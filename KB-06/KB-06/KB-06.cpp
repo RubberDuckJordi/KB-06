@@ -17,9 +17,9 @@ int _tmain(int argc, _TCHAR* argv[])
 
 	WindowManager* wManager = new WindowManager(NULL);
 	wManager->newWindow(NULL, 10, 10, 500, 500);
-	wManager->getLastWindow()->SetTitle("Waarom lees jij deze titel? Het kost je meer tijd dan het waard was!");
+	wManager->getLastWindow()->SetTitle("Waarom lees jij deze titel? Het kost je meer tijd dan het waard is!");
 	wManager->newWindow(NULL, 100, 100, 500, 500);
-	wManager->getLastWindow()->SetTitle("Waarom lees jij deze titel? Het kost je meer tijd dan het waard was!");
+	wManager->getLastWindow()->SetTitle("Waarom lees jij deze titel? Het kost je meer tijd dan het waard is!");
 
 	while (wManager->hasActiveWindow())
 	{

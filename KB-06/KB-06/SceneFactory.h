@@ -6,7 +6,6 @@
 #include <map>
 #include <string>
 
-namespace Scene{
 	class SceneFactory {
 	public:
 		void AddEntityFactory(EntityFactory* entityFactory);
@@ -14,6 +13,6 @@ namespace Scene{
 	private:
 		std::map<std::string, EntityFactory*> entityFactories;
 	};
-}
+
 
 #endif
