@@ -19,7 +19,7 @@ Logger::~Logger()
 	//}
 }
 
-Logger* Logger::getLogger(std::string text){
+Logger* Logger::GetLogger(std::string text){
 	if (pool.find(text) != pool.end()){
 		return pool[text];
 	} 
@@ -30,13 +30,13 @@ Logger* Logger::getLogger(std::string text){
 
 std::map<std::string, Logger*> Logger::pool;
 
-void Logger::log(int logType, std::string text){
-	if (logLevel >= logType && logType > 0){
-		printConsole(logType, text);
+void Logger::Log(int logType, std::string text){
+	if (logLevel >= logType && logType > 0){		
+		PrintConsole(logType, BuildLogEntry(logType, text));
 	}
 }
 
-void Logger::printConsole(int logType,std::string text)
+void Logger::PrintConsole(int logType,std::string text)
 {
 	int color;
 	switch (logType) {
@@ -55,14 +55,14 @@ void Logger::printConsole(int logType,std::string text)
 	}
 	SetConsoleTextAttribute(consoleHandle, color);
 
-	std::cout << buildLogEntry(logType, text) << std::endl;
+	std::cout << text << std::endl;
 }
 
-void Logger::setLogLevel(int newLogLevel){
-		logLevel = newLogLevel;
+void Logger::SetLogLevel(int newLogLevel){
+	logLevel = newLogLevel;
 }
 
-std::string Logger::buildLogEntry(int logType, std::string message){
+std::string Logger::BuildLogEntry(int logType, std::string message){
 	SYSTEMTIME systemTime;
 	GetLocalTime(&systemTime);
 	char* timeBuffer = new char[15];

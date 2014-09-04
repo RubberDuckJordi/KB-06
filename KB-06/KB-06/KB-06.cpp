@@ -7,11 +7,12 @@
 
 int _tmain(int argc, _TCHAR* argv[])
 {
-	Logger* logger = Logger::getLogger("main");
-	logger->log(Logger::ERR, "Iets");
-	logger->log(Logger::WARNING, "Iets");
-	logger->log(Logger::DEBUG, "Iets");
-	logger->log(Logger::INFO, "Iets");
+	Logger* logger = Logger::GetLogger("main");
+	logger->SetLogLevel(Logger::DEBUG);
+	logger->Log(Logger::ERR, "Iets");
+	logger->Log(Logger::WARNING, "Iets");
+	logger->Log(Logger::DEBUG, "Iets");
+	logger->Log(Logger::INFO, "Iets");
 	return 0;
 }
 

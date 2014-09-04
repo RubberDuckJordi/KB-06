@@ -14,15 +14,15 @@ public:
 		INFO = 4
 	};
 
-	static Logger* getLogger(std::string text);
-	void log(int logType, std::string text);
-	void setLogLevel(int logLevel);
+	static Logger* GetLogger(std::string text);
+	void Log(int logType, std::string text);
+	void SetLogLevel(int logLevel);
 private:
 	Logger();
 
 	static std::map<std::string, Logger*> pool;
-	void printConsole(int logType, std::string text);
-	std::string buildLogEntry(int logType, std::string messasge);
+	void PrintConsole(int logType, std::string text);
+	std::string BuildLogEntry(int logType, std::string messasge);
 
 	int logLevel = 4;
 	int consoleColorCodeInfo = gray;
