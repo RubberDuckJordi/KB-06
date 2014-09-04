@@ -3,11 +3,15 @@
 
 #include "stdafx.h"
 #include <cstdlib>
+#include "logger.h"
 
 int _tmain(int argc, _TCHAR* argv[])
 {
-	printf("Hello World\n");
-	system("pause"); //Niet cross-platform & algemeen lelijk
+	Logger* logger = Logger::getLogger("main");
+	logger->log(Logger::ERR, "Iets");
+	logger->log(Logger::WARNING, "Iets");
+	logger->log(Logger::DEBUG, "Iets");
+	logger->log(Logger::INFO, "Iets");
 	return 0;
 }
 
