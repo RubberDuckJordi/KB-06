@@ -65,8 +65,8 @@ void Logger::SetLogLevel(int newLogLevel){
 std::string Logger::BuildLogEntry(int logType, std::string message){
 	SYSTEMTIME systemTime;
 	GetLocalTime(&systemTime);
-	char* timeBuffer = new char[15];
-	sprintf_s(timeBuffer, 15, "%02d:%02d:%02d.%02d", systemTime.wHour, systemTime.wMinute, systemTime.wSecond, systemTime.wMilliseconds);
+	char* timeBuffer = new char[16];
+	sprintf_s(timeBuffer, 16, "%02d:%02d:%02d.%03d", systemTime.wHour, systemTime.wMinute, systemTime.wSecond, systemTime.wMilliseconds);
 
 	std::string logTypceString;
 	switch (logType) {
