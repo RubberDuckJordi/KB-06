@@ -5,6 +5,8 @@
 #include <windows.h>
 #include <ctime>
 
+std::map<std::string, Logger*> Logger::pool;
+
 Logger::Logger()
 {
 	consoleHandle = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -27,8 +29,6 @@ Logger* Logger::GetLogger(std::string text){
 	pool[text] = logger;
 	return logger;
 }
-
-std::map<std::string, Logger*> Logger::pool;
 
 void Logger::Log(int logType, std::string text){
 	if (logLevel >= logType && logType > 0){		
