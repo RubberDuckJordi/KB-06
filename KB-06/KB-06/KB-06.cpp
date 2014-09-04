@@ -26,7 +26,6 @@ int _tmain(int argc, _TCHAR* argv[])
 		wManager->updateWindows();
 		//Do things like input, game logic, ...
 	}
-
 	return 0;
 }
 
