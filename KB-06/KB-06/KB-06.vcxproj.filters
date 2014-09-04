@@ -30,6 +30,7 @@
     <ClInclude Include="targetver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+<<<<<<< HEAD
     <ClInclude Include="Entity.h">
       <Filter>Header Files\Scene</Filter>
     </ClInclude>
@@ -56,6 +57,10 @@
     </ClInclude>
     <ClInclude Include="DefaultSceneFactory.h">
       <Filter>Header Files\Scene</Filter>
+=======
+    <ClInclude Include="Logger.h">
+      <Filter>Header Files</Filter>
+>>>>>>> origin/master
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -65,11 +70,16 @@
     <ClCompile Include="KB-06.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+<<<<<<< HEAD
     <ClCompile Include="DefaultEntity.cpp">
       <Filter>Source Files\Scene</Filter>
     </ClCompile>
     <ClCompile Include="DefaultEntityFactory.cpp">
       <Filter>Source Files\Scene</Filter>
+=======
+    <ClCompile Include="Logger.cpp">
+      <Filter>Source Files</Filter>
+>>>>>>> origin/master
     </ClCompile>
   </ItemGroup>
 </Project>
