@@ -56,5 +56,5 @@ namespace Logger {
 			white = 15
 		};
 	};
-};
+}
 #endif
