@@ -14,13 +14,9 @@ Purpose: Creates and manages windows.
 #include "Window.h"
 #include "Renderer.h"
 #include "SceneManager.h"
+#include <vector>
 
 namespace Window {
-	struct WindowList
-	{
-		Window* window;
-		WindowList* next;
-	};
 
 	class WindowManager
 	{
@@ -42,27 +38,28 @@ namespace Window {
 		@param width: The width of the window.
 		@param height: The height of the window.
 		*/
-		void newWindow(Renderer *renderer, int x, int y, int width, int height);
+		HWND NewWindow(Renderer *renderer, int x, int y, int width, int height);
 
 		/*!
 		Loops through the list of windows to update them.
 		*/
-		void updateWindows();
+		void UpdateWindows();
 
 		/*!
 		Checks if there is an active window.
 		*/
-		bool hasActiveWindow();
+		bool HasActiveWindow();
 
 		/*!
 		Gives back the last created window.
 
 		@return Window*: A pointer to the last window.
 		*/
-		Window* getLastWindow();
+		Window* GetLastWindow();
+
+		Window* GetWindowByHWND(HWND hwnd);
 	private:
-		WindowList *list;
-		WindowList* windows;
+		std::vector<Window*> windows;
 		Scene::SceneManager *sceneManager;
 	};
 }

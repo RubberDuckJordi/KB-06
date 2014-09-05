@@ -3,15 +3,15 @@
 
 
 Scene::DefaultEntityFactory::DefaultEntityFactory(){
-	std::cout << "DefaultEntityFactory::DefaultEntityFactory()" << std::endl;
+
 };
 
 Scene::DefaultEntityFactory::~DefaultEntityFactory(){
-	std::cout << "DefaultEntityFactory::~DefaultEntityFactory()" << std::endl;
+
 };
 
 Scene::Entity* Scene::DefaultEntityFactory::CreateEntity() {
-	DefaultEntity defaultEntity;
-	return &defaultEntity;
+	DefaultEntity *defaultEntity = new DefaultEntity();
+	return defaultEntity;
 };
 

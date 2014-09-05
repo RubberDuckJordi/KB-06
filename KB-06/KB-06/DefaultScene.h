@@ -4,7 +4,7 @@
 #include "Scene.h"
 
 namespace Scene{
-	class DefaultScene : Scene {
+	class DefaultScene : public Scene {
 	public:
 		DefaultScene();
 		~DefaultScene();

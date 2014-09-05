@@ -11,12 +11,14 @@ Window::WindowManager::WindowManager(Scene::SceneManager *sManager)
 
 Window::WindowManager::~WindowManager()
 {
-	delete windows;
+	while (!windows.empty())
+	{
+		delete windows.back(), windows.pop_back();
+	}
 	delete sceneManager;
-	delete list;
 };
 
-void Window::WindowManager::newWindow(Renderer *renderer, int x, int y, int width, int height)
+HWND Window::WindowManager::NewWindow(Renderer *renderer, int x, int y, int width, int height)
 {
 	Window *window = new Window(renderer);
 	HWND hwnd = window->Create(x, y, width, height, NULL, NULL, NULL);
@@ -24,17 +26,14 @@ void Window::WindowManager::newWindow(Renderer *renderer, int x, int y, int widt
 	if (hwnd == NULL)
 	{
 		Logger::Logger::GetLogger("main")->Log(Logger::Logger::ERR, "Could not make window!");
-		return;
+		return NULL;
 	}
 
-	list = new WindowList();
-
-	list->window = window;
-	list->next = windows;
-	windows = list;
+	windows.push_back(window);
+	return hwnd;
 };
 
-void Window::WindowManager::updateWindows()
+void Window::WindowManager::UpdateWindows()
 {
 	MSG Msg;
 	while (PeekMessage(&Msg, NULL, 0U, 0U, true) > 0)//if there's more than one message, go through all of them.
@@ -42,53 +41,57 @@ void Window::WindowManager::updateWindows()
 		TranslateMessage(&Msg);
 		DispatchMessage(&Msg);
 	}
-	WindowList *list = windows;
-	while (list != NULL)//loop through all the windows so we can render them.
-	{
-		Window* window = list->window;
-		window->render(NULL);// Todo: get the scene that has to be rendered in this window...
-		list = list->next;
+
+	for (long index = 0; index < (long)windows.size(); ++index) {
+		windows.at(index)->render(NULL);// Todo: get the scene that has to be rendered in this window...
 	}
+
 };
 
-bool Window::WindowManager::hasActiveWindow()
+bool Window::WindowManager::HasActiveWindow()
 {
-	WindowList *previous = NULL;
-	WindowList *current = windows;
-	while (current != NULL)
-	{
-		if (current->window->state == closed)
+	/*for (int index = 0; index < windows.size(); ++index) {
+		//windows.at(index)->render(NULL);// Todo: get the scene that has to be rendered in this window...
+		if (windows.at(index)->state == closed)
 		{
-			if (current == windows)//it's the current root
-			{
-				previous = current;
-				current = current->next;
-				windows = current;
-				delete previous;
-			}
-			else
-			{
-				WindowList *toDelete = current;
-				previous->next = current->next;
-				current = current->next;
-				delete toDelete;
-			}
+			//delete window
+			delete windows.at(index);
+			windows.erase(index);
 		}
-		else
+	}*/
+
+	for (std::vector<Window*>::iterator it = windows.begin(); it != windows.end();) { // note the missing ++iter !
+		
+		if ((*it)->state == closed)
 		{
-			previous = current;
-			current = current->next;
+			//delete window
+			delete * it;
+			it = windows.erase(it);
+		}
+		else {
+			++it;
 		}
 	}
 
-	if (windows != NULL)
+	if (windows.size() != 0)
 	{
 		return true;
 	}
 	return false;
 };
 
-Window::Window* Window::WindowManager::getLastWindow()
+Window::Window* Window::WindowManager::GetLastWindow()
 {
-	return windows->window;
+	return windows.back();
+};
+
+Window::Window* Window::WindowManager::GetWindowByHWND(HWND hwnd)
+{
+	for (std::vector<Window*>::iterator it = windows.begin(); it != windows.end();) { // note the missing ++iter !
+
+		if ((*it)->_hwnd == hwnd)
+		{
+			return *it;
+		}
+	}
 };

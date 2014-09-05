@@ -9,10 +9,10 @@ namespace Scene {
 	public:
 		Scene();
 		~Scene();
-		virtual void Update() = 0;
+		virtual void Update();
 		void AddEntity(Entity* entity);
 
-	private:
+	protected:
 		std::list<Entity*> entities;
 	};
 }

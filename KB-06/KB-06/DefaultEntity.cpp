@@ -1,14 +1,15 @@
 #include "DefaultEntity.h"
+#include "Logger.h"
 #include <iostream>
 
 Scene::DefaultEntity::DefaultEntity(){
-	std::cout << "DefaultEntity::DefaultEntity()" << std::endl;
+	
 }
 
 Scene::DefaultEntity::~DefaultEntity(){
-	std::cout << "DefaultEntity::~DefaultEntity()" << std::endl;
+	Logger::Logger::GetLogger("main")->Log(Logger::Logger::DEBUG, "NOOOOOO");
 }
 
 void Scene::DefaultEntity::Update(){
-	std::cout << "Updating DefaultEntity" << std::endl;
+	Logger::Logger::GetLogger("main")->Log(Logger::Logger::DEBUG, "DefaultEntity::Update()");
 }

@@ -9,9 +9,11 @@
 namespace Scene {
 	class SceneFactory {
 	public:
-		void AddEntityFactory(EntityFactory* entityFactory);
+		SceneFactory();
+		~SceneFactory();
+		void AddEntityFactory(std::string name, EntityFactory* entityFactory);
 		virtual Scene* CreateScene() = 0;
-	private:
+	protected:
 		std::map<std::string, EntityFactory*> entityFactories;
 	};
 }
