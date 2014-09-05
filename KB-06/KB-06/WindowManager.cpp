@@ -18,7 +18,7 @@ Window::WindowManager::~WindowManager()
 	delete sceneManager;
 };
 
-void Window::WindowManager::newWindow(Renderer *renderer, int x, int y, int width, int height)
+HWND Window::WindowManager::NewWindow(Renderer *renderer, int x, int y, int width, int height)
 {
 	Window *window = new Window(renderer);
 	HWND hwnd = window->Create(x, y, width, height, NULL, NULL, NULL);
@@ -26,13 +26,14 @@ void Window::WindowManager::newWindow(Renderer *renderer, int x, int y, int widt
 	if (hwnd == NULL)
 	{
 		Logger::Logger::GetLogger("main")->Log(Logger::Logger::ERR, "Could not make window!");
-		return;
+		return NULL;
 	}
 
 	windows.push_back(window);
+	return hwnd;
 };
 
-void Window::WindowManager::updateWindows()
+void Window::WindowManager::UpdateWindows()
 {
 	MSG Msg;
 	while (PeekMessage(&Msg, NULL, 0U, 0U, true) > 0)//if there's more than one message, go through all of them.
@@ -47,7 +48,7 @@ void Window::WindowManager::updateWindows()
 
 };
 
-bool Window::WindowManager::hasActiveWindow()
+bool Window::WindowManager::HasActiveWindow()
 {
 	/*for (int index = 0; index < windows.size(); ++index) {
 		//windows.at(index)->render(NULL);// Todo: get the scene that has to be rendered in this window...
@@ -72,10 +73,6 @@ bool Window::WindowManager::hasActiveWindow()
 		}
 	}
 
-	for (std::vector<Window*>::iterator it = windows.begin(); it != windows.end(); ++it) {
-		/* std::cout << *it; ... */
-	}
-
 	if (windows.size() != 0)
 	{
 		return true;
@@ -83,7 +80,18 @@ bool Window::WindowManager::hasActiveWindow()
 	return false;
 };
 
-Window::Window* Window::WindowManager::getLastWindow()
+Window::Window* Window::WindowManager::GetLastWindow()
 {
 	return windows.back();
+};
+
+Window::Window* Window::WindowManager::GetWindowByHWND(HWND hwnd)
+{
+	for (std::vector<Window*>::iterator it = windows.begin(); it != windows.end();) { // note the missing ++iter !
+
+		if ((*it)->_hwnd == hwnd)
+		{
+			return *it;
+		}
+	}
 };
