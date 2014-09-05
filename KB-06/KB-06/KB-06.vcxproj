@@ -84,6 +84,7 @@
   <ItemGroup>
     <ClInclude Include="DefaultScene.h" />
     <ClInclude Include="DefaultSceneFactory.h" />
+    <ClInclude Include="DirectXRenderer.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="EntityFactory.h" />
     <ClInclude Include="DefaultEntity.h" />
@@ -102,6 +103,7 @@
     <ClCompile Include="DefaultEntityFactory.cpp" />
     <ClCompile Include="DefaultScene.cpp" />
     <ClCompile Include="DefaultSceneFactory.cpp" />
+    <ClCompile Include="DirectXRenderer.cpp" />
     <ClCompile Include="KB-06.cpp" />
     <ClCompile Include="DefaultEntity.cpp" />
     <ClCompile Include="Logger.cpp" />

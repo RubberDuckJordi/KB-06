@@ -40,6 +40,9 @@
     <ClCompile Include="Logger.cpp">
       <Filter>Source\Util</Filter>
     </ClCompile>
+    <ClCompile Include="DirectXRenderer.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -85,6 +88,9 @@
       <Filter>Headers\Util</Filter>
     </ClInclude>
     <ClInclude Include="Renderer.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXRenderer.h">
       <Filter>Headers</Filter>
     </ClInclude>
   </ItemGroup>
