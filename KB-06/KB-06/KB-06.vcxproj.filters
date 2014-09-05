@@ -84,6 +84,9 @@
     <ClInclude Include="Logger.h">
       <Filter>Headers\Util</Filter>
     </ClInclude>
+    <ClInclude Include="Renderer.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
