@@ -5,14 +5,14 @@
 #include <windows.h>
 #include <ctime>
 
-std::map<std::string, Logger*> Logger::pool;
+std::map<std::string, Logger::Logger*> Logger::Logger::pool;
 
-Logger::Logger()
+Logger::Logger::Logger()
 {
 	consoleHandle = GetStdHandle(STD_OUTPUT_HANDLE);
 }
 
-Logger::~Logger()
+Logger::Logger::~Logger()
 {
 	//for (it_type iterator = m.begin(); iterator != m.end(); iterator++) {
 	// iterator->first = key
@@ -21,7 +21,7 @@ Logger::~Logger()
 	//}
 }
 
-Logger* Logger::GetLogger(std::string text){
+Logger::Logger* Logger::Logger::GetLogger(std::string text){
 	if (pool.find(text) != pool.end()){
 		return pool[text];
 	}
@@ -30,13 +30,13 @@ Logger* Logger::GetLogger(std::string text){
 	return logger;
 }
 
-void Logger::Log(int logType, std::string text){
+void Logger::Logger::Log(int logType, std::string text){
 	if (logLevel >= logType && logType > 0){
 		PrintConsole(logType, BuildLogEntry(logType, text));
 	}
 }
 
-void Logger::PrintConsole(int logType, std::string text)
+void Logger::Logger::PrintConsole(int logType, std::string text)
 {
 	int color;
 	switch (logType) {
@@ -58,11 +58,11 @@ void Logger::PrintConsole(int logType, std::string text)
 	std::cout << text << std::endl;
 }
 
-void Logger::SetLogLevel(int newLogLevel){
+void Logger::Logger::SetLogLevel(int newLogLevel){
 	logLevel = newLogLevel;
 }
 
-std::string Logger::BuildLogEntry(int logType, std::string message){
+std::string Logger::Logger::BuildLogEntry(int logType, std::string message){
 	SYSTEMTIME systemTime;
 	GetLocalTime(&systemTime);
 	char* timeBuffer = new char[16];

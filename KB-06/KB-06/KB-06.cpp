@@ -8,14 +8,14 @@
 
 int _tmain(int argc, _TCHAR* argv[])
 {
-	Logger* logger = Logger::GetLogger("main");
-	logger->SetLogLevel(Logger::DEBUG);
-	logger->Log(Logger::ERR, "Iets");
-	logger->Log(Logger::WARNING, "Iets");
-	logger->Log(Logger::DEBUG, "Iets");
-	logger->Log(Logger::INFO, "Iets");
+	Logger::Logger* logger = Logger::Logger::GetLogger("main");
+	logger->SetLogLevel(Logger::Logger::DEBUG);
+	logger->Log(Logger::Logger::ERR, "Iets");
+	logger->Log(Logger::Logger::WARNING, "Iets");
+	logger->Log(Logger::Logger::DEBUG, "Iets");
+	logger->Log(Logger::Logger::INFO, "Iets");
 
-	WindowManager* wManager = new WindowManager(NULL);
+	Window::WindowManager* wManager = new Window::WindowManager(NULL);
 	wManager->newWindow(NULL, 10, 10, 500, 500);
 	wManager->getLastWindow()->SetTitle("Waarom lees jij deze titel? Het kost je meer tijd dan het waard is!");
 	wManager->newWindow(NULL, 100, 100, 500, 500);

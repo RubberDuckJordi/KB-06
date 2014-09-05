@@ -4,26 +4,26 @@
 #include <sstream>
 #include "stdafx.h"
 
-WindowManager::WindowManager(SceneManager *sManager)
+Window::WindowManager::WindowManager(Scene::SceneManager *sManager)
 {
 	sceneManager = sManager;
 };
 
-WindowManager::~WindowManager()
+Window::WindowManager::~WindowManager()
 {
 	delete windows;
 	delete sceneManager;
 	delete list;
 };
 
-void WindowManager::newWindow(Renderer *renderer, int x, int y, int width, int height)
+void Window::WindowManager::newWindow(Renderer *renderer, int x, int y, int width, int height)
 {
 	Window *window = new Window(renderer);
 	HWND hwnd = window->Create(x, y, width, height, NULL, NULL, NULL);
 
 	if (hwnd == NULL)
 	{
-		Logger::GetLogger("main")->Log(Logger::ERR, "Could not make window!");
+		Logger::Logger::GetLogger("main")->Log(Logger::Logger::ERR, "Could not make window!");
 		return;
 	}
 
@@ -34,7 +34,7 @@ void WindowManager::newWindow(Renderer *renderer, int x, int y, int width, int h
 	windows = list;
 };
 
-void WindowManager::updateWindows()
+void Window::WindowManager::updateWindows()
 {
 	MSG Msg;
 	while (PeekMessage(&Msg, NULL, 0U, 0U, true) > 0)//if there's more than one message, go through all of them.
@@ -51,7 +51,7 @@ void WindowManager::updateWindows()
 	}
 };
 
-bool WindowManager::hasActiveWindow()
+bool Window::WindowManager::hasActiveWindow()
 {
 	WindowList *previous = NULL;
 	WindowList *current = windows;
@@ -88,7 +88,7 @@ bool WindowManager::hasActiveWindow()
 	return false;
 };
 
-Window* WindowManager::getLastWindow()
+Window::Window* Window::WindowManager::getLastWindow()
 {
 	return windows->window;
 };

@@ -15,53 +15,55 @@ Purpose: Creates and manages windows.
 #include "Renderer.h"
 #include "SceneManager.h"
 
-struct WindowList
-{
-	Window* window;
-	WindowList* next;
-};
+namespace Window {
+	struct WindowList
+	{
+		Window* window;
+		WindowList* next;
+	};
 
-class WindowManager
-{
-public:
-	/*!
-	Constructor (creates WindowManager).
+	class WindowManager
+	{
+	public:
+		/*!
+		Constructor (creates WindowManager).
 
-	@param sceneManager: SceneManager which is used to render a scene.
-	*/
-	WindowManager(SceneManager *sceneManager);
-	~WindowManager();
+		@param sceneManager: SceneManager which is used to render a scene.
+		*/
+		WindowManager(Scene::SceneManager *sceneManager);
+		~WindowManager();
 
-	/*!
-	Creates a new window and adds it to a list of windows.
+		/*!
+		Creates a new window and adds it to a list of windows.
 
-	@param *renderer: A pointer to the renderer is passed to render scenes.
-	@param x: The horizontal position of the upper left corner of the window.
-	@param y: The vertical position of the upper left corner of the window.
-	@param width: The width of the window.
-	@param height: The height of the window.
-	*/
-	void newWindow(Renderer *renderer, int x, int y, int width, int height);
+		@param *renderer: A pointer to the renderer is passed to render scenes.
+		@param x: The horizontal position of the upper left corner of the window.
+		@param y: The vertical position of the upper left corner of the window.
+		@param width: The width of the window.
+		@param height: The height of the window.
+		*/
+		void newWindow(Renderer *renderer, int x, int y, int width, int height);
 
-	/*!
-	Loops through the list of windows to update them.
-	*/
-	void updateWindows();
+		/*!
+		Loops through the list of windows to update them.
+		*/
+		void updateWindows();
 
-	/*!
-	Checks if there is an active window.
-	*/
-	bool hasActiveWindow();
+		/*!
+		Checks if there is an active window.
+		*/
+		bool hasActiveWindow();
 
-	/*!
-	Gives back the last created window.
+		/*!
+		Gives back the last created window.
 
-	@return Window*: A pointer to the last window.
-	*/
-	Window* getLastWindow();
-private:
-	WindowList *list;
-	WindowList* windows;
-	SceneManager *sceneManager;
-};
+		@return Window*: A pointer to the last window.
+		*/
+		Window* getLastWindow();
+	private:
+		WindowList *list;
+		WindowList* windows;
+		Scene::SceneManager *sceneManager;
+	};
+}
 #endif

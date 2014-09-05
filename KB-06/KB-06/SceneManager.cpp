@@ -2,11 +2,11 @@
 #include "SceneManager.h"
 
 
-SceneManager::SceneManager()
+Scene::SceneManager::SceneManager()
 {
 }
 
 
-SceneManager::~SceneManager()
+Scene::SceneManager::~SceneManager()
 {
 }

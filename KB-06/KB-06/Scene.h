@@ -4,7 +4,7 @@
 #include <list>
 #include "Entity.h"
 
-
+namespace Scene {
 	class Scene {
 	public:
 		Scene();
@@ -15,6 +15,6 @@
 	private:
 		std::list<Entity*> entities;
 	};
-
+}
 
 #endif

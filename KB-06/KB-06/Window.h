@@ -15,47 +15,49 @@ Purpose: Keeping information concerning windows.
 #include "Scene.h"
 #include "Renderer.h"
 
-enum WindowState { fullscreen, maximized, normal, minimized, closed };
+namespace Window {
+	enum WindowState { fullscreen, maximized, normal, minimized, closed };
 
-class Window
-{
-public:
-	Window(Renderer* renderer);
-	~Window();
+	class Window
+	{
+	public:
+		Window(Renderer* renderer);
+		~Window();
 
-	/*!
-	Creates a window and returns it's HWND.
+		/*!
+		Creates a window and returns it's HWND.
 
-	@return HWND: The HWND of the created window.
-	@param x: The horizontal position of the upper left corner of the window.
-	@param y: The vertical position of the upper left corner of the window.
-	@param nWidth: The width of the window.
-	@param nHeight: The height of the window.
-	@param hParent: The HWND of the creating window.
-	@param hMenu: The menu of the created window.
-	@param hInstance: The instance of this process.
-	*/
-	HWND Create(int x, int y, int nWidth, int nHeight, HWND hParent, HMENU hMenu, HINSTANCE hInstance);
-	HWND _hwnd;
-	WindowState state;
-	void Resize();
-	void SetTitle(char* title);
+		@return HWND: The HWND of the created window.
+		@param x: The horizontal position of the upper left corner of the window.
+		@param y: The vertical position of the upper left corner of the window.
+		@param nWidth: The width of the window.
+		@param nHeight: The height of the window.
+		@param hParent: The HWND of the creating window.
+		@param hMenu: The menu of the created window.
+		@param hInstance: The instance of this process.
+		*/
+		HWND Create(int x, int y, int nWidth, int nHeight, HWND hParent, HMENU hMenu, HINSTANCE hInstance);
+		HWND _hwnd;
+		WindowState state;
+		void Resize();
+		void SetTitle(char* title);
 
-	/*!
-	Abstract method that renders the given scene.
+		/*!
+		Abstract method that renders the given scene.
 
-	@param *scene: The scene to be rendered.
-	*/
-	virtual void render(Scene *scene);
-protected:
-	static LRESULT CALLBACK BaseWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
-	virtual LRESULT WindowProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
-	WNDCLASSEX _WndClass;
-	DWORD _dwExtendedStyle;
-	DWORD _dwStyle;
-	LPCWSTR _pszClassName;
-	LPCWSTR _pszTitle;
-	virtual void OnDestroy(HWND hwnd);
+		@param *scene: The scene to be rendered.
+		*/
+		virtual void render(Scene::Scene *scene);
+	protected:
+		static LRESULT CALLBACK BaseWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
+		virtual LRESULT WindowProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
+		WNDCLASSEX _WndClass;
+		DWORD _dwExtendedStyle;
+		DWORD _dwStyle;
+		LPCWSTR _pszClassName;
+		LPCWSTR _pszTitle;
+		virtual void OnDestroy(HWND hwnd);
 
-};
+	};
+}
 #endif

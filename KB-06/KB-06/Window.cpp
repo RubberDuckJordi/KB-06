@@ -2,7 +2,7 @@
 #include "Window.h"
 #include "Logger.h"
 
-Window::Window(Renderer* renderer)
+Window::Window::Window(Renderer* renderer)
 {
 	//Set the default data for the window class.
 	//These can be reset in the derived class's constructor.
@@ -24,12 +24,12 @@ Window::Window(Renderer* renderer)
 	_pszTitle = L"Default title, go set it!";
 };
 
-Window::~Window()
+Window::Window::~Window()
 {
 	delete _hwnd;
 };
 
-void Window::SetTitle(char* title) 
+void Window::Window::SetTitle(char* title)
 {
 	size_t origsize = strlen(title) + 1;
 	const size_t newsize = 100;
@@ -43,7 +43,7 @@ void Window::SetTitle(char* title)
 //	delete[] wcstring;
 }
 
-LRESULT Window::WindowProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
+LRESULT Window::Window::WindowProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
 	switch (msg)
 	{
@@ -66,7 +66,7 @@ LRESULT Window::WindowProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 	return 0;
 };
 
-void Window::Resize()
+void Window::Window::Resize()
 {
 	RECT rect;
 	if (GetWindowRect(_hwnd, &rect))
@@ -77,12 +77,12 @@ void Window::Resize()
 	}
 };
 
-void Window::OnDestroy(HWND hwnd)
+void Window::Window::OnDestroy(HWND hwnd)
 {
 	PostQuitMessage(0);
 };
 
-HWND Window::Create(int x, int y, int nWidth, int nHeight, HWND hParent, HMENU hMenu, HINSTANCE hInstance)
+HWND Window::Window::Create(int x, int y, int nWidth, int nHeight, HWND hParent, HMENU hMenu, HINSTANCE hInstance)
 {
 	_WndClass.lpszClassName = _pszClassName;
 	_WndClass.hInstance = hInstance;
@@ -95,7 +95,7 @@ HWND Window::Create(int x, int y, int nWidth, int nHeight, HWND hParent, HMENU h
 	return _hwnd;
 };
 
-LRESULT CALLBACK Window::BaseWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK Window::Window::BaseWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
 	//A pointer to the object is passed in the CREATESTRUCT
 	if (msg == WM_NCCREATE)
@@ -115,7 +115,7 @@ LRESULT CALLBACK Window::BaseWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM 
 	return 0;
 };
 
-void Window::render(Scene *scene)
+void Window::Window::render(Scene::Scene *scene)
 {
 	if (scene)
 	{

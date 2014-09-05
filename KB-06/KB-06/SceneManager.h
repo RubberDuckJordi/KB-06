@@ -8,7 +8,7 @@
 #include <map>
 #include <string>
 
-
+namespace Scene {
 	class SceneManager {
 	public:
 		SceneManager();
@@ -24,6 +24,6 @@
 		std::list<Scene*> scenes;
 		std::map<std::string, SceneFactory*> sceneFactories;
 	};
-
+}
 
 #endif
