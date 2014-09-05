@@ -1,4 +1,6 @@
-#pragma once
+#ifndef _LOGGER_H_
+#define _LOGGER_H_
+
 #include <string>
 #include <windows.h>
 #include <map>
@@ -55,3 +57,4 @@ namespace Logger {
 		};
 	};
 }
+#endif
