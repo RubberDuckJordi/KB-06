@@ -22,9 +22,6 @@
     <ClCompile Include="DefaultSceneFactory.cpp">
       <Filter>Source\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="PlayerFactory.cpp">
-      <Filter>Source\Scene</Filter>
-    </ClCompile>
     <ClCompile Include="Scene.cpp">
       <Filter>Source\Scene</Filter>
     </ClCompile>
@@ -39,6 +36,9 @@
     </ClCompile>
     <ClCompile Include="Logger.cpp">
       <Filter>Source\Util</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneFactory.cpp">
+      <Filter>Source\Scene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

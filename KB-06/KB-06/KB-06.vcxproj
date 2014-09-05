@@ -105,9 +105,9 @@
     <ClCompile Include="KB-06.cpp" />
     <ClCompile Include="DefaultEntity.cpp" />
     <ClCompile Include="Logger.cpp" />
-    <ClCompile Include="PlayerFactory.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="Scene.cpp" />
+    <ClCompile Include="SceneFactory.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

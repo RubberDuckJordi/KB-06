@@ -4,7 +4,8 @@
 #include "SceneFactory.h"
 
 namespace Scene{
-	class DefaultSceneFactory {
+	class DefaultSceneFactory : public SceneFactory
+	{
 	public:
 		DefaultSceneFactory();
 		~DefaultSceneFactory();
