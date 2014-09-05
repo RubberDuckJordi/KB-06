@@ -89,7 +89,6 @@
     <ClInclude Include="DefaultEntity.h" />
     <ClInclude Include="DefaultEntityFactory.h" />
     <ClInclude Include="Logger.h" />
-    <ClInclude Include="Renderer.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneFactory.h" />
     <ClInclude Include="SceneManager.h" />
