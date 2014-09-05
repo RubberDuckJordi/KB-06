@@ -62,7 +62,7 @@ bool Window::WindowManager::HasActiveWindow()
 
 	for (std::vector<Window*>::iterator it = windows.begin(); it != windows.end();) { // note the missing ++iter !
 		
-		if ((*it)->state == closed)
+		if ((*it)->GetWindowState() == closed)
 		{
 			//delete window
 			delete * it;
@@ -89,9 +89,11 @@ Window::Window* Window::WindowManager::GetWindowByHWND(HWND hwnd)
 {
 	for (std::vector<Window*>::iterator it = windows.begin(); it != windows.end();) { // note the missing ++iter !
 
-		if ((*it)->_hwnd == hwnd)
+		if ((*it)->GetHWND() == hwnd)
 		{
 			return *it;
 		}
 	}
+
+	return NULL;
 };

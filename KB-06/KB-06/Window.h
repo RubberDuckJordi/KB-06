@@ -37,10 +37,10 @@ namespace Window {
 		@param hInstance: The instance of this process.
 		*/
 		HWND Create(int x, int y, int nWidth, int nHeight, HWND hParent, HMENU hMenu, HINSTANCE hInstance);
-		HWND _hwnd;
-		WindowState state;
 		void Resize();
 		void SetTitle(char* title);
+		HWND GetHWND();
+		WindowState GetWindowState();
 
 		/*!
 		Abstract method that renders the given scene.
@@ -56,6 +56,8 @@ namespace Window {
 		DWORD _dwStyle;
 		LPCWSTR _pszClassName;
 		LPCWSTR _pszTitle;
+		HWND _hwnd;
+		WindowState state;
 		virtual void OnDestroy(HWND hwnd);
 
 	};

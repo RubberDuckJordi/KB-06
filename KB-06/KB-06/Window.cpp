@@ -132,3 +132,13 @@ void Window::Window::render(Scene::Scene *scene)
 	ReleaseDC(_hwnd, hDC);
 	//renderer->Render(_hwnd, scene);
 };
+
+HWND Window::Window::GetHWND()
+{
+	return _hwnd;
+}
+
+Window::WindowState Window::Window::GetWindowState()
+{
+	return state;
+}
