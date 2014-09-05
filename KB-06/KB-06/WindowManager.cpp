@@ -11,9 +11,11 @@ Window::WindowManager::WindowManager(Scene::SceneManager *sManager)
 
 Window::WindowManager::~WindowManager()
 {
-	delete windows;
+	while (!windows.empty())
+	{
+		delete windows.back(), windows.pop_back();
+	}
 	delete sceneManager;
-	delete list;
 };
 
 void Window::WindowManager::newWindow(Renderer *renderer, int x, int y, int width, int height)
@@ -27,11 +29,7 @@ void Window::WindowManager::newWindow(Renderer *renderer, int x, int y, int widt
 		return;
 	}
 
-	list = new WindowList();
-
-	list->window = window;
-	list->next = windows;
-	windows = list;
+	windows.push_back(window);
 };
 
 void Window::WindowManager::updateWindows()
@@ -42,46 +40,43 @@ void Window::WindowManager::updateWindows()
 		TranslateMessage(&Msg);
 		DispatchMessage(&Msg);
 	}
-	WindowList *list = windows;
-	while (list != NULL)//loop through all the windows so we can render them.
-	{
-		Window* window = list->window;
-		window->render(NULL);// Todo: get the scene that has to be rendered in this window...
-		list = list->next;
+
+	for (long index = 0; index < (long)windows.size(); ++index) {
+		windows.at(index)->render(NULL);// Todo: get the scene that has to be rendered in this window...
 	}
+
 };
 
 bool Window::WindowManager::hasActiveWindow()
 {
-	WindowList *previous = NULL;
-	WindowList *current = windows;
-	while (current != NULL)
-	{
-		if (current->window->state == closed)
+	/*for (int index = 0; index < windows.size(); ++index) {
+		//windows.at(index)->render(NULL);// Todo: get the scene that has to be rendered in this window...
+		if (windows.at(index)->state == closed)
 		{
-			if (current == windows)//it's the current root
-			{
-				previous = current;
-				current = current->next;
-				windows = current;
-				delete previous;
-			}
-			else
-			{
-				WindowList *toDelete = current;
-				previous->next = current->next;
-				current = current->next;
-				delete toDelete;
-			}
+			//delete window
+			delete windows.at(index);
+			windows.erase(index);
 		}
-		else
+	}*/
+
+	for (std::vector<Window*>::iterator it = windows.begin(); it != windows.end();) { // note the missing ++iter !
+		
+		if ((*it)->state == closed)
 		{
-			previous = current;
-			current = current->next;
+			//delete window
+			delete * it;
+			it = windows.erase(it);
+		}
+		else {
+			++it;
 		}
 	}
 
-	if (windows != NULL)
+	for (std::vector<Window*>::iterator it = windows.begin(); it != windows.end(); ++it) {
+		/* std::cout << *it; ... */
+	}
+
+	if (windows.size() != 0)
 	{
 		return true;
 	}
@@ -90,5 +85,5 @@ bool Window::WindowManager::hasActiveWindow()
 
 Window::Window* Window::WindowManager::getLastWindow()
 {
-	return windows->window;
+	return windows.back();
 };

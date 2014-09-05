@@ -26,7 +26,8 @@ Window::Window::Window(Renderer* renderer)
 
 Window::Window::~Window()
 {
-	delete _hwnd;
+	Logger::Logger::GetLogger("MAIN")->Log(Logger::Logger::WARNING, "TODO: Proper Window deconstructor");
+	//delete _hwnd;
 };
 
 void Window::Window::SetTitle(char* title)
