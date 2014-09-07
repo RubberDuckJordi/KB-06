@@ -1,6 +1,7 @@
 #include "WindowManager.h"
 #include <string>
 #include "Logger.h"
+#include "LoggerPool.h"
 #include <sstream>
 #include "stdafx.h"
 
@@ -20,12 +21,13 @@ Window::WindowManager::~WindowManager()
 
 HWND Window::WindowManager::NewWindow(Renderer *renderer, int x, int y, int width, int height)
 {
+	Logger::Logger* logger = Logger::LoggerPool::GetInstance().GetLogger();
 	Window *window = new Window(renderer);
 	HWND hwnd = window->Create(x, y, width, height, NULL, NULL, NULL);
 
 	if (hwnd == NULL)
 	{
-		Logger::Logger::GetLogger("main")->Log(Logger::Logger::ERR, "Could not make window!");
+		logger->Log(Logger::Logger::ERR, "Could not make window!");
 		return NULL;
 	}
 

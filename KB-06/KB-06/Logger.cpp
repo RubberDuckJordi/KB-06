@@ -5,29 +5,13 @@
 #include <windows.h>
 #include <ctime>
 
-std::map<std::string, Logger::Logger*> Logger::Logger::pool;
-
 Logger::Logger::Logger()
 {
 	consoleHandle = GetStdHandle(STD_OUTPUT_HANDLE);
 }
 
-Logger::Logger::~Logger()
-{
-	//for (it_type iterator = m.begin(); iterator != m.end(); iterator++) {
-	// iterator->first = key
-	// iterator->second = value
-	// Repeat if you also want to iterate through the second map.
-	//}
-}
+void Logger::Logger::Reset(){
 
-Logger::Logger* Logger::Logger::GetLogger(std::string text){
-	if (pool.find(text) != pool.end()){
-		return pool[text];
-	}
-	Logger* logger = new Logger;
-	pool[text] = logger;
-	return logger;
 }
 
 void Logger::Logger::Log(int logType, std::string text){

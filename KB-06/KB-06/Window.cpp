@@ -1,6 +1,7 @@
 #include <windows.h>
 #include "Window.h"
 #include "Logger.h"
+#include "LoggerPool.h"
 
 Window::Window::Window(Renderer* renderer)
 {
@@ -26,7 +27,9 @@ Window::Window::Window(Renderer* renderer)
 
 Window::Window::~Window()
 {
-	Logger::Logger::GetLogger("MAIN")->Log(Logger::Logger::WARNING, "TODO: Proper Window deconstructor");
+	Logger::Logger* logger = Logger::LoggerPool::GetInstance().GetLogger();
+	logger->Log(Logger::Logger::WARNING, "TODO: Proper Window deconstructor");
+	Logger::LoggerPool::GetInstance().ReturnLogger(logger);
 	//delete _hwnd;
 };
 

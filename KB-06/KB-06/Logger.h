@@ -10,6 +10,7 @@ namespace Logger {
 	{
 	public:
 		~Logger();
+		Logger();
 		static enum LogLevel{
 			NONE = 0,
 			ERR = 1,
@@ -18,13 +19,10 @@ namespace Logger {
 			INFO = 4
 		};
 
-		static Logger* GetLogger(std::string text);
-		void Log(int logType, std::string text);
+		void Log(int logType, std::string text);		
 		void SetLogLevel(int logLevel);
+		void Reset();
 	private:
-		Logger();
-
-		static std::map<std::string, Logger*> pool;
 		void PrintConsole(int logType, std::string text);
 		std::string BuildLogEntry(int logType, std::string messasge);
 

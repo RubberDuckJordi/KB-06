@@ -43,6 +43,9 @@
     <ClCompile Include="DirectXRenderer.cpp">
       <Filter>Source</Filter>
     </ClCompile>
+    <ClCompile Include="LoggerPool.cpp">
+      <Filter>Source\Util</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -92,6 +95,9 @@
     </ClInclude>
     <ClInclude Include="DirectXRenderer.h">
       <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="LoggerPool.h">
+      <Filter>Headers\Util</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

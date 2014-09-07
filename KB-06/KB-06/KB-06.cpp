@@ -3,12 +3,12 @@
 
 #include "stdafx.h"
 #include <cstdlib>
-#include "logger.h"
+#include "loggerPool.h"
 #include "WindowManager.h"
 
 int _tmain(int argc, _TCHAR* argv[])
 {
-	Logger::Logger* logger = Logger::Logger::GetLogger("main");
+	Logger::Logger* logger = Logger::LoggerPool::GetInstance().GetLogger();
 	logger->SetLogLevel(Logger::Logger::DEBUG);
 	logger->Log(Logger::Logger::ERR, "Iets");
 	logger->Log(Logger::Logger::WARNING, "Iets");
@@ -26,6 +26,7 @@ int _tmain(int argc, _TCHAR* argv[])
 		wManager->UpdateWindows();
 		//Do things like input, game logic, ...
 	}
+	Logger::LoggerPool::GetInstance().ReturnLogger(logger);
 	return 0;
 }
 
