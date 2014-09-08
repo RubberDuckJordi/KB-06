@@ -9,7 +9,7 @@ public:
 	DirectXRenderer();
 	~DirectXRenderer();
 
-	void InitD3D();
+	void InitD3D(HWND hWnd);
 	void SetRenderState();
 
 	void SetWorldMatrix();
