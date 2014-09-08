@@ -6,7 +6,6 @@
 #include "loggerPool.h"
 #include "WindowManager.h"
 #include "InputManager.h"
-#include <iostream>
 
 int _tmain(int argc, _TCHAR* argv[])
 {
