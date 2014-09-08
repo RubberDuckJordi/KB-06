@@ -12,6 +12,7 @@ Purpose: Creates and manages windows.
 
 #include <Windows.h>
 #include "Window.h"
+#include "WindowListener.h"
 #include "Renderer.h"
 #include "SceneManager.h"
 #include <vector>
@@ -58,9 +59,16 @@ namespace Window {
 		Window* GetLastWindow();
 
 		Window* GetWindowByHWND(HWND hwnd);
+
+		void AddWindowListener(WindowListener* p_windowListener);
+		void RemoveWindowListener(WindowListener* p_windowListener);
+		void ClearWindowListeners();
+
 	private:
 		std::vector<Window*> windows;
 		Scene::SceneManager *sceneManager;
+
+		std::list<WindowListener*> m_windowListeners;
 	};
 }
 #endif

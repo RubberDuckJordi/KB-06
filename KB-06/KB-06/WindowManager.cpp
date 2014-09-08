@@ -33,6 +33,12 @@ HWND Window::WindowManager::NewWindow(Renderer *renderer, int x, int y, int widt
 
 	windows.push_back(window);
 	Logger::LoggerPool::GetInstance().ReturnLogger(logger);
+
+	for (std::list<WindowListener*>::iterator itListener = m_windowListeners.begin(); itListener != m_windowListeners.end(); ++itListener)
+	{
+		(*itListener)->WindowOpened(*window);
+	}
+
 	return hwnd;
 };
 
@@ -100,3 +106,24 @@ Window::Window* Window::WindowManager::GetWindowByHWND(HWND hwnd)
 
 	return NULL;
 };
+
+void Window::WindowManager::AddWindowListener(WindowListener* p_windowListener)
+{
+	if (p_windowListener != NULL)
+	{
+		m_windowListeners.push_back(p_windowListener);
+	}
+}
+
+void Window::WindowManager::RemoveWindowListener(WindowListener* p_windowListener)
+{
+	if (p_windowListener != NULL)
+	{
+		m_windowListeners.remove(p_windowListener);
+	}
+}
+
+void Window::WindowManager::ClearWindowListeners()
+{
+	m_windowListeners.clear();
+}

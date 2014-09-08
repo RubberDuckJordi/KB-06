@@ -59,6 +59,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>dinput8.lib;dxguid.lib;d3d9.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -89,8 +90,12 @@
     <ClInclude Include="EntityFactory.h" />
     <ClInclude Include="DefaultEntity.h" />
     <ClInclude Include="DefaultEntityFactory.h" />
+    <ClInclude Include="InputDevice.h" />
+    <ClInclude Include="InputManager.h" />
+    <ClInclude Include="Keyboard.h" />
     <ClInclude Include="Logger.h" />
     <ClInclude Include="LoggerPool.h" />
+    <ClInclude Include="Mouse.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneFactory.h" />
@@ -98,6 +103,7 @@
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Window.h" />
+    <ClInclude Include="WindowListener.h" />
     <ClInclude Include="WindowManager.h" />
   </ItemGroup>
   <ItemGroup>
@@ -105,10 +111,14 @@
     <ClCompile Include="DefaultScene.cpp" />
     <ClCompile Include="DefaultSceneFactory.cpp" />
     <ClCompile Include="DirectXRenderer.cpp" />
+    <ClCompile Include="InputDevice.cpp" />
+    <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="KB-06.cpp" />
     <ClCompile Include="DefaultEntity.cpp" />
+    <ClCompile Include="Keyboard.cpp" />
     <ClCompile Include="Logger.cpp" />
     <ClCompile Include="LoggerPool.cpp" />
+    <ClCompile Include="Mouse.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneFactory.cpp" />

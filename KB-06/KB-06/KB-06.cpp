@@ -5,6 +5,8 @@
 #include <cstdlib>
 #include "loggerPool.h"
 #include "WindowManager.h"
+#include "InputManager.h"
+#include <iostream>
 
 int _tmain(int argc, _TCHAR* argv[])
 {
@@ -16,15 +18,21 @@ int _tmain(int argc, _TCHAR* argv[])
 	logger->Log(Logger::Logger::INFO, "Iets");
 
 	Window::WindowManager* wManager = new Window::WindowManager(NULL);
+	Input::InputManager* iManager = new Input::InputManager();
+	wManager->AddWindowListener(iManager);
 	wManager->NewWindow(NULL, 10, 10, 500, 500);
 	wManager->GetLastWindow()->SetTitle("Waarom lees jij deze titel? Het kost je meer tijd dan het waard is!");
 	wManager->NewWindow(NULL, 100, 100, 500, 500);
-	wManager->GetLastWindow()->SetTitle("Waarom lees jij deze titel? Het kost je meer tijd dan het waard is!");
+	wManager->GetLastWindow()->SetTitle("Waarom lees jij deze titel? Het kost je meer tijd dan het waard is!");	
 
 	while (wManager->HasActiveWindow())
 	{
 		wManager->UpdateWindows();
-		//Do things like input, game logic, ...
+		std::map<Input::InputManager::Action, long> actions = iManager->GetCurrentActions(wManager->GetLastWindow());
+
+		if (actions.size() > 0){
+			logger->Log(Logger::Logger::INFO, "Input!");
+		}
 	}
 	Logger::LoggerPool::GetInstance().ReturnLogger(logger);
 	return 0;

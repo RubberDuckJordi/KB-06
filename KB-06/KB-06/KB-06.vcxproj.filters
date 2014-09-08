@@ -46,6 +46,18 @@
     <ClCompile Include="LoggerPool.cpp">
       <Filter>Source\Util</Filter>
     </ClCompile>
+    <ClCompile Include="Mouse.cpp">
+      <Filter>Source\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Keyboard.cpp">
+      <Filter>Source\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="InputManager.cpp">
+      <Filter>Source\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="InputDevice.cpp">
+      <Filter>Source\Input</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -99,6 +111,21 @@
     <ClInclude Include="LoggerPool.h">
       <Filter>Headers\Util</Filter>
     </ClInclude>
+    <ClInclude Include="InputDevice.h">
+      <Filter>Headers\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="InputManager.h">
+      <Filter>Headers\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Keyboard.h">
+      <Filter>Headers\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Mouse.h">
+      <Filter>Headers\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="WindowListener.h">
+      <Filter>Headers\Window</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -127,6 +154,12 @@
     </Filter>
     <Filter Include="Source\Scene">
       <UniqueIdentifier>{94d643d9-ee70-4307-a3af-2256094c3a9b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headers\Input">
+      <UniqueIdentifier>{c2c4c4da-4c83-43f2-85ff-9c7e2c1733b1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Input">
+      <UniqueIdentifier>{59f19ab9-8c88-4c82-9a31-4a5f7da13058}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
