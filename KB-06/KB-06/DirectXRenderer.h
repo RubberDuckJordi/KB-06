@@ -26,6 +26,16 @@ public:
 
 	void SetMaterial();
 	void SetTexture();
+	void SetFvF();
+	void SetTransform();
+
+	void DrawPrimitive();
+	void DrawSubset();
+
+	void SetStreamSource(); //??
+	void SetIndices(); //??
+
+	void GetDevice();
 
 private:
 	LPDIRECT3D9 g_pD3D;
