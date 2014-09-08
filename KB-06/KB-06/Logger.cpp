@@ -4,6 +4,10 @@
 #include <sstream>
 #include <windows.h>
 #include <ctime>
+/*
+Do NOT directly instaniate this class, use the loggerpool instead!
+The logger defaults to the highest loglevel
+*/
 
 Logger::Logger::Logger()
 {

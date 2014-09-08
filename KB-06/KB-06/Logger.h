@@ -27,7 +27,7 @@ namespace Logger {
 		void PrintConsole(int logType, std::string text);
 		std::string BuildLogEntry(int logType, std::string messasge);
 
-		int logLevel = 4;
+		int logLevel = INFO;
 		int consoleColorCodeInfo = gray;
 		int consoleColorCodeDebug = white;
 		int consoleColorCodeWarning = yellow;
