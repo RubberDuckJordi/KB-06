@@ -8,11 +8,10 @@
 Logger::Logger::Logger()
 {
 	consoleHandle = GetStdHandle(STD_OUTPUT_HANDLE);
-	
 }
 
 void Logger::Logger::Reset(){
-
+	logLevel = INFO;
 }
 
 void Logger::Logger::Log(int logType, std::string text){
@@ -59,10 +58,10 @@ std::string Logger::Logger::BuildLogEntry(int logType, std::string message){
 
 	std::string logTypceString;
 	switch (logType) {
-	case INFO: logTypceString = "INFO   ";	break;
-	case DEBUG:logTypceString = "DEBUG  "; break;
-	case WARNING:logTypceString = "WARNING"; break;
-	case ERR: logTypceString = "ERROR  "; break;
+		case INFO: logTypceString = "INFO   ";	break;
+		case DEBUG:logTypceString = "DEBUG  "; break;
+		case WARNING:logTypceString = "WARNING"; break;
+		case ERR: logTypceString = "ERROR  "; break;
 	}
 
 	std::stringstream sstr;
