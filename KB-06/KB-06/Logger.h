@@ -4,6 +4,7 @@
 #include <string>
 #include <windows.h>
 #include <map>
+#include <fstream>
 
 namespace Logger {
 	class Logger
@@ -31,7 +32,6 @@ namespace Logger {
 		int consoleColorCodeDebug = white;
 		int consoleColorCodeWarning = yellow;
 		int consoleColorCodeError = red;
-
 		HANDLE consoleHandle;
 
 		enum Consolecolor

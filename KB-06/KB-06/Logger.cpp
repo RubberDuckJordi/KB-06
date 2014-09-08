@@ -8,6 +8,7 @@
 Logger::Logger::Logger()
 {
 	consoleHandle = GetStdHandle(STD_OUTPUT_HANDLE);
+	
 }
 
 void Logger::Logger::Reset(){
@@ -16,7 +17,11 @@ void Logger::Logger::Reset(){
 
 void Logger::Logger::Log(int logType, std::string text){
 	if (logLevel >= logType && logType > 0){
-		PrintConsole(logType, BuildLogEntry(logType, text));
+		std::string entry = BuildLogEntry(logType, text);
+		PrintConsole(logType, entry);
+		std::ofstream outfile;
+		outfile.open("log.txt", std::ios_base::app);
+		outfile << entry << "\n";
 	}
 }
 
