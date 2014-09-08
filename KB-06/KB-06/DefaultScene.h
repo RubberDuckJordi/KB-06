@@ -2,6 +2,7 @@
 #define __SCENE_DEFAULT_SCENE_H__
 
 #include "Scene.h"
+#include "Logger.h"
 
 namespace Scene{
 	class DefaultScene : public Scene {

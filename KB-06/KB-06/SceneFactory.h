@@ -4,17 +4,16 @@
 #include "EntityFactory.h"
 #include "Scene.h"
 #include <map>
-#include <string>
 
 namespace Scene {
 	class SceneFactory {
 	public:
 		SceneFactory();
 		~SceneFactory();
-		void AddEntityFactory(std::string name, EntityFactory* entityFactory);
+		void AddEntityFactory(char* name, EntityFactory* entityFactory);
 		virtual Scene* CreateScene() = 0;
 	protected:
-		std::map<std::string, EntityFactory*> entityFactories;
+		std::map<char*, EntityFactory*> entityFactories;
 	};
 }
 

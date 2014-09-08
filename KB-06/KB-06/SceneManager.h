@@ -6,7 +6,6 @@
 #include "SceneFactory.h"
 #include <list>
 #include <map>
-#include <string>
 
 namespace Scene {
 	class SceneManager {
@@ -22,7 +21,7 @@ namespace Scene {
 		Scene* activeScene;
 
 		std::list<Scene*> scenes;
-		std::map<std::string, SceneFactory*> sceneFactories;
+		std::map<char*, SceneFactory*> sceneFactories;
 	};
 }
 

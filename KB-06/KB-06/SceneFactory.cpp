@@ -7,7 +7,7 @@ Scene::SceneFactory::SceneFactory()
 
 Scene::SceneFactory::~SceneFactory()
 {
-	std::map<std::string, EntityFactory*>::iterator itr = entityFactories.begin();
+	std::map<char*, EntityFactory*>::iterator itr = entityFactories.begin();
 	if (itr != entityFactories.end())
 	{
 		delete itr->second;
@@ -15,7 +15,7 @@ Scene::SceneFactory::~SceneFactory()
 	}
 }
 
-void Scene::SceneFactory::AddEntityFactory(std::string name, EntityFactory *entityFactory)
+void Scene::SceneFactory::AddEntityFactory(char* name, EntityFactory *entityFactory)
 {
 	entityFactories[name] = entityFactory;
 }
