@@ -32,6 +32,7 @@ HWND Window::WindowManager::NewWindow(Renderer *renderer, int x, int y, int widt
 	}
 
 	windows.push_back(window);
+	Logger::LoggerPool::GetInstance().ReturnLogger(logger);
 	return hwnd;
 };
 

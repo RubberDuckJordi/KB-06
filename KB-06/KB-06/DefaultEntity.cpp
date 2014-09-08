@@ -4,15 +4,14 @@
 #include <iostream>
 
 Scene::DefaultEntity::DefaultEntity(){
-	
+	logger = Logger::LoggerPool::GetInstance().GetLogger();
 }
 
 Scene::DefaultEntity::~DefaultEntity(){
-	Logger::Logger* logger = Logger::LoggerPool::GetInstance().GetLogger();
 	logger->Log(Logger::Logger::DEBUG, "NOOOOOO");
+	Logger::LoggerPool::GetInstance().ReturnLogger(logger);
 }
 
 void Scene::DefaultEntity::Update(){
-	Logger::Logger* logger = Logger::LoggerPool::GetInstance().GetLogger();
 	logger->Log(Logger::Logger::DEBUG, "DefaultEntity::Update()");
 }

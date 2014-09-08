@@ -9,6 +9,8 @@ namespace Scene{
 		DefaultEntity();
 		~DefaultEntity();
 		void Update();
+	private:
+		Logger::Logger* logger;
 	};
 }
 
