@@ -16,12 +16,12 @@ public:
 
 	};
 
-	void VertexBufferWrapper::SetDWORD(LPDIRECT3DVERTEXBUFFER9 _VertexBuffer)
+	void VertexBufferWrapper::SetVertexBuffer(LPDIRECT3DVERTEXBUFFER9 _VertexBuffer)
 	{
 		VertexBuffer = _VertexBuffer;
 	};
 
-	LPDIRECT3DVERTEXBUFFER9 VertexBufferWrapper::GetDWORD()
+	LPDIRECT3DVERTEXBUFFER9 VertexBufferWrapper::GetVertexBuffer()
 	{
 		return VertexBuffer;
 	};
