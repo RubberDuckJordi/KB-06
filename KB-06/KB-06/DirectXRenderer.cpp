@@ -58,7 +58,6 @@ void DirectXRenderer::SetRenderState()
 };
 
 //Matrixen
-<<<<<<< HEAD
 void DirectXRenderer::SetWorldMatrix(MatrixWrapper* WorldMatrix)
 {
 	this->g_pd3dDevice->SetTransform(D3DTS_WORLD, &(WorldMatrix->getMatrix()));
@@ -74,27 +73,6 @@ void DirectXRenderer::SetProjectionMatrix(MatrixWrapper* ProjectionMatrix)
 	this->g_pd3dDevice->SetTransform(D3DTS_PROJECTION, &(ProjectionMatrix->getMatrix()));
 };
 
-//Scene
-void DirectXRenderer::BeginScene()
-{
-
-};
-
-=======
-void DirectXRenderer::SetWorldMatrix(D3DXMATRIX WorldMatrix)
-{
-
-};
-
-void DirectXRenderer::SetViewMatrix(D3DXMATRIX ViewMatrix)
-{
-
-};
-
-void DirectXRenderer::SetProjectionMatrix(D3DXMATRIX ProjectionMatrix)
-{
-
-};
 
 //Scene
 void DirectXRenderer::BeginScene()
@@ -102,7 +80,6 @@ void DirectXRenderer::BeginScene()
 
 };
 
->>>>>>> origin/master
 void DirectXRenderer::ClearScene(DWORD count, DWORD flags, D3DCOLOR color, float z, DWORD stencil)
 {
 

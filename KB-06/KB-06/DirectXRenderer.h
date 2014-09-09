@@ -2,9 +2,8 @@
 #define _DIRECTXRENDERER_H_
 
 #include <d3dx9.h>
-<<<<<<< HEAD
 #include "MatrixWrapper.cpp"
-
+#include "MaterialWrapper.cpp"
 
 class DirectXRenderer
 {
@@ -20,24 +19,6 @@ public:
 	void SetProjectionMatrix(MatrixWrapper* ProjectionMatrix);
 
 	void BeginScene();
-=======
-#include "MaterialWrapper.cpp"
-
-class DirectXRenderer
-{
-public:
-	DirectXRenderer();
-	~DirectXRenderer();
-
-	void InitD3D(HWND hWnd);
-	void SetRenderState();
-
-	void SetWorldMatrix(D3DXMATRIX WorldMatrix);
-	void SetViewMatrix(D3DXMATRIX ViewMatrix);
-	void SetProjectionMatrix(D3DXMATRIX ProjectionMatrix);
-
-	void BeginScene();
->>>>>>> origin/master
 	void ClearScene(DWORD count, DWORD flags, D3DCOLOR color, float z, DWORD stencil);
 	void PresentScene();
 	void StopScene();
