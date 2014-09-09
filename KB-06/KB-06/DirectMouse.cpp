@@ -1,7 +1,7 @@
-#include "Mouse.h"
+#include "DirectMouse.h"
 #include "LoggerPool.h"
 
-Input::Mouse::Mouse()
+Input::DirectMouse::DirectMouse()
 {
 	m_deviceName = "Mouse";
 	logger = Logger::LoggerPool::GetInstance().GetLogger();
@@ -9,7 +9,7 @@ Input::Mouse::Mouse()
 
 //Create the new DirectInputDevice, add a handler to its window and
 //set the required settings to be able to poll it.
-bool Input::Mouse::Initialize(HWND p_hWnd, LPDIRECTINPUT8 p_dInput)
+bool Input::DirectMouse::Initialize(HWND p_hWnd, LPDIRECTINPUT8 p_dInput)
 {
 	HRESULT hr = p_dInput->CreateDevice(GUID_SysMouse, &m_dInputDevice, NULL);
 	if (FAILED(hr))
@@ -57,19 +57,19 @@ bool Input::Mouse::Initialize(HWND p_hWnd, LPDIRECTINPUT8 p_dInput)
 		return false;
 	}
 
-	InputDevice::AcquireDevice();
+	DirectInputDevice::AcquireDevice();
 	logger->Log(Logger::Logger::INFO, "InputDevice::Mouse: Initialisation successful.");
 
 	return true;
 }
 
 //Update the directinputstate only if it can be acquired and polled.
-bool Input::Mouse::Update()
+bool Input::DirectMouse::Update()
 {
 	bool result = false;
 	if (!m_deviceAcquired)
 	{
-		result = InputDevice::AcquireDevice();
+		result = DirectInputDevice::AcquireDevice();
 	}
 	else if (!SUCCEEDED(m_dInputDevice->Poll()))
 	{
@@ -79,7 +79,7 @@ bool Input::Mouse::Update()
 			logger->Log(Logger::Logger::INFO, "InputManager: Mouse focus lost");
 			ShowCursor(true);
 		}
-		result = InputDevice::AcquireDevice();
+		result = DirectInputDevice::AcquireDevice();
 	}
 
 	if (FAILED(m_dInputDevice->GetDeviceState(sizeof(DIMOUSESTATE2), (LPVOID)&m_dIMouseState)))
@@ -103,7 +103,7 @@ bool Input::Mouse::Update()
 //work with percentages.
 //p_mouseProperty should be a defined value in dinput.h beginning with:
 //"DIMOFS_"
-long Input::Mouse::GetStateOf(int p_mouseProperty)
+long Input::DirectMouse::GetStateOf(int p_mouseProperty)
 {
 	Update();
 	long state = 0;
@@ -171,7 +171,7 @@ long Input::Mouse::GetStateOf(int p_mouseProperty)
 }
 
 //Returns the position compared to the previous position of the X axis.
-long Input::Mouse::GetDeltaXPosition()
+long Input::DirectMouse::GetDeltaXPosition()
 {
 	long delta = m_dIMouseState.lX - m_previousXPos;
 	m_previousXPos = m_dIMouseState.lX;
@@ -183,7 +183,7 @@ long Input::Mouse::GetDeltaXPosition()
 }
 
 //Returns the position compared to the previous position of the Y axis.
-long Input::Mouse::GetDeltaYPosition()
+long Input::DirectMouse::GetDeltaYPosition()
 {
 	long delta = m_dIMouseState.lY - m_previousYPos;
 	m_previousYPos = m_dIMouseState.lY;
@@ -197,7 +197,7 @@ long Input::Mouse::GetDeltaYPosition()
 //Returns the position compared to the previous position of the Z axis.
 //The Z axis is the scrollweel. Every movement stands for 120 delta or less
 //or more depending on the mouse.
-long Input::Mouse::GetDeltaZPosition()
+long Input::DirectMouse::GetDeltaZPosition()
 {
 	long delta = m_dIMouseState.lZ - m_previousZPos;
 	m_previousZPos = m_dIMouseState.lZ;

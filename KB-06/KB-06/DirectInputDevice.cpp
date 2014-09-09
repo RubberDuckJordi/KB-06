@@ -1,13 +1,13 @@
-#include "InputDevice.h"
+#include "DirectInputDevice.h"
 
-Input::InputDevice::InputDevice()
+Input::DirectInputDevice::DirectInputDevice()
 {
 	m_dInputDevice = NULL;
 	m_deviceAcquired = false;
 	logger = Logger::LoggerPool::GetInstance().GetLogger();
 }
 
-void Input::InputDevice::ReleaseDevice()
+void Input::DirectInputDevice::ReleaseDevice()
 {
 	if (m_dInputDevice)
 	{
@@ -19,7 +19,7 @@ void Input::InputDevice::ReleaseDevice()
 	}
 }
 
-bool Input::InputDevice::AcquireDevice()
+bool Input::DirectInputDevice::AcquireDevice()
 {
 	int times = 5;
 

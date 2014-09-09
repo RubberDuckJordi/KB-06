@@ -10,18 +10,6 @@
     <ClCompile Include="stdafx.cpp">
       <Filter>Source</Filter>
     </ClCompile>
-    <ClCompile Include="DefaultEntity.cpp">
-      <Filter>Source\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="DefaultEntityFactory.cpp">
-      <Filter>Source\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="DefaultScene.cpp">
-      <Filter>Source\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="DefaultSceneFactory.cpp">
-      <Filter>Source\Scene</Filter>
-    </ClCompile>
     <ClCompile Include="Scene.cpp">
       <Filter>Source\Scene</Filter>
     </ClCompile>
@@ -46,16 +34,34 @@
     <ClCompile Include="LoggerPool.cpp">
       <Filter>Source\Util</Filter>
     </ClCompile>
-    <ClCompile Include="Mouse.cpp">
-      <Filter>Source\Input</Filter>
-    </ClCompile>
-    <ClCompile Include="Keyboard.cpp">
-      <Filter>Source\Input</Filter>
-    </ClCompile>
     <ClCompile Include="InputManager.cpp">
       <Filter>Source\Input</Filter>
     </ClCompile>
-    <ClCompile Include="InputDevice.cpp">
+    <ClCompile Include="DefaultEntity.cpp">
+      <Filter>Source\Scene\Default</Filter>
+    </ClCompile>
+    <ClCompile Include="DefaultEntityFactory.cpp">
+      <Filter>Source\Scene\Default</Filter>
+    </ClCompile>
+    <ClCompile Include="DefaultScene.cpp">
+      <Filter>Source\Scene\Default</Filter>
+    </ClCompile>
+    <ClCompile Include="DefaultSceneFactory.cpp">
+      <Filter>Source\Scene\Default</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectInputDevice.cpp">
+      <Filter>Source\Input\DirectInput</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectKeyboard.cpp">
+      <Filter>Source\Input\DirectInput</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectMouse.cpp">
+      <Filter>Source\Input\DirectInput</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectInputDeviceFactory.cpp">
+      <Filter>Source\Input\DirectInput</Filter>
+    </ClCompile>
+    <ClCompile Include="InputDeviceFactory.cpp">
       <Filter>Source\Input</Filter>
     </ClCompile>
   </ItemGroup>
@@ -65,18 +71,6 @@
     </ClInclude>
     <ClInclude Include="targetver.h">
       <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="DefaultEntity.h">
-      <Filter>Headers\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="DefaultEntityFactory.h">
-      <Filter>Headers\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="DefaultScene.h">
-      <Filter>Headers\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="DefaultSceneFactory.h">
-      <Filter>Headers\Scene</Filter>
     </ClInclude>
     <ClInclude Include="Entity.h">
       <Filter>Headers\Scene</Filter>
@@ -117,14 +111,35 @@
     <ClInclude Include="InputManager.h">
       <Filter>Headers\Input</Filter>
     </ClInclude>
-    <ClInclude Include="Keyboard.h">
-      <Filter>Headers\Input</Filter>
-    </ClInclude>
-    <ClInclude Include="Mouse.h">
-      <Filter>Headers\Input</Filter>
-    </ClInclude>
     <ClInclude Include="WindowListener.h">
       <Filter>Headers\Window</Filter>
+    </ClInclude>
+    <ClInclude Include="DefaultEntity.h">
+      <Filter>Headers\Scene\Default</Filter>
+    </ClInclude>
+    <ClInclude Include="DefaultEntityFactory.h">
+      <Filter>Headers\Scene\Default</Filter>
+    </ClInclude>
+    <ClInclude Include="DefaultSceneFactory.h">
+      <Filter>Headers\Scene\Default</Filter>
+    </ClInclude>
+    <ClInclude Include="DefaultScene.h">
+      <Filter>Headers\Scene\Default</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectInputDevice.h">
+      <Filter>Headers\Input\DirectInput</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectKeyboard.h">
+      <Filter>Headers\Input\DirectInput</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectMouse.h">
+      <Filter>Headers\Input\DirectInput</Filter>
+    </ClInclude>
+    <ClInclude Include="InputDeviceFactory.h">
+      <Filter>Headers\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectInputDeviceFactory.h">
+      <Filter>Headers\Input\DirectInput</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -160,6 +175,18 @@
     </Filter>
     <Filter Include="Source\Input">
       <UniqueIdentifier>{59f19ab9-8c88-4c82-9a31-4a5f7da13058}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Scene\Default">
+      <UniqueIdentifier>{7865e6f1-3e32-4e16-9eea-53e1799bd64f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headers\Scene\Default">
+      <UniqueIdentifier>{d512436f-21cc-4a6c-9b7f-61f83e4a8119}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headers\Input\DirectInput">
+      <UniqueIdentifier>{a28e59f4-0689-4c21-8290-8c33806559e9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Input\DirectInput">
+      <UniqueIdentifier>{fdf6c98b-8340-4334-b3c3-49b31974fa34}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

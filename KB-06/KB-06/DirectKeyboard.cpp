@@ -1,6 +1,6 @@
-#include "Keyboard.h"
+#include "DirectKeyboard.h"
 
-Input::Keyboard::Keyboard()
+Input::DirectKeyboard::DirectKeyboard()
 {
 	m_deviceName = "Keyboard";
 	logger = Logger::LoggerPool::GetInstance().GetLogger();
@@ -8,7 +8,7 @@ Input::Keyboard::Keyboard()
 
 //Create the new DirectInputDevice, add a handler to its window and
 //set the required settings to be able to poll it.
-bool Input::Keyboard::Initialize(HWND p_hWnd, LPDIRECTINPUT8 m_dInput)
+bool Input::DirectKeyboard::Initialize(HWND p_hWnd, LPDIRECTINPUT8 m_dInput)
 {
 	HRESULT hr = m_dInput->CreateDevice(GUID_SysKeyboard, &m_dInputDevice, NULL);
 	if FAILED(hr)
@@ -40,7 +40,7 @@ bool Input::Keyboard::Initialize(HWND p_hWnd, LPDIRECTINPUT8 m_dInput)
 	return true;
 }
 
-bool Input::Keyboard::Update()
+bool Input::DirectKeyboard::Update()
 {
 	if (!SUCCEEDED(m_dInputDevice->Poll()))
 	{
@@ -61,7 +61,7 @@ bool Input::Keyboard::Update()
 }
 
 //Returns 100 if given key is being pressed at the moment
-long Input::Keyboard::GetStateOf(int p_key)
+long Input::DirectKeyboard::GetStateOf(int p_key)
 {
 	if (!SUCCEEDED(m_dInputDevice->Poll()))
 	{
