@@ -58,6 +58,9 @@
     <ClCompile Include="InputDevice.cpp">
       <Filter>Source\Input</Filter>
     </ClCompile>
+    <ClCompile Include="Wrappermatrix.cpp">
+      <Filter>Source\Wrap Containers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -160,6 +163,9 @@
     </Filter>
     <Filter Include="Source\Input">
       <UniqueIdentifier>{59f19ab9-8c88-4c82-9a31-4a5f7da13058}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Wrap Containers">
+      <UniqueIdentifier>{920494e1-fc74-46cc-9875-5c897c412a7d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

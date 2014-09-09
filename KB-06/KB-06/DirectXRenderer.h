@@ -12,17 +12,17 @@ public:
 	void InitD3D(HWND hWnd);
 	void SetRenderState();
 
-	void SetWorldMatrix();
-	void SetViewMatrix();
-	void SetProjectionMatrix();
+	void SetWorldMatrix(D3DXMATRIX WorldMatrix);
+	void SetViewMatrix(D3DXMATRIX ViewMatrix);
+	void SetProjectionMatrix(D3DXMATRIX ProjectionMatrix);
 
 	void BeginScene();
-	void ClearScene();
+	void ClearScene(DWORD count, DWORD flags, D3DCOLOR color, float z, DWORD stencil);
 	void PresentScene();
 	void StopScene();
 
-	void CreateVertexBuffer();
-	void CreateIndexBuffer();
+	void CreateVertexBuffer(int heightmapvertex, DWORD usage, DWORD fvf, D3DPOOL pool, void* vertexbuffer, HANDLE handle);
+	void CreateIndexBuffer(int length, DWORD usage, D3DFORMAT format, D3DPOOL pool, void* Indexbuffer, HANDLE* handle);
 
 	void SetMaterial();
 	void SetTexture();
