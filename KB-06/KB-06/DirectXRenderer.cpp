@@ -97,12 +97,12 @@ void DirectXRenderer::StopScene()
 
 
 //Buffers
-void DirectXRenderer::CreateVertexBuffer(int heightmapvertex, DWORDWrapper* usage, DWORDWrapper* fvf, PoolWrapper* pool, void* vertexbuffer, HANDLE handle)
+void DirectXRenderer::CreateVertexBuffer(int heightmapvertex, DWORDWrapper* usage, DWORDWrapper* fvf, PoolWrapper* pool, VertexBufferWrapper* vertexbuffer, HANDLE handle)
 {
 
 };
 
-void DirectXRenderer::CreateIndexBuffer(int length, DWORDWrapper* usage, D3DFORMAT format, PoolWrapper* pool, void* Indexbuffer, HANDLE* handle)
+void DirectXRenderer::CreateIndexBuffer(int length, DWORDWrapper* usage, D3DFORMAT format, PoolWrapper* pool, IndexBufferWrapper* Indexbuffer, HANDLE* handle)
 {
 
 };
