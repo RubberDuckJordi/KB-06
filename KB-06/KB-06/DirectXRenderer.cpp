@@ -58,17 +58,17 @@ void DirectXRenderer::SetRenderState()
 };
 
 //Matrixen
-void DirectXRenderer::SetWorldMatrix()
+void DirectXRenderer::SetWorldMatrix(D3DXMATRIX WorldMatrix)
 {
 
 };
 
-void DirectXRenderer::SetViewMatrix()
+void DirectXRenderer::SetViewMatrix(D3DXMATRIX ViewMatrix)
 {
 
 };
 
-void DirectXRenderer::SetProjectionMatrix()
+void DirectXRenderer::SetProjectionMatrix(D3DXMATRIX ProjectionMatrix)
 {
 
 };
@@ -79,7 +79,7 @@ void DirectXRenderer::BeginScene()
 
 };
 
-void DirectXRenderer::ClearScene()
+void DirectXRenderer::ClearScene(DWORD count, DWORD flags, D3DCOLOR color, float z, DWORD stencil)
 {
 
 };
@@ -96,12 +96,12 @@ void DirectXRenderer::StopScene()
 
 
 //Buffers
-void DirectXRenderer::CreateVertexBuffer()
+void DirectXRenderer::CreateVertexBuffer(int heightmapvertex, DWORD usage, DWORD fvf, D3DPOOL pool, void* vertexbuffer, HANDLE handle)
 {
 
 };
 
-void DirectXRenderer::CreateIndexBuffer()
+void DirectXRenderer::CreateIndexBuffer(int length, DWORD usage, D3DFORMAT format, D3DPOOL pool, void* Indexbuffer, HANDLE* handle)
 {
 
 };
