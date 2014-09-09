@@ -80,7 +80,7 @@ void DirectXRenderer::BeginScene()
 
 };
 
-void DirectXRenderer::ClearScene(DWORDWrapper* count, DWORDWrapper* flags, D3DCOLOR color, float z, DWORDWrapper* stencil)
+void DirectXRenderer::ClearScene(DWORDWrapper* count, DWORDWrapper* flags, ColorWrapper* color, float z, DWORDWrapper* stencil)
 {
 
 };
