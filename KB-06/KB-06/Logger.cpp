@@ -18,9 +18,15 @@ void Logger::Logger::Reset(){
 	logLevel = INFO;
 }
 
-void Logger::Logger::Log(int logType, std::string text){
+void Logger::Logger::Log(int logType, std::string messageString){
+	char* message = new char[messageString.length()+1];
+	strcpy_s(message, messageString.length()+1, messageString.c_str());
+	Log(logType, message);
+}
+
+void Logger::Logger::Log(int logType, char* message){
 	if (logLevel >= logType && logType > 0){
-		std::string entry = BuildLogEntry(logType, text);
+		char* entry = BuildLogEntry(logType, message);
 		PrintConsole(logType, entry);
 		std::ofstream outfile;
 		outfile.open("log.txt", std::ios_base::app);
@@ -28,7 +34,7 @@ void Logger::Logger::Log(int logType, std::string text){
 	}
 }
 
-void Logger::Logger::PrintConsole(int logType, std::string text)
+void Logger::Logger::PrintConsole(int logType, char* message)
 {
 	int color;
 	switch (logType) {
@@ -47,31 +53,26 @@ void Logger::Logger::PrintConsole(int logType, std::string text)
 	}
 	SetConsoleTextAttribute(consoleHandle, color);
 
-	std::cout << text << std::endl;
+	std::cout << message << std::endl;
 }
 
 void Logger::Logger::SetLogLevel(int newLogLevel){
 	logLevel = newLogLevel;
 }
 
-std::string Logger::Logger::BuildLogEntry(int logType, std::string message){
+char* Logger::Logger::BuildLogEntry(int logType, char* message){
 	SYSTEMTIME systemTime;
 	GetLocalTime(&systemTime);
-	char* timeBuffer = new char[16];
-	sprintf_s(timeBuffer, 16, "%02d:%02d:%02d.%03d", systemTime.wHour, systemTime.wMinute, systemTime.wSecond, systemTime.wMilliseconds);
-
-	std::string logTypceString;
+	char* logTypeString = new char[7];
 	switch (logType) {
-		case INFO: logTypceString = "INFO   ";	break;
-		case DEBUG:logTypceString = "DEBUG  "; break;
-		case WARNING:logTypceString = "WARNING"; break;
-		case ERR: logTypceString = "ERROR  "; break;
+		case INFO: logTypeString = "INFO   ";	break;
+		case DEBUG:logTypeString = "DEBUG  "; break;
+		case WARNING:logTypeString = "WARNING"; break;
+		case ERR: logTypeString = "ERROR  "; break;
 	}
-
-	std::stringstream sstr;
-	sstr << "[" << timeBuffer << "] " << logTypceString << ": " << message;
-	delete[] timeBuffer;
-	return sstr.str();
+	char* logEntry = new char[240 + sizeof(message) + sizeof(logTypeString)];
+	sprintf_s(logEntry, 240, "[%02d:%02d:%02d.%03d] %s %s", systemTime.wHour, systemTime.wMinute, systemTime.wSecond, systemTime.wMilliseconds, logTypeString, message);
+	return logEntry;
 }
 
 void Logger::Logger::LogMemoryDump(int logType, void* const p_address, const int p_size, char* const p_name)
@@ -94,3 +95,4 @@ void Logger::Logger::LogMemoryDump(int logType, void* const p_address, const int
 		sstr << "]";
 		Log(logType, sstr.str());
 }
+
