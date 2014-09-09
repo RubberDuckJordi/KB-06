@@ -1,4 +1,4 @@
-#include "DirectXRenderer.h"
+	#include "DirectXRenderer.h"
 
 DirectXRenderer::DirectXRenderer()
 {

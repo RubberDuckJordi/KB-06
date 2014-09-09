@@ -5,6 +5,7 @@
 #include "MatrixWrapper.cpp"
 #include "MaterialWrapper.cpp"
 #include "TextureWrapper.cpp"
+#include "DWORDWrapper.cpp"
 
 class DirectXRenderer
 {
@@ -20,16 +21,16 @@ public:
 	void SetProjectionMatrix(MatrixWrapper* ProjectionMatrix);
 
 	void BeginScene();
-	void ClearScene(DWORD count, DWORD flags, D3DCOLOR color, float z, DWORD stencil);
+	void ClearScene(DWORDWrapper* count, DWORDWrapper* flags, D3DCOLOR color, float z, DWORDWrapper* stencil);
 	void PresentScene();
 	void StopScene();
 
-	void CreateVertexBuffer(int heightmapvertex, DWORD usage, DWORD fvf, D3DPOOL pool, void* vertexbuffer, HANDLE handle);
-	void CreateIndexBuffer(int length, DWORD usage, D3DFORMAT format, D3DPOOL pool, void* Indexbuffer, HANDLE* handle);
+	void CreateVertexBuffer(int heightmapvertex, DWORDWrapper* usage, DWORDWrapper* fvf, D3DPOOL pool, void* vertexbuffer, HANDLE handle);
+	void CreateIndexBuffer(int length, DWORDWrapper* usage, D3DFORMAT format, D3DPOOL pool, void* Indexbuffer, HANDLE* handle);
 
 	void SetMaterial(MaterialWrapper* wrapper);
 	void SetTexture(TextureWrapper* wrapper);
-	void SetFvF(DWORD fvf);
+	void SetFvF(DWORDWrapper* fvf);
 	void SetTransform(int type, MatrixWrapper* wrapper);
 
 	void DrawPrimitive();
