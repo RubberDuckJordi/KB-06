@@ -7,6 +7,7 @@
 #include "TextureWrapper.cpp"
 #include "DWORDWrapper.cpp"
 #include "MeshWrapper.cpp"
+#include "PoolWrapper.cpp"
 
 class DirectXRenderer
 {
@@ -26,8 +27,8 @@ public:
 	void PresentScene();
 	void StopScene();
 
-	void CreateVertexBuffer(int heightmapvertex, DWORDWrapper* usage, DWORDWrapper* fvf, D3DPOOL pool, void* vertexbuffer, HANDLE handle);
-	void CreateIndexBuffer(int length, DWORDWrapper* usage, D3DFORMAT format, D3DPOOL pool, void* Indexbuffer, HANDLE* handle);
+	void CreateVertexBuffer(int heightmapvertex, DWORDWrapper* usage, DWORDWrapper* fvf, PoolWrapper* pool, void* vertexbuffer, HANDLE handle);
+	void CreateIndexBuffer(int length, DWORDWrapper* usage, D3DFORMAT format, PoolWrapper* pool, void* Indexbuffer, HANDLE* handle);
 
 	void SetMaterial(MaterialWrapper* wrapper);
 	void SetTexture(TextureWrapper* wrapper);

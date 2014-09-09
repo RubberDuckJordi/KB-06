@@ -79,6 +79,9 @@
     <ClCompile Include="VertexBufferWrapper.cpp">
       <Filter>Source\Wrap Containers</Filter>
     </ClCompile>
+    <ClCompile Include="PoolWrapper.cpp">
+      <Filter>Source\Wrap Containers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">

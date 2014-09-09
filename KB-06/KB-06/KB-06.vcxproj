@@ -123,6 +123,7 @@
     <ClCompile Include="MaterialWrapper.cpp" />
     <ClCompile Include="MeshWrapper.cpp" />
     <ClCompile Include="Mouse.cpp" />
+    <ClCompile Include="PoolWrapper.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneFactory.cpp" />
