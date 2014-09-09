@@ -97,12 +97,12 @@ void DirectXRenderer::StopScene()
 
 
 //Buffers
-void DirectXRenderer::CreateVertexBuffer(int heightmapvertex, DWORDWrapper* usage, DWORDWrapper* fvf, D3DPOOL pool, void* vertexbuffer, HANDLE handle)
+void DirectXRenderer::CreateVertexBuffer(int heightmapvertex, DWORDWrapper* usage, DWORDWrapper* fvf, PoolWrapper* pool, void* vertexbuffer, HANDLE handle)
 {
 
 };
 
-void DirectXRenderer::CreateIndexBuffer(int length, DWORDWrapper* usage, D3DFORMAT format, D3DPOOL pool, void* Indexbuffer, HANDLE* handle)
+void DirectXRenderer::CreateIndexBuffer(int length, DWORDWrapper* usage, D3DFORMAT format, PoolWrapper* pool, void* Indexbuffer, HANDLE* handle)
 {
 
 };
@@ -127,18 +127,18 @@ void DirectXRenderer::SetFvF(DWORDWrapper* fvf)
 
 void DirectXRenderer::SetTransform(int type, MatrixWrapper* wrapper)
 {
-	g_pd3dDevice->SetTransform((D3DTRANSFORMSTATETYPE)type, wrapper->getMatrix);
+	g_pd3dDevice->SetTransform((D3DTRANSFORMSTATETYPE)type, &wrapper->getMatrix());
 };
 
 //Draw functions
-void DirectXRenderer::DrawPrimitive()
+void DirectXRenderer::DrawPrimitive(int heightArraySize, int amountOfIndices)
 {
-
+	g_pd3dDevice->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, heightArraySize, 0, amountOfIndices / 3);
 };
 
-void DirectXRenderer::DrawSubset(MeshWrapper* wrapper)
+void DirectXRenderer::DrawSubset(MeshWrapper* wrapper, int subset)
 {
-	wrapper->GetMesh()->DrawSubset;
+	wrapper->GetMesh()->DrawSubset(subset);
 };
 
 //??

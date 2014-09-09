@@ -73,6 +73,12 @@
     <ClCompile Include="MeshWrapper.cpp">
       <Filter>Source\Wrap Containers</Filter>
     </ClCompile>
+    <ClCompile Include="IndexBufferWrapper.cpp">
+      <Filter>Source\Wrap Containers</Filter>
+    </ClCompile>
+    <ClCompile Include="VertexBufferWrapper.cpp">
+      <Filter>Source\Wrap Containers</Filter>
+    </ClCompile>
     <ClCompile Include="PoolWrapper.cpp">
       <Filter>Source\Wrap Containers</Filter>
     </ClCompile>

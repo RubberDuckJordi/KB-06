@@ -114,6 +114,7 @@
     <ClCompile Include="DirectXRenderer.cpp" />
     <ClCompile Include="DWORDWrapper.cpp" />
     <ClCompile Include="FormatWrapper.cpp" />
+    <ClCompile Include="IndexBufferWrapper.cpp" />
     <ClCompile Include="InputDevice.cpp" />
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="KB-06.cpp" />
@@ -135,6 +136,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="TextureWrapper.cpp" />
+    <ClCompile Include="VertexBufferWrapper.cpp" />
     <ClCompile Include="Window.cpp" />
     <ClCompile Include="WindowManager.cpp" />
   </ItemGroup>
