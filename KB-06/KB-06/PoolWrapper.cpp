@@ -18,12 +18,12 @@ public:
 
 	}
 
-	void PoolWrapper::setPool(D3DPOOL newPool)
+	void PoolWrapper::SetPool(D3DPOOL newPool)
 	{
 		pool = newPool;
 	}
 
-	D3DPOOL PoolWrapper::getPool()
+	D3DPOOL PoolWrapper::GetPool()
 	{
 		return pool;
 	}

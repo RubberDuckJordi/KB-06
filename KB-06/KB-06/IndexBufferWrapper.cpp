@@ -16,12 +16,12 @@ public:
 
 	};
 
-	void IndexBufferWrapper::SetDWORD(LPDIRECT3DINDEXBUFFER9 _IndexBuffer)
+	void IndexBufferWrapper::SetIndexBuffer(LPDIRECT3DINDEXBUFFER9 _IndexBuffer)
 	{
 		IndexBuffer = _IndexBuffer;
 	};
 
-	LPDIRECT3DINDEXBUFFER9 IndexBufferWrapper::GetDWORD()
+	LPDIRECT3DINDEXBUFFER9 IndexBufferWrapper::GetIndexBuffer()
 	{
 		return IndexBuffer;
 	};
