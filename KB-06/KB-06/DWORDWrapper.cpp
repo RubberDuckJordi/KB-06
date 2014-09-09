@@ -21,7 +21,7 @@ public:
 		dword = _dword;
 	};
 
-	DWORD DWORDWrapper::SetDWORD()
+	DWORD DWORDWrapper::GetDWORD()
 	{
 		return dword;
 	};

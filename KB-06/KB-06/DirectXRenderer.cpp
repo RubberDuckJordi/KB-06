@@ -80,7 +80,7 @@ void DirectXRenderer::BeginScene()
 
 };
 
-void DirectXRenderer::ClearScene(DWORD count, DWORD flags, D3DCOLOR color, float z, DWORD stencil)
+void DirectXRenderer::ClearScene(DWORDWrapper* count, DWORDWrapper* flags, D3DCOLOR color, float z, DWORDWrapper* stencil)
 {
 
 };
@@ -97,12 +97,12 @@ void DirectXRenderer::StopScene()
 
 
 //Buffers
-void DirectXRenderer::CreateVertexBuffer(int heightmapvertex, DWORD usage, DWORD fvf, D3DPOOL pool, void* vertexbuffer, HANDLE handle)
+void DirectXRenderer::CreateVertexBuffer(int heightmapvertex, DWORDWrapper* usage, DWORDWrapper* fvf, D3DPOOL pool, void* vertexbuffer, HANDLE handle)
 {
 
 };
 
-void DirectXRenderer::CreateIndexBuffer(int length, DWORD usage, D3DFORMAT format, D3DPOOL pool, void* Indexbuffer, HANDLE* handle)
+void DirectXRenderer::CreateIndexBuffer(int length, DWORDWrapper* usage, D3DFORMAT format, D3DPOOL pool, void* Indexbuffer, HANDLE* handle)
 {
 
 };
@@ -120,9 +120,9 @@ void DirectXRenderer::SetTexture(TextureWrapper* wrapper)
 	// return g_pd3dDevice->SetTexture(0, wrapper->GetTexture()); when H_RESULT as return type
 };
 
-void DirectXRenderer::SetFvF(DWORD fvf)
+void DirectXRenderer::SetFvF(DWORDWrapper* fvf)
 {
-	g_pd3dDevice->SetFVF(fvf);
+	g_pd3dDevice->SetFVF(fvf->GetDWORD());
 };
 
 void DirectXRenderer::SetTransform(int type, MatrixWrapper* wrapper)
