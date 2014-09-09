@@ -1299,3 +1299,74 @@
 [14:07:10.613] INFO   : Input!
 [14:07:10.696] INFO   : InputManager: Keyboard focus lost.
 [14:07:10.710] INFO   : InputManager: Mouse focus lost
+[14:36:21.753] ERROR  : Iets
+[14:36:21.766] WARNING: Iets
+[14:36:21.784] DEBUG  : Iets
+[14:36:21.801] INFO   : Iets
+[14:36:21.837] DEBUG  : DirectInputDeviceFactory: Initialised factory
+[14:36:21.872] DEBUG  : DirectInputDeviceFactory: Created mouse
+[14:36:21.892] INFO   : InputManager::InputDevice Mouse acquired.
+[14:36:21.907] INFO   : InputDevice::Mouse: Initialisation successful.
+[14:36:21.920] DEBUG  : DirectInputDeviceFactory: Created keyboard
+[14:36:21.932] INFO   : InputManager::InputDevice Keyboard acquired.
+[14:36:21.944] INFO   : InputDevice::Keyboard: Initialisation successful.
+[14:36:21.956] INFO   : InputManager: Window added, devices initialized.
+[14:36:21.982] DEBUG  : DirectInputDeviceFactory: Created mouse
+[14:36:21.995] INFO   : InputManager::InputDevice Mouse acquired.
+[14:36:22.009] INFO   : InputDevice::Mouse: Initialisation successful.
+[14:36:22.022] DEBUG  : DirectInputDeviceFactory: Created keyboard
+[14:36:22.039] INFO   : InputManager::InputDevice Keyboard acquired.
+[14:36:22.055] INFO   : InputDevice::Keyboard: Initialisation successful.
+[14:36:22.072] INFO   : InputManager: Window added, devices initialized.
+[14:36:22.091] INFO   : Input!
+[14:36:23.863] INFO   : Input!
+[14:36:23.878] INFO   : Input!
+[14:36:23.894] INFO   : Input!
+[14:36:23.909] INFO   : Input!
+[14:36:23.927] INFO   : Input!
+[14:36:23.946] INFO   : Input!
+[14:36:23.963] INFO   : Input!
+[14:36:24.007] INFO   : Input!
+[14:36:24.025] INFO   : Input!
+[14:36:24.042] INFO   : Input!
+[14:36:24.060] INFO   : Input!
+[14:36:24.078] INFO   : Input!
+[14:36:24.096] INFO   : Input!
+[14:36:24.114] INFO   : Input!
+[14:36:24.132] INFO   : Input!
+[14:36:24.150] INFO   : Input!
+[14:36:24.168] INFO   : Input!
+[14:36:24.185] INFO   : Input!
+[14:36:24.207] INFO   : Input!
+[14:36:24.223] INFO   : Input!
+[14:36:24.239] INFO   : Input!
+[14:36:24.263] INFO   : Input!
+[14:36:24.276] INFO   : Input!
+[14:36:24.288] INFO   : Input!
+[14:36:24.299] INFO   : Input!
+[14:36:24.311] INFO   : Input!
+[14:36:24.323] INFO   : Input!
+[14:36:24.336] INFO   : Input!
+[14:36:25.336] INFO   : Input!
+[14:36:25.345] INFO   : Input!
+[14:36:25.354] INFO   : Input!
+[14:36:25.364] INFO   : Input!
+[14:36:25.376] INFO   : Input!
+[14:36:25.385] INFO   : Input!
+[14:36:25.397] INFO   : Input!
+[14:36:25.408] INFO   : Input!
+[14:36:25.418] INFO   : Input!
+[14:36:25.430] INFO   : Input!
+[14:36:25.441] INFO   : Input!
+[14:36:25.552] INFO   : Input!
+[14:36:25.560] INFO   : Input!
+[14:36:25.568] INFO   : Input!
+[14:36:25.576] INFO   : Input!
+[14:36:25.584] INFO   : Input!
+[14:36:25.592] INFO   : Input!
+[14:36:25.600] INFO   : Input!
+[14:36:25.608] INFO   : Input!
+[14:36:25.616] INFO   : Input!
+[14:36:25.624] INFO   : Input!
+[14:36:25.633] INFO   : InputManager: Keyboard focus lost.
+[14:36:25.641] INFO   : InputManager: Mouse focus lost

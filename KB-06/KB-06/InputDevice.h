@@ -9,7 +9,8 @@ namespace Input
 	class InputDevice
 	{
 	public:
-
+		InputDevice();
+		~InputDevice();
 		enum Type
 		{
 			KEYBOARD,
