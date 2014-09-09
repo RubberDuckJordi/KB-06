@@ -8,6 +8,8 @@
 #include "DWORDWrapper.cpp"
 #include "MeshWrapper.cpp"
 #include "PoolWrapper.cpp"
+#include "VertexBufferWrapper.cpp"
+#include "IndexBufferWrapper.cpp"
 #include "FormatWrapper.cpp"
 #include "ColorWrapper.cpp"
 
@@ -29,8 +31,8 @@ public:
 	void PresentScene();
 	void StopScene();
 
-	void CreateVertexBuffer(int heightmapvertex, DWORDWrapper* usage, DWORDWrapper* fvf, PoolWrapper* pool, void* vertexbuffer, HANDLE handle);
-	void CreateIndexBuffer(int length, DWORDWrapper* usage, FormatWrapper* format, PoolWrapper* pool, void* Indexbuffer, HANDLE* handle);
+	void CreateVertexBuffer(int heightmapvertex, DWORDWrapper* usage, DWORDWrapper* fvf, PoolWrapper* pool, VertexBufferWrapper* vertexbuffer, HANDLE handle);
+	void CreateIndexBuffer(int length, DWORDWrapper* usage, FormatWrapper format, PoolWrapper* pool, IndexBufferWrapper* Indexbuffer, HANDLE* handle);
 
 	void SetMaterial(MaterialWrapper* wrapper);
 	void SetTexture(TextureWrapper* wrapper);
