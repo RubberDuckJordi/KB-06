@@ -5,6 +5,7 @@
 #include "MatrixWrapper.cpp"
 #include "MaterialWrapper.cpp"
 #include "TextureWrapper.cpp"
+#include "MeshWrapper.cpp"
 
 class DirectXRenderer
 {
@@ -33,7 +34,7 @@ public:
 	void SetTransform(int type, MatrixWrapper* wrapper);
 
 	void DrawPrimitive();
-	void DrawSubset();
+	void DrawSubset(MeshWrapper* wrapper);
 
 	void SetStreamSource(); //??
 	void SetIndices(); //??
