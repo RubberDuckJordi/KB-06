@@ -10,6 +10,8 @@
 #include "PoolWrapper.cpp"
 #include "VertexBufferWrapper.cpp"
 #include "IndexBufferWrapper.cpp"
+#include "FormatWrapper.cpp"
+#include "ColorWrapper.cpp"
 
 class DirectXRenderer
 {
@@ -25,12 +27,12 @@ public:
 	void SetProjectionMatrix(MatrixWrapper* ProjectionMatrix);
 
 	void BeginScene();
-	void ClearScene(DWORDWrapper* count, DWORDWrapper* flags, D3DCOLOR color, float z, DWORDWrapper* stencil);
+	void ClearScene(DWORDWrapper* count, DWORDWrapper* flags, ColorWrapper* color, float z, DWORDWrapper* stencil);
 	void PresentScene();
 	void StopScene();
 
 	void CreateVertexBuffer(int heightmapvertex, DWORDWrapper* usage, DWORDWrapper* fvf, PoolWrapper* pool, VertexBufferWrapper* vertexbuffer, HANDLE handle);
-	void CreateIndexBuffer(int length, DWORDWrapper* usage, D3DFORMAT format, PoolWrapper* pool, IndexBufferWrapper* Indexbuffer, HANDLE* handle);
+	void CreateIndexBuffer(int length, DWORDWrapper* usage, FormatWrapper format, PoolWrapper* pool, IndexBufferWrapper* Indexbuffer, HANDLE* handle);
 
 	void SetMaterial(MaterialWrapper* wrapper);
 	void SetTexture(TextureWrapper* wrapper);

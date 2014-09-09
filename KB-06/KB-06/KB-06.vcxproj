@@ -107,11 +107,13 @@
     <ClInclude Include="WindowManager.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ColorWrapper.cpp" />
     <ClCompile Include="DefaultEntityFactory.cpp" />
     <ClCompile Include="DefaultScene.cpp" />
     <ClCompile Include="DefaultSceneFactory.cpp" />
     <ClCompile Include="DirectXRenderer.cpp" />
     <ClCompile Include="DWORDWrapper.cpp" />
+    <ClCompile Include="FormatWrapper.cpp" />
     <ClCompile Include="IndexBufferWrapper.cpp" />
     <ClCompile Include="InputDevice.cpp" />
     <ClCompile Include="InputManager.cpp" />
