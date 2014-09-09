@@ -205,3 +205,6 @@ FakesAssemblies/
 *.exe
 *.out
 *.app
+
+# log files
+log.txt
