@@ -127,3 +127,8 @@ void Window::WindowManager::ClearWindowListeners()
 {
 	m_windowListeners.clear();
 }
+
+std::vector<Window::Window*>* Window::WindowManager::GetAllWindows()
+{
+	return &windows;
+}
