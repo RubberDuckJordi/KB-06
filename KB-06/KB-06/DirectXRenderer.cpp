@@ -114,9 +114,10 @@ void DirectXRenderer::SetMaterial(MaterialWrapper* wrapper)
 	//return g_pd3dDevice->SetMaterial(&wrapper->GetMaterial()); when H_RESULT as return type
 };
 
-void DirectXRenderer::SetTexture()
+void DirectXRenderer::SetTexture(TextureWrapper* wrapper)
 {
-
+	g_pd3dDevice->SetTexture(0, wrapper->GetTexture());
+	// return g_pd3dDevice->SetTexture(0, wrapper->GetTexture()); when H_RESULT as return type
 };
 
 void DirectXRenderer::SetFvF(DWORD fvf)
@@ -124,9 +125,9 @@ void DirectXRenderer::SetFvF(DWORD fvf)
 	g_pd3dDevice->SetFVF(fvf);
 };
 
-void DirectXRenderer::SetTransform()
+void DirectXRenderer::SetTransform(int type, MatrixWrapper* wrapper)
 {
-
+	g_pd3dDevice->SetTransform((D3DTRANSFORMSTATETYPE)type, wrapper->getMatrix);
 };
 
 //Draw functions

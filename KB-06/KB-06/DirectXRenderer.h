@@ -4,6 +4,7 @@
 #include <d3dx9.h>
 #include "MatrixWrapper.cpp"
 #include "MaterialWrapper.cpp"
+#include "TextureWrapper.cpp"
 
 class DirectXRenderer
 {
@@ -27,9 +28,9 @@ public:
 	void CreateIndexBuffer(int length, DWORD usage, D3DFORMAT format, D3DPOOL pool, void* Indexbuffer, HANDLE* handle);
 
 	void SetMaterial(MaterialWrapper* wrapper);
-	void SetTexture();
+	void SetTexture(TextureWrapper* wrapper);
 	void SetFvF(DWORD fvf);
-	void SetTransform();
+	void SetTransform(int type, MatrixWrapper* wrapper);
 
 	void DrawPrimitive();
 	void DrawSubset();

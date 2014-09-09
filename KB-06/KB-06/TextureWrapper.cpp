@@ -21,7 +21,7 @@ public:
 		texture = _texture;
 	};
 
-	LPDIRECT3DTEXTURE9 TextureWrapper::SetTexture()
+	LPDIRECT3DTEXTURE9 TextureWrapper::GetTexture()
 	{
 		return texture;
 	};

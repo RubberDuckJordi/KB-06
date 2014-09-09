@@ -111,6 +111,7 @@
     <ClCompile Include="DefaultScene.cpp" />
     <ClCompile Include="DefaultSceneFactory.cpp" />
     <ClCompile Include="DirectXRenderer.cpp" />
+    <ClCompile Include="DWORDWrapper.cpp" />
     <ClCompile Include="InputDevice.cpp" />
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="KB-06.cpp" />
