@@ -205,4 +205,6 @@ FakesAssemblies/
 *.exe
 *.out
 *.app
-KB-06/KB-06/log.txt
+
+# exclude log files
+log.txt
