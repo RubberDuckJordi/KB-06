@@ -76,6 +76,12 @@
     <ClCompile Include="PoolWrapper.cpp">
       <Filter>Source\Wrap Containers</Filter>
     </ClCompile>
+    <ClCompile Include="FormatWrapper.cpp">
+      <Filter>Source\Wrap Containers</Filter>
+    </ClCompile>
+    <ClCompile Include="ColorWrapper.cpp">
+      <Filter>Source\Wrap Containers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
