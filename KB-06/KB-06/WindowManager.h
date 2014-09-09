@@ -63,7 +63,7 @@ namespace Window {
 		void AddWindowListener(WindowListener* p_windowListener);
 		void RemoveWindowListener(WindowListener* p_windowListener);
 		void ClearWindowListeners();
-
+		std::vector<Window*>* GetAllWindows();
 	private:
 		std::vector<Window*> windows;
 		Scene::SceneManager *sceneManager;

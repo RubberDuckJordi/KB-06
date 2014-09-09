@@ -64,6 +64,36 @@
     <ClCompile Include="InputDeviceFactory.cpp">
       <Filter>Source\Input</Filter>
     </ClCompile>
+    <ClCompile Include="MatrixWrapper.cpp">
+      <Filter>Source\Wrap Containers</Filter>
+    </ClCompile>
+    <ClCompile Include="MaterialWrapper.cpp">
+      <Filter>Source\Wrap Containers</Filter>
+    </ClCompile>
+    <ClCompile Include="TextureWrapper.cpp">
+      <Filter>Source\Wrap Containers</Filter>
+    </ClCompile>
+    <ClCompile Include="DWORDWrapper.cpp">
+      <Filter>Source\Wrap Containers</Filter>
+    </ClCompile>
+    <ClCompile Include="MeshWrapper.cpp">
+      <Filter>Source\Wrap Containers</Filter>
+    </ClCompile>
+    <ClCompile Include="IndexBufferWrapper.cpp">
+      <Filter>Source\Wrap Containers</Filter>
+    </ClCompile>
+    <ClCompile Include="VertexBufferWrapper.cpp">
+      <Filter>Source\Wrap Containers</Filter>
+    </ClCompile>
+    <ClCompile Include="PoolWrapper.cpp">
+      <Filter>Source\Wrap Containers</Filter>
+    </ClCompile>
+    <ClCompile Include="FormatWrapper.cpp">
+      <Filter>Source\Wrap Containers</Filter>
+    </ClCompile>
+    <ClCompile Include="ColorWrapper.cpp">
+      <Filter>Source\Wrap Containers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -187,6 +217,8 @@
     </Filter>
     <Filter Include="Source\Input\DirectInput">
       <UniqueIdentifier>{fdf6c98b-8340-4334-b3c3-49b31974fa34}</UniqueIdentifier>
+    <Filter Include="Source\Wrap Containers">
+      <UniqueIdentifier>{920494e1-fc74-46cc-9875-5c897c412a7d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

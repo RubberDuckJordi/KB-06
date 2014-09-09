@@ -2,6 +2,16 @@
 #define _DIRECTXRENDERER_H_
 
 #include <d3dx9.h>
+#include "MatrixWrapper.cpp"
+#include "MaterialWrapper.cpp"
+#include "TextureWrapper.cpp"
+#include "DWORDWrapper.cpp"
+#include "MeshWrapper.cpp"
+#include "PoolWrapper.cpp"
+#include "VertexBufferWrapper.cpp"
+#include "IndexBufferWrapper.cpp"
+#include "FormatWrapper.cpp"
+#include "ColorWrapper.cpp"
 
 class DirectXRenderer
 {
@@ -12,30 +22,30 @@ public:
 	void InitD3D(HWND hWnd);
 	void SetRenderState();
 
-	void SetWorldMatrix();
-	void SetViewMatrix();
-	void SetProjectionMatrix();
+	void SetWorldMatrix(MatrixWrapper* WorldMatrix);
+	void SetViewMatrix(MatrixWrapper* ViewMatrix);
+	void SetProjectionMatrix(MatrixWrapper* ProjectionMatrix);
 
 	void BeginScene();
-	void ClearScene();
+	void ClearScene(DWORDWrapper* count, DWORDWrapper* flags, ColorWrapper* color, float z, DWORDWrapper* stencil);
 	void PresentScene();
 	void StopScene();
 
-	void CreateVertexBuffer();
-	void CreateIndexBuffer();
+	void CreateVertexBuffer(int heightmapvertex, DWORDWrapper* usage, DWORDWrapper* fvf, PoolWrapper* pool, VertexBufferWrapper* vertexbuffer, HANDLE handle);
+	void CreateIndexBuffer(int length, DWORDWrapper* usage, FormatWrapper format, PoolWrapper* pool, IndexBufferWrapper* Indexbuffer, HANDLE* handle);
 
-	void SetMaterial();
-	void SetTexture();
-	void SetFvF();
-	void SetTransform();
+	void SetMaterial(MaterialWrapper* wrapper);
+	void SetTexture(TextureWrapper* wrapper);
+	void SetFvF(DWORDWrapper* fvf);
+	void SetTransform(int type, MatrixWrapper* wrapper);
 
-	void DrawPrimitive();
-	void DrawSubset();
+	void DrawPrimitive(int heightArraySize, int amountOfIndices);
+	void DrawSubset(MeshWrapper* wrapper, int subset);
 
 	void SetStreamSource(); //??
 	void SetIndices(); //??
 
-	void GetDevice();
+	LPDIRECT3DDEVICE9* GetDevice();
 
 private:
 	LPDIRECT3D9 g_pD3D;
