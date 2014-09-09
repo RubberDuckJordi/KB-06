@@ -80,7 +80,7 @@ void DirectXRenderer::BeginScene()
 
 };
 
-void DirectXRenderer::ClearScene(DWORDWrapper* count, DWORDWrapper* flags, D3DCOLOR color, float z, DWORDWrapper* stencil)
+void DirectXRenderer::ClearScene(DWORDWrapper* count, DWORDWrapper* flags, ColorWrapper* color, float z, DWORDWrapper* stencil)
 {
 
 };
@@ -102,7 +102,7 @@ void DirectXRenderer::CreateVertexBuffer(int heightmapvertex, DWORDWrapper* usag
 
 };
 
-void DirectXRenderer::CreateIndexBuffer(int length, DWORDWrapper* usage, D3DFORMAT format, PoolWrapper* pool, IndexBufferWrapper* Indexbuffer, HANDLE* handle)
+void DirectXRenderer::CreateIndexBuffer(int length, DWORDWrapper* usage, FormatWrapper format, PoolWrapper* pool, IndexBufferWrapper* Indexbuffer, HANDLE* handle)
 {
 
 };
