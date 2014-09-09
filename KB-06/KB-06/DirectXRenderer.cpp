@@ -131,9 +131,9 @@ void DirectXRenderer::SetTransform(int type, MatrixWrapper* wrapper)
 };
 
 //Draw functions
-void DirectXRenderer::DrawPrimitive()
+void DirectXRenderer::DrawPrimitive(int heightArraySize, int amountOfIndices)
 {
-
+	g_pd3dDevice->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, heightArraySize, 0, amountOfIndices / 3);
 };
 
 void DirectXRenderer::DrawSubset(MeshWrapper* wrapper)

@@ -34,7 +34,7 @@ public:
 	void SetFvF(DWORDWrapper* fvf);
 	void SetTransform(int type, MatrixWrapper* wrapper);
 
-	void DrawPrimitive();
+	void DrawPrimitive(int heightArraySize, int amountOfIndices);
 	void DrawSubset(MeshWrapper* wrapper);
 
 	void SetStreamSource(); //??
