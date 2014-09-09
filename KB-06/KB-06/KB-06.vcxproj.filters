@@ -223,5 +223,8 @@
     <Filter Include="Source\Wrap Containers">
       <UniqueIdentifier>{920494e1-fc74-46cc-9875-5c897c412a7d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\Wrap Containers">
+      <UniqueIdentifier>{920494e1-fc74-46cc-9875-5c897c412a7d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>
