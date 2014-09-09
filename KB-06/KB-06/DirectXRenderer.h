@@ -2,6 +2,7 @@
 #define _DIRECTXRENDERER_H_
 
 #include <d3dx9.h>
+<<<<<<< HEAD
 #include "MatrixWrapper.cpp"
 
 
@@ -19,6 +20,24 @@ public:
 	void SetProjectionMatrix(MatrixWrapper* ProjectionMatrix);
 
 	void BeginScene();
+=======
+#include "MaterialWrapper.cpp"
+
+class DirectXRenderer
+{
+public:
+	DirectXRenderer();
+	~DirectXRenderer();
+
+	void InitD3D(HWND hWnd);
+	void SetRenderState();
+
+	void SetWorldMatrix(D3DXMATRIX WorldMatrix);
+	void SetViewMatrix(D3DXMATRIX ViewMatrix);
+	void SetProjectionMatrix(D3DXMATRIX ProjectionMatrix);
+
+	void BeginScene();
+>>>>>>> origin/master
 	void ClearScene(DWORD count, DWORD flags, D3DCOLOR color, float z, DWORD stencil);
 	void PresentScene();
 	void StopScene();
@@ -26,9 +45,9 @@ public:
 	void CreateVertexBuffer(int heightmapvertex, DWORD usage, DWORD fvf, D3DPOOL pool, void* vertexbuffer, HANDLE handle);
 	void CreateIndexBuffer(int length, DWORD usage, D3DFORMAT format, D3DPOOL pool, void* Indexbuffer, HANDLE* handle);
 
-	void SetMaterial();
+	void SetMaterial(MaterialWrapper*w wrapper);
 	void SetTexture();
-	void SetFvF();
+	void SetFvF(DWORD fvf);
 	void SetTransform();
 
 	void DrawPrimitive();
@@ -37,7 +56,7 @@ public:
 	void SetStreamSource(); //??
 	void SetIndices(); //??
 
-	void GetDevice();
+	LPDIRECT3DDEVICE9* GetDevice();
 
 private:
 	LPDIRECT3D9 g_pD3D;

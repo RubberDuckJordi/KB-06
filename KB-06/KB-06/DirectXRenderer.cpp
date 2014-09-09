@@ -58,6 +58,7 @@ void DirectXRenderer::SetRenderState()
 };
 
 //Matrixen
+<<<<<<< HEAD
 void DirectXRenderer::SetWorldMatrix(MatrixWrapper* WorldMatrix)
 {
 	this->g_pd3dDevice->SetTransform(D3DTS_WORLD, &(WorldMatrix->getMatrix()));
@@ -79,6 +80,29 @@ void DirectXRenderer::BeginScene()
 
 };
 
+=======
+void DirectXRenderer::SetWorldMatrix(D3DXMATRIX WorldMatrix)
+{
+
+};
+
+void DirectXRenderer::SetViewMatrix(D3DXMATRIX ViewMatrix)
+{
+
+};
+
+void DirectXRenderer::SetProjectionMatrix(D3DXMATRIX ProjectionMatrix)
+{
+
+};
+
+//Scene
+void DirectXRenderer::BeginScene()
+{
+
+};
+
+>>>>>>> origin/master
 void DirectXRenderer::ClearScene(DWORD count, DWORD flags, D3DCOLOR color, float z, DWORD stencil)
 {
 
@@ -107,9 +131,9 @@ void DirectXRenderer::CreateIndexBuffer(int length, DWORD usage, D3DFORMAT forma
 };
 
 //Set stuff
-void DirectXRenderer::SetMaterial()
+void DirectXRenderer::SetMaterial(MaterialWrapper* wrapper)
 {
-
+	g_pd3dDevice->SetMaterial(&wrapper->GetMaterial()); //return g_pd3dDevice->SetMaterial(&wrapper->GetMaterial()); when H_RESULT as return type
 };
 
 void DirectXRenderer::SetTexture()
@@ -117,9 +141,9 @@ void DirectXRenderer::SetTexture()
 
 };
 
-void DirectXRenderer::SetFvF()
+void DirectXRenderer::SetFvF(DWORD fvf)
 {
-
+	g_pd3dDevice->SetFVF(fvf);
 };
 
 void DirectXRenderer::SetTransform()
@@ -150,7 +174,7 @@ void DirectXRenderer::SetIndices() //??
 };
 
 //GetDevice
-void DirectXRenderer::GetDevice()
+LPDIRECT3DDEVICE9* DirectXRenderer::GetDevice()
 {
-
+	return &g_pd3dDevice;
 };
