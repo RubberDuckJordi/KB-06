@@ -73,6 +73,9 @@
     <ClCompile Include="MeshWrapper.cpp">
       <Filter>Source\Wrap Containers</Filter>
     </ClCompile>
+    <ClCompile Include="PoolWrapper.cpp">
+      <Filter>Source\Wrap Containers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
