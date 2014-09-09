@@ -58,7 +58,7 @@
     <ClCompile Include="InputDevice.cpp">
       <Filter>Source\Input</Filter>
     </ClCompile>
-    <ClCompile Include="Wrappermatrix.cpp">
+    <ClCompile Include="MatrixWrapper.cpp">
       <Filter>Source\Wrap Containers</Filter>
     </ClCompile>
   </ItemGroup>
