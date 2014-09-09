@@ -61,6 +61,9 @@
     <ClCompile Include="Wrappermatrix.cpp">
       <Filter>Source\Wrap Containers</Filter>
     </ClCompile>
+    <ClCompile Include="MaterialWrapper.cpp">
+      <Filter>Source\Wrap Containers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">

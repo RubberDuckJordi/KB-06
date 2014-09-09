@@ -2,6 +2,7 @@
 #define _DIRECTXRENDERER_H_
 
 #include <d3dx9.h>
+#include "MaterialWrapper.cpp"
 
 class DirectXRenderer
 {
@@ -24,7 +25,7 @@ public:
 	void CreateVertexBuffer(int heightmapvertex, DWORD usage, DWORD fvf, D3DPOOL pool, void* vertexbuffer, HANDLE handle);
 	void CreateIndexBuffer(int length, DWORD usage, D3DFORMAT format, D3DPOOL pool, void* Indexbuffer, HANDLE* handle);
 
-	void SetMaterial();
+	void SetMaterial(MaterialWrapper*w wrapper);
 	void SetTexture();
 	void SetFvF(DWORD fvf);
 	void SetTransform();
