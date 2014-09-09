@@ -136,9 +136,9 @@ void DirectXRenderer::DrawPrimitive()
 
 };
 
-void DirectXRenderer::DrawSubset()
+void DirectXRenderer::DrawSubset(MeshWrapper* wrapper)
 {
-
+	wrapper->GetMesh()->DrawSubset;
 };
 
 //??

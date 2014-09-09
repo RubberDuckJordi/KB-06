@@ -120,6 +120,7 @@
     <ClCompile Include="Logger.cpp" />
     <ClCompile Include="LoggerPool.cpp" />
     <ClCompile Include="MaterialWrapper.cpp" />
+    <ClCompile Include="MeshWrapper.cpp" />
     <ClCompile Include="Mouse.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="Scene.cpp" />
