@@ -4,7 +4,7 @@
 #include <d3dx9.h>
 
 class DWORDWrapper
-{
+{ 
 public:
 	DWORDWrapper::DWORDWrapper(DWORD _dword)
 	{
