@@ -26,7 +26,7 @@ public:
 
 	void SetMaterial();
 	void SetTexture();
-	void SetFvF();
+	void SetFvF(DWORD fvf);
 	void SetTransform();
 
 	void DrawPrimitive();
@@ -35,7 +35,7 @@ public:
 	void SetStreamSource(); //??
 	void SetIndices(); //??
 
-	void GetDevice();
+	LPDIRECT3DDEVICE9* GetDevice();
 
 private:
 	LPDIRECT3D9 g_pD3D;

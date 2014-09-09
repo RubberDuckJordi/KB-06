@@ -117,9 +117,9 @@ void DirectXRenderer::SetTexture()
 
 };
 
-void DirectXRenderer::SetFvF()
+void DirectXRenderer::SetFvF(DWORD fvf)
 {
-
+	g_pd3dDevice->SetFVF(fvf);
 };
 
 void DirectXRenderer::SetTransform()
@@ -150,7 +150,7 @@ void DirectXRenderer::SetIndices() //??
 };
 
 //GetDevice
-void DirectXRenderer::GetDevice()
+LPDIRECT3DDEVICE9* DirectXRenderer::GetDevice()
 {
-
+	return &g_pd3dDevice;
 };
