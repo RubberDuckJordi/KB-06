@@ -77,34 +77,35 @@ void DirectXRenderer::SetProjectionMatrix(MatrixWrapper* ProjectionMatrix)
 //Scene
 void DirectXRenderer::BeginScene()
 {
-
+	this->g_pd3dDevice->BeginScene();
 };
 
 void DirectXRenderer::ClearScene(DWORDWrapper* count, DWORDWrapper* flags, ColorWrapper* color, float z, DWORDWrapper* stencil)
 {
-
+	g_pd3dDevice->Clear(count->getDWORD(), NULL, flags->getDWORD(), color->getColor(), z, stencil->getDWORD());
 };
 
 void DirectXRenderer::PresentScene()
 {
-
+	this->g_pd3dDevice->Present(NULL, NULL, NULL, NULL);
 };
 
 void DirectXRenderer::StopScene()
 {
-
+	g_pd3dDevice->EndScene();
 };
 
 
 //Buffers
 void DirectXRenderer::CreateVertexBuffer(int heightmapvertex, DWORDWrapper* usage, DWORDWrapper* fvf, PoolWrapper* pool, VertexBufferWrapper* vertexbuffer, HANDLE handle)
 {
-
+	
 };
 
-void DirectXRenderer::CreateIndexBuffer(int length, DWORDWrapper* usage, FormatWrapper format, PoolWrapper* pool, IndexBufferWrapper* Indexbuffer, HANDLE* handle)
+void DirectXRenderer::CreateIndexBuffer(int length, DWORDWrapper* usage, FormatWrapper* format, PoolWrapper* pool, IndexBufferWrapper* Indexbuffer, HANDLE* handle)
 {
-
+	this->g_pd3dDevice->CreateIndexBuffer(length, usage->GetDWORD(), format->GetFormat(), pool->GetPool(), Indexbuffer->GetIndexBuffer(), NULL);
+	// return this->g_pd3dDevice->CreateIndexBuffer(length, usage, format, pool, ((IDirect3DIndexBuffer9**)&Indexbuffer), NULL); when H_result return type
 };
 
 //Set stuff

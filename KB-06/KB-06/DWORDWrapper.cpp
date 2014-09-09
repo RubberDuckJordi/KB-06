@@ -16,12 +16,12 @@ public:
 
 	};
 
-	void DWORDWrapper::SetDWORD(DWORD _dword)
+	void DWORDWrapper::setDWORD(DWORD _dword)
 	{
 		dword = _dword;
 	};
 
-	DWORD DWORDWrapper::GetDWORD()
+	DWORD DWORDWrapper::getDWORD()
 	{
 		return dword;
 	};
