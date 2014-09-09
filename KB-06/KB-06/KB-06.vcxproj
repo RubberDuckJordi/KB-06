@@ -122,6 +122,11 @@
     <ClCompile Include="FormatWrapper.cpp" />
     <ClCompile Include="IndexBufferWrapper.cpp" />
     <ClCompile Include="InputDevice.cpp" />
+    <ClCompile Include="DirectXRenderer.cpp" />
+    <ClCompile Include="DWORDWrapper.cpp" />
+    <ClCompile Include="FormatWrapper.cpp" />
+    <ClCompile Include="IndexBufferWrapper.cpp" />
+    <ClCompile Include="InputDevice.cpp" />
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="KB-06.cpp" />
     <ClCompile Include="DefaultEntity.cpp" />
