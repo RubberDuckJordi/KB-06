@@ -110,7 +110,8 @@ void DirectXRenderer::CreateIndexBuffer(int length, DWORD usage, D3DFORMAT forma
 //Set stuff
 void DirectXRenderer::SetMaterial(MaterialWrapper* wrapper)
 {
-	g_pd3dDevice->SetMaterial(&wrapper->GetMaterial()); //return g_pd3dDevice->SetMaterial(&wrapper->GetMaterial()); when H_RESULT as return type
+	g_pd3dDevice->SetMaterial(&wrapper->GetMaterial());
+	//return g_pd3dDevice->SetMaterial(&wrapper->GetMaterial()); when H_RESULT as return type
 };
 
 void DirectXRenderer::SetTexture()

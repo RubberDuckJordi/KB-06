@@ -26,7 +26,7 @@ public:
 	void CreateVertexBuffer(int heightmapvertex, DWORD usage, DWORD fvf, D3DPOOL pool, void* vertexbuffer, HANDLE handle);
 	void CreateIndexBuffer(int length, DWORD usage, D3DFORMAT format, D3DPOOL pool, void* Indexbuffer, HANDLE* handle);
 
-	void SetMaterial(MaterialWrapper*w wrapper);
+	void SetMaterial(MaterialWrapper* wrapper);
 	void SetTexture();
 	void SetFvF(DWORD fvf);
 	void SetTransform();
