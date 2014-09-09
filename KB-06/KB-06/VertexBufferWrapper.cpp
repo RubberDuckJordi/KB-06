@@ -6,7 +6,7 @@
 class VertexBufferWrapper
 {
 public:
-	VertexBufferWrapper::VertexBufferWrapper(LPDIRECT3DVERTEXBUFFER9 _VertexBuffer)
+	VertexBufferWrapper::VertexBufferWrapper(IDirect3DVertexBuffer9** _VertexBuffer)
 	{
 		VertexBuffer = _VertexBuffer;
 	};
@@ -16,18 +16,18 @@ public:
 
 	};
 
-	void VertexBufferWrapper::SetVertexBuffer(LPDIRECT3DVERTEXBUFFER9 _VertexBuffer)
+	void VertexBufferWrapper::SetVertexBuffer(IDirect3DVertexBuffer9** _VertexBuffer)
 	{
 		VertexBuffer = _VertexBuffer;
 	};
 
-	LPDIRECT3DVERTEXBUFFER9 VertexBufferWrapper::GetVertexBuffer()
+	IDirect3DVertexBuffer9** VertexBufferWrapper::GetVertexBuffer()
 	{
 		return VertexBuffer;
 	};
 
 private:
-	LPDIRECT3DVERTEXBUFFER9 VertexBuffer;
+	IDirect3DVertexBuffer9** VertexBuffer;
 };
 
 #endif

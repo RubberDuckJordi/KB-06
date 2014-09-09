@@ -18,12 +18,12 @@ public:
 
 	}
 
-	void MatrixWrapper::setMatrix(D3DXMATRIX newMatrix)
+	void MatrixWrapper::SetMatrix(D3DXMATRIX newMatrix)
 	{
 		matrix = newMatrix;
 	}
 
-	D3DXMATRIX MatrixWrapper::getMatrix()
+	D3DXMATRIX MatrixWrapper::GetMatrix()
 	{
 		return matrix;
 	}

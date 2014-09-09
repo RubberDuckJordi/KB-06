@@ -6,7 +6,7 @@
 class IndexBufferWrapper
 {
 public:
-	IndexBufferWrapper::IndexBufferWrapper(LPDIRECT3DINDEXBUFFER9 _IndexBuffer)
+	IndexBufferWrapper::IndexBufferWrapper(IDirect3DIndexBuffer9** _IndexBuffer)
 	{
 		IndexBuffer = _IndexBuffer;
 	};
@@ -16,18 +16,18 @@ public:
 
 	};
 
-	void IndexBufferWrapper::SetIndexBuffer(LPDIRECT3DINDEXBUFFER9 _IndexBuffer)
+	void IndexBufferWrapper::SetIndexBuffer(IDirect3DIndexBuffer9** _IndexBuffer)
 	{
 		IndexBuffer = _IndexBuffer;
 	};
 
-	LPDIRECT3DINDEXBUFFER9 IndexBufferWrapper::GetIndexBuffer()
+	IDirect3DIndexBuffer9** IndexBufferWrapper::GetIndexBuffer()
 	{
 		return IndexBuffer;
 	};
 
 private:
-	LPDIRECT3DINDEXBUFFER9 IndexBuffer;
+	IDirect3DIndexBuffer9** IndexBuffer;
 };
 
 #endif
