@@ -16,9 +16,10 @@ namespace Input
 		DirectKeyboard();
 		bool Initialize(HWND, LPDIRECTINPUT8);
 		bool Update();
-		long GetStateOf(int);
+		std::map<Input, long>* GetInputValues();
 
 	private:
+		long GetStateOf(int p_key);
 		char m_KeyBuffer[256];
 		Logger::Logger* logger;
 	};

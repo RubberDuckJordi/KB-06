@@ -12,9 +12,10 @@ namespace Input
 		DirectMouse();
 		bool Initialize(HWND, LPDIRECTINPUT8);
 		bool Update();
-		long GetStateOf(int);
+		std::map<Input, long>* GetInputValues();
 
 	private:
+
 		DIMOUSESTATE2 m_dIMouseState;
 		long m_previousXPos;
 		long m_previousYPos;

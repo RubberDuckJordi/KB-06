@@ -12,10 +12,7 @@ int _tmain(int argc, _TCHAR* argv[])
 { 
 	Logger::Logger* logger = Logger::LoggerPool::GetInstance().GetLogger();
 	logger->SetLogLevel(Logger::Logger::INFO);
-	logger->Log(Logger::Logger::ERR, "Iets");
-	logger->Log(Logger::Logger::WARNING, "Iets");
-	logger->Log(Logger::Logger::DEBUG, "Iets");
-	logger->Log(Logger::Logger::INFO, "Iets");
+
 
 	Window::WindowManager* wManager = new Window::WindowManager(NULL);
 	// Aanmaken van deze factory moet in een abstract factory gaan gebeuren
@@ -30,7 +27,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	while (wManager->HasActiveWindow())
 	{
 		wManager->UpdateWindows();
-		std::map<Input::InputManager::Action, long> actions = iManager->GetCurrentActions(wManager->GetLastWindow());
+		std::map<Input::Input, long> actions = iManager->GetCurrentActions(wManager->GetLastWindow());
 
 		if (actions.size() > 0){
 			logger->Log(Logger::Logger::INFO, "Input!");

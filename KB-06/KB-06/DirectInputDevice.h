@@ -20,7 +20,6 @@ namespace Input
 		bool AcquireDevice();
 		void ReleaseDevice();
 		virtual bool Update() = 0;
-		virtual long GetStateOf(int p_key) = 0;
 
 	protected:
 		LPDIRECTINPUTDEVICE8 m_dInputDevice;

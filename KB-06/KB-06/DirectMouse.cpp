@@ -97,78 +97,64 @@ bool Input::DirectMouse::Update()
 	return m_deviceAcquired;
 }
 
-//Returns the state of a mouseproperty (like a button or axis. Returns 0 if
-//value hasn't changed or button isn't pressed. Otherwise returns the value
-//of the property or 100 at a buttonpress. 100 because in the future we can
-//work with percentages.
-//p_mouseProperty should be a defined value in dinput.h beginning with:
-//"DIMOFS_"
-long Input::DirectMouse::GetStateOf(int p_mouseProperty)
+
+std::map<Input::Input, long>* Input::DirectMouse::GetInputValues()
 {
-	Update();
-	long state = 0;
-	switch (p_mouseProperty)
+	std::map<Input, long>* returnMap = new std::map<Input, long>();
+
+	long deltaXPosition = GetDeltaXPosition();
+	long deltaYPosition = GetDeltaYPosition();
+	long deltaZPosition = GetDeltaZPosition();
+
+	if (deltaXPosition != 0)
 	{
-	case DIMOFS_X:
-		state = GetDeltaXPosition();
-		break;
-	case DIMOFS_Y:
-		state = GetDeltaYPosition();
-		break;
-	case DIMOFS_Z:
-		state = GetDeltaZPosition();
-		break;
-	case DIMOFS_BUTTON0:
-		if (m_dIMouseState.rgbButtons[0] & 0x80)
-		{
-			state = 100;
-		}
-		break;
-	case DIMOFS_BUTTON1:
-		if (m_dIMouseState.rgbButtons[1] & 0x80)
-		{
-			state = 100;
-		}
-		break;
-	case DIMOFS_BUTTON2:
-		if (m_dIMouseState.rgbButtons[2] & 0x80)
-		{
-			state = 100;
-		}
-		break;
-	case DIMOFS_BUTTON3:
-		if (m_dIMouseState.rgbButtons[3] & 0x80)
-		{
-			state = 100;
-		}
-		break;
-	case DIMOFS_BUTTON4:
-		if (m_dIMouseState.rgbButtons[4] & 0x80)
-		{
-			state = 100;
-		}
-		break;
-	case DIMOFS_BUTTON5:
-		if (m_dIMouseState.rgbButtons[5] & 0x80)
-		{
-			state = 100;
-		}
-		break;
-	case DIMOFS_BUTTON6:
-		if (m_dIMouseState.rgbButtons[6] & 0x80)
-		{
-			state = 100;
-		}
-		break;
-	case DIMOFS_BUTTON7:
-		if (m_dIMouseState.rgbButtons[7] & 0x80)
-		{
-			state = 100;
-		}
-		break;
+		returnMap->insert(std::make_pair(Input::MOUSE_X, deltaXPosition));
 	}
-	return state;
+	if (deltaYPosition != 0)
+	{
+		returnMap->insert(std::make_pair(Input::MOUSE_Y, deltaYPosition));
+	}
+	if (deltaZPosition != 0)
+	{
+		returnMap->insert(std::make_pair(Input::MOUSE_Z, deltaZPosition));
+	}
+
+	if (m_dIMouseState.rgbButtons[0] & 0x80)
+	{
+		returnMap->insert(std::make_pair(Input::MOUSE_BUTTON0, 100));
+	}
+	if (m_dIMouseState.rgbButtons[1] & 0x80)
+	{
+		returnMap->insert(std::make_pair(Input::MOUSE_BUTTON1, 100));
+	}
+	if (m_dIMouseState.rgbButtons[2] & 0x80)
+	{
+		returnMap->insert(std::make_pair(Input::MOUSE_BUTTON2, 100));
+	}
+	if (m_dIMouseState.rgbButtons[3] & 0x80)
+	{
+		returnMap->insert(std::make_pair(Input::MOUSE_BUTTON3, 100));
+	}
+	if (m_dIMouseState.rgbButtons[4] & 0x80)
+	{
+		returnMap->insert(std::make_pair(Input::MOUSE_BUTTON4, 100));
+	}
+	if (m_dIMouseState.rgbButtons[5] & 0x80)
+	{
+		returnMap->insert(std::make_pair(Input::MOUSE_BUTTON5, 100));
+	}
+	if (m_dIMouseState.rgbButtons[6] & 0x80)
+	{
+		returnMap->insert(std::make_pair(Input::MOUSE_BUTTON6, 100));
+	}
+	if (m_dIMouseState.rgbButtons[7] & 0x80)
+	{
+		returnMap->insert(std::make_pair(Input::MOUSE_BUTTON7, 100));
+	}
+
+	return returnMap;
 }
+
 
 //Returns the position compared to the previous position of the X axis.
 long Input::DirectMouse::GetDeltaXPosition()

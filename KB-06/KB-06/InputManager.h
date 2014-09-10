@@ -5,6 +5,7 @@
 #include "Window.h"
 #include "WindowListener.h"
 #include "LoggerPool.h"
+#include "Input.h"
 #include <windows.h>
 #include <map>
 #include <vector>
@@ -16,30 +17,9 @@ namespace Input
 	class InputManager : public Window::WindowListener
 	{
 	public:
-		enum Action
-		{
-			UP,
-			DOWN,
-			LEFT,
-			RIGHT,
-			FORWARD,
-			BACKWARD,
-			TOWARD,
-			AWAY,
-			CURSOR_X,
-			CURSOR_Y,
-			CURSOR_Z,
-			JUMP,
-			CAMERA_NEXT,
-			CAMERA_PREVIOUS,
-			CAMERA_FIRST,
-			CAMERA_LAST,
-			WINDOW_EXIT
-		};
-
 		InputManager(InputDeviceFactory* inputDeviceFactory);
 		~InputManager();
-		std::map<Action, long> GetCurrentActions(Window::Window*);
+		std::map<Input, long> GetCurrentActions(Window::Window*);
 		void AddWindow(Window::Window*);
 		void RemoveWindow(Window::Window&);
 		void RemoveWindows();
@@ -47,13 +27,11 @@ namespace Input
 		void WindowOpened(Window::Window& p_window);
 
 	private:
-		std::map<std::pair<InputDevice::Type, int>, Action> m_keyMapping;
-		std::map<Window::Window*, std::map<InputDevice::Type, InputDevice*>> m_windowDevices;
+		std::map<std::pair<InputDevice::Type, int>, Input> m_keyMapping;
+		std::map<Window::Window*, std::list<InputDevice*>> m_windowDevices;
 
 		InputDeviceFactory* inputDeviceFactory;
 
-		void Initialize();
-		void LoadKeyMapping();
 		Logger::Logger* logger;
 	};
 }

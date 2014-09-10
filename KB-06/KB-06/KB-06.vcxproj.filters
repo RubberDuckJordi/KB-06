@@ -174,6 +174,9 @@
     <ClInclude Include="targetver.h">
       <Filter>Header</Filter>
     </ClInclude>
+    <ClInclude Include="Input.h">
+      <Filter>Header\Input</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
