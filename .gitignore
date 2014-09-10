@@ -207,4 +207,3 @@ FakesAssemblies/
 *.app
 
 # exclude log files
-log.txt
