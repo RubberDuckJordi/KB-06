@@ -1803,3 +1803,25 @@
 [11:27:53.575] INFO    Input!
 [11:27:53.605] INFO    InputManager: Keyboard focus lost.
 [11:27:53.616] INFO    InputManager: Mouse focus lost
+[11:42:50.476] ERROR   Iets
+[11:42:50.486] WARNING Iets
+[11:42:50.494] DEBUG   Iets
+[11:42:50.504] INFO    Iets
+[11:42:50.534] DEBUG   DirectInputDeviceFactory: Initialised factory
+[11:42:50.594] DEBUG   DirectInputDeviceFactory: Created mouse
+[11:42:50.609] INFO    InputManager::InputDevice Mouse acquired.
+[11:42:50.620] INFO    InputDevice::Mouse: Initialisation successful.
+[11:42:50.632] DEBUG   DirectInputDeviceFactory: Created keyboard
+[11:42:50.643] INFO    InputManager::InputDevice Keyboard acquired.
+[11:42:50.652] INFO    InputDevice::Keyboard: Initialisation successful.
+[11:42:50.662] INFO    InputManager: Window added, devices initialized.
+[11:42:50.685] DEBUG   DirectInputDeviceFactory: Created mouse
+[11:42:50.695] INFO    InputManager::InputDevice Mouse acquired.
+[11:42:50.704] INFO    InputDevice::Mouse: Initialisation successful.
+[11:42:50.715] DEBUG   DirectInputDeviceFactory: Created keyboard
+[11:42:50.725] INFO    InputManager::InputDevice Keyboard acquired.
+[11:42:50.735] INFO    InputDevice::Keyboard: Initialisation successful.
+[11:42:50.746] INFO    InputManager: Window added, devices initialized.
+[11:42:50.761] INFO    Input!
+[11:42:55.226] INFO    InputManager: Keyboard focus lost.
+[11:42:55.235] INFO    InputManager: Mouse focus lost
