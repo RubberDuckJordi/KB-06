@@ -97,8 +97,17 @@
     <ClCompile Include="InputDevice.cpp">
       <Filter>Source\Input</Filter>
     </ClCompile>
+    <ClCompile Include="ObjLoader.cpp">
+      <Filter>Source\Resource</Filter>
+    </ClCompile>
     <ClCompile Include="ResourceManager.cpp">
-      <Filter>Source</Filter>
+      <Filter>Source\Resource</Filter>
+    </ClCompile>
+    <ClCompile Include="MtlLoader.cpp">
+      <Filter>Source\Resource</Filter>
+    </ClCompile>
+    <ClCompile Include="StringHelper.cpp">
+      <Filter>Source\Util</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -179,9 +188,42 @@
     </ClInclude>
     <ClInclude Include="Input.h">
       <Filter>Header\Input</Filter>
-	 </ClInclude>
+    </ClInclude>
     <ClInclude Include="ResourceManager.h">
-      <Filter>Header</Filter>
+      <Filter>Header\Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="Vertex.h">
+      <Filter>Header\Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="MtlLoader.h">
+      <Filter>Header\Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjLoader.h">
+      <Filter>Header\Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="Mesh.h">
+      <Filter>Header\Resource\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="FaceDefinition.h">
+      <Filter>Header\Resource\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="Normal.h">
+      <Filter>Header\Resource\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureCoordinate.h">
+      <Filter>Header\Resource\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="Material.h">
+      <Filter>Header\Resource\Material</Filter>
+    </ClInclude>
+    <ClInclude Include="RGBColor.h">
+      <Filter>Header\Resource\Material</Filter>
+    </ClInclude>
+    <ClInclude Include="StringHelper.h">
+      <Filter>Header\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="ParameterSpaceVertex.h">
+      <Filter>Header\Resource\Mesh</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -235,6 +277,18 @@
     </Filter>
     <Filter Include="Source\Scene\Default">
       <UniqueIdentifier>{a0b6dd3a-b07d-46ed-bd94-ef5085d3c579}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Resource">
+      <UniqueIdentifier>{33e97ab4-b8a0-4075-b927-2b12fc56c201}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header\Resource">
+      <UniqueIdentifier>{6adb8963-1a79-441d-a362-fc21851a1f8a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header\Resource\Mesh">
+      <UniqueIdentifier>{61bb6508-9788-49b4-aa4c-53a2ad616839}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header\Resource\Material">
+      <UniqueIdentifier>{bd5400fc-8d23-4b12-9509-e420ca906b5c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
