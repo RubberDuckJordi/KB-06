@@ -87,9 +87,9 @@ void DirectXRenderer::ClearScene(DWORDWrapper* count, DWORDWrapper* flags, Color
 
 };
 
-void DirectXRenderer::PresentScene()
+void DirectXRenderer::PresentScene(HWND hWnd)
 {
-	this->g_pd3dDevice->Present(NULL, NULL, NULL, NULL);
+	this->g_pd3dDevice->Present(NULL, NULL, hWnd, NULL);
 };
 
 void DirectXRenderer::StopScene()
