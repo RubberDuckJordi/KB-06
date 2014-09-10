@@ -20,6 +20,7 @@ namespace Logger {
 			INFO = 4
 		};
 
+		void NewFile();
 		void Log(int logType, char* text);
 		void Log(int logType, std::string text);
 		void LogMemoryDump(int logType, void* const p_address, const int p_size, char* const p_name);
@@ -35,7 +36,8 @@ namespace Logger {
 		int consoleColorCodeWarning = yellow;
 		int consoleColorCodeError = red;
 		HANDLE consoleHandle;
-
+		char* logFile = "log.txt";
+		char* previousLogFile = "log_old.txt";
 		enum Consolecolor
 		{
 			black = 0,

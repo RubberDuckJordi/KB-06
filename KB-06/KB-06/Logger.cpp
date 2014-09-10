@@ -18,6 +18,11 @@ void Logger::Logger::Reset(){
 	logLevel = INFO;
 }
 
+void Logger
+::Logger::NewFile(){
+	remove(previousLogFile);
+	rename(logFile, previousLogFile);
+}
 void Logger::Logger::Log(int logType, std::string messageString){
 	char* message = new char[messageString.length()+1];
 	strcpy_s(message, messageString.length()+1, messageString.c_str());
