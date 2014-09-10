@@ -206,5 +206,5 @@ FakesAssemblies/
 *.out
 *.app
 
-# log files
+# exclude log files
 log.txt

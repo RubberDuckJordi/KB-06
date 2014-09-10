@@ -21,6 +21,7 @@ public:
 		IndexBuffer = _IndexBuffer;
 	};
 
+
 	IDirect3DIndexBuffer9** IndexBufferWrapper::GetIndexBuffer()
 	{
 		return IndexBuffer;

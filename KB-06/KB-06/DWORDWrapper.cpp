@@ -1,3 +1,4 @@
+
 #ifndef _DWORDWRAPPER_CPP_
 #define _DWORDWRAPPER_CPP_
 
@@ -29,5 +30,6 @@ public:
 private:
 	DWORD dword;
 };
+
 
 #endif

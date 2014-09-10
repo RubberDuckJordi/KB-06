@@ -1,15 +1,15 @@
-#ifndef __INPUT_MOUSE_H__
-#define __INPUT_MOUSE_H__
+#ifndef __INPUT_DIRECTMOUSE_H__
+#define __INPUT_DIRECTMOUSE_H__
 
-#include "InputDevice.h"
+#include "DirectInputDevice.h"
 #include "LoggerPool.h"
 
 namespace Input
 {
-	class Mouse : public InputDevice
+	class DirectMouse : public DirectInputDevice
 	{
 	public:
-		Mouse();
+		DirectMouse();
 		bool Initialize(HWND, LPDIRECTINPUT8);
 		bool Update();
 		long GetStateOf(int);
