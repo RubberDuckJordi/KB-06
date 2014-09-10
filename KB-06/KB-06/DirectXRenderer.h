@@ -2,18 +2,10 @@
 #define _DIRECTXRENDERER_H_
 
 #include <d3dx9.h>
-#include "MatrixWrapper.cpp"
-#include "MaterialWrapper.cpp"
-#include "TextureWrapper.cpp"
-#include "DWORDWrapper.cpp"
-#include "MeshWrapper.cpp"
-#include "PoolWrapper.cpp"
-#include "VertexBufferWrapper.cpp"
-#include "IndexBufferWrapper.cpp"
-#include "FormatWrapper.cpp"
-#include "ColorWrapper.cpp"
+#include "Renderer.h"
 
-class DirectXRenderer
+
+class DirectXRenderer : public Renderer
 {
 public:
 	DirectXRenderer();
@@ -28,11 +20,11 @@ public:
 
 	void BeginScene();
 	void ClearScene(DWORDWrapper* count, DWORDWrapper* flags, ColorWrapper* color, float z, DWORDWrapper* stencil);
-	void PresentScene();
+	void PresentScene(HWND hWnd);
 	void StopScene();
 
 	void CreateVertexBuffer(int heightmapvertex, DWORDWrapper* usage, DWORDWrapper* fvf, PoolWrapper* pool, VertexBufferWrapper* vertexbuffer, HANDLE handle);
-	void CreateIndexBuffer(int length, DWORDWrapper* usage, FormatWrapper format, PoolWrapper* pool, IndexBufferWrapper* Indexbuffer, HANDLE* handle);
+	void CreateIndexBuffer(int length, DWORDWrapper* usage, FormatWrapper* format, PoolWrapper* pool, IndexBufferWrapper* Indexbuffer, HANDLE* handle);
 
 	void SetMaterial(MaterialWrapper* wrapper);
 	void SetTexture(TextureWrapper* wrapper);

@@ -97,6 +97,9 @@
     <ClCompile Include="InputDevice.cpp">
       <Filter>Source\Input</Filter>
     </ClCompile>
+    <ClCompile Include="ResourceManager.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DefaultEntity.h">
@@ -176,6 +179,9 @@
     </ClInclude>
     <ClInclude Include="Input.h">
       <Filter>Header\Input</Filter>
+	 </ClInclude>
+    <ClInclude Include="ResourceManager.h">
+      <Filter>Header</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

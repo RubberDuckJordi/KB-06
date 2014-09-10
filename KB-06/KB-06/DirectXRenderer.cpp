@@ -60,39 +60,41 @@ void DirectXRenderer::SetRenderState()
 //Matrixen
 void DirectXRenderer::SetWorldMatrix(MatrixWrapper* WorldMatrix)
 {
-	this->g_pd3dDevice->SetTransform(D3DTS_WORLD, &(WorldMatrix->getMatrix()));
+	this->g_pd3dDevice->SetTransform(D3DTS_WORLD, &(WorldMatrix->GetMatrix()));
 };
 
 void DirectXRenderer::SetViewMatrix(MatrixWrapper* ViewMatrix)
 {
-	this->g_pd3dDevice->SetTransform(D3DTS_VIEW, &(ViewMatrix->getMatrix()));
+	this->g_pd3dDevice->SetTransform(D3DTS_VIEW, &(ViewMatrix->GetMatrix()));
 };
 
 void DirectXRenderer::SetProjectionMatrix(MatrixWrapper* ProjectionMatrix)
 {
-	this->g_pd3dDevice->SetTransform(D3DTS_PROJECTION, &(ProjectionMatrix->getMatrix()));
+	this->g_pd3dDevice->SetTransform(D3DTS_PROJECTION, &(ProjectionMatrix->GetMatrix()));
 };
 
 
 //Scene
 void DirectXRenderer::BeginScene()
 {
-
+	this->g_pd3dDevice->BeginScene();
 };
 
 void DirectXRenderer::ClearScene(DWORDWrapper* count, DWORDWrapper* flags, ColorWrapper* color, float z, DWORDWrapper* stencil)
 {
 
+	this->g_pd3dDevice->Clear(count->GetDWORD(), NULL, flags->GetDWORD(), color->GetColor(), z, stencil->GetDWORD());
+
 };
 
-void DirectXRenderer::PresentScene()
+void DirectXRenderer::PresentScene(HWND hWnd)
 {
-
+	this->g_pd3dDevice->Present(NULL, NULL, hWnd, NULL);
 };
 
 void DirectXRenderer::StopScene()
 {
-
+	this->g_pd3dDevice->EndScene();
 };
 
 
@@ -100,11 +102,13 @@ void DirectXRenderer::StopScene()
 void DirectXRenderer::CreateVertexBuffer(int heightmapvertex, DWORDWrapper* usage, DWORDWrapper* fvf, PoolWrapper* pool, VertexBufferWrapper* vertexbuffer, HANDLE handle)
 {
 
+	this->g_pd3dDevice->CreateVertexBuffer(heightmapvertex, usage->GetDWORD(), fvf->GetDWORD(), pool->GetPool(), vertexbuffer->GetVertexBuffer(), &handle);
+
 };
 
-void DirectXRenderer::CreateIndexBuffer(int length, DWORDWrapper* usage, FormatWrapper format, PoolWrapper* pool, IndexBufferWrapper* Indexbuffer, HANDLE* handle)
+void DirectXRenderer::CreateIndexBuffer(int length, DWORDWrapper* usage, FormatWrapper* format, PoolWrapper* pool, IndexBufferWrapper* Indexbuffer, HANDLE* handle)
 {
-
+	this->g_pd3dDevice->CreateIndexBuffer(length, usage->GetDWORD(), format->GetFormat(), pool->GetPool(), Indexbuffer->GetIndexBuffer(), NULL);
 };
 
 //Set stuff
@@ -127,7 +131,7 @@ void DirectXRenderer::SetFvF(DWORDWrapper* fvf)
 
 void DirectXRenderer::SetTransform(int type, MatrixWrapper* wrapper)
 {
-	g_pd3dDevice->SetTransform((D3DTRANSFORMSTATETYPE)type, &wrapper->getMatrix());
+	g_pd3dDevice->SetTransform((D3DTRANSFORMSTATETYPE)type, &(wrapper->GetMatrix()));
 };
 
 //Draw functions
@@ -138,7 +142,7 @@ void DirectXRenderer::DrawPrimitive(int heightArraySize, int amountOfIndices)
 
 void DirectXRenderer::DrawSubset(MeshWrapper* wrapper, int subset)
 {
-	wrapper->GetMesh()->DrawSubset(subset);
+	(wrapper->GetMesh())->DrawSubset(subset);
 };
 
 //??

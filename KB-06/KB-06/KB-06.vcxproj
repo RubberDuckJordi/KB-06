@@ -101,6 +101,7 @@
     <ClInclude Include="LoggerPool.h" />
     <ClInclude Include="DirectMouse.h" />
     <ClInclude Include="Renderer.h" />
+    <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneFactory.h" />
     <ClInclude Include="SceneManager.h" />
@@ -134,6 +135,7 @@
     <ClCompile Include="MeshWrapper.cpp" />
     <ClCompile Include="PoolWrapper.cpp" />
     <ClCompile Include="Renderer.cpp" />
+    <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneFactory.cpp" />
     <ClCompile Include="SceneManager.cpp" />
