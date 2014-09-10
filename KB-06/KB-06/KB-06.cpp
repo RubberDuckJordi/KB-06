@@ -9,7 +9,7 @@
 #include "DirectInputDeviceFactory.h"
 
 int _tmain(int argc, _TCHAR* argv[])
-{
+{ 
 	Logger::Logger* logger = Logger::LoggerPool::GetInstance().GetLogger();
 	logger->SetLogLevel(Logger::Logger::INFO);
 	logger->Log(Logger::Logger::ERR, "Iets");
