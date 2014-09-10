@@ -18,12 +18,12 @@ public:
 
 	}
 
-	void FormatWrapper::setFormat(D3DFORMAT newFormat)
+	void FormatWrapper::SetFormat(D3DFORMAT newFormat)
 	{
 		format = newFormat;
 	}
 
-	D3DFORMAT FormatWrapper::getFormat()
+	D3DFORMAT FormatWrapper::GetFormat()
 	{
 		return format;
 	}

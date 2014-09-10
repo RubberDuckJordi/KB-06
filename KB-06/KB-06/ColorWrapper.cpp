@@ -18,12 +18,12 @@ public:
 
 	}
 
-	void ColorWrapper::setColor(D3DCOLOR newColor)
+	void ColorWrapper::SetColor(D3DCOLOR newColor)
 	{
 		color = newColor;
 	}
 
-	D3DCOLOR ColorWrapper::getColor()
+	D3DCOLOR ColorWrapper::GetColor()
 	{
 		return color;
 	}

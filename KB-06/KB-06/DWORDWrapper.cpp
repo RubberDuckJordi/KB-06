@@ -1,3 +1,4 @@
+
 #ifndef _DWORDWRAPPER_CPP_
 #define _DWORDWRAPPER_CPP_
 
@@ -16,7 +17,7 @@ public:
 
 	};
 
-	void DWORDWrapper::SetDWORD(DWORD _dword)
+	void DWORDWrapper::GetDWORD(DWORD _dword)
 	{
 		dword = _dword;
 	};
@@ -29,5 +30,6 @@ public:
 private:
 	DWORD dword;
 };
+
 
 #endif
