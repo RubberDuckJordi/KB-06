@@ -24,7 +24,6 @@ void Logger
 	rename(logFile, previousLogFile);
 }
 void Logger::Logger::Log(int logType, std::string messageString){
-	std::cout << messageString << std::endl;
 	char* message = new char[messageString.length()+1];
 	strcpy_s(message, messageString.length()+1, messageString.c_str());
 	Log(logType, message);

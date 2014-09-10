@@ -16,7 +16,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	logger->SetLogLevel(Logger::Logger::INFO);
 
 	ResourceManager* resourceManager = new ResourceManager();
-	resourceManager->load("cube.obj");
+	resourceManager->load("cube.obj.mesh");
 
 	Window::WindowManager* wManager = new Window::WindowManager(NULL);
 	// Aanmaken van deze factory moet in een abstract factory gaan gebeuren

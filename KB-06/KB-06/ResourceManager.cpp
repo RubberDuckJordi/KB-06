@@ -15,7 +15,7 @@ ResourceManager::~ResourceManager()
 }
 
 void ResourceManager::load(std::string file){
-	if (StringHelper::EndsWith(file, ".obj")){
+	if (StringHelper::EndsWith(file, ".obj.mesh")){
 		meshes[file] = ObjLoader::Load(file, this);
 	}
 	else if (StringHelper::EndsWith(file, ".mtl")){
