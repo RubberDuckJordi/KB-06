@@ -2,18 +2,10 @@
 #define _DIRECTXRENDERER_H_
 
 #include <d3dx9.h>
-#include "MatrixWrapper.cpp"
-#include "MaterialWrapper.cpp"
-#include "TextureWrapper.cpp"
-#include "DWORDWrapper.cpp"
-#include "MeshWrapper.cpp"
-#include "PoolWrapper.cpp"
-#include "VertexBufferWrapper.cpp"
-#include "IndexBufferWrapper.cpp"
-#include "FormatWrapper.cpp"
-#include "ColorWrapper.cpp"
+#include "Renderer.h"
 
-class DirectXRenderer
+
+class DirectXRenderer : public Renderer
 {
 public:
 	DirectXRenderer();
