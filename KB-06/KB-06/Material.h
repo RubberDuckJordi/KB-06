@@ -6,5 +6,7 @@ struct Material {
 	RGBColor ambientColor;
 	RGBColor diffuseColor;
 	RGBColor SpecularColor;
+	float specularWeight;
+	float alpha;
 };
 #endif

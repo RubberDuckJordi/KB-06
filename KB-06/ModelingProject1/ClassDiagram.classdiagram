@@ -229,6 +229,60 @@
     <logicalClassDesignerModelHasTypes>
       <class Id="4ddd44e1-d822-474b-b0c4-bda77de5196f" name="ResourceManager" isAbstract="false" isLeaf="false" isActiveClass="false">
         <elementDefinition Id="715b93e3-44b6-45dd-a804-09470469b19a" />
+        <targetEnds>
+          <association Id="799c79a3-d873-45ab-8fcb-0e4646fb2082" isDerived="false" sourceEndRoleName="ResourceManager" targetEndRoleName="ResourceFactory" isLeaf="false" isAbstract="false">
+            <classMoniker Id="5603c0cf-0f99-424e-8551-1b0630a44c03" LastKnownName="ResourceFactory" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="af6f9169-b5fa-4496-8d37-5d81900793dd" name="ResourceManager" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="81c5db29-a529-4926-a596-64bffcc327cb" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="02ee5f67-e38a-47f3-83f6-c224003c04bb" name="ResourceFactory" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <lowerValueInternal>
+                    <literalString Id="caa1de59-e1a8-418d-80cb-bcb8faaf5fed" name="Lower" value="*">
+                      <elementDefinition Id="dc0568ce-f55e-403f-b18d-49ee6a2c4505" />
+                    </literalString>
+                  </lowerValueInternal>
+                  <upperValueInternal>
+                    <literalString Id="cd677e87-b825-47eb-9a8c-dd18d83dab82" name="Upper" value="*">
+                      <elementDefinition Id="16a8bf0e-771d-4fa7-b5a5-035de8ca141d" />
+                    </literalString>
+                  </upperValueInternal>
+                  <elementDefinition Id="0eeb132d-c29a-4713-8539-c91c89c39dda" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="eaec3651-3a70-46d5-b413-ff84b627d915" />
+          </association>
+          <association Id="f1a72ffb-6e3a-43c7-b375-da7bfd181896" isDerived="false" sourceEndRoleName="ResourceManager" targetEndRoleName="Resource" isLeaf="false" isAbstract="false">
+            <classMoniker Id="ceff38b1-b582-4be4-a5e5-254873caf5bb" LastKnownName="Resource" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="2dba6f70-8b62-400c-ac0e-fe086391d933" name="ResourceManager" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="b0227114-5e32-430a-87eb-0d7b24a0bc85" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="dc895379-cdda-4044-8059-85775ca51741" name="Resource" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <lowerValueInternal>
+                    <literalString Id="0d8216a8-8660-4a64-81db-69fce30290c5" name="Lower" value="*">
+                      <elementDefinition Id="9c889b8c-c1f6-47cc-b213-e73886b983f5" />
+                    </literalString>
+                  </lowerValueInternal>
+                  <upperValueInternal>
+                    <literalString Id="0e388d1e-f121-468e-966a-ba6ad0a68c2e" name="Upper" value="*">
+                      <elementDefinition Id="bcf1a076-4157-4c42-8c35-8d35e3573d78" />
+                    </literalString>
+                  </upperValueInternal>
+                  <elementDefinition Id="a534303f-e56a-48dd-8f3c-ffe0141de01c" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="cd2cdb7e-cbc0-4f3e-be60-777fee83b621" />
+          </association>
+        </targetEnds>
       </class>
     </logicalClassDesignerModelHasTypes>
     <logicalClassDesignerModelHasTypes>
@@ -593,6 +647,106 @@
           <generalization Id="5eb0314b-2ae2-4f3d-b24b-600d59195902" isSubstitutable="false">
             <classMoniker Id="b28e6aac-461f-47a0-be66-ca170cef3130" LastKnownName="InputDevice" />
             <elementDefinition Id="e4d7a885-0c74-4abd-a01d-e5e6124eaa14" />
+          </generalization>
+        </generalsInternal>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="329da756-fd39-49c7-b760-a664ba17e60c" name="MtlLoader" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="a9c8ac50-9dc3-488d-b753-e9260d29cc95" />
+        <suppliersInternal>
+          <dependency Id="2905d188-52ef-4122-a8e3-a0310fdc7a18">
+            <classMoniker Id="dc73bae7-05dd-4b22-8f0f-7b13d98bf9ca" LastKnownName="Material" />
+            <elementDefinition Id="5f00e0a1-9b35-4a33-89a6-10191fb83a1d" />
+          </dependency>
+        </suppliersInternal>
+        <generalsInternal>
+          <generalization Id="8134420b-ce15-4b9d-aad0-dd6b94c99a45" isSubstitutable="false">
+            <classMoniker Id="5603c0cf-0f99-424e-8551-1b0630a44c03" LastKnownName="ResourceFactory" />
+            <elementDefinition Id="bc42ee78-6267-4c8d-be9d-66d807f0786d" />
+          </generalization>
+        </generalsInternal>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="ceff38b1-b582-4be4-a5e5-254873caf5bb" name="Resource" isAbstract="true" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="231e512f-c959-407c-aa10-8aab21eb4da4" />
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="5603c0cf-0f99-424e-8551-1b0630a44c03" name="ResourceFactory" isAbstract="true" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="92cd113c-eab4-4389-b4d4-16263e91fe72" />
+        <suppliersInternal>
+          <dependency Id="509e9345-43e4-4829-9b21-bde6e19185bf">
+            <classMoniker Id="ceff38b1-b582-4be4-a5e5-254873caf5bb" LastKnownName="Resource" />
+            <elementDefinition Id="0792a6d8-402c-4272-96cc-b7d9bbc0eca2" />
+          </dependency>
+        </suppliersInternal>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="b396a9a2-734f-4be7-a152-05fc6936dd41" name="ResourceFactoryImp" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="6c0e5c9e-cf24-4ee5-9468-e1ee51b16a26" />
+        <suppliersInternal>
+          <dependency Id="5d51c525-cd3b-4976-91cd-a43e627cc770">
+            <classMoniker Id="a1f5237d-1754-4424-a397-f61b95f8808a" LastKnownName="ResourceImp" />
+            <elementDefinition Id="e525794b-9d35-4146-ba8f-14ba690fd33a" />
+          </dependency>
+        </suppliersInternal>
+        <generalsInternal>
+          <generalization Id="2dfbe315-243d-48de-bcde-d9865109a814" isSubstitutable="false">
+            <classMoniker Id="5603c0cf-0f99-424e-8551-1b0630a44c03" LastKnownName="ResourceFactory" />
+            <elementDefinition Id="1caba93b-543a-4015-bf58-68bd6ca49585" />
+          </generalization>
+        </generalsInternal>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="a1f5237d-1754-4424-a397-f61b95f8808a" name="ResourceImp" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="9c5d5a4a-8e26-4589-aac2-f8b136c3a06b" />
+        <generalsInternal>
+          <generalization Id="1eeb245c-6837-4746-b647-a7c6473f7126" isSubstitutable="false">
+            <classMoniker Id="ceff38b1-b582-4be4-a5e5-254873caf5bb" LastKnownName="Resource" />
+            <elementDefinition Id="e2ecb4f5-49cc-4236-8708-5688af66e15e" />
+          </generalization>
+        </generalsInternal>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="dc73bae7-05dd-4b22-8f0f-7b13d98bf9ca" name="Material" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="223afeb2-ffba-432a-a4b3-e7b28494879f" />
+        <generalsInternal>
+          <generalization Id="353cf34f-cf30-4243-b2cf-c166fe1706cc" isSubstitutable="false">
+            <classMoniker Id="ceff38b1-b582-4be4-a5e5-254873caf5bb" LastKnownName="Resource" />
+            <elementDefinition Id="c46b8176-3df1-4f6d-93b0-e19ef3ff4cb6" />
+          </generalization>
+        </generalsInternal>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="8a310cfa-1772-48ab-ab51-f93b3b0dee82" name="ObjLoader" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="0f3026db-2cd0-4028-a69e-f692d0727482" />
+        <suppliersInternal>
+          <dependency Id="bbe6fab7-70b2-43c6-bc51-6df97177c437">
+            <classMoniker Id="4120a0df-8793-436e-b785-ce8a4573a806" LastKnownName="Mesh" />
+            <elementDefinition Id="3f1355fd-4da1-44a6-b46c-c636e17244e8" />
+          </dependency>
+        </suppliersInternal>
+        <generalsInternal>
+          <generalization Id="a331da13-b853-4684-b7f2-3fc4ec89ce4a" isSubstitutable="false">
+            <classMoniker Id="5603c0cf-0f99-424e-8551-1b0630a44c03" LastKnownName="ResourceFactory" />
+            <elementDefinition Id="5cf6df3a-b0ec-4499-9c49-0557d1a5beb2" />
+          </generalization>
+        </generalsInternal>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="4120a0df-8793-436e-b785-ce8a4573a806" name="Mesh" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="3233574c-f5ce-4056-aade-70f98fef765b" />
+        <generalsInternal>
+          <generalization Id="398a03c9-e4d9-4214-a150-2f947a20fea7" isSubstitutable="false">
+            <classMoniker Id="ceff38b1-b582-4be4-a5e5-254873caf5bb" LastKnownName="Resource" />
+            <elementDefinition Id="9b31a088-0e02-4767-b22b-78ecdc7a8e0c" />
           </generalization>
         </generalsInternal>
       </class>

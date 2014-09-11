@@ -522,7 +522,114 @@
         name="ResourceManager"
         isAbstract="false"
         isLeaf="false"
-        isActiveClass="false" />
+        isActiveClass="false">
+        <targetEnds>
+          <association
+            Id="eaec3651-3a70-46d5-b413-ff84b627d915"
+            isDerived="false"
+            sourceEndRoleName="ResourceManager"
+            targetEndRoleName="ResourceFactory"
+            isLeaf="false"
+            isAbstract="false">
+            <classMoniker
+              Id="92cd113c-eab4-4389-b4d4-16263e91fe72"
+              LastKnownName="ResourceFactory"
+              LastKnownLocation="ModelingProject1.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="81c5db29-a529-4926-a596-64bffcc327cb"
+                  name="ResourceManager"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="0eeb132d-c29a-4713-8539-c91c89c39dda"
+                  name="ResourceFactory"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false">
+                  <lowerValueInternal>
+                    <literalString
+                      Id="dc0568ce-f55e-403f-b18d-49ee6a2c4505"
+                      name="Lower"
+                      value="*" />
+                  </lowerValueInternal>
+                  <upperValueInternal>
+                    <literalString
+                      Id="16a8bf0e-771d-4fa7-b5a5-035de8ca141d"
+                      name="Upper"
+                      value="*" />
+                  </upperValueInternal>
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+          <association
+            Id="cd2cdb7e-cbc0-4f3e-be60-777fee83b621"
+            isDerived="false"
+            sourceEndRoleName="ResourceManager"
+            targetEndRoleName="Resource"
+            isLeaf="false"
+            isAbstract="false">
+            <classMoniker
+              Id="231e512f-c959-407c-aa10-8aab21eb4da4"
+              LastKnownName="Resource"
+              LastKnownLocation="ModelingProject1.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="b0227114-5e32-430a-87eb-0d7b24a0bc85"
+                  name="ResourceManager"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="a534303f-e56a-48dd-8f3c-ffe0141de01c"
+                  name="Resource"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false">
+                  <lowerValueInternal>
+                    <literalString
+                      Id="9c889b8c-c1f6-47cc-b213-e73886b983f5"
+                      name="Lower"
+                      value="*" />
+                  </lowerValueInternal>
+                  <upperValueInternal>
+                    <literalString
+                      Id="bcf1a076-4157-4c42-8c35-8d35e3573d78"
+                      name="Upper"
+                      value="*" />
+                  </upperValueInternal>
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+        </targetEnds>
+      </class>
     </packageHasNamedElement>
     <packageHasNamedElement>
       <class
@@ -1324,6 +1431,173 @@
             <classMoniker
               Id="9d63ba47-5983-466d-8d4c-723731a49a5b"
               LastKnownName="InputDevice"
+              LastKnownLocation="ModelingProject1.uml" />
+          </generalization>
+        </generalsInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="a9c8ac50-9dc3-488d-b753-e9260d29cc95"
+        name="MtlLoader"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <suppliersInternal>
+          <dependency
+            Id="5f00e0a1-9b35-4a33-89a6-10191fb83a1d">
+            <classMoniker
+              Id="223afeb2-ffba-432a-a4b3-e7b28494879f"
+              LastKnownName="Material"
+              LastKnownLocation="ModelingProject1.uml" />
+          </dependency>
+        </suppliersInternal>
+        <generalsInternal>
+          <generalization
+            Id="bc42ee78-6267-4c8d-be9d-66d807f0786d"
+            isSubstitutable="false">
+            <classMoniker
+              Id="92cd113c-eab4-4389-b4d4-16263e91fe72"
+              LastKnownName="ResourceFactory"
+              LastKnownLocation="ModelingProject1.uml" />
+          </generalization>
+        </generalsInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="231e512f-c959-407c-aa10-8aab21eb4da4"
+        name="Resource"
+        isAbstract="true"
+        isLeaf="false"
+        isActiveClass="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="92cd113c-eab4-4389-b4d4-16263e91fe72"
+        name="ResourceFactory"
+        isAbstract="true"
+        isLeaf="false"
+        isActiveClass="false">
+        <suppliersInternal>
+          <dependency
+            Id="0792a6d8-402c-4272-96cc-b7d9bbc0eca2">
+            <classMoniker
+              Id="231e512f-c959-407c-aa10-8aab21eb4da4"
+              LastKnownName="Resource"
+              LastKnownLocation="ModelingProject1.uml" />
+          </dependency>
+        </suppliersInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="6c0e5c9e-cf24-4ee5-9468-e1ee51b16a26"
+        name="ResourceFactoryImp"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <suppliersInternal>
+          <dependency
+            Id="e525794b-9d35-4146-ba8f-14ba690fd33a">
+            <classMoniker
+              Id="9c5d5a4a-8e26-4589-aac2-f8b136c3a06b"
+              LastKnownName="ResourceImp"
+              LastKnownLocation="ModelingProject1.uml" />
+          </dependency>
+        </suppliersInternal>
+        <generalsInternal>
+          <generalization
+            Id="1caba93b-543a-4015-bf58-68bd6ca49585"
+            isSubstitutable="false">
+            <classMoniker
+              Id="92cd113c-eab4-4389-b4d4-16263e91fe72"
+              LastKnownName="ResourceFactory"
+              LastKnownLocation="ModelingProject1.uml" />
+          </generalization>
+        </generalsInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="9c5d5a4a-8e26-4589-aac2-f8b136c3a06b"
+        name="ResourceImp"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <generalsInternal>
+          <generalization
+            Id="e2ecb4f5-49cc-4236-8708-5688af66e15e"
+            isSubstitutable="false">
+            <classMoniker
+              Id="231e512f-c959-407c-aa10-8aab21eb4da4"
+              LastKnownName="Resource"
+              LastKnownLocation="ModelingProject1.uml" />
+          </generalization>
+        </generalsInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="223afeb2-ffba-432a-a4b3-e7b28494879f"
+        name="Material"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <generalsInternal>
+          <generalization
+            Id="c46b8176-3df1-4f6d-93b0-e19ef3ff4cb6"
+            isSubstitutable="false">
+            <classMoniker
+              Id="231e512f-c959-407c-aa10-8aab21eb4da4"
+              LastKnownName="Resource"
+              LastKnownLocation="ModelingProject1.uml" />
+          </generalization>
+        </generalsInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="0f3026db-2cd0-4028-a69e-f692d0727482"
+        name="ObjLoader"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <suppliersInternal>
+          <dependency
+            Id="3f1355fd-4da1-44a6-b46c-c636e17244e8">
+            <classMoniker
+              Id="3233574c-f5ce-4056-aade-70f98fef765b"
+              LastKnownName="Mesh"
+              LastKnownLocation="ModelingProject1.uml" />
+          </dependency>
+        </suppliersInternal>
+        <generalsInternal>
+          <generalization
+            Id="5cf6df3a-b0ec-4499-9c49-0557d1a5beb2"
+            isSubstitutable="false">
+            <classMoniker
+              Id="92cd113c-eab4-4389-b4d4-16263e91fe72"
+              LastKnownName="ResourceFactory"
+              LastKnownLocation="ModelingProject1.uml" />
+          </generalization>
+        </generalsInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="3233574c-f5ce-4056-aade-70f98fef765b"
+        name="Mesh"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <generalsInternal>
+          <generalization
+            Id="9b31a088-0e02-4767-b22b-78ecdc7a8e0c"
+            isSubstitutable="false">
+            <classMoniker
+              Id="231e512f-c959-407c-aa10-8aab21eb4da4"
+              LastKnownName="Resource"
               LastKnownLocation="ModelingProject1.uml" />
           </generalization>
         </generalsInternal>
