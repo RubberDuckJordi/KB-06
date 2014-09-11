@@ -11,6 +11,7 @@
 #include "IndexBufferWrapper.cpp"
 #include "FormatWrapper.cpp"
 #include "ColorWrapper.cpp"
+#include "Mesh.h"
 
 class Renderer
 {
@@ -38,7 +39,7 @@ public:
 	virtual void SetFvF(DWORDWrapper* fvf)=0;
 	virtual void SetTransform(int type, MatrixWrapper* wrapper)=0;
 
-	virtual void DrawPrimitive(int heightArraySize, int amountOfIndices)=0;
+	virtual void DrawPrimitive(Mesh mesh)=0;
 	virtual void DrawSubset(MeshWrapper* wrapper, int subset)=0;
 
 	virtual void SetStreamSource()=0; //??

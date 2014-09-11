@@ -101,9 +101,7 @@ void DirectXRenderer::StopScene()
 //Buffers
 void DirectXRenderer::CreateVertexBuffer(int heightmapvertex, DWORDWrapper* usage, DWORDWrapper* fvf, PoolWrapper* pool, VertexBufferWrapper* vertexbuffer, HANDLE handle)
 {
-
 	this->g_pd3dDevice->CreateVertexBuffer(heightmapvertex, usage->GetDWORD(), fvf->GetDWORD(), pool->GetPool(), vertexbuffer->GetVertexBuffer(), &handle);
-
 };
 
 void DirectXRenderer::CreateIndexBuffer(int length, DWORDWrapper* usage, FormatWrapper* format, PoolWrapper* pool, IndexBufferWrapper* Indexbuffer, HANDLE* handle)
@@ -135,9 +133,9 @@ void DirectXRenderer::SetTransform(int type, MatrixWrapper* wrapper)
 };
 
 //Draw functions
-void DirectXRenderer::DrawPrimitive(int heightArraySize, int amountOfIndices)
+void DirectXRenderer::DrawPrimitive(Mesh mesh)
 {
-	g_pd3dDevice->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, heightArraySize, 0, amountOfIndices / 3);
+	g_pd3dDevice->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, mesh.vertices.size, 0, mesh.faceDefinitions.size * 3);
 };
 
 void DirectXRenderer::DrawSubset(MeshWrapper* wrapper, int subset)
