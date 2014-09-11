@@ -10,7 +10,7 @@
     </comment>
     <comment
       Id="ebe048ff-4583-462f-8460-42a9c5b6b730">
-      <body>Gold classes are classes that are supposed to be implemented by the end user.</body>
+      <body>Gold classes are classes that can be made by the end user.</body>
     </comment>
   </ownedCommentsInternal>
   <profileInstances>
@@ -355,7 +355,166 @@
         name="InputManager"
         isAbstract="false"
         isLeaf="false"
-        isActiveClass="false" />
+        isActiveClass="false">
+        <targetEnds>
+          <association
+            Id="962e2b59-acc6-45b2-a359-9bab10a0b256"
+            isDerived="false"
+            sourceEndRoleName="InputManager"
+            targetEndRoleName="Window"
+            isLeaf="false"
+            isAbstract="false">
+            <classMoniker
+              Id="24a019df-3362-4aa6-b353-71d127d4c246"
+              LastKnownName="Window"
+              LastKnownLocation="ModelingProject1.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="eb258c73-e29a-4ea7-bd70-bcacc54deafd"
+                  name="InputManager"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="77c87d37-6fe5-4b56-a2aa-788879440879"
+                  name="Window"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false">
+                  <lowerValueInternal>
+                    <literalString
+                      Id="8790697c-8557-400e-ac80-6130ad96f723"
+                      name="Lower"
+                      value="*" />
+                  </lowerValueInternal>
+                  <upperValueInternal>
+                    <literalString
+                      Id="11d52f01-b0f4-4959-8351-d4af8c534a1e"
+                      name="Upper"
+                      value="*" />
+                  </upperValueInternal>
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+          <association
+            Id="bb6a2a50-ac63-428e-9ff4-e8113528c338"
+            isDerived="false"
+            sourceEndRoleName="InputManager"
+            targetEndRoleName="InputDeviceFactory"
+            isLeaf="false"
+            isAbstract="false">
+            <classMoniker
+              Id="34e65f4c-cb0d-4752-a46c-75755836991e"
+              LastKnownName="InputDeviceFactory"
+              LastKnownLocation="ModelingProject1.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="b07148c5-517c-4be2-90ba-1f5dd8f5f2b4"
+                  name="InputManager"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false">
+                  <lowerValueInternal>
+                    <literalString
+                      Id="de38d6f2-73a9-4096-b44c-eb4b0417a6f9"
+                      name="Lower"
+                      value="*" />
+                  </lowerValueInternal>
+                  <upperValueInternal>
+                    <literalString
+                      Id="6f3fd873-72a5-4300-93e5-7ddf92916f0a"
+                      name="Upper"
+                      value="*" />
+                  </upperValueInternal>
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="4ae4a186-a830-4199-a4e4-925c53d8c1fc"
+                  name="InputDeviceFactory"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false" />
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+          <association
+            Id="865e96bc-ce6b-4dcf-91b6-c0b9eab1e564"
+            isDerived="false"
+            sourceEndRoleName="InputManager"
+            targetEndRoleName="InputDevice"
+            isLeaf="false"
+            isAbstract="false">
+            <classMoniker
+              Id="9d63ba47-5983-466d-8d4c-723731a49a5b"
+              LastKnownName="InputDevice"
+              LastKnownLocation="ModelingProject1.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="f277aed3-76f3-4df8-994f-e226dfa3ea40"
+                  name="InputManager"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="f2e58f43-a8b9-47b4-aaa8-1ded0a6eec4c"
+                  name="InputDevice"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false">
+                  <lowerValueInternal>
+                    <literalString
+                      Id="4d33d407-38cb-46a5-b200-12c15600696d"
+                      name="Lower"
+                      value="*" />
+                  </lowerValueInternal>
+                  <upperValueInternal>
+                    <literalString
+                      Id="80b68487-5bea-4d8c-b673-fb9f4c5d295d"
+                      name="Upper"
+                      value="*" />
+                  </upperValueInternal>
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+        </targetEnds>
+      </class>
     </packageHasNamedElement>
     <packageHasNamedElement>
       <class
@@ -674,7 +833,7 @@
             Id="994700f2-7e5e-4d08-9311-b4656a86cdfb">
             <classMoniker
               Id="c77c377f-1f41-48e0-93e2-2750102126dd"
-              LastKnownName="SceneImpl"
+              LastKnownName="SceneImp"
               LastKnownLocation="ModelingProject1.uml" />
           </dependency>
         </suppliersInternal>
@@ -715,7 +874,7 @@
     <packageHasNamedElement>
       <class
         Id="c77c377f-1f41-48e0-93e2-2750102126dd"
-        name="SceneImpl"
+        name="SceneImp"
         isAbstract="false"
         isLeaf="false"
         isActiveClass="false">
@@ -949,6 +1108,222 @@
             <classMoniker
               Id="ec30eef9-8695-4e41-b87b-7b43e6639795"
               LastKnownName="Entity"
+              LastKnownLocation="ModelingProject1.uml" />
+          </generalization>
+        </generalsInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="24a019df-3362-4aa6-b353-71d127d4c246"
+        name="Window"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="34e65f4c-cb0d-4752-a46c-75755836991e"
+        name="InputDeviceFactory"
+        isAbstract="true"
+        isLeaf="false"
+        isActiveClass="false">
+        <suppliersInternal>
+          <dependency
+            Id="d4854837-2d4f-4638-a43e-253a2e4951ac">
+            <classMoniker
+              Id="9d63ba47-5983-466d-8d4c-723731a49a5b"
+              LastKnownName="InputDevice"
+              LastKnownLocation="ModelingProject1.uml" />
+          </dependency>
+        </suppliersInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="9d63ba47-5983-466d-8d4c-723731a49a5b"
+        name="InputDevice"
+        isAbstract="true"
+        isLeaf="false"
+        isActiveClass="false">
+        <targetEnds>
+          <association
+            Id="2d149abd-9c6b-47df-8b02-241a1dc13942"
+            isDerived="false"
+            sourceEndRoleName="InputDevice"
+            targetEndRoleName="Input"
+            isLeaf="false"
+            isAbstract="false">
+            <classMoniker
+              Id="899c6365-591d-463d-85f7-5c000cdd6a64"
+              LastKnownName="Input"
+              LastKnownLocation="ModelingProject1.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="6b3f2b62-5ef4-4a9b-96ef-1995793af736"
+                  name="InputDevice"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="01202ff3-8f47-443f-8bda-7e3e0468956c"
+                  name="Input"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false" />
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+        </targetEnds>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="82999296-c78e-4cf8-9ffb-9c9ef5d2abb0"
+        name="DirectInputDeviceFactory"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <suppliersInternal>
+          <dependency
+            Id="c1a439f6-ab25-4deb-aa03-a577b186bb86">
+            <classMoniker
+              Id="e887e8e9-c429-47ce-b487-7183934780ee"
+              LastKnownName="DirectInputDevice"
+              LastKnownLocation="ModelingProject1.uml" />
+          </dependency>
+        </suppliersInternal>
+        <generalsInternal>
+          <generalization
+            Id="7f9d5a34-a037-4a6f-9432-901f72a5840d"
+            isSubstitutable="false">
+            <classMoniker
+              Id="34e65f4c-cb0d-4752-a46c-75755836991e"
+              LastKnownName="InputDeviceFactory"
+              LastKnownLocation="ModelingProject1.uml" />
+          </generalization>
+        </generalsInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="e887e8e9-c429-47ce-b487-7183934780ee"
+        name="DirectInputDevice"
+        isAbstract="true"
+        isLeaf="false"
+        isActiveClass="false">
+        <generalsInternal>
+          <generalization
+            Id="68266831-9bf9-4542-8862-79d89bfa37c0"
+            isSubstitutable="false">
+            <classMoniker
+              Id="9d63ba47-5983-466d-8d4c-723731a49a5b"
+              LastKnownName="InputDevice"
+              LastKnownLocation="ModelingProject1.uml" />
+          </generalization>
+        </generalsInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="fb5c521d-10ef-4a92-bf83-cad0384a8667"
+        name="DirectKeyboard"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <generalsInternal>
+          <generalization
+            Id="a02c0448-e042-4180-b639-924e3c258508"
+            isSubstitutable="false">
+            <classMoniker
+              Id="e887e8e9-c429-47ce-b487-7183934780ee"
+              LastKnownName="DirectInputDevice"
+              LastKnownLocation="ModelingProject1.uml" />
+          </generalization>
+        </generalsInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="0190d151-8f79-4cdc-9a95-b74323ef6426"
+        name="DirectMouse"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <generalsInternal>
+          <generalization
+            Id="558cd7e5-894b-4731-b0b5-a6ccf708309c"
+            isSubstitutable="false">
+            <classMoniker
+              Id="e887e8e9-c429-47ce-b487-7183934780ee"
+              LastKnownName="DirectInputDevice"
+              LastKnownLocation="ModelingProject1.uml" />
+          </generalization>
+        </generalsInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="899c6365-591d-463d-85f7-5c000cdd6a64"
+        name="Input"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="c20fe274-43ea-4bfa-b816-0daebeeb1cdc"
+        name="InputDeviceFactoryImp"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <suppliersInternal>
+          <dependency
+            Id="2f6a4b7f-61bf-4b5d-b2c1-a22e9151f7e6">
+            <classMoniker
+              Id="87dec567-e390-4b61-a5ce-6cd74bf9a44e"
+              LastKnownName="InputDeviceImp"
+              LastKnownLocation="ModelingProject1.uml" />
+          </dependency>
+        </suppliersInternal>
+        <generalsInternal>
+          <generalization
+            Id="6492864d-4159-4c9b-9f2c-8c9e38e0c293"
+            isSubstitutable="false">
+            <classMoniker
+              Id="34e65f4c-cb0d-4752-a46c-75755836991e"
+              LastKnownName="InputDeviceFactory"
+              LastKnownLocation="ModelingProject1.uml" />
+          </generalization>
+        </generalsInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="87dec567-e390-4b61-a5ce-6cd74bf9a44e"
+        name="InputDeviceImp"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <generalsInternal>
+          <generalization
+            Id="e4d7a885-0c74-4abd-a01d-e5e6124eaa14"
+            isSubstitutable="false">
+            <classMoniker
+              Id="9d63ba47-5983-466d-8d4c-723731a49a5b"
+              LastKnownName="InputDevice"
               LastKnownLocation="ModelingProject1.uml" />
           </generalization>
         </generalsInternal>

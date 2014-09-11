@@ -7,23 +7,9 @@
     </comment>
     <comment Id="1df1e266-b221-477e-a260-4a869cc9c29b">
       <elementDefinition Id="ebe048ff-4583-462f-8460-42a9c5b6b730" />
-      <body>Gold classes are classes that are supposed to be implemented by the end user.</body>
+      <body>Gold classes are classes that can be made by the end user.</body>
     </comment>
   </ownedCommentsInternal>
-  <profileInstances>
-    <packageHasProfileInstances Id="3a83ef58-098a-4947-a588-c4c4af4bdf97">
-      <profileInstance Id="b71419fc-be0f-4667-a2fa-a2f76059ce12" name="StandardProfileL2">
-        <elementDefinition Id="e34d544e-0fea-4ed6-ac5e-1b74119ac791" />
-      </profileInstance>
-      <elementDefinition Id="0caec977-1f8c-4ba3-a7db-8cc9ad9cc73b" />
-    </packageHasProfileInstances>
-    <packageHasProfileInstances Id="84f32f44-dbb7-447f-909e-f73c5b15cbb2">
-      <profileInstance Id="97baa935-130c-4321-8347-a847ef26cb7c" name="StandardProfileL3">
-        <elementDefinition Id="532ea607-fb19-44b8-8502-3351b05452be" />
-      </profileInstance>
-      <elementDefinition Id="29349502-908c-4fda-9054-c48619c59ed0" />
-    </packageHasProfileInstances>
-  </profileInstances>
   <packagedElements>
     <logicalClassDesignerModelHasTypes>
       <class Id="14229a28-346b-46c4-87ef-44ba8bb9d802" name="Kernel" isAbstract="false" isLeaf="false" isActiveClass="false">
@@ -158,6 +144,86 @@
     <logicalClassDesignerModelHasTypes>
       <class Id="37723309-fb88-4733-b397-c19033482cfb" name="InputManager" isAbstract="false" isLeaf="false" isActiveClass="false">
         <elementDefinition Id="524ab529-0234-4d50-97cf-634cd26a5a18" />
+        <targetEnds>
+          <association Id="bacd8e2c-6312-458c-88dc-2de46e243d2a" isDerived="false" sourceEndRoleName="InputManager" targetEndRoleName="Window" isLeaf="false" isAbstract="false">
+            <classMoniker Id="a3c5129d-473d-4bce-83ec-d9771eaea98a" LastKnownName="Window" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="9452d270-2d84-4a4d-b2a0-ef258f7ba80c" name="InputManager" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="eb258c73-e29a-4ea7-bd70-bcacc54deafd" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="4bcc951f-a8e7-4936-afa3-d25b23edcf80" name="Window" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <lowerValueInternal>
+                    <literalString Id="06f57e7d-eebd-4795-b038-80fa221935de" name="Lower" value="*">
+                      <elementDefinition Id="8790697c-8557-400e-ac80-6130ad96f723" />
+                    </literalString>
+                  </lowerValueInternal>
+                  <upperValueInternal>
+                    <literalString Id="355b2f51-ae01-44dc-8e5a-6fb40f52d103" name="Upper" value="*">
+                      <elementDefinition Id="11d52f01-b0f4-4959-8351-d4af8c534a1e" />
+                    </literalString>
+                  </upperValueInternal>
+                  <elementDefinition Id="77c87d37-6fe5-4b56-a2aa-788879440879" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="962e2b59-acc6-45b2-a359-9bab10a0b256" />
+          </association>
+          <association Id="c2fc2323-df02-4d82-9a66-9bef927c3801" isDerived="false" sourceEndRoleName="InputManager" targetEndRoleName="InputDeviceFactory" isLeaf="false" isAbstract="false">
+            <classMoniker Id="f105cbe2-3c96-4744-b402-90ed6b7080a4" LastKnownName="InputDeviceFactory" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="0b2f2a32-aef1-460f-96d6-8788206a8fdd" name="InputManager" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <lowerValueInternal>
+                    <literalString Id="0f8e6e4a-0986-4496-81e7-a5af842e77c2" name="Lower" value="*">
+                      <elementDefinition Id="de38d6f2-73a9-4096-b44c-eb4b0417a6f9" />
+                    </literalString>
+                  </lowerValueInternal>
+                  <upperValueInternal>
+                    <literalString Id="80475580-6a52-4033-8658-19aeaa426be2" name="Upper" value="*">
+                      <elementDefinition Id="6f3fd873-72a5-4300-93e5-7ddf92916f0a" />
+                    </literalString>
+                  </upperValueInternal>
+                  <elementDefinition Id="b07148c5-517c-4be2-90ba-1f5dd8f5f2b4" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="4ee4715f-79f8-4a43-9811-3594b6d781eb" name="InputDeviceFactory" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="4ae4a186-a830-4199-a4e4-925c53d8c1fc" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="bb6a2a50-ac63-428e-9ff4-e8113528c338" />
+          </association>
+          <association Id="0d9e8b12-e218-4e03-a445-31d3eced560f" isDerived="false" sourceEndRoleName="InputManager" targetEndRoleName="InputDevice" isLeaf="false" isAbstract="false">
+            <classMoniker Id="b28e6aac-461f-47a0-be66-ca170cef3130" LastKnownName="InputDevice" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="dc430b5d-a61e-4f2a-9548-3cb8e6e7a566" name="InputManager" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="f277aed3-76f3-4df8-994f-e226dfa3ea40" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="e90a98c2-f792-4b7a-baeb-d2f97e57ed6c" name="InputDevice" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <lowerValueInternal>
+                    <literalString Id="b4bd0c19-cc4a-4b6d-8482-b4218e7e3fe1" name="Lower" value="*">
+                      <elementDefinition Id="4d33d407-38cb-46a5-b200-12c15600696d" />
+                    </literalString>
+                  </lowerValueInternal>
+                  <upperValueInternal>
+                    <literalString Id="72ef1aa0-caca-4fc7-98a9-ebd053d8e9d4" name="Upper" value="*">
+                      <elementDefinition Id="80b68487-5bea-4d8c-b673-fb9f4c5d295d" />
+                    </literalString>
+                  </upperValueInternal>
+                  <elementDefinition Id="f2e58f43-a8b9-47b4-aaa8-1ded0a6eec4c" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="865e96bc-ce6b-4dcf-91b6-c0b9eab1e564" />
+          </association>
+        </targetEnds>
       </class>
     </logicalClassDesignerModelHasTypes>
     <logicalClassDesignerModelHasTypes>
@@ -272,7 +338,7 @@
         <elementDefinition Id="2d79de58-6930-46f5-8d4b-929ae44810a7" />
         <suppliersInternal>
           <dependency Id="1de939e9-79c1-45ae-9b7d-be96e289b1df">
-            <classMoniker Id="8104260c-7457-40f6-995c-ce206a7c02dd" LastKnownName="SceneImpl" />
+            <classMoniker Id="8104260c-7457-40f6-995c-ce206a7c02dd" LastKnownName="SceneImp" />
             <elementDefinition Id="994700f2-7e5e-4d08-9311-b4656a86cdfb" />
           </dependency>
         </suppliersInternal>
@@ -285,7 +351,7 @@
       </class>
     </logicalClassDesignerModelHasTypes>
     <logicalClassDesignerModelHasTypes>
-      <class Id="8104260c-7457-40f6-995c-ce206a7c02dd" name="SceneImpl" isAbstract="false" isLeaf="false" isActiveClass="false">
+      <class Id="8104260c-7457-40f6-995c-ce206a7c02dd" name="SceneImp" isAbstract="false" isLeaf="false" isActiveClass="false">
         <elementDefinition Id="c77c377f-1f41-48e0-93e2-2750102126dd" />
         <generalsInternal>
           <generalization Id="088eef1f-20dd-407b-9891-38a2cb8f2b2a" isSubstitutable="false">
@@ -409,8 +475,144 @@
         </generalsInternal>
       </class>
     </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="a3c5129d-473d-4bce-83ec-d9771eaea98a" name="Window" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="24a019df-3362-4aa6-b353-71d127d4c246" />
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="f105cbe2-3c96-4744-b402-90ed6b7080a4" name="InputDeviceFactory" isAbstract="true" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="34e65f4c-cb0d-4752-a46c-75755836991e" />
+        <suppliersInternal>
+          <dependency Id="665dbc5c-8806-400f-bcde-52a4445debc8">
+            <classMoniker Id="b28e6aac-461f-47a0-be66-ca170cef3130" LastKnownName="InputDevice" />
+            <elementDefinition Id="d4854837-2d4f-4638-a43e-253a2e4951ac" />
+          </dependency>
+        </suppliersInternal>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="b28e6aac-461f-47a0-be66-ca170cef3130" name="InputDevice" isAbstract="true" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="9d63ba47-5983-466d-8d4c-723731a49a5b" />
+        <targetEnds>
+          <association Id="5313bb16-8e10-465b-9f5b-aa7ba837ff4f" isDerived="false" sourceEndRoleName="InputDevice" targetEndRoleName="Input" isLeaf="false" isAbstract="false">
+            <classMoniker Id="7d4652fa-731b-43dd-98a6-d5aa585a39dd" LastKnownName="Input" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="97d41472-d9d7-40ca-92c7-50c59d76eb1a" name="InputDevice" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="6b3f2b62-5ef4-4a9b-96ef-1995793af736" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="23a473f8-ef15-46f3-97f5-df6f95dfd91b" name="Input" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="01202ff3-8f47-443f-8bda-7e3e0468956c" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="2d149abd-9c6b-47df-8b02-241a1dc13942" />
+          </association>
+        </targetEnds>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="f75867d2-c935-48b9-99bc-eadf8e641199" name="DirectInputDeviceFactory" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="82999296-c78e-4cf8-9ffb-9c9ef5d2abb0" />
+        <suppliersInternal>
+          <dependency Id="3e7d3c50-1d92-40ea-8731-1b4ff7ba96bd">
+            <classMoniker Id="dac0a314-eb84-4e41-9df2-712c95a0c7a8" LastKnownName="DirectInputDevice" />
+            <elementDefinition Id="c1a439f6-ab25-4deb-aa03-a577b186bb86" />
+          </dependency>
+        </suppliersInternal>
+        <generalsInternal>
+          <generalization Id="d49c6241-b821-4774-bc07-6703c95752ca" isSubstitutable="false">
+            <classMoniker Id="f105cbe2-3c96-4744-b402-90ed6b7080a4" LastKnownName="InputDeviceFactory" />
+            <elementDefinition Id="7f9d5a34-a037-4a6f-9432-901f72a5840d" />
+          </generalization>
+        </generalsInternal>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="dac0a314-eb84-4e41-9df2-712c95a0c7a8" name="DirectInputDevice" isAbstract="true" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="e887e8e9-c429-47ce-b487-7183934780ee" />
+        <generalsInternal>
+          <generalization Id="0537fd9d-34d2-4c57-84cf-78af9a7969fc" isSubstitutable="false">
+            <classMoniker Id="b28e6aac-461f-47a0-be66-ca170cef3130" LastKnownName="InputDevice" />
+            <elementDefinition Id="68266831-9bf9-4542-8862-79d89bfa37c0" />
+          </generalization>
+        </generalsInternal>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="d8c06118-ccf7-4e99-8080-14f3dab1fd44" name="DirectKeyboard" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="fb5c521d-10ef-4a92-bf83-cad0384a8667" />
+        <generalsInternal>
+          <generalization Id="47c8cfbf-8bc7-4b6e-9e2e-5cf151d55baf" isSubstitutable="false">
+            <classMoniker Id="dac0a314-eb84-4e41-9df2-712c95a0c7a8" LastKnownName="DirectInputDevice" />
+            <elementDefinition Id="a02c0448-e042-4180-b639-924e3c258508" />
+          </generalization>
+        </generalsInternal>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="520cf0a1-24f7-49bb-9ff4-f436f8ad1fa8" name="DirectMouse" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="0190d151-8f79-4cdc-9a95-b74323ef6426" />
+        <generalsInternal>
+          <generalization Id="8e7be34c-9ef8-466f-9d86-6adafce2aae8" isSubstitutable="false">
+            <classMoniker Id="dac0a314-eb84-4e41-9df2-712c95a0c7a8" LastKnownName="DirectInputDevice" />
+            <elementDefinition Id="558cd7e5-894b-4731-b0b5-a6ccf708309c" />
+          </generalization>
+        </generalsInternal>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="7d4652fa-731b-43dd-98a6-d5aa585a39dd" name="Input" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="899c6365-591d-463d-85f7-5c000cdd6a64" />
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="49a69aac-93ac-4d9e-9f46-45b96769cc7b" name="InputDeviceFactoryImp" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="c20fe274-43ea-4bfa-b816-0daebeeb1cdc" />
+        <suppliersInternal>
+          <dependency Id="3efadf2e-e5b5-4db4-aece-316754f7443e">
+            <classMoniker Id="5c92b777-6b38-42d7-ac8a-380647810bb8" LastKnownName="InputDeviceImp" />
+            <elementDefinition Id="2f6a4b7f-61bf-4b5d-b2c1-a22e9151f7e6" />
+          </dependency>
+        </suppliersInternal>
+        <generalsInternal>
+          <generalization Id="8b958b74-538e-4a1d-ab7b-485bc8156ef2" isSubstitutable="false">
+            <classMoniker Id="f105cbe2-3c96-4744-b402-90ed6b7080a4" LastKnownName="InputDeviceFactory" />
+            <elementDefinition Id="6492864d-4159-4c9b-9f2c-8c9e38e0c293" />
+          </generalization>
+        </generalsInternal>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="5c92b777-6b38-42d7-ac8a-380647810bb8" name="InputDeviceImp" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="87dec567-e390-4b61-a5ce-6cd74bf9a44e" />
+        <generalsInternal>
+          <generalization Id="5eb0314b-2ae2-4f3d-b24b-600d59195902" isSubstitutable="false">
+            <classMoniker Id="b28e6aac-461f-47a0-be66-ca170cef3130" LastKnownName="InputDevice" />
+            <elementDefinition Id="e4d7a885-0c74-4abd-a01d-e5e6124eaa14" />
+          </generalization>
+        </generalsInternal>
+      </class>
+    </logicalClassDesignerModelHasTypes>
   </packagedElements>
   <package Id="fdc58c98-cb0e-4ddf-8523-a34ffc8744e0" name="ModelingProject1">
     <elementDefinition Id="40f63b3e-5460-48e0-9e04-60349f546976" />
+    <profileInstances>
+      <packageHasProfileInstances Id="3a83ef58-098a-4947-a588-c4c4af4bdf97">
+        <profileInstance Id="b71419fc-be0f-4667-a2fa-a2f76059ce12" name="StandardProfileL2">
+          <elementDefinition Id="e34d544e-0fea-4ed6-ac5e-1b74119ac791" />
+        </profileInstance>
+        <elementDefinition Id="0caec977-1f8c-4ba3-a7db-8cc9ad9cc73b" />
+      </packageHasProfileInstances>
+      <packageHasProfileInstances Id="84f32f44-dbb7-447f-909e-f73c5b15cbb2">
+        <profileInstance Id="97baa935-130c-4321-8347-a847ef26cb7c" name="StandardProfileL3">
+          <elementDefinition Id="532ea607-fb19-44b8-8502-3351b05452be" />
+        </profileInstance>
+        <elementDefinition Id="29349502-908c-4fda-9054-c48619c59ed0" />
+      </packageHasProfileInstances>
+    </profileInstances>
   </package>
 </logicalClassDesignerModel>
