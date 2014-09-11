@@ -27,7 +27,7 @@ public:
 
 	virtual void BeginScene()=0;
 	virtual void ClearScene(DWORDWrapper* count, DWORDWrapper* flags, ColorWrapper* color, float z, DWORDWrapper* stencil)=0;
-	virtual void PresentScene()=0;
+	virtual void PresentScene(HWND hWnd) = 0;
 	virtual void StopScene()=0;
 
 	virtual void CreateVertexBuffer(int heightmapvertex, DWORDWrapper* usage, DWORDWrapper* fvf, PoolWrapper* pool, VertexBufferWrapper* vertexbuffer, HANDLE handle)=0;
