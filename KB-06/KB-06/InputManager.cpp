@@ -91,7 +91,7 @@ void Input::InputManager::RemoveWindow(Window::Window& p_window)
 	}
 }
 
-void Input::InputManager::RemoveWindows()
+void Input::InputManager::RemoveAllWindows()
 {
 	std::map<Window::Window*, std::list<InputDevice*>>::iterator it;
 

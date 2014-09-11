@@ -22,7 +22,7 @@ namespace Input
 		std::map<Input, long> GetCurrentActions(Window::Window*);
 		void AddWindow(Window::Window*);
 		void RemoveWindow(Window::Window&);
-		void RemoveWindows();
+		void RemoveAllWindows();
 		void WindowClosed(Window::Window& p_window);
 		void WindowOpened(Window::Window& p_window);
 
