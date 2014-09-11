@@ -1,11 +1,11 @@
 #ifndef _MTLLOADER_H_
 #define _MTLLOADER_H_
-#include <string>
 #include "Material.h"
+#include <map>
 class MtlLoader
 {
 public:
-	static Material Load(std::string file);
+	static std::map<std::string, Material> MtlLoader::Load(std::string file);
 };
 #endif
 

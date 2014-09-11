@@ -8,6 +8,7 @@
 #include "InputManager.h"
 #include "DirectInputDeviceFactory.h"
 #include "ResourceManager.h"
+#include "DirectXRenderer.h"
 
 int _tmain(int argc, _TCHAR* argv[])
 { 
@@ -16,7 +17,8 @@ int _tmain(int argc, _TCHAR* argv[])
 	logger->SetLogLevel(Logger::Logger::INFO);
 
 	ResourceManager* resourceManager = new ResourceManager();
-	resourceManager->load("cube.obj.mesh");
+	resourceManager->loadMesh("cube.obj.mesh");
+	DirectXRenderer* renderer = new DirectXRenderer();
 
 	Window::WindowManager* wManager = new Window::WindowManager(NULL);
 	// Aanmaken van deze factory moet in een abstract factory gaan gebeuren

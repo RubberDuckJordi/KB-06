@@ -6,8 +6,6 @@
 #include "StringHelper.h"
 #include "LoggerPool.h"
 
-
-
 Mesh ObjLoader::Load(std::string file, ResourceManager* resourceManager){
 	std::ifstream ifs(file, std::ifstream::in);
 	std::string line;
@@ -19,8 +17,8 @@ Mesh ObjLoader::Load(std::string file, ResourceManager* resourceManager){
 		getline(ifs, line);
 		elements = StringHelper::split(line, ' ');
 		if (elements.size() > 0){
-			if (elements[0] == "mtllib "){
-
+			if (elements[0] == "mtllib"){
+				resourceManager->loadMaterials(elements[1]);
 			}
 			else if (elements[0] == "v"){
 				Vertex newVertex;

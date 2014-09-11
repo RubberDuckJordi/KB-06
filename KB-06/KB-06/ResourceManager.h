@@ -1,8 +1,9 @@
 #ifndef _RESOURCEMANAGER_H_
 #define _RESOURCEMANAGER_H_
-#include <hash_map>
+#include <map>
 #include "Mesh.h"
 #include "Material.h"
+
 #include <string>
 
 class ResourceManager
@@ -10,9 +11,10 @@ class ResourceManager
 public:
 	ResourceManager();
 	~ResourceManager();
-	void load(std::string file);
+	Mesh* ResourceManager::loadMesh(std::string);
+	std::map<std::string, Material>* ResourceManager::loadMaterials(std::string file);
 private:
-	std::hash_map<std::string, Mesh> meshes;
-	std::hash_map<std::string, Material> materials;
+	std::map<std::string, Mesh> meshes;
+	std::map<std::string, std::map<std::string, Material>> materials;
 };
 #endif 
