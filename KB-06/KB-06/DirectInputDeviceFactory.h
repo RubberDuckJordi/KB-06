@@ -8,7 +8,8 @@
 
 #include <map>
 
-namespace Input {
+namespace Input 
+{
 	class DirectInputDeviceFactory : public InputDeviceFactory 
 	{
 	public:

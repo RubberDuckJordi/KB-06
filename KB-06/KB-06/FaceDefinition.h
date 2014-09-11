@@ -1,6 +1,12 @@
-#ifndef _FACEDFINITION_H_
-#define _FACEDFINITION_H_
-struct FaceDefinition {
-	int v1, v2, v3;
-};
+#ifndef _RESOURCE_FACEDFINITION_H_
+#define _RESOURCE_FACEDFINITION_H_
+
+namespace Resource
+{
+	struct FaceDefinition 
+	{
+		int v1, v2, v3;
+	};
+}
+
 #endif

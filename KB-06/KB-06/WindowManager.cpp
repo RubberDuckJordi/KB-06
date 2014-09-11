@@ -19,7 +19,7 @@ Window::WindowManager::~WindowManager()
 	delete sceneManager;
 };
 
-HWND Window::WindowManager::NewWindow(Renderer *renderer, int x, int y, int width, int height)
+HWND Window::WindowManager::NewWindow(Renderer::Renderer *renderer, int x, int y, int width, int height)
 {
 	Logger::Logger* logger = Logger::LoggerPool::GetInstance().GetLogger();
 	Window *window = new Window(renderer);

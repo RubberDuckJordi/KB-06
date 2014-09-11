@@ -2,7 +2,7 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="ColorWrapper.cpp">
-      <Filter>Source\Wrap Containers</Filter>
+      <Filter>Source\Renderer\Wrap Containers</Filter>
     </ClCompile>
     <ClCompile Include="DefaultEntity.cpp">
       <Filter>Source\Scene\Default</Filter>
@@ -28,17 +28,14 @@
     <ClCompile Include="DirectMouse.cpp">
       <Filter>Source\Input\Direct</Filter>
     </ClCompile>
-    <ClCompile Include="DirectXRenderer.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
     <ClCompile Include="DWORDWrapper.cpp">
-      <Filter>Source\Wrap Containers</Filter>
+      <Filter>Source\Renderer\Wrap Containers</Filter>
     </ClCompile>
     <ClCompile Include="IndexBufferWrapper.cpp">
-      <Filter>Source\Wrap Containers</Filter>
+      <Filter>Source\Renderer\Wrap Containers</Filter>
     </ClCompile>
     <ClCompile Include="FormatWrapper.cpp">
-      <Filter>Source\Wrap Containers</Filter>
+      <Filter>Source\Renderer\Wrap Containers</Filter>
     </ClCompile>
     <ClCompile Include="InputManager.cpp">
       <Filter>Source\Input</Filter>
@@ -50,25 +47,22 @@
       <Filter>Source</Filter>
     </ClCompile>
     <ClCompile Include="Logger.cpp">
-      <Filter>Source\Util</Filter>
+      <Filter>Source\Logger</Filter>
     </ClCompile>
     <ClCompile Include="LoggerPool.cpp">
-      <Filter>Source\Util</Filter>
+      <Filter>Source\Logger</Filter>
     </ClCompile>
     <ClCompile Include="MaterialWrapper.cpp">
-      <Filter>Source\Wrap Containers</Filter>
+      <Filter>Source\Renderer\Wrap Containers</Filter>
     </ClCompile>
     <ClCompile Include="MatrixWrapper.cpp">
-      <Filter>Source\Wrap Containers</Filter>
+      <Filter>Source\Renderer\Wrap Containers</Filter>
     </ClCompile>
     <ClCompile Include="MeshWrapper.cpp">
-      <Filter>Source\Wrap Containers</Filter>
+      <Filter>Source\Renderer\Wrap Containers</Filter>
     </ClCompile>
     <ClCompile Include="PoolWrapper.cpp">
-      <Filter>Source\Wrap Containers</Filter>
-    </ClCompile>
-    <ClCompile Include="Renderer.cpp">
-      <Filter>Source</Filter>
+      <Filter>Source\Renderer\Wrap Containers</Filter>
     </ClCompile>
     <ClCompile Include="Scene.cpp">
       <Filter>Source\Scene</Filter>
@@ -80,10 +74,10 @@
       <Filter>Source\Scene</Filter>
     </ClCompile>
     <ClCompile Include="TextureWrapper.cpp">
-      <Filter>Source\Wrap Containers</Filter>
+      <Filter>Source\Renderer\Wrap Containers</Filter>
     </ClCompile>
     <ClCompile Include="VertexBufferWrapper.cpp">
-      <Filter>Source\Wrap Containers</Filter>
+      <Filter>Source\Renderer\Wrap Containers</Filter>
     </ClCompile>
     <ClCompile Include="WindowManager.cpp">
       <Filter>Source\Window</Filter>
@@ -107,7 +101,13 @@
       <Filter>Source\Resource</Filter>
     </ClCompile>
     <ClCompile Include="StringHelper.cpp">
-      <Filter>Source\Util</Filter>
+      <Filter>Source\Logger</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectXRenderer.cpp">
+      <Filter>Source\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer.cpp">
+      <Filter>Source\Renderer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -135,9 +135,6 @@
     <ClInclude Include="DirectMouse.h">
       <Filter>Header\Input\Direct</Filter>
     </ClInclude>
-    <ClInclude Include="DirectXRenderer.h">
-      <Filter>Header</Filter>
-    </ClInclude>
     <ClInclude Include="Entity.h">
       <Filter>Header\Scene</Filter>
     </ClInclude>
@@ -154,13 +151,10 @@
       <Filter>Header\Input</Filter>
     </ClInclude>
     <ClInclude Include="Logger.h">
-      <Filter>Header\Util</Filter>
+      <Filter>Header\Logger</Filter>
     </ClInclude>
     <ClInclude Include="LoggerPool.h">
-      <Filter>Header\Util</Filter>
-    </ClInclude>
-    <ClInclude Include="Renderer.h">
-      <Filter>Header</Filter>
+      <Filter>Header\Logger</Filter>
     </ClInclude>
     <ClInclude Include="Window.h">
       <Filter>Header\Window</Filter>
@@ -220,10 +214,16 @@
       <Filter>Header\Resource\Material</Filter>
     </ClInclude>
     <ClInclude Include="StringHelper.h">
-      <Filter>Header\Util</Filter>
+      <Filter>Header\Logger</Filter>
     </ClInclude>
     <ClInclude Include="ParameterSpaceVertex.h">
       <Filter>Header\Resource\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXRenderer.h">
+      <Filter>Header\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer.h">
+      <Filter>Header\Renderer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -245,26 +245,14 @@
     <Filter Include="Header\Window">
       <UniqueIdentifier>{5727ef4d-677c-4d5d-9751-6d790726ead0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header\Wrap Containers">
-      <UniqueIdentifier>{9268418a-0d0c-4254-82d9-7be99c70a034}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header\Scene\Default">
       <UniqueIdentifier>{7a920306-9829-4958-8b40-8250c9fdc650}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header\Input\Direct">
       <UniqueIdentifier>{6cc027ff-f9d4-44a3-a451-e2d0b5641208}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header\Util">
-      <UniqueIdentifier>{226121f4-6309-4255-8ee6-a36ca871dd34}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source\Input">
       <UniqueIdentifier>{a271cb67-092f-4b65-82cd-00400669ba89}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source\Util">
-      <UniqueIdentifier>{e64004ff-6cdf-4d2e-b712-c17cb013f798}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source\Wrap Containers">
-      <UniqueIdentifier>{a8a4c3de-c6dc-4555-a187-5c944c40dacb}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source\Window">
       <UniqueIdentifier>{5266aa26-4bfb-46d7-b110-8f68e9e626a4}</UniqueIdentifier>
@@ -289,6 +277,24 @@
     </Filter>
     <Filter Include="Header\Resource\Material">
       <UniqueIdentifier>{bd5400fc-8d23-4b12-9509-e420ca906b5c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header\Logger">
+      <UniqueIdentifier>{226121f4-6309-4255-8ee6-a36ca871dd34}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Logger">
+      <UniqueIdentifier>{e64004ff-6cdf-4d2e-b712-c17cb013f798}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header\Renderer">
+      <UniqueIdentifier>{d0d813fc-eb91-487b-adf7-bab8fe83899d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header\Renderer\Wrap Containers">
+      <UniqueIdentifier>{9268418a-0d0c-4254-82d9-7be99c70a034}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Renderer">
+      <UniqueIdentifier>{abcaad1d-c18a-4cfa-9569-1a15d73ca377}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Renderer\Wrap Containers">
+      <UniqueIdentifier>{a8a4c3de-c6dc-4555-a187-5c944c40dacb}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

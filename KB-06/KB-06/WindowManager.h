@@ -7,8 +7,8 @@ Purpose: Creates and manages windows.
 @version 1.0
 */
 
-#ifndef _WINDOWMANAGER_H_
-#define _WINDOWMANAGER_H_
+#ifndef _WINDOW_WINDOWMANAGER_H_
+#define _WINDOW_WINDOWMANAGER_H_
 
 #include <Windows.h>
 #include "Window.h"
@@ -17,7 +17,8 @@ Purpose: Creates and manages windows.
 #include "SceneManager.h"
 #include <vector>
 
-namespace Window {
+namespace Window 
+{
 
 	class WindowManager
 	{
@@ -39,7 +40,7 @@ namespace Window {
 		@param width: The width of the window.
 		@param height: The height of the window.
 		*/
-		HWND NewWindow(Renderer *renderer, int x, int y, int width, int height);
+		HWND NewWindow(Renderer::Renderer *renderer, int x, int y, int width, int height);
 
 		/*!
 		Loops through the list of windows to update them.

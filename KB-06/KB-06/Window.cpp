@@ -3,7 +3,7 @@
 #include "Logger.h"
 #include "LoggerPool.h"
 
-Window::Window::Window(Renderer* renderer)
+Window::Window::Window(Renderer::Renderer* renderer)
 {
 	//Set the default data for the window class.
 	//These can be reset in the derived class's constructor.

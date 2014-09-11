@@ -16,9 +16,9 @@ int _tmain(int argc, _TCHAR* argv[])
 	logger->NewFile();
 	logger->SetLogLevel(Logger::Logger::INFO);
 
-	ResourceManager* resourceManager = new ResourceManager();
+	Resource::ResourceManager* resourceManager = new Resource::ResourceManager();
 	resourceManager->loadMesh("cube.obj.mesh");
-	DirectXRenderer* renderer = new DirectXRenderer();
+	Renderer::DirectXRenderer* renderer = new Renderer::DirectXRenderer();
 
 	Window::WindowManager* wManager = new Window::WindowManager(NULL);
 	// Aanmaken van deze factory moet in een abstract factory gaan gebeuren

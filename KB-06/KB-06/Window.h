@@ -7,21 +7,22 @@ Purpose: Keeping information concerning windows.
 @version 1.0
 */
 
-#ifndef _WINDOW_H_
-#define _WINDOW_H_
+#ifndef _WINDOW_WINDOW_H_
+#define _WINDOW_WINDOW_H_
 
 #include <Windows.h>
 //#include "SceneManager.h"
 #include "Scene.h"
 #include "Renderer.h"
 
-namespace Window {
+namespace Window 
+{
 	enum WindowState { fullscreen, maximized, normal, minimized, closed };
 
 	class Window
 	{
 	public:
-		Window(Renderer* renderer);
+		Window(Renderer::Renderer* renderer);
 		~Window();
 
 		/*!

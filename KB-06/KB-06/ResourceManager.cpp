@@ -5,27 +5,27 @@
 #include "MtlLoader.h"
 
 
-ResourceManager::ResourceManager()
+Resource::ResourceManager::ResourceManager()
 {
 }
 
 
-ResourceManager::~ResourceManager()
+Resource::ResourceManager::~ResourceManager()
 {
 }
 
-Mesh* ResourceManager::loadMesh(std::string file){
+Resource::Mesh* Resource::ResourceManager::loadMesh(std::string file){
 	Mesh mesh;
-	if (StringHelper::EndsWith(file, ".obj.mesh")){
+	if (Logger::StringHelper::EndsWith(file, ".obj.mesh")){
 		mesh = ObjLoader::Load(file, this);
 		meshes[file] = mesh;
 	}
 	return &mesh;
 }
 
-std::map<std::string, Material>* ResourceManager::loadMaterials(std::string file){
+std::map<std::string, Resource::Material>* Resource::ResourceManager::loadMaterials(std::string file){
 	std::map<std::string, Material> newMaterials;
-	if (StringHelper::EndsWith(file, ".mtl")){
+	if (Logger::StringHelper::EndsWith(file, ".mtl")){
 		newMaterials = MtlLoader::Load(file);
 		materials[file] = newMaterials;
 	}

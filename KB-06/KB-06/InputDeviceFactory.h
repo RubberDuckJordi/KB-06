@@ -6,7 +6,8 @@
 #include "Input.h"
 #include "Window.h"
 
-namespace Input {
+namespace Input 
+{
 	class InputDeviceFactory 
 	{
 	public:

@@ -8,7 +8,7 @@
 #include "LoggerPool.h"
 
 
-std::map<std::string, Material> MtlLoader::Load(std::string file){
+std::map<std::string, Resource::Material> Resource::MtlLoader::Load(std::string file){
 	std::ifstream ifs(file, std::ifstream::in);
 	std::string line;
 	std::vector<std::string> elements;
@@ -17,7 +17,7 @@ std::map<std::string, Material> MtlLoader::Load(std::string file){
 	std::string currentMaterial;
 	while (ifs.good()) {
 		getline(ifs, line);
-		elements = StringHelper::split(line, ' ');
+		elements = Logger::StringHelper::split(line, ' ');
 		if (elements.size() > 0){
 			if (elements[0] == "newmtl"){
 				currentMaterial = elements[1];

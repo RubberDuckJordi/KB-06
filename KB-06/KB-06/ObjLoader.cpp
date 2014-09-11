@@ -6,7 +6,7 @@
 #include "StringHelper.h"
 #include "LoggerPool.h"
 
-Mesh ObjLoader::Load(std::string file, ResourceManager* resourceManager){
+Resource::Mesh Resource::ObjLoader::Load(std::string file, ResourceManager* resourceManager){
 	std::ifstream ifs(file, std::ifstream::in);
 	std::string line;
 	std::vector<std::string> elements;
@@ -15,7 +15,7 @@ Mesh ObjLoader::Load(std::string file, ResourceManager* resourceManager){
 	Mesh mesh;
 	while (ifs.good()) {
 		getline(ifs, line);
-		elements = StringHelper::split(line, ' ');
+		elements = Logger::StringHelper::split(line, ' ');
 		if (elements.size() > 0){
 			if (elements[0] == "mtllib"){
 				resourceManager->loadMaterials(elements[1]);
@@ -61,7 +61,7 @@ Mesh ObjLoader::Load(std::string file, ResourceManager* resourceManager){
 			}
 			else if (elements[0] == "f"){
 				for (int i = 1; i < elements.size(); ++i){
-					faces = StringHelper::split(line, '/');
+					faces = Logger::StringHelper::split(line, '/');
 					FaceDefinition newFaceDefinition;
 					newFaceDefinition.v1 = atoi(faces[0].c_str());;
 					newFaceDefinition.v2 = atoi(faces[1].c_str());;

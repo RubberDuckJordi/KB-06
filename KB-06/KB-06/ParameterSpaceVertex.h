@@ -1,6 +1,12 @@
-#ifndef _PARAMETERSPACEVERTEX_H_
-#define _PARAMETERSPACEVERTEX_H_
-struct ParameterSpaceVertex {
-	float u, v, w;
-};
+#ifndef _RESOURCE_PARAMETERSPACEVERTEX_H_
+#define _RESOURCE_PARAMETERSPACEVERTEX_H_
+
+namespace Resource
+{
+	struct ParameterSpaceVertex 
+	{
+		float u, v, w;
+	};
+}
+
 #endif

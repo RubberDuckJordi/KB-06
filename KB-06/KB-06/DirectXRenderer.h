@@ -1,47 +1,50 @@
-#ifndef _DIRECTXRENDERER_H_
-#define _DIRECTXRENDERER_H_
+#ifndef _RENDERER_DIRECTXRENDERER_H_
+#define _RENDERER_DIRECTXRENDERER_H_
 
 #include <d3dx9.h>
 #include "Renderer.h"
 
-
-class DirectXRenderer : public Renderer
+namespace Renderer
 {
-public:
-	DirectXRenderer();
-	~DirectXRenderer();
+	class DirectXRenderer : public Renderer
+	{
+	public:
+		DirectXRenderer();
+		~DirectXRenderer();
 
-	void InitD3D(HWND hWnd);
-	void SetRenderState();
+		void InitD3D(HWND hWnd);
+		void SetRenderState();
 
-	void SetWorldMatrix(MatrixWrapper* WorldMatrix);
-	void SetViewMatrix(MatrixWrapper* ViewMatrix);
-	void SetProjectionMatrix(MatrixWrapper* ProjectionMatrix);
+		void SetWorldMatrix(MatrixWrapper* WorldMatrix);
+		void SetViewMatrix(MatrixWrapper* ViewMatrix);
+		void SetProjectionMatrix(MatrixWrapper* ProjectionMatrix);
 
-	void BeginScene();
-	void ClearScene(DWORDWrapper* count, DWORDWrapper* flags, ColorWrapper* color, float z, DWORDWrapper* stencil);
-	void PresentScene(HWND hWnd);
-	void StopScene();
+		void BeginScene();
+		void ClearScene(DWORDWrapper* count, DWORDWrapper* flags, ColorWrapper* color, float z, DWORDWrapper* stencil);
+		void PresentScene(HWND hWnd);
+		void StopScene();
 
-	void CreateVertexBuffer(int heightmapvertex, DWORDWrapper* usage, DWORDWrapper* fvf, PoolWrapper* pool, VertexBufferWrapper* vertexbuffer, HANDLE handle);
-	void CreateIndexBuffer(int length, DWORDWrapper* usage, FormatWrapper* format, PoolWrapper* pool, IndexBufferWrapper* Indexbuffer, HANDLE* handle);
+		void CreateVertexBuffer(int heightmapvertex, DWORDWrapper* usage, DWORDWrapper* fvf, PoolWrapper* pool, VertexBufferWrapper* vertexbuffer, HANDLE handle);
+		void CreateIndexBuffer(int length, DWORDWrapper* usage, FormatWrapper* format, PoolWrapper* pool, IndexBufferWrapper* Indexbuffer, HANDLE* handle);
 
-	void SetMaterial(MaterialWrapper* wrapper);
-	void SetTexture(TextureWrapper* wrapper);
-	void SetFvF(DWORDWrapper* fvf);
-	void SetTransform(int type, MatrixWrapper* wrapper);
+		void SetMaterial(MaterialWrapper* wrapper);
+		void SetTexture(TextureWrapper* wrapper);
+		void SetFvF(DWORDWrapper* fvf);
+		void SetTransform(int type, MatrixWrapper* wrapper);
 
-	void DrawPrimitive(Mesh mesh);
-	void DrawSubset(MeshWrapper* wrapper, int subset);
+		void DrawPrimitive(Resource::Mesh mesh);
+		void DrawSubset(MeshWrapper* wrapper, int subset);
 
-	void SetStreamSource(); //??
-	void SetIndices(); //??
+		void SetStreamSource(); //??
+		void SetIndices(); //??
 
-	LPDIRECT3DDEVICE9* GetDevice();
+		LPDIRECT3DDEVICE9* GetDevice();
 
-private:
-	LPDIRECT3D9 g_pD3D;
-	LPDIRECT3DDEVICE9 g_pd3dDevice;
-};
+	private:
+		LPDIRECT3D9 g_pD3D;
+		LPDIRECT3DDEVICE9 g_pd3dDevice;
+	};
+}
+
 
 #endif

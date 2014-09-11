@@ -1,12 +1,13 @@
-#ifndef _LOGGER_H_
-#define _LOGGER_H_
+#ifndef _LOGGER_LOGGER_H_
+#define _LOGGER_LOGGER_H_
 
 #include <string>
 #include <windows.h>
 #include <map>
 #include <fstream>
 
-namespace Logger {
+namespace Logger 
+{
 	class Logger
 	{
 	public:

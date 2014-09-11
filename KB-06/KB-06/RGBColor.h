@@ -1,6 +1,12 @@
-#ifndef _RGBCOLOR_H_
-#define _RGBCOLOR_H_
-struct RGBColor{
-	float r, g, b;
-};
+#ifndef _RESOURCE_RGBCOLOR_H_
+#define _RESOURCE_RGBCOLOR_H_
+
+namespace Resource
+{
+	struct RGBColor
+	{
+		float r, g, b;
+	};
+}
+
 #endif

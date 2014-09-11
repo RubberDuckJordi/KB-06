@@ -1,11 +1,12 @@
-	#include "DirectXRenderer.h"
+#include "DirectXRenderer.h"
 
-DirectXRenderer::DirectXRenderer()
+Renderer::DirectXRenderer::DirectXRenderer()
 {
 	g_pD3D = NULL;
 	g_pd3dDevice = NULL;
 };
-DirectXRenderer::~DirectXRenderer()
+
+Renderer::DirectXRenderer::~DirectXRenderer()
 {
 	if (g_pd3dDevice != NULL)
 	{
@@ -18,7 +19,7 @@ DirectXRenderer::~DirectXRenderer()
 	}
 };
 
-void DirectXRenderer::InitD3D(HWND hWnd)
+void Renderer::DirectXRenderer::InitD3D(HWND hWnd)
 {
 	if (NULL == (g_pD3D = Direct3DCreate9(D3D_SDK_VERSION)))
 	{
@@ -46,7 +47,7 @@ void DirectXRenderer::InitD3D(HWND hWnd)
 	//return S_OK; -> when switching from void to H_RESULT return type
 };
 
-void DirectXRenderer::SetRenderState()
+void Renderer::DirectXRenderer::SetRenderState()
 {
 	this->g_pd3dDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);	//Counter Clockwise Cullmode
 	this->g_pd3dDevice->SetRenderState(D3DRS_LIGHTING, FALSE); //No lightning
@@ -58,104 +59,104 @@ void DirectXRenderer::SetRenderState()
 };
 
 //Matrixen
-void DirectXRenderer::SetWorldMatrix(MatrixWrapper* WorldMatrix)
+void Renderer::DirectXRenderer::SetWorldMatrix(MatrixWrapper* WorldMatrix)
 {
 	this->g_pd3dDevice->SetTransform(D3DTS_WORLD, &(WorldMatrix->GetMatrix()));
 };
 
-void DirectXRenderer::SetViewMatrix(MatrixWrapper* ViewMatrix)
+void Renderer::DirectXRenderer::SetViewMatrix(MatrixWrapper* ViewMatrix)
 {
 	this->g_pd3dDevice->SetTransform(D3DTS_VIEW, &(ViewMatrix->GetMatrix()));
 };
 
-void DirectXRenderer::SetProjectionMatrix(MatrixWrapper* ProjectionMatrix)
+void Renderer::DirectXRenderer::SetProjectionMatrix(MatrixWrapper* ProjectionMatrix)
 {
 	this->g_pd3dDevice->SetTransform(D3DTS_PROJECTION, &(ProjectionMatrix->GetMatrix()));
 };
 
 
 //Scene
-void DirectXRenderer::BeginScene()
+void Renderer::DirectXRenderer::BeginScene()
 {
 	this->g_pd3dDevice->BeginScene();
 };
 
-void DirectXRenderer::ClearScene(DWORDWrapper* count, DWORDWrapper* flags, ColorWrapper* color, float z, DWORDWrapper* stencil)
+void Renderer::DirectXRenderer::ClearScene(DWORDWrapper* count, DWORDWrapper* flags, ColorWrapper* color, float z, DWORDWrapper* stencil)
 {
 
 	this->g_pd3dDevice->Clear(count->GetDWORD(), NULL, flags->GetDWORD(), color->GetColor(), z, stencil->GetDWORD());
 
 };
 
-void DirectXRenderer::PresentScene(HWND hWnd)
+void Renderer::DirectXRenderer::PresentScene(HWND hWnd)
 {
 	this->g_pd3dDevice->Present(NULL, NULL, hWnd, NULL);
 };
 
-void DirectXRenderer::StopScene()
+void Renderer::DirectXRenderer::StopScene()
 {
 	this->g_pd3dDevice->EndScene();
 };
 
 
 //Buffers
-void DirectXRenderer::CreateVertexBuffer(int heightmapvertex, DWORDWrapper* usage, DWORDWrapper* fvf, PoolWrapper* pool, VertexBufferWrapper* vertexbuffer, HANDLE handle)
+void Renderer::DirectXRenderer::CreateVertexBuffer(int heightmapvertex, DWORDWrapper* usage, DWORDWrapper* fvf, PoolWrapper* pool, VertexBufferWrapper* vertexbuffer, HANDLE handle)
 {
 	this->g_pd3dDevice->CreateVertexBuffer(heightmapvertex, usage->GetDWORD(), fvf->GetDWORD(), pool->GetPool(), vertexbuffer->GetVertexBuffer(), &handle);
 };
 
-void DirectXRenderer::CreateIndexBuffer(int length, DWORDWrapper* usage, FormatWrapper* format, PoolWrapper* pool, IndexBufferWrapper* Indexbuffer, HANDLE* handle)
+void Renderer::DirectXRenderer::CreateIndexBuffer(int length, DWORDWrapper* usage, FormatWrapper* format, PoolWrapper* pool, IndexBufferWrapper* Indexbuffer, HANDLE* handle)
 {
 	this->g_pd3dDevice->CreateIndexBuffer(length, usage->GetDWORD(), format->GetFormat(), pool->GetPool(), Indexbuffer->GetIndexBuffer(), NULL);
 };
 
 //Set stuff
-void DirectXRenderer::SetMaterial(MaterialWrapper* wrapper)
+void Renderer::DirectXRenderer::SetMaterial(MaterialWrapper* wrapper)
 {
 	g_pd3dDevice->SetMaterial(&wrapper->GetMaterial());
 	//return g_pd3dDevice->SetMaterial(&wrapper->GetMaterial()); when H_RESULT as return type
 };
 
-void DirectXRenderer::SetTexture(TextureWrapper* wrapper)
+void Renderer::DirectXRenderer::SetTexture(TextureWrapper* wrapper)
 {
 	g_pd3dDevice->SetTexture(0, wrapper->GetTexture());
 	// return g_pd3dDevice->SetTexture(0, wrapper->GetTexture()); when H_RESULT as return type
 };
 
-void DirectXRenderer::SetFvF(DWORDWrapper* fvf)
+void Renderer::DirectXRenderer::SetFvF(DWORDWrapper* fvf)
 {
 	g_pd3dDevice->SetFVF(fvf->GetDWORD());
 };
 
-void DirectXRenderer::SetTransform(int type, MatrixWrapper* wrapper)
+void Renderer::DirectXRenderer::SetTransform(int type, MatrixWrapper* wrapper)
 {
 	g_pd3dDevice->SetTransform((D3DTRANSFORMSTATETYPE)type, &(wrapper->GetMatrix()));
 };
 
 //Draw functions
-void DirectXRenderer::DrawPrimitive(Mesh mesh)
+void Renderer::DirectXRenderer::DrawPrimitive(Resource::Mesh mesh)
 {
 	g_pd3dDevice->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, mesh.vertices.size, 0, mesh.faceDefinitions.size * 3);
 };
 
-void DirectXRenderer::DrawSubset(MeshWrapper* wrapper, int subset)
+void Renderer::DirectXRenderer::DrawSubset(MeshWrapper* wrapper, int subset)
 {
 	(wrapper->GetMesh())->DrawSubset(subset);
 };
 
 //??
-void DirectXRenderer::SetStreamSource() //??
+void Renderer::DirectXRenderer::SetStreamSource() //??
 {
 
 };
 
-void DirectXRenderer::SetIndices() //??
+void Renderer::DirectXRenderer::SetIndices() //??
 {
 
 };
 
 //GetDevice
-LPDIRECT3DDEVICE9* DirectXRenderer::GetDevice()
+LPDIRECT3DDEVICE9* Renderer::DirectXRenderer::GetDevice()
 {
 	return &g_pd3dDevice;
 };

@@ -1,6 +1,12 @@
-#ifndef _VERTEX_H_
-#define _VERTEX_H_
-struct Vertex {
-	float x, y, z, w;
-};
+#ifndef _RESOURCE_VERTEX_H_
+#define _RESOURCE_VERTEX_H_
+
+namespace Resource
+{
+	struct Vertex 
+	{
+		float x, y, z, w;
+	};
+}
+
 #endif
