@@ -9,7 +9,7 @@ Input::InputManager::InputManager(InputDeviceFactory* p_inputDeviceFactory)
 
 Input::InputManager::~InputManager()
 {
-	RemoveWindows();
+	DetachAllWindows();
 	delete inputDeviceFactory;
 }
 
@@ -50,7 +50,7 @@ std::map<Input::Input, long> Input::InputManager::GetCurrentActions(Window::Wind
 }
 
 //Adds a window to the m_windowDevices map. Also adds a mouse and a keyboard to it
-void Input::InputManager::AddWindow(Window::Window* p_window)
+void Input::InputManager::AttachWindow(Window::Window* p_window)
 {
 	std::list<InputDevice*> inputDevices;
 	InputDevice* newMouse = inputDeviceFactory->CreateInputDevice(InputDevice::MOUSE, p_window);
@@ -71,7 +71,7 @@ void Input::InputManager::AddWindow(Window::Window* p_window)
 }
 
 //Releases the devices of the given window
-void Input::InputManager::RemoveWindow(Window::Window& p_window)
+void Input::InputManager::DetachWindow(Window::Window& p_window)
 {
 	std::map<Window::Window*, std::list<InputDevice*>>::iterator it = m_windowDevices.find(&p_window);
 
@@ -91,7 +91,7 @@ void Input::InputManager::RemoveWindow(Window::Window& p_window)
 	}
 }
 
-void Input::InputManager::RemoveAllWindows()
+void Input::InputManager::DetachAllWindows()
 {
 	std::map<Window::Window*, std::list<InputDevice*>>::iterator it;
 
@@ -113,10 +113,10 @@ void Input::InputManager::RemoveAllWindows()
 
 void Input::InputManager::WindowClosed(Window::Window& p_window)
 {
-	RemoveWindow(p_window);
+	DetachWindow(p_window);
 }
 
 void Input::InputManager::WindowOpened(Window::Window& p_window)
 {
-	AddWindow(&p_window);
+	AttachWindow(&p_window);
 }

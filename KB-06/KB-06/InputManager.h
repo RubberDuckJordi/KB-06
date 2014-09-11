@@ -20,9 +20,9 @@ namespace Input
 		InputManager(InputDeviceFactory* inputDeviceFactory);
 		~InputManager();
 		std::map<Input, long> GetCurrentActions(Window::Window*);
-		void AddWindow(Window::Window*);
-		void RemoveWindow(Window::Window&);
-		void RemoveAllWindows();
+		void AttachWindow(Window::Window*);
+		void DetachWindow(Window::Window&);
+		void DetachAllWindows();
 		void WindowClosed(Window::Window& p_window);
 		void WindowOpened(Window::Window& p_window);
 
