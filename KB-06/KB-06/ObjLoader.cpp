@@ -60,7 +60,7 @@ Resource::Mesh Resource::ObjLoader::Load(std::string file, ResourceManager* reso
 				mesh.parameterSpaceVertices.push_back(newParameterSpaceVertex);
 			}
 			else if (elements[0] == "f"){
-				for (int i = 1; i < elements.size(); ++i){
+				for (unsigned int i = 1; i < elements.size(); ++i){
 					faces = Logger::StringHelper::split(line, '/');
 					FaceDefinition newFaceDefinition;
 					newFaceDefinition.v1 = atoi(faces[0].c_str());;

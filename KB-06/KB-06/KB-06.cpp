@@ -16,20 +16,21 @@ int _tmain(int argc, _TCHAR* argv[])
 	logger->NewFile();
 	logger->SetLogLevel(Logger::Logger::INFO);
 
-	Resource::ResourceManager* resourceManager = new Resource::ResourceManager();
-	resourceManager->loadMesh("cube.obj.mesh");
-	Renderer::DirectXRenderer* renderer = new Renderer::DirectXRenderer();
 
-	Window::WindowManager* wManager = new Window::WindowManager(NULL);
 	// Aanmaken van deze factory moet in een abstract factory gaan gebeuren
 	Input::InputDeviceFactory* inputDeviceFactory = new Input::DirectInputDeviceFactory();
 	Input::InputManager* iManager = new Input::InputManager(inputDeviceFactory);
+
+	Window::WindowManager* wManager = new Window::WindowManager(NULL);
 	wManager->AddWindowListener(iManager);
 	wManager->NewWindow(NULL, 10, 10, 500, 500);
-	wManager->GetLastWindow()->SetTitle("Waarom lees jij deze titel? Het kost je meer tijd dan het waard is!");
-	wManager->NewWindow(NULL, 100, 100, 500, 500);
-	wManager->GetLastWindow()->SetTitle("Waarom lees jij deze titel? Het kost je meer tijd dan het waard is!");	
+	
+	Renderer::DirectXRenderer* renderer = new Renderer::DirectXRenderer();
+	renderer->InitD3D(wManager->GetLastWindow()->GetHWND());
 
+	Resource::ResourceManager* resourceManager = new Resource::ResourceManager();
+	renderer->Draw(resourceManager->loadMesh("cube.obj.mesh"));
+		
 	while (wManager->HasActiveWindow())
 	{
 		wManager->UpdateWindows();

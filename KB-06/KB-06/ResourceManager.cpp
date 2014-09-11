@@ -20,7 +20,7 @@ Resource::Mesh* Resource::ResourceManager::loadMesh(std::string file){
 		mesh = ObjLoader::Load(file, this);
 		meshes[file] = mesh;
 	}
-	return &mesh;
+	return &meshes[file];
 }
 
 std::map<std::string, Resource::Material>* Resource::ResourceManager::loadMaterials(std::string file){
@@ -29,6 +29,6 @@ std::map<std::string, Resource::Material>* Resource::ResourceManager::loadMateri
 		newMaterials = MtlLoader::Load(file);
 		materials[file] = newMaterials;
 	}
-	return &newMaterials;
+	return &materials[file];
 }
 

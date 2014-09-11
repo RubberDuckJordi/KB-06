@@ -1,0 +1,14 @@
+#ifndef _CUSTOMD3DVERTEX_H_
+#define _CUSTOMD3DVERTEX_H_
+
+#include <d3dx9.h>
+#include <d3dx9.h>
+#define D3DFVF_CUSTOMVERTEX (D3DFVF_XYZ|D3DFVF_NORMAL|D3DFVF_TEX1)
+#define	D3DFVF_MESH (D3DFVF_XYZ|D3DFVF_NORMAL|D3DFVF_TEX1)
+struct CustomD3DVertex
+{
+	D3DXVECTOR3 position;
+	D3DXVECTOR3 normal;
+	FLOAT tu, tv;
+};
+#endif

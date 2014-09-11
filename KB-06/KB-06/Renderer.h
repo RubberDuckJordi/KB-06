@@ -46,6 +46,8 @@ namespace Renderer
 
 		virtual void SetStreamSource() = 0; //??
 		virtual void SetIndices() = 0; //??
+
+		virtual void Draw(Resource::Mesh* mesh) = 0;
 	};
 }
 
