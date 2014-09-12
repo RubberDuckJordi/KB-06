@@ -8,7 +8,7 @@ namespace Resource
 	{
 	public:
 		ObjLoader();
-		Mesh Load(std::string file, const ResourceManager* resourceManager);
+		Mesh Load(const std::string file, const ResourceManager* resourceManager);
 		std::string GetExtension();
 	};
 }

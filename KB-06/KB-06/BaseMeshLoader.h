@@ -14,7 +14,7 @@ namespace Resource
 	public:
 		BaseMeshLoader();
 		~BaseMeshLoader();
-		virtual Mesh Load(std::string file, const ResourceManager* resourceManager) = 0;
+		virtual Mesh Load(const std::string file, const ResourceManager* resourceManager) = 0;
 		virtual std::string GetExtension() = 0;
 	};
 }
