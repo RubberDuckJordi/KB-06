@@ -27,8 +27,7 @@ namespace Input
 		void WindowOpened(Window::Window& p_window);
 
 	private:
-		std::map<std::pair<InputDevice::Type, int>, Input> m_keyMapping;
-		std::map<Window::Window*, std::list<InputDevice*>> m_windowDevices;
+		std::map<Window::Window*, std::list<InputDevice*>> windowDevices;
 
 		InputDeviceFactory* inputDeviceFactory;
 

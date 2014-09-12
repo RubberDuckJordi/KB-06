@@ -16,6 +16,10 @@ Window::WindowManager::~WindowManager()
 	{
 		delete windows.back(), windows.pop_back();
 	}
+	while (!windowListeners.empty())
+	{
+		delete windowListeners.back(), windowListeners.pop_back();
+	}
 	delete sceneManager;
 };
 

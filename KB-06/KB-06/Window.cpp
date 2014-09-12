@@ -5,6 +5,8 @@
 
 Window::Window::Window(Renderer::Renderer* renderer)
 {
+	Logger::Logger* logger = Logger::LoggerPool::GetInstance().GetLogger();
+
 	//Set the default data for the window class.
 	//These can be reset in the derived class's constructor.
 	_WndClass.cbSize = sizeof(_WndClass);
@@ -27,10 +29,8 @@ Window::Window::Window(Renderer::Renderer* renderer)
 
 Window::Window::~Window()
 {
-	Logger::Logger* logger = Logger::LoggerPool::GetInstance().GetLogger();
-	logger->Log(Logger::Logger::WARNING, "TODO: Proper Window deconstructor");
 	Logger::LoggerPool::GetInstance().ReturnLogger(logger);
-	//delete _hwnd;
+	delete _hwnd;
 };
 
 void Window::Window::SetTitle(char* title)

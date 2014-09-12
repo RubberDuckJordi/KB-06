@@ -2,12 +2,7 @@
 #define _RENDERER_DIRECTXRENDERER_H_
 
 #include <d3dx9.h>
-#include <d3dx9.h>
 #include "Renderer.h"
-#include "LoggerPool.h"
-
-#pragma comment(lib, "d3dx9.lib")
-#pragma comment(lib, "d3d9.lib")
 
 namespace Renderer
 {
@@ -48,7 +43,6 @@ namespace Renderer
 	private:
 		LPDIRECT3D9 g_pD3D;
 		LPDIRECT3DDEVICE9 g_pd3dDevice;
-		Logger::Logger* logger;
 		std::map<Resource::Mesh*, LPD3DXMESH> meshCache;
 	};
 }

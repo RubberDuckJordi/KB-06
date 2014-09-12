@@ -6,7 +6,10 @@
 #include "StringHelper.h"
 #include "LoggerPool.h"
 
-Resource::Mesh Resource::ObjLoader::Load(std::string file, ResourceManager* resourceManager){
+
+Resource::ObjLoader::ObjLoader(){};
+
+Resource::Mesh Resource::ObjLoader::Load(const std::string file, const ResourceManager* resourceManager){
 	std::ifstream ifs(file, std::ifstream::in);
 	std::string line;
 	std::vector<std::string> elements;
@@ -18,7 +21,7 @@ Resource::Mesh Resource::ObjLoader::Load(std::string file, ResourceManager* reso
 		elements = Logger::StringHelper::split(line, ' ');
 		if (elements.size() > 0){
 			if (elements[0] == "mtllib"){
-				resourceManager->loadMaterials(elements[1]);
+				//resourceManager->loadMaterials(elements[1]);
 			}
 			else if (elements[0] == "v"){
 				Vertex newVertex;
@@ -82,4 +85,8 @@ Resource::Mesh Resource::ObjLoader::Load(std::string file, ResourceManager* reso
 	logger->Log(Logger::Logger::DEBUG, "faceDefinitions: " + std::to_string(mesh.faceDefinitions.size()));
 	Logger::LoggerPool::GetInstance().ReturnLogger(logger);
 	return mesh;
+}
+
+std::string Resource::ObjLoader::GetExtension(){
+	return "obj.mesh";
 }
