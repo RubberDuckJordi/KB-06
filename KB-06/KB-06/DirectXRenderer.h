@@ -2,12 +2,8 @@
 #define _RENDERER_DIRECTXRENDERER_H_
 
 #include <d3dx9.h>
-#include <d3dx9.h>
 #include "Renderer.h"
 #include "LoggerPool.h"
-
-#pragma comment(lib, "d3dx9.lib")
-#pragma comment(lib, "d3d9.lib")
 
 namespace Renderer
 {
