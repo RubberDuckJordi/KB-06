@@ -4,6 +4,7 @@
 
 #include "Scene.h"
 #include "SceneFactory.h"
+#include "Input.h"
 #include <list>
 #include <map>
 
@@ -16,7 +17,7 @@ namespace Scene {
 		Scene* AddScene(std::string sceneType);
 		void RemoveScene(Scene* scene);
 		void UpdateScene(Scene* scene);
-		void UpdateActiveScene();
+		void UpdateActiveScene(std::map<Input::Input, long> actions);
 	private:
 		Scene* activeScene;
 

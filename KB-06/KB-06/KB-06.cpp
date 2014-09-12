@@ -6,6 +6,7 @@
 #include "loggerPool.h"
 #include "WindowManager.h"
 #include "InputManager.h"
+#include "SceneManager.h"
 #include "DirectInputDeviceFactory.h"
 #include "ResourceManager.h"
 #include "DirectXRenderer.h"
@@ -30,6 +31,8 @@ int _tmain(int argc, _TCHAR* argv[])
 
 	Resource::ResourceManager* resourceManager = new Resource::ResourceManager();
 	renderer->Draw(resourceManager->loadMesh("cube.obj.mesh"));
+
+	Scene::SceneManager* sceneManager = new Scene::SceneManager();
 		
 	while (wManager->HasActiveWindow())
 	{
@@ -39,6 +42,8 @@ int _tmain(int argc, _TCHAR* argv[])
 		if (actions.size() > 0){
 			logger->Log(Logger::Logger::INFO, "Input!");
 		}
+
+		sceneManager->UpdateActiveScene(actions);
 	}
 	Logger::LoggerPool::GetInstance().ReturnLogger(logger);
 	return 0;

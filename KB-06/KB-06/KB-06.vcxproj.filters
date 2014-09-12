@@ -109,6 +109,9 @@
     <ClCompile Include="Renderer.cpp">
       <Filter>Source\Renderer</Filter>
     </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>Source\Scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DefaultEntity.h">
@@ -224,6 +227,9 @@
     </ClInclude>
     <ClInclude Include="Renderer.h">
       <Filter>Header\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>Header\Scene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
