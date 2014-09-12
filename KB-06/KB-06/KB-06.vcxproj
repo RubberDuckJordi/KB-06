@@ -129,7 +129,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BaseMeshLoader.cpp" />
-    <ClCompile Include="ColorWrapper.cpp" />
     <ClCompile Include="DefaultEntityFactory.cpp" />
     <ClCompile Include="DefaultScene.cpp" />
     <ClCompile Include="DefaultSceneFactory.cpp" />
