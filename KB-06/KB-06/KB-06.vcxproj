@@ -85,7 +85,9 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CustomD3DVertex.h" />
     <ClInclude Include="FaceDefinition.h" />
+    <ClInclude Include="BaseMeshLoader.h" />
     <ClInclude Include="RGBColor.h" />
     <ClInclude Include="StringHelper.h" />
     <ClInclude Include="Material.h" />
@@ -125,6 +127,7 @@
     <ClInclude Include="WindowManager.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="BaseMeshLoader.cpp" />
     <ClCompile Include="ColorWrapper.cpp" />
     <ClCompile Include="DefaultEntityFactory.cpp" />
     <ClCompile Include="DefaultScene.cpp" />
