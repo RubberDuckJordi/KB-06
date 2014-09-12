@@ -9,7 +9,7 @@
 
 Resource::ObjLoader::ObjLoader(){};
 
-Resource::Mesh Resource::ObjLoader::Load(std::string file, const ResourceManager* resourceManager){
+Resource::Mesh Resource::ObjLoader::Load(const std::string file, const ResourceManager* resourceManager){
 	std::ifstream ifs(file, std::ifstream::in);
 	std::string line;
 	std::vector<std::string> elements;
