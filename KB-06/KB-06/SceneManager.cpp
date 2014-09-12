@@ -18,7 +18,7 @@ void Scene::SceneManager::AddSceneFactory(std::string, SceneFactory* sceneFactor
 
 Scene::Scene* Scene::SceneManager::AddScene(std::string sceneType)
 {
-
+	return NULL;
 }
 
 void Scene::SceneManager::RemoveScene(Scene* scene)

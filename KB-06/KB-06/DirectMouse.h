@@ -10,6 +10,7 @@ namespace Input
 	{
 	public:
 		DirectMouse();
+		~DirectMouse();
 		bool Initialize(HWND, LPDIRECTINPUT8);
 		bool Update();
 		std::map<Input, long>* GetInputValues();
@@ -25,7 +26,8 @@ namespace Input
 		long GetDeltaYPosition();
 		long GetDeltaZPosition();
 
-		Logger::Logger* logger;
+
+		DIMOUSESTATE2 dIMouseState; // Albas check dit ff
 	};
 }
 #endif

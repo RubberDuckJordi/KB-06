@@ -10,6 +10,8 @@ namespace Window
 	public:
 		virtual void WindowClosed(Window& p_window) = 0;
 		virtual void WindowOpened(Window& p_window) = 0;
+	protected:
+		Logger::Logger* logger;
 	};
 }
 

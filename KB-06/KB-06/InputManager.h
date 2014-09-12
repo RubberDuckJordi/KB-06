@@ -31,7 +31,6 @@ namespace Input
 
 		InputDeviceFactory* inputDeviceFactory;
 
-		Logger::Logger* logger;
 	};
 }
 #endif
