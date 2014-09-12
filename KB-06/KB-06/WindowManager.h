@@ -69,7 +69,7 @@ namespace Window
 		std::vector<Window*> windows;
 		Scene::SceneManager *sceneManager;
 
-		std::list<WindowListener*> m_windowListeners;
+		std::list<WindowListener*> windowListeners;
 	};
 }
 #endif

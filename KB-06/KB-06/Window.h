@@ -14,6 +14,7 @@ Purpose: Keeping information concerning windows.
 //#include "SceneManager.h"
 #include "Scene.h"
 #include "Renderer.h"
+#include "Logger.h"
 
 namespace Window 
 {
@@ -60,6 +61,7 @@ namespace Window
 		HWND _hwnd;
 		WindowState state;
 		virtual void OnDestroy(HWND hwnd);
+		Logger::Logger* logger;
 
 	};
 }
