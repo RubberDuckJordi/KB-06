@@ -87,11 +87,8 @@
   <ItemGroup>
     <ClInclude Include="Camera.h" />
     <ClInclude Include="FaceDefinition.h" />
-<<<<<<< HEAD
-=======
     <ClInclude Include="PengineDefinitions.h" />
     <ClInclude Include="BaseMeshLoader.h" />
->>>>>>> 0df19e1165c380ace40bd0cc1501c3dbc29c4c6f
     <ClInclude Include="RGBColor.h" />
     <ClInclude Include="StringHelper.h" />
     <ClInclude Include="Material.h" />
@@ -131,12 +128,9 @@
     <ClInclude Include="WindowManager.h" />
   </ItemGroup>
   <ItemGroup>
-<<<<<<< HEAD
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="ColorWrapper.cpp" />
-=======
     <ClCompile Include="BaseMeshLoader.cpp" />
->>>>>>> 0df19e1165c380ace40bd0cc1501c3dbc29c4c6f
     <ClCompile Include="DefaultEntityFactory.cpp" />
     <ClCompile Include="DefaultScene.cpp" />
     <ClCompile Include="DefaultSceneFactory.cpp" />
