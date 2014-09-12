@@ -86,10 +86,10 @@ void Renderer::DirectXRenderer::BeginScene()
 	this->g_pd3dDevice->BeginScene();
 };
 
-void Renderer::DirectXRenderer::ClearScene(DWORDWrapper* count, DWORDWrapper* flags, ColorWrapper* color, float z, DWORDWrapper* stencil)
+void Renderer::DirectXRenderer::ClearScene(PENGINEDWORD count, PENGINEDWORD flags, PENGINECOLOR color, float z, PENGINEDWORD stencil)
 {
 
-	this->g_pd3dDevice->Clear(count->GetDWORD(), NULL, flags->GetDWORD(), color->GetColor(), z, stencil->GetDWORD());
+	this->g_pd3dDevice->Clear(count, NULL, flags, color, z, stencil);
 
 };
 
@@ -105,19 +105,20 @@ void Renderer::DirectXRenderer::StopScene()
 
 
 //Buffers
-void Renderer::DirectXRenderer::CreateVertexBuffer(int heightmapvertex, DWORDWrapper* usage, DWORDWrapper* fvf, PoolWrapper* pool, VertexBufferWrapper* vertexbuffer, HANDLE handle)
+void Renderer::DirectXRenderer::CreateVertexBuffer(int heightmapvertex, PENGINEDWORD usage, PENGINEDWORD fvf, PENGINEPOOL pool, VertexBufferWrapper* vertexbuffer, HANDLE handle)
 {
-	this->g_pd3dDevice->CreateVertexBuffer(heightmapvertex, usage->GetDWORD(), fvf->GetDWORD(), pool->GetPool(), vertexbuffer->GetVertexBuffer(), &handle);
+	this->g_pd3dDevice->CreateVertexBuffer(heightmapvertex, usage, fvf, static_cast<D3DPOOL>(pool), vertexbuffer->GetVertexBuffer(), &handle);
 };
 
-void Renderer::DirectXRenderer::CreateIndexBuffer(int length, DWORDWrapper* usage, FormatWrapper* format, PoolWrapper* pool, IndexBufferWrapper* Indexbuffer, HANDLE* handle)
+void Renderer::DirectXRenderer::CreateIndexBuffer(int length, PENGINEDWORD usage, PENGINEFORMAT format, PENGINEPOOL pool, IndexBufferWrapper* Indexbuffer, HANDLE* handle)
 {
-	this->g_pd3dDevice->CreateIndexBuffer(length, usage->GetDWORD(), format->GetFormat(), pool->GetPool(), Indexbuffer->GetIndexBuffer(), NULL);
+	this->g_pd3dDevice->CreateIndexBuffer(length, usage, static_cast<D3DFORMAT>(format), static_cast<D3DPOOL>(pool), Indexbuffer->GetIndexBuffer(), NULL);
 };
 
 //Set stuff
 void Renderer::DirectXRenderer::SetMaterial(MaterialWrapper* wrapper)
 {
+	//static_cast<D3DCOLORVALUE>(wrapper->Ambient);
 	g_pd3dDevice->SetMaterial(&wrapper->GetMaterial());
 	//return g_pd3dDevice->SetMaterial(&wrapper->GetMaterial()); when H_RESULT as return type
 };
@@ -128,9 +129,9 @@ void Renderer::DirectXRenderer::SetTexture(TextureWrapper* wrapper)
 	// return g_pd3dDevice->SetTexture(0, wrapper->GetTexture()); when H_RESULT as return type
 };
 
-void Renderer::DirectXRenderer::SetFvF(DWORDWrapper* fvf)
+void Renderer::DirectXRenderer::SetFvF(PENGINEDWORD fvf)
 {
-	g_pd3dDevice->SetFVF(fvf->GetDWORD());
+	g_pd3dDevice->SetFVF(fvf);
 };
 
 void Renderer::DirectXRenderer::SetTransform(int type, MatrixWrapper* wrapper)
