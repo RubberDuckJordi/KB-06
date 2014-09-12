@@ -94,16 +94,14 @@
     <ClCompile Include="Renderer.cpp">
       <Filter>Source\Renderer</Filter>
     </ClCompile>
-<<<<<<< HEAD
     <ClCompile Include="Camera.cpp">
       <Filter>Source\Scene</Filter>
-=======
+    </ClCompile>
     <ClCompile Include="MaterialWrapper.cpp">
       <Filter>Source\Renderer\Wrap Containers</Filter>
     </ClCompile>
     <ClCompile Include="BaseMeshLoader.cpp">
       <Filter>Source\Resource</Filter>
->>>>>>> 0df19e1165c380ace40bd0cc1501c3dbc29c4c6f
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
