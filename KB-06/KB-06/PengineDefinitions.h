@@ -13,8 +13,8 @@ typedef PENGINEDWORD PENGINECOLOR;
 // format definitions
 #ifndef MAKEFOURCC
 #define MAKEFOURCC(ch0, ch1, ch2, ch3)                              \
-                ((DWORD)(BYTE)(ch0) | ((DWORD)(BYTE)(ch1) << 8) |       \
-                ((DWORD)(BYTE)(ch2) << 16) | ((DWORD)(BYTE)(ch3) << 24 ))
+	((PENGINEDWORD)(PENGINEBYTE)(ch0) | ((PENGINEDWORD)(PENGINEBYTE)(ch1) << 8) | \
+	((PENGINEDWORD)(PENGINEBYTE)(ch2) << 16) | ((PENGINEDWORD)(PENGINEBYTE)(ch3) << 24))
 #endif /* defined(MAKEFOURCC) */
 
 
@@ -126,10 +126,10 @@ struct PENGINECOLORVALUE {
 
 struct PENGINEMATERIAL
 {
-	D3DCOLORVALUE   Diffuse;        /* Diffuse color RGBA */
-	D3DCOLORVALUE   Ambient;        /* Ambient color RGB */
-	D3DCOLORVALUE   Specular;       /* Specular 'shininess' */
-	D3DCOLORVALUE   Emissive;       /* Emissive color RGB */
+	PENGINECOLORVALUE   Diffuse;        /* Diffuse color RGBA */
+	PENGINECOLORVALUE   Ambient;        /* Ambient color RGB */
+	PENGINECOLORVALUE   Specular;       /* Specular 'shininess' */
+	PENGINECOLORVALUE   Emissive;       /* Emissive color RGB */
 	float           Power;          /* Sharpness if specular highlight */
 }; // end material definitions
 
