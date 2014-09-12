@@ -1,9 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="ColorWrapper.cpp">
-      <Filter>Source\Renderer\Wrap Containers</Filter>
-    </ClCompile>
     <ClCompile Include="DefaultEntity.cpp">
       <Filter>Source\Scene\Default</Filter>
     </ClCompile>
@@ -28,13 +25,7 @@
     <ClCompile Include="DirectMouse.cpp">
       <Filter>Source\Input\Direct</Filter>
     </ClCompile>
-    <ClCompile Include="DWORDWrapper.cpp">
-      <Filter>Source\Renderer\Wrap Containers</Filter>
-    </ClCompile>
     <ClCompile Include="IndexBufferWrapper.cpp">
-      <Filter>Source\Renderer\Wrap Containers</Filter>
-    </ClCompile>
-    <ClCompile Include="FormatWrapper.cpp">
       <Filter>Source\Renderer\Wrap Containers</Filter>
     </ClCompile>
     <ClCompile Include="InputManager.cpp">
@@ -52,16 +43,10 @@
     <ClCompile Include="LoggerPool.cpp">
       <Filter>Source\Logger</Filter>
     </ClCompile>
-    <ClCompile Include="MaterialWrapper.cpp">
-      <Filter>Source\Renderer\Wrap Containers</Filter>
-    </ClCompile>
     <ClCompile Include="MatrixWrapper.cpp">
       <Filter>Source\Renderer\Wrap Containers</Filter>
     </ClCompile>
     <ClCompile Include="MeshWrapper.cpp">
-      <Filter>Source\Renderer\Wrap Containers</Filter>
-    </ClCompile>
-    <ClCompile Include="PoolWrapper.cpp">
       <Filter>Source\Renderer\Wrap Containers</Filter>
     </ClCompile>
     <ClCompile Include="Scene.cpp">
@@ -108,6 +93,9 @@
     </ClCompile>
     <ClCompile Include="Renderer.cpp">
       <Filter>Source\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="MaterialWrapper.cpp">
+      <Filter>Source\Renderer\Wrap Containers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -224,6 +212,9 @@
     </ClInclude>
     <ClInclude Include="Renderer.h">
       <Filter>Header\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="PengineDefinitions.h">
+      <Filter>Header</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
