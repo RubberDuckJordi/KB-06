@@ -38,7 +38,7 @@ HWND Window::WindowManager::NewWindow(Renderer::Renderer *renderer, int x, int y
 	windows.push_back(window);
 	Logger::LoggerPool::GetInstance().ReturnLogger(logger);
 
-	for (std::list<WindowListener*>::iterator itListener = windowListeners.begin(); itListener != windowListeners.end(); ++itListener)
+	for (std::list<WindowListener*>::iterator itListener = m_windowListeners.begin(); itListener != m_windowListeners.end(); ++itListener)
 	{
 		(*itListener)->WindowOpened(*window);
 	}
@@ -115,7 +115,7 @@ void Window::WindowManager::AddWindowListener(WindowListener* p_windowListener)
 {
 	if (p_windowListener != NULL)
 	{
-		windowListeners.push_back(p_windowListener);
+		m_windowListeners.push_back(p_windowListener);
 	}
 }
 
@@ -123,13 +123,13 @@ void Window::WindowManager::RemoveWindowListener(WindowListener* p_windowListene
 {
 	if (p_windowListener != NULL)
 	{
-		windowListeners.remove(p_windowListener);
+		m_windowListeners.remove(p_windowListener);
 	}
 }
 
 void Window::WindowManager::ClearWindowListeners()
 {
-	windowListeners.clear();
+	m_windowListeners.clear();
 }
 
 std::vector<Window::Window*>* Window::WindowManager::GetAllWindows()
