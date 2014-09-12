@@ -3,7 +3,6 @@
 
 #include <d3dx9.h>
 #include "Renderer.h"
-#include "LoggerPool.h"
 
 namespace Renderer
 {
@@ -44,7 +43,6 @@ namespace Renderer
 	private:
 		LPDIRECT3D9 g_pD3D;
 		LPDIRECT3DDEVICE9 g_pd3dDevice;
-		Logger::Logger* logger;
 		std::map<Resource::Mesh*, LPD3DXMESH> meshCache;
 	};
 }

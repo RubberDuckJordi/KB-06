@@ -9,6 +9,7 @@
 #include "DirectInputDeviceFactory.h"
 #include "ResourceManager.h"
 #include "DirectXRenderer.h"
+#include "ObjLoader.h"
 
 int _tmain(int argc, _TCHAR* argv[])
 { 
@@ -29,7 +30,9 @@ int _tmain(int argc, _TCHAR* argv[])
 	renderer->InitD3D(wManager->GetLastWindow()->GetHWND());
 
 	Resource::ResourceManager* resourceManager = new Resource::ResourceManager();
-	renderer->Draw(resourceManager->loadMesh("cube.obj.mesh"));
+	resourceManager->AddMeshLoader(new Resource::ObjLoader());
+
+	renderer->Draw(resourceManager->LoadMesh("cube.obj.mesh", "obj.mesh"));
 		
 	while (wManager->HasActiveWindow())
 	{
