@@ -41,6 +41,8 @@ int _tmain(int argc, _TCHAR* argv[])
 		}
 	}
 	Logger::LoggerPool::GetInstance().ReturnLogger(logger);
+
+	delete iManager;
 	return 0;
 }
 

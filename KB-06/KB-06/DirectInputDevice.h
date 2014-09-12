@@ -16,13 +16,16 @@ namespace Input
 	{
 	public:
 		DirectInputDevice();
+		~DirectInputDevice();
 		virtual bool Initialize(HWND, LPDIRECTINPUT8) = 0;
 		bool AcquireDevice();
 		void ReleaseDevice();
 		virtual bool Update() = 0;
+		void SetActionMapping(std::map<Input, int>* actionMapping);
 
 	protected:
-		LPDIRECTINPUTDEVICE8 m_dInputDevice;
+		std::map<Input, int>* actionMapping;
+		LPDIRECTINPUTDEVICE8 dInputDevice;
 	};
 }
 

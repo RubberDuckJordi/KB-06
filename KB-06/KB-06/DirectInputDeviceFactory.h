@@ -18,8 +18,8 @@ namespace Input
 		InputDevice* CreateInputDevice(InputDevice::Type type, Window::Window* window);
 	private:
 		void CreateActionMapping();
-		LPDIRECTINPUT8 m_dInput;
-		std::map<Input, int> actionMapping;
+		LPDIRECTINPUT8 dInput;
+		std::map<Input, int>* actionMapping;
 	};
 }
 

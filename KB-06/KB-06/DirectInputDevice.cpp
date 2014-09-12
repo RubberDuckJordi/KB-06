@@ -2,20 +2,30 @@
 
 Input::DirectInputDevice::DirectInputDevice()
 {
-	m_dInputDevice = NULL;
-	m_deviceAcquired = false;
-	logger = Logger::LoggerPool::GetInstance().GetLogger();
+	dInputDevice = NULL;
+	deviceAcquired = false;
+}
+
+Input::DirectInputDevice::~DirectInputDevice()
+{
+	if (dInputDevice)
+	{
+		dInputDevice->Unacquire();
+		dInputDevice->Release();
+		delete dInputDevice;
+	}
+	InputDevice::~InputDevice();
 }
 
 void Input::DirectInputDevice::ReleaseDevice()
 {
-	if (m_dInputDevice)
+	if (dInputDevice)
 	{
-		m_dInputDevice->Unacquire();
-		m_dInputDevice->Release();
-		m_dInputDevice = NULL;
+		dInputDevice->Unacquire();
+		dInputDevice->Release();
+		dInputDevice = NULL;
 
-		m_deviceAcquired = false;
+		deviceAcquired = false;
 	}
 }
 
@@ -25,11 +35,11 @@ bool Input::DirectInputDevice::AcquireDevice()
 
 	for (int i = 0; i < times; i++)
 	{
-		if (SUCCEEDED(m_dInputDevice->Acquire()))
+		if (SUCCEEDED(dInputDevice->Acquire()))
 		{
-			logger->Log(Logger::Logger::INFO, "InputManager::InputDevice " + m_deviceName + " acquired.");
+			logger->Log(Logger::Logger::INFO, "InputManager::InputDevice " + deviceName + " acquired.");
 
-			m_deviceAcquired = true;
+			deviceAcquired = true;
 
 			return true;
 		}
@@ -37,4 +47,9 @@ bool Input::DirectInputDevice::AcquireDevice()
 
 	return false;
 
+}
+
+void Input::DirectInputDevice::SetActionMapping(std::map<Input, int>* p_actionMapping)
+{
+	actionMapping = p_actionMapping;
 }
