@@ -7,25 +7,37 @@
 
 Resource::ResourceManager::ResourceManager()
 {
+	logger = Logger::LoggerPool::GetInstance().GetLogger();
 }
 
 
 Resource::ResourceManager::~ResourceManager()
 {
+	Logger::LoggerPool::GetInstance().ReturnLogger(logger);
 }
 
-Resource::Mesh* Resource::ResourceManager::loadMesh(std::string file){
-	Mesh mesh;
-	if (Logger::StringHelper::EndsWith(file, ".obj.mesh")){
-		mesh = ObjLoader::Load(file, this);
-		meshes[file] = mesh;
+Resource::Mesh* Resource::ResourceManager::LoadMesh(const std::string& fileName, const std::string& extension)
+{
+	if (meshLoaders.find(extension) != meshLoaders.end()){
+		meshes[fileName] = meshLoaders[extension]->Load(fileName, this);
+		return &meshes[fileName];
 	}
-	return &meshes[file];
+	else {
+		logger->Log(Logger::Logger::ERR, "MeshLoader not found for extension:" + extension);
+		return NULL;
+	}
 }
 
-std::map<std::string, Resource::Material>* Resource::ResourceManager::loadMaterials(std::string file){
+void Resource::ResourceManager::AddMeshLoader(Resource::BaseMeshLoader* newMeshLoader)
+{
+	meshLoaders[newMeshLoader->GetExtension()] = newMeshLoader;
+}
+
+std::map<std::string, Resource::Material>* Resource::ResourceManager::loadMaterials(std::string file)
+{
 	std::map<std::string, Material> newMaterials;
-	if (Logger::StringHelper::EndsWith(file, ".mtl")){
+	if (Logger::StringHelper::EndsWith(file, ".mtl"))
+	{
 		newMaterials = MtlLoader::Load(file);
 		materials[file] = newMaterials;
 	}

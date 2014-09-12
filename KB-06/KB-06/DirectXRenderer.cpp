@@ -171,13 +171,14 @@ void Renderer::DirectXRenderer::Draw(Resource::Mesh* mesh){
 	if (meshCache.find(mesh) == meshCache.end()){
 		logger->Log(Logger::Logger::DEBUG, "Mesh not converted to LPD3DXMESH yet.");
 
+
 		LPD3DXMESH d3dMesh;
 		if (FAILED(D3DXCreateMeshFVF(mesh->faceDefinitions.size(), mesh->vertices.size(), D3DXMESH_MANAGED, D3DFVF_MESH, g_pd3dDevice, &d3dMesh))){
 			logger->Log(Logger::Logger::ERR, "Failed to create a D3DXCreateMeshFVF");
 		}
 
 		const int amountOfVertices = mesh->vertices.size();
-		D3DXVECTOR3 vertices[16384]; // !!!!!!!!!!!!!
+		D3DXVECTOR3 vertices[16384];
 		logger->Log(Logger::Logger::WARNING, "@todo; Remove limit to 16384 vertices.");
 		for (unsigned int i = 0; i < mesh->vertices.size(); ++i){
 			vertices[i] = D3DXVECTOR3(mesh->vertices.at(i).x, mesh->vertices.at(i).y, mesh->vertices.at(i).z);

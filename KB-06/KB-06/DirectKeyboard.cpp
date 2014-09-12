@@ -2,15 +2,19 @@
 
 Input::DirectKeyboard::DirectKeyboard()
 {
-	m_deviceName = "Keyboard";
-	logger = Logger::LoggerPool::GetInstance().GetLogger();
+	deviceName = "Keyboard";
+}
+
+Input::DirectKeyboard::~DirectKeyboard()
+{
+	DirectInputDevice::~DirectInputDevice();
 }
 
 //Create the new DirectInputDevice, add a handler to its window and
 //set the required settings to be able to poll it.
 bool Input::DirectKeyboard::Initialize(HWND p_hWnd, LPDIRECTINPUT8 m_dInput)
 {
-	HRESULT hr = m_dInput->CreateDevice(GUID_SysKeyboard, &m_dInputDevice, NULL);
+	HRESULT hr = m_dInput->CreateDevice(GUID_SysKeyboard, &dInputDevice, NULL);
 	if FAILED(hr)
 	{
 		ReleaseDevice();
@@ -18,7 +22,7 @@ bool Input::DirectKeyboard::Initialize(HWND p_hWnd, LPDIRECTINPUT8 m_dInput)
 		return false;
 	}
 
-	hr = m_dInputDevice->SetDataFormat(&c_dfDIKeyboard);
+	hr = dInputDevice->SetDataFormat(&c_dfDIKeyboard);
 	if FAILED(hr)
 	{
 		ReleaseDevice();
@@ -26,7 +30,7 @@ bool Input::DirectKeyboard::Initialize(HWND p_hWnd, LPDIRECTINPUT8 m_dInput)
 		return false;
 	}
 
-	hr = m_dInputDevice->SetCooperativeLevel(p_hWnd, DISCL_EXCLUSIVE | DISCL_FOREGROUND);
+	hr = dInputDevice->SetCooperativeLevel(p_hWnd, DISCL_EXCLUSIVE | DISCL_FOREGROUND);
 	if FAILED(hr)
 	{
 		ReleaseDevice();
@@ -42,17 +46,17 @@ bool Input::DirectKeyboard::Initialize(HWND p_hWnd, LPDIRECTINPUT8 m_dInput)
 
 bool Input::DirectKeyboard::Update()
 {
-	if (!SUCCEEDED(m_dInputDevice->Poll()))
+	if (!SUCCEEDED(dInputDevice->Poll()))
 	{
-		if (m_deviceAcquired)
+		if (deviceAcquired)
 		{
 			logger->Log(Logger::Logger::INFO, "InputManager: Keyboard focus lost.");
-			m_deviceAcquired = false;
+			deviceAcquired = false;
 		}
 		AcquireDevice();
 	}
 
-	if (FAILED(m_dInputDevice->GetDeviceState(sizeof(m_KeyBuffer), (LPVOID)&m_KeyBuffer)))
+	if (FAILED(dInputDevice->GetDeviceState(sizeof(m_KeyBuffer), (LPVOID)&m_KeyBuffer)))
 	{
 		return false;
 	}
@@ -63,7 +67,7 @@ bool Input::DirectKeyboard::Update()
 //Returns 100 if given key is being pressed at the moment
 long Input::DirectKeyboard::GetStateOf(int p_key)
 {
-	if (!SUCCEEDED(m_dInputDevice->Poll()))
+	if (!SUCCEEDED(dInputDevice->Poll()))
 	{
 		return 0;
 	}
@@ -81,13 +85,13 @@ std::map<Input::Input, long>* Input::DirectKeyboard::GetInputValues()
 {
 	std::map<Input, long>* returnMap = new std::map<Input, long>();
 
-	typedef std::map<Input, void*>::iterator it_type;
+	typedef std::map<Input, int>::iterator it_type;
 	for (it_type iterator = (*actionMapping).begin(); iterator != (*actionMapping).end(); iterator++)
 	{
-		int* directInputKey = (int*) iterator->second;
+		int directInputKey = iterator->second;
 		// Only process range of keyboard values
-		if ((*directInputKey) >= 0x01 && (*directInputKey) <= 0xED){
-			long state = GetStateOf(*directInputKey);
+		if (directInputKey >= 0x01 && directInputKey <= 0xED){
+			long state = GetStateOf(directInputKey);
 			if (state != 0){
 				returnMap->insert(std::make_pair(iterator->first, state));
 			}

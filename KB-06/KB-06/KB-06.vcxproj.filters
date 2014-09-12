@@ -97,6 +97,9 @@
     <ClCompile Include="MaterialWrapper.cpp">
       <Filter>Source\Renderer\Wrap Containers</Filter>
     </ClCompile>
+    <ClCompile Include="BaseMeshLoader.cpp">
+      <Filter>Source\Resource</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DefaultEntity.h">
@@ -174,15 +177,6 @@
     <ClInclude Include="ResourceManager.h">
       <Filter>Header\Resource</Filter>
     </ClInclude>
-    <ClInclude Include="Vertex.h">
-      <Filter>Header\Resource</Filter>
-    </ClInclude>
-    <ClInclude Include="MtlLoader.h">
-      <Filter>Header\Resource</Filter>
-    </ClInclude>
-    <ClInclude Include="ObjLoader.h">
-      <Filter>Header\Resource</Filter>
-    </ClInclude>
     <ClInclude Include="Mesh.h">
       <Filter>Header\Resource\Mesh</Filter>
     </ClInclude>
@@ -212,6 +206,21 @@
     </ClInclude>
     <ClInclude Include="Renderer.h">
       <Filter>Header\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="Vertex.h">
+      <Filter>Header\Resource\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjLoader.h">
+      <Filter>Header\Resource\Loader</Filter>
+    </ClInclude>
+    <ClInclude Include="MtlLoader.h">
+      <Filter>Header\Resource\Loader</Filter>
+    </ClInclude>
+    <ClInclude Include="CustomD3DVertex.h">
+      <Filter>Header\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseMeshLoader.h">
+      <Filter>Header\Resource\Loader</Filter>
     </ClInclude>
     <ClInclude Include="PengineDefinitions.h">
       <Filter>Header</Filter>
@@ -286,6 +295,9 @@
     </Filter>
     <Filter Include="Source\Renderer\Wrap Containers">
       <UniqueIdentifier>{a8a4c3de-c6dc-4555-a187-5c944c40dacb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header\Resource\Loader">
+      <UniqueIdentifier>{b5f4cc97-82d2-4ef5-baa8-f426e5a6653b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

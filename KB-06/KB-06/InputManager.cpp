@@ -25,10 +25,10 @@ std::map<Input::Input, long> Input::InputManager::GetCurrentActions(Window::Wind
 
 	if (p_window != NULL)
 	{
-		std::map<Window::Window*, std::list<InputDevice*>>::iterator itWindow = m_windowDevices.find(p_window);
+		std::map<Window::Window*, std::list<InputDevice*>>::iterator itWindow = windowDevices.find(p_window);
 
 		//Check if there are InputDevices for the Window
-		if (itWindow != m_windowDevices.end())
+		if (itWindow != windowDevices.end())
 		{
 			std::list<InputDevice*>::iterator itInputDevice;
 
@@ -65,7 +65,7 @@ void Input::InputManager::AttachWindow(Window::Window* p_window)
 		inputDevices.push_back(newKeyboard);
 	}
 
-	m_windowDevices.insert(std::pair<Window::Window*, std::list<InputDevice*>>(p_window, inputDevices));
+	windowDevices.insert(std::pair<Window::Window*, std::list<InputDevice*>>(p_window, inputDevices));
 
 	logger->Log(Logger::Logger::INFO, "InputManager: Window added, devices initialized.");
 }
@@ -73,10 +73,10 @@ void Input::InputManager::AttachWindow(Window::Window* p_window)
 //Releases the devices of the given window
 void Input::InputManager::DetachWindow(Window::Window& p_window)
 {
-	std::map<Window::Window*, std::list<InputDevice*>>::iterator it = m_windowDevices.find(&p_window);
+	std::map<Window::Window*, std::list<InputDevice*>>::iterator it = windowDevices.find(&p_window);
 
 	//If the window is found
-	if (it != m_windowDevices.end())
+	if (it != windowDevices.end())
 	{
 		//Destroy all InputDevices for the Window
 		for (std::list<InputDevice*>::iterator itInputDevice = it->second.begin(); itInputDevice != it->second.end(); ++itInputDevice)
@@ -85,7 +85,7 @@ void Input::InputManager::DetachWindow(Window::Window& p_window)
 			delete (*itInputDevice);
 		}
 
-		m_windowDevices.erase(&p_window);
+		windowDevices.erase(&p_window);
 
 		logger->Log(Logger::Logger::INFO, "InputManager: Window destroyed. InputDevices destroyed.");
 	}
@@ -96,7 +96,7 @@ void Input::InputManager::DetachAllWindows()
 	std::map<Window::Window*, std::list<InputDevice*>>::iterator it;
 
 	//Iterate all Windows
-	for (it = m_windowDevices.begin(); it != m_windowDevices.end(); ++it)
+	for (it = windowDevices.begin(); it != windowDevices.end(); ++it)
 	{
 		std::list<InputDevice*>::iterator itInputDevice;
 
