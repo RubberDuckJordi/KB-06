@@ -19,6 +19,7 @@ namespace Input
 	private:
 		void CreateActionMapping();
 		LPDIRECTINPUT8 m_dInput;
+		std::map<Input, int> actionMapping;
 	};
 }
 

@@ -81,13 +81,13 @@ std::map<Input::Input, long>* Input::DirectKeyboard::GetInputValues()
 {
 	std::map<Input, long>* returnMap = new std::map<Input, long>();
 
-	typedef std::map<Input, void*>::iterator it_type;
+	typedef std::map<Input, int>::iterator it_type;
 	for (it_type iterator = (*actionMapping).begin(); iterator != (*actionMapping).end(); iterator++)
 	{
-		int* directInputKey = (int*) iterator->second;
+		int directInputKey = iterator->second;
 		// Only process range of keyboard values
-		if ((*directInputKey) >= 0x01 && (*directInputKey) <= 0xED){
-			long state = GetStateOf(*directInputKey);
+		if (directInputKey >= 0x01 && directInputKey <= 0xED){
+			long state = GetStateOf(directInputKey);
 			if (state != 0){
 				returnMap->insert(std::make_pair(iterator->first, state));
 			}

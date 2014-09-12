@@ -9,7 +9,3 @@ Input::InputDeviceFactory::~InputDeviceFactory()
 {
 	Logger::LoggerPool::GetInstance().ReturnLogger(logger);
 }
-
-std::map<Input::Input, void*>* Input::InputDeviceFactory::GetActionMapping(){
-	return &actionMapping;
-}

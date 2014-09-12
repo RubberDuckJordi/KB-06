@@ -24,10 +24,10 @@ namespace Input
 		virtual bool Update() = 0;
 		virtual std::map<Input, long>* GetInputValues() = 0;
 		
-		void SetActionMapping(std::map<Input, void*>* actionMapping);
+		void SetActionMapping(std::map<Input, int>* actionMapping);
 
 	protected:
-		std::map<Input, void*>* actionMapping;
+		std::map<Input, int>* actionMapping;
 		std::string m_deviceName;
 		bool m_deviceAcquired;
 		Logger::Logger* logger;

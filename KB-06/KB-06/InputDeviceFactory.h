@@ -14,10 +14,8 @@ namespace Input
 		InputDeviceFactory();
 		~InputDeviceFactory();
 		virtual InputDevice* CreateInputDevice(InputDevice::Type type, Window::Window* window) = 0;
-		std::map<Input, void*>* GetActionMapping();
 	protected:
 		Logger::Logger* logger;
-		std::map<Input, void*> actionMapping;
 	};
 }
 
