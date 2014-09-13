@@ -13,6 +13,7 @@
 #include "ColorWrapper.cpp"
 #include "Mesh.h"
 #include "LoggerPool.h"
+#include "MeshResource.h"
 
 namespace Renderer
 {
@@ -48,7 +49,7 @@ namespace Renderer
 		virtual void SetStreamSource() = 0; //??
 		virtual void SetIndices() = 0; //??
 
-		virtual void Draw(Resource::Mesh* mesh) = 0;
+		virtual void Draw(Resource::MeshResource* mesh) = 0;
 	protected:
 		Logger::Logger* logger;
 	};

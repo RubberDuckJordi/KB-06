@@ -11,6 +11,8 @@
 #include "ResourceManager.h"
 #include "DirectXRenderer.h"
 #include "ObjLoader.h"
+#include "MtlLoader.h"
+#include "MeshResource.h"
 
 int _tmain(int argc, _TCHAR* argv[])
 { 
@@ -31,9 +33,11 @@ int _tmain(int argc, _TCHAR* argv[])
 	renderer->InitD3D(wManager->GetLastWindow()->GetHWND());
 
 	Resource::ResourceManager* resourceManager = new Resource::ResourceManager();
-	resourceManager->AddMeshLoader(new Resource::ObjLoader());
+	//resourceManager->AddMeshLoader(new Resource::ObjLoader());
+	resourceManager->RegisterFactory("mtl", new Resource::MtlLoader());
+	resourceManager->RegisterFactory("obj.mesh", new Resource::ObjLoader());
 
-	renderer->Draw(resourceManager->LoadMesh("cube.obj.mesh", "obj.mesh"));
+	renderer->Draw(((Resource::MeshResource*) resourceManager->GetResource("cube.obj.mesh", "obj.mesh")));
 
 	Scene::SceneManager* sceneManager = new Scene::SceneManager();
 		
@@ -43,7 +47,7 @@ int _tmain(int argc, _TCHAR* argv[])
 		std::map<Input::Input, long> actions = iManager->GetCurrentActions(wManager->GetLastWindow());
 
 		if (actions.size() > 0){
-			logger->Log(Logger::Logger::INFO, "Input!");
+			//logger->Log(Logger::Logger::INFO, "Input!");
 		}
 
 		sceneManager->UpdateActiveScene(actions);

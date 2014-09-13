@@ -76,13 +76,7 @@
     <ClCompile Include="InputDevice.cpp">
       <Filter>Source\Input</Filter>
     </ClCompile>
-    <ClCompile Include="ObjLoader.cpp">
-      <Filter>Source\Resource</Filter>
-    </ClCompile>
     <ClCompile Include="ResourceManager.cpp">
-      <Filter>Source\Resource</Filter>
-    </ClCompile>
-    <ClCompile Include="MtlLoader.cpp">
       <Filter>Source\Resource</Filter>
     </ClCompile>
     <ClCompile Include="StringHelper.cpp">
@@ -100,10 +94,27 @@
     <ClCompile Include="MaterialWrapper.cpp">
       <Filter>Source\Renderer\Wrap Containers</Filter>
     </ClCompile>
-    <ClCompile Include="BaseMeshLoader.cpp">
+    <ClCompile Include="ColorWrapper.cpp">
+      <Filter>Source\Renderer\Wrap Containers</Filter>
+    </ClCompile>
+    <ClCompile Include="ResourceFactory.cpp">
       <Filter>Source\Resource</Filter>
     </ClCompile>
-    <ClCompile Include="ColorWrapper.cpp" />
+    <ClCompile Include="Resource.cpp">
+      <Filter>Source\Resource</Filter>
+    </ClCompile>
+    <ClCompile Include="MeshResource.cpp">
+      <Filter>Source\Resource\Mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="MtlLoader.cpp">
+      <Filter>Source\Resource\Material</Filter>
+    </ClCompile>
+    <ClCompile Include="MTLResource.cpp">
+      <Filter>Source\Resource\Material</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjLoader.cpp">
+      <Filter>Source\Resource\Mesh</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DefaultEntity.h">
@@ -181,15 +192,6 @@
     <ClInclude Include="ResourceManager.h">
       <Filter>Header\Resource</Filter>
     </ClInclude>
-    <ClInclude Include="Vertex.h">
-      <Filter>Header\Resource</Filter>
-    </ClInclude>
-    <ClInclude Include="MtlLoader.h">
-      <Filter>Header\Resource</Filter>
-    </ClInclude>
-    <ClInclude Include="ObjLoader.h">
-      <Filter>Header\Resource</Filter>
-    </ClInclude>
     <ClInclude Include="Mesh.h">
       <Filter>Header\Resource\Mesh</Filter>
     </ClInclude>
@@ -226,7 +228,27 @@
     <ClInclude Include="PengineDefinitions.h">
       <Filter>Header</Filter>
     </ClInclude>
-    <ClInclude Include="BaseMeshLoader.h" />
+    <ClInclude Include="ResourceFactory.h">
+      <Filter>Header\Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>Header\Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="Vertex.h">
+      <Filter>Header\Resource\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="MTLResource.h">
+      <Filter>Header\Resource\Material</Filter>
+    </ClInclude>
+    <ClInclude Include="MeshResource.h">
+      <Filter>Header\Resource\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="MtlLoader.h">
+      <Filter>Header\Resource\Material</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjLoader.h">
+      <Filter>Header\Resource\Mesh</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -297,6 +319,12 @@
     </Filter>
     <Filter Include="Source\Renderer\Wrap Containers">
       <UniqueIdentifier>{a8a4c3de-c6dc-4555-a187-5c944c40dacb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Resource\Material">
+      <UniqueIdentifier>{99e37ea4-52d8-4bfc-8946-5ed3f66cc21c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Resource\Mesh">
+      <UniqueIdentifier>{0d33d217-67b9-4342-a082-62886686c1ab}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
