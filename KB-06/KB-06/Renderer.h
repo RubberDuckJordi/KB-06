@@ -13,6 +13,8 @@
 #include "ColorWrapper.cpp"
 #include "Mesh.h"
 #include "LoggerPool.h"
+#include "RGBAColor.h"
+#include <d3dx9.h>
 
 namespace Renderer
 {
@@ -27,12 +29,15 @@ namespace Renderer
 
 		virtual void SetWorldMatrix(MatrixWrapper* WorldMatrix) = 0;
 		virtual void SetViewMatrix(MatrixWrapper* ViewMatrix) = 0;
+		virtual void SetViewMatrix(float posX, float posY, float posZ, float roatationX, float roatationY, float roatationZ) = 0;
 		virtual void SetProjectionMatrix(MatrixWrapper* ProjectionMatrix) = 0;
+		virtual void SetProjectionMatrix(float FOV, float farClippingPlane) = 0;
 
 		virtual void BeginScene() = 0;
 		virtual void ClearScene(DWORDWrapper* count, DWORDWrapper* flags, ColorWrapper* color, float z, DWORDWrapper* stencil) = 0;
+		virtual void ClearScene(unsigned long count, unsigned long flags, Resource::RGBAColor color, float z, unsigned long stencil) = 0;
 		virtual void PresentScene(HWND hWnd) = 0;
-		virtual void StopScene() = 0;
+		virtual void EndScene() = 0;
 
 		virtual void CreateVertexBuffer(int heightmapvertex, DWORDWrapper* usage, DWORDWrapper* fvf, PoolWrapper* pool, VertexBufferWrapper* vertexbuffer, HANDLE handle) = 0;
 		virtual void CreateIndexBuffer(int length, DWORDWrapper* usage, FormatWrapper* format, PoolWrapper* pool, IndexBufferWrapper* Indexbuffer, HANDLE* handle) = 0;
@@ -49,6 +54,7 @@ namespace Renderer
 		virtual void SetIndices() = 0; //??
 
 		virtual void Draw(Resource::Mesh* mesh) = 0;
+		virtual void SetWorldMatrix(D3DXMATRIXA16* matrix, D3DXMATRIXA16* offset, boolean staticEntity) = 0;
 	protected:
 		Logger::Logger* logger;
 	};

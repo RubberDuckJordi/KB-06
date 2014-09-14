@@ -3,6 +3,7 @@
 
 #include <d3dx9.h>
 #include "Normal.h"
+#include "renderer.h"
 
 namespace Scene{
 	class Entity {
@@ -15,8 +16,12 @@ namespace Scene{
 		Resource::Normal GetRotation();
 		Resource::Normal GetScale();
 
-		D3DXMATRIXA16 finalMatrix;
-		D3DXMATRIXA16 rotationMatrix;
+		D3DXMATRIXA16 matrix;
+		D3DXMATRIXA16* GetMatrix();
+		void Draw(Renderer::Renderer* renderer, D3DXMATRIXA16* offset);
+
+		D3DXMATRIXA16 finalMatrix; 
+		D3DXMATRIXA16 rotationMatrix; 
 
 	protected:
 		float x, y, z;

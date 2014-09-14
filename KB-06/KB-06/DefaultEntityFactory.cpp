@@ -14,4 +14,3 @@ Scene::Entity* Scene::DefaultEntityFactory::CreateEntity() {
 	DefaultEntity *defaultEntity = new DefaultEntity();
 	return defaultEntity;
 };
-

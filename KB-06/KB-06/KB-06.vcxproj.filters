@@ -94,9 +94,6 @@
     <ClCompile Include="Renderer.cpp">
       <Filter>Source\Renderer</Filter>
     </ClCompile>
-    <ClCompile Include="Camera.cpp">
-      <Filter>Source\Scene</Filter>
-    </ClCompile>
     <ClCompile Include="MaterialWrapper.cpp">
       <Filter>Source\Renderer\Wrap Containers</Filter>
     </ClCompile>
@@ -104,6 +101,15 @@
       <Filter>Source\Resource</Filter>
     </ClCompile>
     <ClCompile Include="ColorWrapper.cpp" />
+    <ClCompile Include="PEngine.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="EntityCamera.cpp">
+      <Filter>Source\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity.cpp">
+      <Filter>Source\Scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DefaultEntity.h">
@@ -205,9 +211,6 @@
     <ClInclude Include="Material.h">
       <Filter>Header\Resource\Material</Filter>
     </ClInclude>
-    <ClInclude Include="RGBColor.h">
-      <Filter>Header\Resource\Material</Filter>
-    </ClInclude>
     <ClInclude Include="StringHelper.h">
       <Filter>Header\Logger</Filter>
     </ClInclude>
@@ -220,13 +223,24 @@
     <ClInclude Include="Renderer.h">
       <Filter>Header\Renderer</Filter>
     </ClInclude>
-    <ClInclude Include="Camera.h">
-      <Filter>Header\Scene</Filter>
-    </ClInclude>
     <ClInclude Include="PengineDefinitions.h">
       <Filter>Header</Filter>
     </ClInclude>
-    <ClInclude Include="BaseMeshLoader.h" />
+    <ClInclude Include="PEngine.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseMeshLoader.h">
+      <Filter>Header\Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="RGBAColor.h">
+      <Filter>Header\Resource\Material</Filter>
+    </ClInclude>
+    <ClInclude Include="RGBColor.h">
+      <Filter>Header\Resource\Material</Filter>
+    </ClInclude>
+    <ClInclude Include="EntityCamera.h">
+      <Filter>Header\Scene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />

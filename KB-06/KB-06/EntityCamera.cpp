@@ -1,6 +1,6 @@
-#include "Camera.h"
+#include "EntityCamera.h"
 
-Scene::Camera::Camera()
+Scene::EntityCamera::EntityCamera()
 {
 	speed = 0.0f;
 	xMovement = yMovement = zMovement = 0.0f;
@@ -9,11 +9,11 @@ Scene::Camera::Camera()
 }
 
 
-Scene::Camera::~Camera()
+Scene::EntityCamera::~EntityCamera()
 {
 }
 
-void Scene::Camera::Update()
+void Scene::EntityCamera::Update()
 {
 	Move();
 
@@ -24,7 +24,7 @@ void Scene::Camera::Update()
 	SetPosition(tf.x, tf.y, tf.z);
 }
 
-void Scene::Camera::Move()
+void Scene::EntityCamera::Move()
 {
 	Resource::Normal rot = GetRotation();
 	float yaw = rot.x;
@@ -74,7 +74,7 @@ void Scene::Camera::Move()
 	}
 };
 
-void Scene::Camera::MultiplyMatrices()
+void Scene::EntityCamera::MultiplyMatrices()
 {
 	finalMatrix = positionMatrix;
 
@@ -87,17 +87,17 @@ void Scene::Camera::MultiplyMatrices()
 	}
 };
 
-void Scene::Camera::UseKeyboardInput()
+void Scene::EntityCamera::UseKeyboardInput()
 {
 	
 };
 
-void Scene::Camera::UseMouseInput()
+void Scene::EntityCamera::UseMouseInput()
 {
 	
 };
 
-void Scene::Camera::SetPosition(float x, float y, float z)
+void Scene::EntityCamera::SetPosition(float x, float y, float z)
 {
 	this->x = -x;
 	this->y = -y;
@@ -106,7 +106,7 @@ void Scene::Camera::SetPosition(float x, float y, float z)
 	MultiplyMatrices();
 }
 
-void Scene::Camera::SetRotation(float yaw, float pitch, float roll)
+void Scene::EntityCamera::SetRotation(float yaw, float pitch, float roll)
 {
 	this->yaw = -yaw;
 	this->pitch = -pitch;
@@ -119,7 +119,7 @@ void Scene::Camera::SetRotation(float yaw, float pitch, float roll)
 	D3DXMatrixMultiply(&rotationMatrix, &rot1, &rot2);
 }
 
-void Scene::Camera::SetScale(float scaleX, float scaleY, float scaleZ)
+void Scene::EntityCamera::SetScale(float scaleX, float scaleY, float scaleZ)
 {
 	this->scaleX = -scaleX;
 	this->scaleY = -scaleY;
@@ -128,17 +128,17 @@ void Scene::Camera::SetScale(float scaleX, float scaleY, float scaleZ)
 	MultiplyMatrices();
 }
 
-Resource::Normal Scene::Camera::GetPosition()
+Resource::Normal Scene::EntityCamera::GetPosition()
 {
 	return{ -x, -y, -z };
 }
 
-Resource::Normal Scene::Camera::GetRotation()
+Resource::Normal Scene::EntityCamera::GetRotation()
 {
 	return{ -yaw, -pitch, -roll };
 }
 
-Resource::Normal Scene::Camera::GetScale()
+Resource::Normal Scene::EntityCamera::GetScale()
 {
 	return{ -scaleX, -scaleY, -scaleZ };
 }

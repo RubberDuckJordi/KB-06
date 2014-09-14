@@ -23,7 +23,7 @@ namespace Window
 	class Window
 	{
 	public:
-		Window(Renderer::Renderer* renderer);
+		Window();
 		~Window();
 
 		/*!

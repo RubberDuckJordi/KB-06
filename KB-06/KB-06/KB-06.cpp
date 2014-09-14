@@ -1,6 +1,7 @@
 // KB-06.cpp : Defines the entry point for the console application.
 //
 
+/*
 #include "stdafx.h"
 #include <cstdlib>
 #include "loggerPool.h"
@@ -11,7 +12,6 @@
 #include "ResourceManager.h"
 #include "DirectXRenderer.h"
 #include "ObjLoader.h"
-
 int _tmain(int argc, _TCHAR* argv[])
 { 
 	Logger::Logger* logger = Logger::LoggerPool::GetInstance().GetLogger();
@@ -52,4 +52,5 @@ int _tmain(int argc, _TCHAR* argv[])
 	delete iManager;
 	return 0;
 }
+*/
 

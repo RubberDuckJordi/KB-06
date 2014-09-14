@@ -30,6 +30,7 @@ void Logger::Logger::Log(int logType, std::string messageString){
 }
 
 void Logger::Logger::Log(int logType, char* message){
+
 	if (logLevel >= logType && logType > 0){
 		char* entry = BuildLogEntry(logType, message);
 		PrintConsole(logType, entry);

@@ -1,11 +1,15 @@
 #include "WindowManager.h"
 #include <string>
-#include "Logger.h"
 #include "LoggerPool.h"
 #include <sstream>
 #include "stdafx.h"
 
-Window::WindowManager::WindowManager(Scene::SceneManager *sManager)
+Window::WindowManager::WindowManager()
+{
+	logger = Logger::LoggerPool::GetInstance().GetLogger();
+}
+
+	Window::WindowManager::WindowManager(Scene::SceneManager *sManager)
 {
 	sceneManager = sManager;
 };
@@ -21,12 +25,14 @@ Window::WindowManager::~WindowManager()
 		delete windowListeners.back(), windowListeners.pop_back();
 	}
 	delete sceneManager;
+	logger->Log(Logger::Logger::INFO, "WindowManager destructed");
+	Logger::LoggerPool::GetInstance().ReturnLogger(logger);
 };
 
-HWND Window::WindowManager::NewWindow(Renderer::Renderer *renderer, int x, int y, int width, int height)
+HWND Window::WindowManager::NewWindow(int x, int y, int width, int height)
 {
 	Logger::Logger* logger = Logger::LoggerPool::GetInstance().GetLogger();
-	Window *window = new Window(renderer);
+	Window *window = new Window();
 	HWND hwnd = window->Create(x, y, width, height, NULL, NULL, NULL);
 
 	if (hwnd == NULL)
@@ -55,9 +61,11 @@ void Window::WindowManager::UpdateWindows()
 		DispatchMessage(&Msg);
 	}
 
+	/*  Window does not render; See renderer
 	for (long index = 0; index < (long)windows.size(); ++index) {
 		windows.at(index)->render(NULL);// Todo: get the scene that has to be rendered in this window...
 	}
+	*/
 
 };
 
@@ -73,7 +81,7 @@ bool Window::WindowManager::HasActiveWindow()
 		}
 	}*/
 
-	for (std::vector<Window*>::iterator it = windows.begin(); it != windows.end();) { // note the missing ++iter !
+	for (std::vector<Window*>::iterator it = windows.begin(); it != windows.end();) { // note the missing ++iter !; noted, does not work properly, attempts to destroy non instatiated objects
 		
 		if ((*it)->GetWindowState() == closed)
 		{

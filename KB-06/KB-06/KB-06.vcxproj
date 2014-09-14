@@ -14,10 +14,11 @@
     <ProjectGuid>{92DAF88F-03E3-49FB-8CD4-CC217C022CFC}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>KB06</RootNamespace>
+    <ProjectName>PEngine</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v120</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
@@ -85,11 +86,13 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Camera.h" />
+    <ClInclude Include="EntityCamera.h" />
     <ClInclude Include="FaceDefinition.h" />
+    <ClInclude Include="RGBColor.h" />
+    <ClInclude Include="PEngine.h" />
     <ClInclude Include="PengineDefinitions.h" />
     <ClInclude Include="BaseMeshLoader.h" />
-    <ClInclude Include="RGBColor.h" />
+    <ClInclude Include="RGBAColor.h" />
     <ClInclude Include="StringHelper.h" />
     <ClInclude Include="Material.h" />
     <ClInclude Include="Input.h" />
@@ -128,7 +131,8 @@
     <ClInclude Include="WindowManager.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="Entity.cpp" />
+    <ClCompile Include="EntityCamera.cpp" />
     <ClCompile Include="ColorWrapper.cpp" />
     <ClCompile Include="BaseMeshLoader.cpp" />
     <ClCompile Include="DefaultEntityFactory.cpp" />
@@ -145,6 +149,7 @@
     <ClCompile Include="DefaultEntity.cpp" />
     <ClCompile Include="DirectKeyboard.cpp" />
     <ClCompile Include="MaterialWrapper.cpp" />
+    <ClCompile Include="PEngine.cpp" />
     <ClCompile Include="StringHelper.cpp" />
     <ClCompile Include="Logger.cpp" />
     <ClCompile Include="LoggerPool.cpp" />

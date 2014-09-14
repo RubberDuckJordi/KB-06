@@ -1,15 +1,15 @@
-#ifndef __SCENE_CAMERA_H__
-#define __SCENE_CAMERA_H__
+#ifndef __SCENE_ENTITYCAMERA_H__
+#define __SCENE_ENTITYCAMERA_H__
 
 #define SPEED 0.5f
 
 #include "Entity.h"
 
 namespace Scene{
-	class Camera : public Entity {
+	class EntityCamera : public Entity {
 	public:
-		Camera();
-		~Camera();
+		EntityCamera();
+		~EntityCamera();
 		void Update();
 		void MultiplyMatrices();
 		void UseKeyboardInput();

@@ -5,6 +5,7 @@
 #include "Scene.h"
 #include "SceneFactory.h"
 #include "Input.h"
+#include "Renderer.h"
 #include <list>
 #include <map>
 
@@ -13,16 +14,18 @@ namespace Scene {
 	public:
 		SceneManager();
 		~SceneManager();
-		void AddSceneFactory(std::string, SceneFactory* sceneFactory);
-		Scene* AddScene(std::string sceneType);
+		void AddSceneFactory(char* key, SceneFactory* sceneFactory);
+		Scene* AddScene(char* sceneFactory);
+		void AddScene(Scene* scene);
 		void RemoveScene(Scene* scene);
 		void UpdateScene(Scene* scene);
 		void UpdateActiveScene(std::map<Input::Input, long> actions);
+		void RenderActiveScene(Renderer::Renderer* renderer);
 	private:
-		Scene* activeScene;
-
+		Scene* currentScene;
 		std::list<Scene*> scenes;
 		std::map<char*, SceneFactory*> sceneFactories;
+		Logger::Logger* logger;
 	};
 }
 
