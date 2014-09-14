@@ -39,11 +39,11 @@ namespace Renderer
 		void SetIndices(); //??
 
 		LPDIRECT3DDEVICE9* GetDevice();
-		void Draw(Resource::MeshResource* mesh);
+		void Draw(Resource::Mesh* mesh);
 	private:
 		LPDIRECT3D9 g_pD3D;
 		LPDIRECT3DDEVICE9 g_pd3dDevice;
-		std::map<Resource::MeshResource*, LPD3DXMESH> meshCache;
+		std::map<Resource::Mesh*, LPD3DXMESH> meshCache;
 	};
 }
 

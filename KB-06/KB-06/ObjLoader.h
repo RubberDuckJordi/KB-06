@@ -1,16 +1,15 @@
 #ifndef _RESOURCE_OBJLOADER_H_
 #define _RESOURCE_OBJLOADER_H_
-//#include "BaseMeshLoader.h"
-#include "ResourceFactory.h"
+#include "BaseMeshLoader.h"
+
 namespace Resource
 {
-	class ObjLoader : public ResourceFactory
+	class ObjLoader : public BaseMeshLoader
 	{
 	public:
 		ObjLoader();
-		//Mesh Load(const std::string file, const ResourceManager* resourceManager);
-		//std::string GetExtension();
-		Resource* LoadResource(char* path, ResourceManager* rsmgr);
+		Mesh Load(const std::string file, const ResourceManager* resourceManager);
+		std::string GetExtension();
 	};
 }
 

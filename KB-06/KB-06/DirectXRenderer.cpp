@@ -166,29 +166,30 @@ LPDIRECT3DDEVICE9* Renderer::DirectXRenderer::GetDevice()
 	return &g_pd3dDevice;
 };
 
-void Renderer::DirectXRenderer::Draw(Resource::MeshResource* mesh){
+void Renderer::DirectXRenderer::Draw(Resource::Mesh* mesh){
 	if (meshCache.find(mesh) == meshCache.end()){
 		logger->Log(Logger::Logger::DEBUG, "Mesh not converted to LPD3DXMESH yet.");
 
+
 		LPD3DXMESH d3dMesh;
-		if (FAILED(D3DXCreateMeshFVF(mesh->GetFaceDefinitions()->size(), mesh->GetVertices()->size(), D3DXMESH_MANAGED, D3DFVF_MESH, g_pd3dDevice, &d3dMesh))){
+		if (FAILED(D3DXCreateMeshFVF(mesh->faceDefinitions.size(), mesh->vertices.size(), D3DXMESH_MANAGED, D3DFVF_MESH, g_pd3dDevice, &d3dMesh))){
 			logger->Log(Logger::Logger::ERR, "Failed to create a D3DXCreateMeshFVF");
 		}
 
-		const int amountOfVertices = mesh->GetVertices()->size();
+		const int amountOfVertices = mesh->vertices.size();
 		D3DXVECTOR3 vertices[16384];
 		logger->Log(Logger::Logger::WARNING, "@todo; Remove limit to 16384 vertices.");
-		for (unsigned int i = 0; i < mesh->GetVertices()->size(); ++i){
-			vertices[i] = D3DXVECTOR3(mesh->GetVertices()->at(i).x, mesh->GetVertices()->at(i).y, mesh->GetVertices()->at(i).z);
+		for (unsigned int i = 0; i < mesh->vertices.size(); ++i){
+			vertices[i] = D3DXVECTOR3(mesh->vertices.at(i).x, mesh->vertices.at(i).y, mesh->vertices.at(i).z);
 		}
 
-		const int amountOfIndices = mesh->GetFaceDefinitions()->size();
+		const int amountOfIndices = mesh->faceDefinitions.size();
 		unsigned int* indices = new unsigned int[amountOfIndices];
 		int index = -1;
-		for (unsigned int i = 0; i < mesh->GetVertices()->size(); ++i){
-			indices[++index] = mesh->GetFaceDefinitions()->at(i).v1;
-			indices[++index] = mesh->GetFaceDefinitions()->at(i).v2;
-			indices[++index] = mesh->GetFaceDefinitions()->at(i).v3;
+		for (unsigned int i = 0; i < mesh->vertices.size(); ++i){
+			indices[++index] = mesh->faceDefinitions.at(i).v1;
+			indices[++index] = mesh->faceDefinitions.at(i).v2;
+			indices[++index] = mesh->faceDefinitions.at(i).v3;
 		}
 
 		//create buffers

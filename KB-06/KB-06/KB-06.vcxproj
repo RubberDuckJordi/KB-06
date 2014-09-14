@@ -85,13 +85,10 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="MTLResource.h" />
-    <ClInclude Include="MeshResource.h" />
-    <ClInclude Include="Resource.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="FaceDefinition.h" />
     <ClInclude Include="PengineDefinitions.h" />
-    <ClInclude Include="ResourceFactory.h" />
+    <ClInclude Include="BaseMeshLoader.h" />
     <ClInclude Include="RGBColor.h" />
     <ClInclude Include="StringHelper.h" />
     <ClInclude Include="Material.h" />
@@ -131,11 +128,9 @@
     <ClInclude Include="WindowManager.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="MTLResource.cpp" />
-    <ClCompile Include="MeshResource.cpp" />
-    <ClCompile Include="Resource.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="ColorWrapper.cpp" />
+    <ClCompile Include="BaseMeshLoader.cpp" />
     <ClCompile Include="DefaultEntityFactory.cpp" />
     <ClCompile Include="DefaultScene.cpp" />
     <ClCompile Include="DefaultSceneFactory.cpp" />
@@ -150,7 +145,6 @@
     <ClCompile Include="DefaultEntity.cpp" />
     <ClCompile Include="DirectKeyboard.cpp" />
     <ClCompile Include="MaterialWrapper.cpp" />
-    <ClCompile Include="ResourceFactory.cpp" />
     <ClCompile Include="StringHelper.cpp" />
     <ClCompile Include="Logger.cpp" />
     <ClCompile Include="LoggerPool.cpp" />
