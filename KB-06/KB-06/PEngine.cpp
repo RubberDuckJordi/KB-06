@@ -14,8 +14,8 @@ PEngine::PEngine()
 PEngine::~PEngine()
 {
 	delete resourceManager;
-	delete windowManager;
 	delete inputManager;
+	delete windowManager;
 	delete sceneManager;
 	delete renderer;
 
