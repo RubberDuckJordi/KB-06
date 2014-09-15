@@ -10,22 +10,21 @@ namespace Input
 	{
 	public:
 		DirectMouse();
+		~DirectMouse();
 		bool Initialize(HWND, LPDIRECTINPUT8);
 		bool Update();
 		std::map<Input, long>* GetInputValues();
 
 	private:
 
-		DIMOUSESTATE2 m_dIMouseState;
-		long m_previousXPos;
-		long m_previousYPos;
-		long m_previousZPos;
+		DIMOUSESTATE2 dIMouseState;
+		long previousXPos;
+		long previousYPos;
+		long previousZPos;
 
 		long GetDeltaXPosition();
 		long GetDeltaYPosition();
 		long GetDeltaZPosition();
-
-		Logger::Logger* logger;
 	};
 }
 #endif
