@@ -25,6 +25,8 @@ namespace Input
 		long GetDeltaXPosition();
 		long GetDeltaYPosition();
 		long GetDeltaZPosition();
+
+		DIMOUSESTATE2 dIMouseState;
 	};
 }
 #endif
