@@ -33,6 +33,7 @@ Input::DirectInputDeviceFactory::~DirectInputDeviceFactory()
 
 	InputDeviceFactory::~InputDeviceFactory();
 }
+
 Input::InputDevice* Input::DirectInputDeviceFactory::CreateInputDevice(InputDevice::Type type, Window::Window* window)
 {
 	DirectInputDevice* newDevice = NULL;

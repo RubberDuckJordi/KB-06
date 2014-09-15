@@ -5,6 +5,7 @@
 
 Scene::DefaultEntity::DefaultEntity(){
 	logger = Logger::LoggerPool::GetInstance().GetLogger();
+	logger->Log(Logger::Logger::DEBUG, "DefaultEntity::Created()");
 }
 
 Scene::DefaultEntity::~DefaultEntity(){

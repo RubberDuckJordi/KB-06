@@ -1,5 +1,6 @@
 #include "DefaultSceneFactory.h"
 #include "DefaultScene.h"
+#include "DefaultEntityFactory.h"
 
 Scene::DefaultSceneFactory::DefaultSceneFactory()
 {
@@ -14,6 +15,7 @@ Scene::DefaultSceneFactory::~DefaultSceneFactory()
 Scene::Scene* Scene::DefaultSceneFactory::CreateScene()
 {
 	// Add two entities from factory default
+	entityFactories["default"] = new DefaultEntityFactory();
 	Entity *entity = entityFactories.at("default")->CreateEntity();
 	Entity *entityTwo = entityFactories.at("default")->CreateEntity();
 	

@@ -49,6 +49,9 @@ void Renderer::DirectXRenderer::InitD3D(HWND hWnd)
 		//return E_FAIL; -> when switching from void to H_RESULT return type
 	}
 
+	logger->Log(Logger::Logger::WARNING, "Culling turned off");
+	g_pd3dDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);    // turn off culling
+
 	//return S_OK; -> when switching from void to H_RESULT return type
 };
 
@@ -74,11 +77,37 @@ void Renderer::DirectXRenderer::SetViewMatrix(MatrixWrapper* ViewMatrix)
 	this->g_pd3dDevice->SetTransform(D3DTS_VIEW, &(ViewMatrix->GetMatrix()));
 };
 
+void Renderer::DirectXRenderer::SetViewMatrix(float posX, float posY, float posZ, float roatationX, float roatationY, float roatationZ)
+{
+	// Set up our view matrix. A view matrix can be defined given an eye point,
+	// a point to lookat, and a direction for which way is up. Here, we set the
+	// eye five units back along the z-axis and up three units, look at the 
+	// origin, and define "up" to be in the y-direction.
+	D3DXVECTOR3 vEyePt(posX, posY, posZ);
+	D3DXVECTOR3 vLookatPt(roatationX, roatationY, roatationZ);
+	D3DXVECTOR3 vUpVec(0.0f, 1.0f, 0.0f);
+
+	D3DXMatrixLookAtLH(&matView, &vEyePt, &vLookatPt, &vUpVec);
+	g_pd3dDevice->SetTransform(D3DTS_VIEW, &matView);
+}
+
 void Renderer::DirectXRenderer::SetProjectionMatrix(MatrixWrapper* ProjectionMatrix)
 {
 	this->g_pd3dDevice->SetTransform(D3DTS_PROJECTION, &(ProjectionMatrix->GetMatrix()));
 };
 
+void Renderer::DirectXRenderer::SetProjectionMatrix(float FOV, float farClippingPlane)
+{
+	// For the projection matrix, we set up a perspective transform (which
+	// transforms geometry from 3D view space to 2D viewport space, with
+	// a perspective divide making objects smaller in the distance). To build
+	// a perpsective transform, we need the field of view (1/4 pi is common),
+	// the aspect ratio, and the near and far clipping planes (which define at
+	// what distances geometry should be no longer be rendered).
+	D3DXMATRIXA16 matProj;
+	D3DXMatrixPerspectiveFovLH(&matProj, FOV, 1.0f, 1.0f, 1000.0f);
+	g_pd3dDevice->SetTransform(D3DTS_PROJECTION, &matProj);
+}
 
 //Scene
 void Renderer::DirectXRenderer::BeginScene()
@@ -86,11 +115,14 @@ void Renderer::DirectXRenderer::BeginScene()
 	this->g_pd3dDevice->BeginScene();
 };
 
-void Renderer::DirectXRenderer::ClearScene(PENGINEDWORD count, PENGINEDWORD flags, PENGINECOLOR color, float z, PENGINEDWORD stencil)
+void Renderer::DirectXRenderer::ClearScene(DWORDWrapper* count, DWORDWrapper* flags, ColorWrapper* color, float z, DWORDWrapper* stencil)
 {
-
-	this->g_pd3dDevice->Clear(count, NULL, flags, color, z, stencil);
-
+	this->g_pd3dDevice->Clear(count->GetDWORD(), NULL, flags->GetDWORD(), color->GetColor(), z, stencil->GetDWORD());
+};
+void Renderer::DirectXRenderer::ClearScene(unsigned long count, unsigned long flags, Resource::RGBAColor color, float z, unsigned long stencil){
+	flags = D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER;
+	g_pd3dDevice->Clear(DWORD(count), NULL, DWORD(flags),
+		D3DCOLOR_COLORVALUE(color.r, color.g, color.b, color.a), z, DWORD(stencil));
 };
 
 void Renderer::DirectXRenderer::PresentScene(HWND hWnd)
@@ -98,27 +130,26 @@ void Renderer::DirectXRenderer::PresentScene(HWND hWnd)
 	this->g_pd3dDevice->Present(NULL, NULL, hWnd, NULL);
 };
 
-void Renderer::DirectXRenderer::StopScene()
+void Renderer::DirectXRenderer::EndScene()
 {
 	this->g_pd3dDevice->EndScene();
 };
 
 
 //Buffers
-void Renderer::DirectXRenderer::CreateVertexBuffer(int heightmapvertex, PENGINEDWORD usage, PENGINEDWORD fvf, PENGINEPOOL pool, VertexBufferWrapper* vertexbuffer, HANDLE handle)
+void Renderer::DirectXRenderer::CreateVertexBuffer(int heightmapvertex, DWORDWrapper* usage, DWORDWrapper* fvf, PoolWrapper* pool, VertexBufferWrapper* vertexbuffer, HANDLE handle)
 {
-	this->g_pd3dDevice->CreateVertexBuffer(heightmapvertex, usage, fvf, static_cast<D3DPOOL>(pool), vertexbuffer->GetVertexBuffer(), &handle);
+	this->g_pd3dDevice->CreateVertexBuffer(heightmapvertex, usage->GetDWORD(), fvf->GetDWORD(), pool->GetPool(), vertexbuffer->GetVertexBuffer(), &handle);
 };
 
-void Renderer::DirectXRenderer::CreateIndexBuffer(int length, PENGINEDWORD usage, PENGINEFORMAT format, PENGINEPOOL pool, IndexBufferWrapper* Indexbuffer, HANDLE* handle)
+void Renderer::DirectXRenderer::CreateIndexBuffer(int length, DWORDWrapper* usage, FormatWrapper* format, PoolWrapper* pool, IndexBufferWrapper* Indexbuffer, HANDLE* handle)
 {
-	this->g_pd3dDevice->CreateIndexBuffer(length, usage, static_cast<D3DFORMAT>(format), static_cast<D3DPOOL>(pool), Indexbuffer->GetIndexBuffer(), NULL);
+	this->g_pd3dDevice->CreateIndexBuffer(length, usage->GetDWORD(), format->GetFormat(), pool->GetPool(), Indexbuffer->GetIndexBuffer(), NULL);
 };
 
 //Set stuff
 void Renderer::DirectXRenderer::SetMaterial(MaterialWrapper* wrapper)
 {
-	//static_cast<D3DCOLORVALUE>(wrapper->Ambient);
 	g_pd3dDevice->SetMaterial(&wrapper->GetMaterial());
 	//return g_pd3dDevice->SetMaterial(&wrapper->GetMaterial()); when H_RESULT as return type
 };
@@ -129,9 +160,9 @@ void Renderer::DirectXRenderer::SetTexture(TextureWrapper* wrapper)
 	// return g_pd3dDevice->SetTexture(0, wrapper->GetTexture()); when H_RESULT as return type
 };
 
-void Renderer::DirectXRenderer::SetFvF(PENGINEDWORD fvf)
+void Renderer::DirectXRenderer::SetFvF(DWORDWrapper* fvf)
 {
-	g_pd3dDevice->SetFVF(fvf);
+	g_pd3dDevice->SetFVF(fvf->GetDWORD());
 };
 
 void Renderer::DirectXRenderer::SetTransform(int type, MatrixWrapper* wrapper)
@@ -175,6 +206,7 @@ void Renderer::DirectXRenderer::Draw(Resource::Mesh* mesh){
 		LPD3DXMESH d3dMesh;
 		if (FAILED(D3DXCreateMeshFVF(mesh->faceDefinitions.size(), mesh->vertices.size(), D3DXMESH_MANAGED, D3DFVF_MESH, g_pd3dDevice, &d3dMesh))){
 			logger->Log(Logger::Logger::ERR, "Failed to create a D3DXCreateMeshFVF");
+			return;
 		}
 
 		const int amountOfVertices = mesh->vertices.size();
@@ -222,8 +254,26 @@ void Renderer::DirectXRenderer::Draw(Resource::Mesh* mesh){
 		i_buffer->Unlock();
 		meshCache[mesh] = d3dMesh;
 		logger->Log(Logger::Logger::DEBUG, "Mesh converted to LPD3DXMESH.");
+		logger->Log(Logger::Logger::WARNING, "@todo; specify subsets.");
 	}
-
-	logger->Log(Logger::Logger::WARNING, "@todo; specify subsets.");
 	meshCache[mesh]->DrawSubset(0);
+}
+/**
+* set the world matrix
+* @param matrix
+* @param offset
+* @param staticEntity
+*/
+void Renderer::DirectXRenderer::SetWorldMatrix(D3DXMATRIXA16* matrix, D3DXMATRIXA16* offset, boolean staticEntity)
+{
+	D3DXMATRIXA16 worldMatrix;
+	if (staticEntity)
+	{
+		worldMatrix = *matrix;
+	}
+	else
+	{
+		worldMatrix = *matrix * *offset;
+	}
+	g_pd3dDevice->SetTransform(D3DTS_WORLD, &worldMatrix);
 }

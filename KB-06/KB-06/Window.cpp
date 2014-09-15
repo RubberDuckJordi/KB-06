@@ -2,8 +2,9 @@
 #include "Window.h"
 #include "Logger.h"
 #include "LoggerPool.h"
+#include <iostream>
 
-Window::Window::Window(Renderer::Renderer* renderer)
+Window::Window::Window()
 {
 	Logger::Logger* logger = Logger::LoggerPool::GetInstance().GetLogger();
 
@@ -29,8 +30,9 @@ Window::Window::Window(Renderer::Renderer* renderer)
 
 Window::Window::~Window()
 {
-	Logger::LoggerPool::GetInstance().ReturnLogger(logger);
-	delete _hwnd;
+	//logger->Log(Logger::Logger::INFO, "Destructed window");
+	//Logger::LoggerPool::GetInstance().ReturnLogger(logger);
+	//delete _hwnd;
 };
 
 void Window::Window::SetTitle(char* title)

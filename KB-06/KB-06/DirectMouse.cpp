@@ -84,8 +84,7 @@ bool Input::DirectMouse::Update()
 			ShowCursor(true);
 		}
 		result = DirectInputDevice::AcquireDevice();
-	}
-
+	} 
 	if (FAILED(dInputDevice->GetDeviceState(sizeof(DIMOUSESTATE2), (LPVOID)&dIMouseState)))
 	{
 		result = false;
@@ -93,9 +92,9 @@ bool Input::DirectMouse::Update()
 
 	if (result == true)
 	{
-		previousXPos = dIMouseState.lX;
-		previousYPos = dIMouseState.lY;
-		previousZPos = dIMouseState.lZ;
+		m_previousXPos = dIMouseState.lX;
+		m_previousYPos = dIMouseState.lY;
+		m_previousZPos = dIMouseState.lZ;
 	}
 
 	return deviceAcquired;
@@ -163,8 +162,8 @@ std::map<Input::Input, long>* Input::DirectMouse::GetInputValues()
 //Returns the position compared to the previous position of the X axis.
 long Input::DirectMouse::GetDeltaXPosition()
 {
-	long delta = dIMouseState.lX - previousXPos;
-	previousXPos = dIMouseState.lX;
+	long delta = dIMouseState.lX - m_previousXPos;
+	m_previousXPos = dIMouseState.lX;
 	if (delta > 10000 && delta < -10000)
 	{
 		delta = 0;
@@ -175,8 +174,8 @@ long Input::DirectMouse::GetDeltaXPosition()
 //Returns the position compared to the previous position of the Y axis.
 long Input::DirectMouse::GetDeltaYPosition()
 {
-	long delta = dIMouseState.lY - previousYPos;
-	previousYPos = dIMouseState.lY;
+	long delta = dIMouseState.lY - m_previousYPos;
+	m_previousYPos = dIMouseState.lY;
 	if (delta > 10000 && delta < -10000)
 	{
 		delta = 0;
@@ -189,8 +188,8 @@ long Input::DirectMouse::GetDeltaYPosition()
 //or more depending on the mouse.
 long Input::DirectMouse::GetDeltaZPosition()
 {
-	long delta = dIMouseState.lZ - previousZPos;
-	previousZPos = dIMouseState.lZ;
+	long delta = dIMouseState.lZ - m_previousZPos;
+	m_previousZPos = dIMouseState.lZ;
 	if (delta > 10000 && delta < -10000)
 	{
 		delta = 0;

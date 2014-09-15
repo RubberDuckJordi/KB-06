@@ -28,7 +28,8 @@ namespace Window
 
 		@param sceneManager: SceneManager which is used to render a scene.
 		*/
-		WindowManager(Scene::SceneManager *sceneManager);
+		WindowManager(Scene::SceneManager *sceneManager); // Manager shouln't use another manager
+		WindowManager();
 		~WindowManager();
 
 		/*!
@@ -40,7 +41,7 @@ namespace Window
 		@param width: The width of the window.
 		@param height: The height of the window.
 		*/
-		HWND NewWindow(Renderer::Renderer *renderer, int x, int y, int width, int height);
+		HWND NewWindow(int x, int y, int width, int height);
 
 		/*!
 		Loops through the list of windows to update them.
@@ -70,6 +71,7 @@ namespace Window
 		Scene::SceneManager *sceneManager;
 
 		std::list<WindowListener*> windowListeners;
+		Logger::Logger* logger;
 	};
 }
 #endif
