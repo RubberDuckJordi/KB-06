@@ -1,8 +1,9 @@
-#ifndef _RESOURCE_MATERIAL_H_
-#define _RESOURCE_MATERIAL_H_
+#ifndef _RESOURCE_TEXTURE_H_
+#define _RESOURCE_TEXTURE_H_
 
 namespace Resource
 {
-	struct Material();
+	struct Texture{
+	};
 }
 #endif

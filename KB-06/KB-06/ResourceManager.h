@@ -12,7 +12,7 @@
 
 namespace Resource
 {
-	class BaseMeshLoader;
+	class BaseMeshFactory;
 
 	class ResourceManager
 	{
@@ -25,10 +25,10 @@ namespace Resource
 		Mesh* LoadTexture(const std::string& fileName, const std::string& extension);
 		Mesh* LoadSound(const std::string& fileName, const std::string& extension);
 
-		void AddMeshLoader(BaseMeshLoader*);
-		void AddMaterialLoader(BaseMeshLoader*);
-		void AddTexureLoader(BaseMeshLoader*);
-		void AddSoundLoader(BaseMeshLoader*);
+		void AddMeshLoader(BaseMeshFactory*);
+		void AddMaterialLoader(BaseMeshFactory*);
+		void AddTexureLoader(BaseMeshFactory*);
+		void AddSoundLoader(BaseMeshFactory*);
 
 		std::map<std::string, Material>* loadMaterials(std::string file);
 	private:
@@ -37,11 +37,11 @@ namespace Resource
 		std::map<std::string, Mesh> meshes;
 		std::map<std::string, Material> materials;
 		std::map<std::string, Texture> textures;
-		std::map<std::string, Sounds> sounds;
+		std::map<std::string, Sound> sounds;
 		
-		std::map<std::string, BaseMeshLoader*> meshLoaders;
-		std::map<std::string, BaseMeshLoader*> meshLoaders;
-		std::map<std::string, BaseMeshLoader*> meshLoaders;
+		std::map<std::string, BaseMeshFactory*> meshLoaders;
+		std::map<std::string, BaseMeshFactory*> meshLoaders;
+		std::map<std::string, BaseMeshFactory*> meshLoaders;
 	};
 }
 #endif

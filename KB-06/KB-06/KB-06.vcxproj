@@ -94,6 +94,7 @@
     <ClInclude Include="PEngine.h" />
     <ClInclude Include="PengineDefinitions.h" />
     <ClInclude Include="RGBAColor.h" />
+    <ClInclude Include="Sound.h" />
     <ClInclude Include="StringHelper.h" />
     <ClInclude Include="Material.h" />
     <ClInclude Include="Input.h" />

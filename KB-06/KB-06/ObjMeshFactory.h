@@ -7,7 +7,7 @@ namespace Resource
 	class ObjMeshFactory : public BaseMeshFactory
 	{
 	public:
-		Mesh Load(const std::string file, const ResourceManager* resourceManager);
+		Mesh Load(const std::string file);
 		std::string GetExtension();
 	};
 }

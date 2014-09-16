@@ -240,6 +240,9 @@
     <ClInclude Include="BaseMeshFactory.h">
       <Filter>Header\Resource</Filter>
     </ClInclude>
+    <ClInclude Include="Sound.h">
+      <Filter>Header\Resource\Sound</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />

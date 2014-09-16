@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "ResourceManager.h"
 #include "StringHelper.h"
-#include "ObjLoader.h"
+#include "ObjMeshFactory.h"
 #include "MtlLoader.h"
 
 

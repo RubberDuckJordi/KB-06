@@ -6,10 +6,7 @@
 #include "StringHelper.h"
 #include "LoggerPool.h"
 
-
-Resource::ObjMeshFactory::ObjMeshFactory(){};
-
-Resource::Mesh Resource::ObjMeshFactory::Load(const std::string file, const ResourceManager* resourceManager){
+Resource::Mesh Resource::ObjMeshFactory::Load(const std::string file){
 	std::ifstream ifs(file, std::ifstream::in);
 	std::string line;
 	std::vector<std::string> elements;
