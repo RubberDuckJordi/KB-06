@@ -26,6 +26,12 @@ void Scene::Scene::Update() {
 
 
 void Scene::Scene::Render(Renderer::Renderer* renderer){
+	
+	Resource::Vertex* cameraPosition = currentCamera->GetPosition();
+	Resource::Vertex* cameraRotation = currentCamera->GetRotation();
+
+	renderer->SetViewMatrix(cameraPosition->x, cameraPosition->y, cameraPosition->z, cameraRotation->x, cameraRotation->y, cameraRotation->z);
+
 	for each(Entity* entity in entities)
 	{
 		entity->Draw(renderer, currentCamera->GetPosition(), currentCamera->GetRotation());
