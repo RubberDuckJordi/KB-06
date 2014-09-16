@@ -21,6 +21,8 @@ namespace Scene {
 		void UpdateScene(Scene* scene);
 		void UpdateActiveScene(std::map<Input::Input, long> actions);
 		void RenderActiveScene(Renderer::Renderer* renderer);
+		void SetCurrentScene(Scene* scene);
+
 	private:
 		Scene* currentScene;
 		std::list<Scene*> scenes;

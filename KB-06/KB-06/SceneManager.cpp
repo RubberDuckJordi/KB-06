@@ -58,3 +58,8 @@ void Scene::SceneManager::RenderActiveScene(Renderer::Renderer* renderer){
 	}
 	currentScene->Render(renderer);
 }
+
+void Scene::SceneManager::SetCurrentScene(Scene* scene)
+{
+	currentScene = scene;
+}
