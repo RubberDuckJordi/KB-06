@@ -2,6 +2,7 @@
 #define _RESOURCE_BASEMESHFACTORY_H_
 
 #include "mesh.h"
+#include <vector>
 
 namespace Resource
 {
@@ -11,7 +12,7 @@ namespace Resource
 		BaseMeshFactory();
 		~BaseMeshFactory();
 
-		virtual Mesh Load(const std::string file) = 0;
+		virtual std::pair<Mesh, std::vector<const std::string>> Load(const std::string file) = 0;
 		virtual std::string GetExtension() = 0;
 	};
 }

@@ -4,6 +4,7 @@
 namespace Resource
 {
 	struct Texture{
+		float todo;
 	};
 }
 #endif

@@ -189,9 +189,6 @@
     <ClInclude Include="MtlLoader.h">
       <Filter>Header\Resource</Filter>
     </ClInclude>
-    <ClInclude Include="Mesh.h">
-      <Filter>Header\Resource\Mesh</Filter>
-    </ClInclude>
     <ClInclude Include="FaceDefinition.h">
       <Filter>Header\Resource\Mesh</Filter>
     </ClInclude>
@@ -245,6 +242,15 @@
     </ClInclude>
     <ClInclude Include="Sound.h">
       <Filter>Header\Resource\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="Subset.h">
+      <Filter>Header\Resource\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="Mesh.h">
+      <Filter>Header\Resource\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseMaterialFactory.h">
+      <Filter>Header\Resource</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

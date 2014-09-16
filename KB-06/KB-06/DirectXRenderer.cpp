@@ -57,13 +57,14 @@ void Renderer::DirectXRenderer::InitD3D(HWND hWnd)
 
 void Renderer::DirectXRenderer::SetRenderState()
 {
-	this->g_pd3dDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);	//Counter Clockwise Cullmode
+	this->g_pd3dDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);	//Counter Clockwise Cullmode
 	this->g_pd3dDevice->SetRenderState(D3DRS_LIGHTING, FALSE); //No lightning
 	this->g_pd3dDevice->SetRenderState(D3DRS_ZENABLE, TRUE); //Z buffer on
 	this->g_pd3dDevice->SetRenderState(D3DRS_AMBIENT, 0xffffffff); //Ambient is white
 	this->g_pd3dDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, true); //Turn Alphablending on
 	this->g_pd3dDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA); //Type alphablending
 	this->g_pd3dDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA); //Type alphablending
+	g_pd3dDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
 };
 
 //Matrixen
@@ -204,55 +205,69 @@ void Renderer::DirectXRenderer::Draw(Resource::Mesh* mesh){
 
 
 		LPD3DXMESH d3dMesh;
-		if (FAILED(D3DXCreateMeshFVF(mesh->faceDefinitions.size(), mesh->vertices.size(), D3DXMESH_MANAGED, D3DFVF_MESH, g_pd3dDevice, &d3dMesh))){
+
+		LPD3DXBUFFER* pAdjacencyBuffer = NULL;
+		int vertices = 0;
+		int amountOfIndices = 0;
+		for (unsigned int i = 0; i < mesh->subsets.size(); ++i){
+			vertices += mesh->subsets.at(i).vertices.size();
+			amountOfIndices += mesh->subsets.at(i).faceDefinitions.size();
+		}
+
+		if (FAILED(D3DXCreateMeshFVF(amountOfIndices, vertices, D3DXMESH_MANAGED, D3DFVF_MESH, g_pd3dDevice, &d3dMesh))){
 			logger->Log(Logger::Logger::ERR, "Failed to create a D3DXCreateMeshFVF");
 			return;
 		}
 
-		const int amountOfVertices = mesh->vertices.size();
-		D3DXVECTOR3 vertices[16384];
-		logger->Log(Logger::Logger::WARNING, "@todo; Remove limit to 16384 vertices.");
-		for (unsigned int i = 0; i < mesh->vertices.size(); ++i){
-			vertices[i] = D3DXVECTOR3(mesh->vertices.at(i).x, mesh->vertices.at(i).y, mesh->vertices.at(i).z);
-		}
+			unsigned int* indices = new unsigned int[amountOfIndices];
 
-		const int amountOfIndices = mesh->faceDefinitions.size();
-		unsigned int* indices = new unsigned int[amountOfIndices];
-		int index = -1;
-		for (unsigned int i = 0; i < mesh->vertices.size(); ++i){
-			indices[++index] = mesh->faceDefinitions.at(i).v1;
-			indices[++index] = mesh->faceDefinitions.at(i).v2;
-			indices[++index] = mesh->faceDefinitions.at(i).v3;
-		}
+			const int amountOfVertices = vertices;
+			D3DXVECTOR3 d3dVertices[16384];
+			logger->Log(Logger::Logger::WARNING, "@todo; Remove limit to 16384 vertices.");
+			for (unsigned int i = 0; i < mesh->subsets.size(); ++i){
+				for (unsigned int j = 0; j < mesh->subsets.at(i).vertices.size(); ++j){
+					d3dVertices[j] = D3DXVECTOR3(mesh->subsets.at(i).vertices.at(j).x, mesh->subsets.at(i).vertices.at(j).y, mesh->subsets.at(i).vertices.at(j).z);
+				}
 
-		//create buffers
-		LPDIRECT3DVERTEXBUFFER9 v_buffer;
-		g_pd3dDevice->CreateVertexBuffer(amountOfVertices*sizeof(D3DXVECTOR3),
-			0,
-			D3DFVF_MESH,
-			D3DPOOL_MANAGED,
-			&v_buffer,
-			NULL);
+				unsigned int* indices = new unsigned int[amountOfIndices];
+				int index = -1;
+				for (unsigned int i = 0; i < mesh->subsets.at(i).vertices.size(); ++i){
+					indices[++index] = mesh->subsets.at(i).faceDefinitions.at(i).v1;
+					indices[++index] = mesh->subsets.at(i).faceDefinitions.at(i).v2;
+					indices[++index] = mesh->subsets.at(i).faceDefinitions.at(i).v3;
+				}
+			}
+			//create buffers
+			LPDIRECT3DVERTEXBUFFER9 v_buffer;
+			g_pd3dDevice->CreateVertexBuffer(amountOfVertices*sizeof(D3DXVECTOR3),
+				0,
+				D3DFVF_MESH,
+				D3DPOOL_MANAGED,
+				&v_buffer,
+				NULL);
 
-		LPDIRECT3DINDEXBUFFER9 i_buffer;
-		g_pd3dDevice->CreateIndexBuffer(amountOfIndices*sizeof(unsigned int),
-			0,
-			D3DFMT_INDEX32,
-			D3DPOOL_MANAGED,
-			&i_buffer,
-			NULL);
+			LPDIRECT3DINDEXBUFFER9 i_buffer;
+			g_pd3dDevice->CreateIndexBuffer(amountOfIndices*sizeof(unsigned int),
+				0,
+				D3DFMT_INDEX32,
+				D3DPOOL_MANAGED,
+				&i_buffer,
+				NULL);
 
-		VOID* pVoid;
-		// lock v_buffer and load the vertices into it
-		v_buffer->Lock(0, 0, (void**)&pVoid, 0);
-		memcpy(pVoid, vertices, amountOfVertices*sizeof(D3DXVECTOR3));
-		v_buffer->Unlock();
-	
-		// lock i_buffer and load the indices into it
-		i_buffer->Lock(0, 0, (void**)&pVoid, 0);
-		memcpy(pVoid, indices, amountOfIndices*sizeof(unsigned int));
-		i_buffer->Unlock();
-		meshCache[mesh] = d3dMesh;
+			VOID* pVoid;
+			// lock v_buffer and load the vertices into it
+			v_buffer->Lock(0, 0, (void**)&pVoid, 0);
+			memcpy(pVoid, d3dVertices, amountOfVertices*sizeof(D3DXVECTOR3));
+			v_buffer->Unlock();
+
+			// lock i_buffer and load the indices into it
+			i_buffer->Lock(0, 0, (void**)&pVoid, 0);
+			memcpy(pVoid, indices, amountOfIndices*sizeof(unsigned int));
+			i_buffer->Unlock();
+			meshCache[mesh] = d3dMesh;
+
+		D3DXCreateBox(g_pd3dDevice, 1.0f, 1.0f, 1.0f, &d3dMesh, pAdjacencyBuffer); // force a cube until resourcemanager works properly
+		//HRESULT hr = D3DXSaveMeshToX(L"test.x", d3dMesh, NULL, NULL, NULL, 0, 1); //save mesh to file to test
 		logger->Log(Logger::Logger::DEBUG, "Mesh converted to LPD3DXMESH.");
 		logger->Log(Logger::Logger::WARNING, "@todo; specify subsets.");
 	}

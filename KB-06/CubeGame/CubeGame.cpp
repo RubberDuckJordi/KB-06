@@ -17,14 +17,14 @@ int _tmain(int argc, _TCHAR* argv[])
 
 	pEngine.GetWindowManager()->NewWindow(10, 10, 500, 500);
 	pEngine.GetRenderer()->InitD3D(pEngine.GetWindowManager()->GetLastWindow()->GetHWND());
-	pEngine.GetResourceManager()->AddMeshLoader(new Resource::ObjMeshFactory());
+	pEngine.GetResourceManager()->AddMeshFactory(new Resource::ObjMeshFactory());
 
 	Resource::RGBAColor color;
 	color.r = 1.0f;
-	color.g = 0.5f;
+	color.g = 1.0f;
 	color.b = 1.0f;
 	color.a = 0.5f;
-	Resource::Mesh* mesh = pEngine.GetResourceManager()->LoadMesh("cube.obj.mesh", "obj.mesh");
+	Resource::Mesh* mesh = pEngine.GetResourceManager()->LoadMesh("resources/cube.obj.mesh", "obj.mesh");
 
 	Scene::DefaultSceneFactory* sceneFactory = new Scene::DefaultSceneFactory();
 	sceneFactory->setMesh(mesh);
@@ -33,7 +33,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	Scene::Scene* scene = pEngine.GetSceneManager()->AddScene("iets");
 	pEngine.GetSceneManager()->SetCurrentScene(scene);
 
-	//pEngine.GetRenderer()->SetViewMatrix(0.0f, 0.0f, -2.0f, 0.0f, 0.0f, 0.0f);
+	pEngine.GetRenderer()->SetViewMatrix(0.0f, 0.0f, -2.0f, 0.0f, 0.0f, 0.0f);
 	pEngine.GetRenderer()->SetProjectionMatrix(3.14159265358979323846f / 4, 100.0f);
 	while (pEngine.GetWindowManager()->HasActiveWindow())
 	{

@@ -4,6 +4,7 @@
 namespace Resource
 {
 	struct Sound{
+		float todo;
 	};
 }
 #endif

@@ -3,10 +3,11 @@
 
 #include "LoggerPool.h"
 #include "Mesh.h"
-#include "Texture.h";
-#include "Sound.h";
+#include "Texture.h"
+#include "Sound.h"
 #include "Material.h"
 #include "BaseMeshFactory.h"
+#include "BaseMaterialFactory.h"
 
 #include <string>
 
@@ -25,10 +26,10 @@ namespace Resource
 		Mesh* LoadTexture(const std::string& fileName, const std::string& extension);
 		Mesh* LoadSound(const std::string& fileName, const std::string& extension);
 
-		void AddMeshLoader(BaseMeshFactory*);
-		void AddMaterialLoader(BaseMeshFactory*);
-		void AddTexureLoader(BaseMeshFactory*);
-		void AddSoundLoader(BaseMeshFactory*);
+		void AddMeshFactory(BaseMeshFactory*);
+		void AddMaterialFactory(BaseMaterialFactory*);
+		void AddTexureFactory(BaseMeshFactory*);
+		void AddSoundFactory(BaseMeshFactory*);
 
 		std::map<std::string, Material>* loadMaterials(std::string file);
 	private:
@@ -38,8 +39,9 @@ namespace Resource
 		std::map<std::string, Material> materials;
 		std::map<std::string, Texture> textures;
 		std::map<std::string, Sound> sounds;
-		
-		std::map<std::string, BaseMeshFactory*> meshLoaders;
+
+		std::map<std::string, BaseMeshFactory*> meshFactories;
+		std::map<std::string, BaseMaterialFactory*> materialFactories;
 	};
 }
 #endif

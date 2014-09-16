@@ -86,9 +86,11 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BaseMaterialFactory.h" />
     <ClInclude Include="BaseMeshFactory.h" />
     <ClInclude Include="EntityCamera.h" />
     <ClInclude Include="FaceDefinition.h" />
+    <ClInclude Include="Mesh.h" />
     <ClInclude Include="ObjMeshFactory.h" />
     <ClInclude Include="RGBColor.h" />
     <ClInclude Include="PEngine.h" />
@@ -114,7 +116,7 @@
     <ClInclude Include="Logger.h" />
     <ClInclude Include="LoggerPool.h" />
     <ClInclude Include="DirectMouse.h" />
-    <ClInclude Include="Mesh.h" />
+    <ClInclude Include="Subset.h" />
     <ClInclude Include="MtlLoader.h" />
     <ClInclude Include="Normal.h" />
     <ClInclude Include="ParameterSpaceVertex.h" />
