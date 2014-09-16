@@ -51,9 +51,12 @@ namespace Renderer
 		virtual void SetIndices() = 0; //??
 
 		virtual void Draw(Resource::Mesh* mesh) = 0;
-		virtual void SetWorldMatrix(Resource::Vertex translation, Resource::Vertex rotation, Resource::Vertex scaling) = 0;
+		virtual void SetWorldMatrixForStaticEntity(Resource::Vertex* translation, Resource::Vertex* rotation, Resource::Vertex* scaling) = 0;
+		virtual void SetWorldMatrix(Resource::Vertex* translation, Resource::Vertex* rotation, Resource::Vertex* scaling, Resource::Vertex* cameraPosition, Resource::Vertex* cameraRotation) = 0;
+
 	protected:
 		Logger::Logger* logger;
+
 	};
 }
 

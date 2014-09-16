@@ -26,8 +26,8 @@ void Scene::Scene::Update() {
 
 
 void Scene::Scene::Render(Renderer::Renderer* renderer){
-	for each(Entity* enitity in entities)
+	for each(Entity* entity in entities)
 	{
-		enitity->Draw(renderer, currentCamera.GetMatrix());
+		entity->Draw(renderer, currentCamera->GetPosition(), currentCamera->GetRotation());
 	}
 }

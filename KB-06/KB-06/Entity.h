@@ -22,13 +22,13 @@ namespace Scene
 		void AddRotation(float yaw, float pitch, float roll);
 		void AddScale(float scaleX, float scaleY, float scaleZ);
 
-		Resource::Vertex GetPosition();
-		Resource::Vertex GetRotation();
-		Resource::Vertex GetScale();
+		Resource::Vertex* GetPosition();
+		Resource::Vertex* GetRotation();
+		Resource::Vertex* GetScale();
 
 		void SetMesh(Resource::Mesh* mesh);
 
-		void Draw(Renderer::Renderer* renderer);
+		void Draw(Renderer::Renderer* renderer, Resource::Vertex* position, Resource::Vertex* rotation);
 
 	protected:
 		Resource::Vertex position;

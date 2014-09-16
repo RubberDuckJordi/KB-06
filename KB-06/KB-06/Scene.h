@@ -7,8 +7,10 @@
 #include "Renderer.h"
 #include "LoggerPool.h"
 
-namespace Scene {
-	class Scene {
+namespace Scene 
+{
+	class Scene 
+	{
 	public:
 		Scene();
 		~Scene();
@@ -21,7 +23,7 @@ namespace Scene {
 	protected:
 		std::list<Entity*> entities;
 		std::list<EntityCamera*> cameras;
-		EntityCamera currentCamera;
+		EntityCamera* currentCamera;
 		Logger::Logger* logger;
 	};
 }

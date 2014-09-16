@@ -186,9 +186,6 @@
     <ClInclude Include="ResourceManager.h">
       <Filter>Header\Resource</Filter>
     </ClInclude>
-    <ClInclude Include="Vertex.h">
-      <Filter>Header\Resource</Filter>
-    </ClInclude>
     <ClInclude Include="MtlLoader.h">
       <Filter>Header\Resource</Filter>
     </ClInclude>
@@ -239,6 +236,9 @@
     </ClInclude>
     <ClInclude Include="EntityCamera.h">
       <Filter>Header\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Vertex.h">
+      <Filter>Header\Resource</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
