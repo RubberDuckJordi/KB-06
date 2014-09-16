@@ -292,7 +292,7 @@ void Renderer::DirectXRenderer::SetWorldMatrix(Resource::Vertex* p_translation, 
 	SetWorldMatrix(transformation, offset, false);
 }
 
-D3DXMATRIX* CreateD3DMATRIX(Resource::Vertex* p_translation, Resource::Vertex* p_rotation, Resource::Vertex* p_scaling)
+D3DXMATRIX* Renderer::DirectXRenderer::CreateD3DMATRIX(Resource::Vertex* p_translation, Resource::Vertex* p_rotation, Resource::Vertex* p_scaling)
 {
 	D3DXMATRIX translation;
 	

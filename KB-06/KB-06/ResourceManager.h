@@ -40,8 +40,6 @@ namespace Resource
 		std::map<std::string, Sound> sounds;
 		
 		std::map<std::string, BaseMeshFactory*> meshLoaders;
-		std::map<std::string, BaseMeshFactory*> meshLoaders;
-		std::map<std::string, BaseMeshFactory*> meshLoaders;
 	};
 }
 #endif

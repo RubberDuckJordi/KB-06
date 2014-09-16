@@ -133,6 +133,7 @@
     <ClInclude Include="WindowManager.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="BaseMeshFactory.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="EntityCamera.cpp" />
     <ClCompile Include="DefaultEntityFactory.cpp" />

@@ -19,7 +19,7 @@ Resource::ResourceManager::~ResourceManager()
 Resource::Mesh* Resource::ResourceManager::LoadMesh(const std::string& fileName, const std::string& extension)
 {
 	if (meshLoaders.find(extension) != meshLoaders.end()){
-		meshes[fileName] = meshLoaders[extension]->Load(fileName, this);
+		meshes[fileName] = meshLoaders[extension]->Load(fileName);
 		return &meshes[fileName];
 	}
 	else {
@@ -28,7 +28,7 @@ Resource::Mesh* Resource::ResourceManager::LoadMesh(const std::string& fileName,
 	}
 }
 
-void Resource::ResourceManager::AddMeshLoader(Resource::BaseMeshLoader* newMeshLoader)
+void Resource::ResourceManager::AddMeshLoader(Resource::BaseMeshFactory* newMeshLoader)
 {
 	meshLoaders[newMeshLoader->GetExtension()] = newMeshLoader;
 }
@@ -39,8 +39,8 @@ std::map<std::string, Resource::Material>* Resource::ResourceManager::loadMateri
 	if (Logger::StringHelper::EndsWith(file, ".mtl"))
 	{
 		newMaterials = MtlLoader::Load(file);
-		materials[file] = newMaterials;
+		//materials[file] = newMaterials;
 	}
-	return &materials[file];
+	return NULL;
 }
 
