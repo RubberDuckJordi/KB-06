@@ -18,6 +18,5 @@ namespace Resource
 		std::vector<FaceDefinition> faceDefinitions;
 	};
 }
-
 #endif
 

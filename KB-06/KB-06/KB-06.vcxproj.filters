@@ -76,9 +76,6 @@
     <ClCompile Include="InputDevice.cpp">
       <Filter>Source\Input</Filter>
     </ClCompile>
-    <ClCompile Include="ObjLoader.cpp">
-      <Filter>Source\Resource</Filter>
-    </ClCompile>
     <ClCompile Include="ResourceManager.cpp">
       <Filter>Source\Resource</Filter>
     </ClCompile>
@@ -97,9 +94,6 @@
     <ClCompile Include="MaterialWrapper.cpp">
       <Filter>Source\Renderer\Wrap Containers</Filter>
     </ClCompile>
-    <ClCompile Include="BaseMeshLoader.cpp">
-      <Filter>Source\Resource</Filter>
-    </ClCompile>
     <ClCompile Include="PEngine.cpp">
       <Filter>Source</Filter>
     </ClCompile>
@@ -108,6 +102,9 @@
     </ClCompile>
     <ClCompile Include="Entity.cpp">
       <Filter>Source\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjMeshFactory.cpp">
+      <Filter>Source\Resource</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -189,9 +186,6 @@
     <ClInclude Include="MtlLoader.h">
       <Filter>Header\Resource</Filter>
     </ClInclude>
-    <ClInclude Include="ObjLoader.h">
-      <Filter>Header\Resource</Filter>
-    </ClInclude>
     <ClInclude Include="Mesh.h">
       <Filter>Header\Resource\Mesh</Filter>
     </ClInclude>
@@ -225,9 +219,6 @@
     <ClInclude Include="PEngine.h">
       <Filter>Header</Filter>
     </ClInclude>
-    <ClInclude Include="BaseMeshLoader.h">
-      <Filter>Header\Resource</Filter>
-    </ClInclude>
     <ClInclude Include="RGBAColor.h">
       <Filter>Header\Resource\Material</Filter>
     </ClInclude>
@@ -239,6 +230,18 @@
     </ClInclude>
     <ClInclude Include="Vertex.h">
       <Filter>Header\Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture.h">
+      <Filter>Header\Resource\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjMeshFactory.h">
+      <Filter>Header\Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseMeshFactory.h">
+      <Filter>Header\Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="Sound.h">
+      <Filter>Header\Resource\Sound</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -310,6 +313,12 @@
     </Filter>
     <Filter Include="Source\Renderer\Wrap Containers">
       <UniqueIdentifier>{a8a4c3de-c6dc-4555-a187-5c944c40dacb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header\Resource\Texture">
+      <UniqueIdentifier>{64633755-409c-448e-a890-f37c0adcdcd2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header\Resource\Sound">
+      <UniqueIdentifier>{96c78ed4-cdc5-4f8f-87c7-648f3f6e5d85}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

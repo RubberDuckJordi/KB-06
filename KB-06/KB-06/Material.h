@@ -1,5 +1,6 @@
 #ifndef _RESOURCE_MATERIAL_H_
 #define _RESOURCE_MATERIAL_H_
+
 #include "RGBColor.h"
 
 namespace Resource
@@ -14,5 +15,4 @@ namespace Resource
 		float alpha;
 	};
 }
-
 #endif

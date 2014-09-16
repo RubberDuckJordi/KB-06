@@ -3,7 +3,7 @@
 
 #include "stdafx.h"
 #include "PEngine.h"
-#include "ObjLoader.h"
+#include "ObjMeshFactory.h"
 #include "RGBAColor.h"
 #include "Mesh.h"
 #include "SceneFactory.h"
@@ -17,7 +17,7 @@ int _tmain(int argc, _TCHAR* argv[])
 
 	pEngine.GetWindowManager()->NewWindow(10, 10, 500, 500);
 	pEngine.GetRenderer()->InitD3D(pEngine.GetWindowManager()->GetLastWindow()->GetHWND());
-	pEngine.GetResourceManager()->AddMeshLoader(new Resource::ObjLoader());
+	pEngine.GetResourceManager()->AddMeshLoader(new Resource::ObjMeshFactory());
 	
 	Scene::SceneFactory* sceneFactory = new Scene::DefaultSceneFactory();
 	pEngine.GetSceneManager()->AddSceneFactory("iets", sceneFactory);

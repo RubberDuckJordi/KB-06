@@ -1,15 +1,12 @@
 #include "stdafx.h"
-#include "ObjLoader.h"
+#include "ObjMeshFactory.h"
 #include "Mesh.h"
 #include <iostream>     // std::cout
 #include <fstream>      // std::ifstream
 #include "StringHelper.h"
 #include "LoggerPool.h"
 
-
-Resource::ObjLoader::ObjLoader(){};
-
-Resource::Mesh Resource::ObjLoader::Load(const std::string file, const ResourceManager* resourceManager){
+Resource::Mesh Resource::ObjMeshFactory::Load(const std::string file){
 	std::ifstream ifs(file, std::ifstream::in);
 	std::string line;
 	std::vector<std::string> elements;
@@ -87,6 +84,6 @@ Resource::Mesh Resource::ObjLoader::Load(const std::string file, const ResourceM
 	return mesh;
 }
 
-std::string Resource::ObjLoader::GetExtension(){
+std::string Resource::ObjMeshFactory::GetExtension(){
 	return "obj.mesh";
 }
