@@ -631,6 +631,34 @@
             <elementDefinition Id="bd97bab7-600d-44e4-88eb-05bb1ce40d9e" />
           </dependency>
         </suppliersInternal>
+        <targetEnds>
+          <association Id="49a467b8-125b-4918-a596-658fc177b23d" isDerived="false" sourceEndRoleName="" targetEndRoleName="" isLeaf="false" isAbstract="false">
+            <classMoniker Id="c3c0bfc6-7006-4371-bc7e-80dfe3e444ed" LastKnownName="Savegame" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="f709fa63-6e9a-4a94-9082-83e7898ff4f6" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="a66f8b9f-3b21-4c24-9384-da1a506fa3a8" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="14c65257-939e-481d-a1d7-6f6df95cd70f" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <lowerValueInternal>
+                    <literalString Id="8c99b7ff-8083-4b42-8984-f34226b67bc7" name="Lower" value="*">
+                      <elementDefinition Id="86bb4a0e-cc79-4e83-861b-9a2af21ae74c" />
+                    </literalString>
+                  </lowerValueInternal>
+                  <upperValueInternal>
+                    <literalString Id="873cc15b-809b-4663-9849-528bb168dc5f" name="Upper" value="*">
+                      <elementDefinition Id="f6aa8900-b72b-4108-8a72-6a68c5bf5440" />
+                    </literalString>
+                  </upperValueInternal>
+                  <elementDefinition Id="ce1f0eb8-8432-4ad2-9a1b-7bf1b6d59ddc" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="55b42645-7f67-4a75-b044-1473744c609b" />
+          </association>
+        </targetEnds>
       </class>
     </logicalClassDesignerModelHasTypes>
     <logicalClassDesignerModelHasTypes>
