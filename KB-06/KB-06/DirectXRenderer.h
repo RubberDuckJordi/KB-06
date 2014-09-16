@@ -43,8 +43,11 @@ namespace Renderer
 
 		LPDIRECT3DDEVICE9* GetDevice();
 		void Draw(Resource::Mesh* mesh);
-		void SetWorldMatrix(D3DXMATRIXA16* matrix, D3DXMATRIXA16* offset, boolean staticEntity);
+		void SetWorldMatrix(Resource::Vertex translation, Resource::Vertex rotation, Resource::Vertex scaling);
+
 	private:
+		void SetWorldMatrix(D3DXMATRIX* matrix, D3DXMATRIX* offset, boolean staticEntity);
+
 		LPDIRECT3D9 g_pD3D;
 		LPDIRECT3DDEVICE9 g_pd3dDevice;
 		std::map<Resource::Mesh*, LPD3DXMESH> meshCache;

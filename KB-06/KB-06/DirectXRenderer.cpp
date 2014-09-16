@@ -264,9 +264,9 @@ void Renderer::DirectXRenderer::Draw(Resource::Mesh* mesh){
 * @param offset
 * @param staticEntity
 */
-void Renderer::DirectXRenderer::SetWorldMatrix(D3DXMATRIXA16* matrix, D3DXMATRIXA16* offset, boolean staticEntity)
+void Renderer::DirectXRenderer::SetWorldMatrix(D3DXMATRIX* matrix, D3DXMATRIX* offset, boolean staticEntity)
 {
-	D3DXMATRIXA16 worldMatrix;
+	D3DXMATRIX worldMatrix;
 	if (staticEntity)
 	{
 		worldMatrix = *matrix;
@@ -276,4 +276,30 @@ void Renderer::DirectXRenderer::SetWorldMatrix(D3DXMATRIXA16* matrix, D3DXMATRIX
 		worldMatrix = *matrix * *offset;
 	}
 	g_pd3dDevice->SetTransform(D3DTS_WORLD, &worldMatrix);
+}
+
+void Renderer::DirectXRenderer::SetWorldMatrix(Resource::Vertex p_translation, Resource::Vertex p_rotation, Resource::Vertex p_scaling)
+{
+	D3DXMATRIX translation;
+	D3DXMATRIX scaling;
+	D3DXMATRIX rotationX;
+	D3DXMATRIX rotationY;
+	D3DXMATRIX rotationZ;
+	D3DXMATRIX transformation;
+
+	D3DXMatrixTranslation(&translation, p_translation.x, p_translation.y, p_translation.z);
+	D3DXMatrixScaling(&scaling, p_scaling.x, p_scaling.y, p_scaling.z);
+
+	//(PI/180)*angle = Degree to Radian
+	D3DXMatrixRotationX(&rotationX, (D3DX_PI / 180) * p_rotation.x);
+	D3DXMatrixRotationY(&rotationY, (D3DX_PI / 180) * p_rotation.y);
+	D3DXMatrixRotationZ(&rotationZ, (D3DX_PI / 180) * p_rotation.z);
+
+	//First rotate, scale, then translate the entity
+	//Otherwise the translation will be rotated
+	transformation = rotationX * rotationY * rotationZ;
+	transformation *= scaling;
+	transformation *= translation;
+
+	SetWorldMatrix(&translation, NULL, false);
 }

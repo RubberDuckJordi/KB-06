@@ -51,7 +51,7 @@ namespace Renderer
 		virtual void SetIndices() = 0; //??
 
 		virtual void Draw(Resource::Mesh* mesh) = 0;
-		virtual void SetWorldMatrix(D3DXMATRIXA16* matrix, D3DXMATRIXA16* offset, boolean staticEntity) = 0;
+		virtual void SetWorldMatrix(Resource::Vertex translation, Resource::Vertex rotation, Resource::Vertex scaling) = 0;
 	protected:
 		Logger::Logger* logger;
 	};

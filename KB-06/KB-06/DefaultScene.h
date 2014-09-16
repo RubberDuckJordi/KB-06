@@ -10,8 +10,6 @@ namespace Scene{
 		DefaultScene();
 		~DefaultScene();
 		void Update();
-	private:
-		Logger::Logger* logger;
 	};
 }
 
