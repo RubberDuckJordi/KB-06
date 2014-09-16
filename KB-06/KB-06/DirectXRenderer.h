@@ -22,17 +22,17 @@ namespace Renderer
 		void SetProjectionMatrix(float FOV, float farClippingPlane);
 
 		void BeginScene();
-		void ClearScene(DWORDWrapper* count, DWORDWrapper* flags, ColorWrapper* color, float z, DWORDWrapper* stencil);
+		void ClearScene(PENGINEDWORD* count, PENGINEDWORD* flags, PENGINECOLOR* color, float z, PENGINEDWORD* stencil);
 		void ClearScene(unsigned long count, unsigned long flags, Resource::RGBAColor color, float z, unsigned long stencil);
 		void PresentScene(HWND hWnd);
 		void EndScene();
 
-		void CreateVertexBuffer(int heightmapvertex, DWORDWrapper* usage, DWORDWrapper* fvf, PoolWrapper* pool, VertexBufferWrapper* vertexbuffer, HANDLE handle);
-		void CreateIndexBuffer(int length, DWORDWrapper* usage, FormatWrapper* format, PoolWrapper* pool, IndexBufferWrapper* Indexbuffer, HANDLE* handle);
+		void CreateVertexBuffer(int heightmapvertex, PENGINEDWORD* usage, PENGINEDWORD* fvf, PENGINEPOOL* pool, VertexBufferWrapper* vertexbuffer, HANDLE handle);
+		void CreateIndexBuffer(int length, PENGINEDWORD* usage, PENGINEFORMAT* format, PENGINEPOOL* pool, IndexBufferWrapper* Indexbuffer, HANDLE* handle);
 
 		void SetMaterial(MaterialWrapper* wrapper);
 		void SetTexture(TextureWrapper* wrapper);
-		void SetFvF(DWORDWrapper* fvf);
+		void SetFvF(PENGINEDWORD* fvf);
 		void SetTransform(int type, MatrixWrapper* wrapper);
 
 		void DrawPrimitive(Resource::Mesh mesh);

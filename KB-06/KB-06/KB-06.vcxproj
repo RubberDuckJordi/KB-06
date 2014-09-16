@@ -133,7 +133,6 @@
   <ItemGroup>
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="EntityCamera.cpp" />
-    <ClCompile Include="ColorWrapper.cpp" />
     <ClCompile Include="BaseMeshLoader.cpp" />
     <ClCompile Include="DefaultEntityFactory.cpp" />
     <ClCompile Include="DefaultScene.cpp" />

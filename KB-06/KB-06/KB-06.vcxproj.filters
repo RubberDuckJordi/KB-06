@@ -100,7 +100,6 @@
     <ClCompile Include="BaseMeshLoader.cpp">
       <Filter>Source\Resource</Filter>
     </ClCompile>
-    <ClCompile Include="ColorWrapper.cpp" />
     <ClCompile Include="PEngine.cpp">
       <Filter>Source</Filter>
     </ClCompile>
