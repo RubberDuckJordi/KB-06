@@ -69,8 +69,11 @@ Resource::Vertex* Scene::Entity::GetScale()
 
 void Scene::Entity::Draw(Renderer::Renderer* renderer, Resource::Vertex* p_position, Resource::Vertex* p_rotation)
 {
-	renderer->SetWorldMatrix(&position, &rotation, &scale, p_position, p_rotation);
-	renderer->Draw(mesh);
+	if (mesh != NULL)
+	{
+		renderer->SetWorldMatrix(&position, &rotation, &scale, p_position, p_rotation);
+		renderer->Draw(mesh);
+	}
 }
 
 void Scene::Entity::SetMesh(Resource::Mesh* p_mesh)

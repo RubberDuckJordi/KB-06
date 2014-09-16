@@ -28,7 +28,7 @@ namespace Scene
 
 		void SetMesh(Resource::Mesh* mesh);
 
-		void Draw(Renderer::Renderer* renderer, Resource::Vertex* position, Resource::Vertex* rotation);
+		virtual void Draw(Renderer::Renderer* renderer, Resource::Vertex* position, Resource::Vertex* rotation);
 
 	protected:
 		Resource::Vertex position;

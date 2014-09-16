@@ -9,6 +9,7 @@ namespace Scene{
 		EntityCamera();
 		~EntityCamera();
 		void Update();
+		void Draw(Renderer::Renderer* renderer, Resource::Vertex* position, Resource::Vertex* rotation);
 	private:
 		void Move();
 	};

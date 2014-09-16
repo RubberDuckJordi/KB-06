@@ -19,3 +19,9 @@ void Scene::EntityCamera::Move()
 {
 	
 };
+
+// Camera's worden niet getekend
+void Scene::EntityCamera::Draw(Renderer::Renderer* renderer, Resource::Vertex* position, Resource::Vertex* rotation)
+{
+
+}

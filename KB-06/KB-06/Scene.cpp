@@ -31,3 +31,13 @@ void Scene::Scene::Render(Renderer::Renderer* renderer){
 		entity->Draw(renderer, currentCamera->GetPosition(), currentCamera->GetRotation());
 	}
 }
+
+Scene::EntityCamera* Scene::Scene::GetCurrentCamera()
+{
+	return currentCamera;
+}
+
+void Scene::Scene::SetCurrentCamera(EntityCamera* camera)
+{
+	currentCamera = camera;
+}

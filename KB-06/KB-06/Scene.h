@@ -18,11 +18,10 @@ namespace Scene
 		void AddEntity(Entity* entity);
 		void Render(Renderer::Renderer* renderer);
 
-		void GetCurrentCamera();
-		//void SetCurrentCamera(EntityCamera camera);
+		EntityCamera* GetCurrentCamera();
+		void SetCurrentCamera(EntityCamera* camera);
 	protected:
 		std::list<Entity*> entities;
-		std::list<EntityCamera*> cameras;
 		EntityCamera* currentCamera;
 		Logger::Logger* logger;
 	};

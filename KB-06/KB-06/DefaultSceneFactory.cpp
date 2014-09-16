@@ -23,5 +23,8 @@ Scene::Scene* Scene::DefaultSceneFactory::CreateScene()
 	defaultScene->AddEntity(entity);
 	defaultScene->AddEntity(entityTwo);
 
+	EntityCamera* camera = new EntityCamera();
+	defaultScene->SetCurrentCamera(camera);
+
 	return defaultScene;
 }
