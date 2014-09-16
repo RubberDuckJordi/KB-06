@@ -8,6 +8,7 @@ Scene::EntityCamera::EntityCamera()
 
 Scene::EntityCamera::~EntityCamera()
 {
+
 }
 
 void Scene::EntityCamera::Update()

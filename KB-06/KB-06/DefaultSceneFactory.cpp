@@ -23,7 +23,7 @@ Scene::Scene* Scene::DefaultSceneFactory::CreateScene()
 	entity->SetMesh(mesh);
 
 	EntityCamera* camera = new EntityCamera();
-	camera->AddPosition(-100, 0, 0);
+	camera->AddPosition(-50.0f, 0.0f, 0.0f);
 	defaultScene->SetCurrentCamera(camera);
 
 	return defaultScene;

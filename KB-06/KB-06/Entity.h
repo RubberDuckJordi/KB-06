@@ -3,6 +3,7 @@
 
 #include "renderer.h"
 #include "Vertex.h"
+#include "logger.h"
 
 namespace Scene
 {
@@ -36,6 +37,8 @@ namespace Scene
 		Resource::Vertex scale;
 
 		Resource::Mesh* mesh;
+		Logger::Logger* logger;
+
 	};
 }
 

@@ -2,12 +2,12 @@
 
 Scene::Entity::Entity()
 {
-
+	logger = Logger::LoggerPool::GetInstance().GetLogger();
 }
 
 Scene::Entity::~Entity()
 {
-
+	Logger::LoggerPool::GetInstance().ReturnLogger(logger);
 }
 
 void Scene::Entity::SetPosition(float x, float y, float z)
@@ -73,6 +73,10 @@ void Scene::Entity::Draw(Renderer::Renderer* renderer, Resource::Vertex* p_posit
 	{
 		renderer->SetWorldMatrix(&position, &rotation, &scale, p_position, p_rotation);
 		renderer->Draw(mesh);
+	}
+	else
+	{
+		logger->Log(Logger::Logger::WARNING, "No mesh for entity!");
 	}
 }
 
