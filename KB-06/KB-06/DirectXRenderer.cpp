@@ -84,11 +84,18 @@ void Renderer::DirectXRenderer::SetViewMatrix(float posX, float posY, float posZ
 	// a point to lookat, and a direction for which way is up. Here, we set the
 	// eye five units back along the z-axis and up three units, look at the 
 	// origin, and define "up" to be in the y-direction.
-	D3DXVECTOR3 vEyePt(posX, posY, posZ);
+	/*D3DXVECTOR3 vEyePt(posX, posY, posZ);
 	D3DXVECTOR3 vLookatPt(roatationX, roatationY, roatationZ);
 	D3DXVECTOR3 vUpVec(0.0f, 1.0f, 0.0f);
 
+	D3DXMatrixLookAtLH(&matView, &vEyePt, &vLookatPt, &vUpVec);*/
+
+	D3DXVECTOR3 vEyePt(0, 0, -0.5f);
+	D3DXVECTOR3 vLookatPt(0, 0, 0.5f);
+	D3DXVECTOR3 vUpVec(0.0f, 0.5f, 0.0f);
+	D3DXMATRIXA16 matView;
 	D3DXMatrixLookAtLH(&matView, &vEyePt, &vLookatPt, &vUpVec);
+
 	g_pd3dDevice->SetTransform(D3DTS_VIEW, &matView);
 }
 
@@ -264,14 +271,18 @@ void Renderer::DirectXRenderer::Draw(Resource::Mesh* mesh){
 			i_buffer->Lock(0, 0, (void**)&pVoid, 0);
 			memcpy(pVoid, indices, amountOfIndices*sizeof(unsigned int));
 			i_buffer->Unlock();
+
+			D3DXCreateBox(g_pd3dDevice, 2.0f, 2.0f, 2.0f, &d3dMesh, pAdjacencyBuffer); // force a cube until resourcemanager works properly
+
 			meshCache[mesh] = d3dMesh;
 
-		D3DXCreateBox(g_pd3dDevice, 1.0f, 1.0f, 1.0f, &d3dMesh, pAdjacencyBuffer); // force a cube until resourcemanager works properly
+		
 		//HRESULT hr = D3DXSaveMeshToX(L"test.x", d3dMesh, NULL, NULL, NULL, 0, 1); //save mesh to file to test
 		logger->Log(Logger::Logger::DEBUG, "Mesh converted to LPD3DXMESH.");
 		logger->Log(Logger::Logger::WARNING, "@todo; specify subsets.");
 	}
-	meshCache[mesh]->DrawSubset(0);
+	HRESULT r = meshCache[mesh]->DrawSubset(0);
+	//logger->Log(Logger::Logger::WARNING, "meow");
 }
 /**
 * set the world matrix
