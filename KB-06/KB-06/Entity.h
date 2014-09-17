@@ -33,6 +33,8 @@ namespace Scene
 		virtual void Draw(Renderer::Renderer* renderer, Resource::Vertex* position, Resource::Vertex* rotation);
 
 	protected:
+		void FixDegrees(Resource::Vertex*);
+
 		Resource::Vertex position;
 		Resource::Vertex rotation;
 		Resource::Vertex scale;

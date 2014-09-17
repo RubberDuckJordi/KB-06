@@ -21,7 +21,7 @@ int _tmain(int argc, _TCHAR* argv[])
 
 	Resource::RGBAColor color;
 	color.r = 1.0f;
-	color.g = 1.0f;
+	color.g = 0.0f;
 	color.b = 1.0f;
 	color.a = 0.5f;
 	Resource::Mesh* mesh = pEngine.GetResourceManager()->LoadMesh("resources/cube.obj.mesh", "obj.mesh");
@@ -35,6 +35,7 @@ int _tmain(int argc, _TCHAR* argv[])
 
 	pEngine.GetRenderer()->SetViewMatrix(0.0f, 0.0f, -2.0f, 0.0f, 0.0f, 0.0f);
 	pEngine.GetRenderer()->SetProjectionMatrix(3.14159265358979323846f / 4, 100.0f);
+	pEngine.GetRenderer()->SetRenderState();
 	while (pEngine.GetWindowManager()->HasActiveWindow())
 	{
 
