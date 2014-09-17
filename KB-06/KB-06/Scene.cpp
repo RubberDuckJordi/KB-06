@@ -31,12 +31,20 @@ void Scene::Scene::Render(Renderer::Renderer* renderer){
 	Resource::Vertex* cameraPosition = currentCamera->GetPosition();
 	Resource::Vertex* cameraRotation = currentCamera->GetRotation();
 
-	renderer->SetViewMatrix(0, 0, 1, 0, 0, 0);
+	renderer->SetViewMatrix(0, 0, -0.5f, 0, 0, 0.5f);
 
 	for each(Entity* entity in entities)
 	{
+		D3DXMATRIXA16 entityMatrix;
+		Resource::Vertex* pos = entity->GetPosition();
+		D3DXMatrixTranslation(&entityMatrix, pos->x, pos->y, pos->z);
+		MatrixWrapper* theRealFinalMatix = new MatrixWrapper(entityMatrix);
+		renderer->SetWorldMatrix(theRealFinalMatix);
+
 		entity->Draw(renderer, currentCamera->GetPosition(), currentCamera->GetRotation());
 	}
+
+
 }
 
 Scene::EntityCamera* Scene::Scene::GetCurrentCamera()

@@ -18,9 +18,9 @@ Scene::Scene* Scene::DefaultSceneFactory::CreateScene()
 	entityFactories["default"] = new DefaultEntityFactory();
 	Entity *entity = entityFactories.at("default")->CreateEntity();
 
-	entity->AddPosition(0.0f, 0.0f, 5.0f);
+	entity->AddPosition(0.0f, 0.0f, 7.5f);
 	entity->AddScale(1.0f, 1.0f, 1.0f);
-	entity->AddRotation(1.0f, 1.0f, 1.0f);
+	entity->AddRotation(0.0f, 0.0f, 0.0f);
 	
 	DefaultScene* defaultScene = new DefaultScene();
 	defaultScene->AddEntity(entity);

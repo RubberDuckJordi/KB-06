@@ -264,9 +264,10 @@ void Renderer::DirectXRenderer::Draw(Resource::Mesh* mesh){
 			i_buffer->Lock(0, 0, (void**)&pVoid, 0);
 			memcpy(pVoid, indices, amountOfIndices*sizeof(unsigned int));
 			i_buffer->Unlock();
+			D3DXCreateBox(g_pd3dDevice, 2.0f, 2.0f, 2.0f, &d3dMesh, pAdjacencyBuffer); // force a cube until resourcemanager works properly
+
 			meshCache[mesh] = d3dMesh;
 
-		D3DXCreateBox(g_pd3dDevice, 1.0f, 1.0f, 1.0f, &d3dMesh, pAdjacencyBuffer); // force a cube until resourcemanager works properly
 		//HRESULT hr = D3DXSaveMeshToX(L"test.x", d3dMesh, NULL, NULL, NULL, 0, 1); //save mesh to file to test
 		logger->Log(Logger::Logger::DEBUG, "Mesh converted to LPD3DXMESH.");
 		logger->Log(Logger::Logger::WARNING, "@todo; specify subsets.");
