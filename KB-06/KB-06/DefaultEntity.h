@@ -9,9 +9,7 @@ namespace Scene{
 	public:
 		DefaultEntity();
 		~DefaultEntity();
-		void Update();
-	private:
-		Logger::Logger* logger;
+		void Update(std::map<Input::Input, long>* actions);
 	};
 }
 

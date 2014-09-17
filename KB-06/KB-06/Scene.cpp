@@ -17,17 +17,42 @@ void Scene::Scene::AddEntity(Entity* entity){
 	entities.push_back(entity);
 }
 
-void Scene::Scene::Update() {
+void Scene::Scene::Update(std::map<Input::Input, long>* actions) {
 	for (std::list<Entity*>::iterator i = entities.begin(); i != entities.end(); ++i)
 	{
-		(*i)->Update();
+		(*i)->Update(actions);
 	}
+	currentCamera->Update(actions);
 }
 
 
 void Scene::Scene::Render(Renderer::Renderer* renderer){
-	for each(Entity* enitity in entities)
+	
+	Resource::Vertex* cameraPosition = currentCamera->GetPosition();
+	Resource::Vertex* cameraRotation = currentCamera->GetRotation();
+
+	renderer->SetViewMatrix(0, 0, -0.5f, 0, 0, 0.5f);
+
+	for each(Entity* entity in entities)
 	{
-		enitity->Draw(renderer, currentCamera.GetMatrix());
+		D3DXMATRIXA16 entityMatrix;
+		Resource::Vertex* pos = entity->GetPosition();
+		D3DXMatrixTranslation(&entityMatrix, pos->x, pos->y, pos->z);
+		MatrixWrapper* theRealFinalMatix = new MatrixWrapper(entityMatrix);
+		renderer->SetWorldMatrix(theRealFinalMatix);
+
+		entity->Draw(renderer, currentCamera->GetPosition(), currentCamera->GetRotation());
 	}
+
+
+}
+
+Scene::EntityCamera* Scene::Scene::GetCurrentCamera()
+{
+	return currentCamera;
+}
+
+void Scene::Scene::SetCurrentCamera(EntityCamera* camera)
+{
+	currentCamera = camera;
 }

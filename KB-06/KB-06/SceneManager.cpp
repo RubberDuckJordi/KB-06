@@ -40,9 +40,9 @@ void Scene::SceneManager::UpdateScene(Scene* scene)
 
 }
 
-void Scene::SceneManager::UpdateActiveScene(std::map<Input::Input, long> actions)
+void Scene::SceneManager::UpdateActiveScene(std::map<Input::Input, long>* actions)
 {
-
+	currentScene->Update(actions);
 }
 
 void Scene::SceneManager::RenderActiveScene(Renderer::Renderer* renderer){
@@ -57,4 +57,9 @@ void Scene::SceneManager::RenderActiveScene(Renderer::Renderer* renderer){
 		}
 	}
 	currentScene->Render(renderer);
+}
+
+void Scene::SceneManager::SetCurrentScene(Scene* scene)
+{
+	currentScene = scene;
 }

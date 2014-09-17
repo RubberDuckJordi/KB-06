@@ -5,12 +5,9 @@
 #include "MatrixWrapper.cpp"
 #include "MaterialWrapper.cpp"
 #include "TextureWrapper.cpp"
-#include "DWORDWrapper.cpp"
 #include "MeshWrapper.cpp"
-#include "PoolWrapper.cpp"
 #include "VertexBufferWrapper.cpp"
 #include "IndexBufferWrapper.cpp"
-#include "FormatWrapper.cpp"
 #include "Mesh.h"
 #include "LoggerPool.h"
 #include "RGBAColor.h"
@@ -34,17 +31,17 @@ namespace Renderer
 		virtual void SetProjectionMatrix(float FOV, float farClippingPlane) = 0;
 
 		virtual void BeginScene() = 0;
-		virtual void ClearScene(DWORDWrapper* count, DWORDWrapper* flags, ColorWrapper* color, float z, DWORDWrapper* stencil) = 0;
+		virtual void ClearScene(PENGINEDWORD* count, PENGINEDWORD* flags, PENGINECOLOR* color, float z, PENGINEDWORD* stencil) = 0;
 		virtual void ClearScene(unsigned long count, unsigned long flags, Resource::RGBAColor color, float z, unsigned long stencil) = 0;
 		virtual void PresentScene(HWND hWnd) = 0;
 		virtual void EndScene() = 0;
 
-		virtual void CreateVertexBuffer(int heightmapvertex, DWORDWrapper* usage, DWORDWrapper* fvf, PoolWrapper* pool, VertexBufferWrapper* vertexbuffer, HANDLE handle) = 0;
-		virtual void CreateIndexBuffer(int length, DWORDWrapper* usage, FormatWrapper* format, PoolWrapper* pool, IndexBufferWrapper* Indexbuffer, HANDLE* handle) = 0;
+		virtual void CreateVertexBuffer(int heightmapvertex, PENGINEDWORD* usage, PENGINEDWORD* fvf, PENGINEPOOL* pool, VertexBufferWrapper* vertexbuffer, HANDLE handle) = 0;
+		virtual void CreateIndexBuffer(int length, PENGINEDWORD* usage, PENGINEFORMAT* format, PENGINEPOOL* pool, IndexBufferWrapper* Indexbuffer, HANDLE* handle) = 0;
 
 		virtual void SetMaterial(MaterialWrapper* wrapper) = 0;
 		virtual void SetTexture(TextureWrapper* wrapper) = 0;
-		virtual void SetFvF(DWORDWrapper* fvf) = 0;
+		virtual void SetFvF(DWORD* fvf) = 0;
 		virtual void SetTransform(int type, MatrixWrapper* wrapper) = 0;
 
 		virtual void DrawPrimitive(Resource::Mesh mesh) = 0;
@@ -54,9 +51,12 @@ namespace Renderer
 		virtual void SetIndices() = 0; //??
 
 		virtual void Draw(Resource::Mesh* mesh) = 0;
-		virtual void SetWorldMatrix(D3DXMATRIXA16* matrix, D3DXMATRIXA16* offset, boolean staticEntity) = 0;
+		virtual void SetWorldMatrixForStaticEntity(Resource::Vertex* translation, Resource::Vertex* rotation, Resource::Vertex* scaling) = 0;
+		virtual void SetWorldMatrix(Resource::Vertex* translation, Resource::Vertex* rotation, Resource::Vertex* scaling, Resource::Vertex* cameraPosition, Resource::Vertex* cameraRotation) = 0;
+
 	protected:
 		Logger::Logger* logger;
+
 	};
 }
 

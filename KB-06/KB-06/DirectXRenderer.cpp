@@ -57,13 +57,14 @@ void Renderer::DirectXRenderer::InitD3D(HWND hWnd)
 
 void Renderer::DirectXRenderer::SetRenderState()
 {
-	this->g_pd3dDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);	//Counter Clockwise Cullmode
+	this->g_pd3dDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);	//Counter Clockwise Cullmode
 	this->g_pd3dDevice->SetRenderState(D3DRS_LIGHTING, FALSE); //No lightning
 	this->g_pd3dDevice->SetRenderState(D3DRS_ZENABLE, TRUE); //Z buffer on
 	this->g_pd3dDevice->SetRenderState(D3DRS_AMBIENT, 0xffffffff); //Ambient is white
 	this->g_pd3dDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, true); //Turn Alphablending on
 	this->g_pd3dDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA); //Type alphablending
 	this->g_pd3dDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA); //Type alphablending
+	g_pd3dDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
 };
 
 //Matrixen
@@ -115,14 +116,14 @@ void Renderer::DirectXRenderer::BeginScene()
 	this->g_pd3dDevice->BeginScene();
 };
 
-void Renderer::DirectXRenderer::ClearScene(DWORDWrapper* count, DWORDWrapper* flags, ColorWrapper* color, float z, DWORDWrapper* stencil)
+void Renderer::DirectXRenderer::ClearScene(PENGINEDWORD* count, PENGINEDWORD* flags, PENGINECOLOR* color, float z, PENGINEDWORD* stencil)
 {
-	this->g_pd3dDevice->Clear(count->GetDWORD(), NULL, flags->GetDWORD(), color->GetColor(), z, stencil->GetDWORD());
+	this->g_pd3dDevice->Clear(*count, NULL, *flags, *color, z, *stencil);
 };
 void Renderer::DirectXRenderer::ClearScene(unsigned long count, unsigned long flags, Resource::RGBAColor color, float z, unsigned long stencil){
 	flags = D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER;
-	g_pd3dDevice->Clear(DWORD(count), NULL, DWORD(flags),
-		D3DCOLOR_COLORVALUE(color.r, color.g, color.b, color.a), z, DWORD(stencil));
+	g_pd3dDevice->Clear(PENGINEDWORD(count), NULL, PENGINEDWORD(flags),
+		D3DCOLOR_COLORVALUE(color.r, color.g, color.b, color.a), z, PENGINEDWORD(stencil));
 };
 
 void Renderer::DirectXRenderer::PresentScene(HWND hWnd)
@@ -137,14 +138,14 @@ void Renderer::DirectXRenderer::EndScene()
 
 
 //Buffers
-void Renderer::DirectXRenderer::CreateVertexBuffer(int heightmapvertex, DWORDWrapper* usage, DWORDWrapper* fvf, PoolWrapper* pool, VertexBufferWrapper* vertexbuffer, HANDLE handle)
+void Renderer::DirectXRenderer::CreateVertexBuffer(int heightmapvertex, PENGINEDWORD* usage, PENGINEDWORD* fvf, PENGINEPOOL* pool, VertexBufferWrapper* vertexbuffer, HANDLE handle)
 {
-	this->g_pd3dDevice->CreateVertexBuffer(heightmapvertex, usage->GetDWORD(), fvf->GetDWORD(), pool->GetPool(), vertexbuffer->GetVertexBuffer(), &handle);
+	this->g_pd3dDevice->CreateVertexBuffer(heightmapvertex, *usage, *fvf, static_cast<D3DPOOL>(*pool), vertexbuffer->GetVertexBuffer(), &handle);
 };
 
-void Renderer::DirectXRenderer::CreateIndexBuffer(int length, DWORDWrapper* usage, FormatWrapper* format, PoolWrapper* pool, IndexBufferWrapper* Indexbuffer, HANDLE* handle)
+void Renderer::DirectXRenderer::CreateIndexBuffer(int length, PENGINEDWORD* usage, PENGINEFORMAT* format, PENGINEPOOL* pool, IndexBufferWrapper* Indexbuffer, HANDLE* handle)
 {
-	this->g_pd3dDevice->CreateIndexBuffer(length, usage->GetDWORD(), format->GetFormat(), pool->GetPool(), Indexbuffer->GetIndexBuffer(), NULL);
+	this->g_pd3dDevice->CreateIndexBuffer(length, *usage, static_cast<D3DFORMAT>(*format), static_cast<D3DPOOL>(*pool), Indexbuffer->GetIndexBuffer(), NULL);
 };
 
 //Set stuff
@@ -160,9 +161,9 @@ void Renderer::DirectXRenderer::SetTexture(TextureWrapper* wrapper)
 	// return g_pd3dDevice->SetTexture(0, wrapper->GetTexture()); when H_RESULT as return type
 };
 
-void Renderer::DirectXRenderer::SetFvF(DWORDWrapper* fvf)
+void Renderer::DirectXRenderer::SetFvF(PENGINEDWORD* fvf)
 {
-	g_pd3dDevice->SetFVF(fvf->GetDWORD());
+	g_pd3dDevice->SetFVF(*fvf);
 };
 
 void Renderer::DirectXRenderer::SetTransform(int type, MatrixWrapper* wrapper)
@@ -204,55 +205,70 @@ void Renderer::DirectXRenderer::Draw(Resource::Mesh* mesh){
 
 
 		LPD3DXMESH d3dMesh;
-		if (FAILED(D3DXCreateMeshFVF(mesh->faceDefinitions.size(), mesh->vertices.size(), D3DXMESH_MANAGED, D3DFVF_MESH, g_pd3dDevice, &d3dMesh))){
+
+		LPD3DXBUFFER* pAdjacencyBuffer = NULL;
+		int vertices = 0;
+		int amountOfIndices = 0;
+		for (unsigned int i = 0; i < mesh->subsets.size(); ++i){
+			vertices += mesh->subsets.at(i).vertices.size();
+			amountOfIndices += mesh->subsets.at(i).faceDefinitions.size();
+		}
+
+		if (FAILED(D3DXCreateMeshFVF(amountOfIndices, vertices, D3DXMESH_MANAGED, D3DFVF_MESH, g_pd3dDevice, &d3dMesh))){
 			logger->Log(Logger::Logger::ERR, "Failed to create a D3DXCreateMeshFVF");
 			return;
 		}
 
-		const int amountOfVertices = mesh->vertices.size();
-		D3DXVECTOR3 vertices[16384];
-		logger->Log(Logger::Logger::WARNING, "@todo; Remove limit to 16384 vertices.");
-		for (unsigned int i = 0; i < mesh->vertices.size(); ++i){
-			vertices[i] = D3DXVECTOR3(mesh->vertices.at(i).x, mesh->vertices.at(i).y, mesh->vertices.at(i).z);
-		}
+			unsigned int* indices = new unsigned int[amountOfIndices];
 
-		const int amountOfIndices = mesh->faceDefinitions.size();
-		unsigned int* indices = new unsigned int[amountOfIndices];
-		int index = -1;
-		for (unsigned int i = 0; i < mesh->vertices.size(); ++i){
-			indices[++index] = mesh->faceDefinitions.at(i).v1;
-			indices[++index] = mesh->faceDefinitions.at(i).v2;
-			indices[++index] = mesh->faceDefinitions.at(i).v3;
-		}
+			const int amountOfVertices = vertices;
+			D3DXVECTOR3 d3dVertices[16384];
+			logger->Log(Logger::Logger::WARNING, "@todo; Remove limit to 16384 vertices.");
+			for (unsigned int i = 0; i < mesh->subsets.size(); ++i){
+				for (unsigned int j = 0; j < mesh->subsets.at(i).vertices.size(); ++j){
+					d3dVertices[j] = D3DXVECTOR3(mesh->subsets.at(i).vertices.at(j).x, mesh->subsets.at(i).vertices.at(j).y, mesh->subsets.at(i).vertices.at(j).z);
+				}
 
-		//create buffers
-		LPDIRECT3DVERTEXBUFFER9 v_buffer;
-		g_pd3dDevice->CreateVertexBuffer(amountOfVertices*sizeof(D3DXVECTOR3),
-			0,
-			D3DFVF_MESH,
-			D3DPOOL_MANAGED,
-			&v_buffer,
-			NULL);
+				unsigned int* indices = new unsigned int[amountOfIndices];
+				int index = -1;
+				for (unsigned int j = 0; j < mesh->subsets.at(i).vertices.size(); ++j){
+					indices[++index] = mesh->subsets.at(i).faceDefinitions.at(j).v1;
+					indices[++index] = mesh->subsets.at(i).faceDefinitions.at(j).v2;
+					indices[++index] = mesh->subsets.at(i).faceDefinitions.at(j).v3;
+				}
+			}
+			//create buffers
+			LPDIRECT3DVERTEXBUFFER9 v_buffer;
+			g_pd3dDevice->CreateVertexBuffer(amountOfVertices*sizeof(D3DXVECTOR3),
+				0,
+				D3DFVF_MESH,
+				D3DPOOL_MANAGED,
+				&v_buffer,
+				NULL);
 
-		LPDIRECT3DINDEXBUFFER9 i_buffer;
-		g_pd3dDevice->CreateIndexBuffer(amountOfIndices*sizeof(unsigned int),
-			0,
-			D3DFMT_INDEX32,
-			D3DPOOL_MANAGED,
-			&i_buffer,
-			NULL);
+			LPDIRECT3DINDEXBUFFER9 i_buffer;
+			g_pd3dDevice->CreateIndexBuffer(amountOfIndices*sizeof(unsigned int),
+				0,
+				D3DFMT_INDEX32,
+				D3DPOOL_MANAGED,
+				&i_buffer,
+				NULL);
 
-		VOID* pVoid;
-		// lock v_buffer and load the vertices into it
-		v_buffer->Lock(0, 0, (void**)&pVoid, 0);
-		memcpy(pVoid, vertices, amountOfVertices*sizeof(D3DXVECTOR3));
-		v_buffer->Unlock();
-	
-		// lock i_buffer and load the indices into it
-		i_buffer->Lock(0, 0, (void**)&pVoid, 0);
-		memcpy(pVoid, indices, amountOfIndices*sizeof(unsigned int));
-		i_buffer->Unlock();
-		meshCache[mesh] = d3dMesh;
+			VOID* pVoid;
+			// lock v_buffer and load the vertices into it
+			v_buffer->Lock(0, 0, (void**)&pVoid, 0);
+			memcpy(pVoid, d3dVertices, amountOfVertices*sizeof(D3DXVECTOR3));
+			v_buffer->Unlock();
+
+			// lock i_buffer and load the indices into it
+			i_buffer->Lock(0, 0, (void**)&pVoid, 0);
+			memcpy(pVoid, indices, amountOfIndices*sizeof(unsigned int));
+			i_buffer->Unlock();
+			D3DXCreateBox(g_pd3dDevice, 2.0f, 2.0f, 2.0f, &d3dMesh, pAdjacencyBuffer); // force a cube until resourcemanager works properly
+
+			meshCache[mesh] = d3dMesh;
+
+		//HRESULT hr = D3DXSaveMeshToX(L"test.x", d3dMesh, NULL, NULL, NULL, 0, 1); //save mesh to file to test
 		logger->Log(Logger::Logger::DEBUG, "Mesh converted to LPD3DXMESH.");
 		logger->Log(Logger::Logger::WARNING, "@todo; specify subsets.");
 	}
@@ -264,9 +280,9 @@ void Renderer::DirectXRenderer::Draw(Resource::Mesh* mesh){
 * @param offset
 * @param staticEntity
 */
-void Renderer::DirectXRenderer::SetWorldMatrix(D3DXMATRIXA16* matrix, D3DXMATRIXA16* offset, boolean staticEntity)
+void Renderer::DirectXRenderer::SetWorldMatrix(D3DXMATRIX* matrix, D3DXMATRIX* offset, bool staticEntity)
 {
-	D3DXMATRIXA16 worldMatrix;
+	D3DXMATRIX worldMatrix;
 	if (staticEntity)
 	{
 		worldMatrix = *matrix;
@@ -276,4 +292,49 @@ void Renderer::DirectXRenderer::SetWorldMatrix(D3DXMATRIXA16* matrix, D3DXMATRIX
 		worldMatrix = *matrix * *offset;
 	}
 	g_pd3dDevice->SetTransform(D3DTS_WORLD, &worldMatrix);
+}
+
+void Renderer::DirectXRenderer::SetWorldMatrixForStaticEntity(Resource::Vertex* p_translation, Resource::Vertex* p_rotation, Resource::Vertex* p_scaling)
+{
+	D3DXMATRIX* transformation = CreateD3DMATRIX(p_translation, p_rotation, p_scaling);
+	SetWorldMatrix(transformation, NULL, true);
+}
+
+void Renderer::DirectXRenderer::SetWorldMatrix(Resource::Vertex* p_translation, Resource::Vertex* p_rotation, Resource::Vertex* p_scaling, Resource::Vertex* p_cameraPosition, Resource::Vertex* p_cameraRotation)
+{
+	D3DXMATRIX* transformation = CreateD3DMATRIX(p_translation, p_rotation, p_scaling);
+	D3DXMATRIX* offset = CreateD3DMATRIX(p_cameraPosition, p_cameraRotation, NULL);
+
+	SetWorldMatrix(transformation, offset, false);
+}
+
+D3DXMATRIX* Renderer::DirectXRenderer::CreateD3DMATRIX(Resource::Vertex* p_translation, Resource::Vertex* p_rotation, Resource::Vertex* p_scaling)
+{
+	D3DXMATRIX translation;
+	
+	D3DXMATRIX rotationX;
+	D3DXMATRIX rotationY;
+	D3DXMATRIX rotationZ;
+	D3DXMATRIX* transformation = new D3DXMATRIX();
+
+	D3DXMatrixTranslation(&translation, (*p_translation).x, (*p_translation).y, (*p_translation).z);
+
+	//(PI/180)*angle = Degree to Radian
+	D3DXMatrixRotationX(&rotationX, (D3DX_PI / 180) * (*p_rotation).x);
+	D3DXMatrixRotationY(&rotationY, (D3DX_PI / 180) * (*p_rotation).y);
+	D3DXMatrixRotationZ(&rotationZ, (D3DX_PI / 180) * (*p_rotation).z);
+
+	//First rotate, scale, then translate the entity
+	//Otherwise the translation will be rotated
+	(*transformation) = rotationX * rotationY * rotationZ;
+	
+	(*transformation) *= translation;
+	if (p_scaling != NULL)
+	{
+		D3DXMATRIX* scaling = new D3DXMATRIX();
+		D3DXMatrixScaling(scaling, (*p_scaling).x, (*p_scaling).y, (*p_scaling).z);
+		(*transformation) *= (*scaling);
+	}
+
+	return transformation;
 }

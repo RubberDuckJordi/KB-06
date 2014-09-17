@@ -1,12 +1,14 @@
 #ifndef _RESOURCE_MATERIAL_H_
 #define _RESOURCE_MATERIAL_H_
+
 #include "RGBColor.h"
+#include <string>
 
 namespace Resource
 {
 	struct Material 
 	{
-		char* name;
+		std::string name;
 		RGBColor ambientColor;
 		RGBColor diffuseColor;
 		RGBColor SpecularColor;
@@ -14,5 +16,4 @@ namespace Resource
 		float alpha;
 	};
 }
-
 #endif

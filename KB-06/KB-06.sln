@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.30501.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "KB-06", "KB-06\KB-06.vcxproj", "{92DAF88F-03E3-49FB-8CD4-CC217C022CFC}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PEngine", "KB-06\KB-06.vcxproj", "{92DAF88F-03E3-49FB-8CD4-CC217C022CFC}"
 EndProject
-Project("{F088123C-0E9E-452A-89E6-6BA2F21D5CAC}") = "Class Diagram", "ModelingProject1\Class Diagram.modelproj", "{C5CFA96D-DAB1-4546-80A5-2197159A01A9}"
+Project("{F088123C-0E9E-452A-89E6-6BA2F21D5CAC}") = "UML Project", "ModelingProject1\UML Project.modelproj", "{C5CFA96D-DAB1-4546-80A5-2197159A01A9}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CubeGame", "CubeGame\CubeGame.vcxproj", "{3E3ED95C-DA53-4863-B948-E51C5F4CB1B7}"
 EndProject

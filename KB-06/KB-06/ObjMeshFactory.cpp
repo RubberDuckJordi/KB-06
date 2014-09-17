@@ -1,27 +1,50 @@
 #include "stdafx.h"
-#include "ObjLoader.h"
+#include "ObjMeshFactory.h"
 #include "Mesh.h"
+#include "Subset.h"
 #include <iostream>     // std::cout
 #include <fstream>      // std::ifstream
 #include "StringHelper.h"
 #include "LoggerPool.h"
+#include "Material.h"
 
+std::pair<Resource::Mesh, std::vector<const std::string>> Resource::ObjMeshFactory::Load(const std::string file){
+	std::pair<Mesh, std::vector<const std::string>> returnValue;
 
-Resource::ObjLoader::ObjLoader(){};
-
-Resource::Mesh Resource::ObjLoader::Load(const std::string file, const ResourceManager* resourceManager){
 	std::ifstream ifs(file, std::ifstream::in);
 	std::string line;
 	std::vector<std::string> elements;
 	std::vector<std::string> faces;
+	std::vector<std::string> materials;
 
 	Mesh mesh;
+	//Subset* subset = new Subset();
+	int currentSubset;
+
 	while (ifs.good()) {
 		getline(ifs, line);
 		elements = Logger::StringHelper::split(line, ' ');
 		if (elements.size() > 0){
 			if (elements[0] == "mtllib"){
-				//resourceManager->loadMaterials(elements[1]);
+				returnValue.second.push_back(elements[1]);
+			}
+			else if (elements[0] == "usemtl"){
+				bool usedBefore = false;
+				for (unsigned int i = 0; i < materials.size(); ++i){
+					if (materials.at(i) != elements[1]){
+						usedBefore = true;
+						currentSubset = i;
+					}
+				}
+				if (!usedBefore){
+					currentSubset = materials.size();
+					Material material;
+					material.name = elements[1];
+					Subset subset;
+					mesh.subsets.push_back(subset);
+					mesh.subsets.at(currentSubset).material = material;
+					materials.push_back(material.name);
+				}
 			}
 			else if (elements[0] == "v"){
 				Vertex newVertex;
@@ -34,7 +57,7 @@ Resource::Mesh Resource::ObjLoader::Load(const std::string file, const ResourceM
 				else {
 					newVertex.w = 1.0f;
 				}
-				mesh.vertices.push_back(newVertex);
+				mesh.subsets.at(currentSubset).vertices.push_back(newVertex);
 			}
 			else if (elements[0] == "vt"){
 				TextureCoordinate newTextureCoordinate;
@@ -46,21 +69,21 @@ Resource::Mesh Resource::ObjLoader::Load(const std::string file, const ResourceM
 				else {
 					newTextureCoordinate.w = 0.0f;
 				}
-				mesh.textureCoordinates.push_back(newTextureCoordinate);
+				mesh.subsets.at(currentSubset).textureCoordinates.push_back(newTextureCoordinate);
 			}
 			else if (elements[0] == "vn"){
 				Normal newNormal;
 				newNormal.x = strtof(elements[1].c_str(), 0);
 				newNormal.y = strtof(elements[2].c_str(), 0);
 				newNormal.z = strtof(elements[3].c_str(), 0);
-				mesh.normals.push_back(newNormal);
+				mesh.subsets.at(currentSubset).normals.push_back(newNormal);
 			}
 			else if (elements[0] == "vp"){
 				ParameterSpaceVertex newParameterSpaceVertex;
 				newParameterSpaceVertex.u = strtof(elements[1].c_str(), 0);
 				newParameterSpaceVertex.v = strtof(elements[2].c_str(), 0);
 				newParameterSpaceVertex.w = strtof(elements[3].c_str(), 0);
-				mesh.parameterSpaceVertices.push_back(newParameterSpaceVertex);
+				mesh.subsets.at(currentSubset).parameterSpaceVertices.push_back(newParameterSpaceVertex);
 			}
 			else if (elements[0] == "f"){
 				for (unsigned int i = 1; i < elements.size(); ++i){
@@ -69,7 +92,7 @@ Resource::Mesh Resource::ObjLoader::Load(const std::string file, const ResourceM
 					newFaceDefinition.v1 = atoi(faces[0].c_str());;
 					newFaceDefinition.v2 = atoi(faces[1].c_str());;
 					newFaceDefinition.v3 = atoi(faces[2].c_str());;
-					mesh.faceDefinitions.push_back(newFaceDefinition);
+					mesh.subsets.at(currentSubset).faceDefinitions.push_back(newFaceDefinition);
 				}
 			}
 		}
@@ -78,15 +101,19 @@ Resource::Mesh Resource::ObjLoader::Load(const std::string file, const ResourceM
 	ifs.close();
 	Logger::Logger* logger = Logger::LoggerPool::GetInstance().GetLogger();
 	logger->Log(Logger::Logger::DEBUG, "loaded: " + file);
-	logger->Log(Logger::Logger::DEBUG, "vertices: " + std::to_string(mesh.vertices.size()));
-	logger->Log(Logger::Logger::DEBUG, "textureCoordinates: " + std::to_string(mesh.textureCoordinates.size()));
-	logger->Log(Logger::Logger::DEBUG, "normals: " + std::to_string(mesh.normals.size()));
-	logger->Log(Logger::Logger::DEBUG, "parameterSpaceVertices: " + std::to_string(mesh.parameterSpaceVertices.size()));
-	logger->Log(Logger::Logger::DEBUG, "faceDefinitions: " + std::to_string(mesh.faceDefinitions.size()));
+	logger->Log(Logger::Logger::DEBUG, "subsets: " + std::to_string(mesh.subsets.size()));
+	for (unsigned int i = 0; i < mesh.subsets.size(); ++i){
+		logger->Log(Logger::Logger::DEBUG, "vertices: " + std::to_string(mesh.subsets.at(i).vertices.size()));
+		logger->Log(Logger::Logger::DEBUG, "textureCoordinates: " + std::to_string(mesh.subsets.at(i).textureCoordinates.size()));
+		logger->Log(Logger::Logger::DEBUG, "normals: " + std::to_string(mesh.subsets.at(i).normals.size()));
+		logger->Log(Logger::Logger::DEBUG, "parameterSpaceVertices: " + std::to_string(mesh.subsets.at(i).parameterSpaceVertices.size()));
+		logger->Log(Logger::Logger::DEBUG, "faceDefinitions: " + std::to_string(mesh.subsets.at(i).faceDefinitions.size()));
+	}
 	Logger::LoggerPool::GetInstance().ReturnLogger(logger);
-	return mesh;
+	returnValue.first = mesh;
+	return returnValue;
 }
 
-std::string Resource::ObjLoader::GetExtension(){
+std::string Resource::ObjMeshFactory::GetExtension(){
 	return "obj.mesh";
 }

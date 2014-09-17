@@ -1,37 +1,47 @@
 #ifndef __SCENE_ENTITY_H__
 #define __SCENE_ENTITY_H__
 
-#include <d3dx9.h>
-#include "Normal.h"
 #include "renderer.h"
+#include "Vertex.h"
+#include "logger.h"
+#include "Input.h"
 
-namespace Scene{
-	class Entity {
+namespace Scene
+{
+	class Entity 
+	{
 	public:
-		virtual void Update() = 0;
+		Entity();
+		~Entity();
+
+		virtual void Update(std::map<Input::Input, long>* actions) = 0;
+		
 		void SetPosition(float x, float y, float z);
 		void SetRotation(float yaw, float pitch, float roll);
 		void SetScale(float scaleX, float scaleY, float scaleZ);
-		Resource::Normal GetPosition();
-		Resource::Normal GetRotation();
-		Resource::Normal GetScale();
 
-		D3DXMATRIXA16 matrix;
-		D3DXMATRIXA16* GetMatrix();
-		void Draw(Renderer::Renderer* renderer, D3DXMATRIXA16* offset);
+		void AddPosition(float x, float y, float z);
+		void AddRotation(float yaw, float pitch, float roll);
+		void AddScale(float scaleX, float scaleY, float scaleZ);
 
-		D3DXMATRIXA16 finalMatrix; 
-		D3DXMATRIXA16 rotationMatrix; 
+		Resource::Vertex* GetPosition();
+		Resource::Vertex* GetRotation();
+		Resource::Vertex* GetScale();
+
+		void SetMesh(Resource::Mesh* mesh);
+
+		virtual void Draw(Renderer::Renderer* renderer, Resource::Vertex* position, Resource::Vertex* rotation);
 
 	protected:
-		float x, y, z;
-		float yaw, pitch, roll;
-		float scaleX, scaleY, scaleZ;
-		D3DXMATRIXA16 positionMatrix, scaleMatrix;
+		void FixDegrees(Resource::Vertex*);
 
-		void MultiplyMatrices();
+		Resource::Vertex position;
+		Resource::Vertex rotation;
+		Resource::Vertex scale;
 
-	private:
+		Resource::Mesh* mesh;
+		Logger::Logger* logger;
+
 	};
 }
 

@@ -13,11 +13,11 @@ PEngine::PEngine()
 
 PEngine::~PEngine()
 {
-	delete resourceManager;
 	delete inputManager;
 	delete windowManager;
 	delete sceneManager;
 	delete renderer;
+	delete resourceManager;
 
 	logger->Log(Logger::Logger::INFO, "Destructed PEngine");
 	Logger::LoggerPool::GetInstance().ReturnLogger(logger);

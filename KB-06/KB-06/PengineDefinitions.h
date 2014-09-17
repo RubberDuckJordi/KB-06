@@ -10,11 +10,16 @@ typedef unsigned char       PENGINEBYTE;
 typedef PENGINEDWORD PENGINECOLOR;
 // end color definitions
 
+//windows definitions
+typedef unsigned long PENGINEDWORD;
+//end windows definitions
+
 // format definitions
 #ifndef MAKEFOURCC
 #define MAKEFOURCC(ch0, ch1, ch2, ch3)                              \
-                ((DWORD)(BYTE)(ch0) | ((DWORD)(BYTE)(ch1) << 8) |       \
-                ((DWORD)(BYTE)(ch2) << 16) | ((DWORD)(BYTE)(ch3) << 24 ))
+                ((PENGINEDWORD)(PENGINEBYTE)(ch0) | ((PENGINEDWORD)(PENGINEBYTE)(ch1) << 8) |       \
+                ((PENGINEDWORD)(PENGINEBYTE)(ch2) << 16) | ((PENGINEDWORD)(PENGINEBYTE)(ch3) << 24 ))
+
 #endif /* defined(MAKEFOURCC) */
 
 
@@ -108,30 +113,6 @@ enum PENGINEFORMAT
 
 	FMT_FORCE_DWORD = 0x7fffffff
 }; // end format definitions
-
-
-// material definitions
-
-// colorvalue definitions
-
-
-struct PENGINECOLORVALUE {
-	float r;
-	float g;
-	float b;
-	float a;
-};
-
-
-
-struct PENGINEMATERIAL
-{
-	D3DCOLORVALUE   Diffuse;        /* Diffuse color RGBA */
-	D3DCOLORVALUE   Ambient;        /* Ambient color RGB */
-	D3DCOLORVALUE   Specular;       /* Specular 'shininess' */
-	D3DCOLORVALUE   Emissive;       /* Emissive color RGB */
-	float           Power;          /* Sharpness if specular highlight */
-}; // end material definitions
 
 
 // pool definitions
