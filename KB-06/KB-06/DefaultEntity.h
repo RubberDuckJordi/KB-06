@@ -9,7 +9,7 @@ namespace Scene{
 	public:
 		DefaultEntity();
 		~DefaultEntity();
-		void Update();
+		void Update(std::map<Input::Input, long>* actions);
 	};
 }
 

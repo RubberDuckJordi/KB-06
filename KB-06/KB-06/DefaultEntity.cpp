@@ -11,6 +11,6 @@ Scene::DefaultEntity::~DefaultEntity(){
 
 }
 
-void Scene::DefaultEntity::Update(){
+void Scene::DefaultEntity::Update(std::map<Input::Input, long>* actions){
 
 }

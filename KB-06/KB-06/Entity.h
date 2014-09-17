@@ -4,6 +4,7 @@
 #include "renderer.h"
 #include "Vertex.h"
 #include "logger.h"
+#include "Input.h"
 
 namespace Scene
 {
@@ -13,7 +14,7 @@ namespace Scene
 		Entity();
 		~Entity();
 
-		virtual void Update() = 0;
+		virtual void Update(std::map<Input::Input, long>* actions) = 0;
 		
 		void SetPosition(float x, float y, float z);
 		void SetRotation(float yaw, float pitch, float roll);

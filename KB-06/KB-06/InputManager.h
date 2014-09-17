@@ -19,7 +19,7 @@ namespace Input
 	public:
 		InputManager(InputDeviceFactory* inputDeviceFactory);
 		~InputManager();
-		std::map<Input, long> GetCurrentActions(Window::Window*);
+		std::map<Input, long>* GetCurrentActions(Window::Window*);
 		void AttachWindow(Window::Window*);
 		void DetachWindow(Window::Window&);
 		void DetachAllWindows();

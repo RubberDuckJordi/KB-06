@@ -19,7 +19,7 @@ namespace Scene {
 		void AddScene(Scene* scene);
 		void RemoveScene(Scene* scene);
 		void UpdateScene(Scene* scene);
-		void UpdateActiveScene(std::map<Input::Input, long> actions);
+		void UpdateActiveScene(std::map<Input::Input, long>* actions);
 		void RenderActiveScene(Renderer::Renderer* renderer);
 		void SetCurrentScene(Scene* scene);
 

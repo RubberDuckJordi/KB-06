@@ -10,6 +10,6 @@ Scene::DefaultScene::~DefaultScene(){
 
 }
 
-void Scene::DefaultScene::Update(){
-	Scene::Update();
+void Scene::DefaultScene::Update(std::map<Input::Input, long>* actions){
+	Scene::Update(actions);
 }
