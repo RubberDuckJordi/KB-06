@@ -61,7 +61,7 @@ void Scene::Entity::FixDegrees(Resource::Vertex* vertex)
 	}
 	if (vertex->x < 0)
 	{
-		vertex->x + 360;
+		vertex->x += 360;
 	}
 	if (vertex->y > 360)
 	{
@@ -69,7 +69,7 @@ void Scene::Entity::FixDegrees(Resource::Vertex* vertex)
 	}
 	if (vertex->y < 0)
 	{
-		vertex->y + 360;
+		vertex->y += 360;
 	}
 	if (vertex->z > 360)
 	{
@@ -77,7 +77,7 @@ void Scene::Entity::FixDegrees(Resource::Vertex* vertex)
 	}
 	if (vertex->z < 0)
 	{
-		vertex->z + 360;
+		vertex->z += 360;
 	}
 }
 
@@ -100,7 +100,7 @@ void Scene::Entity::Draw(Renderer::Renderer* renderer, Resource::Vertex* p_posit
 {
 	if (mesh != NULL)
 	{
-		//renderer->SetWorldMatrix(&position, &rotation, &scale, p_position, p_rotation);
+		renderer->SetWorldMatrix(&position, &rotation, &scale, p_position, p_rotation);
 		renderer->Draw(mesh);
 	}
 	else
