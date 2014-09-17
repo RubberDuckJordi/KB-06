@@ -20,8 +20,6 @@ std::pair<Resource::Mesh, std::vector<const std::string>> Resource::ObjMeshFacto
 	Mesh mesh;
 	//Subset* subset = new Subset();
 	int currentSubset;
-	Subset subset;
-	mesh.subsets.push_back(subset);
 
 	while (ifs.good()) {
 		getline(ifs, line);
@@ -33,7 +31,7 @@ std::pair<Resource::Mesh, std::vector<const std::string>> Resource::ObjMeshFacto
 			else if (elements[0] == "usemtl"){
 				bool usedBefore = false;
 				for (unsigned int i = 0; i < materials.size(); ++i){
-					if (materials.at(i) == elements[1]){
+					if (materials.at(i) != elements[1]){
 						usedBefore = true;
 						currentSubset = i;
 					}

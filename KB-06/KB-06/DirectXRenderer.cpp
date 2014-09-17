@@ -231,10 +231,10 @@ void Renderer::DirectXRenderer::Draw(Resource::Mesh* mesh){
 
 				unsigned int* indices = new unsigned int[amountOfIndices];
 				int index = -1;
-				for (unsigned int i = 0; i < mesh->subsets.at(i).vertices.size(); ++i){
-					indices[++index] = mesh->subsets.at(i).faceDefinitions.at(i).v1;
-					indices[++index] = mesh->subsets.at(i).faceDefinitions.at(i).v2;
-					indices[++index] = mesh->subsets.at(i).faceDefinitions.at(i).v3;
+				for (unsigned int j = 0; j < mesh->subsets.at(i).vertices.size(); ++j){
+					indices[++index] = mesh->subsets.at(i).faceDefinitions.at(j).v1;
+					indices[++index] = mesh->subsets.at(i).faceDefinitions.at(j).v2;
+					indices[++index] = mesh->subsets.at(i).faceDefinitions.at(j).v3;
 				}
 			}
 			//create buffers
