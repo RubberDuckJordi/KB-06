@@ -33,27 +33,10 @@ void Scene::Scene::Render(Renderer::Renderer* renderer){
 
 	renderer->SetViewMatrix(0, 0, -0.5f, 0, 0, 0.5f);
 
-	//logger->Log(1, "New render!");
-
 	for each(Entity* entity in entities)
 	{
-		D3DXMATRIXA16 entityMatrix;
-		Resource::Vertex* pos = entity->GetPosition();
-		D3DXMatrixTranslation(&entityMatrix, pos->x, pos->y, pos->z);
-
-		MatrixWrapper* theRealFinalMatix = new MatrixWrapper(entityMatrix);
-
-
-
-		renderer->SetWorldMatrix(theRealFinalMatix);
-
-		/*D3DXMATRIXA16 matWorldFinal;
-		D3DXMatrixMultiply(&matWorldFinal, &currentEntity->finalMatrix, &activeCamera->finalMatrix);
-		g_pd3dDevice->SetTransform(D3DTS_WORLD, &matWorldFinal);*/
-
 		entity->Draw(renderer, currentCamera->GetPosition(), currentCamera->GetRotation());
 	}
-	//logger->Log(1, "End render!");
 }
 
 Scene::EntityCamera* Scene::Scene::GetCurrentCamera()

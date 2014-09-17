@@ -90,8 +90,8 @@ void Renderer::DirectXRenderer::SetViewMatrix(float posX, float posY, float posZ
 
 	D3DXMatrixLookAtLH(&matView, &vEyePt, &vLookatPt, &vUpVec);*/
 
-	D3DXVECTOR3 vEyePt(0, 0, -0.5f);
-	D3DXVECTOR3 vLookatPt(0, 0, 0.5f);
+	D3DXVECTOR3 vEyePt(posX, posY, posZ);
+	D3DXVECTOR3 vLookatPt(roatationX, roatationY, roatationZ);
 	D3DXVECTOR3 vUpVec(0.0f, 0.5f, 0.0f);
 	D3DXMATRIXA16 matView;
 	D3DXMatrixLookAtLH(&matView, &vEyePt, &vLookatPt, &vUpVec);
