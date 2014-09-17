@@ -17,8 +17,10 @@ void Scene::EntityCamera::Update(std::map<Input::Input, long>* actions)
 	for (it_type iterator = (*actions).begin(); iterator != (*actions).end(); iterator++) {
 		logger->Log(Logger::Logger::INFO, "changing camera view");
 		float speed = static_cast<float>(iterator->second);
-		if (iterator->first == Input::MOUSE_X)
+
+		switch (iterator->first)
 		{
+		case Input::MOUSE_X:
 			if (speed < 0)
 			{
 				this->AddRotation(0.0f, 1.0f, 0.0f);
@@ -27,9 +29,8 @@ void Scene::EntityCamera::Update(std::map<Input::Input, long>* actions)
 			{
 				this->AddRotation(0.0f, -1.0f, 0.0f);
 			}
-		}
-		if (iterator->first == Input::MOUSE_Y)
-		{
+			break;
+		case Input::MOUSE_Y:
 			if (speed > 0)
 			{
 				this->AddRotation(1.0f, 0.0f, 0.0f);
@@ -38,6 +39,21 @@ void Scene::EntityCamera::Update(std::map<Input::Input, long>* actions)
 			{
 				this->AddRotation(-1.0f, 0.0f, 0.0f);
 			}
+			break;
+		case Input::KEY_S:
+			this->AddPosition(0.0f, 0.0f, 0.5f);
+			break;
+		case Input::KEY_W:
+			this->AddPosition(0.0f, 0.0f, -0.5f);
+			break;
+		case Input::KEY_D:
+			this->AddPosition(-0.5f, 0.0f, 0.0f);
+			break;
+		case Input::KEY_A:
+			this->AddPosition(0.5f, 0.0f, 0.0f);
+			break;
+		default:
+			break;
 		}
 	}
 	if ((*actions).size() > 0){
