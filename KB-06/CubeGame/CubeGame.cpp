@@ -21,9 +21,9 @@ int _tmain(int argc, _TCHAR* argv[])
 
 	Resource::RGBAColor color;
 	color.r = 1.0f;
-	color.g = 0.0f;
+	color.g = 0.25f;
 	color.b = 1.0f;
-	color.a = 0.5f;
+	color.a = 1.0f;
 	Resource::Mesh* mesh = pEngine.GetResourceManager()->LoadMesh("resources/cube.obj.mesh", "obj.mesh");
 
 	Scene::DefaultSceneFactory* sceneFactory = new Scene::DefaultSceneFactory();

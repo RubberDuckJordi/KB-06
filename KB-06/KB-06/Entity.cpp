@@ -100,7 +100,7 @@ void Scene::Entity::Draw(Renderer::Renderer* renderer, Resource::Vertex* p_posit
 {
 	if (mesh != NULL)
 	{
-		renderer->SetWorldMatrix(&position, &rotation, &scale, p_position, p_rotation);
+		//renderer->SetWorldMatrix(&position, &rotation, &scale, p_position, p_rotation);
 		renderer->Draw(mesh);
 	}
 	else
