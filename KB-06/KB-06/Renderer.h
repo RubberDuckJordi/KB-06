@@ -7,7 +7,7 @@
 #include "TextureWrapper.cpp"
 #include "MeshWrapper.cpp"
 #include "VertexBufferWrapper.cpp"
-#include "IndexBufferWrapper.cpp"
+#include "IndexBufferWrapper.h"
 #include "Mesh.h"
 #include "LoggerPool.h"
 #include "RGBAColor.h"
