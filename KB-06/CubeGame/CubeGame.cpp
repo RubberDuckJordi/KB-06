@@ -35,16 +35,15 @@ int _tmain(int argc, _TCHAR* argv[])
 
 	pEngine.GetRenderer()->SetViewMatrix(0.0f, 0.0f, -2.0f, 0.0f, 0.0f, 0.0f);
 	pEngine.GetRenderer()->SetProjectionMatrix(3.14159265358979323846f / 4, 100.0f);
+	pEngine.GetRenderer()->SetRenderState();
 	while (pEngine.GetWindowManager()->HasActiveWindow())
 	{
 
 		pEngine.GetWindowManager()->UpdateWindows();
 		
 		// Logics
-		std::map<Input::Input, long> actions = pEngine.GetInputManager()->GetCurrentActions(pEngine.GetWindowManager()->GetLastWindow());
-		if (actions.size() > 0){
-			logger->Log(Logger::Logger::INFO, "Input!");
-		}
+		std::map<Input::Input, long>* actions = pEngine.GetInputManager()->GetCurrentActions(pEngine.GetWindowManager()->GetLastWindow());
+
 		pEngine.GetSceneManager()->UpdateActiveScene(actions);
 
 		// Visuals

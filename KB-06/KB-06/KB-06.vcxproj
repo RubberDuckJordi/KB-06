@@ -86,17 +86,13 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="BaseMaterialFactory.h" />
-    <ClInclude Include="BaseMeshFactory.h" />
     <ClInclude Include="EntityCamera.h" />
     <ClInclude Include="FaceDefinition.h" />
-    <ClInclude Include="Mesh.h" />
-    <ClInclude Include="ObjMeshFactory.h" />
     <ClInclude Include="RGBColor.h" />
     <ClInclude Include="PEngine.h" />
     <ClInclude Include="PengineDefinitions.h" />
+    <ClInclude Include="BaseMeshLoader.h" />
     <ClInclude Include="RGBAColor.h" />
-    <ClInclude Include="Sound.h" />
     <ClInclude Include="StringHelper.h" />
     <ClInclude Include="Material.h" />
     <ClInclude Include="Input.h" />
@@ -116,9 +112,10 @@
     <ClInclude Include="Logger.h" />
     <ClInclude Include="LoggerPool.h" />
     <ClInclude Include="DirectMouse.h" />
-    <ClInclude Include="Subset.h" />
+    <ClInclude Include="Mesh.h" />
     <ClInclude Include="MtlLoader.h" />
     <ClInclude Include="Normal.h" />
+    <ClInclude Include="ObjLoader.h" />
     <ClInclude Include="ParameterSpaceVertex.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="ResourceManager.h" />
@@ -127,7 +124,6 @@
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
-    <ClInclude Include="Texture.h" />
     <ClInclude Include="TextureCoordinate.h" />
     <ClInclude Include="Vertex.h" />
     <ClInclude Include="Window.h" />
@@ -135,9 +131,9 @@
     <ClInclude Include="WindowManager.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="BaseMeshFactory.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="EntityCamera.cpp" />
+    <ClCompile Include="BaseMeshLoader.cpp" />
     <ClCompile Include="DefaultEntityFactory.cpp" />
     <ClCompile Include="DefaultScene.cpp" />
     <ClCompile Include="DefaultSceneFactory.cpp" />
@@ -152,7 +148,6 @@
     <ClCompile Include="DefaultEntity.cpp" />
     <ClCompile Include="DirectKeyboard.cpp" />
     <ClCompile Include="MaterialWrapper.cpp" />
-    <ClCompile Include="ObjMeshFactory.cpp" />
     <ClCompile Include="PEngine.cpp" />
     <ClCompile Include="StringHelper.cpp" />
     <ClCompile Include="Logger.cpp" />
@@ -160,6 +155,7 @@
     <ClCompile Include="DirectMouse.cpp" />
     <ClCompile Include="MeshWrapper.cpp" />
     <ClCompile Include="MtlLoader.cpp" />
+    <ClCompile Include="ObjLoader.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="Scene.cpp" />

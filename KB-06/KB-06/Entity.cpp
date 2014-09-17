@@ -43,6 +43,7 @@ void Scene::Entity::AddRotation(float yaw, float pitch, float roll)
 	rotation.x += yaw;
 	rotation.y += pitch;
 	rotation.z += roll;
+	FixDegrees(&rotation);
 }
 
 void Scene::Entity::AddScale(float scaleX, float scaleY, float scaleZ)
@@ -50,6 +51,34 @@ void Scene::Entity::AddScale(float scaleX, float scaleY, float scaleZ)
 	scale.x += scaleX;
 	scale.y += scaleY;
 	scale.z += scaleZ;
+}
+
+void Scene::Entity::FixDegrees(Resource::Vertex* vertex)
+{
+	if (vertex->x > 360)
+	{
+		vertex->x -= 360;
+	}
+	if (vertex->x < 0)
+	{
+		vertex->x + 360;
+	}
+	if (vertex->y > 360)
+	{
+		vertex->y -= 360;
+	}
+	if (vertex->y < 0)
+	{
+		vertex->y + 360;
+	}
+	if (vertex->z > 360)
+	{
+		vertex->z -= 360;
+	}
+	if (vertex->z < 0)
+	{
+		vertex->z + 360;
+	}
 }
 
 Resource::Vertex* Scene::Entity::GetPosition()

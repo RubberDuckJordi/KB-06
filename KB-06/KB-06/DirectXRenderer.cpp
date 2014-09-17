@@ -276,7 +276,6 @@ void Renderer::DirectXRenderer::Draw(Resource::Mesh* mesh){
 
 			meshCache[mesh] = d3dMesh;
 
-		
 		//HRESULT hr = D3DXSaveMeshToX(L"test.x", d3dMesh, NULL, NULL, NULL, 0, 1); //save mesh to file to test
 		logger->Log(Logger::Logger::DEBUG, "Mesh converted to LPD3DXMESH.");
 		logger->Log(Logger::Logger::WARNING, "@todo; specify subsets.");

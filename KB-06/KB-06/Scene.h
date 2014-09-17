@@ -6,6 +6,7 @@
 #include "EntityCamera.h"
 #include "Renderer.h"
 #include "LoggerPool.h"
+#include "Input.h"
 
 namespace Scene 
 {
@@ -14,7 +15,7 @@ namespace Scene
 	public:
 		Scene();
 		~Scene();
-		virtual void Update();
+		virtual void Update(std::map<Input::Input, long>* actions);
 		void AddEntity(Entity* entity);
 		void Render(Renderer::Renderer* renderer);
 

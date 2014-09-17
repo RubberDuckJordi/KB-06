@@ -8,7 +8,7 @@ namespace Scene{
 	public:
 		EntityCamera();
 		~EntityCamera();
-		void Update();
+		void Update(std::map<Input::Input, long>* actions);
 		void Draw(Renderer::Renderer* renderer, Resource::Vertex* position, Resource::Vertex* rotation);
 	private:
 		void Move();
