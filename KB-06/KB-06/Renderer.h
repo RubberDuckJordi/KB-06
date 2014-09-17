@@ -1,6 +1,7 @@
 #ifndef _RENDERER_RENDERER_H_
 #define _RENDERER_RENDERER_H_
 
+#include "PengineDefinitions.h"
 #include "MatrixWrapper.cpp"
 #include "MaterialWrapper.cpp"
 #include "TextureWrapper.cpp"
@@ -10,7 +11,6 @@
 #include "VertexBufferWrapper.cpp"
 #include "IndexBufferWrapper.cpp"
 #include "FormatWrapper.cpp"
-#include "ColorWrapper.cpp"
 #include "Mesh.h"
 #include "LoggerPool.h"
 #include "RGBAColor.h"
