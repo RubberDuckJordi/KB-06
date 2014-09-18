@@ -218,7 +218,20 @@
                   isDerived="false"
                   isDerivedUnion="false"
                   aggregation="None"
-                  isComposite="false" />
+                  isComposite="false">
+                  <lowerValueInternal>
+                    <literalString
+                      Id="bdb8113d-0b20-419b-a3af-cfacd50c813f"
+                      name="Lower"
+                      value="*" />
+                  </lowerValueInternal>
+                  <upperValueInternal>
+                    <literalString
+                      Id="0b90a7a2-f23e-4a97-b14e-924a7be5829c"
+                      name="Upper"
+                      value="*" />
+                  </upperValueInternal>
+                </memberEnd>
               </associationHasOwnedEnds>
             </relationshipOwnedElementsInternal>
           </association>
@@ -269,56 +282,6 @@
                   isDerivedUnion="false"
                   aggregation="None"
                   isComposite="false" />
-              </associationHasOwnedEnds>
-            </relationshipOwnedElementsInternal>
-          </association>
-          <association
-            Id="c78b1852-a0aa-419b-b628-947553ac869d"
-            isDerived="false"
-            sourceEndRoleName=""
-            targetEndRoleName=""
-            isLeaf="false"
-            isAbstract="false">
-            <classMoniker
-              Id="bd4e344b-873b-4a9b-a775-8887fb9b5dd8"
-              LastKnownName="EntityFactory"
-              LastKnownLocation="ModelingProject1.uml" />
-            <relationshipOwnedElementsInternal>
-              <associationHasOwnedEnds>
-                <memberEnd
-                  Id="27a3151a-cc01-43d6-b4cf-a6e175c388ab"
-                  isLeaf="false"
-                  isStatic="false"
-                  isReadOnly="false"
-                  isDerived="false"
-                  isDerivedUnion="false"
-                  aggregation="None"
-                  isComposite="false"
-                  isNavigableOwned="false" />
-              </associationHasOwnedEnds>
-              <associationHasOwnedEnds>
-                <memberEnd
-                  Id="f6475585-b4b6-475e-ad4f-9d0ec5df29db"
-                  isLeaf="false"
-                  isStatic="false"
-                  isReadOnly="false"
-                  isDerived="false"
-                  isDerivedUnion="false"
-                  aggregation="None"
-                  isComposite="false">
-                  <lowerValueInternal>
-                    <literalString
-                      Id="740037dc-92e2-4981-aad2-65236fce74dc"
-                      name="Lower"
-                      value="*" />
-                  </lowerValueInternal>
-                  <upperValueInternal>
-                    <literalString
-                      Id="d3b745a0-4e04-4e67-8409-9e9c8b9a75a1"
-                      name="Upper"
-                      value="*" />
-                  </upperValueInternal>
-                </memberEnd>
               </associationHasOwnedEnds>
             </relationshipOwnedElementsInternal>
           </association>
@@ -432,57 +395,16 @@
         isAbstract="false"
         isLeaf="false"
         isActiveClass="false">
-        <targetEnds>
-          <association
-            Id="962e2b59-acc6-45b2-a359-9bab10a0b256"
-            isDerived="false"
-            sourceEndRoleName=""
-            targetEndRoleName=""
-            isLeaf="false"
-            isAbstract="false">
+        <suppliersInternal>
+          <dependency
+            Id="533619fa-df73-4450-8ff9-0a536e27b808">
             <classMoniker
               Id="24a019df-3362-4aa6-b353-71d127d4c246"
               LastKnownName="Window"
               LastKnownLocation="ModelingProject1.uml" />
-            <relationshipOwnedElementsInternal>
-              <associationHasOwnedEnds>
-                <memberEnd
-                  Id="eb258c73-e29a-4ea7-bd70-bcacc54deafd"
-                  isLeaf="false"
-                  isStatic="false"
-                  isReadOnly="false"
-                  isDerived="false"
-                  isDerivedUnion="false"
-                  aggregation="None"
-                  isComposite="false"
-                  isNavigableOwned="false" />
-              </associationHasOwnedEnds>
-              <associationHasOwnedEnds>
-                <memberEnd
-                  Id="77c87d37-6fe5-4b56-a2aa-788879440879"
-                  isLeaf="false"
-                  isStatic="false"
-                  isReadOnly="false"
-                  isDerived="false"
-                  isDerivedUnion="false"
-                  aggregation="None"
-                  isComposite="false">
-                  <lowerValueInternal>
-                    <literalString
-                      Id="8790697c-8557-400e-ac80-6130ad96f723"
-                      name="Lower"
-                      value="*" />
-                  </lowerValueInternal>
-                  <upperValueInternal>
-                    <literalString
-                      Id="11d52f01-b0f4-4959-8351-d4af8c534a1e"
-                      name="Upper"
-                      value="*" />
-                  </upperValueInternal>
-                </memberEnd>
-              </associationHasOwnedEnds>
-            </relationshipOwnedElementsInternal>
-          </association>
+          </dependency>
+        </suppliersInternal>
+        <targetEnds>
           <association
             Id="bb6a2a50-ac63-428e-9ff4-e8113528c338"
             isDerived="false"
@@ -616,7 +538,7 @@
             isAbstract="false">
             <classMoniker
               Id="92cd113c-eab4-4389-b4d4-16263e91fe72"
-              LastKnownName="ResourceLoader"
+              LastKnownName="MeshLoader"
               LastKnownLocation="ModelingProject1.uml" />
             <relationshipOwnedElementsInternal>
               <associationHasOwnedEnds>
@@ -768,7 +690,7 @@
             isAbstract="false">
             <classMoniker
               Id="f66c4e61-b721-493e-a435-c9da9442055f"
-              LastKnownName="Savegame"
+              LastKnownName="SceneFile"
               LastKnownLocation="ModelingProject1.uml" />
             <relationshipOwnedElementsInternal>
               <associationHasOwnedEnds>
@@ -956,6 +878,143 @@
                       value="*" />
                   </upperValueInternal>
                 </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+          <association
+            Id="97963854-fa44-4d33-9982-765211b8501a"
+            isDerived="false"
+            sourceEndRoleName=""
+            targetEndRoleName=""
+            isLeaf="false"
+            isAbstract="false">
+            <classMoniker
+              Id="fe775db3-d36f-4222-9377-724fd8caaed2"
+              LastKnownName="SoundLoader"
+              LastKnownLocation="ModelingProject1.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="bbcd976a-3156-4720-906f-3110e385e159"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="02a31ce4-f274-42c7-8e4c-9457d33ecbcd"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false">
+                  <lowerValueInternal>
+                    <literalString
+                      Id="0f5769dc-f59f-4ead-8c07-c7f30d6d4a07"
+                      name="Lower"
+                      value="*" />
+                  </lowerValueInternal>
+                  <upperValueInternal>
+                    <literalString
+                      Id="4a030380-2534-41a3-af55-68ced384f0cc"
+                      name="Upper"
+                      value="*" />
+                  </upperValueInternal>
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+          <association
+            Id="841230b4-de64-4cd5-bc36-6ff6b83da2a8"
+            isDerived="false"
+            sourceEndRoleName=""
+            targetEndRoleName=""
+            isLeaf="false"
+            isAbstract="false">
+            <classMoniker
+              Id="35f03b26-11b0-4b84-a178-b1dcffca2237"
+              LastKnownName="MaterialLoader"
+              LastKnownLocation="ModelingProject1.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="5a94a310-a881-4e29-831a-96b8057e8f56"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="da815d30-499c-48bb-82b6-b61c5a1e9f5e"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false">
+                  <lowerValueInternal>
+                    <literalString
+                      Id="7345291a-c09c-40c1-bbaf-713f455d51d2"
+                      name="Lower"
+                      value="*" />
+                  </lowerValueInternal>
+                  <upperValueInternal>
+                    <literalString
+                      Id="9853bb0f-c0ba-4e58-b487-c3e6db053bf8"
+                      name="Upper"
+                      value="*" />
+                  </upperValueInternal>
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+          <association
+            Id="7af26f72-87c0-4835-8c42-07f5f1d0b05f"
+            isDerived="false"
+            sourceEndRoleName=""
+            targetEndRoleName=""
+            isLeaf="false"
+            isAbstract="false">
+            <classMoniker
+              Id="5619576d-fc2f-4ba8-b923-8f2846721738"
+              LastKnownName="TextureLoader"
+              LastKnownLocation="ModelingProject1.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="dc79e8c7-baa7-4d6d-8ac8-2db9c9c277e8"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="fb1e43cc-fbbd-4f08-8aa8-e449e6976956"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false" />
               </associationHasOwnedEnds>
             </relationshipOwnedElementsInternal>
           </association>
@@ -1162,47 +1221,15 @@
         isAbstract="true"
         isLeaf="false"
         isActiveClass="false">
-        <targetEnds>
-          <association
-            Id="1be252c8-127d-4088-a4a2-9c366c177195"
-            isDerived="false"
-            sourceEndRoleName="Renderer"
-            targetEndRoleName="Window"
-            isLeaf="false"
-            isAbstract="false">
+        <suppliersInternal>
+          <dependency
+            Id="ff343b33-849b-41e3-b75b-4dd18c8c0daa">
             <classMoniker
               Id="24a019df-3362-4aa6-b353-71d127d4c246"
               LastKnownName="Window"
               LastKnownLocation="ModelingProject1.uml" />
-            <relationshipOwnedElementsInternal>
-              <associationHasOwnedEnds>
-                <memberEnd
-                  Id="09a93ad1-550c-4163-b391-92e73fa1f4d6"
-                  name="Renderer"
-                  isLeaf="false"
-                  isStatic="false"
-                  isReadOnly="false"
-                  isDerived="false"
-                  isDerivedUnion="false"
-                  aggregation="None"
-                  isComposite="false"
-                  isNavigableOwned="false" />
-              </associationHasOwnedEnds>
-              <associationHasOwnedEnds>
-                <memberEnd
-                  Id="0ec66075-6a21-4f21-b72b-85f9c09c729f"
-                  name="Window"
-                  isLeaf="false"
-                  isStatic="false"
-                  isReadOnly="false"
-                  isDerived="false"
-                  isDerivedUnion="false"
-                  aggregation="None"
-                  isComposite="false" />
-              </associationHasOwnedEnds>
-            </relationshipOwnedElementsInternal>
-          </association>
-        </targetEnds>
+          </dependency>
+        </suppliersInternal>
       </class>
     </packageHasNamedElement>
     <packageHasNamedElement>
@@ -1444,6 +1471,56 @@
               </associationHasOwnedEnds>
             </relationshipOwnedElementsInternal>
           </association>
+          <association
+            Id="b336f9ec-9789-4b70-8807-a76ee1f72c19"
+            isDerived="false"
+            sourceEndRoleName=""
+            targetEndRoleName=""
+            isLeaf="false"
+            isAbstract="false">
+            <classMoniker
+              Id="ec30eef9-8695-4e41-b87b-7b43e6639795"
+              LastKnownName="Entity"
+              LastKnownLocation="ModelingProject1.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="c2258b29-2e45-428b-a9f1-9f17e72c1cb1"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="1b0f2ffe-9e7b-4c50-af40-b70f9b6a65db"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false">
+                  <lowerValueInternal>
+                    <literalString
+                      Id="9996eb5e-48cc-4643-b84b-e4df012f054b"
+                      name="Lower"
+                      value="*" />
+                  </lowerValueInternal>
+                  <upperValueInternal>
+                    <literalString
+                      Id="82d73e12-b438-429d-9de7-24e32c3a78d9"
+                      name="Upper"
+                      value="*" />
+                  </upperValueInternal>
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
         </targetEnds>
       </class>
     </packageHasNamedElement>
@@ -1473,7 +1550,7 @@
             isAbstract="false">
             <classMoniker
               Id="f66c4e61-b721-493e-a435-c9da9442055f"
-              LastKnownName="Savegame"
+              LastKnownName="SceneFile"
               LastKnownLocation="ModelingProject1.uml" />
             <relationshipOwnedElementsInternal>
               <associationHasOwnedEnds>
@@ -1559,16 +1636,6 @@
               LastKnownLocation="ModelingProject1.uml" />
           </dependency>
         </suppliersInternal>
-        <generalsInternal>
-          <generalization
-            Id="7216eb39-e9be-4c14-9cb7-05c9ed38f3d1"
-            isSubstitutable="false">
-            <classMoniker
-              Id="bd4e344b-873b-4a9b-a775-8887fb9b5dd8"
-              LastKnownName="EntityFactory"
-              LastKnownLocation="ModelingProject1.uml" />
-          </generalization>
-        </generalsInternal>
       </class>
     </packageHasNamedElement>
     <packageHasNamedElement>
@@ -1577,158 +1644,7 @@
         name="Entity"
         isAbstract="true"
         isLeaf="false"
-        isActiveClass="false">
-        <targetEnds>
-          <association
-            Id="cf51d346-b42d-476d-a817-4e9225562aa0"
-            isDerived="false"
-            sourceEndRoleName=""
-            targetEndRoleName=""
-            isLeaf="false"
-            isAbstract="false">
-            <classMoniker
-              Id="3233574c-f5ce-4056-aade-70f98fef765b"
-              LastKnownName="Mesh"
-              LastKnownLocation="ModelingProject1.uml" />
-            <relationshipOwnedElementsInternal>
-              <associationHasOwnedEnds>
-                <memberEnd
-                  Id="619dab38-c759-46ee-8741-00528f78977e"
-                  isLeaf="false"
-                  isStatic="false"
-                  isReadOnly="false"
-                  isDerived="false"
-                  isDerivedUnion="false"
-                  aggregation="None"
-                  isComposite="false"
-                  isNavigableOwned="false" />
-              </associationHasOwnedEnds>
-              <associationHasOwnedEnds>
-                <memberEnd
-                  Id="641c7442-614d-40dd-b569-5564fc00f0bc"
-                  isLeaf="false"
-                  isStatic="false"
-                  isReadOnly="false"
-                  isDerived="false"
-                  isDerivedUnion="false"
-                  aggregation="None"
-                  isComposite="false" />
-              </associationHasOwnedEnds>
-            </relationshipOwnedElementsInternal>
-          </association>
-          <association
-            Id="a04fc94d-4d98-49aa-bc4f-38157a070305"
-            isDerived="false"
-            sourceEndRoleName=""
-            targetEndRoleName=""
-            isLeaf="false"
-            isAbstract="false">
-            <classMoniker
-              Id="223afeb2-ffba-432a-a4b3-e7b28494879f"
-              LastKnownName="Material"
-              LastKnownLocation="ModelingProject1.uml" />
-            <relationshipOwnedElementsInternal>
-              <associationHasOwnedEnds>
-                <memberEnd
-                  Id="9a511620-c671-4249-ad57-a6a930f9f767"
-                  isLeaf="false"
-                  isStatic="false"
-                  isReadOnly="false"
-                  isDerived="false"
-                  isDerivedUnion="false"
-                  aggregation="None"
-                  isComposite="false"
-                  isNavigableOwned="false" />
-              </associationHasOwnedEnds>
-              <associationHasOwnedEnds>
-                <memberEnd
-                  Id="499f7f78-4a9c-4724-9b1a-e7962cfe50f3"
-                  isLeaf="false"
-                  isStatic="false"
-                  isReadOnly="false"
-                  isDerived="false"
-                  isDerivedUnion="false"
-                  aggregation="None"
-                  isComposite="false" />
-              </associationHasOwnedEnds>
-            </relationshipOwnedElementsInternal>
-          </association>
-          <association
-            Id="3816c13d-983f-43a5-898f-227bb280f0f0"
-            isDerived="false"
-            sourceEndRoleName=""
-            targetEndRoleName=""
-            isLeaf="false"
-            isAbstract="false">
-            <classMoniker
-              Id="03b170d6-0dfd-472e-8cda-aa0ed5dcf6da"
-              LastKnownName="Texture"
-              LastKnownLocation="ModelingProject1.uml" />
-            <relationshipOwnedElementsInternal>
-              <associationHasOwnedEnds>
-                <memberEnd
-                  Id="ab7ff3f6-ce27-4e52-ac11-bb89226934e6"
-                  isLeaf="false"
-                  isStatic="false"
-                  isReadOnly="false"
-                  isDerived="false"
-                  isDerivedUnion="false"
-                  aggregation="None"
-                  isComposite="false"
-                  isNavigableOwned="false" />
-              </associationHasOwnedEnds>
-              <associationHasOwnedEnds>
-                <memberEnd
-                  Id="6ba1b42f-c5b5-41d5-af4d-475a12727e67"
-                  isLeaf="false"
-                  isStatic="false"
-                  isReadOnly="false"
-                  isDerived="false"
-                  isDerivedUnion="false"
-                  aggregation="None"
-                  isComposite="false" />
-              </associationHasOwnedEnds>
-            </relationshipOwnedElementsInternal>
-          </association>
-          <association
-            Id="2af681ed-55c8-4b3f-9589-84c1ea6cbfec"
-            isDerived="false"
-            sourceEndRoleName=""
-            targetEndRoleName=""
-            isLeaf="false"
-            isAbstract="false">
-            <classMoniker
-              Id="223afeb2-ffba-432a-a4b3-e7b28494879f"
-              LastKnownName="Material"
-              LastKnownLocation="ModelingProject1.uml" />
-            <relationshipOwnedElementsInternal>
-              <associationHasOwnedEnds>
-                <memberEnd
-                  Id="a6896115-5119-4b62-95da-23ffeefb7644"
-                  isLeaf="false"
-                  isStatic="false"
-                  isReadOnly="false"
-                  isDerived="false"
-                  isDerivedUnion="false"
-                  aggregation="None"
-                  isComposite="false"
-                  isNavigableOwned="false" />
-              </associationHasOwnedEnds>
-              <associationHasOwnedEnds>
-                <memberEnd
-                  Id="bd3bbb39-b182-496e-af5f-75318ab90ca4"
-                  isLeaf="false"
-                  isStatic="false"
-                  isReadOnly="false"
-                  isDerived="false"
-                  isDerivedUnion="false"
-                  aggregation="None"
-                  isComposite="false" />
-              </associationHasOwnedEnds>
-            </relationshipOwnedElementsInternal>
-          </association>
-        </targetEnds>
-      </class>
+        isActiveClass="false" />
     </packageHasNamedElement>
     <packageHasNamedElement>
       <class
@@ -1981,11 +1897,11 @@
         </suppliersInternal>
         <generalsInternal>
           <generalization
-            Id="bc42ee78-6267-4c8d-be9d-66d807f0786d"
+            Id="fcfc1c7f-298f-413b-bd08-160a3cd7f2d3"
             isSubstitutable="false">
             <classMoniker
-              Id="92cd113c-eab4-4389-b4d4-16263e91fe72"
-              LastKnownName="ResourceLoader"
+              Id="35f03b26-11b0-4b84-a178-b1dcffca2237"
+              LastKnownName="MaterialLoader"
               LastKnownLocation="ModelingProject1.uml" />
           </generalization>
         </generalsInternal>
@@ -2002,7 +1918,7 @@
     <packageHasNamedElement>
       <class
         Id="92cd113c-eab4-4389-b4d4-16263e91fe72"
-        name="ResourceLoader"
+        name="MeshLoader"
         isAbstract="true"
         isLeaf="false"
         isActiveClass="false">
@@ -2012,27 +1928,6 @@
             <classMoniker
               Id="231e512f-c959-407c-aa10-8aab21eb4da4"
               LastKnownName="Resource"
-              LastKnownLocation="ModelingProject1.uml" />
-          </dependency>
-          <dependency
-            Id="44817e26-4b50-4e6c-8717-956ef7d73085">
-            <classMoniker
-              Id="03b170d6-0dfd-472e-8cda-aa0ed5dcf6da"
-              LastKnownName="Texture"
-              LastKnownLocation="ModelingProject1.uml" />
-          </dependency>
-          <dependency
-            Id="3195095a-0fb1-4713-baaa-5d0685a6fa98">
-            <classMoniker
-              Id="f66c4e61-b721-493e-a435-c9da9442055f"
-              LastKnownName="Savegame"
-              LastKnownLocation="ModelingProject1.uml" />
-          </dependency>
-          <dependency
-            Id="b8c6d585-e8a0-48b7-88dd-18b79904e5d5">
-            <classMoniker
-              Id="c112788b-9509-4368-90ca-329b360f21d3"
-              LastKnownName="Sound"
               LastKnownLocation="ModelingProject1.uml" />
           </dependency>
         </suppliersInternal>
@@ -2060,7 +1955,7 @@
             isSubstitutable="false">
             <classMoniker
               Id="92cd113c-eab4-4389-b4d4-16263e91fe72"
-              LastKnownName="ResourceLoader"
+              LastKnownName="MeshLoader"
               LastKnownLocation="ModelingProject1.uml" />
           </generalization>
         </generalsInternal>
@@ -2126,7 +2021,7 @@
             isSubstitutable="false">
             <classMoniker
               Id="92cd113c-eab4-4389-b4d4-16263e91fe72"
-              LastKnownName="ResourceLoader"
+              LastKnownName="MeshLoader"
               LastKnownLocation="ModelingProject1.uml" />
           </generalization>
         </generalsInternal>
@@ -2162,7 +2057,7 @@
     <packageHasNamedElement>
       <class
         Id="f66c4e61-b721-493e-a435-c9da9442055f"
-        name="Savegame"
+        name="SceneFile"
         isAbstract="false"
         isLeaf="false"
         isActiveClass="false" />
@@ -2193,6 +2088,121 @@
         isAbstract="false"
         isLeaf="false"
         isActiveClass="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="a17b099a-6abf-40e6-b09d-f6cbf0f219c4"
+        name="BMPLoader"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <suppliersInternal>
+          <dependency
+            Id="0d30bb8e-38d2-4daf-9fa2-a6f34a4ca1d1">
+            <classMoniker
+              Id="03b170d6-0dfd-472e-8cda-aa0ed5dcf6da"
+              LastKnownName="Texture"
+              LastKnownLocation="ModelingProject1.uml" />
+          </dependency>
+        </suppliersInternal>
+        <generalsInternal>
+          <generalization
+            Id="d1e0351e-a81e-43be-a4c3-e83d5620b005"
+            isSubstitutable="false">
+            <classMoniker
+              Id="5619576d-fc2f-4ba8-b923-8f2846721738"
+              LastKnownName="TextureLoader"
+              LastKnownLocation="ModelingProject1.uml" />
+          </generalization>
+        </generalsInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="35f03b26-11b0-4b84-a178-b1dcffca2237"
+        name="MaterialLoader"
+        isAbstract="true"
+        isLeaf="false"
+        isActiveClass="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="b977af3b-1216-4f92-b1f3-d354bcff88b0"
+        name="MeshLoader1"
+        isAbstract="true"
+        isLeaf="false"
+        isActiveClass="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="5619576d-fc2f-4ba8-b923-8f2846721738"
+        name="TextureLoader"
+        isAbstract="true"
+        isLeaf="false"
+        isActiveClass="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="fe775db3-d36f-4222-9377-724fd8caaed2"
+        name="SoundLoader"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="d1d7e02a-d4d8-4ad0-972d-14f72447c6a1"
+        name="SoundLoaderImpl"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <suppliersInternal>
+          <dependency
+            Id="a586281c-ad16-4388-b4d3-c3033e3095cf">
+            <classMoniker
+              Id="c112788b-9509-4368-90ca-329b360f21d3"
+              LastKnownName="Sound"
+              LastKnownLocation="ModelingProject1.uml" />
+          </dependency>
+        </suppliersInternal>
+        <generalsInternal>
+          <generalization
+            Id="07ef7b8e-7e97-400a-b62a-4a627bb3d571"
+            isSubstitutable="false">
+            <classMoniker
+              Id="fe775db3-d36f-4222-9377-724fd8caaed2"
+              LastKnownName="SoundLoader"
+              LastKnownLocation="ModelingProject1.uml" />
+          </generalization>
+        </generalsInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="16ff353f-30d9-4b15-ab37-876ee3f6556f"
+        name="Entity"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="ef040d7a-9e7f-43de-8a60-e58a0997a055"
+        name="Camera"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <generalsInternal>
+          <generalization
+            Id="8b4a7a8d-c32e-4359-a958-1d2ca130d115"
+            isSubstitutable="false">
+            <classMoniker
+              Id="ec30eef9-8695-4e41-b87b-7b43e6639795"
+              LastKnownName="Entity"
+              LastKnownLocation="ModelingProject1.uml" />
+          </generalization>
+        </generalsInternal>
+      </class>
     </packageHasNamedElement>
   </packagedElements>
   <primitiveType
