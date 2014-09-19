@@ -293,7 +293,7 @@ void Renderer::DirectXRenderer::Draw(Resource::Mesh* mesh){
 		i_buffer->Unlock();
 
 		D3DXCreateBox(g_pd3dDevice, 2.0f, 2.0f, 2.0f, &d3dMesh, NULL); // force a cube until resourcemanager works properly
-		hr = D3DXSaveMeshToX(L"test.x", d3dMesh, NULL, NULL, NULL, 0, 1); //save mesh to file to test
+		//hr = D3DXSaveMeshToX(L"test.x", d3dMesh, NULL, NULL, NULL, 0, 1); //save mesh to file to test
 
 		meshCache[mesh] = d3dMesh;
 
