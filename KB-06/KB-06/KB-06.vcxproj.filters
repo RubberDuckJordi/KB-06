@@ -248,6 +248,21 @@
       <Filter>Header\Renderer\Wrap Containers</Filter>
     </ClInclude>
     <ClInclude Include="RenderMatrix.h" />
+    <ClInclude Include="MaterialWrapper.h">
+      <Filter>Header\Renderer\Wrap Containers</Filter>
+    </ClInclude>
+    <ClInclude Include="MatrixWrapper.h">
+      <Filter>Header\Renderer\Wrap Containers</Filter>
+    </ClInclude>
+    <ClInclude Include="MeshWrapper.h">
+      <Filter>Header\Renderer\Wrap Containers</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureWrapper.h">
+      <Filter>Header\Renderer\Wrap Containers</Filter>
+    </ClInclude>
+    <ClInclude Include="VertexBufferWrapper.h">
+      <Filter>Header\Renderer\Wrap Containers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />

@@ -91,7 +91,10 @@
     <ClInclude Include="EntityCamera.h" />
     <ClInclude Include="FaceDefinition.h" />
     <ClInclude Include="IndexBufferWrapper.h" />
+    <ClInclude Include="MaterialWrapper.h" />
+    <ClInclude Include="MatrixWrapper.h" />
     <ClInclude Include="Mesh.h" />
+    <ClInclude Include="MeshWrapper.h" />
     <ClInclude Include="ObjMeshFactory.h" />
     <ClInclude Include="RenderMatrix.h" />
     <ClInclude Include="RGBColor.h" />
@@ -129,7 +132,9 @@
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="TextureCoordinate.h" />
+    <ClInclude Include="TextureWrapper.h" />
     <ClInclude Include="Vertex.h" />
+    <ClInclude Include="VertexBufferWrapper.h" />
     <ClInclude Include="Window.h" />
     <ClInclude Include="WindowListener.h" />
     <ClInclude Include="WindowManager.h" />

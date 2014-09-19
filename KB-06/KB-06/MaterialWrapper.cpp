@@ -1,33 +1,27 @@
-#ifndef _MATERIALWRAPPER_CPP_
-#define _MATERIALWRAPPER_CPP_
+#include "MaterialWrapper.h"
 
-#include <d3dx9.h>
 
-class MaterialWrapper
-{
-public:
-	MaterialWrapper::MaterialWrapper(D3DMATERIAL9 _material)
+
+Renderer::MaterialWrapper::MaterialWrapper(D3DMATERIAL9 _material)
 	{
 		material = _material;
 	};
 
-	MaterialWrapper::~MaterialWrapper()
+	Renderer::MaterialWrapper::~MaterialWrapper()
 	{
 
 	};
 
-	void MaterialWrapper::SetMaterial(D3DMATERIAL9 _material)
+	void Renderer::MaterialWrapper::SetMaterial(D3DMATERIAL9 _material)
 	{
 		material = _material;
 	};
 
-	D3DMATERIAL9 MaterialWrapper::GetMaterial()
+	D3DMATERIAL9 Renderer::MaterialWrapper::GetMaterial()
 	{
 		return material;
 	};
 
-private:
-	D3DMATERIAL9 material;
-};
 
-#endif
+
+
