@@ -61,16 +61,11 @@ namespace Window
 		Window* GetLastWindow();
 
 		Window* GetWindowByHWND(HWND hwnd);
-
-		void AddWindowListener(WindowListener* p_windowListener);
-		void RemoveWindowListener(WindowListener* p_windowListener);
-		void ClearWindowListeners();
 		std::vector<Window*>* GetAllWindows();
 	private:
 		std::vector<Window*> windows;
 		Scene::SceneManager *sceneManager;
-
-		std::list<WindowListener*> windowListeners;
+		
 		Logger::Logger* logger;
 	};
 }

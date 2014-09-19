@@ -16,6 +16,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	pEngine.Init();
 
 	pEngine.GetWindowManager()->NewWindow(10, 10, 500, 500);
+	pEngine.GetWindowManager()->GetLastWindow()->AddWindowListener(pEngine.GetInputManager());
 	pEngine.GetRenderer()->InitD3D(pEngine.GetWindowManager()->GetLastWindow()->GetHWND());
 	pEngine.GetResourceManager()->AddMeshFactory(new Resource::ObjMeshFactory());
 
@@ -42,7 +43,7 @@ int _tmain(int argc, _TCHAR* argv[])
 		pEngine.GetWindowManager()->UpdateWindows();
 		
 		// Logics
-		std::map<Input::Input, long>* actions = pEngine.GetInputManager()->GetCurrentActions(pEngine.GetWindowManager()->GetLastWindow());
+		std::map<Input::Input, long>* actions = pEngine.GetInputManager()->GetCurrentActions();
 
 		pEngine.GetSceneManager()->UpdateActiveScene(actions);
 

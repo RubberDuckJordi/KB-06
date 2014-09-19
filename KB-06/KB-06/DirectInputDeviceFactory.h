@@ -15,7 +15,7 @@ namespace Input
 	public:
 		DirectInputDeviceFactory();
 		~DirectInputDeviceFactory();
-		InputDevice* CreateInputDevice(InputDevice::Type type, Window::Window* window);
+		InputDevice* CreateInputDevice(InputDevice::Type type);
 	private:
 		void CreateActionMapping();
 		LPDIRECTINPUT8 dInput;

@@ -12,7 +12,7 @@ Input::DirectKeyboard::~DirectKeyboard()
 
 //Create the new DirectInputDevice, add a handler to its window and
 //set the required settings to be able to poll it.
-bool Input::DirectKeyboard::Initialize(HWND p_hWnd, LPDIRECTINPUT8 m_dInput)
+bool Input::DirectKeyboard::Initialize(LPDIRECTINPUT8 m_dInput)
 {
 	HRESULT hr = m_dInput->CreateDevice(GUID_SysKeyboard, &dInputDevice, NULL);
 	if FAILED(hr)
@@ -30,14 +30,6 @@ bool Input::DirectKeyboard::Initialize(HWND p_hWnd, LPDIRECTINPUT8 m_dInput)
 		return false;
 	}
 
-	hr = dInputDevice->SetCooperativeLevel(p_hWnd, DISCL_EXCLUSIVE | DISCL_FOREGROUND);
-	if FAILED(hr)
-	{
-		ReleaseDevice();
-		logger->Log(Logger::Logger::WARNING, "InputDevice::Keyboard: Initialisation failed. Unable to set Cooperative Level.");
-		return false;
-	}
-
 	AcquireDevice();
 	logger->Log(Logger::Logger::INFO, "InputDevice::Keyboard: Initialisation successful.");
 
@@ -46,20 +38,24 @@ bool Input::DirectKeyboard::Initialize(HWND p_hWnd, LPDIRECTINPUT8 m_dInput)
 
 bool Input::DirectKeyboard::Update()
 {
-	if (!SUCCEEDED(dInputDevice->Poll()))
+	if (activeWindow != NULL)
 	{
-		if (deviceAcquired)
+		if (!SUCCEEDED(dInputDevice->Poll()))
 		{
-			logger->Log(Logger::Logger::INFO, "InputManager: Keyboard focus lost.");
-			deviceAcquired = false;
+			if (deviceAcquired)
+			{
+				logger->Log(Logger::Logger::INFO, "InputManager: Keyboard focus lost.");
+				deviceAcquired = false;
+			}
+			AcquireDevice();
 		}
-		AcquireDevice();
-	}
 
-	if (FAILED(dInputDevice->GetDeviceState(sizeof(m_KeyBuffer), (LPVOID)&m_KeyBuffer)))
-	{
-		return false;
+		if (FAILED(dInputDevice->GetDeviceState(sizeof(m_KeyBuffer), (LPVOID)&m_KeyBuffer)))
+		{
+			return false;
+		}
 	}
+	
 
 	return true;
 }
@@ -99,4 +95,15 @@ std::map<Input::Input, long>* Input::DirectKeyboard::GetInputValues()
 	}
 
 	return returnMap;
+}
+
+bool Input::DirectKeyboard::SetActiveWindow(Window::Window* window)
+{
+	activeWindow = window;
+	return true;
+}
+
+void Input::DirectKeyboard::SetWindowInactive(Window::Window* window)
+{
+	activeWindow = NULL;
 }

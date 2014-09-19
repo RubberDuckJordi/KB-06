@@ -34,7 +34,7 @@ Input::DirectInputDeviceFactory::~DirectInputDeviceFactory()
 	InputDeviceFactory::~InputDeviceFactory();
 }
 
-Input::InputDevice* Input::DirectInputDeviceFactory::CreateInputDevice(InputDevice::Type type, Window::Window* window)
+Input::InputDevice* Input::DirectInputDeviceFactory::CreateInputDevice(InputDevice::Type type)
 {
 	DirectInputDevice* newDevice = NULL;
 
@@ -53,7 +53,7 @@ Input::InputDevice* Input::DirectInputDeviceFactory::CreateInputDevice(InputDevi
 		return NULL;
 	}
 
-	if (newDevice->Initialize(window->GetHWND(), dInput))
+	if (newDevice->Initialize(dInput))
 	{
 		newDevice->SetActionMapping(actionMapping);
 		return newDevice;

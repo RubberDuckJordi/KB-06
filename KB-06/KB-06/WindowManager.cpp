@@ -20,7 +20,6 @@ Window::WindowManager::~WindowManager()
 	{
 		delete windows.back(), windows.pop_back();
 	}
-	ClearWindowListeners();
 	delete sceneManager;
 	logger->Log(Logger::Logger::INFO, "WindowManager destructed");
 	Logger::LoggerPool::GetInstance().ReturnLogger(logger);
@@ -40,11 +39,6 @@ HWND Window::WindowManager::NewWindow(int x, int y, int width, int height)
 
 	windows.push_back(window);
 	Logger::LoggerPool::GetInstance().ReturnLogger(logger);
-
-	for (std::list<WindowListener*>::iterator itListener = windowListeners.begin(); itListener != windowListeners.end(); ++itListener)
-	{
-		(*itListener)->WindowOpened(*window);
-	}
 
 	return hwnd;
 };
@@ -115,27 +109,6 @@ Window::Window* Window::WindowManager::GetWindowByHWND(HWND hwnd)
 
 	return NULL;
 };
-
-void Window::WindowManager::AddWindowListener(WindowListener* p_windowListener)
-{
-	if (p_windowListener != NULL)
-	{
-		windowListeners.push_back(p_windowListener);
-	}
-}
-
-void Window::WindowManager::RemoveWindowListener(WindowListener* p_windowListener)
-{
-	if (p_windowListener != NULL)
-	{
-		windowListeners.remove(p_windowListener);
-	}
-}
-
-void Window::WindowManager::ClearWindowListeners()
-{
-	windowListeners.clear();
-}
 
 std::vector<Window::Window*>* Window::WindowManager::GetAllWindows()
 {

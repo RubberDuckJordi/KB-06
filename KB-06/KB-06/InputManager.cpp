@@ -5,11 +5,13 @@ Input::InputManager::InputManager(InputDeviceFactory* p_inputDeviceFactory)
 {
 	logger = Logger::LoggerPool::GetInstance().GetLogger();
 	inputDeviceFactory = p_inputDeviceFactory;
+
+	inputDevices.push_back(inputDeviceFactory->CreateInputDevice(InputDevice::Type::KEYBOARD));
+	inputDevices.push_back(inputDeviceFactory->CreateInputDevice(InputDevice::Type::MOUSE));
 }
 
 Input::InputManager::~InputManager()
 {
-	DetachAllWindows();
 	delete inputDeviceFactory;
 }
 
@@ -19,104 +21,40 @@ puts in a map. Only occured actions will be in the map. The default
 value of a action is 100. This represents 100% with buttons but stands
 for pixels when being a mouse movement.
 */
-std::map<Input::Input, long>* Input::InputManager::GetCurrentActions(Window::Window* p_window)
+std::map<Input::Input, long>* Input::InputManager::GetCurrentActions()
 {
 	std::map<Input, long>* actionMapping = new std::map<Input, long>;
+	std::list<InputDevice*>::iterator itInputDevice;
 
-	if (p_window != NULL)
+	//Iterate all InputDevices
+	for (itInputDevice = inputDevices.begin(); itInputDevice != inputDevices.end(); ++itInputDevice)
 	{
-		std::map<Window::Window*, std::list<InputDevice*>>::iterator itWindow = windowDevices.find(p_window);
-
-		//Check if there are InputDevices for the Window
-		if (itWindow != windowDevices.end())
+		//Update the InputDevice
+		//And read the InputDevice key states when the InputDevice updated successful
+		if ((*itInputDevice)->Update())
 		{
-			std::list<InputDevice*>::iterator itInputDevice;
-
-			//Iterate all InputDevices
-			for (itInputDevice = itWindow->second.begin(); itInputDevice != itWindow->second.end(); ++itInputDevice)
-			{
-				//Update the InputDevice
-				//And read the InputDevice key states when the InputDevice updated successful
-				if ((*itInputDevice)->Update())
-				{
-					std::map<Input, long>* stateValues = (*itInputDevice)->GetInputValues();
-					(*actionMapping).insert((*stateValues).begin(), (*stateValues).end());
-				}
-			}
+			std::map<Input, long>* stateValues = (*itInputDevice)->GetInputValues();
+			(*actionMapping).insert((*stateValues).begin(), (*stateValues).end());
 		}
 	}
 
 	return actionMapping;
 }
 
-//Adds a window to the m_windowDevices map. Also adds a mouse and a keyboard to it
-void Input::InputManager::AttachWindow(Window::Window* p_window)
+void Input::InputManager::OnWindowFocusGained(Window::Window* p_window)
 {
-	std::list<InputDevice*> inputDevices;
-	InputDevice* newMouse = inputDeviceFactory->CreateInputDevice(InputDevice::MOUSE, p_window);
-	InputDevice* newKeyboard = inputDeviceFactory->CreateInputDevice(InputDevice::KEYBOARD, p_window);
-
-	if (newMouse != NULL)
+	std::list<InputDevice*>::iterator inputDeviceIterator;
+	for (inputDeviceIterator = inputDevices.begin(); inputDeviceIterator != inputDevices.end(); inputDeviceIterator++)
 	{
-		inputDevices.push_back(newMouse);
-	}
-	if (newKeyboard != NULL)
-	{
-		inputDevices.push_back(newKeyboard);
-	}
-
-	windowDevices.insert(std::pair<Window::Window*, std::list<InputDevice*>>(p_window, inputDevices));
-
-	logger->Log(Logger::Logger::INFO, "InputManager: Window added, devices initialized.");
-}
-
-//Releases the devices of the given window
-void Input::InputManager::DetachWindow(Window::Window& p_window)
-{
-	std::map<Window::Window*, std::list<InputDevice*>>::iterator it = windowDevices.find(&p_window);
-
-	//If the window is found
-	if (it != windowDevices.end())
-	{
-		//Destroy all InputDevices for the Window
-		for (std::list<InputDevice*>::iterator itInputDevice = it->second.begin(); itInputDevice != it->second.end(); ++itInputDevice)
-		{
-			(*itInputDevice)->ReleaseDevice();
-			delete (*itInputDevice);
-		}
-
-		windowDevices.erase(&p_window);
-
-		logger->Log(Logger::Logger::INFO, "InputManager: Window destroyed. InputDevices destroyed.");
+		(*inputDeviceIterator)->SetActiveWindow(p_window);
 	}
 }
 
-void Input::InputManager::DetachAllWindows()
+void Input::InputManager::OnWindowFocusLost(Window::Window* p_window)
 {
-	std::map<Window::Window*, std::list<InputDevice*>>::iterator it;
-
-	//Iterate all Windows
-	for (it = windowDevices.begin(); it != windowDevices.end(); ++it)
+	std::list<InputDevice*>::iterator inputDeviceIterator;
+	for (inputDeviceIterator = inputDevices.begin(); inputDeviceIterator != inputDevices.end(); inputDeviceIterator++)
 	{
-		std::list<InputDevice*>::iterator itInputDevice;
-
-		//Destroy all InputDevices for the Window
-		for (itInputDevice = it->second.begin(); itInputDevice != it->second.end(); ++itInputDevice)
-		{
-			(*itInputDevice)->ReleaseDevice();
-			delete (*itInputDevice);
-		}
+		(*inputDeviceIterator)->SetWindowInactive(p_window);
 	}
-
-	logger->Log(Logger::Logger::INFO, "InputManager: All InputDevices deleted.");
-}
-
-void Input::InputManager::WindowClosed(Window::Window& p_window)
-{
-	DetachWindow(p_window);
-}
-
-void Input::InputManager::WindowOpened(Window::Window& p_window)
-{
-	AttachWindow(&p_window);
 }

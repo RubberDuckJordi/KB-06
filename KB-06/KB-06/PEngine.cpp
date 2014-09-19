@@ -25,10 +25,9 @@ PEngine::~PEngine()
 
 void PEngine::Init(){
 	// Aanmaken van deze factory moet in een abstract factory gaan gebeuren
+	windowManager = new Window::WindowManager();
 	Input::InputDeviceFactory* inputDeviceFactory = new Input::DirectInputDeviceFactory();
 	inputManager = new Input::InputManager(inputDeviceFactory);
-	windowManager = new Window::WindowManager();
-	windowManager->AddWindowListener(inputManager);
 	renderer = new Renderer::DirectXRenderer();
 	sceneManager = new Scene::SceneManager();
 	resourceManager = new Resource::ResourceManager();

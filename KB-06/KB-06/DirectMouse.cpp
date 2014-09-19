@@ -13,7 +13,7 @@ Input::DirectMouse::~DirectMouse()
 
 //Create the new DirectInputDevice, add a handler to its window and
 //set the required settings to be able to poll it.
-bool Input::DirectMouse::Initialize(HWND p_hWnd, LPDIRECTINPUT8 p_dInput)
+bool Input::DirectMouse::Initialize(LPDIRECTINPUT8 p_dInput)
 {
 	HRESULT hr = p_dInput->CreateDevice(GUID_SysMouse, &dInputDevice, NULL);
 	if (FAILED(hr))
@@ -28,16 +28,6 @@ bool Input::DirectMouse::Initialize(HWND p_hWnd, LPDIRECTINPUT8 p_dInput)
 	{
 		ReleaseDevice();
 		logger->Log(Logger::Logger::WARNING, "InputDevice::Mouse: Initialisation failed. Unable to set dataformat.");
-		return false;
-	}
-
-	//The coorperative level has to be Exclusive and foreground to manage
-	//focussing for this device.
-	hr = dInputDevice->SetCooperativeLevel(p_hWnd, DISCL_EXCLUSIVE | DISCL_FOREGROUND);
-	if (FAILED(hr))
-	{
-		ReleaseDevice();
-		logger->Log(Logger::Logger::WARNING, "InputDevice::Mouse: Initialisation failed. Unable to set Cooperative Level.");
 		return false;
 	}
 
@@ -70,34 +60,38 @@ bool Input::DirectMouse::Initialize(HWND p_hWnd, LPDIRECTINPUT8 p_dInput)
 //Update the directinputstate only if it can be acquired and polled.
 bool Input::DirectMouse::Update()
 {
-	bool result = false;
-	if (!deviceAcquired)
+	if (activeWindow != NULL)
 	{
-		result = DirectInputDevice::AcquireDevice();
-	}
-	else if (!SUCCEEDED(dInputDevice->Poll()))
-	{
-		if (deviceAcquired)
+
+		bool result = false;
+		if (!deviceAcquired)
 		{
-			deviceAcquired = false;
-			logger->Log(Logger::Logger::INFO, "InputManager: Mouse focus lost");
-			ShowCursor(true);
+			result = DirectInputDevice::AcquireDevice();
 		}
-		result = DirectInputDevice::AcquireDevice();
-	} 
-	if (FAILED(dInputDevice->GetDeviceState(sizeof(DIMOUSESTATE2), (LPVOID)&dIMouseState)))
-	{
-		result = false;
-	}
+		else if (!SUCCEEDED(dInputDevice->Poll()))
+		{
+			if (deviceAcquired)
+			{
+				deviceAcquired = false;
+				logger->Log(Logger::Logger::INFO, "InputManager: Mouse focus lost");
+				ShowCursor(true);
+			}
+			result = DirectInputDevice::AcquireDevice();
+		}
+		if (FAILED(dInputDevice->GetDeviceState(sizeof(DIMOUSESTATE2), (LPVOID)&dIMouseState)))
+		{
+			result = false;
+		}
 
-	if (result == true)
-	{
-		previousXPos = dIMouseState.lX;
-		previousYPos = dIMouseState.lY;
-		previousZPos = dIMouseState.lZ;
+		if (result == true)
+		{
+			previousXPos = dIMouseState.lX;
+			previousYPos = dIMouseState.lY;
+			previousZPos = dIMouseState.lZ;
+		}
+		return deviceAcquired;
 	}
-
-	return deviceAcquired;
+	return true;
 }
 
 
@@ -195,4 +189,15 @@ long Input::DirectMouse::GetDeltaZPosition()
 		delta = 0;
 	}
 	return delta;
+}
+
+bool Input::DirectMouse::SetActiveWindow(Window::Window* window)
+{
+	activeWindow = window;
+	return true;
+}
+
+void Input::DirectMouse::SetWindowInactive(Window::Window* window)
+{
+	activeWindow = NULL;
 }

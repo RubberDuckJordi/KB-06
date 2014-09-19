@@ -15,9 +15,11 @@ namespace Input
 	public:
 		DirectKeyboard();
 		~DirectKeyboard();
-		bool Initialize(HWND, LPDIRECTINPUT8);
+		bool Initialize(LPDIRECTINPUT8);
 		bool Update();
 		std::map<Input, long>* GetInputValues();
+		bool SetActiveWindow(Window::Window* window);
+		void SetWindowInactive(Window::Window* window);
 
 	private:
 		long GetStateOf(int p_key);

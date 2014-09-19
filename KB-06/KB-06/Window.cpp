@@ -33,6 +33,7 @@ Window::Window::~Window()
 	//logger->Log(Logger::Logger::INFO, "Destructed window");
 	//Logger::LoggerPool::GetInstance().ReturnLogger(logger);
 	//delete _hwnd;
+	ClearWindowListeners();
 };
 
 void Window::Window::SetTitle(char* title)
@@ -53,6 +54,24 @@ LRESULT Window::Window::WindowProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lP
 {
 	switch (msg)
 	{
+	case WM_ACTIVATE:
+		if (wParam == WA_INACTIVE)
+		{
+			std::list<WindowListener*>::iterator itWindowListener;
+			for (itWindowListener = windowListeners.begin(); itWindowListener != windowListeners.end(); ++itWindowListener)
+			{
+				(*itWindowListener)->OnWindowFocusLost(this);
+			}
+		}
+		else
+		{
+			std::list<WindowListener*>::iterator itWindowListener;
+			for (itWindowListener = windowListeners.begin(); itWindowListener != windowListeners.end(); ++itWindowListener)
+			{
+				(*itWindowListener)->OnWindowFocusGained(this);
+			}
+		}
+		break;
 	case WM_PAINT:
 		render(NULL);
 		break;
@@ -146,4 +165,29 @@ HWND Window::Window::GetHWND()
 Window::WindowState Window::Window::GetWindowState()
 {
 	return state;
+}
+
+void Window::Window::AddWindowListener(WindowListener* p_windowListener)
+{
+	if (p_windowListener != NULL)
+	{
+		windowListeners.push_back(p_windowListener);
+	}
+
+	p_windowListener->OnWindowFocusGained(this);
+}
+
+void Window::Window::RemoveWindowListener(WindowListener* p_windowListener)
+{
+	if (p_windowListener != NULL)
+	{
+		windowListeners.remove(p_windowListener);
+	}
+
+	p_windowListener->OnWindowFocusLost(this);
+}
+
+void Window::Window::ClearWindowListeners()
+{
+	windowListeners.clear();
 }

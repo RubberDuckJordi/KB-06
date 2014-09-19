@@ -7,10 +7,9 @@
 #include "LoggerPool.h"
 #include "Input.h"
 #include <windows.h>
-#include <map>
 #include <vector>
 #include <string>
-
+#include  "Logger.h"
 
 namespace Input
 {
@@ -19,15 +18,13 @@ namespace Input
 	public:
 		InputManager(InputDeviceFactory* inputDeviceFactory);
 		~InputManager();
-		std::map<Input, long>* GetCurrentActions(Window::Window*);
-		void AttachWindow(Window::Window*);
-		void DetachWindow(Window::Window&);
-		void DetachAllWindows();
-		void WindowClosed(Window::Window& p_window);
-		void WindowOpened(Window::Window& p_window);
+		std::map<Input, long>* GetCurrentActions();
+		void OnWindowFocusGained(Window::Window* p_window);
+		void OnWindowFocusLost(Window::Window* p_window);
 
 	private:
-		std::map<Window::Window*, std::list<InputDevice*>> windowDevices;
+		std::list<InputDevice*> inputDevices;
+		Logger::Logger* logger;
 
 		InputDeviceFactory* inputDeviceFactory;
 
