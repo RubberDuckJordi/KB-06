@@ -2,11 +2,11 @@
 #define _RENDERER_RENDERER_H_
 
 #include "PengineDefinitions.h"
-#include "MatrixWrapper.cpp"
-#include "MaterialWrapper.cpp"
-#include "TextureWrapper.cpp"
-#include "MeshWrapper.cpp"
-#include "VertexBufferWrapper.cpp"
+#include "MatrixWrapper.h"
+#include "MaterialWrapper.h"
+#include "TextureWrapper.h"
+#include "MeshWrapper.h"
+#include "VertexBufferWrapper.h"
 #include "IndexBufferWrapper.h"
 #include "Mesh.h"
 #include "LoggerPool.h"

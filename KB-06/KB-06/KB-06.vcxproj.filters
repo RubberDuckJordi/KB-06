@@ -94,9 +94,6 @@
     <ClCompile Include="MaterialWrapper.cpp">
       <Filter>Source\Renderer\Wrap Containers</Filter>
     </ClCompile>
-    <ClCompile Include="BaseMeshLoader.cpp">
-      <Filter>Source\Resource</Filter>
-    </ClCompile>
     <ClCompile Include="PEngine.cpp">
       <Filter>Source</Filter>
     </ClCompile>
@@ -256,6 +253,21 @@
       <Filter>Header\Resource</Filter>
     </ClInclude>
     <ClInclude Include="IndexBufferWrapper.h">
+      <Filter>Header\Renderer\Wrap Containers</Filter>
+    </ClInclude>
+    <ClInclude Include="MaterialWrapper.h">
+      <Filter>Header\Renderer\Wrap Containers</Filter>
+    </ClInclude>
+    <ClInclude Include="MatrixWrapper.h">
+      <Filter>Header\Renderer\Wrap Containers</Filter>
+    </ClInclude>
+    <ClInclude Include="MeshWrapper.h">
+      <Filter>Header\Renderer\Wrap Containers</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureWrapper.h">
+      <Filter>Header\Renderer\Wrap Containers</Filter>
+    </ClInclude>
+    <ClInclude Include="VertexBufferWrapper.h">
       <Filter>Header\Renderer\Wrap Containers</Filter>
     </ClInclude>
   </ItemGroup>
