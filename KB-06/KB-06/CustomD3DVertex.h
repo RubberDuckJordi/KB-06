@@ -3,12 +3,12 @@
 
 #include <d3dx9.h>
 #include <d3dx9.h>
-#define D3DFVF_CUSTOMVERTEX (D3DFVF_XYZ|D3DFVF_NORMAL|D3DFVF_TEX1)
-#define	D3DFVF_MESH (D3DFVF_XYZ|D3DFVF_NORMAL|D3DFVF_TEX1)
-struct CustomD3DVertex
+struct D3DCustomVertex
 {
-	D3DXVECTOR3 position;
-	D3DXVECTOR3 normal;
-	FLOAT tu, tv;
+	float x, y, z; // vertex position
+	//float tu, tv; // Texture co-ordinate
 };
+
+#define D3DCustomVertexFVF (D3DFVF_XYZ )
+//#define D3DCustomVertexFVF (D3DFVF_XYZ | D3DFVF_TEX1 )
 #endif

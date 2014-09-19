@@ -1,3 +1,4 @@
+#include <vector>
 #include "stdafx.h"
 #include "ObjMeshFactory.h"
 #include "Mesh.h"
@@ -86,14 +87,25 @@ std::pair<Resource::Mesh, std::vector<const std::string>> Resource::ObjMeshFacto
 				mesh.subsets.at(currentSubset).parameterSpaceVertices.push_back(newParameterSpaceVertex);
 			}
 			else if (elements[0] == "f"){
+				std::vector<int> faceDefinition;
+
 				for (unsigned int i = 1; i < elements.size(); ++i){
-					faces = Logger::StringHelper::split(line, '/');
-					FaceDefinition newFaceDefinition;
-					newFaceDefinition.v1 = atoi(faces[0].c_str());;
-					newFaceDefinition.v2 = atoi(faces[1].c_str());;
-					newFaceDefinition.v3 = atoi(faces[2].c_str());;
-					mesh.subsets.at(currentSubset).faceDefinitions.push_back(newFaceDefinition);
+					faces = Logger::StringHelper::split(elements.at(i), '/');
+
+					faceDefinition.push_back(atoi(faces[0].c_str()));
+					faceDefinition.push_back(atoi(faces[1].c_str()));
+					faceDefinition.push_back(atoi(faces[2].c_str()));
 				}
+
+				FaceDefinition newFaceDefinition;
+				newFaceDefinition.v1 = faceDefinition.at(0)-1;
+				newFaceDefinition.v2 = faceDefinition.at(3)-1;
+				newFaceDefinition.v3 = faceDefinition.at(6)-1;
+				mesh.subsets.at(currentSubset).faceDefinitions.push_back(newFaceDefinition);
+				newFaceDefinition.v1 = faceDefinition.at(6)-1;
+				newFaceDefinition.v2 = faceDefinition.at(9)-1;
+				newFaceDefinition.v3 = faceDefinition.at(0)-1;
+				mesh.subsets.at(currentSubset).faceDefinitions.push_back(newFaceDefinition);
 			}
 		}
 	}
