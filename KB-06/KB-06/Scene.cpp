@@ -20,22 +20,23 @@ void Scene::Scene::AddEntity(Entity* entity){
 void Scene::Scene::Update(std::map<Input::Input, long>* actions) {
 	for (std::list<Entity*>::iterator i = entities.begin(); i != entities.end(); ++i)
 	{
-		(*i)->Update(actions);
+		(*i)->UpdateLogic(actions);
 	}
-	currentCamera->Update(actions);
+	currentCamera->UpdateLogic(actions);
 }
 
 
 void Scene::Scene::Render(Renderer::Renderer* renderer){
 
-	Resource::Vertex* cameraPosition = currentCamera->GetPosition();
-	Resource::Vertex* cameraRotation = currentCamera->GetRotation();
+	/*Resource::Vertex* cameraPosition = currentCamera->GetPosition();
+	Resource::Vertex* cameraRotation = currentCamera->GetRotation();*/
 
-	renderer->SetViewMatrix(0, 0, -0.5f, 0, 0, 0.5f);
+	//renderer->SetViewMatrix(0, 0, -0.5f, 0, 0, 0.5f);
+	renderer->SetActiveCamera(currentCamera->GetCameraData());
 
 	for each(Entity* entity in entities)
 	{
-		entity->Draw(renderer, currentCamera->GetPosition(), currentCamera->GetRotation());
+		entity->Draw(renderer);
 	}
 }
 

@@ -1,11 +1,13 @@
 #include "DirectXRenderer.h"
 #include "CustomD3DVertex.h"
+//#include <sstream>
 
 Renderer::DirectXRenderer::DirectXRenderer()
 {
 	logger = Logger::LoggerPool::GetInstance().GetLogger();
 	g_pD3D = NULL;
 	g_pd3dDevice = NULL;
+	matrixCache = new D3DXMATRIX();
 };
 
 Renderer::DirectXRenderer::~DirectXRenderer()
@@ -66,6 +68,38 @@ void Renderer::DirectXRenderer::SetRenderState()
 	this->g_pd3dDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA); //Type alphablending
 	g_pd3dDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
 };
+
+void Renderer::DirectXRenderer::SetActiveCamera(CameraData camera)
+{
+	// Set up our view matrix. A view matrix can be defined given an eye point,
+	// a point to lookat, and a direction for which way is up. Here, we set the
+	// eye 0.5 units back along the z-axis and up 0 units, look at the 
+	// origin + 0.5 on the z-axis, and define "up" to be in the y-direction.
+	/*std::ostringstream oss;
+
+	oss << "Camera x: " << camera.x << ", y: " << camera.y << ", z: " << camera.z 
+		<< ", lookAtX: " << camera.lookAtX << ", lookAtY: " << camera.lookAtY << ", lookAtZ: " << camera.lookAtZ
+		<< ", upVecX: " << camera.upVecX << ", upVecY: " << camera.upVecY << ", upVecZ: " << camera.upVecZ;
+	logger->Log(Logger::Logger::LogLevel::DEBUG, oss.str().c_str());*/
+
+	D3DXVECTOR3 vEyePt(camera.x, camera.y, camera.z);
+	D3DXVECTOR3 vLookatPt(camera.lookAtX, camera.lookAtY, camera.lookAtZ);
+	D3DXVECTOR3 vUpVec(camera.upVecX, camera.upVecY, camera.upVecZ);
+	D3DXMATRIXA16 matView;
+	D3DXMatrixLookAtLH(&matView, &vEyePt, &vLookatPt, &vUpVec);
+	g_pd3dDevice->SetTransform(D3DTS_VIEW, &matView);
+
+	// Set up our view matrix. A view matrix can be defined given an eye point,
+	// a point to lookat, and a direction for which way is up. Here, we set the
+	// eye 0.5 units back along the z-axis and up 0 units, look at the 
+	// origin + 0.5 on the z-axis, and define "up" to be in the y-direction.
+	/*D3DXVECTOR3 vEyePt(0, 0, -0.5f);
+	D3DXVECTOR3 vLookatPt(0, 0, 0.5f);
+	D3DXVECTOR3 vUpVec(0.0f, 0.5f, 0.0f);
+	D3DXMATRIXA16 matView;
+	D3DXMatrixLookAtLH(&matView, &vEyePt, &vLookatPt, &vUpVec);
+	g_pd3dDevice->SetTransform(D3DTS_VIEW, &matView);*/
+}
 
 //Matrixen
 void Renderer::DirectXRenderer::SetWorldMatrix(MatrixWrapper* WorldMatrix)
@@ -173,10 +207,6 @@ void Renderer::DirectXRenderer::SetFvF(PENGINEDWORD* fvf)
 	g_pd3dDevice->SetFVF(*fvf);
 };
 
-void Renderer::DirectXRenderer::SetTransform(int type, MatrixWrapper* wrapper)
-{
-	g_pd3dDevice->SetTransform((D3DTRANSFORMSTATETYPE)type, &(wrapper->GetMatrix()));
-};
 
 //Draw functions
 void Renderer::DirectXRenderer::DrawPrimitive(Resource::Mesh mesh)
@@ -226,55 +256,55 @@ void Renderer::DirectXRenderer::Draw(Resource::Mesh* mesh){
 			return;
 		}
 
-			unsigned int* indices = new unsigned int[amountOfIndices];
+		unsigned int* indices = new unsigned int[amountOfIndices];
 
-			const int amountOfVertices = vertices;
-			D3DXVECTOR3 d3dVertices[16384];
-			logger->Log(Logger::Logger::WARNING, "@todo; Remove limit to 16384 vertices.");
-			for (unsigned int i = 0; i < mesh->subsets.size(); ++i){
-				for (unsigned int j = 0; j < mesh->subsets.at(i).vertices.size(); ++j){
-					d3dVertices[j] = D3DXVECTOR3(mesh->subsets.at(i).vertices.at(j).x, mesh->subsets.at(i).vertices.at(j).y, mesh->subsets.at(i).vertices.at(j).z);
-				}
-
-				unsigned int* indices = new unsigned int[amountOfIndices];
-				int index = -1;
-				for (unsigned int j = 0; j < mesh->subsets.at(i).vertices.size(); ++j){
-					indices[++index] = mesh->subsets.at(i).faceDefinitions.at(j).v1;
-					indices[++index] = mesh->subsets.at(i).faceDefinitions.at(j).v2;
-					indices[++index] = mesh->subsets.at(i).faceDefinitions.at(j).v3;
-				}
+		const int amountOfVertices = vertices;
+		D3DXVECTOR3 d3dVertices[16384];
+		logger->Log(Logger::Logger::WARNING, "@todo; Remove limit to 16384 vertices.");
+		for (unsigned int i = 0; i < mesh->subsets.size(); ++i){
+			for (unsigned int j = 0; j < mesh->subsets.at(i).vertices.size(); ++j){
+				d3dVertices[j] = D3DXVECTOR3(mesh->subsets.at(i).vertices.at(j).x, mesh->subsets.at(i).vertices.at(j).y, mesh->subsets.at(i).vertices.at(j).z);
 			}
-			//create buffers
-			LPDIRECT3DVERTEXBUFFER9 v_buffer;
-			g_pd3dDevice->CreateVertexBuffer(amountOfVertices*sizeof(D3DXVECTOR3),
-				0,
-				D3DFVF_MESH,
-				D3DPOOL_MANAGED,
-				&v_buffer,
-				NULL);
 
-			LPDIRECT3DINDEXBUFFER9 i_buffer;
-			g_pd3dDevice->CreateIndexBuffer(amountOfIndices*sizeof(unsigned int),
-				0,
-				D3DFMT_INDEX32,
-				D3DPOOL_MANAGED,
-				&i_buffer,
-				NULL);
+			unsigned int* indices = new unsigned int[amountOfIndices];
+			int index = -1;
+			for (unsigned int j = 0; j < mesh->subsets.at(i).vertices.size(); ++j){
+				indices[++index] = mesh->subsets.at(i).faceDefinitions.at(j).v1;
+				indices[++index] = mesh->subsets.at(i).faceDefinitions.at(j).v2;
+				indices[++index] = mesh->subsets.at(i).faceDefinitions.at(j).v3;
+			}
+		}
+		//create buffers
+		LPDIRECT3DVERTEXBUFFER9 v_buffer;
+		g_pd3dDevice->CreateVertexBuffer(amountOfVertices*sizeof(D3DXVECTOR3),
+			0,
+			D3DFVF_MESH,
+			D3DPOOL_MANAGED,
+			&v_buffer,
+			NULL);
 
-			VOID* pVoid;
-			// lock v_buffer and load the vertices into it
-			v_buffer->Lock(0, 0, (void**)&pVoid, 0);
-			memcpy(pVoid, d3dVertices, amountOfVertices*sizeof(D3DXVECTOR3));
-			v_buffer->Unlock();
+		LPDIRECT3DINDEXBUFFER9 i_buffer;
+		g_pd3dDevice->CreateIndexBuffer(amountOfIndices*sizeof(unsigned int),
+			0,
+			D3DFMT_INDEX32,
+			D3DPOOL_MANAGED,
+			&i_buffer,
+			NULL);
 
-			// lock i_buffer and load the indices into it
-			i_buffer->Lock(0, 0, (void**)&pVoid, 0);
-			memcpy(pVoid, indices, amountOfIndices*sizeof(unsigned int));
-			i_buffer->Unlock();
+		VOID* pVoid;
+		// lock v_buffer and load the vertices into it
+		v_buffer->Lock(0, 0, (void**)&pVoid, 0);
+		memcpy(pVoid, d3dVertices, amountOfVertices*sizeof(D3DXVECTOR3));
+		v_buffer->Unlock();
 
-			D3DXCreateBox(g_pd3dDevice, 2.0f, 2.0f, 2.0f, &d3dMesh, pAdjacencyBuffer); // force a cube until resourcemanager works properly
+		// lock i_buffer and load the indices into it
+		i_buffer->Lock(0, 0, (void**)&pVoid, 0);
+		memcpy(pVoid, indices, amountOfIndices*sizeof(unsigned int));
+		i_buffer->Unlock();
 
-			meshCache[mesh] = d3dMesh;
+		D3DXCreateBox(g_pd3dDevice, 2.0f, 2.0f, 2.0f, &d3dMesh, pAdjacencyBuffer); // force a cube until resourcemanager works properly
+
+		meshCache[mesh] = d3dMesh;
 
 		//HRESULT hr = D3DXSaveMeshToX(L"test.x", d3dMesh, NULL, NULL, NULL, 0, 1); //save mesh to file to test
 		logger->Log(Logger::Logger::DEBUG, "Mesh converted to LPD3DXMESH.");
@@ -283,6 +313,33 @@ void Renderer::DirectXRenderer::Draw(Resource::Mesh* mesh){
 	HRESULT r = meshCache[mesh]->DrawSubset(0);
 	//logger->Log(Logger::Logger::WARNING, "meow");
 }
+
+void Renderer::DirectXRenderer::SetActiveMatrix(PEngineMatrix* matrix)
+{
+	matrixCache->_11 = matrix->_11;
+	matrixCache->_12 = matrix->_12;
+	matrixCache->_13 = matrix->_13;
+	matrixCache->_14 = matrix->_14;
+
+	matrixCache->_21 = matrix->_21;
+	matrixCache->_22 = matrix->_22;
+	matrixCache->_23 = matrix->_23;
+	matrixCache->_24 = matrix->_24;
+
+	matrixCache->_31 = matrix->_31;
+	matrixCache->_32 = matrix->_32;
+	matrixCache->_33 = matrix->_33;
+	matrixCache->_34 = matrix->_34;
+
+	matrixCache->_41 = matrix->_41;
+	matrixCache->_42 = matrix->_42;
+	matrixCache->_43 = matrix->_43;
+	matrixCache->_44 = matrix->_44;
+
+	g_pd3dDevice->SetTransform(D3DTS_WORLD, matrixCache);
+}
+
+
 /**
 * set the world matrix
 * @param matrix
@@ -317,10 +374,11 @@ void Renderer::DirectXRenderer::SetWorldMatrix(Resource::Vertex* p_translation, 
 	SetWorldMatrix(transformation, offset, false);
 }
 
+
 D3DXMATRIX* Renderer::DirectXRenderer::CreateD3DMATRIX(Resource::Vertex* p_translation, Resource::Vertex* p_rotation, Resource::Vertex* p_scaling)
 {
 	D3DXMATRIX translation;
-	
+
 	D3DXMATRIX rotationX;
 	D3DXMATRIX rotationY;
 	D3DXMATRIX rotationZ;
@@ -329,14 +387,15 @@ D3DXMATRIX* Renderer::DirectXRenderer::CreateD3DMATRIX(Resource::Vertex* p_trans
 	D3DXMatrixTranslation(&translation, (*p_translation).x, (*p_translation).y, (*p_translation).z);
 
 	//(PI/180)*angle = Degree to Radian
-	D3DXMatrixRotationX(&rotationX, (D3DX_PI / 180) * (*p_rotation).x);
+	D3DXMatrixRotationX(&rotationX, DEGREES(p_rotation->x));
 	D3DXMatrixRotationY(&rotationY, (D3DX_PI / 180) * (*p_rotation).y);
 	D3DXMatrixRotationZ(&rotationZ, (D3DX_PI / 180) * (*p_rotation).z);
+	//D3DXMatrixRotationYawPitchRoll(&rotationMatrix, yaw, pitch, roll);
 
 	//First rotate, scale, then translate the entity
 	//Otherwise the translation will be rotated
 	(*transformation) = rotationX * rotationY * rotationZ;
-	
+
 	(*transformation) *= translation;
 	if (p_scaling != NULL)
 	{

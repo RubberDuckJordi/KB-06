@@ -93,6 +93,7 @@
     <ClInclude Include="IndexBufferWrapper.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="ObjMeshFactory.h" />
+    <ClInclude Include="RenderMatrix.h" />
     <ClInclude Include="RGBColor.h" />
     <ClInclude Include="PEngine.h" />
     <ClInclude Include="PengineDefinitions.h" />
@@ -107,9 +108,7 @@
     <ClInclude Include="DirectInputDeviceFactory.h" />
     <ClInclude Include="DirectXRenderer.h" />
     <ClInclude Include="Entity.h" />
-    <ClInclude Include="EntityFactory.h" />
     <ClInclude Include="DefaultEntity.h" />
-    <ClInclude Include="DefaultEntityFactory.h" />
     <ClInclude Include="InputDevice.h" />
     <ClInclude Include="InputDeviceFactory.h" />
     <ClInclude Include="InputManager.h" />
@@ -139,7 +138,6 @@
     <ClCompile Include="BaseMeshFactory.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="EntityCamera.cpp" />
-    <ClCompile Include="DefaultEntityFactory.cpp" />
     <ClCompile Include="DefaultScene.cpp" />
     <ClCompile Include="DefaultSceneFactory.cpp" />
     <ClCompile Include="DirectInputDeviceFactory.cpp" />
@@ -155,6 +153,7 @@
     <ClCompile Include="MaterialWrapper.cpp" />
     <ClCompile Include="ObjMeshFactory.cpp" />
     <ClCompile Include="PEngine.cpp" />
+    <ClCompile Include="RenderMatrix.cpp" />
     <ClCompile Include="StringHelper.cpp" />
     <ClCompile Include="Logger.cpp" />
     <ClCompile Include="LoggerPool.cpp" />

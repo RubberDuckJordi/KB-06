@@ -11,11 +11,11 @@ Scene::EntityCamera::~EntityCamera()
 
 }
 
-void Scene::EntityCamera::Update(std::map<Input::Input, long>* actions)
+void Scene::EntityCamera::UpdateLogic(std::map<Input::Input, long>* actions)
 {
 	typedef std::map<Input::Input, long>::iterator it_type;
 	for (it_type iterator = (*actions).begin(); iterator != (*actions).end(); iterator++) {
-		logger->Log(Logger::Logger::INFO, "changing camera view");
+		//logger->Log(Logger::Logger::INFO, "changing camera view");
 		float speed = static_cast<float>(iterator->second);
 
 		switch (iterator->first)
@@ -56,21 +56,32 @@ void Scene::EntityCamera::Update(std::map<Input::Input, long>* actions)
 			break;
 		}
 	}
-	if ((*actions).size() > 0){
+	/*if ((*actions).size() > 0){
 		logger->Log(Logger::Logger::INFO, "Camera");
 		logger->Log(Logger::Logger::INFO, std::to_string(rotation.x));
 		logger->Log(Logger::Logger::INFO, std::to_string(rotation.y));
 		logger->Log(Logger::Logger::INFO, std::to_string(rotation.z));
+	}*/
+}
+
+
+// Camera's worden niet getekend
+void Scene::EntityCamera::Draw(Renderer::Renderer* renderer)
+{
+	bool debug = false;
+	if (debug)
+	{
+		//teken een wireframe ofzo
 	}
 }
 
-void Scene::EntityCamera::Move()
+Resource::Vertex* Scene::EntityCamera::GetPosition()
 {
-	
-};
+	return &position;
+}
 
-// Camera's worden niet getekend
-void Scene::EntityCamera::Draw(Renderer::Renderer* renderer, Resource::Vertex* position, Resource::Vertex* rotation)
+CameraData Scene::EntityCamera::GetCameraData()
 {
-
+	CameraData d = { position.x, position.y, position.z, position.x, position.y, position.z-0.5f, 0.0f, 0.5f, 0.0f };
+	return d;
 }

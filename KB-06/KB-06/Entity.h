@@ -1,7 +1,7 @@
 #ifndef __SCENE_ENTITY_H__
 #define __SCENE_ENTITY_H__
 
-#include "renderer.h"
+#include "Renderer.h"
 #include "Vertex.h"
 #include "logger.h"
 #include "Input.h"
@@ -14,33 +14,32 @@ namespace Scene
 		Entity();
 		~Entity();
 
-		virtual void Update(std::map<Input::Input, long>* actions) = 0;
-		
 		void SetPosition(float x, float y, float z);
 		void SetRotation(float yaw, float pitch, float roll);
 		void SetScale(float scaleX, float scaleY, float scaleZ);
+		void SetAll(float x, float y, float z, float yaw, float pitch, float roll, float scaleX, float scaleY, float scaleZ);
 
-		void AddPosition(float x, float y, float z);
+		void AddPosition(float x, float y, float z);//No need for a seperate substract for all these, as you can add negative values to substract
 		void AddRotation(float yaw, float pitch, float roll);
 		void AddScale(float scaleX, float scaleY, float scaleZ);
+		void AddAll(float x, float y, float z, float yaw, float pitch, float roll, float scaleX, float scaleY, float scaleZ);
 
-		Resource::Vertex* GetPosition();
+		/*Resource::Vertex* GetPosition();
 		Resource::Vertex* GetRotation();
-		Resource::Vertex* GetScale();
+		Resource::Vertex* GetScale();*/
 
-		void SetMesh(Resource::Mesh* mesh);
+		virtual void Draw(Renderer::Renderer* renderer) = 0;
 
-		virtual void Draw(Renderer::Renderer* renderer, Resource::Vertex* position, Resource::Vertex* rotation);
+		virtual void UpdateLogic(std::map<Input::Input, long>* actions) = 0;
 
 	protected:
-		void FixDegrees(Resource::Vertex*);
-
 		Resource::Vertex position;
 		Resource::Vertex rotation;
 		Resource::Vertex scale;
 
-		Resource::Mesh* mesh;
-		Logger::Logger* logger;
+		RenderMatrix* myCachedMatrix;
+
+		Logger::Logger* logger;//Really? We keep track of a pointer to a logger in every entity? Isn't that what the singleton loggerpool is for?
 
 	};
 }

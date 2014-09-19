@@ -4,9 +4,6 @@
     <ClCompile Include="DefaultEntity.cpp">
       <Filter>Source\Scene\Default</Filter>
     </ClCompile>
-    <ClCompile Include="DefaultEntityFactory.cpp">
-      <Filter>Source\Scene\Default</Filter>
-    </ClCompile>
     <ClCompile Include="DefaultScene.cpp">
       <Filter>Source\Scene\Default</Filter>
     </ClCompile>
@@ -94,9 +91,6 @@
     <ClCompile Include="MaterialWrapper.cpp">
       <Filter>Source\Renderer\Wrap Containers</Filter>
     </ClCompile>
-    <ClCompile Include="BaseMeshLoader.cpp">
-      <Filter>Source\Resource</Filter>
-    </ClCompile>
     <ClCompile Include="PEngine.cpp">
       <Filter>Source</Filter>
     </ClCompile>
@@ -112,12 +106,10 @@
     <ClCompile Include="BaseMeshFactory.cpp">
       <Filter>Source\Resource</Filter>
     </ClCompile>
+    <ClCompile Include="RenderMatrix.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DefaultEntity.h">
-      <Filter>Header\Scene\Default</Filter>
-    </ClInclude>
-    <ClInclude Include="DefaultEntityFactory.h">
       <Filter>Header\Scene\Default</Filter>
     </ClInclude>
     <ClInclude Include="DefaultScene.h">
@@ -139,9 +131,6 @@
       <Filter>Header\Input\Direct</Filter>
     </ClInclude>
     <ClInclude Include="Entity.h">
-      <Filter>Header\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="EntityFactory.h">
       <Filter>Header\Scene</Filter>
     </ClInclude>
     <ClInclude Include="InputDevice.h">
@@ -258,6 +247,7 @@
     <ClInclude Include="IndexBufferWrapper.h">
       <Filter>Header\Renderer\Wrap Containers</Filter>
     </ClInclude>
+    <ClInclude Include="RenderMatrix.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
