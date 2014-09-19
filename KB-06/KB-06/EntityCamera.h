@@ -2,16 +2,21 @@
 #define __SCENE_ENTITYCAMERA_H__
 
 #include "Entity.h"
+#include "Vertex.h"
 
-namespace Scene{
-	class EntityCamera : public Entity {
+namespace Scene
+{
+	class EntityCamera : public Entity 
+	{
 	public:
 		EntityCamera();
 		~EntityCamera();
-		void Update(std::map<Input::Input, long>* actions);
-		void Draw(Renderer::Renderer* renderer, Resource::Vertex* position, Resource::Vertex* rotation);
+		void UpdateLogic(std::map<Input::Input, long>* actions);
+		void Draw(Renderer::Renderer* renderer);
+		Resource::Vertex* GetPosition();
+		CameraData GetCameraData();
 	private:
-		void Move();
+		CameraData cameraData;
 	};
 }
 

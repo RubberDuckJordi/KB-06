@@ -17,12 +17,19 @@ typedef unsigned long PENGINEDWORD;
 // format definitions
 #ifndef MAKEFOURCC
 #define MAKEFOURCC(ch0, ch1, ch2, ch3)                              \
-                ((PENGINEDWORD)(PENGINEBYTE)(ch0) | ((PENGINEDWORD)(PENGINEBYTE)(ch1) << 8) |       \
-                ((PENGINEDWORD)(PENGINEBYTE)(ch2) << 16) | ((PENGINEDWORD)(PENGINEBYTE)(ch3) << 24 ))
+	((PENGINEDWORD)(PENGINEBYTE)(ch0) | ((PENGINEDWORD)(PENGINEBYTE)(ch1) << 8) |       \
+	((PENGINEDWORD)(PENGINEBYTE)(ch2) << 16) | ((PENGINEDWORD)(PENGINEBYTE)(ch3) << 24 ))
 
 #endif /* defined(MAKEFOURCC) */
 
+#define M_PI 3.14159265358979323846f
+#define RADIANS(degree) (M_PI * (degree) / 180.0f)
+#define DEGREES(radian) (radian) * (180 / M_PI)
 
+struct CameraData
+{
+	float x, y, z, lookAtX, lookAtY, lookAtZ, upVecX, upVecY, upVecZ;
+};
 
 enum PENGINEFORMAT
 {
@@ -118,7 +125,7 @@ enum PENGINEFORMAT
 // pool definitions
 
 
-enum PENGINEPOOL 
+enum PENGINEPOOL
 {
 	POOL_DEFAULT = 0,
 	POOL_MANAGED = 1,

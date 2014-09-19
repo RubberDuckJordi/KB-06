@@ -15,6 +15,8 @@ namespace Renderer
 		void InitD3D(HWND hWnd);
 		void SetRenderState();
 
+		void SetActiveCamera(CameraData camera);
+
 		void SetWorldMatrix(MatrixWrapper* WorldMatrix);
 		void SetViewMatrix(MatrixWrapper* ViewMatrix);
 		void SetViewMatrix(float posX, float posY, float posZ, float roatationX, float roatationY, float roatationZ);
@@ -33,7 +35,7 @@ namespace Renderer
 		void SetMaterial(MaterialWrapper* wrapper);
 		void SetTexture(TextureWrapper* wrapper);
 		void SetFvF(PENGINEDWORD* fvf);
-		void SetTransform(int type, MatrixWrapper* wrapper);
+		//void SetTransform(int type, MatrixWrapper* wrapper);
 
 		void DrawPrimitive(Resource::Mesh mesh);
 		void DrawSubset(MeshWrapper* wrapper, int subset);
@@ -43,6 +45,8 @@ namespace Renderer
 
 		LPDIRECT3DDEVICE9* GetDevice();
 		void Draw(Resource::Mesh* mesh);
+		void SetActiveMatrix(PEngineMatrix* matrix);
+
 		void SetWorldMatrixForStaticEntity(Resource::Vertex* translation, Resource::Vertex* rotation, Resource::Vertex* scaling);
 		void SetWorldMatrix(Resource::Vertex* translation, Resource::Vertex* rotation, Resource::Vertex* scaling, Resource::Vertex* cameraPosition, Resource::Vertex* cameraRotation);
 
@@ -54,6 +58,8 @@ namespace Renderer
 		LPDIRECT3DDEVICE9 g_pd3dDevice;
 		std::map<Resource::Mesh*, LPD3DXMESH> meshCache;
 		D3DXMATRIXA16 matView;
+
+		D3DXMATRIX* matrixCache;
 	};
 }
 

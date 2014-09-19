@@ -12,6 +12,7 @@
 #include "LoggerPool.h"
 #include "RGBAColor.h"
 #include <d3dx9.h>
+#include "RenderMatrix.h"
 
 namespace Renderer
 {
@@ -24,9 +25,7 @@ namespace Renderer
 		virtual void InitD3D(HWND hWnd) = 0;
 		virtual void SetRenderState() = 0;
 
-		virtual void SetWorldMatrix(MatrixWrapper* WorldMatrix) = 0;
-		virtual void SetViewMatrix(MatrixWrapper* ViewMatrix) = 0;
-		virtual void SetViewMatrix(float posX, float posY, float posZ, float roatationX, float roatationY, float roatationZ) = 0;
+		virtual void SetActiveCamera(CameraData camera) = 0;
 		virtual void SetProjectionMatrix(MatrixWrapper* ProjectionMatrix) = 0;
 		virtual void SetProjectionMatrix(float FOV, float farClippingPlane) = 0;
 
@@ -42,7 +41,6 @@ namespace Renderer
 		virtual void SetMaterial(MaterialWrapper* wrapper) = 0;
 		virtual void SetTexture(TextureWrapper* wrapper) = 0;
 		virtual void SetFvF(DWORD* fvf) = 0;
-		virtual void SetTransform(int type, MatrixWrapper* wrapper) = 0;
 
 		virtual void DrawPrimitive(Resource::Mesh mesh) = 0;
 		virtual void DrawSubset(MeshWrapper* wrapper, int subset) = 0;
@@ -51,12 +49,10 @@ namespace Renderer
 		virtual void SetIndices() = 0; //??
 
 		virtual void Draw(Resource::Mesh* mesh) = 0;
-		virtual void SetWorldMatrixForStaticEntity(Resource::Vertex* translation, Resource::Vertex* rotation, Resource::Vertex* scaling) = 0;
-		virtual void SetWorldMatrix(Resource::Vertex* translation, Resource::Vertex* rotation, Resource::Vertex* scaling, Resource::Vertex* cameraPosition, Resource::Vertex* cameraRotation) = 0;
+		virtual void SetActiveMatrix(PEngineMatrix* matrix) = 0;
 
 	protected:
 		Logger::Logger* logger;
-
 	};
 }
 
