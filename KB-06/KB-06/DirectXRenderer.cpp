@@ -177,7 +177,6 @@ void Renderer::DirectXRenderer::EndScene()
 	this->g_pd3dDevice->EndScene();
 };
 
-
 //Buffers
 void Renderer::DirectXRenderer::CreateVertexBuffer(int heightmapvertex, PENGINEDWORD* usage, PENGINEDWORD* fvf, PENGINEPOOL* pool, VertexBufferWrapper* vertexbuffer, HANDLE handle)
 {
@@ -237,10 +236,8 @@ LPDIRECT3DDEVICE9* Renderer::DirectXRenderer::GetDevice()
 };
 
 void Renderer::DirectXRenderer::Draw(Resource::Mesh* mesh){
-	HRESULT hr = 0;
 	if (meshCache.find(mesh) == meshCache.end()){
 		logger->Log(Logger::Logger::DEBUG, "Mesh not converted to LPD3DXMESH yet.");
-
 
 		LPD3DXMESH d3dMesh;
 		int	amountOfVertices = 0;
@@ -249,58 +246,56 @@ void Renderer::DirectXRenderer::Draw(Resource::Mesh* mesh){
 			amountOfVertices += mesh->subsets.at(i).vertices.size();
 			amountOfIndices += mesh->subsets.at(i).faceDefinitions.size();
 		}
-
-		if (FAILED(D3DXCreateMeshFVF(amountOfIndices, amountOfVertices, D3DXMESH_MANAGED, D3DCustomVertexFVF, g_pd3dDevice, &d3dMesh))){
-			logger->Log(Logger::Logger::ERR, "Failed to create a D3DXCreateMeshFVF");
-			return;
+		if (FAILED(D3DXCreateMeshFVF(amountOfIndices, amountOfVertices, 0, D3DCustomVertexFVF, g_pd3dDevice, &d3dMesh))){
+			logger->Log(Logger::Logger::ERR, "Failed to create a D3DXCreateMeshFVF. Generating a cube");
+			D3DXCreateBox(g_pd3dDevice, 1.0f, 1.0f, 1.0f, &d3dMesh, NULL); 
 		}
-		D3DCustomVertex* d3dVertices = new D3DCustomVertex[amountOfVertices];
+		else {
+			D3DCustomVertex* d3dVertices = new D3DCustomVertex[amountOfVertices];
+			unsigned short* indices = new unsigned short[amountOfIndices * 3];
 
+			for (unsigned int i = 0; i < mesh->subsets.size(); ++i){
+				for (unsigned int j = 0; j < mesh->subsets.at(i).vertices.size(); ++j){
+					D3DCustomVertex newVertex;
+					newVertex.x = mesh->subsets.at(i).vertices.at(j).x;
+					newVertex.y = mesh->subsets.at(i).vertices.at(j).y;
+					newVertex.z = mesh->subsets.at(i).vertices.at(j).z;
+					d3dVertices[j] = newVertex;
+				}
+				int index = -1;
+				for (unsigned int j = 0; j < mesh->subsets.at(i).faceDefinitions.size(); ++j){
+					indices[++index] = mesh->subsets.at(i).faceDefinitions.at(j).v1;
+					indices[++index] = mesh->subsets.at(i).faceDefinitions.at(j).v2;
+					indices[++index] = mesh->subsets.at(i).faceDefinitions.at(j).v3;
+					int test = 10;
+				}
+			}
+			VOID* pVoid;
 
-		unsigned int* indices = new unsigned int[amountOfIndices*3];
-		for (unsigned int i = 0; i < mesh->subsets.size(); ++i){
-			for (unsigned int j = 0; j < mesh->subsets.at(i).vertices.size(); ++j){
-				D3DCustomVertex newVertex;
-				newVertex.x = mesh->subsets.at(i).vertices.at(j).x;
-				newVertex.y = mesh->subsets.at(i).vertices.at(j).y;
-				newVertex.z = mesh->subsets.at(i).vertices.at(j).z;
-				d3dVertices[j] = newVertex;
-			}
-						int index = -1;
-			for (unsigned int j = 0; j < mesh->subsets.at(i).faceDefinitions.size(); ++j){
-				indices[++index] = mesh->subsets.at(i).faceDefinitions.at(j).v1;
-				indices[++index] = mesh->subsets.at(i).faceDefinitions.at(j).v2;
-				indices[++index] = mesh->subsets.at(i).faceDefinitions.at(j).v3;
-				int test = 10;
-			}
+			LPDIRECT3DVERTEXBUFFER9 v_buffer;
+			d3dMesh->GetVertexBuffer(&v_buffer);
+			// lock v_buffer and load the vertices into it
+			v_buffer->Lock(0, 0, (void**)&pVoid, 0);
+			memcpy(pVoid, d3dVertices, amountOfVertices*sizeof(D3DCustomVertex));
+			v_buffer->Unlock();
+	
+			LPDIRECT3DINDEXBUFFER9 i_buffer;
+			d3dMesh->GetIndexBuffer(&i_buffer);
+			// lock i_buffer and load the indices into it
+			i_buffer->Lock(0, 0, (void**)&pVoid, 0);
+			memcpy(pVoid, indices, amountOfIndices * 3 * sizeof(unsigned short));
+			i_buffer->Unlock();
+
+			logger->Log(Logger::Logger::DEBUG, "Mesh converted to LPD3DXMESH.");
 		}
-
-		logger->Log(Logger::Logger::WARNING, std::to_string(hr));
-		VOID* pVoid;
-
-		LPDIRECT3DVERTEXBUFFER9 v_buffer;
-		hr = d3dMesh->GetVertexBuffer(&v_buffer);
-		// lock v_buffer and load the vertices into it
-		v_buffer->Lock(0, 0, (void**)&pVoid, 0);
-		memcpy(pVoid, d3dVertices, amountOfVertices*sizeof(D3DCustomVertex));
-		v_buffer->Unlock();
-
-		LPDIRECT3DINDEXBUFFER9 i_buffer;
-		hr = d3dMesh->GetIndexBuffer(&i_buffer);
-		// lock i_buffer and load the indices into it
-		i_buffer->Lock(0, 0, (void**)&pVoid, 0);
-		memcpy(pVoid, indices, amountOfIndices * 3 * sizeof(unsigned int));
-		i_buffer->Unlock();
-
-		D3DXCreateBox(g_pd3dDevice, 2.0f, 2.0f, 2.0f, &d3dMesh, NULL); // force a cube until resourcemanager works properly
-		//hr = D3DXSaveMeshToX(L"test.x", d3dMesh, NULL, NULL, NULL, 0, 1); //save mesh to file to test
-
 		meshCache[mesh] = d3dMesh;
-
-		logger->Log(Logger::Logger::DEBUG, "Mesh converted to LPD3DXMESH.");
-		logger->Log(Logger::Logger::WARNING, "@todo; specify subsets.");
+		//D3DXSaveMeshToX(L"test.x", d3dMesh, NULL, NULL, NULL, 0, 1); //save mesh to file to debug
 	}
-	hr = meshCache[mesh]->DrawSubset(0);
+
+	meshCache[mesh]->DrawSubset(0); // always draw the first subset incase it's a d3dx9 generated cube
+	for (int i = 1; i < mesh->subsets.size(); ++i){ // So we start at 1 instead of 0
+		meshCache[mesh]->DrawSubset(1 + i);
+	}
 }
 
 void Renderer::DirectXRenderer::SetActiveMatrix(PEngineMatrix* matrix)

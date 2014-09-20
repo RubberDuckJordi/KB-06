@@ -25,7 +25,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	color.g = 0.25f;
 	color.b = 1.0f;
 	color.a = 1.0f;
-	Resource::Mesh* mesh = pEngine.GetResourceManager()->LoadMesh("resources/cube.obj.mesh", "obj.mesh");
+	Resource::Mesh* mesh = pEngine.GetResourceManager()->LoadMesh("resources/simplecube.obj.mesh", "obj.mesh");
 
 	Scene::DefaultSceneFactory* sceneFactory = new Scene::DefaultSceneFactory();
 	sceneFactory->setMesh(mesh);
@@ -33,7 +33,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	pEngine.GetSceneManager()->AddSceneFactory("iets", sceneFactory);
 	Scene::Scene* scene = pEngine.GetSceneManager()->AddScene("iets");
 	pEngine.GetSceneManager()->SetCurrentScene(scene);
-
+	
 	//pEngine.GetRenderer()->SetViewMatrix(0.0f, 0.0f, -2.0f, 0.0f, 0.0f, 0.0f);
 	pEngine.GetRenderer()->SetProjectionMatrix(3.14159265358979323846f / 4, 100.0f);
 	pEngine.GetRenderer()->SetRenderState();

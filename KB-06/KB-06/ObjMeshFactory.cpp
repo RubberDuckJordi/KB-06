@@ -59,6 +59,7 @@ std::pair<Resource::Mesh, std::vector<const std::string>> Resource::ObjMeshFacto
 					newVertex.w = 1.0f;
 				}
 				mesh.subsets.at(currentSubset).vertices.push_back(newVertex);
+
 			}
 			else if (elements[0] == "vt"){
 				TextureCoordinate newTextureCoordinate;
