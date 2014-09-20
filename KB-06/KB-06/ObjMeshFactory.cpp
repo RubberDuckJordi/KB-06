@@ -30,22 +30,13 @@ std::pair<Resource::Mesh, std::vector<const std::string>> Resource::ObjMeshFacto
 				returnValue.second.push_back(elements[1]);
 			}
 			else if (elements[0] == "usemtl"){
-				bool usedBefore = false;
-				for (unsigned int i = 0; i < materials.size(); ++i){
-					if (materials.at(i) != elements[1]){
-						usedBefore = true;
-						currentSubset = i;
-					}
-				}
-				if (!usedBefore){
-					currentSubset = materials.size();
-					Material material;
-					material.name = elements[1];
-					Subset subset;
-					mesh.subsets.push_back(subset);
-					mesh.subsets.at(currentSubset).material = material;
-					materials.push_back(material.name);
-				}
+				currentSubset = materials.size();
+				Material material;
+				material.name = elements[1];
+				Subset subset;
+				mesh.subsets.push_back(subset);
+				mesh.subsets.at(currentSubset).material = material;
+				materials.push_back(material.name);
 			}
 			else if (elements[0] == "v"){
 				Vertex newVertex;

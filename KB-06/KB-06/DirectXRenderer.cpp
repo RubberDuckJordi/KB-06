@@ -254,19 +254,20 @@ void Renderer::DirectXRenderer::Draw(Resource::Mesh* mesh){
 			D3DCustomVertex* d3dVertices = new D3DCustomVertex[amountOfVertices];
 			unsigned short* indices = new unsigned short[amountOfIndices * 3];
 
+			int vertexCount = -1;
+			int indexCount = -1;
 			for (unsigned int i = 0; i < mesh->subsets.size(); ++i){
 				for (unsigned int j = 0; j < mesh->subsets.at(i).vertices.size(); ++j){
 					D3DCustomVertex newVertex;
 					newVertex.x = mesh->subsets.at(i).vertices.at(j).x;
 					newVertex.y = mesh->subsets.at(i).vertices.at(j).y;
 					newVertex.z = mesh->subsets.at(i).vertices.at(j).z;
-					d3dVertices[j] = newVertex;
+					d3dVertices[++vertexCount] = newVertex;
 				}
-				int index = -1;
 				for (unsigned int j = 0; j < mesh->subsets.at(i).faceDefinitions.size(); ++j){
-					indices[++index] = mesh->subsets.at(i).faceDefinitions.at(j).v1;
-					indices[++index] = mesh->subsets.at(i).faceDefinitions.at(j).v2;
-					indices[++index] = mesh->subsets.at(i).faceDefinitions.at(j).v3;
+					indices[++indexCount] = mesh->subsets.at(i).faceDefinitions.at(j).v1;
+					indices[++indexCount] = mesh->subsets.at(i).faceDefinitions.at(j).v2;
+					indices[++indexCount] = mesh->subsets.at(i).faceDefinitions.at(j).v3;
 					int test = 10;
 				}
 			}
@@ -289,7 +290,7 @@ void Renderer::DirectXRenderer::Draw(Resource::Mesh* mesh){
 			logger->Log(Logger::Logger::DEBUG, "Mesh converted to LPD3DXMESH.");
 		}
 		meshCache[mesh] = d3dMesh;
-		//D3DXSaveMeshToX(L"test.x", d3dMesh, NULL, NULL, NULL, 0, 1); //save mesh to file to debug
+		D3DXSaveMeshToX(L"test.x", d3dMesh, NULL, NULL, NULL, 0, 1); //save mesh to file to debug
 	}
 
 	meshCache[mesh]->DrawSubset(0); // always draw the first subset incase it's a d3dx9 generated cube
@@ -297,7 +298,7 @@ void Renderer::DirectXRenderer::Draw(Resource::Mesh* mesh){
 		meshCache[mesh]->DrawSubset(1 + i);
 	}
 }
-
+	
 void Renderer::DirectXRenderer::SetActiveMatrix(PEngineMatrix* matrix)
 {
 	matrixCache->_11 = matrix->_11;
