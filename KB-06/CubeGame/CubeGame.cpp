@@ -3,7 +3,8 @@
 
 #include "stdafx.h"
 #include "PEngine.h"
-#include "ObjMeshFactory.h"
+#include "ObjMeshLoader.h"
+#include "MtlLoader.h"
 #include "RGBAColor.h"
 #include "Mesh.h"
 #include "SceneFactory.h"
@@ -18,14 +19,15 @@ int _tmain(int argc, _TCHAR* argv[])
 	pEngine.GetWindowManager()->NewWindow(10, 10, 500, 500);
 	pEngine.GetWindowManager()->GetLastWindow()->AddWindowListener(pEngine.GetInputManager());
 	pEngine.GetRenderer()->InitD3D(pEngine.GetWindowManager()->GetLastWindow()->GetHWND());
-	pEngine.GetResourceManager()->AddMeshFactory(new Resource::ObjMeshFactory());
+	pEngine.GetResourceManager()->AddMeshLoader(new Resource::ObjMeshLoader());
+	pEngine.GetResourceManager()->AddMaterialLoader(new Resource::MtlLoader());
 
 	Resource::RGBAColor color;
 	color.r = 1.0f;
 	color.g = 0.25f;
 	color.b = 1.0f;
 	color.a = 1.0f;
-	Resource::Mesh* mesh = pEngine.GetResourceManager()->LoadMesh("resources/simplecube.obj.mesh", "obj.mesh");
+	Resource::Mesh* mesh = pEngine.GetResourceManager()->LoadMesh("resources/cube.obj.mesh", "obj.mesh");
 
 	Scene::DefaultSceneFactory* sceneFactory = new Scene::DefaultSceneFactory();
 	sceneFactory->setMesh(mesh);
@@ -50,6 +52,7 @@ int _tmain(int argc, _TCHAR* argv[])
 		// Visuals
 		pEngine.GetRenderer()->ClearScene(0UL, 0UL, color, 1.0f, 0UL);
 		pEngine.GetRenderer()->BeginScene();
+		pEngine.GetRenderer()->SetLights();
 		pEngine.GetSceneManager()->RenderActiveScene(pEngine.GetRenderer());
 
 		pEngine.GetRenderer()->EndScene();

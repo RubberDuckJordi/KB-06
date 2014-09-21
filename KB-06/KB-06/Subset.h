@@ -17,7 +17,7 @@ namespace Resource
 		std::vector<Normal> normals;
 		std::vector<ParameterSpaceVertex> parameterSpaceVertices;
 		std::vector<FaceDefinition> faceDefinitions;
-		Material material;
+		Material defaultMaterial;
 	};
 }
 #endif

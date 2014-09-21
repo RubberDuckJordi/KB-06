@@ -7,7 +7,9 @@ namespace Resource
 {
 	struct Mesh
 	{
+		std::string fileName;
 		std::vector<Subset> subsets;
+		std::vector<std::string> defaultMaterialFiles;
 	};
 }
 #endif

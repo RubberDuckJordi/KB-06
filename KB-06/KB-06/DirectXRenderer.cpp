@@ -1,5 +1,6 @@
 #include "DirectXRenderer.h"
 #include "CustomD3DVertex.h"
+#include "BinaryData.h"
 //#include <sstream>
 
 Renderer::DirectXRenderer::DirectXRenderer()
@@ -50,23 +51,17 @@ void Renderer::DirectXRenderer::InitD3D(HWND hWnd)
 		return;
 		//return E_FAIL; -> when switching from void to H_RESULT return type
 	}
-
-	logger->Log(Logger::Logger::WARNING, "Culling turned off");
-	g_pd3dDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);    // turn off culling
-
-	//return S_OK; -> when switching from void to H_RESULT return type
+		//return S_OK; -> when switching from void to H_RESULT return type
 };
 
 void Renderer::DirectXRenderer::SetRenderState()
 {
-	this->g_pd3dDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);	//Counter Clockwise Cullmode
-	this->g_pd3dDevice->SetRenderState(D3DRS_LIGHTING, FALSE); //No lightning
+	this->g_pd3dDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);	//Counter Clockwise Cullmode
 	this->g_pd3dDevice->SetRenderState(D3DRS_ZENABLE, TRUE); //Z buffer on
-	this->g_pd3dDevice->SetRenderState(D3DRS_AMBIENT, 0xffffffff); //Ambient is white
 	this->g_pd3dDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, true); //Turn Alphablending on
 	this->g_pd3dDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA); //Type alphablending
 	this->g_pd3dDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA); //Type alphablending
-	g_pd3dDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
+	//g_pd3dDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
 };
 
 void Renderer::DirectXRenderer::SetActiveCamera(CameraData camera)
@@ -237,7 +232,7 @@ LPDIRECT3DDEVICE9* Renderer::DirectXRenderer::GetDevice()
 
 void Renderer::DirectXRenderer::Draw(Resource::Mesh* mesh){
 	if (meshCache.find(mesh) == meshCache.end()){
-		logger->Log(Logger::Logger::DEBUG, "Mesh not converted to LPD3DXMESH yet.");
+		logger->Log(Logger::Logger::DEBUG, "Mesh \"" + mesh->fileName + "\" not converted to LPD3DXMESH yet.");
 
 		LPD3DXMESH d3dMesh;
 		int	amountOfVertices = 0;
@@ -262,6 +257,8 @@ void Renderer::DirectXRenderer::Draw(Resource::Mesh* mesh){
 					newVertex.x = mesh->subsets.at(i).vertices.at(j).x;
 					newVertex.y = mesh->subsets.at(i).vertices.at(j).y;
 					newVertex.z = mesh->subsets.at(i).vertices.at(j).z;
+					newVertex.tu = mesh->subsets.at(i).textureCoordinates.at(j).u;
+					newVertex.tv = mesh->subsets.at(i).textureCoordinates.at(j).v;
 					d3dVertices[++vertexCount] = newVertex;
 				}
 				for (unsigned int j = 0; j < mesh->subsets.at(i).faceDefinitions.size(); ++j){
@@ -287,18 +284,50 @@ void Renderer::DirectXRenderer::Draw(Resource::Mesh* mesh){
 			memcpy(pVoid, indices, amountOfIndices * 3 * sizeof(unsigned short));
 			i_buffer->Unlock();
 
-			logger->Log(Logger::Logger::DEBUG, "Mesh converted to LPD3DXMESH.");
+			logger->Log(Logger::Logger::DEBUG, "Mesh \"" + mesh->fileName + "\" converted to LPD3DXMESH.");
 		}
 		meshCache[mesh] = d3dMesh;
-		D3DXSaveMeshToX(L"test.x", d3dMesh, NULL, NULL, NULL, 0, 1); //save mesh to file to debug
+		//D3DXSaveMeshToX(L"test.x", d3dMesh, NULL, NULL, NULL, 0, 1); //save mesh to xfile to debug
 	}
 
 	meshCache[mesh]->DrawSubset(0); // always draw the first subset incase it's a d3dx9 generated cube
-	for (int i = 1; i < mesh->subsets.size(); ++i){ // So we start at 1 instead of 0
+	for (unsigned int i = 1; i < mesh->subsets.size(); ++i){ // So we start at 1 instead of 0
+		SetMaterial(&mesh->subsets.at(i).defaultMaterial);
+		SetTexture(&mesh->subsets.at(i).defaultMaterial.defaultTexture);
 		meshCache[mesh]->DrawSubset(1 + i);
 	}
 }
-	
+
+void Renderer::DirectXRenderer::SetTexture(Resource::BinaryData* texture)
+{
+	if (textureCache.find(texture) == textureCache.end()){
+		logger->Log(Logger::Logger::DEBUG, "Texture \"" + texture->fileName + "\" not converted to LPDIRECT3DTEXTURE9 yet.");
+		LPDIRECT3DTEXTURE9 d3DTexture;
+
+		D3DXCreateTextureFromFileInMemory(g_pd3dDevice, texture->rawData, texture->size, &d3DTexture);
+		textureCache[texture] = d3DTexture;
+		logger->Log(Logger::Logger::DEBUG, "Texture \""+ texture->fileName +"\" converted to LPDIRECT3DTEXTURE9.");
+	}
+	g_pd3dDevice->SetTexture(0, textureCache[texture]);
+}
+
+void Renderer::DirectXRenderer::SetMaterial(Resource::Material* material){
+	D3DMATERIAL9 mat;
+	mat.Ambient.r = material->ambientColor.r;
+	mat.Ambient.g = material->ambientColor.g;
+	mat.Ambient.b = material->ambientColor.b;
+
+	mat.Diffuse.r = material->diffuseColor.r;
+	mat.Diffuse.g = material->diffuseColor.g;
+	mat.Diffuse.b = material->diffuseColor.b;
+
+	mat.Specular.r = material->SpecularColor.r;
+	mat.Specular.g = material->SpecularColor.g;
+	mat.Specular.b = material->SpecularColor.b;
+	mat.Power = material->specularWeight;
+
+	g_pd3dDevice->SetMaterial(&mat);
+}
 void Renderer::DirectXRenderer::SetActiveMatrix(PEngineMatrix* matrix)
 {
 	matrixCache->_11 = matrix->_11;
@@ -390,4 +419,22 @@ D3DXMATRIX* Renderer::DirectXRenderer::CreateD3DMATRIX(Resource::Vertex* p_trans
 	}
 
 	return transformation;
+}
+void Renderer::DirectXRenderer::SetLights(){
+	D3DXVECTOR3 vecDir;
+	D3DLIGHT9 light;
+	light.Type = D3DLIGHT_DIRECTIONAL;
+	light.Diffuse.r = 1.0f;
+	light.Diffuse.g = 1.0f;
+	light.Diffuse.b = 1.0f;
+	vecDir = D3DXVECTOR3(cosf(timeGetTime() / 350.0f),
+		1.0f,
+		sinf(timeGetTime() / 350.0f));
+	D3DXVec3Normalize((D3DXVECTOR3*)&light.Direction, &vecDir);
+	light.Range = 1000.0f;
+	g_pd3dDevice->SetLight(0, &light);
+	g_pd3dDevice->LightEnable(0, TRUE);
+	g_pd3dDevice->SetRenderState(D3DRS_LIGHTING, FALSE); // maar weer uit
+	// Finally, turn on some ambient light.
+	g_pd3dDevice->SetRenderState(D3DRS_AMBIENT, 0x00202020);
 }

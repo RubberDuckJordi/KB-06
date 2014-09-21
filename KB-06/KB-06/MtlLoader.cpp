@@ -7,9 +7,8 @@
 #include "StringHelper.h"
 #include "LoggerPool.h"
 
-
 std::map<std::string, Resource::Material> Resource::MtlLoader::Load(std::string file){
-	std::ifstream ifs(file, std::ifstream::in);
+	std::ifstream ifs("resources/"+file, std::ifstream::in);
 	std::string line;
 	std::vector<std::string> elements;
 	std::map<std::string, Material> materials;
@@ -21,6 +20,7 @@ std::map<std::string, Resource::Material> Resource::MtlLoader::Load(std::string 
 		if (elements.size() > 0){
 			if (elements[0] == "newmtl"){
 				currentMaterial = elements[1];
+				materials[currentMaterial].name = elements[1];
 			}
 			else if (elements[0] == "Ka"){
 				materials[currentMaterial].ambientColor.r = strtof(elements[1].c_str(), 0);
@@ -43,6 +43,9 @@ std::map<std::string, Resource::Material> Resource::MtlLoader::Load(std::string 
 			else if (elements[0] == "d" || elements[0] == "Tr"){
 				materials[currentMaterial].alpha = strtof(elements[1].c_str(), 0);
 			}
+			else if (elements[0] == "map_Kd"){
+				materials[currentMaterial].defaultTexture.fileName = elements[1];
+			}
 		}
 	}
 	ifs.close();
@@ -56,4 +59,8 @@ std::map<std::string, Resource::Material> Resource::MtlLoader::Load(std::string 
 	}
 	Logger::LoggerPool::GetInstance().ReturnLogger(logger);
 	return materials;
+}
+
+std::string Resource::MtlLoader::GetExtension(){
+	return "mtl";
 }

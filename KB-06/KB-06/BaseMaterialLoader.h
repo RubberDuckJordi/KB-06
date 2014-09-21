@@ -3,16 +3,17 @@
 
 #include "mesh.h"
 #include <vector>
+#include <map>
 
 namespace Resource
 {
-	class BaseMaterialFactory
+	class BaseMaterialLoader
 	{
 	public:
-		BaseMaterialFactory();
-		~BaseMaterialFactory();
+		BaseMaterialLoader(){};
+		~BaseMaterialLoader();
 
-		virtual std::pair<Material, std::vector<const std::string>> Load(const std::string file) = 0;
+		virtual std::map<std::string, Material> Load(const std::string file) = 0;
 		virtual std::string GetExtension() = 0;
 	};
 }

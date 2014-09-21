@@ -6,13 +6,13 @@
 
 namespace Resource
 {
-	class BaseMeshFactory
+	class BaseMeshLoader
 	{
 	public:
-		BaseMeshFactory();
-		~BaseMeshFactory();
+		BaseMeshLoader(){};
+		~BaseMeshLoader();
 
-		virtual std::pair<Mesh, std::vector<const std::string>> Load(const std::string file) = 0;
+		virtual Mesh Load(const std::string file) = 0;
 		virtual std::string GetExtension() = 0;
 	};
 }

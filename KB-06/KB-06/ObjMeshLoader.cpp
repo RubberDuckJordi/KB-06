@@ -1,6 +1,6 @@
 #include <vector>
 #include "stdafx.h"
-#include "ObjMeshFactory.h"
+#include "ObjMeshLoader.h"
 #include "Mesh.h"
 #include "Subset.h"
 #include <iostream>     // std::cout
@@ -9,9 +9,7 @@
 #include "LoggerPool.h"
 #include "Material.h"
 
-std::pair<Resource::Mesh, std::vector<const std::string>> Resource::ObjMeshFactory::Load(const std::string file){
-	std::pair<Mesh, std::vector<const std::string>> returnValue;
-
+Resource::Mesh Resource::ObjMeshLoader::Load(const std::string file){
 	std::ifstream ifs(file, std::ifstream::in);
 	std::string line;
 	std::vector<std::string> elements;
@@ -27,7 +25,7 @@ std::pair<Resource::Mesh, std::vector<const std::string>> Resource::ObjMeshFacto
 		elements = Logger::StringHelper::split(line, ' ');
 		if (elements.size() > 0){
 			if (elements[0] == "mtllib"){
-				returnValue.second.push_back(elements[1]);
+				mesh.defaultMaterialFiles.push_back(elements[1]);
 			}
 			else if (elements[0] == "usemtl"){
 				currentSubset = materials.size();
@@ -35,7 +33,7 @@ std::pair<Resource::Mesh, std::vector<const std::string>> Resource::ObjMeshFacto
 				material.name = elements[1];
 				Subset subset;
 				mesh.subsets.push_back(subset);
-				mesh.subsets.at(currentSubset).material = material;
+				mesh.subsets.at(currentSubset).defaultMaterial = material;
 				materials.push_back(material.name);
 			}
 			else if (elements[0] == "v"){
@@ -103,6 +101,7 @@ std::pair<Resource::Mesh, std::vector<const std::string>> Resource::ObjMeshFacto
 	}
 
 	ifs.close();
+	mesh.fileName = file;
 	Logger::Logger* logger = Logger::LoggerPool::GetInstance().GetLogger();
 	logger->Log(Logger::Logger::DEBUG, "loaded: " + file);
 	logger->Log(Logger::Logger::DEBUG, "subsets: " + std::to_string(mesh.subsets.size()));
@@ -114,10 +113,9 @@ std::pair<Resource::Mesh, std::vector<const std::string>> Resource::ObjMeshFacto
 		logger->Log(Logger::Logger::DEBUG, "faceDefinitions: " + std::to_string(mesh.subsets.at(i).faceDefinitions.size()));
 	}
 	Logger::LoggerPool::GetInstance().ReturnLogger(logger);
-	returnValue.first = mesh;
-	return returnValue;
+	return mesh;
 }
 
-std::string Resource::ObjMeshFactory::GetExtension(){
+std::string Resource::ObjMeshLoader::GetExtension(){
 	return "obj.mesh";
 }

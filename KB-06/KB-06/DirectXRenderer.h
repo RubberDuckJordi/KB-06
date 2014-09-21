@@ -49,14 +49,17 @@ namespace Renderer
 
 		void SetWorldMatrixForStaticEntity(Resource::Vertex* translation, Resource::Vertex* rotation, Resource::Vertex* scaling);
 		void SetWorldMatrix(Resource::Vertex* translation, Resource::Vertex* rotation, Resource::Vertex* scaling, Resource::Vertex* cameraPosition, Resource::Vertex* cameraRotation);
-
+		void SetLights();
 	private:
+		void SetTexture(Resource::BinaryData* texture);
+		void SetMaterial(Resource::Material* material);
 		void SetWorldMatrix(D3DXMATRIX* matrix, D3DXMATRIX* offset, bool staticEntity);
 		D3DXMATRIX* CreateD3DMATRIX(Resource::Vertex* p_translation, Resource::Vertex* p_rotation, Resource::Vertex* p_scaling);
 
 		LPDIRECT3D9 g_pD3D;
 		LPDIRECT3DDEVICE9 g_pd3dDevice;
 		std::map<Resource::Mesh*, LPD3DXMESH> meshCache;
+		std::map<Resource::BinaryData*, LPDIRECT3DTEXTURE9> textureCache;
 		D3DXMATRIXA16 matView;
 
 		D3DXMATRIX* matrixCache;

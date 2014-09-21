@@ -3,12 +3,14 @@
 
 #include "RGBColor.h"
 #include <string>
+#include "BinaryData.h"
 
 namespace Resource
 {
 	struct Material 
 	{
 		std::string name;
+		BinaryData defaultTexture;
 		RGBColor ambientColor;
 		RGBColor diffuseColor;
 		RGBColor SpecularColor;

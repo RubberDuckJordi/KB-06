@@ -51,6 +51,7 @@ namespace Renderer
 		virtual void Draw(Resource::Mesh* mesh) = 0;
 		virtual void SetActiveMatrix(PEngineMatrix* matrix) = 0;
 
+		virtual void SetLights() = 0;
 	protected:
 		Logger::Logger* logger;
 	};

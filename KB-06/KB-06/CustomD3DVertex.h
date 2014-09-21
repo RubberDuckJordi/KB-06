@@ -6,9 +6,7 @@
 struct D3DCustomVertex
 {
 	float x, y, z; // vertex position
-	//float tu, tv; // Texture co-ordinate
+	float tu, tv; // Texture co-ordinate
 };
-
-#define D3DCustomVertexFVF (D3DFVF_XYZ )
-//#define D3DCustomVertexFVF (D3DFVF_XYZ | D3DFVF_TEX1 )
+#define D3DCustomVertexFVF (D3DFVF_XYZ | D3DFVF_TEX1 )
 #endif
