@@ -23,7 +23,7 @@ std::vector<std::string>* Resource::SceneLoader::LoadFile(std::string filePath)
 		}
 	}
 
-	return; scenesFile;
+	return scenesFile;
 
 	/*
 	CODE USED TO PROGRESS THE VECTOR FILLED WITH SCENES/LEVELS
