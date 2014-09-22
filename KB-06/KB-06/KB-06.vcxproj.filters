@@ -104,6 +104,9 @@
     <ClCompile Include="ObjMeshLoader.cpp">
       <Filter>Source\Resource</Filter>
     </ClCompile>
+    <ClCompile Include="SceneLoader.cpp">
+      <Filter>Source\Resource</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DefaultEntity.h">
@@ -259,6 +262,12 @@
     </ClInclude>
     <ClInclude Include="BinaryData.h">
       <Filter>Header\Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneLoader.h">
+      <Filter>Header\Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneDefinition.h">
+      <Filter>Header\Resource\Mesh</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
