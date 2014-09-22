@@ -22,8 +22,8 @@ void Input::DirectInputDevice::ReleaseDevice()
 	if (dInputDevice)
 	{
 		dInputDevice->Unacquire();
-		dInputDevice->Release();
-		dInputDevice = NULL;
+		//dInputDevice->Release();
+		//dInputDevice = NULL;
 
 		deviceAcquired = false;
 	}

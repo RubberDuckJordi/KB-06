@@ -169,7 +169,6 @@ void Window::Window::AddWindowListener(WindowListener* p_windowListener)
 	if (p_windowListener != NULL)
 	{
 		windowListeners.push_back(p_windowListener);
-
 	}
 }
 

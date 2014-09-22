@@ -48,6 +48,10 @@ bool Input::DirectKeyboard::Initialize(LPDIRECTINPUT8 m_dInput, HWND hwnd)
 
 bool Input::DirectKeyboard::Update()
 {
+	if (!deviceAcquired){
+		return false;
+	}
+
 	if (!SUCCEEDED(dInputDevice->Poll()))
 	{
 		if (deviceAcquired)
@@ -105,14 +109,16 @@ std::map<Input::Input, long>* Input::DirectKeyboard::GetInputValues()
 
 void Input::DirectKeyboard::OnWindowFocusLost(Window::Window* window)
 {
+	ReleaseDevice();
 }
 
 void Input::DirectKeyboard::OnWindowFocusGained(Window::Window* window)
-{
+{	
 	HRESULT hr = dInputDevice->SetCooperativeLevel(window->GetHWND(), DISCL_FOREGROUND | DISCL_NONEXCLUSIVE);
 	if (FAILED(hr))
 	{
 		ReleaseDevice();
 		logger->Log(Logger::Logger::WARNING, "InputDevice::Keyboard: Could not set cooperative level.");
 	}
+	AcquireDevice();
 }
