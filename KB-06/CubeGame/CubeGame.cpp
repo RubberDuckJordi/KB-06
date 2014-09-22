@@ -38,7 +38,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	
 	//pEngine.GetRenderer()->SetViewMatrix(0.0f, 0.0f, -2.0f, 0.0f, 0.0f, 0.0f);
 	pEngine.GetRenderer()->SetProjectionMatrix(3.14159265358979323846f / 4, 100.0f);
-	pEngine.GetRenderer()->SetRenderState();
+	pEngine.GetRenderer()->SetDefaultRenderStates();
 	while (pEngine.GetWindowManager()->HasActiveWindow())
 	{
 

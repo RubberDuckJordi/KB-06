@@ -54,7 +54,7 @@ void Renderer::DirectXRenderer::InitD3D(HWND hWnd)
 		//return S_OK; -> when switching from void to H_RESULT return type
 };
 
-void Renderer::DirectXRenderer::SetRenderState()
+void Renderer::DirectXRenderer::SetDefaultRenderStates()
 {
 	this->g_pd3dDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);	//Counter Clockwise Cullmode
 	this->g_pd3dDevice->SetRenderState(D3DRS_ZENABLE, TRUE); //Z buffer on
@@ -63,6 +63,11 @@ void Renderer::DirectXRenderer::SetRenderState()
 	this->g_pd3dDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA); //Type alphablending
 	//g_pd3dDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
 };
+
+void Renderer::DirectXRenderer::SetRenderState(PENGINERENDERSTATETYPE* state, PENGINEDWORD* dword)
+{
+	this->g_pd3dDevice->SetRenderState(static_cast<D3DRENDERSTATETYPE>(*state), static_cast<DWORD>(*dword));
+}
 
 void Renderer::DirectXRenderer::SetActiveCamera(CameraData camera)
 {

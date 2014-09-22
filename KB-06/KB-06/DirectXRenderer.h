@@ -13,7 +13,9 @@ namespace Renderer
 		~DirectXRenderer();
 
 		void InitD3D(HWND hWnd);
-		void SetRenderState();
+		void SetDefaultRenderStates();
+
+		void SetRenderState(PENGINERENDERSTATETYPE* state, PENGINEDWORD* dword);
 
 		void SetActiveCamera(CameraData camera);
 

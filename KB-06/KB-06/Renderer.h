@@ -23,7 +23,9 @@ namespace Renderer
 		virtual ~Renderer() = 0;
 
 		virtual void InitD3D(HWND hWnd) = 0;
-		virtual void SetRenderState() = 0;
+		virtual void SetDefaultRenderStates() = 0;
+
+		virtual void SetRenderState(PENGINERENDERSTATETYPE* state, PENGINEDWORD* dword) = 0;
 
 		virtual void SetActiveCamera(CameraData camera) = 0;
 		virtual void SetProjectionMatrix(MatrixWrapper* ProjectionMatrix) = 0;
