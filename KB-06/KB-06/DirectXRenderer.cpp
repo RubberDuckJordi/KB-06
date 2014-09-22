@@ -88,6 +88,12 @@ void Renderer::DirectXRenderer::SetActiveCamera(CameraData camera)
 	D3DXVECTOR3 vUpVec(camera.upVecX, camera.upVecY, camera.upVecZ);
 	D3DXMatrixLookAtLH(matrixCache, &vEyePt, &vLookatPt, &vUpVec);
 	g_pd3dDevice->SetTransform(D3DTS_VIEW, matrixCache);
+
+	/*D3DXVECTOR3 vEyePt(0.0f, 0.0f, 50.0f);
+	D3DXVECTOR3 vLookatPt(0.0f, 0.0f, 0.0f);
+	D3DXVECTOR3 vUpVec(0.0f, 1.0f, 0.0f);
+	D3DXMatrixLookAtLH(matrixCache, &vEyePt, &vLookatPt, &vUpVec);
+	g_pd3dDevice->SetTransform(D3DTS_VIEW, matrixCache);*/
 }
 
 void Renderer::DirectXRenderer::SetProjectionMatrix(MatrixWrapper* ProjectionMatrix)

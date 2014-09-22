@@ -52,3 +52,8 @@ void RenderMatrix::CreateMatrix(float x, float y, float z, float yaw, float pitc
 	matrix->_43 = result._43;
 	matrix->_44 = result._44;
 }
+
+void RenderMatrix::MultiplyMatrices(PEngineMatrix* m1, PEngineMatrix* m2, PEngineMatrix* receiver)
+{
+	D3DXMatrixMultiply((D3DXMATRIX *) receiver, (D3DXMATRIX *)m1, (D3DXMATRIX *)m2);
+}

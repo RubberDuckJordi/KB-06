@@ -14,6 +14,7 @@ public:
 	RenderMatrix();
 	~RenderMatrix();
 	void CreateMatrix(float x, float y, float z, float yaw, float pitch, float roll, float scaleX, float scaleY, float scaleZ, PEngineMatrix* matrix);
+	void MultiplyMatrices(PEngineMatrix* m1, PEngineMatrix* m2, PEngineMatrix* receiver);
 	PEngineMatrix* theMatrix;
 };
 

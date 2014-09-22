@@ -29,8 +29,13 @@ int _tmain(int argc, _TCHAR* argv[])
 	color.a = 1.0f;
 	Resource::Mesh* mesh = pEngine.GetResourceManager()->LoadMesh("resources/cube.obj.mesh", "obj.mesh");
 
+	Resource::Mesh* mesh2 = pEngine.GetResourceManager()->LoadMesh("resources/cube.obj.mesh", "obj.mesh");
+	Resource::Mesh* mesh3 = pEngine.GetResourceManager()->LoadMesh("resources/cube.obj.mesh", "obj.mesh");
+
 	Scene::DefaultSceneFactory* sceneFactory = new Scene::DefaultSceneFactory();
 	sceneFactory->setMesh(mesh);
+	sceneFactory->setMesh2(mesh2);
+	sceneFactory->setMesh3(mesh3);
 
 	pEngine.GetSceneManager()->AddSceneFactory("iets", sceneFactory);
 	Scene::Scene* scene = pEngine.GetSceneManager()->AddScene("iets");

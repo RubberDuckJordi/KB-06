@@ -3,6 +3,7 @@
 
 #include "Entity.h"
 #include "Vertex.h"
+#include "Mesh.h"
 
 namespace Scene
 {
@@ -15,6 +16,13 @@ namespace Scene
 		void Draw(Renderer::Renderer* renderer);
 		Resource::Vertex* GetPosition();
 		CameraData GetCameraData();
+		void SetLookAtPosition(float x, float y, float z, float rollDegrees);
+
+		Resource::Mesh* myMesh;//debug!
+		Resource::Mesh* myMesh2;//debug!
+		bool useInput = false;
+	protected:
+		Resource::Vertex lookAtPosition;
 	private:
 		CameraData cameraData;
 	};

@@ -13,7 +13,7 @@ namespace Scene{
 		void UpdateLogic(std::map<Input::Input, long>* actions);
 		void Draw(Renderer::Renderer* renderer);
 		void SetMesh(Resource::Mesh* mesh);
-		float rotationMod = 1.0f;
+		float rotationMod = 0.0f;
 
 	private:
 		Resource::Mesh* myMesh;
