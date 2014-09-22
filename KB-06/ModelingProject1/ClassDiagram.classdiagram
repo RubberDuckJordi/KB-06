@@ -816,6 +816,11 @@
             <elementDefinition Id="fcfc1c7f-298f-413b-bd08-160a3cd7f2d3" />
           </generalization>
         </generalsInternal>
+        <ownedAttributesInternal>
+          <property Id="875e2b20-dc19-484e-82f6-14dc9f5a3cee" name="string defaultTexture" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="4e3e4646-e59e-4150-a9bd-9790ecd8676e" />
+          </property>
+        </ownedAttributesInternal>
       </class>
     </logicalClassDesignerModelHasTypes>
     <logicalClassDesignerModelHasTypes>
