@@ -105,7 +105,6 @@ std::map<Input::Input, long>* Input::DirectKeyboard::GetInputValues()
 
 void Input::DirectKeyboard::OnWindowFocusLost(Window::Window* window)
 {
-
 }
 
 void Input::DirectKeyboard::OnWindowFocusGained(Window::Window* window)

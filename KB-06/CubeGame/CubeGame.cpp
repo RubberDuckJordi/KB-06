@@ -16,8 +16,8 @@ int _tmain(int argc, _TCHAR* argv[])
 	Logger::Logger* logger = Logger::LoggerPool::GetInstance().GetInstance().GetLogger();
 	pEngine.Init();
 
+	pEngine.GetWindowManager()->AddWindowListener(pEngine.GetInputManager());
 	pEngine.GetWindowManager()->NewWindow(10, 10, 500, 500);
-	pEngine.GetWindowManager()->GetLastWindow()->AddWindowListener(pEngine.GetInputManager());
 	pEngine.GetRenderer()->InitD3D(pEngine.GetWindowManager()->GetLastWindow()->GetHWND());
 	pEngine.GetResourceManager()->AddMeshLoader(new Resource::ObjMeshLoader());
 	pEngine.GetResourceManager()->AddMaterialLoader(new Resource::MtlLoader());

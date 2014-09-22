@@ -197,7 +197,6 @@ long Input::DirectMouse::GetDeltaZPosition()
 
 void Input::DirectMouse::OnWindowFocusLost(Window::Window* window)
 {
-
 }
 
 void Input::DirectMouse::OnWindowFocusGained(Window::Window* window)
