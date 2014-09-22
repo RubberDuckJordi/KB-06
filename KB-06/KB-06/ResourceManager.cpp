@@ -3,7 +3,6 @@
 #include "StringHelper.h"
 #include "ObjMeshLoader.h"
 #include "MtlLoader.h"
-#include "RawDataLoader.h"
 
 
 Resource::ResourceManager::ResourceManager()
@@ -58,7 +57,9 @@ Resource::Material* Resource::ResourceManager::LoadMaterial(const std::string& f
 	{
 		newMaterials = materialLoaders[extension]->Load(fileName);
 		for (auto iterator = newMaterials.begin(); iterator != newMaterials.end(); iterator++) {
-			iterator->second.defaultTexture = LoadBinaryFile(iterator->second.defaultTexture.fileName);
+			if (iterator->second.defaultTexture.fileName != ""){
+				iterator->second.defaultTexture = LoadBinaryFile(iterator->second.defaultTexture.fileName);
+			}
 		}
 		materials.insert(newMaterials.begin(), newMaterials.end());
 	}
