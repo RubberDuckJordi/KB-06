@@ -101,6 +101,8 @@
     <ClInclude Include="PEngine.h" />
     <ClInclude Include="PengineDefinitions.h" />
     <ClInclude Include="RGBAColor.h" />
+    <ClInclude Include="SceneDefinition.h" />
+    <ClInclude Include="SceneLoader.h" />
     <ClInclude Include="Sound.h" />
     <ClInclude Include="StringHelper.h" />
     <ClInclude Include="Material.h" />
@@ -158,6 +160,7 @@
     <ClCompile Include="ObjMeshLoader.cpp" />
     <ClCompile Include="PEngine.cpp" />
     <ClCompile Include="RenderMatrix.cpp" />
+    <ClCompile Include="SceneLoader.cpp" />
     <ClCompile Include="StringHelper.cpp" />
     <ClCompile Include="Logger.cpp" />
     <ClCompile Include="LoggerPool.cpp" />
