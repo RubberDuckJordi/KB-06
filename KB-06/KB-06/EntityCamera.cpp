@@ -119,15 +119,15 @@ void Scene::EntityCamera::Draw(Renderer::Renderer* renderer)
 		if (myMesh != NULL)
 		{
 			RenderMatrix* lookAt = new RenderMatrix();//should be global
-			lookAt->CreateMatrix(lookAtPosition.x, lookAtPosition.y, lookAtPosition.z, 0.0f, 0.0f, 0.0f, 0.5f, 0.5f, 0.5f, lookAt->theMatrix);//should only be called when needed (when any value has updated)
+			lookAt->CreateMatrix(lookAtPosition.x, lookAtPosition.y, lookAtPosition.z, 0.0f, 0.0f, 0.0f, 0.75f, 0.75f, 0.75f, lookAt->theMatrix);//should only be called when needed (when any value has updated)
 			//renderer->SetWorldMatrix(&position, &rotation, &scale, p_position, p_rotation);
 			renderer->SetActiveMatrix(lookAt->theMatrix);//should be called every frame
 			renderer->Draw(myMesh);
 
 			RenderMatrix* cameraM = new RenderMatrix();//should be global
-			cameraM->CreateMatrix(position.x, position.y, position.z, rotation.x, rotation.y, rotation.z, 1.5f, 1.5f, 1.5f, cameraM->theMatrix);//should only be called when needed (when any value has updated)
+			cameraM->CreateMatrix(position.x, position.y, position.z, rotation.x, rotation.y, rotation.z, 0.75f, 0.75f, 0.75f, cameraM->theMatrix);//should only be called when needed (when any value has updated)
 			renderer->SetActiveMatrix(cameraM->theMatrix);//should be called every frame
-			renderer->Draw(myMesh);
+			renderer->Draw(myMesh2);
 		}
 		else
 		{
@@ -154,13 +154,13 @@ void Scene::EntityCamera::SetLookAtPosition(float x, float y, float z, float rol
 	float deltaZ = position.z - z;
 	
 	float result = DEGREES(atan2f(deltaX, deltaZ));
-	float result2 = -DEGREES(atan2f(deltaY, deltaZ));
+	float result2 = -DEGREES(atan2f(deltaY, deltaX));
 
 	logger->Log(3, "result is " + std::to_string(result) + ", deltaX" + std::to_string(deltaX) + ", deltaZ" + std::to_string(deltaZ));
 	logger->Log(3, "result2 is " + std::to_string(result2) + ", deltaZ" + std::to_string(deltaZ) + ", deltaY" + std::to_string(deltaY));
 
 	rotation.x = result;
-	rotation.y = result2;
-	Entity::SetRotation(result, result2, rollDegrees);
+	//rotation.y = result2;
+	//Entity::SetRotation(result, result2, rollDegrees);
 	lookAtPosition = { x, y, z };
 }

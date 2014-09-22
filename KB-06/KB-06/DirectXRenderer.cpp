@@ -211,7 +211,7 @@ void Renderer::DirectXRenderer::Draw(Resource::Mesh* mesh){
 		}
 		if (FAILED(D3DXCreateMeshFVF(amountOfIndices, amountOfVertices, 0, D3DCustomVertexFVF, g_pd3dDevice, &d3dMesh))){
 			logger->Log(Logger::Logger::ERR, "Failed to create a D3DXCreateMeshFVF. Generating a cube");
-			D3DXCreateBox(g_pd3dDevice, 1.0f, 1.0f, 1.0f, &d3dMesh, NULL); 
+			D3DXCreateBox(g_pd3dDevice, 1.0f, 1.0f, 1.0f, &d3dMesh, NULL);
 		}
 		else {
 			D3DCustomVertex* d3dVertices = new D3DCustomVertex[amountOfVertices];
@@ -253,6 +253,19 @@ void Renderer::DirectXRenderer::Draw(Resource::Mesh* mesh){
 			i_buffer->Unlock();
 
 			logger->Log(Logger::Logger::DEBUG, "Mesh \"" + mesh->fileName + "\" converted to LPD3DXMESH.");
+
+			if (mesh->fileName == "resources/cubeClone.obj.mesh")
+			{
+				//D3DXCreateBox(g_pd3dDevice, 1.0f, 1.0f, 1.0f, &d3dMesh, NULL);
+				D3DXCreateSphere(g_pd3dDevice, 1.0f, 10, 10, &d3dMesh, NULL);
+				logger->Log(3, "The meow is great in this one.");
+			}
+
+			if (mesh->fileName == "resources/cubeCloneClone.obj.mesh")
+			{
+				D3DXCreateTeapot(g_pd3dDevice, &d3dMesh, NULL);
+				logger->Log(3, "The meow is greater in this one.");
+			}
 		}
 		meshCache[mesh] = d3dMesh;
 		//D3DXSaveMeshToX(L"test.x", d3dMesh, NULL, NULL, NULL, 0, 1); //save mesh to xfile to debug
