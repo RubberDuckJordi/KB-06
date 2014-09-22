@@ -61,6 +61,7 @@ void Renderer::DirectXRenderer::SetDefaultRenderStates()
 	this->g_pd3dDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, true); //Turn Alphablending on
 	this->g_pd3dDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA); //Type alphablending
 	this->g_pd3dDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA); //Type alphablending
+
 	//g_pd3dDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
 };
 
@@ -317,6 +318,7 @@ void Renderer::DirectXRenderer::SetActiveMatrix(PEngineMatrix* matrix)
 void Renderer::DirectXRenderer::SetLights(){
 	D3DXVECTOR3 vecDir;
 	D3DLIGHT9 light;
+	D3DMATERIAL9 material;    // create the material struct
 	light.Type = D3DLIGHT_DIRECTIONAL;
 	light.Diffuse.r = 1.0f;
 	light.Diffuse.g = 1.0f;
@@ -328,7 +330,13 @@ void Renderer::DirectXRenderer::SetLights(){
 	light.Range = 1000.0f;
 	g_pd3dDevice->SetLight(0, &light);
 	g_pd3dDevice->LightEnable(0, TRUE);
-	g_pd3dDevice->SetRenderState(D3DRS_LIGHTING, FALSE); // maar weer uit
+	g_pd3dDevice->SetRenderState(D3DRS_LIGHTING, FALSE);
 	// Finally, turn on some ambient light.
 	g_pd3dDevice->SetRenderState(D3DRS_AMBIENT, 0x00202020);
+	material.Diffuse = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);    // set diffuse color to white
+	material.Ambient = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);    // set ambient color to white
+
+	g_pd3dDevice->SetMaterial(&material);    // set the globably-used material to &material
+
 }
+

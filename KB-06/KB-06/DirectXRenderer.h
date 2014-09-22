@@ -4,6 +4,9 @@
 #include <d3dx9.h>
 #include "Renderer.h"
 
+
+
+
 namespace Renderer
 {
 	class DirectXRenderer : public Renderer
