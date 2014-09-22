@@ -39,7 +39,8 @@ dlldata.c
 *_i.h
 *.ilk
 *.meta
-*.obj
+KB-06/Debug/*.obj
+KB-06/CubeGame/Debug/*.obj
 *.pch
 *.pdb
 *.pgc
