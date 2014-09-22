@@ -85,52 +85,8 @@ void Renderer::DirectXRenderer::SetActiveCamera(CameraData camera)
 	D3DXVECTOR3 vEyePt(camera.x, camera.y, camera.z);
 	D3DXVECTOR3 vLookatPt(camera.lookAtX, camera.lookAtY, camera.lookAtZ);
 	D3DXVECTOR3 vUpVec(camera.upVecX, camera.upVecY, camera.upVecZ);
-	D3DXMATRIXA16 matView;
-	D3DXMatrixLookAtLH(&matView, &vEyePt, &vLookatPt, &vUpVec);
-	g_pd3dDevice->SetTransform(D3DTS_VIEW, &matView);
-
-	// Set up our view matrix. A view matrix can be defined given an eye point,
-	// a point to lookat, and a direction for which way is up. Here, we set the
-	// eye 0.5 units back along the z-axis and up 0 units, look at the 
-	// origin + 0.5 on the z-axis, and define "up" to be in the y-direction.
-	/*D3DXVECTOR3 vEyePt(0, 0, -0.5f);
-	D3DXVECTOR3 vLookatPt(0, 0, 0.5f);
-	D3DXVECTOR3 vUpVec(0.0f, 0.5f, 0.0f);
-	D3DXMATRIXA16 matView;
-	D3DXMatrixLookAtLH(&matView, &vEyePt, &vLookatPt, &vUpVec);
-	g_pd3dDevice->SetTransform(D3DTS_VIEW, &matView);*/
-}
-
-//Matrixen
-void Renderer::DirectXRenderer::SetWorldMatrix(MatrixWrapper* WorldMatrix)
-{
-	this->g_pd3dDevice->SetTransform(D3DTS_WORLD, &(WorldMatrix->GetMatrix()));
-};
-
-void Renderer::DirectXRenderer::SetViewMatrix(MatrixWrapper* ViewMatrix)
-{
-	this->g_pd3dDevice->SetTransform(D3DTS_VIEW, &(ViewMatrix->GetMatrix()));
-};
-
-void Renderer::DirectXRenderer::SetViewMatrix(float posX, float posY, float posZ, float roatationX, float roatationY, float roatationZ)
-{
-	// Set up our view matrix. A view matrix can be defined given an eye point,
-	// a point to lookat, and a direction for which way is up. Here, we set the
-	// eye five units back along the z-axis and up three units, look at the 
-	// origin, and define "up" to be in the y-direction.
-	/*D3DXVECTOR3 vEyePt(posX, posY, posZ);
-	D3DXVECTOR3 vLookatPt(roatationX, roatationY, roatationZ);
-	D3DXVECTOR3 vUpVec(0.0f, 1.0f, 0.0f);
-
-	D3DXMatrixLookAtLH(&matView, &vEyePt, &vLookatPt, &vUpVec);*/
-
-	D3DXVECTOR3 vEyePt(posX, posY, posZ);
-	D3DXVECTOR3 vLookatPt(roatationX, roatationY, roatationZ);
-	D3DXVECTOR3 vUpVec(0.0f, 0.5f, 0.0f);
-	D3DXMATRIXA16 matView;
-	D3DXMatrixLookAtLH(&matView, &vEyePt, &vLookatPt, &vUpVec);
-
-	g_pd3dDevice->SetTransform(D3DTS_VIEW, &matView);
+	D3DXMatrixLookAtLH(matrixCache, &vEyePt, &vLookatPt, &vUpVec);
+	g_pd3dDevice->SetTransform(D3DTS_VIEW, matrixCache);
 }
 
 void Renderer::DirectXRenderer::SetProjectionMatrix(MatrixWrapper* ProjectionMatrix)
@@ -358,73 +314,6 @@ void Renderer::DirectXRenderer::SetActiveMatrix(PEngineMatrix* matrix)
 	g_pd3dDevice->SetTransform(D3DTS_WORLD, matrixCache);
 }
 
-
-/**
-* set the world matrix
-* @param matrix
-* @param offset
-* @param staticEntity
-*/
-void Renderer::DirectXRenderer::SetWorldMatrix(D3DXMATRIX* matrix, D3DXMATRIX* offset, bool staticEntity)
-{
-	D3DXMATRIX worldMatrix;
-	if (staticEntity)
-	{
-		worldMatrix = *matrix;
-	}
-	else
-	{
-		worldMatrix = *matrix * *offset;
-	}
-	g_pd3dDevice->SetTransform(D3DTS_WORLD, &worldMatrix);
-}
-
-void Renderer::DirectXRenderer::SetWorldMatrixForStaticEntity(Resource::Vertex* p_translation, Resource::Vertex* p_rotation, Resource::Vertex* p_scaling)
-{
-	D3DXMATRIX* transformation = CreateD3DMATRIX(p_translation, p_rotation, p_scaling);
-	SetWorldMatrix(transformation, NULL, true);
-}
-
-void Renderer::DirectXRenderer::SetWorldMatrix(Resource::Vertex* p_translation, Resource::Vertex* p_rotation, Resource::Vertex* p_scaling, Resource::Vertex* p_cameraPosition, Resource::Vertex* p_cameraRotation)
-{
-	D3DXMATRIX* transformation = CreateD3DMATRIX(p_translation, p_rotation, p_scaling);
-	D3DXMATRIX* offset = CreateD3DMATRIX(p_cameraPosition, p_cameraRotation, NULL);
-
-	SetWorldMatrix(transformation, offset, false);
-}
-
-
-D3DXMATRIX* Renderer::DirectXRenderer::CreateD3DMATRIX(Resource::Vertex* p_translation, Resource::Vertex* p_rotation, Resource::Vertex* p_scaling)
-{
-	D3DXMATRIX translation;
-
-	D3DXMATRIX rotationX;
-	D3DXMATRIX rotationY;
-	D3DXMATRIX rotationZ;
-	D3DXMATRIX* transformation = new D3DXMATRIX();
-
-	D3DXMatrixTranslation(&translation, (*p_translation).x, (*p_translation).y, (*p_translation).z);
-
-	//(PI/180)*angle = Degree to Radian
-	D3DXMatrixRotationX(&rotationX, DEGREES(p_rotation->x));
-	D3DXMatrixRotationY(&rotationY, (D3DX_PI / 180) * (*p_rotation).y);
-	D3DXMatrixRotationZ(&rotationZ, (D3DX_PI / 180) * (*p_rotation).z);
-	//D3DXMatrixRotationYawPitchRoll(&rotationMatrix, yaw, pitch, roll);
-
-	//First rotate, scale, then translate the entity
-	//Otherwise the translation will be rotated
-	(*transformation) = rotationX * rotationY * rotationZ;
-
-	(*transformation) *= translation;
-	if (p_scaling != NULL)
-	{
-		D3DXMATRIX* scaling = new D3DXMATRIX();
-		D3DXMatrixScaling(scaling, (*p_scaling).x, (*p_scaling).y, (*p_scaling).z);
-		(*transformation) *= (*scaling);
-	}
-
-	return transformation;
-}
 void Renderer::DirectXRenderer::SetLights(){
 	D3DXVECTOR3 vecDir;
 	D3DLIGHT9 light;

@@ -19,9 +19,6 @@ namespace Renderer
 
 		void SetActiveCamera(CameraData camera);
 
-		void SetWorldMatrix(MatrixWrapper* WorldMatrix);
-		void SetViewMatrix(MatrixWrapper* ViewMatrix);
-		void SetViewMatrix(float posX, float posY, float posZ, float roatationX, float roatationY, float roatationZ);
 		void SetProjectionMatrix(MatrixWrapper* ProjectionMatrix);
 		void SetProjectionMatrix(float FOV, float farClippingPlane);
 
@@ -55,7 +52,6 @@ namespace Renderer
 	private:
 		void SetTexture(Resource::BinaryData* texture);
 		void SetMaterial(Resource::Material* material);
-		void SetWorldMatrix(D3DXMATRIX* matrix, D3DXMATRIX* offset, bool staticEntity);
 		D3DXMATRIX* CreateD3DMATRIX(Resource::Vertex* p_translation, Resource::Vertex* p_rotation, Resource::Vertex* p_scaling);
 
 		LPDIRECT3D9 g_pD3D;

@@ -15,12 +15,12 @@ typedef unsigned long PENGINEDWORD;
 //end windows definitions
 
 // format definitions
-#ifndef MAKEFOURCC
-#define MAKEFOURCC(ch0, ch1, ch2, ch3)                              \
+#ifndef CMAKEFOURCC
+#define CMAKEFOURCC(ch0, ch1, ch2, ch3)                              \
 	((PENGINEDWORD)(PENGINEBYTE)(ch0) | ((PENGINEDWORD)(PENGINEBYTE)(ch1) << 8) |       \
 	((PENGINEDWORD)(PENGINEBYTE)(ch2) << 16) | ((PENGINEDWORD)(PENGINEBYTE)(ch3) << 24 ))
 
-#endif /* defined(MAKEFOURCC) */
+#endif /* defined(CMAKEFOURCC) */
 
 #define M_PI 3.14159265358979323846f
 #define RADIANS(degree) (M_PI * (degree) / 180.0f)
@@ -67,15 +67,15 @@ enum PENGINEFORMAT
 	FMT_V16U16 = 64,
 	FMT_A2W10V10U10 = 67,
 
-	FMT_UYVY = MAKEFOURCC('U', 'Y', 'V', 'Y'),
-	FMT_R8G8_B8G8 = MAKEFOURCC('R', 'G', 'B', 'G'),
-	FMT_YUY2 = MAKEFOURCC('Y', 'U', 'Y', '2'),
-	FMT_G8R8_G8B8 = MAKEFOURCC('G', 'R', 'G', 'B'),
-	FMT_DXT1 = MAKEFOURCC('D', 'X', 'T', '1'),
-	FMT_DXT2 = MAKEFOURCC('D', 'X', 'T', '2'),
-	FMT_DXT3 = MAKEFOURCC('D', 'X', 'T', '3'),
-	FMT_DXT4 = MAKEFOURCC('D', 'X', 'T', '4'),
-	FMT_DXT5 = MAKEFOURCC('D', 'X', 'T', '5'),
+	FMT_UYVY = CMAKEFOURCC('U', 'Y', 'V', 'Y'),
+	FMT_R8G8_B8G8 = CMAKEFOURCC('R', 'G', 'B', 'G'),
+	FMT_YUY2 = CMAKEFOURCC('Y', 'U', 'Y', '2'),
+	FMT_G8R8_G8B8 = CMAKEFOURCC('G', 'R', 'G', 'B'),
+	FMT_DXT1 = CMAKEFOURCC('D', 'X', 'T', '1'),
+	FMT_DXT2 = CMAKEFOURCC('D', 'X', 'T', '2'),
+	FMT_DXT3 = CMAKEFOURCC('D', 'X', 'T', '3'),
+	FMT_DXT4 = CMAKEFOURCC('D', 'X', 'T', '4'),
+	FMT_DXT5 = CMAKEFOURCC('D', 'X', 'T', '5'),
 
 	FMT_D16_LOCKABLE = 70,
 	FMT_D32 = 71,
@@ -99,7 +99,7 @@ enum PENGINEFORMAT
 
 	FMT_Q16W16V16U16 = 110,
 
-	FMT_MULTI2_ARGB8 = MAKEFOURCC('M', 'E', 'T', '1'),
+	FMT_MULTI2_ARGB8 = CMAKEFOURCC('M', 'E', 'T', '1'),
 
 	// Floating point surface formats
 
