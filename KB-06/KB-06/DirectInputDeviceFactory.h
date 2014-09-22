@@ -15,11 +15,13 @@ namespace Input
 	public:
 		DirectInputDeviceFactory();
 		~DirectInputDeviceFactory();
+		void Initialise(HWND);
 		InputDevice* CreateInputDevice(InputDevice::Type type);
 	private:
 		void CreateActionMapping();
 		LPDIRECTINPUT8 dInput;
 		std::map<Input, int>* actionMapping;
+		HWND hwnd;
 	};
 }
 

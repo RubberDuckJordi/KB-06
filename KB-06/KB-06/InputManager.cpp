@@ -1,18 +1,25 @@
 #include "InputManager.h"
-#include <iostream>
 
 Input::InputManager::InputManager(InputDeviceFactory* p_inputDeviceFactory)
 {
 	logger = Logger::LoggerPool::GetInstance().GetLogger();
 	inputDeviceFactory = p_inputDeviceFactory;
-
-	inputDevices.push_back(inputDeviceFactory->CreateInputDevice(InputDevice::Type::KEYBOARD));
-	inputDevices.push_back(inputDeviceFactory->CreateInputDevice(InputDevice::Type::MOUSE));
+	initialised = false;
 }
 
 Input::InputManager::~InputManager()
 {
 	delete inputDeviceFactory;
+}
+
+void Input::InputManager::Initialise(HWND hwnd)
+{
+	logger->Log(Logger::Logger::DEBUG, "InputManager::Initialise");
+	inputDeviceFactory->Initialise(hwnd);
+	inputDevices.push_back(inputDeviceFactory->CreateInputDevice(InputDevice::Type::KEYBOARD));
+	inputDevices.push_back(inputDeviceFactory->CreateInputDevice(InputDevice::Type::MOUSE));
+
+	initialised = true;
 }
 
 /*
@@ -41,20 +48,30 @@ std::map<Input::Input, long>* Input::InputManager::GetCurrentActions()
 	return actionMapping;
 }
 
-void Input::InputManager::OnWindowFocusGained(Window::Window* p_window)
+void Input::InputManager::OnWindowCreated(Window::Window* window)
 {
-	std::list<InputDevice*>::iterator inputDeviceIterator;
-	for (inputDeviceIterator = inputDevices.begin(); inputDeviceIterator != inputDevices.end(); inputDeviceIterator++)
+	if (!initialised)
 	{
-		(*inputDeviceIterator)->SetActiveWindow(p_window);
+		Initialise(window->GetHWND());
 	}
 }
 
-void Input::InputManager::OnWindowFocusLost(Window::Window* p_window)
+void Input::InputManager::OnWindowFocusGained(Window::Window* window)
 {
-	std::list<InputDevice*>::iterator inputDeviceIterator;
-	for (inputDeviceIterator = inputDevices.begin(); inputDeviceIterator != inputDevices.end(); inputDeviceIterator++)
+	logger->Log(Logger::Logger::DEBUG, "InputManager::Focus gained");
+	std::list<InputDevice*>::iterator deviceIt;
+	for (deviceIt = inputDevices.begin(); deviceIt != inputDevices.end(); ++deviceIt)
 	{
-		(*inputDeviceIterator)->SetWindowInactive(p_window);
+		(*deviceIt)->OnWindowFocusGained(window);
+	}
+}
+
+void Input::InputManager::OnWindowFocusLost(Window::Window* window)
+{
+	logger->Log(Logger::Logger::DEBUG, "InputManager::Focus lost");
+	std::list<InputDevice*>::iterator deviceIt;
+	for (deviceIt = inputDevices.begin(); deviceIt != inputDevices.end(); ++deviceIt)
+	{
+		(*deviceIt)->OnWindowFocusLost(window);
 	}
 }

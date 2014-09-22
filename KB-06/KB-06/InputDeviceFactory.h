@@ -13,6 +13,7 @@ namespace Input
 	public:
 		InputDeviceFactory();
 		~InputDeviceFactory();
+		virtual void Initialise(HWND) = 0;
 		virtual InputDevice* CreateInputDevice(InputDevice::Type type) = 0;
 	protected:
 		Logger::Logger* logger;

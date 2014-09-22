@@ -51,11 +51,11 @@ namespace Window
 		@param *scene: The scene to be rendered.
 		*/
 		virtual void render(Scene::Scene *scene);
-		
+
 		void AddWindowListener(WindowListener* p_windowListener);
 		void RemoveWindowListener(WindowListener* p_windowListener);
 		void ClearWindowListeners();
-		
+
 	protected:
 		static LRESULT CALLBACK BaseWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
 		virtual LRESULT WindowProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
@@ -66,10 +66,10 @@ namespace Window
 		LPCWSTR _pszTitle;
 		HWND _hwnd;
 		WindowState state;
+		std::list<WindowListener*> windowListeners;
 		virtual void OnDestroy(HWND hwnd);
 
 		Logger::Logger* logger;
-		std::list<WindowListener*> windowListeners;
 	};
 }
 #endif

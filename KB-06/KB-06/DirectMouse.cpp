@@ -13,7 +13,7 @@ Input::DirectMouse::~DirectMouse()
 
 //Create the new DirectInputDevice, add a handler to its window and
 //set the required settings to be able to poll it.
-bool Input::DirectMouse::Initialize(LPDIRECTINPUT8 p_dInput)
+bool Input::DirectMouse::Initialize(LPDIRECTINPUT8 p_dInput, HWND hwnd)
 {
 	HRESULT hr = p_dInput->CreateDevice(GUID_SysMouse, &dInputDevice, NULL);
 	if (FAILED(hr))
@@ -51,6 +51,15 @@ bool Input::DirectMouse::Initialize(LPDIRECTINPUT8 p_dInput)
 		return false;
 	}
 
+	// Set the cooperative level of the keyboard to not share with other programs.
+	hr = dInputDevice->SetCooperativeLevel(hwnd, DISCL_FOREGROUND | DISCL_NONEXCLUSIVE);
+	if (FAILED(hr))
+	{
+		ReleaseDevice();
+		logger->Log(Logger::Logger::WARNING, "InputDevice::Mouse: Initialisation failed. Could not set cooperative level.");
+		return false;
+	}
+
 	DirectInputDevice::AcquireDevice();
 	logger->Log(Logger::Logger::INFO, "InputDevice::Mouse: Initialisation successful.");
 
@@ -60,38 +69,33 @@ bool Input::DirectMouse::Initialize(LPDIRECTINPUT8 p_dInput)
 //Update the directinputstate only if it can be acquired and polled.
 bool Input::DirectMouse::Update()
 {
-	if (activeWindow != NULL)
+	bool result = false;
+	if (!deviceAcquired)
 	{
-
-		bool result = false;
-		if (!deviceAcquired)
-		{
-			result = DirectInputDevice::AcquireDevice();
-		}
-		else if (!SUCCEEDED(dInputDevice->Poll()))
-		{
-			if (deviceAcquired)
-			{
-				deviceAcquired = false;
-				logger->Log(Logger::Logger::INFO, "InputManager: Mouse focus lost");
-				ShowCursor(true);
-			}
-			result = DirectInputDevice::AcquireDevice();
-		}
-		if (FAILED(dInputDevice->GetDeviceState(sizeof(DIMOUSESTATE2), (LPVOID)&dIMouseState)))
-		{
-			result = false;
-		}
-
-		if (result == true)
-		{
-			previousXPos = dIMouseState.lX;
-			previousYPos = dIMouseState.lY;
-			previousZPos = dIMouseState.lZ;
-		}
-		return deviceAcquired;
+		result = DirectInputDevice::AcquireDevice();
 	}
-	return true;
+	else if (!SUCCEEDED(dInputDevice->Poll()))
+	{
+		if (deviceAcquired)
+		{
+			deviceAcquired = false;
+			logger->Log(Logger::Logger::INFO, "InputManager: Mouse focus lost");
+			ShowCursor(true);
+		}
+		result = DirectInputDevice::AcquireDevice();
+	}
+	if (FAILED(dInputDevice->GetDeviceState(sizeof(DIMOUSESTATE2), (LPVOID)&dIMouseState)))
+	{
+		result = false;
+	}
+
+	if (result == true)
+	{
+		previousXPos = dIMouseState.lX;
+		previousYPos = dIMouseState.lY;
+		previousZPos = dIMouseState.lZ;
+	}
+	return deviceAcquired;
 }
 
 
@@ -191,13 +195,17 @@ long Input::DirectMouse::GetDeltaZPosition()
 	return delta;
 }
 
-bool Input::DirectMouse::SetActiveWindow(Window::Window* window)
+void Input::DirectMouse::OnWindowFocusLost(Window::Window* window)
 {
-	activeWindow = window;
-	return true;
+
 }
 
-void Input::DirectMouse::SetWindowInactive(Window::Window* window)
+void Input::DirectMouse::OnWindowFocusGained(Window::Window* window)
 {
-	activeWindow = NULL;
+	HRESULT hr = dInputDevice->SetCooperativeLevel(window->GetHWND(), DISCL_FOREGROUND | DISCL_NONEXCLUSIVE);
+	if (FAILED(hr))
+	{
+		ReleaseDevice();
+		logger->Log(Logger::Logger::WARNING, "InputDevice::Mouse: Could not set cooperative level.");
+	}
 }

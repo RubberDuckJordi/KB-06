@@ -40,6 +40,13 @@ HWND Window::WindowManager::NewWindow(int x, int y, int width, int height)
 	windows.push_back(window);
 	Logger::LoggerPool::GetInstance().ReturnLogger(logger);
 
+	std::list<WindowListener*>::iterator listenersIt;
+	for (listenersIt = windowListeners.begin(); listenersIt != windowListeners.end(); ++listenersIt)
+	{
+		(*listenersIt)->OnWindowCreated(window);
+		window->AddWindowListener((*listenersIt));
+	}
+
 	return hwnd;
 };
 
@@ -113,4 +120,41 @@ Window::Window* Window::WindowManager::GetWindowByHWND(HWND hwnd)
 std::vector<Window::Window*>* Window::WindowManager::GetAllWindows()
 {
 	return &windows;
+}
+
+void Window::WindowManager::AddWindowListener(WindowListener* p_windowListener)
+{
+	if (p_windowListener != NULL)
+	{
+		windowListeners.push_back(p_windowListener);
+		std::vector<Window*>::iterator windowIt;
+		for (windowIt = windows.begin(); windowIt != windows.end(); ++windowIt)
+		{
+			(*windowIt)->AddWindowListener(p_windowListener);
+		}
+
+	}
+}
+
+void Window::WindowManager::RemoveWindowListener(WindowListener* p_windowListener)
+{
+	if (p_windowListener != NULL)
+	{
+		windowListeners.remove(p_windowListener);
+		std::vector<Window*>::iterator windowIt;
+		for (windowIt = windows.begin(); windowIt != windows.end(); ++windowIt)
+		{
+			(*windowIt)->RemoveWindowListener(p_windowListener);
+		}
+	}
+}
+
+void Window::WindowManager::ClearWindowListeners()
+{
+	windowListeners.clear();
+	std::vector<Window*>::iterator windowIt;
+	for (windowIt = windows.begin(); windowIt != windows.end(); ++windowIt)
+	{
+		(*windowIt)->ClearWindowListeners();
+	}
 }

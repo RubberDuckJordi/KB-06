@@ -12,7 +12,7 @@ Input::DirectKeyboard::~DirectKeyboard()
 
 //Create the new DirectInputDevice, add a handler to its window and
 //set the required settings to be able to poll it.
-bool Input::DirectKeyboard::Initialize(LPDIRECTINPUT8 m_dInput)
+bool Input::DirectKeyboard::Initialize(LPDIRECTINPUT8 m_dInput, HWND hwnd)
 {
 	HRESULT hr = m_dInput->CreateDevice(GUID_SysKeyboard, &dInputDevice, NULL);
 	if FAILED(hr)
@@ -30,32 +30,38 @@ bool Input::DirectKeyboard::Initialize(LPDIRECTINPUT8 m_dInput)
 		return false;
 	}
 
+	// Set the cooperative level of the keyboard to not share with other programs.
+	hr = dInputDevice->SetCooperativeLevel(hwnd, DISCL_FOREGROUND | DISCL_NONEXCLUSIVE);
+	if (FAILED(hr))
+	{
+		ReleaseDevice();
+		logger->Log(Logger::Logger::WARNING, "InputDevice::Keyboard: Initialisation failed. Could not set cooperative level.");
+		return false;
+	}
+
 	AcquireDevice();
 	logger->Log(Logger::Logger::INFO, "InputDevice::Keyboard: Initialisation successful.");
+
 
 	return true;
 }
 
 bool Input::DirectKeyboard::Update()
 {
-	if (activeWindow != NULL)
+	if (!SUCCEEDED(dInputDevice->Poll()))
 	{
-		if (!SUCCEEDED(dInputDevice->Poll()))
+		if (deviceAcquired)
 		{
-			if (deviceAcquired)
-			{
-				logger->Log(Logger::Logger::INFO, "InputManager: Keyboard focus lost.");
-				deviceAcquired = false;
-			}
-			AcquireDevice();
+			logger->Log(Logger::Logger::INFO, "InputManager: Keyboard focus lost.");
+			deviceAcquired = false;
 		}
-
-		if (FAILED(dInputDevice->GetDeviceState(sizeof(m_KeyBuffer), (LPVOID)&m_KeyBuffer)))
-		{
-			return false;
-		}
+		AcquireDevice();
 	}
-	
+
+	if (FAILED(dInputDevice->GetDeviceState(sizeof(m_KeyBuffer), (LPVOID)&m_KeyBuffer)))
+	{
+		return false;
+	}
 
 	return true;
 }
@@ -97,13 +103,17 @@ std::map<Input::Input, long>* Input::DirectKeyboard::GetInputValues()
 	return returnMap;
 }
 
-bool Input::DirectKeyboard::SetActiveWindow(Window::Window* window)
+void Input::DirectKeyboard::OnWindowFocusLost(Window::Window* window)
 {
-	activeWindow = window;
-	return true;
+
 }
 
-void Input::DirectKeyboard::SetWindowInactive(Window::Window* window)
+void Input::DirectKeyboard::OnWindowFocusGained(Window::Window* window)
 {
-	activeWindow = NULL;
+	HRESULT hr = dInputDevice->SetCooperativeLevel(window->GetHWND(), DISCL_FOREGROUND | DISCL_NONEXCLUSIVE);
+	if (FAILED(hr))
+	{
+		ReleaseDevice();
+		logger->Log(Logger::Logger::WARNING, "InputDevice::Keyboard: Could not set cooperative level.");
+	}
 }

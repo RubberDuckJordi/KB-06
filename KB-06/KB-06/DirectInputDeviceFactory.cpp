@@ -22,6 +22,11 @@ Input::DirectInputDeviceFactory::DirectInputDeviceFactory()
 	CreateActionMapping();
 }
 
+void Input::DirectInputDeviceFactory::Initialise(HWND p_hwnd)
+{
+	hwnd = p_hwnd;
+}
+
 Input::DirectInputDeviceFactory::~DirectInputDeviceFactory()
 {
 	if (dInput != NULL)
@@ -36,34 +41,42 @@ Input::DirectInputDeviceFactory::~DirectInputDeviceFactory()
 
 Input::InputDevice* Input::DirectInputDeviceFactory::CreateInputDevice(InputDevice::Type type)
 {
-	DirectInputDevice* newDevice = NULL;
-
-	switch (type)
+	if (hwnd != NULL)
 	{
-	case InputDevice::KEYBOARD:
-		newDevice = new DirectKeyboard();
-		logger->Log(Logger::Logger::DEBUG, "DirectInputDeviceFactory: Created keyboard");
-		break;
-	case InputDevice::MOUSE:
-		newDevice = new DirectMouse();
-		logger->Log(Logger::Logger::DEBUG, "DirectInputDeviceFactory: Created mouse");
-		break;
-	default:
-		logger->Log(Logger::Logger::ERR, "DirectInputDeviceFactory: Unable to create device, unknown device type");
-		return NULL;
-	}
+		DirectInputDevice* newDevice = NULL;
 
-	if (newDevice->Initialize(dInput))
-	{
-		newDevice->SetActionMapping(actionMapping);
-		return newDevice;
+		switch (type)
+		{
+		case InputDevice::KEYBOARD:
+			newDevice = new DirectKeyboard();
+			logger->Log(Logger::Logger::DEBUG, "DirectInputDeviceFactory: Created keyboard");
+			break;
+		case InputDevice::MOUSE:
+			newDevice = new DirectMouse();
+			logger->Log(Logger::Logger::DEBUG, "DirectInputDeviceFactory: Created mouse");
+			break;
+		default:
+			logger->Log(Logger::Logger::ERR, "DirectInputDeviceFactory: Unable to create device, unknown device type");
+			return NULL;
+		}
+
+		if (newDevice->Initialize(dInput, hwnd))
+		{
+			newDevice->SetActionMapping(actionMapping);
+			return newDevice;
+		}
+		else
+		{
+			logger->Log(Logger::Logger::ERR, "DirectInputDeviceFactory: Unable to create device, initialisation failed");
+			delete newDevice;
+			return NULL;
+		}
 	}
 	else
 	{
-		logger->Log(Logger::Logger::ERR, "DirectInputDeviceFactory: Unable to create device, initialisation failed");
-		delete newDevice;
-		return NULL;
+		logger->Log(Logger::Logger::ERR, "Unable to create device, factory is not initialised");
 	}
+	
 }
 
 void Input::DirectInputDeviceFactory::CreateActionMapping()

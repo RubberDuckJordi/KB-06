@@ -17,7 +17,7 @@ namespace Input
 	public:
 		DirectInputDevice();
 		~DirectInputDevice();
-		virtual bool Initialize(LPDIRECTINPUT8) = 0;
+		virtual bool Initialize(LPDIRECTINPUT8, HWND) = 0;
 		bool AcquireDevice();
 		void ReleaseDevice();
 		virtual bool Update() = 0;

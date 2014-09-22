@@ -11,11 +11,12 @@ namespace Input
 	public:
 		DirectMouse();
 		~DirectMouse();
-		bool Initialize(LPDIRECTINPUT8);
+		bool Initialize(LPDIRECTINPUT8, HWND);
 		bool Update();
 		std::map<Input, long>* GetInputValues();
-		bool SetActiveWindow(Window::Window* window);
-		void SetWindowInactive(Window::Window* window);
+
+		void OnWindowFocusLost(Window::Window* window);
+		void OnWindowFocusGained(Window::Window* window);
 
 	private:
 

@@ -24,12 +24,11 @@ namespace Input
 		virtual void ReleaseDevice() = 0;
 		virtual bool Update() = 0;
 		virtual std::map<Input, long>* GetInputValues() = 0;
-		virtual bool SetActiveWindow(Window::Window* window) = 0;
-		virtual void SetWindowInactive(Window::Window* window) = 0;
+		virtual void OnWindowFocusLost(Window::Window* window) = 0;
+		virtual void OnWindowFocusGained(Window::Window* window) = 0;
 
 	protected:
 		std::string deviceName;
-		Window::Window* activeWindow;
 		bool deviceAcquired;
 		Logger::Logger* logger;
 

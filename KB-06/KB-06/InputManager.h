@@ -18,13 +18,16 @@ namespace Input
 	public:
 		InputManager(InputDeviceFactory* inputDeviceFactory);
 		~InputManager();
+		void Initialise(HWND hwnd);
 		std::map<Input, long>* GetCurrentActions();
-		void OnWindowFocusGained(Window::Window* p_window);
-		void OnWindowFocusLost(Window::Window* p_window);
+		void OnWindowCreated(Window::Window* window);
+		void OnWindowFocusGained(Window::Window* window);
+		void OnWindowFocusLost(Window::Window* window);
 
 	private:
 		std::list<InputDevice*> inputDevices;
 		Logger::Logger* logger;
+		bool initialised;
 
 		InputDeviceFactory* inputDeviceFactory;
 
