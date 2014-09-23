@@ -25,6 +25,7 @@ namespace Scene
 		Resource::Vertex lookAtPosition;
 	private:
 		CameraData cameraData;
+		PEngineMatrix* rotationMatrix;
 	};
 }
 
