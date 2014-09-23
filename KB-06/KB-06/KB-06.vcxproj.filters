@@ -286,9 +286,6 @@
     <Filter Include="Header\Scene">
       <UniqueIdentifier>{cf56b5a6-361d-4c2e-97d1-f24afbf85e91}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header\Window">
-      <UniqueIdentifier>{5727ef4d-677c-4d5d-9751-6d790726ead0}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header\Scene\Default">
       <UniqueIdentifier>{7a920306-9829-4958-8b40-8250c9fdc650}</UniqueIdentifier>
     </Filter>
@@ -342,6 +339,9 @@
     </Filter>
     <Filter Include="Header\Resource\Sound">
       <UniqueIdentifier>{96c78ed4-cdc5-4f8f-87c7-648f3f6e5d85}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header\Window">
+      <UniqueIdentifier>{5727ef4d-677c-4d5d-9751-6d790726ead0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

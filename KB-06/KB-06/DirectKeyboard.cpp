@@ -54,12 +54,8 @@ bool Input::DirectKeyboard::Update()
 
 	if (!SUCCEEDED(dInputDevice->Poll()))
 	{
-		if (deviceAcquired)
-		{
-			logger->Log(Logger::Logger::INFO, "InputManager: Keyboard focus lost.");
-			deviceAcquired = false;
-		}
-		AcquireDevice();
+		logger->Log(Logger::Logger::INFO, "InputManager: Keyboard polling failed");
+		return false;
 	}
 
 	if (FAILED(dInputDevice->GetDeviceState(sizeof(m_KeyBuffer), (LPVOID)&m_KeyBuffer)))
@@ -113,7 +109,7 @@ void Input::DirectKeyboard::OnWindowFocusLost(Window::Window* window)
 }
 
 void Input::DirectKeyboard::OnWindowFocusGained(Window::Window* window)
-{	
+{
 	HRESULT hr = dInputDevice->SetCooperativeLevel(window->GetHWND(), DISCL_FOREGROUND | DISCL_NONEXCLUSIVE);
 	if (FAILED(hr))
 	{
