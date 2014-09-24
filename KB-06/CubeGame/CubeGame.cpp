@@ -28,6 +28,9 @@ int _tmain(int argc, _TCHAR* argv[])
 	Resource::XModel* xmodel = new Resource::XModel();
 	Resource::XModelLoader* xmodelLoader = new Resource::XModelLoader();
 	xmodelLoader->LoadXModel("resources/tiger.x", static_cast<Renderer::DirectXRenderer*>(pEngine.GetRenderer()), xmodel);
+
+	Resource::XModel* xmodel2 = new Resource::XModel();
+	xmodelLoader->LoadXModel("resources/camera.x", static_cast<Renderer::DirectXRenderer*>(pEngine.GetRenderer()), xmodel2);
 	
 
 	Resource::RGBAColor color;
@@ -45,6 +48,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	sceneFactory->setMesh2(mesh2);
 	sceneFactory->setMesh3(mesh3);
 	sceneFactory->SetXModel(xmodel);
+	sceneFactory->SetXModel2(xmodel2);
 
 	pEngine.GetSceneManager()->AddSceneFactory("iets", sceneFactory);
 	Scene::Scene* scene = pEngine.GetSceneManager()->AddScene("iets");

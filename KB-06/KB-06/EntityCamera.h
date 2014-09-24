@@ -4,6 +4,7 @@
 #include "Entity.h"
 #include "Vertex.h"
 #include "Mesh.h"
+#include "XModel.h"
 
 namespace Scene
 {
@@ -20,10 +21,12 @@ namespace Scene
 
 		Resource::Mesh* myMesh;//debug!
 		Resource::Mesh* myMesh2;//debug!
+		void SetXModel(Resource::XModel*); //debug
 		bool useInput = false;
 	protected:
 		Resource::Vertex lookAtPosition;
 	private:
+		Resource::XModel* xModel; //debug
 		CameraData cameraData;
 		PEngineMatrix* rotationMatrix;
 	};

@@ -16,12 +16,14 @@ namespace Scene{
 		void setMesh2(Resource::Mesh* mesh);//debug!
 		void setMesh3(Resource::Mesh* mesh);//debug!
 		void SetXModel(Resource::XModel*); //debug
+		void SetXModel2(Resource::XModel*); //debug
 	private:
 		Resource::Mesh* mesh;//debug!
 		Resource::Mesh* mesh2;//debug!
 		Resource::Mesh* mesh3;//debug!
 
 		Resource::XModel* xModel; //debug.
+		Resource::XModel* xModel2; //debug.
 	};
 }
 

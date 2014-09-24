@@ -144,7 +144,7 @@ void Scene::EntityCamera::Draw(Renderer::Renderer* renderer)
 	if (debug)
 	{
 		//teken een wireframe ofzo
-		if (myMesh != NULL)
+		/*if (myMesh != NULL)
 		{
 			RenderMatrix* lookAt = new RenderMatrix();//should be global
 			lookAt->CreateMatrix(lookAtPosition.x, lookAtPosition.y, lookAtPosition.z, 0.0f, 0.0f, 0.0f, 0.75f, 0.75f, 0.75f, lookAt->theMatrix);//should only be called when needed (when any value has updated)
@@ -162,6 +162,40 @@ void Scene::EntityCamera::Draw(Renderer::Renderer* renderer)
 		else
 		{
 			logger->Log(Logger::Logger::WARNING, "No mesh for entity!");
+		}*/
+
+		if (xModel != NULL)
+		{
+			RenderMatrix* lookAt = new RenderMatrix();//should be global
+			lookAt->CreateMatrix(lookAtPosition.x, lookAtPosition.y, lookAtPosition.z, 0.0f, 0.0f, 0.0f, 0.5f, 0.5f, 0.5f, lookAt->theMatrix);//should only be called when needed (when any value has updated)
+			renderer->SetActiveMatrix(lookAt->theMatrix);//should be called every frame
+			renderer->Draw(myMesh);
+
+			RenderMatrix* cameraM = new RenderMatrix();//should be global
+			cameraM->CreateMatrix(position.x, position.y, position.z, 0, 0, 0, 0.1f, 0.1f, 0.1f, cameraM->theMatrix);//should only be called when needed (when any value has updated)
+			cameraM->MultiplyMatrices(rotationMatrix, cameraM->theMatrix, cameraM->theMatrix);
+
+			renderer->SetActiveMatrix(cameraM->theMatrix);//should be called every frame
+
+			Renderer::MaterialWrapper* materialWrapper;
+			int materialCount;
+			xModel->GetMaterials(materialWrapper, materialCount);
+
+			Renderer::TextureWrapper* textureWrapper;
+			int textureCount;
+			
+
+			renderer->SetMaterial(materialWrapper);
+			xModel->GetTextures(textureWrapper, textureCount);
+			renderer->SetTexture(textureWrapper);
+			renderer->DrawSubset(xModel->GetMesh(), 0);
+			xModel->GetTextures(textureWrapper, textureCount);
+			renderer->SetTexture(textureWrapper);//how do I get the second texture?
+			renderer->DrawSubset(xModel->GetMesh(), 1);
+		}
+		else
+		{
+			logger->Log(Logger::Logger::WARNING, "No xModel for entity!");
 		}
 	}
 }
@@ -187,12 +221,20 @@ void Scene::EntityCamera::SetLookAtPosition(float x, float y, float z, float rol
 	Vector3 xaxis = Vector3::normalize(Vector3::cross(objectUpVector, zaxis));
 	Vector3 yaxis = Vector3::cross(zaxis, xaxis);
 
-	PEngineMatrix pm = {
+	/*PEngineMatrix pm = {
 		xaxis.x, yaxis.x, zaxis.x, 0,
 		xaxis.y, yaxis.y, zaxis.y, 0,
 		xaxis.z, yaxis.z, zaxis.z, 0,
 		0, 0, 0, 1
+	};*/
+
+	PEngineMatrix pm = {
+		xaxis.x, xaxis.y, xaxis.z, 0,
+		yaxis.x, yaxis.y, yaxis.z, 0,
+		zaxis.x, zaxis.y, zaxis.z, 0,
+		0, 0, 0, 1
 	};
+
 	rotationMatrix->_11 = pm._11;
 	rotationMatrix->_12 = pm._12;
 	rotationMatrix->_13 = pm._13;
@@ -228,4 +270,9 @@ void Scene::EntityCamera::SetLookAtPosition(float x, float y, float z, float rol
 	logger->Log(1, oss.str());*/
 
 	lookAtPosition = { x, y, z };
+}
+
+void Scene::EntityCamera::SetXModel(Resource::XModel* p_xmodel)
+{
+	xModel = p_xmodel;
 }

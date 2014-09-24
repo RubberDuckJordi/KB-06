@@ -68,6 +68,7 @@ Scene::Scene* Scene::DefaultSceneFactory::CreateScene()
 	camera2->AddPosition(0.0f, 0.0f, 0.0f);
 	camera2->myMesh = mesh2;
 	camera2->myMesh2 = mesh3;
+	camera2->SetXModel(xModel2);
 	camera2->useInput = true;
 
 	//defaultScene->AddEntity(camera);
@@ -94,4 +95,8 @@ void Scene::DefaultSceneFactory::setMesh3(Resource::Mesh* p_mesh)
 void Scene::DefaultSceneFactory::SetXModel(Resource::XModel* p_xModel)
 {
 	xModel = p_xModel;
+}
+void Scene::DefaultSceneFactory::SetXModel2(Resource::XModel* p_xModel)
+{
+	xModel2 = p_xModel;
 }
