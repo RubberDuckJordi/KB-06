@@ -35,6 +35,13 @@ Scene::Scene* Scene::DefaultSceneFactory::CreateScene()
 	entity5->SetMesh(mesh);
 	entity6->SetMesh(mesh);
 
+	entity->SetXModel(xModel);
+	entity2->SetXModel(xModel);
+	entity3->SetXModel(xModel);
+	entity4->SetXModel(xModel);
+	entity5->SetXModel(xModel);
+	entity6->SetXModel(xModel);
+
 	/*entity->rotationMod = 1;
 	entity2->rotationMod = -1;
 	entity3->rotationMod = 2;
@@ -82,4 +89,9 @@ void Scene::DefaultSceneFactory::setMesh2(Resource::Mesh* p_mesh)
 void Scene::DefaultSceneFactory::setMesh3(Resource::Mesh* p_mesh)
 {
 	mesh3 = p_mesh;
+}
+
+void Scene::DefaultSceneFactory::SetXModel(Resource::XModel* p_xModel)
+{
+	xModel = p_xModel;
 }

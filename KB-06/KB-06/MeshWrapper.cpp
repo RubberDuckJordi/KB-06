@@ -1,24 +1,24 @@
 #include "MeshWrapper.h"
 
-    Renderer::MeshWrapper::MeshWrapper(LPD3DXMESH _mesh)
-	{
-		mesh = _mesh;
-	};
+Renderer::MeshWrapper::MeshWrapper(LPD3DXMESH* _mesh)
+{
+	mesh = _mesh;
+};
 
-	Renderer::MeshWrapper::~MeshWrapper()
-	{
+Renderer::MeshWrapper::~MeshWrapper()
+{
 
-	};
+};
 
-	void Renderer::MeshWrapper::SetMesh(LPD3DXMESH _mesh)
-	{
-		mesh = _mesh;
-	};
+void Renderer::MeshWrapper::SetMesh(LPD3DXMESH* _mesh)
+{
+	mesh = _mesh;
+};
 
-	LPD3DXMESH Renderer::MeshWrapper::GetMesh()
-	{
-		return mesh;
-	};
+LPD3DXMESH* Renderer::MeshWrapper::GetMesh()
+{
+	return mesh;
+};
 
 
 

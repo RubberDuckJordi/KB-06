@@ -4,6 +4,7 @@
 #include "Entity.h"
 #include "Logger.h"
 #include "Renderer.h"
+#include "XModel.h"
 
 namespace Scene{
 	class DefaultEntity : public Entity {
@@ -14,8 +15,10 @@ namespace Scene{
 		void Draw(Renderer::Renderer* renderer);
 		void SetMesh(Resource::Mesh* mesh);
 		float rotationMod = 0.0f;
+		void SetXModel(Resource::XModel*); //debug
 
 	private:
+		Resource::XModel* xModel; //debug
 		Resource::Mesh* myMesh;
 	};
 

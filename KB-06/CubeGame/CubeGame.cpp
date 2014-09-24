@@ -10,6 +10,9 @@
 #include "SceneFactory.h"
 #include "DefaultSceneFactory.h"
 
+#include "XModelLoader.h"
+#include "DirectXRenderer.h"
+
 int _tmain(int argc, _TCHAR* argv[])
 {
 	PEngine pEngine;
@@ -21,6 +24,11 @@ int _tmain(int argc, _TCHAR* argv[])
 	pEngine.GetRenderer()->InitD3D(pEngine.GetWindowManager()->GetLastWindow()->GetHWND());
 	pEngine.GetResourceManager()->AddMeshLoader(new Resource::ObjMeshLoader());
 	pEngine.GetResourceManager()->AddMaterialLoader(new Resource::MtlLoader());
+
+	Resource::XModel* xmodel = new Resource::XModel();
+	Resource::XModelLoader* xmodelLoader = new Resource::XModelLoader();
+	xmodelLoader->LoadXModel("resources/tiger.x", static_cast<Renderer::DirectXRenderer*>(pEngine.GetRenderer()), xmodel);
+	
 
 	Resource::RGBAColor color;
 	color.r = 1.0f;
@@ -36,6 +44,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	sceneFactory->setMesh(mesh);
 	sceneFactory->setMesh2(mesh2);
 	sceneFactory->setMesh3(mesh3);
+	sceneFactory->SetXModel(xmodel);
 
 	pEngine.GetSceneManager()->AddSceneFactory("iets", sceneFactory);
 	Scene::Scene* scene = pEngine.GetSceneManager()->AddScene("iets");

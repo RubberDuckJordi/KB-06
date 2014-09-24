@@ -154,13 +154,13 @@ void Renderer::DirectXRenderer::CreateIndexBuffer(int length, PENGINEDWORD* usag
 //Set stuff
 void Renderer::DirectXRenderer::SetMaterial(MaterialWrapper* wrapper)
 {
-	g_pd3dDevice->SetMaterial(&wrapper->GetMaterial());
+	g_pd3dDevice->SetMaterial(wrapper->GetMaterial());
 	//return g_pd3dDevice->SetMaterial(&wrapper->GetMaterial()); when H_RESULT as return type
 };
 
 void Renderer::DirectXRenderer::SetTexture(TextureWrapper* wrapper)
 {
-	g_pd3dDevice->SetTexture(0, wrapper->GetTexture());
+	g_pd3dDevice->SetTexture(0, *wrapper->GetTexture());
 	// return g_pd3dDevice->SetTexture(0, wrapper->GetTexture()); when H_RESULT as return type
 };
 
@@ -178,7 +178,7 @@ void Renderer::DirectXRenderer::DrawPrimitive(Resource::Mesh mesh)
 
 void Renderer::DirectXRenderer::DrawSubset(MeshWrapper* wrapper, int subset)
 {
-	(wrapper->GetMesh())->DrawSubset(subset);
+	(*wrapper->GetMesh())->DrawSubset(subset);
 };
 
 //??

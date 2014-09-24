@@ -108,6 +108,12 @@
       <Filter>Source\Resource</Filter>
     </ClCompile>
     <ClCompile Include="Vector3.cpp" />
+    <ClCompile Include="XModel.cpp">
+      <Filter>Source\Resource\X</Filter>
+    </ClCompile>
+    <ClCompile Include="XModelLoader.cpp">
+      <Filter>Source\Resource\X</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DefaultEntity.h">
@@ -271,6 +277,12 @@
       <Filter>Header\Resource\Mesh</Filter>
     </ClInclude>
     <ClInclude Include="Vector3.h" />
+    <ClInclude Include="XModel.h">
+      <Filter>Header\Resource\X</Filter>
+    </ClInclude>
+    <ClInclude Include="XModelLoader.h">
+      <Filter>Header\Resource\X</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -344,6 +356,12 @@
     </Filter>
     <Filter Include="Header\Resource\Sound">
       <UniqueIdentifier>{96c78ed4-cdc5-4f8f-87c7-648f3f6e5d85}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header\Resource\X">
+      <UniqueIdentifier>{a3b18def-2698-4f77-9a69-3172bb03a783}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Resource\X">
+      <UniqueIdentifier>{0ba113e0-08d5-4e90-831c-b3c0bbce4b81}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

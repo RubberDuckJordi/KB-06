@@ -8,12 +8,12 @@ namespace Renderer
 	class MeshWrapper
 	{
 	public:
-		MeshWrapper::MeshWrapper(LPD3DXMESH _mesh);
+		MeshWrapper::MeshWrapper(LPD3DXMESH* _mesh);
 		MeshWrapper::~MeshWrapper();
-		void MeshWrapper::SetMesh(LPD3DXMESH _mesh);
-		LPD3DXMESH MeshWrapper::GetMesh();
+		void MeshWrapper::SetMesh(LPD3DXMESH* _mesh);
+		LPD3DXMESH* MeshWrapper::GetMesh();
 	private:
-		LPD3DXMESH mesh;
+		LPD3DXMESH* mesh;
 	};
 } 
 

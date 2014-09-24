@@ -8,12 +8,12 @@ namespace Renderer
 	class MaterialWrapper
 	{
 	public:
-		MaterialWrapper(D3DMATERIAL9 _material);
+		MaterialWrapper(D3DMATERIAL9* _material);
 		~MaterialWrapper();
-		void SetMaterial(D3DMATERIAL9 _material);
-		D3DMATERIAL9 GetMaterial();
+		void SetMaterial(D3DMATERIAL9* _material);
+		D3DMATERIAL9* GetMaterial();
 	private:
-		D3DMATERIAL9 material;
+		D3DMATERIAL9* material;
 	};
 
 }

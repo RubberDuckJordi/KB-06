@@ -2,23 +2,23 @@
 #include "TextureWrapper.h"
 
 
-	Renderer::TextureWrapper::TextureWrapper(LPDIRECT3DTEXTURE9 _texture)
-	{
-		texture = _texture;
-	};
+Renderer::TextureWrapper::TextureWrapper(LPDIRECT3DTEXTURE9* _texture)
+{
+	texture = _texture;
+};
 
-	Renderer::TextureWrapper::~TextureWrapper()
-	{
+Renderer::TextureWrapper::~TextureWrapper()
+{
 
-	};
+};
 
-	void Renderer::TextureWrapper::SetTexture(LPDIRECT3DTEXTURE9 _texture)
-	{
-		texture = _texture;
-	};
+void Renderer::TextureWrapper::SetTexture(LPDIRECT3DTEXTURE9* _texture)
+{
+	texture = _texture;
+};
 
-	LPDIRECT3DTEXTURE9 Renderer::TextureWrapper::GetTexture()
-	{
-		return texture;
-	};
+LPDIRECT3DTEXTURE9* Renderer::TextureWrapper::GetTexture()
+{
+	return texture;
+};
 
