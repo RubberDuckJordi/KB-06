@@ -274,7 +274,7 @@ void Renderer::DirectXRenderer::Draw(Resource::Mesh* mesh){
 	//meshCache[mesh]->DrawSubset(0); // always draw the first subset incase it's a d3dx9 generated cube
 	for (unsigned int i = 0; i < mesh->subsets.size(); ++i){ // So we start at 1 instead of 0
 		SetMaterial(&mesh->subsets.at(i).defaultMaterial);
-		SetTexture(&mesh->subsets.at(i).defaultMaterial.defaultTexture);
+		//SetTexture(&mesh->subsets.at(i).defaultMaterial.defaultTexture);
 		meshCache[mesh]->DrawSubset(i);
 	}
 }

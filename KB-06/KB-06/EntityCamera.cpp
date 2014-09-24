@@ -17,14 +17,13 @@ Scene::EntityCamera::~EntityCamera()
 
 void Scene::EntityCamera::UpdateLogic(std::map<Input::Input, long>* actions)
 {
+	if (useInput)
+	{
+		typedef std::map<Input::Input, long>::iterator it_type;
+		for (it_type iterator = (*actions).begin(); iterator != (*actions).end(); iterator++) {
+			//logger->Log(Logger::Logger::INFO, "changing camera view");
+			float speed = static_cast<float>(iterator->second);
 
-	typedef std::map<Input::Input, long>::iterator it_type;
-	for (it_type iterator = (*actions).begin(); iterator != (*actions).end(); iterator++) {
-		//logger->Log(Logger::Logger::INFO, "changing camera view");
-		float speed = static_cast<float>(iterator->second);
-
-		if (useInput)
-		{
 			switch (iterator->first)
 			{
 				/*case Input::MOUSE_X:
@@ -103,37 +102,14 @@ void Scene::EntityCamera::UpdateLogic(std::map<Input::Input, long>* actions)
 			default:
 				break;
 			}
-		} 
-		else
-		{
-			switch (iterator->first)
-			{
-			case Input::KEY_NUMPAD2:
-				this->AddPosition(0.0f, 0.0f, 0.5f);
-				break;
-			case Input::KEY_NUMPAD8:
-				this->AddPosition(0.0f, 0.0f, -0.5f);
-				break;
-			case Input::KEY_NUMPAD6:
-				this->AddPosition(-0.5f, 0.0f, 0.0f);
-				break;
-			case Input::KEY_NUMPAD4:
-				this->AddPosition(0.5f, 0.0f, 0.0f);
-				break;
-
-			case Input::KEY_NUMPAD7:
-				this->AddPosition(0.0f, 0.5f, 0.0f);
-				break;
-
-			case Input::KEY_NUMPAD1:
-				this->AddPosition(0.0f, -0.5f, 0.0f);
-				break;
-			default:
-				break;
-			}
 		}
+		/*if ((*actions).size() > 0){
+		logger->Log(Logger::Logger::INFO, "Camera");
+		logger->Log(Logger::Logger::INFO, std::to_string(rotation.x));
+		logger->Log(Logger::Logger::INFO, std::to_string(rotation.y));
+		logger->Log(Logger::Logger::INFO, std::to_string(rotation.z));
+		}*/
 	}
-
 }
 
 
@@ -148,13 +124,30 @@ void Scene::EntityCamera::Draw(Renderer::Renderer* renderer)
 		{
 			RenderMatrix* lookAt = new RenderMatrix();//should be global
 			lookAt->CreateMatrix(lookAtPosition.x, lookAtPosition.y, lookAtPosition.z, 0.0f, 0.0f, 0.0f, 0.75f, 0.75f, 0.75f, lookAt->theMatrix);//should only be called when needed (when any value has updated)
-
+			//renderer->SetWorldMatrix(&position, &rotation, &scale, p_position, p_rotation);
 			renderer->SetActiveMatrix(lookAt->theMatrix);//should be called every frame
 			renderer->Draw(myMesh);
 
 			RenderMatrix* cameraM = new RenderMatrix();//should be global
 			cameraM->CreateMatrix(position.x, position.y, position.z, 0, 0, 0, 0.75f, 0.75f, 0.75f, cameraM->theMatrix);//should only be called when needed (when any value has updated)
 			cameraM->MultiplyMatrices(rotationMatrix, cameraM->theMatrix, cameraM->theMatrix);
+
+			//RenderMatrix* rot1 = new RenderMatrix();
+
+			/*//Custom multiplying of Matrices
+			D3DXMATRIXA16 rot1;
+			D3DXMatrixRotationYawPitchRoll(&rot1, RADIANS(rotation.x), 0.0f, 0.0f);
+			//rot1->CreateMatrix(0, 0, 0, rotation.x, 0, 0, 1, 1, 1, rot1->theMatrix);
+			D3DXMATRIXA16 rot2;
+			D3DXMatrixRotationYawPitchRoll(&rot2, 0.0f, RADIANS(rotation.y), 0.0f);
+			D3DXMATRIXA16 rotationMatrix;
+			D3DXMatrixMultiply(&rotationMatrix, &rot1, &rot2);
+			cameraM->MultiplyMatrices((PEngineMatrix*)&rotationMatrix, cameraM->theMatrix, cameraM->theMatrix);
+
+			/*D3DXVECTOR3 vEyePt(position.x, position.y, position.z);
+			D3DXVECTOR3 vLookatPt(lookAtPosition.x, lookAtPosition.y, lookAtPosition.z);
+			D3DXVECTOR3 vUpVec(0, 1, 0);
+			D3DXMatrixLookAtLH((D3DXMATRIX*) cameraM->theMatrix, &vEyePt, &vLookatPt, &vUpVec);*/
 
 			renderer->SetActiveMatrix(cameraM->theMatrix);//should be called every frame
 			renderer->Draw(myMesh2);
@@ -179,13 +172,45 @@ CameraData Scene::EntityCamera::GetCameraData()
 
 void Scene::EntityCamera::SetLookAtPosition(float x, float y, float z, float rollDegrees)
 {
-	Vector3 lookat = { lookAtPosition.x, lookAtPosition.y, lookAtPosition.z };
+	/*float deltaX = position.x - x;
+	float deltaY = position.y - y;
+	float deltaZ = position.z - z;
+
+	float result = DEGREES(atan2f(deltaX, deltaZ));
+	float result2 = -DEGREES(atan2f(deltaY, deltaZ));
+
+	logger->Log(3, "result is " + std::to_string(result) + ", deltaX" + std::to_string(deltaX) + ", deltaZ" + std::to_string(deltaZ));
+	logger->Log(3, "result2 is " + std::to_string(result2) + ", deltaZ" + std::to_string(deltaZ) + ", deltaY" + std::to_string(deltaY));
+
+
+
+	rotation.x = result + 90;
+	rotation.y = result2;*/
+
+	//Entity::SetRotation(result, result2, rollDegrees);
+
+	/*Vector3 vz = lookat - pos;
+	vz.normalize();
+	Vector3 vx = Vector3::cross(Vector3(0, 1, 0), vz);
+	vx.normalize();
+	Vector3 vy = Vector3::cross(vz, vx);
+
+	Matrix4 rotation(vx.x, vy.x, vz.x, 0,
+	vx.y, vy.y, vz.y, 0,
+	vx.z, vy.z, vz.z, 0,
+	0, 0, 0, 1);*/
+
+
+	/*Vector3 lookat = { lookAtPosition.x, lookAtPosition.y, lookAtPosition.z };
 	Vector3 pos = { position.x, position.y, position.z };
-	Vector3 objectUpVector = { 0.0f, 1.0f, 0.0f };
+	Vector3 cameraUpVector = { 0.0f, 1.0f, 0.0f };
 
 	Vector3 zaxis = Vector3::normalize(lookat - pos);
-	Vector3 xaxis = Vector3::normalize(Vector3::cross(objectUpVector, zaxis));
+	Vector3 xaxis = Vector3::normalize(Vector3::cross(cameraUpVector, zaxis));
+		//cameraUpVector.cross(zaxis);
+	//xaxis.normalize();
 	Vector3 yaxis = Vector3::cross(zaxis, xaxis);
+		//zaxis.cross(xaxis);
 
 	PEngineMatrix pm = {
 		xaxis.x, yaxis.x, zaxis.x, 0,
@@ -193,39 +218,78 @@ void Scene::EntityCamera::SetLookAtPosition(float x, float y, float z, float rol
 		xaxis.z, yaxis.z, zaxis.z, 0,
 		0, 0, 0, 1
 	};
-	rotationMatrix->_11 = pm._11;
-	rotationMatrix->_12 = pm._12;
-	rotationMatrix->_13 = pm._13;
-	rotationMatrix->_14 = pm._14;
 
-	rotationMatrix->_21 = pm._21;
-	rotationMatrix->_22 = pm._22;
-	rotationMatrix->_23 = pm._23;
-	rotationMatrix->_24 = pm._24;
+	/*PEngineMatrix pm = {
+		xaxis.x, xaxis.y, xaxis.z, 0,
+		yaxis.x, yaxis.y, yaxis.z, 0,
+		zaxis.x, zaxis.y, zaxis.z, 0,
+		0, 0, 0, 1
+		};*/
 
-	rotationMatrix->_31 = pm._31;
-	rotationMatrix->_32 = pm._32;
-	rotationMatrix->_33 = pm._33;
-	rotationMatrix->_34 = pm._34;
+	D3DXVECTOR3 vEyePt(position.x, position.y, position.z);
+	D3DXVECTOR3 vLookatPt(lookAtPosition.x, lookAtPosition.y, lookAtPosition.z);
+	D3DXVECTOR3 vUpVec(0.0f, 1.0f, 0.0f);
+	D3DXMatrixLookAtLH((D3DXMATRIX *)rotationMatrix, &vEyePt, &vLookatPt, &vUpVec);
 
-	rotationMatrix->_41 = pm._41;
-	rotationMatrix->_42 = pm._42;
-	rotationMatrix->_43 = pm._43;
-	rotationMatrix->_44 = pm._44;
+	rotationMatrix->_14 = 0.0f;
+	rotationMatrix->_24 = 0.0f;
+	rotationMatrix->_34 = 0.0f;
+	rotationMatrix->_41 = 0.0f;
+	rotationMatrix->_42 = 0.0f;
+	rotationMatrix->_43 = 0.0f;
 
-	/*std::ostringstream oss;
+	Vector3 lookat = { lookAtPosition.x, lookAtPosition.y, lookAtPosition.z };
+	Vector3 pos = { position.x, position.y, position.z };
+	Vector3 cameraUpVector = { 0.0f, 1.0f, 0.0f };
+
+	Vector3 zaxis = Vector3::normalize(lookat - pos);
+	Vector3 xaxis = Vector3::normalize(Vector3::cross(cameraUpVector, zaxis));
+	//cameraUpVector.cross(zaxis);
+	//xaxis.normalize();
+	Vector3 yaxis = Vector3::cross(zaxis, xaxis);
+	//zaxis.cross(xaxis);
+
+	PEngineMatrix pm = {
+		xaxis.x, yaxis.x, zaxis.x, 0,
+		xaxis.y, yaxis.y, zaxis.y, 0,
+		xaxis.z, yaxis.z, zaxis.z, 0,
+		0, 0, 0, 1
+	};
+	//rotationMatrix = &pm;
+	
+	std::ostringstream oss;
 	oss << "\nDirectX:\n"
-	<< "[" << rotationMatrix->_11 << ",\t" << rotationMatrix->_12 << ",\t" << rotationMatrix->_13 << ",\t" << rotationMatrix->_14 << "]\n"
-	<< "[" << rotationMatrix->_21 << ",\t" << rotationMatrix->_22 << ",\t" << rotationMatrix->_23 << ",\t" << rotationMatrix->_24 << "]\n"
-	<< "[" << rotationMatrix->_31 << ",\t" << rotationMatrix->_32 << ",\t" << rotationMatrix->_33 << ",\t" << rotationMatrix->_34 << "]\n"
-	<< "[" << rotationMatrix->_41 << ",\t" << rotationMatrix->_42 << ",\t" << rotationMatrix->_43 << ",\t" << rotationMatrix->_44 << "]\n"
-	<< "Die van mij:\n"
-	<< "[" << pm._11 << ",\t" << pm._12 << ",\t" << pm._13 << ",\t" << pm._14 << "]\n"
-	<< "[" << pm._21 << ",\t" << pm._22 << ",\t" << pm._23 << ",\t" << pm._24 << "]\n"
-	<< "[" << pm._31 << ",\t" << pm._32 << ",\t" << pm._33 << ",\t" << pm._34 << "]\n"
-	<< "[" << pm._41 << ",\t" << pm._42 << ",\t" << pm._43 << ",\t" << pm._44 << "]\n"
-	;
-	logger->Log(1, oss.str());*/
+		<< "[" << rotationMatrix->_11 << ",\t" << rotationMatrix->_12 << ",\t" << rotationMatrix->_13 << ",\t" << rotationMatrix->_14 << "]\n"
+		<< "[" << rotationMatrix->_21 << ",\t" << rotationMatrix->_22 << ",\t" << rotationMatrix->_23 << ",\t" << rotationMatrix->_24 << "]\n"
+		<< "[" << rotationMatrix->_31 << ",\t" << rotationMatrix->_32 << ",\t" << rotationMatrix->_33 << ",\t" << rotationMatrix->_34 << "]\n"
+		<< "[" << rotationMatrix->_41 << ",\t" << rotationMatrix->_42 << ",\t" << rotationMatrix->_43 << ",\t" << rotationMatrix->_44 << "]\n"
+		<< "Die van mij:\n"
+		<< "[" << pm._11 << ",\t" << pm._12 << ",\t" << pm._13 << ",\t" << pm._14 << "]\n"
+		<< "[" << pm._21 << ",\t" << pm._22 << ",\t" << pm._23 << ",\t" << pm._24 << "]\n"
+		<< "[" << pm._31 << ",\t" << pm._32 << ",\t" << pm._33 << ",\t" << pm._34 << "]\n"
+		<< "[" << pm._41 << ",\t" << pm._42 << ",\t" << pm._43 << ",\t" << pm._44 << "]\n"
+		;
+	logger->Log(1, oss.str());
+
+	/*zaxis = normal(cameraTarget - cameraPosition)
+		xaxis = normal(cross(cameraUpVector, zaxis))
+		yaxis = cross(zaxis, xaxis)
+
+		xaxis.x           yaxis.x           zaxis.x          0
+		xaxis.y           yaxis.y           zaxis.y          0
+		xaxis.z           yaxis.z           zaxis.z          0
+		- dot(xaxis, cameraPosition) - dot(yaxis, cameraPosition) - dot(zaxis, cameraPosition)  1*/
+
+	/*Vector3 vz = lookat - pos;
+	vz.Normalize();
+	Vector3 vx = Vector3(0, 1, 0).Cross(vz);
+	vx.Normalize();
+	Vector3 vy = Vector3::cross(vz, vx);
+
+	Matrix4 rotation(vx.x, vy.x, vz.x, 0,
+	vx.y, vy.y, vz.y, 0,
+	vx.z, vy.z, vz.z, 0,
+	0, 0, 0, 1);*/
 
 	lookAtPosition = { x, y, z };
 }
