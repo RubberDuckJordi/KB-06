@@ -1,5 +1,6 @@
 #include "EntityCamera.h"
 #include "Vector3.h"
+#include <sstream>
 
 Scene::EntityCamera::EntityCamera()
 {
@@ -200,24 +201,75 @@ void Scene::EntityCamera::SetLookAtPosition(float x, float y, float z, float rol
 	0, 0, 0, 1);*/
 
 
-	Vector3 lookat = { lookAtPosition.x, lookAtPosition.y, lookAtPosition.z };
+	/*Vector3 lookat = { lookAtPosition.x, lookAtPosition.y, lookAtPosition.z };
 	Vector3 pos = { position.x, position.y, position.z };
-	Vector3 cameraUpVector = { 0, 1, 0 };
+	Vector3 cameraUpVector = { 0.0f, 1.0f, 0.0f };
 
-	Vector3 zaxis = (lookat - pos);
-	zaxis.normalize();
-	Vector3 xaxis = cameraUpVector.cross(zaxis);
-	xaxis.normalize();
-	Vector3 yaxis = zaxis.cross(xaxis);
+	Vector3 zaxis = Vector3::normalize(lookat - pos);
+	Vector3 xaxis = Vector3::normalize(Vector3::cross(cameraUpVector, zaxis));
+		//cameraUpVector.cross(zaxis);
+	//xaxis.normalize();
+	Vector3 yaxis = Vector3::cross(zaxis, xaxis);
+		//zaxis.cross(xaxis);
 
 	PEngineMatrix pm = {
 		xaxis.x, yaxis.x, zaxis.x, 0,
 		xaxis.y, yaxis.y, zaxis.y, 0,
 		xaxis.z, yaxis.z, zaxis.z, 0,
 		0, 0, 0, 1
-
 	};
-	rotationMatrix = &pm;
+
+	/*PEngineMatrix pm = {
+		xaxis.x, xaxis.y, xaxis.z, 0,
+		yaxis.x, yaxis.y, yaxis.z, 0,
+		zaxis.x, zaxis.y, zaxis.z, 0,
+		0, 0, 0, 1
+		};*/
+
+	D3DXVECTOR3 vEyePt(position.x, position.y, position.z);
+	D3DXVECTOR3 vLookatPt(lookAtPosition.x, lookAtPosition.y, lookAtPosition.z);
+	D3DXVECTOR3 vUpVec(0.0f, 1.0f, 0.0f);
+	D3DXMatrixLookAtLH((D3DXMATRIX *)rotationMatrix, &vEyePt, &vLookatPt, &vUpVec);
+
+	rotationMatrix->_14 = 0.0f;
+	rotationMatrix->_24 = 0.0f;
+	rotationMatrix->_34 = 0.0f;
+	rotationMatrix->_41 = 0.0f;
+	rotationMatrix->_42 = 0.0f;
+	rotationMatrix->_43 = 0.0f;
+
+	Vector3 lookat = { lookAtPosition.x, lookAtPosition.y, lookAtPosition.z };
+	Vector3 pos = { position.x, position.y, position.z };
+	Vector3 cameraUpVector = { 0.0f, 1.0f, 0.0f };
+
+	Vector3 zaxis = Vector3::normalize(lookat - pos);
+	Vector3 xaxis = Vector3::normalize(Vector3::cross(cameraUpVector, zaxis));
+	//cameraUpVector.cross(zaxis);
+	//xaxis.normalize();
+	Vector3 yaxis = Vector3::cross(zaxis, xaxis);
+	//zaxis.cross(xaxis);
+
+	PEngineMatrix pm = {
+		xaxis.x, yaxis.x, zaxis.x, 0,
+		xaxis.y, yaxis.y, zaxis.y, 0,
+		xaxis.z, yaxis.z, zaxis.z, 0,
+		0, 0, 0, 1
+	};
+	//rotationMatrix = &pm;
+	
+	std::ostringstream oss;
+	oss << "\nDirectX:\n"
+		<< "[" << rotationMatrix->_11 << ",\t" << rotationMatrix->_12 << ",\t" << rotationMatrix->_13 << ",\t" << rotationMatrix->_14 << "]\n"
+		<< "[" << rotationMatrix->_21 << ",\t" << rotationMatrix->_22 << ",\t" << rotationMatrix->_23 << ",\t" << rotationMatrix->_24 << "]\n"
+		<< "[" << rotationMatrix->_31 << ",\t" << rotationMatrix->_32 << ",\t" << rotationMatrix->_33 << ",\t" << rotationMatrix->_34 << "]\n"
+		<< "[" << rotationMatrix->_41 << ",\t" << rotationMatrix->_42 << ",\t" << rotationMatrix->_43 << ",\t" << rotationMatrix->_44 << "]\n"
+		<< "Die van mij:\n"
+		<< "[" << pm._11 << ",\t" << pm._12 << ",\t" << pm._13 << ",\t" << pm._14 << "]\n"
+		<< "[" << pm._21 << ",\t" << pm._22 << ",\t" << pm._23 << ",\t" << pm._24 << "]\n"
+		<< "[" << pm._31 << ",\t" << pm._32 << ",\t" << pm._33 << ",\t" << pm._34 << "]\n"
+		<< "[" << pm._41 << ",\t" << pm._42 << ",\t" << pm._43 << ",\t" << pm._44 << "]\n"
+		;
+	logger->Log(1, oss.str());
 
 	/*zaxis = normal(cameraTarget - cameraPosition)
 		xaxis = normal(cross(cameraUpVector, zaxis))

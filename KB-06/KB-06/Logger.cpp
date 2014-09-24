@@ -76,8 +76,8 @@ char* Logger::Logger::BuildLogEntry(int logType, char* message){
 		case WARNING:logTypeString = "WARNING"; break;
 		case ERR: logTypeString = "ERROR  "; break;
 	}
-	char* logEntry = new char[240 + sizeof(message) + sizeof(logTypeString)];
-	sprintf_s(logEntry, 240, "[%02d:%02d:%02d.%03d] %s %s", systemTime.wHour, systemTime.wMinute, systemTime.wSecond, systemTime.wMilliseconds, logTypeString, message);
+	char* logEntry = new char[1024 + sizeof(message) + sizeof(logTypeString)];
+	sprintf_s(logEntry, 1024, "[%02d:%02d:%02d.%03d] %s %s", systemTime.wHour, systemTime.wMinute, systemTime.wSecond, systemTime.wMilliseconds, logTypeString, message);
 	return logEntry;
 }
 
