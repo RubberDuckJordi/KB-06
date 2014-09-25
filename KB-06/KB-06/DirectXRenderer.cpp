@@ -1,7 +1,6 @@
 #include "DirectXRenderer.h"
 #include "CustomD3DVertex.h"
 #include "BinaryData.h"
-//#include <sstream>
 
 Renderer::DirectXRenderer::DirectXRenderer()
 {
@@ -31,7 +30,6 @@ void Renderer::DirectXRenderer::InitD3D(HWND hWnd)
 	{
 		logger->Log(Logger::Logger::ERR, "Failed to instantiate Direct3DCreate9");
 		return;
-		//return E_FAIL; -> when switching from void to H_RESULT return type
 	}
 
 	D3DPRESENT_PARAMETERS d3dpp;
@@ -49,9 +47,7 @@ void Renderer::DirectXRenderer::InitD3D(HWND hWnd)
 	{
 		logger->Log(Logger::Logger::ERR, "Failed to instantiate Direct3D9 CreateDevice");
 		return;
-		//return E_FAIL; -> when switching from void to H_RESULT return type
 	}
-		//return S_OK; -> when switching from void to H_RESULT return type
 };
 
 void Renderer::DirectXRenderer::SetDefaultRenderStates()
@@ -61,8 +57,6 @@ void Renderer::DirectXRenderer::SetDefaultRenderStates()
 	this->g_pd3dDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, true); //Turn Alphablending on
 	this->g_pd3dDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA); //Type alphablending
 	this->g_pd3dDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA); //Type alphablending
-
-	//g_pd3dDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
 };
 
 void Renderer::DirectXRenderer::SetRenderState(PENGINERENDERSTATETYPE* state, PENGINEDWORD* dword)
@@ -76,24 +70,12 @@ void Renderer::DirectXRenderer::SetActiveCamera(CameraData camera)
 	// a point to lookat, and a direction for which way is up. Here, we set the
 	// eye 0.5 units back along the z-axis and up 0 units, look at the 
 	// origin + 0.5 on the z-axis, and define "up" to be in the y-direction.
-	/*std::ostringstream oss;
-
-	oss << "Camera x: " << camera.x << ", y: " << camera.y << ", z: " << camera.z 
-		<< ", lookAtX: " << camera.lookAtX << ", lookAtY: " << camera.lookAtY << ", lookAtZ: " << camera.lookAtZ
-		<< ", upVecX: " << camera.upVecX << ", upVecY: " << camera.upVecY << ", upVecZ: " << camera.upVecZ;
-	logger->Log(Logger::Logger::LogLevel::DEBUG, oss.str().c_str());*/
 
 	D3DXVECTOR3 vEyePt(camera.x, camera.y, camera.z);
 	D3DXVECTOR3 vLookatPt(camera.lookAtX, camera.lookAtY, camera.lookAtZ);
 	D3DXVECTOR3 vUpVec(camera.upVecX, camera.upVecY, camera.upVecZ);
 	D3DXMatrixLookAtLH(matrixCache, &vEyePt, &vLookatPt, &vUpVec);
 	g_pd3dDevice->SetTransform(D3DTS_VIEW, matrixCache);
-
-	/*D3DXVECTOR3 vEyePt(0.0f, 0.0f, 50.0f);
-	D3DXVECTOR3 vLookatPt(0.0f, 0.0f, 0.0f);
-	D3DXVECTOR3 vUpVec(0.0f, 1.0f, 0.0f);
-	D3DXMatrixLookAtLH(matrixCache, &vEyePt, &vLookatPt, &vUpVec);
-	g_pd3dDevice->SetTransform(D3DTS_VIEW, matrixCache);*/
 }
 
 void Renderer::DirectXRenderer::SetProjectionMatrix(MatrixWrapper* ProjectionMatrix)
@@ -114,7 +96,6 @@ void Renderer::DirectXRenderer::SetProjectionMatrix(float FOV, float farClipping
 	g_pd3dDevice->SetTransform(D3DTS_PROJECTION, &matProj);
 }
 
-//Scene
 void Renderer::DirectXRenderer::BeginScene()
 {
 	this->g_pd3dDevice->BeginScene();
@@ -140,7 +121,6 @@ void Renderer::DirectXRenderer::EndScene()
 	this->g_pd3dDevice->EndScene();
 };
 
-//Buffers
 void Renderer::DirectXRenderer::CreateVertexBuffer(int heightmapvertex, PENGINEDWORD* usage, PENGINEDWORD* fvf, PENGINEPOOL* pool, VertexBufferWrapper* vertexbuffer, HANDLE handle)
 {
 	this->g_pd3dDevice->CreateVertexBuffer(heightmapvertex, *usage, *fvf, static_cast<D3DPOOL>(*pool), vertexbuffer->GetVertexBuffer(), &handle);
@@ -151,17 +131,14 @@ void Renderer::DirectXRenderer::CreateIndexBuffer(int length, PENGINEDWORD* usag
 	this->g_pd3dDevice->CreateIndexBuffer(length, *usage, static_cast<D3DFORMAT>(*format), static_cast<D3DPOOL>(*pool), Indexbuffer->GetIndexBuffer(), NULL);
 };
 
-//Set stuff
 void Renderer::DirectXRenderer::SetMaterial(MaterialWrapper* wrapper)
 {
 	g_pd3dDevice->SetMaterial(wrapper->GetMaterial());
-	//return g_pd3dDevice->SetMaterial(&wrapper->GetMaterial()); when H_RESULT as return type
 };
 
 void Renderer::DirectXRenderer::SetTexture(TextureWrapper* wrapper)
 {
 	g_pd3dDevice->SetTexture(0, *wrapper->GetTexture());
-	// return g_pd3dDevice->SetTexture(0, wrapper->GetTexture()); when H_RESULT as return type
 };
 
 void Renderer::DirectXRenderer::SetFvF(PENGINEDWORD* fvf)
@@ -170,7 +147,6 @@ void Renderer::DirectXRenderer::SetFvF(PENGINEDWORD* fvf)
 };
 
 
-//Draw functions
 void Renderer::DirectXRenderer::DrawPrimitive(Resource::Mesh mesh)
 {
 	//g_pd3dDevice->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, mesh.vertices.size, 0, mesh.faceDefinitions.size * 3);
@@ -192,7 +168,6 @@ void Renderer::DirectXRenderer::SetIndices() //??
 
 };
 
-//GetDevice
 LPDIRECT3DDEVICE9* Renderer::DirectXRenderer::GetDevice()
 {
 	return &g_pd3dDevice;

@@ -11,7 +11,6 @@
 #include "Mesh.h"
 #include "LoggerPool.h"
 #include "RGBAColor.h"
-#include <d3dx9.h>
 #include "RenderMatrix.h"
 
 namespace Renderer

@@ -32,7 +32,7 @@ void Resource::XModelLoader::LoadXModel(std::string filename, Renderer::DirectXR
 	{
 		D3DXMATERIAL* d3dxMaterial = static_cast<D3DXMATERIAL*>(mtrlBuffer->GetBufferPointer());
 		D3DMATERIAL9* materials = new D3DMATERIAL9[mtrlCount];
-		LPDIRECT3DTEXTURE9** textures = new LPDIRECT3DTEXTURE9*[mtrlCount];
+		LPDIRECT3DTEXTURE9* textures = new LPDIRECT3DTEXTURE9[mtrlCount];
 
 		for (int i = 0; i < static_cast<int>(mtrlCount); i++)
 		{
@@ -45,9 +45,9 @@ void Resource::XModelLoader::LoadXModel(std::string filename, Renderer::DirectXR
 				std::string filepathNew = filename.substr(0, pos + 1);
 				filepathNew.append(d3dxMaterial[i].pTextureFilename);
 
-				LPDIRECT3DTEXTURE9& texture = *new LPDIRECT3DTEXTURE9();
-				HRESULT result = D3DXCreateTextureFromFileA(*renderer->GetDevice(), filepathNew.c_str(), &texture);
-				textures[i] = &texture;
+				LPDIRECT3DTEXTURE9* texture = new LPDIRECT3DTEXTURE9();
+				HRESULT result = D3DXCreateTextureFromFileA(*renderer->GetDevice(), filepathNew.c_str(), texture);
+				textures[i] = *texture;
 			}
 			else
 			{
@@ -58,14 +58,13 @@ void Resource::XModelLoader::LoadXModel(std::string filename, Renderer::DirectXR
 
 		Renderer::MeshWrapper* meshWrapper = new Renderer::MeshWrapper(mesh);
 		Renderer::MaterialWrapper* materialWrapper = new Renderer::MaterialWrapper(materials);
-		Renderer::TextureWrapper* textureWrapper = new Renderer::TextureWrapper(*textures);
+		Renderer::TextureWrapper* textureWrapper = new Renderer::TextureWrapper(textures);
 
 		xmodel->SetMesh(meshWrapper);
 		xmodel->SetMaterials(materialWrapper, mtrlCount);
 		xmodel->SetTextures(textureWrapper, mtrlCount);
 
 		mtrlBuffer->Release();
-		delete textures;
 	}
 	else
 	{

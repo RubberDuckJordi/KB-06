@@ -190,7 +190,14 @@ void Scene::EntityCamera::Draw(Renderer::Renderer* renderer)
 			renderer->SetTexture(textureWrapper);
 			renderer->DrawSubset(xModel->GetMesh(), 0);
 			xModel->GetTextures(textureWrapper, textureCount);
-			renderer->SetTexture(textureWrapper);//how do I get the second texture?
+
+			LPDIRECT3DTEXTURE9* textureArray = textureWrapper->GetTexture();
+
+			Renderer::TextureWrapper* textureWrapperIndex = new Renderer::TextureWrapper(&textureWrapper->GetTexture()[1]);
+			Renderer::MaterialWrapper* materialWrapperIndex = new Renderer::MaterialWrapper(&materialWrapper->GetMaterial()[1]);
+
+			renderer->SetTexture(textureWrapperIndex);//how do I get the second texture?
+			renderer->SetMaterial(materialWrapperIndex);
 			renderer->DrawSubset(xModel->GetMesh(), 1);
 		}
 		else

@@ -28,14 +28,12 @@ namespace Logger
 		void SetLogLevel(int logLevel);
 		void Reset();
 	private:
-		void PrintConsole(int logType, char* text);
-		char* BuildLogEntry(int logType, char* messasge);
-
 		int logLevel = INFO;
 		int consoleColorCodeInfo = gray;
 		int consoleColorCodeDebug = white;
 		int consoleColorCodeWarning = yellow;
 		int consoleColorCodeError = red;
+		int consoleColorCodeNone = blue;
 		HANDLE consoleHandle;
 		char* logFile = "log.txt";
 		char* previousLogFile = "log_old.txt";
