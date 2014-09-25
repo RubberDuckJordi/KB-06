@@ -48,8 +48,10 @@ void Scene::DefaultEntity::Draw(Renderer::Renderer* renderer)
 		int textureCount;
 		xModel->GetTextures(textureWrapper, textureCount);
 
+		Renderer::TextureWrapper* textureWrapperIndex = new Renderer::TextureWrapper(&textureWrapper->GetTexture()[0]);
+
 		renderer->SetMaterial(materialWrapper);
-		renderer->SetTexture(textureWrapper);
+		renderer->SetTexture(textureWrapperIndex);
 		renderer->DrawSubset(xModel->GetMesh(), 0);
 	}
 	else
