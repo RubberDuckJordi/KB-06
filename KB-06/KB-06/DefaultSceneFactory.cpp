@@ -51,9 +51,9 @@ Scene::Scene* Scene::DefaultSceneFactory::CreateScene()
 
 	DefaultScene* defaultScene = new DefaultScene();
 	defaultScene->AddEntity(entity);
-	defaultScene->AddEntity(entity2); 
+	defaultScene->AddEntity(entity2);
 	defaultScene->AddEntity(entity3);
-	defaultScene->AddEntity(entity4); 
+	defaultScene->AddEntity(entity4);
 	defaultScene->AddEntity(entity5);
 	defaultScene->AddEntity(entity6);
 
@@ -96,6 +96,7 @@ void Scene::DefaultSceneFactory::SetXModel(Resource::XModel* p_xModel)
 {
 	xModel = p_xModel;
 }
+
 void Scene::DefaultSceneFactory::SetXModel2(Resource::XModel* p_xModel)
 {
 	xModel2 = p_xModel;

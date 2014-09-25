@@ -12,11 +12,11 @@ Input::DirectInputDeviceFactory::DirectInputDeviceFactory()
 		(void**)&dInput,
 		NULL)))
 	{
-		logger->Log(Logger::Logger::DEBUG, "DirectInputDeviceFactory: Initialised factory");
+		logger->Log(Logger::DEBUG, "DirectInputDeviceFactory: Initialised factory");
 	}
 	else
 	{
-		logger->Log(Logger::Logger::ERR, "DirectInputDeviceFactory: Initialisation failed");
+		logger->Log(Logger::ERR, "DirectInputDeviceFactory: Initialisation failed");
 	}
 
 	CreateActionMapping();
@@ -49,14 +49,14 @@ Input::InputDevice* Input::DirectInputDeviceFactory::CreateInputDevice(InputDevi
 		{
 		case InputDevice::KEYBOARD:
 			newDevice = new DirectKeyboard();
-			logger->Log(Logger::Logger::DEBUG, "DirectInputDeviceFactory: Created keyboard");
+			logger->Log(Logger::DEBUG, "DirectInputDeviceFactory: Created keyboard");
 			break;
 		case InputDevice::MOUSE:
 			newDevice = new DirectMouse();
-			logger->Log(Logger::Logger::DEBUG, "DirectInputDeviceFactory: Created mouse");
+			logger->Log(Logger::DEBUG, "DirectInputDeviceFactory: Created mouse");
 			break;
 		default:
-			logger->Log(Logger::Logger::ERR, "DirectInputDeviceFactory: Unable to create device, unknown device type");
+			logger->Log(Logger::ERR, "DirectInputDeviceFactory: Unable to create device, unknown device type");
 			return NULL;
 		}
 
@@ -67,16 +67,15 @@ Input::InputDevice* Input::DirectInputDeviceFactory::CreateInputDevice(InputDevi
 		}
 		else
 		{
-			logger->Log(Logger::Logger::ERR, "DirectInputDeviceFactory: Unable to create device, initialisation failed");
+			logger->Log(Logger::ERR, "DirectInputDeviceFactory: Unable to create device, initialisation failed");
 			delete newDevice;
 			return NULL;
 		}
 	}
 	else
 	{
-		logger->Log(Logger::Logger::ERR, "Unable to create device, factory is not initialised");
+		logger->Log(Logger::ERR, "Unable to create device, factory is not initialised");
 	}
-	
 }
 
 void Input::DirectInputDeviceFactory::CreateActionMapping()
@@ -238,5 +237,4 @@ void Input::DirectInputDeviceFactory::CreateActionMapping()
 	(*actionMapping)[Input::MOUSE_BUTTON5] = DIMOFS_BUTTON5;
 	(*actionMapping)[Input::MOUSE_BUTTON6] = DIMOFS_BUTTON6;
 	(*actionMapping)[Input::MOUSE_BUTTON7] = DIMOFS_BUTTON7;
-
 }

@@ -5,12 +5,11 @@
 #include "DirectMouse.h"
 #include "InputDeviceFactory.h"
 #include "Input.h"
-
 #include <map>
 
-namespace Input 
+namespace Input
 {
-	class DirectInputDeviceFactory : public InputDeviceFactory 
+	class DirectInputDeviceFactory : public InputDeviceFactory
 	{
 	public:
 		DirectInputDeviceFactory();
@@ -24,5 +23,4 @@ namespace Input
 		HWND hwnd;
 	};
 }
-
 #endif

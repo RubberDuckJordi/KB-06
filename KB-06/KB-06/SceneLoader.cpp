@@ -1,10 +1,10 @@
 #include "SceneLoader.h"
 
-
 Resource::SceneLoader::SceneLoader()
 {
 
 }
+
 Resource::SceneLoader::~SceneLoader()
 {
 
@@ -285,5 +285,4 @@ std::vector<std::string>* Resource::SceneLoader::LoadFile(std::string filePath)
 
 	}
 	*/
-
 }

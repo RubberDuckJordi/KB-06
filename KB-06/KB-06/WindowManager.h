@@ -1,23 +1,15 @@
-/*!
-3D Engine
-WindowManager.h
-Purpose: Creates and manages windows.
-
-@author Patrick, Nick, Robert, Jordi
-@version 1.0
-*/
-
 #ifndef _WINDOW_WINDOWMANAGER_H_
 #define _WINDOW_WINDOWMANAGER_H_
 
-#include <Windows.h>
 #include "Window.h"
 #include "WindowListener.h"
 #include "Renderer.h"
 #include "SceneManager.h"
+
+#include <Windows.h>
 #include <vector>
 
-namespace Window 
+namespace Window
 {
 
 	class WindowManager
@@ -70,7 +62,7 @@ namespace Window
 	private:
 		std::vector<Window*> windows;
 		Scene::SceneManager *sceneManager;
-		
+
 		Logger::Logger* logger;
 		std::list<WindowListener*> windowListeners;
 	};

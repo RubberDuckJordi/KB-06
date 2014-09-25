@@ -4,12 +4,10 @@
 #include "ObjMeshLoader.h"
 #include "MtlLoader.h"
 
-
 Resource::ResourceManager::ResourceManager()
 {
 	logger = Logger::LoggerPool::GetInstance().GetLogger();
 }
-
 
 Resource::ResourceManager::~ResourceManager()
 {
@@ -17,24 +15,29 @@ Resource::ResourceManager::~ResourceManager()
 }
 
 Resource::Mesh* Resource::ResourceManager::LoadMesh(const std::string& fileName, const std::string& extension)
-{	
-	if (meshes.find(fileName) == meshes.end()){
-		if (meshLoaders.find(extension) != meshLoaders.end()){
+{
+	if (meshes.find(fileName) == meshes.end())
+	{
+		if (meshLoaders.find(extension) != meshLoaders.end())
+		{
 			Mesh loadedMesh = meshLoaders[extension]->Load(fileName);
 			std::vector<std::string> elements;
-			for (unsigned int i = 0; i < loadedMesh.defaultMaterialFiles.size(); ++i){
+			for (unsigned int i = 0; i < loadedMesh.defaultMaterialFiles.size(); ++i)
+			{
 				// load the material file by assuming everything afther the last '.' is the extension
 				elements = Logger::StringHelper::split(loadedMesh.defaultMaterialFiles.at(i), '.');
 				LoadMaterial(loadedMesh.defaultMaterialFiles.at(i), elements.back());
 			}
-			for (unsigned int i = 0; i < loadedMesh.subsets.size(); ++i){
+			for (unsigned int i = 0; i < loadedMesh.subsets.size(); ++i)
+			{
 				Material material = materials.at(loadedMesh.subsets.at(i).defaultMaterial.name);
 				loadedMesh.subsets.at(i).defaultMaterial = material;
 			}
 			meshes[fileName] = loadedMesh;
 		}
-		else {
-			logger->Log(Logger::Logger::ERR, "MeshLoader not found for extension:" + extension);
+		else
+		{
+			logger->Log(Logger::ERR, "MeshLoader not found for extension:" + extension);
 			return NULL;
 		}
 	}
@@ -45,6 +48,7 @@ void Resource::ResourceManager::AddMeshLoader(Resource::BaseMeshLoader* newMeshL
 {
 	meshLoaders[newMeshLoader->GetExtension()] = newMeshLoader;
 }
+
 void Resource::ResourceManager::AddMaterialLoader(Resource::BaseMaterialLoader* newMaterialLoader)
 {
 	materialLoaders[newMaterialLoader->GetExtension()] = newMaterialLoader;
@@ -56,8 +60,10 @@ Resource::Material* Resource::ResourceManager::LoadMaterial(const std::string& f
 	if (extension == "mtl")
 	{
 		newMaterials = materialLoaders[extension]->Load(fileName);
-		for (auto iterator = newMaterials.begin(); iterator != newMaterials.end(); iterator++) {
-			if (iterator->second.defaultTexture.fileName != ""){
+		for (auto iterator = newMaterials.begin(); iterator != newMaterials.end(); iterator++)
+		{
+			if (iterator->second.defaultTexture.fileName != "")
+			{
 				iterator->second.defaultTexture = LoadBinaryFile(iterator->second.defaultTexture.fileName);
 			}
 		}
@@ -66,7 +72,8 @@ Resource::Material* Resource::ResourceManager::LoadMaterial(const std::string& f
 	return NULL;
 }
 
-Resource::BinaryData Resource::ResourceManager::LoadBinaryFile(const std::string& fileName){
+Resource::BinaryData Resource::ResourceManager::LoadBinaryFile(const std::string& fileName)
+{
 	std::ifstream file("resources/" + fileName, std::ios::binary);
 	file.seekg(0, std::ios::end);
 	std::streamsize size = file.tellg();
@@ -82,6 +89,5 @@ Resource::BinaryData Resource::ResourceManager::LoadBinaryFile(const std::string
 		textures[fileName] = texture;
 		return texture;
 	}
-
 	return texture;
 }

@@ -8,7 +8,7 @@
 
 namespace Scene
 {
-	class EntityCamera : public Entity 
+	class EntityCamera : public Entity
 	{
 	public:
 		EntityCamera();
@@ -23,13 +23,14 @@ namespace Scene
 		Resource::Mesh* myMesh2;//debug!
 		void SetXModel(Resource::XModel*); //debug
 		bool useInput = false;
+
 	protected:
 		Resource::Vertex lookAtPosition;
+
 	private:
 		Resource::XModel* xModel; //debug
 		CameraData cameraData;
-		PEngineMatrix* rotationMatrix;
+		Renderer::PEngineMatrix* rotationMatrix;
 	};
 }
-
 #endif

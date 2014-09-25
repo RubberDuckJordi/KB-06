@@ -5,12 +5,12 @@
 #include "Logger.h"
 
 namespace Scene{
-	class DefaultScene : public Scene {
+	class DefaultScene : public Scene
+	{
 	public:
 		DefaultScene();
 		~DefaultScene();
 		void Update(std::map<Input::Input, long>* actions);
 	};
 }
-
 #endif

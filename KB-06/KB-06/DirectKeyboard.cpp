@@ -18,7 +18,7 @@ bool Input::DirectKeyboard::Initialize(LPDIRECTINPUT8 m_dInput, HWND hwnd)
 	if FAILED(hr)
 	{
 		ReleaseDevice();
-		logger->Log(Logger::Logger::WARNING, "InputDevice::Keyboard: Initialisation failed. Unable to create Input Device.");
+		logger->Log(Logger::WARNING, "InputDevice::Keyboard: Initialisation failed. Unable to create Input Device.");
 		return false;
 	}
 
@@ -26,7 +26,7 @@ bool Input::DirectKeyboard::Initialize(LPDIRECTINPUT8 m_dInput, HWND hwnd)
 	if FAILED(hr)
 	{
 		ReleaseDevice();
-		logger->Log(Logger::Logger::WARNING, "InputDevice::Keyboard: Initialisation failed. Unable to set dataformat.");
+		logger->Log(Logger::WARNING, "InputDevice::Keyboard: Initialisation failed. Unable to set dataformat.");
 		return false;
 	}
 
@@ -35,13 +35,12 @@ bool Input::DirectKeyboard::Initialize(LPDIRECTINPUT8 m_dInput, HWND hwnd)
 	if (FAILED(hr))
 	{
 		ReleaseDevice();
-		logger->Log(Logger::Logger::WARNING, "InputDevice::Keyboard: Initialisation failed. Could not set cooperative level.");
+		logger->Log(Logger::WARNING, "InputDevice::Keyboard: Initialisation failed. Could not set cooperative level.");
 		return false;
 	}
 
 	AcquireDevice();
-	logger->Log(Logger::Logger::INFO, "InputDevice::Keyboard: Initialisation successful.");
-
+	logger->Log(Logger::INFO, "InputDevice::Keyboard: Initialisation successful.");
 
 	return true;
 }
@@ -54,7 +53,7 @@ bool Input::DirectKeyboard::Update()
 
 	if (!SUCCEEDED(dInputDevice->Poll()))
 	{
-		logger->Log(Logger::Logger::INFO, "InputManager: Keyboard polling failed");
+		logger->Log(Logger::INFO, "InputManager: Keyboard polling failed");
 		return false;
 	}
 
@@ -62,7 +61,6 @@ bool Input::DirectKeyboard::Update()
 	{
 		return false;
 	}
-
 	return true;
 }
 
@@ -99,7 +97,6 @@ std::map<Input::Input, long>* Input::DirectKeyboard::GetInputValues()
 			}
 		}
 	}
-
 	return returnMap;
 }
 
@@ -114,7 +111,7 @@ void Input::DirectKeyboard::OnWindowFocusGained(Window::Window* window)
 	if (FAILED(hr))
 	{
 		ReleaseDevice();
-		logger->Log(Logger::Logger::WARNING, "InputDevice::Keyboard: Could not set cooperative level.");
+		logger->Log(Logger::WARNING, "InputDevice::Keyboard: Could not set cooperative level.");
 	}
 	AcquireDevice();
 }

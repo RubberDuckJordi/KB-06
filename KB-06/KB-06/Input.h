@@ -162,5 +162,4 @@ namespace Input
 		MOUSE_BUTTON7
 	};
 }
-
 #endif

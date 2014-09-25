@@ -2,6 +2,7 @@
 #define _SCENELIST_H_
 
 #include <string>
+
 namespace Resource
 {
 	struct SceneDefinition

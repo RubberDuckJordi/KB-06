@@ -19,7 +19,7 @@ bool Input::DirectMouse::Initialize(LPDIRECTINPUT8 p_dInput, HWND hwnd)
 	if (FAILED(hr))
 	{
 		ReleaseDevice();
-		logger->Log(Logger::Logger::WARNING, "InputDevice::Mouse: Initialisation failed. Unable to create Input Device.");
+		logger->Log(Logger::WARNING, "InputDevice::Mouse: Initialisation failed. Unable to create Input Device.");
 		return false;
 	}
 
@@ -27,7 +27,7 @@ bool Input::DirectMouse::Initialize(LPDIRECTINPUT8 p_dInput, HWND hwnd)
 	if (FAILED(hr))
 	{
 		ReleaseDevice();
-		logger->Log(Logger::Logger::WARNING, "InputDevice::Mouse: Initialisation failed. Unable to set dataformat.");
+		logger->Log(Logger::WARNING, "InputDevice::Mouse: Initialisation failed. Unable to set dataformat.");
 		return false;
 	}
 
@@ -46,7 +46,7 @@ bool Input::DirectMouse::Initialize(LPDIRECTINPUT8 p_dInput, HWND hwnd)
 	if (FAILED(hr))
 	{
 		ReleaseDevice();
-		logger->Log(Logger::Logger::WARNING, "InputDevice::Mouse: Initialisation failed. Unable to set property Axismode.");
+		logger->Log(Logger::WARNING, "InputDevice::Mouse: Initialisation failed. Unable to set property Axismode.");
 
 		return false;
 	}
@@ -56,12 +56,12 @@ bool Input::DirectMouse::Initialize(LPDIRECTINPUT8 p_dInput, HWND hwnd)
 	if (FAILED(hr))
 	{
 		ReleaseDevice();
-		logger->Log(Logger::Logger::WARNING, "InputDevice::Mouse: Initialisation failed. Could not set cooperative level.");
+		logger->Log(Logger::WARNING, "InputDevice::Mouse: Initialisation failed. Could not set cooperative level.");
 		return false;
 	}
 
 	DirectInputDevice::AcquireDevice();
-	logger->Log(Logger::Logger::INFO, "InputDevice::Mouse: Initialisation successful.");
+	logger->Log(Logger::INFO, "InputDevice::Mouse: Initialisation successful.");
 
 	return true;
 }
@@ -76,7 +76,7 @@ bool Input::DirectMouse::Update()
 	}
 	else if (!SUCCEEDED(dInputDevice->Poll()))
 	{
-		logger->Log(Logger::Logger::INFO, "InputManager: Mouse polling failed");
+		logger->Log(Logger::INFO, "InputManager: Mouse polling failed");
 		return false;
 	}
 	if (FAILED(dInputDevice->GetDeviceState(sizeof(DIMOUSESTATE2), (LPVOID)&dIMouseState)))
@@ -92,7 +92,6 @@ bool Input::DirectMouse::Update()
 	}
 	return deviceAcquired;
 }
-
 
 std::map<Input::Input, long>* Input::DirectMouse::GetInputValues()
 {
@@ -147,7 +146,6 @@ std::map<Input::Input, long>* Input::DirectMouse::GetInputValues()
 	{
 		returnMap->insert(std::make_pair(Input::MOUSE_BUTTON7, 100));
 	}
-
 	return returnMap;
 }
 
@@ -202,7 +200,7 @@ void Input::DirectMouse::OnWindowFocusGained(Window::Window* window)
 	if (FAILED(hr))
 	{
 		ReleaseDevice();
-		logger->Log(Logger::Logger::WARNING, "InputDevice::Keyboard: Could not set cooperative level.");
+		logger->Log(Logger::WARNING, "InputDevice::Keyboard: Could not set cooperative level.");
 	}
 	AcquireDevice();
 }

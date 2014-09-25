@@ -2,7 +2,6 @@
 #define _RENDERER_RENDERER_H_
 
 #include "PengineDefinitions.h"
-#include "MatrixWrapper.h"
 #include "MaterialWrapper.h"
 #include "TextureWrapper.h"
 #include "MeshWrapper.h"
@@ -27,7 +26,7 @@ namespace Renderer
 		virtual void SetRenderState(PENGINERENDERSTATETYPE* state, PENGINEDWORD* dword) = 0;
 
 		virtual void SetActiveCamera(CameraData camera) = 0;
-		virtual void SetProjectionMatrix(MatrixWrapper* ProjectionMatrix) = 0;
+		virtual void SetProjectionMatrix(PEngineMatrix* ProjectionMatrix) = 0;
 		virtual void SetProjectionMatrix(float FOV, float farClippingPlane) = 0;
 
 		virtual void BeginScene() = 0;
@@ -53,10 +52,9 @@ namespace Renderer
 		virtual void SetActiveMatrix(PEngineMatrix* matrix) = 0;
 
 		virtual void SetLights() = 0;
+
 	protected:
 		Logger::Logger* logger;
 	};
 }
-
-
 #endif

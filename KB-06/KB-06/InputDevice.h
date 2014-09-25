@@ -11,14 +11,15 @@ namespace Input
 	class InputDevice
 	{
 	public:
-		InputDevice();
-		~InputDevice();
 		enum Type
 		{
 			KEYBOARD,
 			MOUSE,
 			JOYSTICK
 		};
+
+		InputDevice();
+		~InputDevice();
 
 		virtual bool AcquireDevice() = 0;
 		virtual void ReleaseDevice() = 0;
@@ -31,8 +32,6 @@ namespace Input
 		std::string deviceName;
 		bool deviceAcquired;
 		Logger::Logger* logger;
-
 	};
 }
-
 #endif

@@ -10,8 +10,6 @@ namespace Scene {
 		SceneFactory();
 		~SceneFactory();
 		virtual Scene* CreateScene() = 0;
-	protected:
 	};
 }
-
 #endif

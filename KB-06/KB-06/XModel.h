@@ -30,5 +30,4 @@ namespace Resource
 		Renderer::TextureWrapper* textures;
 	};
 }
-
 #endif

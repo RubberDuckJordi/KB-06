@@ -13,10 +13,8 @@ namespace Renderer
 		void SetIndexBuffer(IDirect3DIndexBuffer9** _IndexBuffer);
 		IDirect3DIndexBuffer9** GetIndexBuffer();
 
-
 	private:
 		IDirect3DIndexBuffer9** IndexBuffer;
 	};
 }
-
 #endif

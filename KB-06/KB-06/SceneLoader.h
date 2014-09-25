@@ -11,11 +11,8 @@ namespace Resource
 	public:
 		SceneLoader();
 		~SceneLoader();
-		
+
 		std::vector<std::string>* LoadFile(std::string filePath);
-
-	private:
-
 	};
 }
 #endif

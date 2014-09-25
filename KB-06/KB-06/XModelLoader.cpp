@@ -12,7 +12,7 @@ Resource::XModelLoader::~XModelLoader()
 
 void Resource::XModelLoader::LoadXModel(std::string filename, Renderer::DirectXRenderer* renderer, XModel* xmodel)
 {
-	logger->Log(Logger::Logger::DEBUG, "XModelLoader: Loading XModel");
+	logger->Log(Logger::DEBUG, "XModelLoader: Loading XModel");
 
 	LPD3DXBUFFER mtrlBuffer = NULL;
 	DWORD mtrlCount = NULL;
@@ -53,7 +53,6 @@ void Resource::XModelLoader::LoadXModel(std::string filename, Renderer::DirectXR
 			{
 				textures[i] = NULL;
 			}
-
 		}
 
 		Renderer::MeshWrapper* meshWrapper = new Renderer::MeshWrapper(mesh);
@@ -68,6 +67,6 @@ void Resource::XModelLoader::LoadXModel(std::string filename, Renderer::DirectXR
 	}
 	else
 	{
-		logger->Log(Logger::Logger::ERR, "Unable to load X file");
+		logger->Log(Logger::ERR, "Unable to load X file");
 	}
 }

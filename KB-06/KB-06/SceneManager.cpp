@@ -1,12 +1,10 @@
 #include "stdafx.h"
 #include "SceneManager.h"
 
-
 Scene::SceneManager::SceneManager()
 {
 	logger = Logger::LoggerPool::GetInstance().GetLogger();
 }
-
 
 Scene::SceneManager::~SceneManager()
 {
@@ -18,7 +16,8 @@ void Scene::SceneManager::AddSceneFactory(char* key, SceneFactory* sceneFactory)
 	sceneFactories[key] = sceneFactory;
 }
 
-Scene::Scene* Scene::SceneManager::AddScene(char* sceneFactory){
+Scene::Scene* Scene::SceneManager::AddScene(char* sceneFactory)
+{
 	Scene* newScene = sceneFactories.at(sceneFactory)->CreateScene();
 	scenes.push_back(newScene);
 	return newScene;
@@ -45,14 +44,18 @@ void Scene::SceneManager::UpdateActiveScene(std::map<Input::Input, long>* action
 	currentScene->Update(actions);
 }
 
-void Scene::SceneManager::RenderActiveScene(Renderer::Renderer* renderer){
-	if (currentScene == NULL){
-		if (scenes.size() > 0) {
-			logger->Log(Logger::Logger::WARNING, "CurrentScene not set, defaulting to the first added scene");
+void Scene::SceneManager::RenderActiveScene(Renderer::Renderer* renderer)
+{
+	if (currentScene == NULL)
+	{
+		if (scenes.size() > 0)
+		{
+			logger->Log(Logger::WARNING, "CurrentScene not set, defaulting to the first added scene");
 			currentScene = scenes.front();
 		}
-		else {
-			logger->Log(Logger::Logger::ERR, "CurrentScene not set and no scenes available in the SceneManager");
+		else
+		{
+			logger->Log(Logger::ERR, "CurrentScene not set and no scenes available in the SceneManager");
 			return;
 		}
 	}

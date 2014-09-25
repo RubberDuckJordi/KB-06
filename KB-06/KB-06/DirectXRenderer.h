@@ -4,9 +4,6 @@
 #include <d3dx9.h>
 #include "Renderer.h"
 
-
-
-
 namespace Renderer
 {
 	class DirectXRenderer : public Renderer
@@ -22,7 +19,7 @@ namespace Renderer
 
 		void SetActiveCamera(CameraData camera);
 
-		void SetProjectionMatrix(MatrixWrapper* ProjectionMatrix);
+		void SetProjectionMatrix(PEngineMatrix* ProjectionMatrix);
 		void SetProjectionMatrix(float FOV, float farClippingPlane);
 
 		void BeginScene();
@@ -49,9 +46,11 @@ namespace Renderer
 		void SetActiveMatrix(PEngineMatrix* matrix);
 
 		void SetLights();
+
 	private:
 		void SetTexture(Resource::BinaryData* texture);
 		void SetMaterial(Resource::Material* material);
+		void SetMatrixCache(PEngineMatrix* matrix);
 
 		LPDIRECT3D9 g_pD3D;
 		LPDIRECT3DDEVICE9 g_pd3dDevice;
@@ -61,6 +60,4 @@ namespace Renderer
 		D3DXMATRIX* matrixCache;
 	};
 }
-
-
 #endif

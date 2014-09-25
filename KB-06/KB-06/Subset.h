@@ -1,5 +1,6 @@
 #ifndef _RESOURCE_SUBSET_H_
 #define _RESOURCE_SUBSET_H_
+
 #include <vector>
 #include "Vertex.h"
 #include "TextureCoordinate.h"
@@ -10,7 +11,7 @@
 
 namespace Resource
 {
-	struct Subset 
+	struct Subset
 	{
 		std::vector<Vertex> vertices;
 		std::vector<TextureCoordinate> textureCoordinates;

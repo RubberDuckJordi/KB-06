@@ -31,17 +31,11 @@
     <ClCompile Include="InputDeviceFactory.cpp">
       <Filter>Source\Input</Filter>
     </ClCompile>
-    <ClCompile Include="KB-06.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
     <ClCompile Include="Logger.cpp">
       <Filter>Source\Logger</Filter>
     </ClCompile>
     <ClCompile Include="LoggerPool.cpp">
       <Filter>Source\Logger</Filter>
-    </ClCompile>
-    <ClCompile Include="MatrixWrapper.cpp">
-      <Filter>Source\Renderer\Wrap Containers</Filter>
     </ClCompile>
     <ClCompile Include="MeshWrapper.cpp">
       <Filter>Source\Renderer\Wrap Containers</Filter>
@@ -100,14 +94,12 @@
     <ClCompile Include="Entity.cpp">
       <Filter>Source\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="RenderMatrix.cpp" />
     <ClCompile Include="ObjMeshLoader.cpp">
       <Filter>Source\Resource</Filter>
     </ClCompile>
     <ClCompile Include="SceneLoader.cpp">
       <Filter>Source\Resource</Filter>
     </ClCompile>
-    <ClCompile Include="Vector3.cpp" />
     <ClCompile Include="XModel.cpp">
       <Filter>Source\Resource\X</Filter>
     </ClCompile>
@@ -116,6 +108,9 @@
     </ClCompile>
     <ClCompile Include="Menu.cpp">
       <Filter>Source\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderMatrix.cpp">
+      <Filter>Source\Renderer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -245,11 +240,7 @@
     <ClInclude Include="IndexBufferWrapper.h">
       <Filter>Header\Renderer\Wrap Containers</Filter>
     </ClInclude>
-    <ClInclude Include="RenderMatrix.h" />
     <ClInclude Include="MaterialWrapper.h">
-      <Filter>Header\Renderer\Wrap Containers</Filter>
-    </ClInclude>
-    <ClInclude Include="MatrixWrapper.h">
       <Filter>Header\Renderer\Wrap Containers</Filter>
     </ClInclude>
     <ClInclude Include="MeshWrapper.h">
@@ -291,6 +282,9 @@
     </ClInclude>
     <ClInclude Include="SceneDefinition.h">
       <Filter>Header\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderMatrix.h">
+      <Filter>Header\Renderer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

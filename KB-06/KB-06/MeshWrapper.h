@@ -15,6 +15,5 @@ namespace Renderer
 	private:
 		LPD3DXMESH* mesh;
 	};
-} 
-
+}
 #endif

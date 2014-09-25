@@ -1,5 +1,6 @@
 #ifndef _RESOURCE_MTLLOADER_H_
 #define _RESOURCE_MTLLOADER_H_
+
 #include "BaseMaterialLoader.h"
 #include "Material.h"
 #include <map>

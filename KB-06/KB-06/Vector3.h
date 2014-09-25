@@ -1,10 +1,10 @@
-#pragma once
+#ifndef _VECTOR3_H_
+#define _VECTOR3_H_
 
 #include <math.h>
 
 class Vector3
 {
-
 public:
 	float x, y, z;
 	//default constructor
@@ -15,24 +15,6 @@ public:
 		z = Z;
 	}
 	~Vector3(){};
-
-	//calculate and return the magnitude of this vector
-	/*float GetMagnitude()
-	{
-		return sqrtf(x * x + y * y + z * z);
-	}*/
-
-	//multiply this vector by a scalar
-	/*Vector3 operator*(float num) const
-	{
-		return Vector3(x * num, y * num, z * num);
-	}*/
-
-	//pass in a vector, pass in a scalar, return the product
-	/*friend Vector3 operator*(float num, Vector3 const &vec)
-	{
-		return Vector3(vec.x * num, vec.y * num, vec.z * num);
-	}*/
 
 	//add two vectors
 	Vector3 operator+(const Vector3 &vec) const
@@ -50,9 +32,6 @@ public:
 	static Vector3 normalize(Vector3 &vec1)
 	{
 		float magnitude = sqrtf(vec1.x * vec1.x + vec1.y * vec1.y + vec1.z * vec1.z);
-		/*vec1.x /= magnitude;
-		vec1.y /= magnitude;
-		vec1.z /= magnitude;*/
 		return Vector3(vec1.x / magnitude, vec1.y / magnitude, vec1.z / magnitude);
 	}
 
@@ -70,3 +49,4 @@ public:
 			vec1.x * vec2.y - vec1.y * vec2.x);
 	}
 };
+#endif

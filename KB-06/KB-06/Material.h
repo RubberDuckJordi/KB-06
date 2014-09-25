@@ -7,7 +7,7 @@
 
 namespace Resource
 {
-	struct Material 
+	struct Material
 	{
 		std::string name;
 		BinaryData defaultTexture;

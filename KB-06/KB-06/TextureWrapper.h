@@ -15,7 +15,5 @@ namespace Renderer
 	private:
 		LPDIRECT3DTEXTURE9* texture;
 	};
-
 }
-
 #endif

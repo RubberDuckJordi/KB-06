@@ -8,8 +8,8 @@
 #include "Material.h"
 #include "BaseMeshLoader.h"
 #include "BaseMaterialLoader.h"
-#include <vector>
 
+#include <vector>
 #include <string>
 
 namespace Resource

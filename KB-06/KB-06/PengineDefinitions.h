@@ -1,8 +1,6 @@
 #ifndef _PENGINEDEFINITIONS_H_
 #define _PENGINEDEFINITIONS_H_
 
-// #include <float.h>
-
 typedef unsigned long       PENGINEDWORD;
 typedef unsigned char       PENGINEBYTE;
 
@@ -88,9 +86,6 @@ enum PENGINEFORMAT
 	FMT_D32F_LOCKABLE = 82,
 	FMT_D24FS8 = 83,
 
-
-
-
 	FMT_L16 = 81,
 
 	FMT_VERTEXDATA = 100,
@@ -115,16 +110,11 @@ enum PENGINEFORMAT
 
 	FMT_CxV8U8 = 117,
 
-
-
-
 	FMT_FORCE_DWORD = 0x7fffffff
 }; // end format definitions
 
 
 // pool definitions
-
-
 enum PENGINEPOOL
 {
 	POOL_DEFAULT = 0,
@@ -136,7 +126,6 @@ enum PENGINEPOOL
 }; // end pool definitions
 
 // render state definitions
-
 enum PENGINERENDERSTATETYPE {
 	PENGINE_ZENABLE = 7,    /* D3DZBUFFERTYPE (or TRUE/FALSE for legacy) */
 	PENGINE_FILLMODE = 8,    /* D3DFILLMODE */
@@ -242,12 +231,6 @@ enum PENGINERENDERSTATETYPE {
 	PENGINE_DESTBLENDALPHA = 208,  /* DST blend factor for the alpha channel when PENGINE_SEPARATEDESTALPHAENABLE is TRUE */
 	PENGINE_BLENDOPALPHA = 209,  /* Blending operation for the alpha channel when PENGINE_SEPARATEDESTALPHAENABLE is TRUE */
 
-
 	PENGINE_FORCE_DWORD = 0x7fffffff, /* force 32-bit size enum */
 }; // end render state definitions
-
-
-
-
-
 #endif // end penginedefinitions

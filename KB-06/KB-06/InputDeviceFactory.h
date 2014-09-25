@@ -6,9 +6,9 @@
 #include "Input.h"
 #include "Window.h"
 
-namespace Input 
+namespace Input
 {
-	class InputDeviceFactory 
+	class InputDeviceFactory
 	{
 	public:
 		InputDeviceFactory();
@@ -19,5 +19,4 @@ namespace Input
 		Logger::Logger* logger;
 	};
 }
-
 #endif

@@ -26,5 +26,4 @@ namespace Scene{
 		Resource::XModel* xModel2; //debug.
 	};
 }
-
 #endif

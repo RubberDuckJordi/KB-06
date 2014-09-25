@@ -28,5 +28,4 @@ namespace Input
 		LPDIRECTINPUTDEVICE8 dInputDevice;
 	};
 }
-
 #endif

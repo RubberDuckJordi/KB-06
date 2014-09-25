@@ -32,21 +32,18 @@ void Input::DirectInputDevice::ReleaseDevice()
 bool Input::DirectInputDevice::AcquireDevice()
 {
 	int times = 5;
-
 	for (int i = 0; i < times; i++)
 	{
 		if (SUCCEEDED(dInputDevice->Acquire()))
 		{
-			logger->Log(Logger::Logger::INFO, "InputManager::InputDevice " + deviceName + " acquired.");
+			logger->Log(Logger::INFO, "InputManager::InputDevice " + deviceName + " acquired.");
 
 			deviceAcquired = true;
 
 			return true;
 		}
 	}
-
 	return false;
-
 }
 
 void Input::DirectInputDevice::SetActionMapping(std::map<Input, int>* p_actionMapping)

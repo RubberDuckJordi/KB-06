@@ -1,4 +1,3 @@
-
 #ifndef __SCENE_SCENE_MANAGER_H__
 #define __SCENE_SCENE_MANAGER_H__
 
@@ -6,6 +5,7 @@
 #include "SceneFactory.h"
 #include "Input.h"
 #include "Renderer.h"
+
 #include <list>
 #include <map>
 
@@ -30,5 +30,4 @@ namespace Scene {
 		Logger::Logger* logger;
 	};
 }
-
 #endif

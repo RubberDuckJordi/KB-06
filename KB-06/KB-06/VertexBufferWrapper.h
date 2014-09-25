@@ -12,10 +12,9 @@ namespace Renderer
 		VertexBufferWrapper::~VertexBufferWrapper();
 		void VertexBufferWrapper::SetVertexBuffer(IDirect3DVertexBuffer9** _VertexBuffer);
 		IDirect3DVertexBuffer9** VertexBufferWrapper::GetVertexBuffer();
+
 	private:
 		IDirect3DVertexBuffer9** VertexBuffer;
 	};
-
 }
-
 #endif

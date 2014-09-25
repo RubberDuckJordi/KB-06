@@ -14,7 +14,7 @@ Input::InputManager::~InputManager()
 
 void Input::InputManager::Initialise(HWND hwnd)
 {
-	logger->Log(Logger::Logger::DEBUG, "InputManager::Initialise");
+	logger->Log(Logger::DEBUG, "InputManager::Initialise");
 	inputDeviceFactory->Initialise(hwnd);
 	inputDevices.push_back(inputDeviceFactory->CreateInputDevice(InputDevice::Type::KEYBOARD));
 	inputDevices.push_back(inputDeviceFactory->CreateInputDevice(InputDevice::Type::MOUSE));
@@ -30,7 +30,7 @@ for pixels when being a mouse movement.
 */
 std::map<Input::Input, long>* Input::InputManager::GetCurrentActions()
 {
-	std::map<Input, long>* actionMapping = new std::map<Input, long>;
+	std::map<Input, long>* actionMapping = new std::map < Input, long > ;
 	std::list<InputDevice*>::iterator itInputDevice;
 
 	//Iterate all InputDevices
@@ -44,7 +44,6 @@ std::map<Input::Input, long>* Input::InputManager::GetCurrentActions()
 			(*actionMapping).insert((*stateValues).begin(), (*stateValues).end());
 		}
 	}
-
 	return actionMapping;
 }
 
@@ -58,7 +57,7 @@ void Input::InputManager::OnWindowCreated(Window::Window* window)
 
 void Input::InputManager::OnWindowFocusGained(Window::Window* window)
 {
-	logger->Log(Logger::Logger::DEBUG, "InputManager::Focus gained");
+	logger->Log(Logger::DEBUG, "InputManager::Focus gained");
 	std::list<InputDevice*>::iterator deviceIt;
 	for (deviceIt = inputDevices.begin(); deviceIt != inputDevices.end(); ++deviceIt)
 	{
@@ -68,7 +67,7 @@ void Input::InputManager::OnWindowFocusGained(Window::Window* window)
 
 void Input::InputManager::OnWindowFocusLost(Window::Window* window)
 {
-	logger->Log(Logger::Logger::DEBUG, "InputManager::Focus lost");
+	logger->Log(Logger::DEBUG, "InputManager::Focus lost");
 	std::list<InputDevice*>::iterator deviceIt;
 	for (deviceIt = inputDevices.begin(); deviceIt != inputDevices.end(); ++deviceIt)
 	{

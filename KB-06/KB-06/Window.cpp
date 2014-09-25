@@ -26,14 +26,14 @@ Window::Window::Window()
 	_dwStyle = WS_OVERLAPPEDWINDOW | WS_VISIBLE;
 	_pszClassName = L"Window";
 	_pszTitle = L"Default title, go set it!";
-};
+}
 
 Window::Window::~Window()
 {
 	//logger->Log(Logger::Logger::INFO, "Destructed window");
 	//Logger::LoggerPool::GetInstance().ReturnLogger(logger);
 	//delete _hwnd;
-};
+}
 
 void Window::Window::SetTitle(char* title)
 {
@@ -46,7 +46,7 @@ void Window::Window::SetTitle(char* title)
 	_pszTitle = wcstring;
 	SetWindowText(_hwnd, wcstring);
 
-//	delete[] wcstring;
+	//	delete[] wcstring;
 }
 
 LRESULT Window::Window::WindowProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
@@ -56,7 +56,6 @@ LRESULT Window::Window::WindowProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lP
 	switch (msg)
 	{
 	case WM_ACTIVATE:
-		
 		for (listenersIt = windowListeners.begin(); listenersIt != windowListeners.end(); ++listenersIt)
 		{
 			if (wParam == WA_INACTIVE)
@@ -86,7 +85,7 @@ LRESULT Window::Window::WindowProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lP
 		return DefWindowProc(hwnd, msg, wParam, lParam);
 	}
 	return 0;
-};
+}
 
 void Window::Window::Resize()
 {
@@ -97,12 +96,12 @@ void Window::Window::Resize()
 		int height = rect.bottom - rect.top;
 		//renderer->setRenderSize(width, height);
 	}
-};
+}
 
 void Window::Window::OnDestroy(HWND hwnd)
 {
 	PostQuitMessage(0);
-};
+}
 
 HWND Window::Window::Create(int x, int y, int nWidth, int nHeight, HWND hParent, HMENU hMenu, HINSTANCE hInstance)
 {
@@ -115,7 +114,7 @@ HWND Window::Window::Create(int x, int y, int nWidth, int nHeight, HWND hParent,
 	_hwnd = CreateWindowEx(_dwExtendedStyle, _pszClassName, _pszTitle, _dwStyle, x, y, nWidth, nHeight, hParent, hMenu, hInstance, (void*)this);
 	state = normal;
 	return _hwnd;
-};
+}
 
 LRESULT CALLBACK Window::Window::BaseWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
@@ -135,7 +134,7 @@ LRESULT CALLBACK Window::Window::BaseWndProc(HWND hwnd, UINT msg, WPARAM wParam,
 		return pObj->WindowProc(hwnd, msg, wParam, lParam);
 	}
 	return 0;
-};
+}
 
 void Window::Window::render(Scene::Scene *scene)
 {
@@ -152,7 +151,7 @@ void Window::Window::render(Scene::Scene *scene)
 	EndPaint(_hwnd, &PaintStruct);
 	ReleaseDC(_hwnd, hDC);
 	//renderer->Render(_hwnd, scene);
-};
+}
 
 HWND Window::Window::GetHWND()
 {

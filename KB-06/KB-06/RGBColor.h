@@ -8,5 +8,4 @@ namespace Resource
 		float r, g, b;
 	};
 }
-
 #endif

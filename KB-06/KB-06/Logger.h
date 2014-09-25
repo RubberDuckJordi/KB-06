@@ -6,20 +6,21 @@
 #include <map>
 #include <fstream>
 
-namespace Logger 
+namespace Logger
 {
+	enum LogLevel{
+		NONE = 0,
+		ERR = 1,
+		WARNING = 2,
+		DEBUG = 3,
+		INFO = 4
+	};
+
 	class Logger
 	{
 	public:
 		~Logger();
 		Logger();
-		static enum LogLevel{
-			NONE = 0,
-			ERR = 1,
-			WARNING = 2,
-			DEBUG = 3,
-			INFO = 4
-		};
 
 		void NewFile();
 		void Log(int logType, char* text);
@@ -27,7 +28,9 @@ namespace Logger
 		void LogMemoryDump(int logType, void* const p_address, const int p_size, char* const p_name);
 		void SetLogLevel(int logLevel);
 		void Reset();
+
 	private:
+		std::ofstream outfile;
 		int logLevel = INFO;
 		int consoleColorCodeInfo = gray;
 		int consoleColorCodeDebug = white;

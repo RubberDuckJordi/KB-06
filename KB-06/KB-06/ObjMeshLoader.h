@@ -1,5 +1,6 @@
 #ifndef _RESOURCE_OBJFACTORY_H_
 #define _RESOURCE_OBJFACTORY_H_
+
 #include "BaseMeshLoader.h"
 
 namespace Resource
@@ -11,5 +12,4 @@ namespace Resource
 		std::string GetExtension();
 	};
 }
-
 #endif

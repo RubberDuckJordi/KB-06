@@ -30,7 +30,6 @@ namespace Input
 		bool initialised;
 
 		InputDeviceFactory* inputDeviceFactory;
-
 	};
 }
 #endif

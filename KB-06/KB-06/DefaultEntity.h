@@ -21,7 +21,5 @@ namespace Scene{
 		Resource::XModel* xModel; //debug
 		Resource::Mesh* myMesh;
 	};
-
 }
-
 #endif

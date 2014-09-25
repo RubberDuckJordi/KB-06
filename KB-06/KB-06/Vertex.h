@@ -3,10 +3,9 @@
 
 namespace Resource
 {
-	struct Vertex 
+	struct Vertex
 	{
 		float x, y, z, w;
 	};
 }
-
 #endif

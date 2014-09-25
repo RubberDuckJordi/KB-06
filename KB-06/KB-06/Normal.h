@@ -3,10 +3,9 @@
 
 namespace Resource
 {
-	struct Normal 
+	struct Normal
 	{
 		float x, y, z;
 	};
 }
-
 #endif

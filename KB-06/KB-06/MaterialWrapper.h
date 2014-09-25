@@ -15,7 +15,5 @@ namespace Renderer
 	private:
 		D3DMATERIAL9* material;
 	};
-
 }
-
 #endif

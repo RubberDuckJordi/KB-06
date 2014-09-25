@@ -4,11 +4,10 @@
 
 Scene::EntityCamera::EntityCamera()
 {
-	RenderMatrix* temp = new RenderMatrix();
+	Renderer::RenderMatrix* temp = new Renderer::RenderMatrix();
 	temp->CreateMatrix(0, 0, 0, 0, 0, 0, 1, 1, 1, temp->theMatrix);
 	rotationMatrix = temp->theMatrix;
 }
-
 
 Scene::EntityCamera::~EntityCamera()
 {
@@ -17,36 +16,15 @@ Scene::EntityCamera::~EntityCamera()
 
 void Scene::EntityCamera::UpdateLogic(std::map<Input::Input, long>* actions)
 {
-
 	typedef std::map<Input::Input, long>::iterator it_type;
-	for (it_type iterator = (*actions).begin(); iterator != (*actions).end(); iterator++) {
-		//logger->Log(Logger::Logger::INFO, "changing camera view");
+	for (it_type iterator = (*actions).begin(); iterator != (*actions).end(); iterator++)
+	{
 		float speed = static_cast<float>(iterator->second);
 
 		if (useInput)
 		{
 			switch (iterator->first)
 			{
-				/*case Input::MOUSE_X:
-				if (speed < 0)
-				{
-				this->AddRotation(0.0f, 1.0f, 0.0f);
-				}
-				else
-				{
-				this->AddRotation(0.0f, -1.0f, 0.0f);
-				}
-				break;
-				case Input::MOUSE_Y:
-				if (speed > 0)
-				{
-				this->AddRotation(1.0f, 0.0f, 0.0f);
-				}
-				else
-				{
-				this->AddRotation(-1.0f, 0.0f, 0.0f);
-				}
-				break;*/
 			case Input::KEY_S:
 				this->AddPosition(0.0f, 0.0f, 0.5f);
 				//SetLookAtPosition(lookAtPosition.x, lookAtPosition.y, lookAtPosition.z - 1.0f, 0.0f);
@@ -103,7 +81,7 @@ void Scene::EntityCamera::UpdateLogic(std::map<Input::Input, long>* actions)
 			default:
 				break;
 			}
-		} 
+		}
 		else
 		{
 			switch (iterator->first)
@@ -133,9 +111,7 @@ void Scene::EntityCamera::UpdateLogic(std::map<Input::Input, long>* actions)
 			}
 		}
 	}
-
 }
-
 
 // Camera's worden niet getekend
 void Scene::EntityCamera::Draw(Renderer::Renderer* renderer)
@@ -143,35 +119,14 @@ void Scene::EntityCamera::Draw(Renderer::Renderer* renderer)
 	bool debug = true;
 	if (debug)
 	{
-		//teken een wireframe ofzo
-		/*if (myMesh != NULL)
-		{
-			RenderMatrix* lookAt = new RenderMatrix();//should be global
-			lookAt->CreateMatrix(lookAtPosition.x, lookAtPosition.y, lookAtPosition.z, 0.0f, 0.0f, 0.0f, 0.75f, 0.75f, 0.75f, lookAt->theMatrix);//should only be called when needed (when any value has updated)
-
-			renderer->SetActiveMatrix(lookAt->theMatrix);//should be called every frame
-			renderer->Draw(myMesh);
-
-			RenderMatrix* cameraM = new RenderMatrix();//should be global
-			cameraM->CreateMatrix(position.x, position.y, position.z, 0, 0, 0, 0.75f, 0.75f, 0.75f, cameraM->theMatrix);//should only be called when needed (when any value has updated)
-			cameraM->MultiplyMatrices(rotationMatrix, cameraM->theMatrix, cameraM->theMatrix);
-
-			renderer->SetActiveMatrix(cameraM->theMatrix);//should be called every frame
-			renderer->Draw(myMesh2);
-		}
-		else
-		{
-			logger->Log(Logger::Logger::WARNING, "No mesh for entity!");
-		}*/
-
 		if (xModel != NULL)
 		{
-			RenderMatrix* lookAt = new RenderMatrix();//should be global
+			Renderer::RenderMatrix* lookAt = new Renderer::RenderMatrix();//should be global
 			lookAt->CreateMatrix(lookAtPosition.x, lookAtPosition.y, lookAtPosition.z, 0.0f, 0.0f, 0.0f, 0.5f, 0.5f, 0.5f, lookAt->theMatrix);//should only be called when needed (when any value has updated)
 			renderer->SetActiveMatrix(lookAt->theMatrix);//should be called every frame
 			renderer->Draw(myMesh);
 
-			RenderMatrix* cameraM = new RenderMatrix();//should be global
+			Renderer::RenderMatrix* cameraM = new Renderer::RenderMatrix();//should be global
 			cameraM->CreateMatrix(position.x, position.y, position.z, 0, 0, 0, 0.1f, 0.1f, 0.1f, cameraM->theMatrix);//should only be called when needed (when any value has updated)
 			cameraM->MultiplyMatrices(rotationMatrix, cameraM->theMatrix, cameraM->theMatrix);
 
@@ -183,7 +138,7 @@ void Scene::EntityCamera::Draw(Renderer::Renderer* renderer)
 
 			Renderer::TextureWrapper* textureWrapper;
 			int textureCount;
-			
+
 
 			renderer->SetMaterial(materialWrapper);
 			xModel->GetTextures(textureWrapper, textureCount);
@@ -202,7 +157,7 @@ void Scene::EntityCamera::Draw(Renderer::Renderer* renderer)
 		}
 		else
 		{
-			logger->Log(Logger::Logger::WARNING, "No xModel for entity!");
+			logger->Log(Logger::WARNING, "No xModel for entity!");
 		}
 	}
 }
@@ -228,53 +183,27 @@ void Scene::EntityCamera::SetLookAtPosition(float x, float y, float z, float rol
 	Vector3 xaxis = Vector3::normalize(Vector3::cross(objectUpVector, zaxis));
 	Vector3 yaxis = Vector3::cross(zaxis, xaxis);
 
-	/*PEngineMatrix pm = {
-		xaxis.x, yaxis.x, zaxis.x, 0,
-		xaxis.y, yaxis.y, zaxis.y, 0,
-		xaxis.z, yaxis.z, zaxis.z, 0,
-		0, 0, 0, 1
-	};*/
+	rotationMatrix->_11 = xaxis.x;
+	rotationMatrix->_12 = xaxis.y;
+	rotationMatrix->_13 = xaxis.z;
+	rotationMatrix->_14 = 0.0f;
 
-	PEngineMatrix pm = {
-		xaxis.x, xaxis.y, xaxis.z, 0,
-		yaxis.x, yaxis.y, yaxis.z, 0,
-		zaxis.x, zaxis.y, zaxis.z, 0,
-		0, 0, 0, 1
-	};
+	rotationMatrix->_21 = yaxis.x;
+	rotationMatrix->_22 = yaxis.y;
+	rotationMatrix->_23 = yaxis.z;
+	rotationMatrix->_24 = 0.0f;
 
-	rotationMatrix->_11 = pm._11;
-	rotationMatrix->_12 = pm._12;
-	rotationMatrix->_13 = pm._13;
-	rotationMatrix->_14 = pm._14;
+	rotationMatrix->_31 = zaxis.x;
+	rotationMatrix->_32 = zaxis.y;
+	rotationMatrix->_33 = zaxis.z;
+	rotationMatrix->_34 = 0.0f;
 
-	rotationMatrix->_21 = pm._21;
-	rotationMatrix->_22 = pm._22;
-	rotationMatrix->_23 = pm._23;
-	rotationMatrix->_24 = pm._24;
+	rotationMatrix->_41 = 0.0f;
+	rotationMatrix->_42 = 0.0f;
+	rotationMatrix->_43 = 0.0f;
+	rotationMatrix->_44 = 1.0f;
 
-	rotationMatrix->_31 = pm._31;
-	rotationMatrix->_32 = pm._32;
-	rotationMatrix->_33 = pm._33;
-	rotationMatrix->_34 = pm._34;
-
-	rotationMatrix->_41 = pm._41;
-	rotationMatrix->_42 = pm._42;
-	rotationMatrix->_43 = pm._43;
-	rotationMatrix->_44 = pm._44;
-
-	/*std::ostringstream oss;
-	oss << "\nDirectX:\n"
-	<< "[" << rotationMatrix->_11 << ",\t" << rotationMatrix->_12 << ",\t" << rotationMatrix->_13 << ",\t" << rotationMatrix->_14 << "]\n"
-	<< "[" << rotationMatrix->_21 << ",\t" << rotationMatrix->_22 << ",\t" << rotationMatrix->_23 << ",\t" << rotationMatrix->_24 << "]\n"
-	<< "[" << rotationMatrix->_31 << ",\t" << rotationMatrix->_32 << ",\t" << rotationMatrix->_33 << ",\t" << rotationMatrix->_34 << "]\n"
-	<< "[" << rotationMatrix->_41 << ",\t" << rotationMatrix->_42 << ",\t" << rotationMatrix->_43 << ",\t" << rotationMatrix->_44 << "]\n"
-	<< "Die van mij:\n"
-	<< "[" << pm._11 << ",\t" << pm._12 << ",\t" << pm._13 << ",\t" << pm._14 << "]\n"
-	<< "[" << pm._21 << ",\t" << pm._22 << ",\t" << pm._23 << ",\t" << pm._24 << "]\n"
-	<< "[" << pm._31 << ",\t" << pm._32 << ",\t" << pm._33 << ",\t" << pm._34 << "]\n"
-	<< "[" << pm._41 << ",\t" << pm._42 << ",\t" << pm._43 << ",\t" << pm._44 << "]\n"
-	;
-	logger->Log(1, oss.str());*/
+	//RenderMatrix::PrintMatrix(rotationMatrix);
 
 	lookAtPosition = { x, y, z };
 }

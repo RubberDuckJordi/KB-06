@@ -1,25 +1,19 @@
-/*!
-3D Engine
-Window.h
-Purpose: Keeping information concerning windows.
-
-@author Patrick, Nick, Robert, Jordi
-@version 1.0
-*/
-
 #ifndef _WINDOW_WINDOW_H_
 #define _WINDOW_WINDOW_H_
 
-#include <Windows.h>
-//#include "SceneManager.h"
 #include "Scene.h"
 #include "Renderer.h"
 #include "Logger.h"
 #include "WindowListener.h"
 
-namespace Window 
+#include <Windows.h>
+
+namespace Window
 {
-	enum WindowState { fullscreen, maximized, normal, minimized, closed };
+	enum WindowState
+	{
+		fullscreen, maximized, normal, minimized, closed
+	};
 
 	class Window
 	{

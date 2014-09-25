@@ -1,9 +1,11 @@
-#pragma once
+#ifndef _PENGINE_H_
+#define _PENGINE_H_
 
 #include "SceneManager.h"
 #include "InputManager.h"
 #include "ResourceManager.h"
 #include "WindowManager.h"
+
 class PEngine
 {
 public:
@@ -16,6 +18,7 @@ public:
 	Input::InputManager* GetInputManager();
 	Renderer::Renderer* GetRenderer();
 	void Init();
+
 private:
 	Scene::SceneManager* sceneManager;
 	Window::WindowManager* windowManager;
@@ -24,4 +27,4 @@ private:
 	Renderer::Renderer* renderer;
 	Logger::Logger* logger;
 };
-
+#endif

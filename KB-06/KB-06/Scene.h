@@ -8,9 +8,9 @@
 #include "LoggerPool.h"
 #include "Input.h"
 
-namespace Scene 
+namespace Scene
 {
-	class Scene 
+	class Scene
 	{
 	public:
 		Scene();

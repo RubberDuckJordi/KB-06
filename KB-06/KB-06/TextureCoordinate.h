@@ -3,10 +3,9 @@
 
 namespace Resource
 {
-	struct TextureCoordinate 
+	struct TextureCoordinate
 	{
 		float u, v, w;
 	};
 }
-
 #endif

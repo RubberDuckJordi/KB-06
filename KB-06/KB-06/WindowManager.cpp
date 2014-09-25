@@ -1,18 +1,19 @@
 #include "WindowManager.h"
-#include <string>
 #include "LoggerPool.h"
-#include <sstream>
 #include "stdafx.h"
+
+#include <string>
+#include <sstream>
 
 Window::WindowManager::WindowManager()
 {
 	logger = Logger::LoggerPool::GetInstance().GetLogger();
 }
 
-	Window::WindowManager::WindowManager(Scene::SceneManager *sManager)
+Window::WindowManager::WindowManager(Scene::SceneManager *sManager)
 {
 	sceneManager = sManager;
-};
+}
 
 Window::WindowManager::~WindowManager()
 {
@@ -21,9 +22,9 @@ Window::WindowManager::~WindowManager()
 		delete windows.back(), windows.pop_back();
 	}
 	delete sceneManager;
-	logger->Log(Logger::Logger::INFO, "WindowManager destructed");
+	logger->Log(Logger::INFO, "WindowManager destructed");
 	Logger::LoggerPool::GetInstance().ReturnLogger(logger);
-};
+}
 
 HWND Window::WindowManager::NewWindow(int x, int y, int width, int height)
 {
@@ -33,7 +34,7 @@ HWND Window::WindowManager::NewWindow(int x, int y, int width, int height)
 
 	if (hwnd == NULL)
 	{
-		logger->Log(Logger::Logger::ERR, "Could not make window!");
+		logger->Log(Logger::ERR, "Could not make window!");
 		return NULL;
 	}
 
@@ -48,7 +49,7 @@ HWND Window::WindowManager::NewWindow(int x, int y, int width, int height)
 	}
 
 	return hwnd;
-};
+}
 
 void Window::WindowManager::UpdateWindows()
 {
@@ -61,11 +62,10 @@ void Window::WindowManager::UpdateWindows()
 
 	/*  Window does not render; See renderer
 	for (long index = 0; index < (long)windows.size(); ++index) {
-		windows.at(index)->render(NULL);// Todo: get the scene that has to be rendered in this window...
+	windows.at(index)->render(NULL);// Todo: get the scene that has to be rendered in this window...
 	}
 	*/
-
-};
+}
 
 bool Window::WindowManager::HasActiveWindow()
 {
@@ -73,14 +73,14 @@ bool Window::WindowManager::HasActiveWindow()
 		//windows.at(index)->render(NULL);// Todo: get the scene that has to be rendered in this window...
 		if (windows.at(index)->state == closed)
 		{
-			//delete window
-			delete windows.at(index);
-			windows.erase(index);
+		//delete window
+		delete windows.at(index);
+		windows.erase(index);
 		}
-	}*/
+		}*/
 
 	for (std::vector<Window*>::iterator it = windows.begin(); it != windows.end();) { // note the missing ++iter !; noted, does not work properly, attempts to destroy non instatiated objects
-		
+
 		if ((*it)->GetWindowState() == closed)
 		{
 			//delete window
@@ -97,16 +97,17 @@ bool Window::WindowManager::HasActiveWindow()
 		return true;
 	}
 	return false;
-};
+}
 
 Window::Window* Window::WindowManager::GetLastWindow()
 {
 	return windows.back();
-};
+}
 
 Window::Window* Window::WindowManager::GetWindowByHWND(HWND hwnd)
 {
-	for (std::vector<Window*>::iterator it = windows.begin(); it != windows.end();) { // note the missing ++iter !
+	for (std::vector<Window*>::iterator it = windows.begin(); it != windows.end();) // note the missing ++iter !
+	{
 
 		if ((*it)->GetHWND() == hwnd)
 		{
@@ -115,7 +116,7 @@ Window::Window* Window::WindowManager::GetWindowByHWND(HWND hwnd)
 	}
 
 	return NULL;
-};
+}
 
 std::vector<Window::Window*>* Window::WindowManager::GetAllWindows()
 {

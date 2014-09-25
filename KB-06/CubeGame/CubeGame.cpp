@@ -31,15 +31,14 @@ int _tmain(int argc, _TCHAR* argv[])
 
 	Resource::XModel* xmodel2 = new Resource::XModel();
 	xmodelLoader->LoadXModel("resources/camera.x", static_cast<Renderer::DirectXRenderer*>(pEngine.GetRenderer()), xmodel2);
-	
 
 	Resource::RGBAColor color;
 	color.r = 1.0f;
 	color.g = 0.25f;
 	color.b = 1.0f;
 	color.a = 1.0f;
-	Resource::Mesh* mesh = pEngine.GetResourceManager()->LoadMesh("resources/cube.obj.mesh", "obj.mesh");
 
+	Resource::Mesh* mesh = pEngine.GetResourceManager()->LoadMesh("resources/cube.obj.mesh", "obj.mesh");
 	Resource::Mesh* mesh2 = pEngine.GetResourceManager()->LoadMesh("resources/cubeClone.obj.mesh", "obj.mesh");
 	Resource::Mesh* mesh3 = pEngine.GetResourceManager()->LoadMesh("resources/cubeCloneClone.obj.mesh", "obj.mesh");
 
@@ -53,15 +52,13 @@ int _tmain(int argc, _TCHAR* argv[])
 	pEngine.GetSceneManager()->AddSceneFactory("iets", sceneFactory);
 	Scene::Scene* scene = pEngine.GetSceneManager()->AddScene("iets");
 	pEngine.GetSceneManager()->SetCurrentScene(scene);
-	
-	//pEngine.GetRenderer()->SetViewMatrix(0.0f, 0.0f, -2.0f, 0.0f, 0.0f, 0.0f);
-	pEngine.GetRenderer()->SetProjectionMatrix(3.14159265358979323846f / 4, 100.0f);
+
+	pEngine.GetRenderer()->SetProjectionMatrix(M_PI / 4, 100.0f);
 	pEngine.GetRenderer()->SetDefaultRenderStates();
 	while (pEngine.GetWindowManager()->HasActiveWindow())
 	{
-
 		pEngine.GetWindowManager()->UpdateWindows();
-		
+
 		// Logics
 		std::map<Input::Input, long>* actions = pEngine.GetInputManager()->GetCurrentActions();
 

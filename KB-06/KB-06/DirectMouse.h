@@ -19,7 +19,6 @@ namespace Input
 		void OnWindowFocusGained(Window::Window* window);
 
 	private:
-
 		DIMOUSESTATE2 dIMouseState;
 		long previousXPos;
 		long previousYPos;

@@ -7,4 +7,5 @@ Scene::SceneFactory::SceneFactory()
 
 Scene::SceneFactory::~SceneFactory()
 {
+
 }

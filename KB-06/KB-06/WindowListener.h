@@ -15,5 +15,4 @@ namespace Window
 		virtual void OnWindowCreated(Window* window) = 0;
 	};
 }
-
 #endif

@@ -3,10 +3,9 @@
 
 namespace Resource
 {
-	struct ParameterSpaceVertex 
+	struct ParameterSpaceVertex
 	{
 		float u, v, w;
 	};
 }
-
 #endif
