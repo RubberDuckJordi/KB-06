@@ -114,6 +114,9 @@
     <ClCompile Include="XModelLoader.cpp">
       <Filter>Source\Resource\X</Filter>
     </ClCompile>
+    <ClCompile Include="Menu.cpp">
+      <Filter>Source\Scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DefaultEntity.h">
@@ -273,15 +276,21 @@
     <ClInclude Include="SceneLoader.h">
       <Filter>Header\Resource</Filter>
     </ClInclude>
-    <ClInclude Include="SceneDefinition.h">
-      <Filter>Header\Resource\Mesh</Filter>
-    </ClInclude>
     <ClInclude Include="Vector3.h" />
     <ClInclude Include="XModel.h">
       <Filter>Header\Resource\X</Filter>
     </ClInclude>
     <ClInclude Include="XModelLoader.h">
       <Filter>Header\Resource\X</Filter>
+    </ClInclude>
+    <ClInclude Include="Menu.h">
+      <Filter>Header\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuButton.h">
+      <Filter>Header\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneDefinition.h">
+      <Filter>Header\Scene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
