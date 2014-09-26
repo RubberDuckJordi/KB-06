@@ -8,7 +8,6 @@
 #define _TYPES_H_
 
 //#include "ToolBox\MyTrace.h"//This is for logging... we already have that
-#include "3DMath.h"
 
 #include <string>
 

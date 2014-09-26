@@ -301,9 +301,6 @@
     <ClInclude Include="Types.h">
       <Filter>Header\Resource\RobertX\Framework</Filter>
     </ClInclude>
-    <ClInclude Include="3DMath.h">
-      <Filter>Header\Resource\RobertX\Framework</Filter>
-    </ClInclude>
     <ClInclude Include="XMaterial.h">
       <Filter>Header\Resource\RobertX\Framework</Filter>
     </ClInclude>
@@ -312,6 +309,21 @@
     </ClInclude>
     <ClInclude Include="XFileStructs.h">
       <Filter>Header\Resource\RobertX\ToolBox</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector.h">
+      <Filter>Header\Resource\RobertX\Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="Array.h">
+      <Filter>Header\Resource\RobertX\Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="Matrix.h">
+      <Filter>Header\Resource\RobertX</Filter>
+    </ClInclude>
+    <ClInclude Include="Quaternion.h">
+      <Filter>Header\Resource\RobertX</Filter>
+    </ClInclude>
+    <ClInclude Include="TRect.h">
+      <Filter>Header\Resource\RobertX\Framework</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

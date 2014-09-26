@@ -1,9 +1,11 @@
-#pragma once
+#ifndef _XMESH_H_
+#define _XMESH_H_
 
 #include "Types.h"
-#include "3DMath.h"
 //#include "framework\frm_Quaternion.h"
 #include "XMaterial.h"
+#include "Matrix.h"
+#include "Quaternion.h"
 
 #define DEBUG
 //#include "Toolbox\Mytrace.h"
@@ -176,3 +178,4 @@ public:
 private:
 	void UpdateBoneIndices(Bone* &pBone);
 };
+#endif

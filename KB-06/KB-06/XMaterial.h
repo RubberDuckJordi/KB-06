@@ -2,6 +2,7 @@
 #define _XMATERIAL_H
 
 #include "Types.h"
+#include "Array.h"
 
 class XMaterial
 {

@@ -86,7 +86,7 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="3DMath.h" />
+    <ClInclude Include="Array.h" />
     <ClInclude Include="BaseMaterialLoader.h" />
     <ClInclude Include="BaseMeshLoader.h" />
     <ClInclude Include="EntityCamera.h" />
@@ -94,11 +94,13 @@
     <ClInclude Include="IndexBufferWrapper.h" />
     <ClInclude Include="IO.h" />
     <ClInclude Include="MaterialWrapper.h" />
+    <ClInclude Include="Matrix.h" />
     <ClInclude Include="Menu.h" />
     <ClInclude Include="MenuButton.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="MeshWrapper.h" />
     <ClInclude Include="ObjMeshLoader.h" />
+    <ClInclude Include="Quaternion.h" />
     <ClInclude Include="RenderMatrix.h" />
     <ClInclude Include="RGBColor.h" />
     <ClInclude Include="PEngine.h" />
@@ -139,7 +141,9 @@
     <ClInclude Include="BinaryData.h" />
     <ClInclude Include="TextureCoordinate.h" />
     <ClInclude Include="TextureWrapper.h" />
+    <ClInclude Include="TRect.h" />
     <ClInclude Include="Types.h" />
+    <ClInclude Include="Vector.h" />
     <ClInclude Include="Vector3.h" />
     <ClInclude Include="Vertex.h" />
     <ClInclude Include="VertexBufferWrapper.h" />
