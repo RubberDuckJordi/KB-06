@@ -8,7 +8,7 @@
 
 #include <Windows.h>
 
-namespace Window
+namespace pengine
 {
 	enum WindowState
 	{
@@ -44,7 +44,7 @@ namespace Window
 
 		@param *scene: The scene to be rendered.
 		*/
-		virtual void render(Scene::Scene *scene);
+		virtual void render(Scene *scene);
 
 		void AddWindowListener(WindowListener* p_windowListener);
 		void RemoveWindowListener(WindowListener* p_windowListener);
@@ -63,7 +63,7 @@ namespace Window
 		std::list<WindowListener*> windowListeners;
 		virtual void OnDestroy(HWND hwnd);
 
-		Logger::Logger* logger;
+		Logger* logger;
 	};
 }
 #endif

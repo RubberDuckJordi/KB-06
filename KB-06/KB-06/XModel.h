@@ -5,29 +5,29 @@
 #include "TextureWrapper.h"
 #include "MaterialWrapper.h"
 
-namespace Resource
+namespace pengine
 {
 	class XModel
 	{
 	public:
 		XModel();
 		~XModel();
-		Renderer::MeshWrapper* GetMesh();
-		void SetMesh(Renderer::MeshWrapper* p_mesh);
+		MeshWrapper* GetMesh();
+		void SetMesh(MeshWrapper* p_mesh);
 		int GetTextureCount();
-		void GetTextures(Renderer::TextureWrapper*& p_textures, int& p_textureCount);
-		void SetTextures(Renderer::TextureWrapper* p_textures, int p_textureCount);
-		Renderer::TextureWrapper* GetTexture(int p_textureIndex);
+		void GetTextures(TextureWrapper*& p_textures, int& p_textureCount);
+		void SetTextures(TextureWrapper* p_textures, int p_textureCount);
+		TextureWrapper* GetTexture(int p_textureIndex);
 		int GetMaterialCount();
-		void GetMaterials(Renderer::MaterialWrapper*& p_material, int& p_materialCount);
-		void SetMaterials(Renderer::MaterialWrapper* p_material, int p_materialCount);
+		void GetMaterials(MaterialWrapper*& p_material, int& p_materialCount);
+		void SetMaterials(MaterialWrapper* p_material, int p_materialCount);
 
 	private:
-		Renderer::MeshWrapper* mesh;
+		MeshWrapper* mesh;
 		int materialCount;
-		Renderer::MaterialWrapper* materials;
+		MaterialWrapper* materials;
 		int textureCount;
-		Renderer::TextureWrapper* textures;
+		TextureWrapper* textures;
 	};
 }
 #endif

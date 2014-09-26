@@ -4,7 +4,7 @@
 #include <vector>
 #include "Subset.h"
 
-namespace Resource
+namespace pengine
 {
 	struct Mesh
 	{

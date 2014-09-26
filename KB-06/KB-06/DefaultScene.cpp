@@ -2,17 +2,17 @@
 #include "Logger.h"
 #include "LoggerPool.h"
 
-Scene::DefaultScene::DefaultScene()
+pengine::DefaultScene::DefaultScene()
 {
 
 }
 
-Scene::DefaultScene::~DefaultScene()
+pengine::DefaultScene::~DefaultScene()
 {
 
 }
 
-void Scene::DefaultScene::Update(std::map<Input::Input, long>* actions)
+void pengine::DefaultScene::Update(std::map<Input, long>* actions)
 {
 	Scene::Update(actions);
 }

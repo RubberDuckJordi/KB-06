@@ -3,15 +3,15 @@
 
 #include <d3dx9.h>
 
-namespace Renderer
+namespace pengine
 {
 	class TextureWrapper
 	{
 	public:
-		TextureWrapper::TextureWrapper(LPDIRECT3DTEXTURE9* _texture);
-		TextureWrapper::~TextureWrapper();
-		void TextureWrapper::SetTexture(LPDIRECT3DTEXTURE9* _texture);
-		LPDIRECT3DTEXTURE9* TextureWrapper::GetTexture();
+		TextureWrapper(LPDIRECT3DTEXTURE9* _texture);
+		~TextureWrapper();
+		void SetTexture(LPDIRECT3DTEXTURE9* _texture);
+		LPDIRECT3DTEXTURE9* GetTexture();
 	private:
 		LPDIRECT3DTEXTURE9* texture;
 	};

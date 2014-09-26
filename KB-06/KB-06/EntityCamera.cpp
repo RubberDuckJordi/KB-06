@@ -2,21 +2,21 @@
 #include "Vector3.h"
 #include <sstream>
 
-Scene::EntityCamera::EntityCamera()
+pengine::EntityCamera::EntityCamera()
 {
-	Renderer::RenderMatrix* temp = new Renderer::RenderMatrix();
+	RenderMatrix* temp = new RenderMatrix();
 	temp->CreateMatrix(0, 0, 0, 0, 0, 0, 1, 1, 1, temp->theMatrix);
 	rotationMatrix = temp->theMatrix;
 }
 
-Scene::EntityCamera::~EntityCamera()
+pengine::EntityCamera::~EntityCamera()
 {
 
 }
 
-void Scene::EntityCamera::UpdateLogic(std::map<Input::Input, long>* actions)
+void pengine::EntityCamera::UpdateLogic(std::map<Input, long>* actions)
 {
-	typedef std::map<Input::Input, long>::iterator it_type;
+	typedef std::map<Input, long>::iterator it_type;
 	for (it_type iterator = (*actions).begin(); iterator != (*actions).end(); iterator++)
 	{
 		float speed = static_cast<float>(iterator->second);
@@ -114,29 +114,29 @@ void Scene::EntityCamera::UpdateLogic(std::map<Input::Input, long>* actions)
 }
 
 // Camera's worden niet getekend
-void Scene::EntityCamera::Draw(Renderer::Renderer* renderer)
+void pengine::EntityCamera::Draw(pengine::Renderer* renderer)
 {
 	bool debug = true;
 	if (debug)
 	{
 		if (xModel != NULL)
 		{
-			Renderer::RenderMatrix* lookAt = new Renderer::RenderMatrix();//should be global
+			RenderMatrix* lookAt = new RenderMatrix();//should be global
 			lookAt->CreateMatrix(lookAtPosition.x, lookAtPosition.y, lookAtPosition.z, 0.0f, 0.0f, 0.0f, 0.5f, 0.5f, 0.5f, lookAt->theMatrix);//should only be called when needed (when any value has updated)
 			renderer->SetActiveMatrix(lookAt->theMatrix);//should be called every frame
 			renderer->Draw(myMesh);
 
-			Renderer::RenderMatrix* cameraM = new Renderer::RenderMatrix();//should be global
+			RenderMatrix* cameraM = new RenderMatrix();//should be global
 			cameraM->CreateMatrix(position.x, position.y, position.z, 0, 0, 0, 0.1f, 0.1f, 0.1f, cameraM->theMatrix);//should only be called when needed (when any value has updated)
 			cameraM->MultiplyMatrices(rotationMatrix, cameraM->theMatrix, cameraM->theMatrix);
 
 			renderer->SetActiveMatrix(cameraM->theMatrix);//should be called every frame
 
-			Renderer::MaterialWrapper* materialWrapper;
+			MaterialWrapper* materialWrapper;
 			int materialCount;
 			xModel->GetMaterials(materialWrapper, materialCount);
 
-			Renderer::TextureWrapper* textureWrapper;
+			TextureWrapper* textureWrapper;
 			int textureCount;
 
 
@@ -148,8 +148,8 @@ void Scene::EntityCamera::Draw(Renderer::Renderer* renderer)
 
 			LPDIRECT3DTEXTURE9* textureArray = textureWrapper->GetTexture();
 
-			Renderer::TextureWrapper* textureWrapperIndex = new Renderer::TextureWrapper(&textureWrapper->GetTexture()[1]);
-			Renderer::MaterialWrapper* materialWrapperIndex = new Renderer::MaterialWrapper(&materialWrapper->GetMaterial()[1]);
+			TextureWrapper* textureWrapperIndex = new TextureWrapper(&textureWrapper->GetTexture()[1]);
+			MaterialWrapper* materialWrapperIndex = new MaterialWrapper(&materialWrapper->GetMaterial()[1]);
 
 			renderer->SetTexture(textureWrapperIndex);//how do I get the second texture?
 			renderer->SetMaterial(materialWrapperIndex);
@@ -162,18 +162,18 @@ void Scene::EntityCamera::Draw(Renderer::Renderer* renderer)
 	}
 }
 
-Resource::Vertex* Scene::EntityCamera::GetPosition()
+pengine::Vertex* pengine::EntityCamera::GetPosition()
 {
 	return &position;
 }
 
-CameraData Scene::EntityCamera::GetCameraData()
+pengine::CameraData pengine::EntityCamera::GetCameraData()
 {
 	CameraData d = { position.x, position.y, position.z, lookAtPosition.x, lookAtPosition.y, lookAtPosition.z, 0.0f, 1.0f, 0.0f };
 	return d;
 }
 
-void Scene::EntityCamera::SetLookAtPosition(float x, float y, float z, float rollDegrees)
+void pengine::EntityCamera::SetLookAtPosition(float x, float y, float z, float rollDegrees)
 {
 	Vector3 lookat = { lookAtPosition.x, lookAtPosition.y, lookAtPosition.z };
 	Vector3 pos = { position.x, position.y, position.z };
@@ -208,7 +208,7 @@ void Scene::EntityCamera::SetLookAtPosition(float x, float y, float z, float rol
 	lookAtPosition = { x, y, z };
 }
 
-void Scene::EntityCamera::SetXModel(Resource::XModel* p_xmodel)
+void pengine::EntityCamera::SetXModel(pengine::XModel* p_xmodel)
 {
 	xModel = p_xmodel;
 }

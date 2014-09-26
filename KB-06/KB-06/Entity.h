@@ -6,7 +6,7 @@
 #include "logger.h"
 #include "Input.h"
 
-namespace Scene
+namespace pengine
 {
 	class Entity
 	{
@@ -24,17 +24,17 @@ namespace Scene
 		void AddScale(float scaleX, float scaleY, float scaleZ);
 		void AddAll(float x, float y, float z, float yaw, float pitch, float roll, float scaleX, float scaleY, float scaleZ);
 
-		virtual void Draw(Renderer::Renderer* renderer) = 0;
-		virtual void UpdateLogic(std::map<Input::Input, long>* actions) = 0;
+		virtual void Draw(Renderer* renderer) = 0;
+		virtual void UpdateLogic(std::map<Input, long>* actions) = 0;
 
 	protected:
-		Resource::Vertex position;
-		Resource::Vertex rotation;
-		Resource::Vertex scale;
+		Vertex position;
+		Vertex rotation;
+		Vertex scale;
 
-		Renderer::RenderMatrix* myCachedMatrix;
+		RenderMatrix* myCachedMatrix;
 
-		Logger::Logger* logger;//Really? We keep track of a pointer to a logger in every entity? Isn't that what the singleton loggerpool is for?
+		Logger* logger;//Really? We keep track of a pointer to a logger in every entity? Isn't that what the singleton loggerpool is for?
 	};
 }
 #endif

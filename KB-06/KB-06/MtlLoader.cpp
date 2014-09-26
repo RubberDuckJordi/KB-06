@@ -8,7 +8,7 @@
 #include <fstream>      // std::ifstream
 #include <vector>
 
-std::map<std::string, Resource::Material> Resource::MtlLoader::Load(std::string file)
+std::map<std::string, pengine::Material> pengine::MtlLoader::Load(std::string file)
 {
 	std::ifstream ifs("resources/" + file, std::ifstream::in);
 	std::string line;
@@ -19,7 +19,7 @@ std::map<std::string, Resource::Material> Resource::MtlLoader::Load(std::string 
 	while (ifs.good())
 	{
 		getline(ifs, line);
-		elements = Logger::StringHelper::split(line, ' ');
+		elements = StringHelper::split(line, ' ');
 		if (elements.size() > 0){
 			if (elements[0] == "newmtl")
 			{
@@ -59,7 +59,7 @@ std::map<std::string, Resource::Material> Resource::MtlLoader::Load(std::string 
 		}
 	}
 	ifs.close();
-	Logger::Logger* logger = Logger::LoggerPool::GetInstance().GetLogger();
+	Logger* logger = LoggerPool::GetInstance().GetLogger();
 	logger->Log(Logger::DEBUG, "loaded: " + file);
 	for (std::map<std::string, Material>::iterator iterator = materials.begin(); iterator != materials.end(); iterator++)
 	{
@@ -68,10 +68,10 @@ std::map<std::string, Resource::Material> Resource::MtlLoader::Load(std::string 
 		logger->Log(Logger::DEBUG, "diffuseColor: " + std::to_string(iterator->second.diffuseColor.r) + " " + std::to_string(iterator->second.diffuseColor.g) + " " + std::to_string(iterator->second.diffuseColor.b));
 		logger->Log(Logger::DEBUG, "specularWeight: " + std::to_string(iterator->second.specularWeight));
 	}
-	Logger::LoggerPool::GetInstance().ReturnLogger(logger);
+	LoggerPool::GetInstance().ReturnLogger(logger);
 	return materials;
 }
 
-std::string Resource::MtlLoader::GetExtension(){
+std::string pengine::MtlLoader::GetExtension(){
 	return "mtl";
 }

@@ -1,34 +1,34 @@
 #include "XModel.h"
 
-Resource::XModel::XModel()
+pengine::XModel::XModel()
 {
 	materials = NULL;
 	mesh = NULL;
 	textures = NULL;
 }
 
-Resource::XModel::~XModel()
+pengine::XModel::~XModel()
 {
 	delete mesh;
 	delete[] materials;
 }
 
-Renderer::MeshWrapper* Resource::XModel::GetMesh()
+pengine::MeshWrapper* pengine::XModel::GetMesh()
 {
 	return mesh;
 }
 
-void Resource::XModel::SetMesh(Renderer::MeshWrapper* p_mesh)
+void pengine::XModel::SetMesh(pengine::MeshWrapper* p_mesh)
 {
 	mesh = p_mesh;
 }
 
-int Resource::XModel::GetTextureCount()
+int pengine::XModel::GetTextureCount()
 {
 	return materialCount;
 }
 
-Renderer::TextureWrapper* Resource::XModel::GetTexture(int p_textureIndex)
+pengine::TextureWrapper* pengine::XModel::GetTexture(int p_textureIndex)
 {
 	if (p_textureIndex < 0 || p_textureIndex >= textureCount)
 	{
@@ -40,30 +40,30 @@ Renderer::TextureWrapper* Resource::XModel::GetTexture(int p_textureIndex)
 	}
 }
 
-void Resource::XModel::GetTextures(Renderer::TextureWrapper*& p_textures, int& p_textureCount)
+void pengine::XModel::GetTextures(pengine::TextureWrapper*& p_textures, int& p_textureCount)
 {
 	p_textures = textures;
 	p_textureCount = textureCount;
 }
 
-void Resource::XModel::SetTextures(Renderer::TextureWrapper* p_textures, int p_textureCount)
+void pengine::XModel::SetTextures(pengine::TextureWrapper* p_textures, int p_textureCount)
 {
 	textures = p_textures;
 	textureCount = p_textureCount;
 }
 
-int Resource::XModel::GetMaterialCount()
+int pengine::XModel::GetMaterialCount()
 {
 	return materialCount;
 }
 
-void Resource::XModel::GetMaterials(Renderer::MaterialWrapper*& p_materials, int& p_materialCount)
+void pengine::XModel::GetMaterials(pengine::MaterialWrapper*& p_materials, int& p_materialCount)
 {
 	p_materials = materials;
 	p_materialCount = materialCount;
 }
 
-void Resource::XModel::SetMaterials(Renderer::MaterialWrapper* p_materials, int p_materialCount)
+void pengine::XModel::SetMaterials(pengine::MaterialWrapper* p_materials, int p_materialCount)
 {
 	materials = p_materials;
 	materialCount = p_materialCount;

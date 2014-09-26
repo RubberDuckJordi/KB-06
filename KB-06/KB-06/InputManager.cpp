@@ -1,18 +1,18 @@
 #include "InputManager.h"
 
-Input::InputManager::InputManager(InputDeviceFactory* p_inputDeviceFactory)
+pengine::InputManager::InputManager(InputDeviceFactory* p_inputDeviceFactory)
 {
-	logger = Logger::LoggerPool::GetInstance().GetLogger();
+	logger = LoggerPool::GetInstance().GetLogger();
 	inputDeviceFactory = p_inputDeviceFactory;
 	initialised = false;
 }
 
-Input::InputManager::~InputManager()
+pengine::InputManager::~InputManager()
 {
 	delete inputDeviceFactory;
 }
 
-void Input::InputManager::Initialise(HWND hwnd)
+void pengine::InputManager::Initialise(HWND hwnd)
 {
 	logger->Log(Logger::DEBUG, "InputManager::Initialise");
 	inputDeviceFactory->Initialise(hwnd);
@@ -28,7 +28,7 @@ puts in a map. Only occured actions will be in the map. The default
 value of a action is 100. This represents 100% with buttons but stands
 for pixels when being a mouse movement.
 */
-std::map<Input::Input, long>* Input::InputManager::GetCurrentActions()
+std::map<pengine::Input, long>* pengine::InputManager::GetCurrentActions()
 {
 	std::map<Input, long>* actionMapping = new std::map < Input, long > ;
 	std::list<InputDevice*>::iterator itInputDevice;
@@ -47,7 +47,7 @@ std::map<Input::Input, long>* Input::InputManager::GetCurrentActions()
 	return actionMapping;
 }
 
-void Input::InputManager::OnWindowCreated(Window::Window* window)
+void pengine::InputManager::OnWindowCreated(pengine::Window* window)
 {
 	if (!initialised)
 	{
@@ -55,7 +55,7 @@ void Input::InputManager::OnWindowCreated(Window::Window* window)
 	}
 }
 
-void Input::InputManager::OnWindowFocusGained(Window::Window* window)
+void pengine::InputManager::OnWindowFocusGained(pengine::Window* window)
 {
 	logger->Log(Logger::DEBUG, "InputManager::Focus gained");
 	std::list<InputDevice*>::iterator deviceIt;
@@ -65,7 +65,7 @@ void Input::InputManager::OnWindowFocusGained(Window::Window* window)
 	}
 }
 
-void Input::InputManager::OnWindowFocusLost(Window::Window* window)
+void pengine::InputManager::OnWindowFocusLost(pengine::Window* window)
 {
 	logger->Log(Logger::DEBUG, "InputManager::Focus lost");
 	std::list<InputDevice*>::iterator deviceIt;

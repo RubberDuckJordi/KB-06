@@ -4,7 +4,7 @@
 #include "logger.h"
 #include <list>
 
-namespace Logger
+namespace pengine
 {
 	class LoggerPool
 	{

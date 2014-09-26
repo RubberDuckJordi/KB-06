@@ -12,7 +12,7 @@
 #include "RGBAColor.h"
 #include "RenderMatrix.h"
 
-namespace Renderer
+namespace pengine
 {
 	class Renderer
 	{
@@ -31,7 +31,7 @@ namespace Renderer
 
 		virtual void BeginScene() = 0;
 		virtual void ClearScene(PENGINEDWORD* count, PENGINEDWORD* flags, PENGINECOLOR* color, float z, PENGINEDWORD* stencil) = 0;
-		virtual void ClearScene(unsigned long count, unsigned long flags, Resource::RGBAColor color, float z, unsigned long stencil) = 0;
+		virtual void ClearScene(unsigned long count, unsigned long flags, RGBAColor color, float z, unsigned long stencil) = 0;
 		virtual void PresentScene(HWND hWnd) = 0;
 		virtual void EndScene() = 0;
 
@@ -42,19 +42,19 @@ namespace Renderer
 		virtual void SetTexture(TextureWrapper* wrapper) = 0;
 		virtual void SetFvF(DWORD* fvf) = 0;
 
-		virtual void DrawPrimitive(Resource::Mesh mesh) = 0;
+		virtual void DrawPrimitive(Mesh mesh) = 0;
 		virtual void DrawSubset(MeshWrapper* wrapper, int subset) = 0;
 
 		virtual void SetStreamSource() = 0; //??
 		virtual void SetIndices() = 0; //??
 
-		virtual void Draw(Resource::Mesh* mesh) = 0;
+		virtual void Draw(Mesh* mesh) = 0;
 		virtual void SetActiveMatrix(PEngineMatrix* matrix) = 0;
 
 		virtual void SetLights() = 0;
 
 	protected:
-		Logger::Logger* logger;
+		Logger* logger;
 	};
 }
 #endif

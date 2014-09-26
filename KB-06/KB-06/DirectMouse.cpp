@@ -1,19 +1,19 @@
 #include "DirectMouse.h"
 #include "LoggerPool.h"
 
-Input::DirectMouse::DirectMouse()
+pengine::DirectMouse::DirectMouse()
 {
 	deviceName = "Mouse";
 }
 
-Input::DirectMouse::~DirectMouse()
+pengine::DirectMouse::~DirectMouse()
 {
 	DirectInputDevice::~DirectInputDevice();
 }
 
 //Create the new DirectInputDevice, add a handler to its window and
 //set the required settings to be able to poll it.
-bool Input::DirectMouse::Initialize(LPDIRECTINPUT8 p_dInput, HWND hwnd)
+bool pengine::DirectMouse::Initialize(LPDIRECTINPUT8 p_dInput, HWND hwnd)
 {
 	HRESULT hr = p_dInput->CreateDevice(GUID_SysMouse, &dInputDevice, NULL);
 	if (FAILED(hr))
@@ -67,7 +67,7 @@ bool Input::DirectMouse::Initialize(LPDIRECTINPUT8 p_dInput, HWND hwnd)
 }
 
 //Update the directinputstate only if it can be acquired and polled.
-bool Input::DirectMouse::Update()
+bool pengine::DirectMouse::Update()
 {
 	bool result = false;
 	if (!deviceAcquired)
@@ -93,7 +93,7 @@ bool Input::DirectMouse::Update()
 	return deviceAcquired;
 }
 
-std::map<Input::Input, long>* Input::DirectMouse::GetInputValues()
+std::map<pengine::Input, long>* pengine::DirectMouse::GetInputValues()
 {
 	std::map<Input, long>* returnMap = new std::map<Input, long>();
 
@@ -151,7 +151,7 @@ std::map<Input::Input, long>* Input::DirectMouse::GetInputValues()
 
 
 //Returns the position compared to the previous position of the X axis.
-long Input::DirectMouse::GetDeltaXPosition()
+long pengine::DirectMouse::GetDeltaXPosition()
 {
 	long delta = dIMouseState.lX - previousXPos;
 	previousXPos = dIMouseState.lX;
@@ -163,7 +163,7 @@ long Input::DirectMouse::GetDeltaXPosition()
 }
 
 //Returns the position compared to the previous position of the Y axis.
-long Input::DirectMouse::GetDeltaYPosition()
+long pengine::DirectMouse::GetDeltaYPosition()
 {
 	long delta = dIMouseState.lY - previousYPos;
 	previousYPos = dIMouseState.lY;
@@ -177,7 +177,7 @@ long Input::DirectMouse::GetDeltaYPosition()
 //Returns the position compared to the previous position of the Z axis.
 //The Z axis is the scrollweel. Every movement stands for 120 delta or less
 //or more depending on the mouse.
-long Input::DirectMouse::GetDeltaZPosition()
+long pengine::DirectMouse::GetDeltaZPosition()
 {
 	long delta = dIMouseState.lZ - previousZPos;
 	previousZPos = dIMouseState.lZ;
@@ -188,13 +188,13 @@ long Input::DirectMouse::GetDeltaZPosition()
 	return delta;
 }
 
-void Input::DirectMouse::OnWindowFocusLost(Window::Window* window)
+void pengine::DirectMouse::OnWindowFocusLost(pengine::Window* window)
 {
 	ReleaseDevice();
 	ShowCursor(true);
 }
 
-void Input::DirectMouse::OnWindowFocusGained(Window::Window* window)
+void pengine::DirectMouse::OnWindowFocusGained(pengine::Window* window)
 {
 	HRESULT hr = dInputDevice->SetCooperativeLevel(window->GetHWND(), DISCL_FOREGROUND | DISCL_NONEXCLUSIVE);
 	if (FAILED(hr))

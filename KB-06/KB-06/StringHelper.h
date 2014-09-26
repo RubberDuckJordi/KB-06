@@ -4,7 +4,7 @@
 #include <vector>
 #include <string>
 
-namespace Logger
+namespace pengine
 {
 	class StringHelper
 	{

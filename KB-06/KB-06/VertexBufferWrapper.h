@@ -3,15 +3,15 @@
 
 #include <d3dx9.h>
 
-namespace Renderer
+namespace pengine
 {
 	class VertexBufferWrapper
 	{
 	public:
-		VertexBufferWrapper::VertexBufferWrapper(IDirect3DVertexBuffer9** _VertexBuffer);
-		VertexBufferWrapper::~VertexBufferWrapper();
-		void VertexBufferWrapper::SetVertexBuffer(IDirect3DVertexBuffer9** _VertexBuffer);
-		IDirect3DVertexBuffer9** VertexBufferWrapper::GetVertexBuffer();
+		VertexBufferWrapper(IDirect3DVertexBuffer9** _VertexBuffer);
+		~VertexBufferWrapper();
+		void SetVertexBuffer(IDirect3DVertexBuffer9** _VertexBuffer);
+		IDirect3DVertexBuffer9** GetVertexBuffer();
 
 	private:
 		IDirect3DVertexBuffer9** VertexBuffer;

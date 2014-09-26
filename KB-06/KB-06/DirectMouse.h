@@ -4,7 +4,7 @@
 #include "DirectInputDevice.h"
 #include "LoggerPool.h"
 
-namespace Input
+namespace pengine
 {
 	class DirectMouse : public DirectInputDevice
 	{
@@ -15,8 +15,8 @@ namespace Input
 		bool Update();
 		std::map<Input, long>* GetInputValues();
 
-		void OnWindowFocusLost(Window::Window* window);
-		void OnWindowFocusGained(Window::Window* window);
+		void OnWindowFocusLost(Window* window);
+		void OnWindowFocusGained(Window* window);
 
 	private:
 		DIMOUSESTATE2 dIMouseState;

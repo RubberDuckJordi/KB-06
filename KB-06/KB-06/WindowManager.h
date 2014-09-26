@@ -9,7 +9,7 @@
 #include <Windows.h>
 #include <vector>
 
-namespace Window
+namespace pengine
 {
 
 	class WindowManager
@@ -20,7 +20,7 @@ namespace Window
 
 		@param sceneManager: SceneManager which is used to render a scene.
 		*/
-		WindowManager(Scene::SceneManager *sceneManager); // Manager shouln't use another manager
+		WindowManager(SceneManager *sceneManager); // Manager shouln't use another manager
 		WindowManager();
 		~WindowManager();
 
@@ -61,9 +61,9 @@ namespace Window
 
 	private:
 		std::vector<Window*> windows;
-		Scene::SceneManager *sceneManager;
+		SceneManager *sceneManager;
 
-		Logger::Logger* logger;
+		Logger* logger;
 		std::list<WindowListener*> windowListeners;
 	};
 }

@@ -3,7 +3,7 @@
 
 #include "Window.h"
 
-namespace Window
+namespace pengine
 {
 	class Window;
 

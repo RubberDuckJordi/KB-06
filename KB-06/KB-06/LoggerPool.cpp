@@ -1,13 +1,13 @@
 #include "LoggerPool.h"
 #include "Logger.h"
 
-Logger::LoggerPool& Logger::LoggerPool::GetInstance()
+pengine::LoggerPool& pengine::LoggerPool::GetInstance()
 {
 	static LoggerPool instance;
 	return instance;
 }
 
-Logger::Logger* Logger::LoggerPool::GetLogger(){
+pengine::Logger* pengine::LoggerPool::GetLogger(){
 	if (pool.empty())
 	{
 		return new Logger();
@@ -20,7 +20,7 @@ Logger::Logger* Logger::LoggerPool::GetLogger(){
 	}
 }
 
-void Logger::LoggerPool::ReturnLogger(Logger* logger)
+void pengine::LoggerPool::ReturnLogger(Logger* logger)
 {
 	logger->Reset();
 	pool.push_back(logger);

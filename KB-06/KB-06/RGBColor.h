@@ -1,7 +1,7 @@
 #ifndef _RESOURCE_RGBCOLOR_H_
 #define _RESOURCE_RGBCOLOR_H_
 
-namespace Resource
+namespace pengine
 {
 	struct RGBColor
 	{

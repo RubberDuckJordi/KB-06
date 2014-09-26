@@ -4,13 +4,14 @@
 #include "Scene.h"
 #include "Logger.h"
 
-namespace Scene{
+namespace pengine
+{
 	class DefaultScene : public Scene
 	{
 	public:
 		DefaultScene();
 		~DefaultScene();
-		void Update(std::map<Input::Input, long>* actions);
+		void Update(std::map<Input, long>* actions);
 	};
 }
 #endif

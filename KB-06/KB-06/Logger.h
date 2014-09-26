@@ -6,19 +6,21 @@
 #include <map>
 #include <fstream>
 
-namespace Logger
+namespace pengine
 {
-	enum LogLevel{
-		NONE = 0,
-		ERR = 1,
-		WARNING = 2,
-		DEBUG = 3,
-		INFO = 4
-	};
-
 	class Logger
 	{
 	public:
+
+		enum LogLevel
+		{
+			NONE = 0,
+			ERR = 1,
+			WARNING = 2,
+			DEBUG = 3,
+			INFO = 4
+		};
+
 		~Logger();
 		Logger();
 

@@ -6,7 +6,7 @@
 #include "Input.h"
 #include "Window.h"
 
-namespace Input
+namespace pengine
 {
 	class InputDeviceFactory
 	{
@@ -16,7 +16,7 @@ namespace Input
 		virtual void Initialise(HWND) = 0;
 		virtual InputDevice* CreateInputDevice(InputDevice::Type type) = 0;
 	protected:
-		Logger::Logger* logger;
+		Logger* logger;
 	};
 }
 #endif

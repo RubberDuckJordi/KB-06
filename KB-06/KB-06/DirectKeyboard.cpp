@@ -1,18 +1,18 @@
 #include "DirectKeyboard.h"
 
-Input::DirectKeyboard::DirectKeyboard()
+pengine::DirectKeyboard::DirectKeyboard()
 {
 	deviceName = "Keyboard";
 }
 
-Input::DirectKeyboard::~DirectKeyboard()
+pengine::DirectKeyboard::~DirectKeyboard()
 {
 	DirectInputDevice::~DirectInputDevice();
 }
 
 //Create the new DirectInputDevice, add a handler to its window and
 //set the required settings to be able to poll it.
-bool Input::DirectKeyboard::Initialize(LPDIRECTINPUT8 m_dInput, HWND hwnd)
+bool pengine::DirectKeyboard::Initialize(LPDIRECTINPUT8 m_dInput, HWND hwnd)
 {
 	HRESULT hr = m_dInput->CreateDevice(GUID_SysKeyboard, &dInputDevice, NULL);
 	if FAILED(hr)
@@ -45,7 +45,7 @@ bool Input::DirectKeyboard::Initialize(LPDIRECTINPUT8 m_dInput, HWND hwnd)
 	return true;
 }
 
-bool Input::DirectKeyboard::Update()
+bool pengine::DirectKeyboard::Update()
 {
 	if (!deviceAcquired){
 		return false;
@@ -65,7 +65,7 @@ bool Input::DirectKeyboard::Update()
 }
 
 //Returns 100 if given key is being pressed at the moment
-long Input::DirectKeyboard::GetStateOf(int p_key)
+long pengine::DirectKeyboard::GetStateOf(int p_key)
 {
 	if (!SUCCEEDED(dInputDevice->Poll()))
 	{
@@ -81,7 +81,7 @@ long Input::DirectKeyboard::GetStateOf(int p_key)
 	}
 }
 
-std::map<Input::Input, long>* Input::DirectKeyboard::GetInputValues()
+std::map<pengine::Input, long>* pengine::DirectKeyboard::GetInputValues()
 {
 	std::map<Input, long>* returnMap = new std::map<Input, long>();
 
@@ -100,12 +100,12 @@ std::map<Input::Input, long>* Input::DirectKeyboard::GetInputValues()
 	return returnMap;
 }
 
-void Input::DirectKeyboard::OnWindowFocusLost(Window::Window* window)
+void pengine::DirectKeyboard::OnWindowFocusLost(pengine::Window* window)
 {
 	ReleaseDevice();
 }
 
-void Input::DirectKeyboard::OnWindowFocusGained(Window::Window* window)
+void pengine::DirectKeyboard::OnWindowFocusGained(pengine::Window* window)
 {
 	HRESULT hr = dInputDevice->SetCooperativeLevel(window->GetHWND(), DISCL_FOREGROUND | DISCL_NONEXCLUSIVE);
 	if (FAILED(hr))

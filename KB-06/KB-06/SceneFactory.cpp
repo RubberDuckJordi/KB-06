@@ -1,11 +1,11 @@
 #include "SceneFactory.h"
 
-Scene::SceneFactory::SceneFactory()
+pengine::SceneFactory::SceneFactory()
 {
 
 }
 
-Scene::SceneFactory::~SceneFactory()
+pengine::SceneFactory::~SceneFactory()
 {
 
 }

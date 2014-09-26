@@ -7,17 +7,17 @@
 #include <d3d9.h>
 #include <string>
 
-namespace Resource
+namespace pengine
 {
 	class XModelLoader
 	{
 	public:
 		XModelLoader();
 		~XModelLoader();
-		void LoadXModel(std::string filename, Renderer::DirectXRenderer* renderer, XModel* xmodel);
+		void LoadXModel(std::string filename, DirectXRenderer* renderer, XModel* xmodel);
 
 	private:
-		Logger::Logger* logger;
+		Logger* logger;
 		LPDIRECT3DTEXTURE9* texture = new LPDIRECT3DTEXTURE9();
 	};
 }

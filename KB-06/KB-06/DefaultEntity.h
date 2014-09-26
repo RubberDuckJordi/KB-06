@@ -6,20 +6,21 @@
 #include "Renderer.h"
 #include "XModel.h"
 
-namespace Scene{
+namespace pengine
+{
 	class DefaultEntity : public Entity {
 	public:
 		DefaultEntity();
 		~DefaultEntity();
-		void UpdateLogic(std::map<Input::Input, long>* actions);
-		void Draw(Renderer::Renderer* renderer);
-		void SetMesh(Resource::Mesh* mesh);
+		void UpdateLogic(std::map<Input, long>* actions);
+		void Draw(Renderer* renderer);
+		void SetMesh(Mesh* mesh);
 		float rotationMod = 0.0f;
-		void SetXModel(Resource::XModel*); //debug
+		void SetXModel(XModel*); //debug
 
 	private:
-		Resource::XModel* xModel; //debug
-		Resource::Mesh* myMesh;
+		XModel* xModel; //debug
+		Mesh* myMesh;
 	};
 }
 #endif

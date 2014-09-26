@@ -8,23 +8,23 @@
 #include "LoggerPool.h"
 #include "Input.h"
 
-namespace Scene
+namespace pengine
 {
 	class Scene
 	{
 	public:
 		Scene();
 		~Scene();
-		virtual void Update(std::map<Input::Input, long>* actions);
+		virtual void Update(std::map<Input, long>* actions);
 		void AddEntity(Entity* entity);
-		void Render(Renderer::Renderer* renderer);
+		void Render(Renderer* renderer);
 
 		EntityCamera* GetCurrentCamera();
 		void SetCurrentCamera(EntityCamera* camera);
 	protected:
 		std::list<Entity*> entities;
 		EntityCamera* currentCamera;
-		Logger::Logger* logger;
+		Logger* logger;
 	};
 }
 #endif

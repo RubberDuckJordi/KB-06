@@ -1,7 +1,6 @@
 // CubeGame.cpp : Defines the entry point for the console application.
 //
 
-#include "stdafx.h"
 #include "PEngine.h"
 #include "ObjMeshLoader.h"
 #include "MtlLoader.h"
@@ -13,36 +12,36 @@
 #include "XModelLoader.h"
 #include "DirectXRenderer.h"
 
-int _tmain(int argc, _TCHAR* argv[])
+int main(int argc, char* argv[])
 {
-	pengine::PEngine pEngine;
-	pengine::Logger* logger = pengine::LoggerPool::GetInstance().GetInstance().GetLogger();
+	PEngine pEngine;
+	Logger::Logger* logger = Logger::LoggerPool::GetInstance().GetInstance().GetLogger();
 	pEngine.Init();
 
 	pEngine.GetWindowManager()->AddWindowListener(pEngine.GetInputManager());
 	pEngine.GetWindowManager()->NewWindow(10, 10, 500, 500);
 	pEngine.GetRenderer()->InitD3D(pEngine.GetWindowManager()->GetLastWindow()->GetHWND());
-	pEngine.GetResourceManager()->AddMeshLoader(new pengine::ObjMeshLoader());
-	pEngine.GetResourceManager()->AddMaterialLoader(new pengine::MtlLoader());
+	pEngine.GetResourceManager()->AddMeshLoader(new Resource::ObjMeshLoader());
+	pEngine.GetResourceManager()->AddMaterialLoader(new Resource::MtlLoader());
 
-	pengine::XModel* xmodel = new pengine::XModel();
-	pengine::XModelLoader* xmodelLoader = new pengine::XModelLoader();
-	xmodelLoader->LoadXModel("resources/tiger.x", static_cast<pengine::DirectXRenderer*>(pEngine.GetRenderer()), xmodel);
+	Resource::XModel* xmodel = new Resource::XModel();
+	Resource::XModelLoader* xmodelLoader = new Resource::XModelLoader();
+	xmodelLoader->LoadXModel("resources/tiger.x", static_cast<Renderer::DirectXRenderer*>(pEngine.GetRenderer()), xmodel);
 
-	pengine::XModel* xmodel2 = new pengine::XModel();
-	xmodelLoader->LoadXModel("resources/camera.x", static_cast<pengine::DirectXRenderer*>(pEngine.GetRenderer()), xmodel2);
+	Resource::XModel* xmodel2 = new Resource::XModel();
+	xmodelLoader->LoadXModel("resources/camera.x", static_cast<Renderer::DirectXRenderer*>(pEngine.GetRenderer()), xmodel2);
 
-	pengine::RGBAColor color;
+	Resource::RGBAColor color;
 	color.r = 1.0f;
 	color.g = 0.25f;
 	color.b = 1.0f;
 	color.a = 1.0f;
 
-	pengine::Mesh* mesh = pEngine.GetResourceManager()->LoadMesh("resources/cube.obj.mesh", "obj.mesh");
-	pengine::Mesh* mesh2 = pEngine.GetResourceManager()->LoadMesh("resources/cubeClone.obj.mesh", "obj.mesh");
-	pengine::Mesh* mesh3 = pEngine.GetResourceManager()->LoadMesh("resources/cubeCloneClone.obj.mesh", "obj.mesh");
+	Resource::Mesh* mesh = pEngine.GetResourceManager()->LoadMesh("resources/cube.obj.mesh", "obj.mesh");
+	Resource::Mesh* mesh2 = pEngine.GetResourceManager()->LoadMesh("resources/cubeClone.obj.mesh", "obj.mesh");
+	Resource::Mesh* mesh3 = pEngine.GetResourceManager()->LoadMesh("resources/cubeCloneClone.obj.mesh", "obj.mesh");
 
-	pengine::DefaultSceneFactory* sceneFactory = new pengine::DefaultSceneFactory();
+	Scene::DefaultSceneFactory* sceneFactory = new Scene::DefaultSceneFactory();
 	sceneFactory->setMesh(mesh);
 	sceneFactory->setMesh2(mesh2);
 	sceneFactory->setMesh3(mesh3);
@@ -50,7 +49,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	sceneFactory->SetXModel2(xmodel2);
 
 	pEngine.GetSceneManager()->AddSceneFactory("iets", sceneFactory);
-	pengine::Scene* scene = pEngine.GetSceneManager()->AddScene("iets");
+	Scene::Scene* scene = pEngine.GetSceneManager()->AddScene("iets");
 	pEngine.GetSceneManager()->SetCurrentScene(scene);
 
 	pEngine.GetRenderer()->SetProjectionMatrix(M_PI / 4, 100.0f);
@@ -60,7 +59,7 @@ int _tmain(int argc, _TCHAR* argv[])
 		pEngine.GetWindowManager()->UpdateWindows();
 
 		// Logics
-		std::map<pengine::Input, long>* actions = pEngine.GetInputManager()->GetCurrentActions();
+		std::map<Input::Input, long>* actions = pEngine.GetInputManager()->GetCurrentActions();
 
 		pEngine.GetSceneManager()->UpdateActiveScene(actions);
 
@@ -73,6 +72,6 @@ int _tmain(int argc, _TCHAR* argv[])
 		pEngine.GetRenderer()->EndScene();
 		pEngine.GetRenderer()->PresentScene(pEngine.GetWindowManager()->GetLastWindow()->GetHWND());
 	}
-	pengine::LoggerPool::GetInstance().ReturnLogger(logger);
+	Logger::LoggerPool::GetInstance().ReturnLogger(logger);
 }
 

@@ -6,17 +6,17 @@
 
 #include <sstream>
 
-Renderer::RenderMatrix::RenderMatrix()
+pengine::RenderMatrix::RenderMatrix()
 {
 	theMatrix = new PEngineMatrix();
 }
 
-Renderer::RenderMatrix::~RenderMatrix()
+pengine::RenderMatrix::~RenderMatrix()
 {
 	delete theMatrix;
 }
 
-void Renderer::RenderMatrix::CreateMatrix(float x, float y, float z, float yaw, float pitch, float roll, float scaleX, float scaleY, float scaleZ, PEngineMatrix* matrix)
+void pengine::RenderMatrix::CreateMatrix(float x, float y, float z, float yaw, float pitch, float roll, float scaleX, float scaleY, float scaleZ, PEngineMatrix* matrix)
 {
 	//If we want to do this right, this method should do the math using our own functions, not the ones of DirectX, that is out our scope however...
 	D3DXMATRIX rotation;
@@ -55,12 +55,12 @@ void Renderer::RenderMatrix::CreateMatrix(float x, float y, float z, float yaw, 
 	matrix->_44 = result._44;
 }
 
-void Renderer::RenderMatrix::MultiplyMatrices(PEngineMatrix* m1, PEngineMatrix* m2, PEngineMatrix* receiver)
+void pengine::RenderMatrix::MultiplyMatrices(PEngineMatrix* m1, PEngineMatrix* m2, PEngineMatrix* receiver)
 {
 	D3DXMatrixMultiply((D3DXMATRIX *)receiver, (D3DXMATRIX *)m1, (D3DXMATRIX *)m2);
 }
 
-void Renderer::RenderMatrix::PrintMatrix(PEngineMatrix* matrix)
+void pengine::RenderMatrix::PrintMatrix(PEngineMatrix* matrix)
 {
 	std::ostringstream oss;
 	oss.precision(6);
@@ -72,5 +72,5 @@ void Renderer::RenderMatrix::PrintMatrix(PEngineMatrix* matrix)
 		<< "\n[" << matrix->_31 << ",\t" << matrix->_32 << ",\t" << matrix->_33 << ",\t" << matrix->_34 << "]"
 		<< "\n[" << matrix->_41 << ",\t" << matrix->_42 << ",\t" << matrix->_43 << ",\t" << matrix->_44 << "]";
 
-	Logger::LoggerPool::GetInstance().GetLogger()->Log(Logger::DEBUG, oss.str().c_str());
+	LoggerPool::GetInstance().GetLogger()->Log(Logger::DEBUG, oss.str().c_str());
 }

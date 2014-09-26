@@ -4,9 +4,9 @@
 #include "LoggerPool.h"
 #include <iostream>
 
-Window::Window::Window()
+pengine::Window::Window()
 {
-	Logger::Logger* logger = Logger::LoggerPool::GetInstance().GetLogger();
+	Logger* logger = LoggerPool::GetInstance().GetLogger();
 
 	//Set the default data for the window class.
 	//These can be reset in the derived class's constructor.
@@ -28,14 +28,14 @@ Window::Window::Window()
 	_pszTitle = L"Default title, go set it!";
 }
 
-Window::Window::~Window()
+pengine::Window::~Window()
 {
 	//logger->Log(Logger::Logger::INFO, "Destructed window");
 	//Logger::LoggerPool::GetInstance().ReturnLogger(logger);
 	//delete _hwnd;
 }
 
-void Window::Window::SetTitle(char* title)
+void pengine::Window::SetTitle(char* title)
 {
 	size_t origsize = strlen(title) + 1;
 	const size_t newsize = 100;
@@ -49,7 +49,7 @@ void Window::Window::SetTitle(char* title)
 	//	delete[] wcstring;
 }
 
-LRESULT Window::Window::WindowProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
+LRESULT pengine::Window::WindowProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
 	std::list<WindowListener*>::iterator listenersIt;
 
@@ -87,7 +87,7 @@ LRESULT Window::Window::WindowProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lP
 	return 0;
 }
 
-void Window::Window::Resize()
+void pengine::Window::Resize()
 {
 	RECT rect;
 	if (GetWindowRect(_hwnd, &rect))
@@ -98,12 +98,12 @@ void Window::Window::Resize()
 	}
 }
 
-void Window::Window::OnDestroy(HWND hwnd)
+void pengine::Window::OnDestroy(HWND hwnd)
 {
 	PostQuitMessage(0);
 }
 
-HWND Window::Window::Create(int x, int y, int nWidth, int nHeight, HWND hParent, HMENU hMenu, HINSTANCE hInstance)
+HWND pengine::Window::Create(int x, int y, int nWidth, int nHeight, HWND hParent, HMENU hMenu, HINSTANCE hInstance)
 {
 	_WndClass.lpszClassName = _pszClassName;
 	_WndClass.hInstance = hInstance;
@@ -116,7 +116,7 @@ HWND Window::Window::Create(int x, int y, int nWidth, int nHeight, HWND hParent,
 	return _hwnd;
 }
 
-LRESULT CALLBACK Window::Window::BaseWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK pengine::Window::BaseWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
 	//A pointer to the object is passed in the CREATESTRUCT
 	if (msg == WM_NCCREATE)
@@ -136,7 +136,7 @@ LRESULT CALLBACK Window::Window::BaseWndProc(HWND hwnd, UINT msg, WPARAM wParam,
 	return 0;
 }
 
-void Window::Window::render(Scene::Scene *scene)
+void pengine::Window::render(pengine::Scene *scene)
 {
 	if (scene)
 	{
@@ -153,17 +153,17 @@ void Window::Window::render(Scene::Scene *scene)
 	//renderer->Render(_hwnd, scene);
 }
 
-HWND Window::Window::GetHWND()
+HWND pengine::Window::GetHWND()
 {
 	return _hwnd;
 }
 
-Window::WindowState Window::Window::GetWindowState()
+pengine::WindowState pengine::Window::GetWindowState()
 {
 	return state;
 }
 
-void Window::Window::AddWindowListener(WindowListener* p_windowListener)
+void pengine::Window::AddWindowListener(WindowListener* p_windowListener)
 {
 	if (p_windowListener != NULL)
 	{
@@ -171,7 +171,7 @@ void Window::Window::AddWindowListener(WindowListener* p_windowListener)
 	}
 }
 
-void Window::Window::RemoveWindowListener(WindowListener* p_windowListener)
+void pengine::Window::RemoveWindowListener(WindowListener* p_windowListener)
 {
 	if (p_windowListener != NULL)
 	{
@@ -179,7 +179,7 @@ void Window::Window::RemoveWindowListener(WindowListener* p_windowListener)
 	}
 }
 
-void Window::Window::ClearWindowListeners()
+void pengine::Window::ClearWindowListeners()
 {
 	windowListeners.clear();
 }

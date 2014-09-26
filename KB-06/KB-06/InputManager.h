@@ -11,22 +11,22 @@
 #include <string>
 #include  "Logger.h"
 
-namespace Input
+namespace pengine
 {
-	class InputManager : public Window::WindowListener
+	class InputManager : public WindowListener
 	{
 	public:
 		InputManager(InputDeviceFactory* inputDeviceFactory);
 		~InputManager();
 		void Initialise(HWND hwnd);
 		std::map<Input, long>* GetCurrentActions();
-		void OnWindowCreated(Window::Window* window);
-		void OnWindowFocusGained(Window::Window* window);
-		void OnWindowFocusLost(Window::Window* window);
+		void OnWindowCreated(Window* window);
+		void OnWindowFocusGained(Window* window);
+		void OnWindowFocusLost(Window* window);
 
 	private:
 		std::list<InputDevice*> inputDevices;
-		Logger::Logger* logger;
+		Logger* logger;
 		bool initialised;
 
 		InputDeviceFactory* inputDeviceFactory;

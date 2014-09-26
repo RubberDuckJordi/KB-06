@@ -1,21 +1,21 @@
 #include "IndexBufferWrapper.h"
 
-Renderer::IndexBufferWrapper::IndexBufferWrapper(IDirect3DIndexBuffer9** _IndexBuffer)
+pengine::IndexBufferWrapper::IndexBufferWrapper(IDirect3DIndexBuffer9** _IndexBuffer)
 {
 	IndexBuffer = _IndexBuffer;
 }
 
-Renderer::IndexBufferWrapper::~IndexBufferWrapper()
+pengine::IndexBufferWrapper::~IndexBufferWrapper()
 {
 
 }
 
-void Renderer::IndexBufferWrapper::SetIndexBuffer(IDirect3DIndexBuffer9** _IndexBuffer)
+void pengine::IndexBufferWrapper::SetIndexBuffer(IDirect3DIndexBuffer9** _IndexBuffer)
 {
 	IndexBuffer = _IndexBuffer;
 }
 
-IDirect3DIndexBuffer9** Renderer::IndexBufferWrapper::GetIndexBuffer()
+IDirect3DIndexBuffer9** pengine::IndexBufferWrapper::GetIndexBuffer()
 {
 	return IndexBuffer;
 }

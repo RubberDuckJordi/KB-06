@@ -6,31 +6,31 @@
 #include "Mesh.h"
 #include "XModel.h"
 
-namespace Scene
+namespace pengine
 {
 	class EntityCamera : public Entity
 	{
 	public:
 		EntityCamera();
 		~EntityCamera();
-		void UpdateLogic(std::map<Input::Input, long>* actions);
-		void Draw(Renderer::Renderer* renderer);
-		Resource::Vertex* GetPosition();
+		void UpdateLogic(std::map<Input, long>* actions);
+		void Draw(Renderer* renderer);
+		Vertex* GetPosition();
 		CameraData GetCameraData();
 		void SetLookAtPosition(float x, float y, float z, float rollDegrees);
 
-		Resource::Mesh* myMesh;//debug!
-		Resource::Mesh* myMesh2;//debug!
-		void SetXModel(Resource::XModel*); //debug
+		Mesh* myMesh;//debug!
+		Mesh* myMesh2;//debug!
+		void SetXModel(XModel*); //debug
 		bool useInput = false;
 
 	protected:
-		Resource::Vertex lookAtPosition;
+		Vertex lookAtPosition;
 
 	private:
-		Resource::XModel* xModel; //debug
+		XModel* xModel; //debug
 		CameraData cameraData;
-		Renderer::PEngineMatrix* rotationMatrix;
+		PEngineMatrix* rotationMatrix;
 	};
 }
 #endif

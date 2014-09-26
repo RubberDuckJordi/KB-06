@@ -4,8 +4,10 @@
 #include "Scene.h"
 #include <map>
 
-namespace Scene {
-	class SceneFactory {
+namespace pengine
+{
+	class SceneFactory 
+	{
 	public:
 		SceneFactory();
 		~SceneFactory();

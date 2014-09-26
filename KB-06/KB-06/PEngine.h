@@ -6,25 +6,29 @@
 #include "ResourceManager.h"
 #include "WindowManager.h"
 
-class PEngine
+namespace pengine
 {
-public:
-	PEngine();
-	~PEngine();
+	class PEngine
+	{
+	public:
+		PEngine();
+		~PEngine();
 
-	Window::WindowManager* GetWindowManager();
-	Resource::ResourceManager* GetResourceManager();
-	Scene::SceneManager* GetSceneManager();
-	Input::InputManager* GetInputManager();
-	Renderer::Renderer* GetRenderer();
-	void Init();
+		WindowManager* GetWindowManager();
+		ResourceManager* GetResourceManager();
+		SceneManager* GetSceneManager();
+		InputManager* GetInputManager();
+		Renderer* GetRenderer();
+		void Init();
 
-private:
-	Scene::SceneManager* sceneManager;
-	Window::WindowManager* windowManager;
-	Resource::ResourceManager* resourceManager;
-	Input::InputManager* inputManager;
-	Renderer::Renderer* renderer;
-	Logger::Logger* logger;
-};
+	private:
+		SceneManager* sceneManager;
+		WindowManager* windowManager;
+		ResourceManager* resourceManager;
+		InputManager* inputManager;
+		Renderer* renderer;
+		Logger* logger;
+	};
+}
+
 #endif

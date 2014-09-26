@@ -1,50 +1,50 @@
 #include "stdafx.h"
 #include "SceneManager.h"
 
-Scene::SceneManager::SceneManager()
+pengine::SceneManager::SceneManager()
 {
-	logger = Logger::LoggerPool::GetInstance().GetLogger();
+	logger = LoggerPool::GetInstance().GetLogger();
 }
 
-Scene::SceneManager::~SceneManager()
+pengine::SceneManager::~SceneManager()
 {
-	Logger::LoggerPool::GetInstance().ReturnLogger(logger);
+	LoggerPool::GetInstance().ReturnLogger(logger);
 }
 
-void Scene::SceneManager::AddSceneFactory(char* key, SceneFactory* sceneFactory)
+void pengine::SceneManager::AddSceneFactory(char* key, SceneFactory* sceneFactory)
 {
 	sceneFactories[key] = sceneFactory;
 }
 
-Scene::Scene* Scene::SceneManager::AddScene(char* sceneFactory)
+pengine::Scene* pengine::SceneManager::AddScene(char* sceneFactory)
 {
 	Scene* newScene = sceneFactories.at(sceneFactory)->CreateScene();
 	scenes.push_back(newScene);
 	return newScene;
 }
 
-void Scene::SceneManager::AddScene(Scene* scene)
+void pengine::SceneManager::AddScene(Scene* scene)
 {
 	scenes.push_back(scene);
 }
 
 
-void Scene::SceneManager::RemoveScene(Scene* scene)
+void pengine::SceneManager::RemoveScene(Scene* scene)
 {
 
 }
 
-void Scene::SceneManager::UpdateScene(Scene* scene)
+void pengine::SceneManager::UpdateScene(Scene* scene)
 {
 
 }
 
-void Scene::SceneManager::UpdateActiveScene(std::map<Input::Input, long>* actions)
+void pengine::SceneManager::UpdateActiveScene(std::map<pengine::Input, long>* actions)
 {
 	currentScene->Update(actions);
 }
 
-void Scene::SceneManager::RenderActiveScene(Renderer::Renderer* renderer)
+void pengine::SceneManager::RenderActiveScene(pengine::Renderer* renderer)
 {
 	if (currentScene == NULL)
 	{
@@ -62,7 +62,7 @@ void Scene::SceneManager::RenderActiveScene(Renderer::Renderer* renderer)
 	currentScene->Render(renderer);
 }
 
-void Scene::SceneManager::SetCurrentScene(Scene* scene)
+void pengine::SceneManager::SetCurrentScene(Scene* scene)
 {
 	currentScene = scene;
 }

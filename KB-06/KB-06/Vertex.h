@@ -1,7 +1,7 @@
 #ifndef _RESOURCE_VERTEX_H_
 #define _RESOURCE_VERTEX_H_
 
-namespace Resource
+namespace pengine
 {
 	struct Vertex
 	{

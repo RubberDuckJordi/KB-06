@@ -1,16 +1,16 @@
 #include "XModelLoader.h"
 
-Resource::XModelLoader::XModelLoader()
+pengine::XModelLoader::XModelLoader()
 {
-	logger = Logger::LoggerPool::GetInstance().GetLogger();
+	logger = LoggerPool::GetInstance().GetLogger();
 }
 
-Resource::XModelLoader::~XModelLoader()
+pengine::XModelLoader::~XModelLoader()
 {
-	Logger::LoggerPool::GetInstance().ReturnLogger(logger);
+	LoggerPool::GetInstance().ReturnLogger(logger);
 }
 
-void Resource::XModelLoader::LoadXModel(std::string filename, Renderer::DirectXRenderer* renderer, XModel* xmodel)
+void pengine::XModelLoader::LoadXModel(std::string filename, pengine::DirectXRenderer* renderer, XModel* xmodel)
 {
 	logger->Log(Logger::DEBUG, "XModelLoader: Loading XModel");
 
@@ -55,9 +55,9 @@ void Resource::XModelLoader::LoadXModel(std::string filename, Renderer::DirectXR
 			}
 		}
 
-		Renderer::MeshWrapper* meshWrapper = new Renderer::MeshWrapper(mesh);
-		Renderer::MaterialWrapper* materialWrapper = new Renderer::MaterialWrapper(materials);
-		Renderer::TextureWrapper* textureWrapper = new Renderer::TextureWrapper(textures);
+		MeshWrapper* meshWrapper = new MeshWrapper(mesh);
+		MaterialWrapper* materialWrapper = new MaterialWrapper(materials);
+		TextureWrapper* textureWrapper = new TextureWrapper(textures);
 
 		xmodel->SetMesh(meshWrapper);
 		xmodel->SetMaterials(materialWrapper, mtrlCount);

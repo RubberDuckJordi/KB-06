@@ -3,7 +3,7 @@
 
 #include <d3dx9.h>
 
-namespace Renderer
+namespace pengine
 {
 	class MaterialWrapper
 	{

@@ -4,17 +4,17 @@
 #include "ObjMeshLoader.h"
 #include "MtlLoader.h"
 
-Resource::ResourceManager::ResourceManager()
+pengine::ResourceManager::ResourceManager()
 {
-	logger = Logger::LoggerPool::GetInstance().GetLogger();
+	logger = LoggerPool::GetInstance().GetLogger();
 }
 
-Resource::ResourceManager::~ResourceManager()
+pengine::ResourceManager::~ResourceManager()
 {
-	Logger::LoggerPool::GetInstance().ReturnLogger(logger);
+	LoggerPool::GetInstance().ReturnLogger(logger);
 }
 
-Resource::Mesh* Resource::ResourceManager::LoadMesh(const std::string& fileName, const std::string& extension)
+pengine::Mesh* pengine::ResourceManager::LoadMesh(const std::string& fileName, const std::string& extension)
 {
 	if (meshes.find(fileName) == meshes.end())
 	{
@@ -25,7 +25,7 @@ Resource::Mesh* Resource::ResourceManager::LoadMesh(const std::string& fileName,
 			for (unsigned int i = 0; i < loadedMesh.defaultMaterialFiles.size(); ++i)
 			{
 				// load the material file by assuming everything afther the last '.' is the extension
-				elements = Logger::StringHelper::split(loadedMesh.defaultMaterialFiles.at(i), '.');
+				elements = StringHelper::split(loadedMesh.defaultMaterialFiles.at(i), '.');
 				LoadMaterial(loadedMesh.defaultMaterialFiles.at(i), elements.back());
 			}
 			for (unsigned int i = 0; i < loadedMesh.subsets.size(); ++i)
@@ -44,17 +44,17 @@ Resource::Mesh* Resource::ResourceManager::LoadMesh(const std::string& fileName,
 	return &meshes[fileName];
 }
 
-void Resource::ResourceManager::AddMeshLoader(Resource::BaseMeshLoader* newMeshLoader)
+void pengine::ResourceManager::AddMeshLoader(pengine::BaseMeshLoader* newMeshLoader)
 {
 	meshLoaders[newMeshLoader->GetExtension()] = newMeshLoader;
 }
 
-void Resource::ResourceManager::AddMaterialLoader(Resource::BaseMaterialLoader* newMaterialLoader)
+void pengine::ResourceManager::AddMaterialLoader(pengine::BaseMaterialLoader* newMaterialLoader)
 {
 	materialLoaders[newMaterialLoader->GetExtension()] = newMaterialLoader;
 }
 
-Resource::Material* Resource::ResourceManager::LoadMaterial(const std::string& fileName, const std::string& extension)
+pengine::Material* pengine::ResourceManager::LoadMaterial(const std::string& fileName, const std::string& extension)
 {
 	std::map<std::string, Material> newMaterials;
 	if (extension == "mtl")
@@ -72,7 +72,7 @@ Resource::Material* Resource::ResourceManager::LoadMaterial(const std::string& f
 	return NULL;
 }
 
-Resource::BinaryData Resource::ResourceManager::LoadBinaryFile(const std::string& fileName)
+pengine::BinaryData pengine::ResourceManager::LoadBinaryFile(const std::string& fileName)
 {
 	std::ifstream file("resources/" + fileName, std::ios::binary);
 	file.seekg(0, std::ios::end);

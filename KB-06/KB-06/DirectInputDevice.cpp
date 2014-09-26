@@ -1,12 +1,12 @@
 #include "DirectInputDevice.h"
 
-Input::DirectInputDevice::DirectInputDevice()
+pengine::DirectInputDevice::DirectInputDevice()
 {
 	dInputDevice = NULL;
 	deviceAcquired = false;
 }
 
-Input::DirectInputDevice::~DirectInputDevice()
+pengine::DirectInputDevice::~DirectInputDevice()
 {
 	if (dInputDevice)
 	{
@@ -17,7 +17,7 @@ Input::DirectInputDevice::~DirectInputDevice()
 	InputDevice::~InputDevice();
 }
 
-void Input::DirectInputDevice::ReleaseDevice()
+void pengine::DirectInputDevice::ReleaseDevice()
 {
 	if (dInputDevice)
 	{
@@ -29,7 +29,7 @@ void Input::DirectInputDevice::ReleaseDevice()
 	}
 }
 
-bool Input::DirectInputDevice::AcquireDevice()
+bool pengine::DirectInputDevice::AcquireDevice()
 {
 	int times = 5;
 	for (int i = 0; i < times; i++)
@@ -46,7 +46,7 @@ bool Input::DirectInputDevice::AcquireDevice()
 	return false;
 }
 
-void Input::DirectInputDevice::SetActionMapping(std::map<Input, int>* p_actionMapping)
+void pengine::DirectInputDevice::SetActionMapping(std::map<Input, int>* p_actionMapping)
 {
 	actionMapping = p_actionMapping;
 }

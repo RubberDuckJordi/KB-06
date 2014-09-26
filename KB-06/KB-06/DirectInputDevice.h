@@ -10,7 +10,7 @@
 #include <d3dx9.h>
 #include <dinput.h>
 
-namespace Input
+namespace pengine
 {
 	class DirectInputDevice : public InputDevice
 	{

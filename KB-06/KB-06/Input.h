@@ -1,7 +1,7 @@
 #ifndef __INPUT_KEY_H__
 #define __INPUT_KEY_H__
 
-namespace Input
+namespace pengine
 {
 	enum Input
 	{

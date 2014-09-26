@@ -1,11 +1,11 @@
 #include "InputDeviceFactory.h"
 
-Input::InputDeviceFactory::InputDeviceFactory()
+pengine::InputDeviceFactory::InputDeviceFactory()
 {
-	logger = Logger::LoggerPool::GetInstance().GetLogger();
+	logger = LoggerPool::GetInstance().GetLogger();
 }
 
-Input::InputDeviceFactory::~InputDeviceFactory()
+pengine::InputDeviceFactory::~InputDeviceFactory()
 {
-	Logger::LoggerPool::GetInstance().ReturnLogger(logger);
+	LoggerPool::GetInstance().ReturnLogger(logger);
 }

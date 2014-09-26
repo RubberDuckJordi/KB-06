@@ -1,7 +1,7 @@
 #ifndef _RENDERER_RENDERERMATRIX_H_
 #define _RENDERER_RENDERERMATRIX_H_
 
-namespace Renderer
+namespace pengine
 {
 	struct PEngineMatrix
 	{

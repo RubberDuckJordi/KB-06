@@ -3,14 +3,14 @@
 
 #include <sstream>
 
-std::vector<std::string> Logger::StringHelper::split(std::string &s, char delim)
+std::vector<std::string> pengine::StringHelper::split(std::string &s, char delim)
 {
 	std::vector<std::string> elems;
 	split(s, delim, elems);
 	return elems;
 }
 
-std::vector<std::string> Logger::StringHelper::split(const std::string &s, char delim, std::vector<std::string> &elems)
+std::vector<std::string> pengine::StringHelper::split(const std::string &s, char delim, std::vector<std::string> &elems)
 {
 	std::stringstream ss(s);
 	std::string item;
@@ -21,7 +21,7 @@ std::vector<std::string> Logger::StringHelper::split(const std::string &s, char 
 	return elems;
 }
 
-bool Logger::StringHelper::EndsWith(std::string const &fullString, std::string const &ending)
+bool pengine::StringHelper::EndsWith(std::string const &fullString, std::string const &ending)
 {
 	if (fullString.length() >= ending.length())
 	{

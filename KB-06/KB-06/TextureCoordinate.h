@@ -1,7 +1,7 @@
 #ifndef _RESOURCE_TEXTURECOORDINATE_H_
 #define _RESOURCE_TEXTURECOORDINATE_H_
 
-namespace Resource
+namespace pengine
 {
 	struct TextureCoordinate
 	{

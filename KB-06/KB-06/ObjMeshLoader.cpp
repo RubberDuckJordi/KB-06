@@ -10,7 +10,7 @@
 #include <iostream>     // std::cout
 #include <fstream>      // std::ifstream
 
-Resource::Mesh Resource::ObjMeshLoader::Load(const std::string file)
+pengine::Mesh pengine::ObjMeshLoader::Load(const std::string file)
 {
 	std::ifstream ifs(file, std::ifstream::in);
 	std::string line;
@@ -24,7 +24,7 @@ Resource::Mesh Resource::ObjMeshLoader::Load(const std::string file)
 	while (ifs.good())
 	{
 		getline(ifs, line);
-		elements = Logger::StringHelper::split(line, ' ');
+		elements = StringHelper::split(line, ' ');
 		if (elements.size() > 0)
 		{
 			if (elements[0] == "mtllib")
@@ -95,7 +95,7 @@ Resource::Mesh Resource::ObjMeshLoader::Load(const std::string file)
 
 				for (unsigned int i = 1; i < elements.size(); ++i)
 				{
-					faces = Logger::StringHelper::split(elements.at(i), '/');
+					faces = StringHelper::split(elements.at(i), '/');
 
 					faceDefinition.push_back(atoi(faces[0].c_str()));
 					faceDefinition.push_back(atoi(faces[1].c_str()));
@@ -115,7 +115,7 @@ Resource::Mesh Resource::ObjMeshLoader::Load(const std::string file)
 	}
 	ifs.close();
 	mesh.fileName = file;
-	Logger::Logger* logger = Logger::LoggerPool::GetInstance().GetLogger();
+	Logger* logger = LoggerPool::GetInstance().GetLogger();
 	logger->Log(Logger::DEBUG, "loaded: " + file);
 	logger->Log(Logger::DEBUG, "subsets: " + std::to_string(mesh.subsets.size()));
 	for (unsigned int i = 0; i < mesh.subsets.size(); ++i)
@@ -126,11 +126,11 @@ Resource::Mesh Resource::ObjMeshLoader::Load(const std::string file)
 		logger->Log(Logger::DEBUG, "parameterSpaceVertices: " + std::to_string(mesh.subsets.at(i).parameterSpaceVertices.size()));
 		logger->Log(Logger::DEBUG, "faceDefinitions: " + std::to_string(mesh.subsets.at(i).faceDefinitions.size()));
 	}
-	Logger::LoggerPool::GetInstance().ReturnLogger(logger);
+	LoggerPool::GetInstance().ReturnLogger(logger);
 	return mesh;
 }
 
-std::string Resource::ObjMeshLoader::GetExtension()
+std::string pengine::ObjMeshLoader::GetExtension()
 {
 	return "obj.mesh";
 }

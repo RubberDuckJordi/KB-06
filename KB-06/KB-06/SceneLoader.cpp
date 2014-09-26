@@ -1,16 +1,16 @@
 #include "SceneLoader.h"
 
-Resource::SceneLoader::SceneLoader()
+pengine::SceneLoader::SceneLoader()
 {
 
 }
 
-Resource::SceneLoader::~SceneLoader()
+pengine::SceneLoader::~SceneLoader()
 {
 
 }
 
-std::vector<std::string>* Resource::SceneLoader::LoadFile(std::string filePath)
+std::vector<std::string>* pengine::SceneLoader::LoadFile(std::string filePath)
 {
 	std::ifstream file(filePath);
 	std::string line;

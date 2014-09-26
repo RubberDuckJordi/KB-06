@@ -5,12 +5,12 @@
 #include "Material.h"
 #include <map>
 
-namespace Resource
+namespace pengine
 {
 	class MtlLoader : public BaseMaterialLoader
 	{
 	public:
-		std::map<std::string, Material> MtlLoader::Load(std::string file);
+		std::map<std::string, Material> Load(std::string file);
 		std::string GetExtension();
 	};
 }

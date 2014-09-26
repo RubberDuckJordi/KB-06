@@ -1,11 +1,11 @@
 #include "stdafx.h"
 #include "Renderer.h"
 
-Renderer::Renderer::Renderer()
+pengine::Renderer::Renderer()
 {
 }
 
 
-Renderer::Renderer::~Renderer()
+pengine::Renderer::~Renderer()
 {
 }

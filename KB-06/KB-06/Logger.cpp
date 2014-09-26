@@ -12,30 +12,30 @@ Do NOT directly instaniate this class, use the loggerpool instead!
 The logger defaults to the highest loglevel
 */
 
-Logger::Logger::Logger()
+pengine::Logger::Logger()
 {
 	consoleHandle = GetStdHandle(STD_OUTPUT_HANDLE);
 }
 
-void Logger::Logger::Reset()
+void pengine::Logger::Reset()
 {
 	logLevel = INFO;
 }
 
-void Logger::Logger::NewFile()
+void pengine::Logger::NewFile()
 {
 	remove(previousLogFile);
 	rename(logFile, previousLogFile);
 }
 
-void Logger::Logger::Log(int logType, std::string messageString)
+void pengine::Logger::Log(int logType, std::string messageString)
 {
 	char* message = new char[messageString.length() + 1];
 	strcpy_s(message, messageString.length() + 1, messageString.c_str());
 	Log(logType, message);
 }
 
-void Logger::Logger::Log(int logType, char* message)
+void pengine::Logger::Log(int logType, char* message)
 {
 	if (logLevel >= logType){
 		std::ostringstream oss;
@@ -90,12 +90,12 @@ void Logger::Logger::Log(int logType, char* message)
 	}
 }
 
-void Logger::Logger::SetLogLevel(int newLogLevel)
+void pengine::Logger::SetLogLevel(int newLogLevel)
 {
 	logLevel = newLogLevel;
 }
 
-void Logger::Logger::LogMemoryDump(int logType, void* const p_address, const int p_size, char* const p_name)
+void pengine::Logger::LogMemoryDump(int logType, void* const p_address, const int p_size, char* const p_name)
 {
 	std::stringstream sstr;
 	const char* c = reinterpret_cast<const char*>(p_address);

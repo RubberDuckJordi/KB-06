@@ -1,18 +1,18 @@
 #include "Entity.h"
 
-Scene::Entity::Entity()
+pengine::Entity::Entity()
 {
-	logger = Logger::LoggerPool::GetInstance().GetLogger();
-	myCachedMatrix = new Renderer::RenderMatrix();
+	logger = LoggerPool::GetInstance().GetLogger();
+	myCachedMatrix = new RenderMatrix();
 }
 
-Scene::Entity::~Entity()
+pengine::Entity::~Entity()
 {
-	Logger::LoggerPool::GetInstance().ReturnLogger(logger);
+	LoggerPool::GetInstance().ReturnLogger(logger);
 	delete myCachedMatrix;
 }
 
-void Scene::Entity::SetPosition(float x, float y, float z)
+void pengine::Entity::SetPosition(float x, float y, float z)
 {
 	position.x = x;
 	position.y = y;
@@ -20,7 +20,7 @@ void Scene::Entity::SetPosition(float x, float y, float z)
 	myCachedMatrix->CreateMatrix(position.x, position.y, position.z, rotation.x, rotation.y, rotation.z, scale.x, scale.y, scale.z, myCachedMatrix->theMatrix);
 }
 
-void Scene::Entity::SetRotation(float yaw, float pitch, float roll)
+void pengine::Entity::SetRotation(float yaw, float pitch, float roll)
 {
 	rotation.x = yaw;
 	rotation.y = pitch;
@@ -28,7 +28,7 @@ void Scene::Entity::SetRotation(float yaw, float pitch, float roll)
 	myCachedMatrix->CreateMatrix(position.x, position.y, position.z, rotation.x, rotation.y, rotation.z, scale.x, scale.y, scale.z, myCachedMatrix->theMatrix);
 }
 
-void Scene::Entity::SetScale(float scaleX, float scaleY, float scaleZ)
+void pengine::Entity::SetScale(float scaleX, float scaleY, float scaleZ)
 {
 	scale.x = scaleX;
 	scale.y = scaleY;
@@ -36,7 +36,7 @@ void Scene::Entity::SetScale(float scaleX, float scaleY, float scaleZ)
 	myCachedMatrix->CreateMatrix(position.x, position.y, position.z, rotation.x, rotation.y, rotation.z, scale.x, scale.y, scale.z, myCachedMatrix->theMatrix);
 }
 
-void Scene::Entity::SetAll(float x, float y, float z, float yaw, float pitch, float roll, float scaleX, float scaleY, float scaleZ)
+void pengine::Entity::SetAll(float x, float y, float z, float yaw, float pitch, float roll, float scaleX, float scaleY, float scaleZ)
 {
 	position.x = x;
 	position.y = y;
@@ -50,7 +50,7 @@ void Scene::Entity::SetAll(float x, float y, float z, float yaw, float pitch, fl
 	myCachedMatrix->CreateMatrix(position.x, position.y, position.z, rotation.x, rotation.y, rotation.z, scale.x, scale.y, scale.z, myCachedMatrix->theMatrix);//should only be called when needed (when any value has updated)
 }
 
-void Scene::Entity::AddPosition(float x, float y, float z)
+void pengine::Entity::AddPosition(float x, float y, float z)
 {
 	position.x += x;
 	position.y += y;
@@ -58,7 +58,7 @@ void Scene::Entity::AddPosition(float x, float y, float z)
 	myCachedMatrix->CreateMatrix(position.x, position.y, position.z, rotation.x, rotation.y, rotation.z, scale.x, scale.y, scale.z, myCachedMatrix->theMatrix);
 }
 
-void Scene::Entity::AddRotation(float yaw, float pitch, float roll)
+void pengine::Entity::AddRotation(float yaw, float pitch, float roll)
 {
 	rotation.x += yaw;
 	rotation.y += pitch;
@@ -66,7 +66,7 @@ void Scene::Entity::AddRotation(float yaw, float pitch, float roll)
 	myCachedMatrix->CreateMatrix(position.x, position.y, position.z, rotation.x, rotation.y, rotation.z, scale.x, scale.y, scale.z, myCachedMatrix->theMatrix);
 }
 
-void Scene::Entity::AddScale(float scaleX, float scaleY, float scaleZ)
+void pengine::Entity::AddScale(float scaleX, float scaleY, float scaleZ)
 {
 	scale.x += scaleX;
 	scale.y += scaleY;
@@ -74,7 +74,7 @@ void Scene::Entity::AddScale(float scaleX, float scaleY, float scaleZ)
 	myCachedMatrix->CreateMatrix(position.x, position.y, position.z, rotation.x, rotation.y, rotation.z, scale.x, scale.y, scale.z, myCachedMatrix->theMatrix);
 }
 
-void Scene::Entity::AddAll(float x, float y, float z, float yaw, float pitch, float roll, float scaleX, float scaleY, float scaleZ)
+void pengine::Entity::AddAll(float x, float y, float z, float yaw, float pitch, float roll, float scaleX, float scaleY, float scaleZ)
 {
 	position.x += x;
 	position.y += y;

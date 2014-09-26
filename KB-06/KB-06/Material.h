@@ -5,7 +5,7 @@
 #include <string>
 #include "BinaryData.h"
 
-namespace Resource
+namespace pengine
 {
 	struct Material
 	{

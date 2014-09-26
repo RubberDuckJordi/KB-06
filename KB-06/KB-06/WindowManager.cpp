@@ -5,17 +5,17 @@
 #include <string>
 #include <sstream>
 
-Window::WindowManager::WindowManager()
+pengine::WindowManager::WindowManager()
 {
-	logger = Logger::LoggerPool::GetInstance().GetLogger();
+	logger = LoggerPool::GetInstance().GetLogger();
 }
 
-Window::WindowManager::WindowManager(Scene::SceneManager *sManager)
+pengine::WindowManager::WindowManager(pengine::SceneManager *sManager)
 {
 	sceneManager = sManager;
 }
 
-Window::WindowManager::~WindowManager()
+pengine::WindowManager::~WindowManager()
 {
 	while (!windows.empty())
 	{
@@ -23,12 +23,12 @@ Window::WindowManager::~WindowManager()
 	}
 	delete sceneManager;
 	logger->Log(Logger::INFO, "WindowManager destructed");
-	Logger::LoggerPool::GetInstance().ReturnLogger(logger);
+	LoggerPool::GetInstance().ReturnLogger(logger);
 }
 
-HWND Window::WindowManager::NewWindow(int x, int y, int width, int height)
+HWND pengine::WindowManager::NewWindow(int x, int y, int width, int height)
 {
-	Logger::Logger* logger = Logger::LoggerPool::GetInstance().GetLogger();
+	pengine::Logger* logger = pengine::LoggerPool::GetInstance().GetLogger();
 	Window *window = new Window();
 	HWND hwnd = window->Create(x, y, width, height, NULL, NULL, NULL);
 
@@ -39,7 +39,7 @@ HWND Window::WindowManager::NewWindow(int x, int y, int width, int height)
 	}
 
 	windows.push_back(window);
-	Logger::LoggerPool::GetInstance().ReturnLogger(logger);
+	pengine::LoggerPool::GetInstance().ReturnLogger(logger);
 
 	std::list<WindowListener*>::iterator listenersIt;
 	for (listenersIt = windowListeners.begin(); listenersIt != windowListeners.end(); ++listenersIt)
@@ -51,7 +51,7 @@ HWND Window::WindowManager::NewWindow(int x, int y, int width, int height)
 	return hwnd;
 }
 
-void Window::WindowManager::UpdateWindows()
+void pengine::WindowManager::UpdateWindows()
 {
 	MSG Msg;
 	while (PeekMessage(&Msg, NULL, 0U, 0U, true) > 0)//if there's more than one message, go through all of them.
@@ -67,7 +67,7 @@ void Window::WindowManager::UpdateWindows()
 	*/
 }
 
-bool Window::WindowManager::HasActiveWindow()
+bool pengine::WindowManager::HasActiveWindow()
 {
 	/*for (int index = 0; index < windows.size(); ++index) {
 		//windows.at(index)->render(NULL);// Todo: get the scene that has to be rendered in this window...
@@ -99,12 +99,12 @@ bool Window::WindowManager::HasActiveWindow()
 	return false;
 }
 
-Window::Window* Window::WindowManager::GetLastWindow()
+pengine::Window* pengine::WindowManager::GetLastWindow()
 {
 	return windows.back();
 }
 
-Window::Window* Window::WindowManager::GetWindowByHWND(HWND hwnd)
+pengine::Window* pengine::WindowManager::GetWindowByHWND(HWND hwnd)
 {
 	for (std::vector<Window*>::iterator it = windows.begin(); it != windows.end();) // note the missing ++iter !
 	{
@@ -118,12 +118,12 @@ Window::Window* Window::WindowManager::GetWindowByHWND(HWND hwnd)
 	return NULL;
 }
 
-std::vector<Window::Window*>* Window::WindowManager::GetAllWindows()
+std::vector<pengine::Window*>* pengine::WindowManager::GetAllWindows()
 {
 	return &windows;
 }
 
-void Window::WindowManager::AddWindowListener(WindowListener* p_windowListener)
+void pengine::WindowManager::AddWindowListener(WindowListener* p_windowListener)
 {
 	if (p_windowListener != NULL)
 	{
@@ -137,7 +137,7 @@ void Window::WindowManager::AddWindowListener(WindowListener* p_windowListener)
 	}
 }
 
-void Window::WindowManager::RemoveWindowListener(WindowListener* p_windowListener)
+void pengine::WindowManager::RemoveWindowListener(WindowListener* p_windowListener)
 {
 	if (p_windowListener != NULL)
 	{
@@ -150,7 +150,7 @@ void Window::WindowManager::RemoveWindowListener(WindowListener* p_windowListene
 	}
 }
 
-void Window::WindowManager::ClearWindowListeners()
+void pengine::WindowManager::ClearWindowListeners()
 {
 	windowListeners.clear();
 	std::vector<Window*>::iterator windowIt;

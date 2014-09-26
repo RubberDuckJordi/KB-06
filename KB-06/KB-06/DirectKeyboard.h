@@ -8,7 +8,7 @@
 //If not defined, it will default to version 8 as well, but we like a sense of security.
 #define DIRECTINPUT_VERSION 0x0800
 
-namespace Input
+namespace pengine
 {
 	class DirectKeyboard : public DirectInputDevice
 	{
@@ -18,8 +18,8 @@ namespace Input
 		bool Initialize(LPDIRECTINPUT8, HWND hwnd);
 		bool Update();
 		std::map<Input, long>* GetInputValues();
-		void OnWindowFocusLost(Window::Window* window);
-		void OnWindowFocusGained(Window::Window* window);
+		void OnWindowFocusLost(Window* window);
+		void OnWindowFocusGained(Window* window);
 
 	private:
 		long GetStateOf(int p_key);

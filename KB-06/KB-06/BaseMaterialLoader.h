@@ -5,7 +5,7 @@
 #include <vector>
 #include <map>
 
-namespace Resource
+namespace pengine
 {
 	class BaseMaterialLoader
 	{

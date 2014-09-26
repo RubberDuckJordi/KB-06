@@ -7,7 +7,7 @@
 #include "Input.h"
 #include <map>
 
-namespace Input
+namespace pengine
 {
 	class DirectInputDeviceFactory : public InputDeviceFactory
 	{

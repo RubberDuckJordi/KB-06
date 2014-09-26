@@ -4,7 +4,7 @@
 #include "mesh.h"
 #include <vector>
 
-namespace Resource
+namespace pengine
 {
 	class BaseMeshLoader
 	{

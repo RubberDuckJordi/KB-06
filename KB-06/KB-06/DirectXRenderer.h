@@ -4,7 +4,7 @@
 #include <d3dx9.h>
 #include "Renderer.h"
 
-namespace Renderer
+namespace pengine
 {
 	class DirectXRenderer : public Renderer
 	{
@@ -24,7 +24,7 @@ namespace Renderer
 
 		void BeginScene();
 		void ClearScene(PENGINEDWORD* count, PENGINEDWORD* flags, PENGINECOLOR* color, float z, PENGINEDWORD* stencil);
-		void ClearScene(unsigned long count, unsigned long flags, Resource::RGBAColor color, float z, unsigned long stencil);
+		void ClearScene(unsigned long count, unsigned long flags, RGBAColor color, float z, unsigned long stencil);
 		void PresentScene(HWND hWnd);
 		void EndScene();
 
@@ -35,27 +35,27 @@ namespace Renderer
 		void SetTexture(TextureWrapper* wrapper);
 		void SetFvF(PENGINEDWORD* fvf);
 
-		void DrawPrimitive(Resource::Mesh mesh);
+		void DrawPrimitive(Mesh mesh);
 		void DrawSubset(MeshWrapper* wrapper, int subset);
 
 		void SetStreamSource(); //??
 		void SetIndices(); //??
 
 		LPDIRECT3DDEVICE9* GetDevice();
-		void Draw(Resource::Mesh* mesh);
+		void Draw(Mesh* mesh);
 		void SetActiveMatrix(PEngineMatrix* matrix);
 
 		void SetLights();
 
 	private:
-		void SetTexture(Resource::BinaryData* texture);
-		void SetMaterial(Resource::Material* material);
+		void SetTexture(BinaryData* texture);
+		void SetMaterial(Material* material);
 		void SetMatrixCache(PEngineMatrix* matrix);
 
 		LPDIRECT3D9 g_pD3D;
 		LPDIRECT3DDEVICE9 g_pd3dDevice;
-		std::map<Resource::Mesh*, LPD3DXMESH> meshCache;
-		std::map<Resource::BinaryData*, LPDIRECT3DTEXTURE9> textureCache;
+		std::map<Mesh*, LPD3DXMESH> meshCache;
+		std::map<BinaryData*, LPDIRECT3DTEXTURE9> textureCache;
 
 		D3DXMATRIX* matrixCache;
 	};

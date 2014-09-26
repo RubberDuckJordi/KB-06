@@ -1,7 +1,7 @@
 #ifndef _RESOURCE_NORMAL_H_
 #define _RESOURCE_NORMAL_H_
 
-namespace Resource
+namespace pengine
 {
 	struct Normal
 	{

@@ -3,13 +3,13 @@
 #include "DirectInputDeviceFactory.h"
 #include "DirectXRenderer.h"
 
-PEngine::PEngine()
+pengine::PEngine::PEngine()
 {
-	logger = Logger::LoggerPool::GetInstance().GetLogger();
+	logger = LoggerPool::GetInstance().GetLogger();
 	logger->NewFile();
 }
 
-PEngine::~PEngine()
+pengine::PEngine::~PEngine()
 {
 	delete inputManager;
 	delete windowManager;
@@ -18,41 +18,41 @@ PEngine::~PEngine()
 	delete resourceManager;
 
 	logger->Log(Logger::INFO, "Destructed PEngine");
-	Logger::LoggerPool::GetInstance().ReturnLogger(logger);
+	LoggerPool::GetInstance().ReturnLogger(logger);
 }
 
-void PEngine::Init()
+void pengine::PEngine::Init()
 {
 	// Aanmaken van deze factory moet in een abstract factory gaan gebeuren
-	windowManager = new Window::WindowManager();
-	Input::InputDeviceFactory* inputDeviceFactory = new Input::DirectInputDeviceFactory();
-	inputManager = new Input::InputManager(inputDeviceFactory);
-	renderer = new Renderer::DirectXRenderer();
-	sceneManager = new Scene::SceneManager();
-	resourceManager = new Resource::ResourceManager();
+	windowManager = new WindowManager();
+	InputDeviceFactory* inputDeviceFactory = new DirectInputDeviceFactory();
+	inputManager = new InputManager(inputDeviceFactory);
+	renderer = new DirectXRenderer();
+	sceneManager = new SceneManager();
+	resourceManager = new ResourceManager();
 }
 
-Window::WindowManager* PEngine::GetWindowManager()
+pengine::WindowManager* pengine::PEngine::GetWindowManager()
 {
 	return windowManager;
 }
 
-Resource::ResourceManager* PEngine::GetResourceManager()
+pengine::ResourceManager* pengine::PEngine::GetResourceManager()
 {
 	return resourceManager;
 }
 
-Scene::SceneManager* PEngine::GetSceneManager()
+pengine::SceneManager* pengine::PEngine::GetSceneManager()
 {
 	return sceneManager;
 }
 
-Input::InputManager* PEngine::GetInputManager()
+pengine::InputManager* pengine::PEngine::GetInputManager()
 {
 	return inputManager;
 }
 
-Renderer::Renderer* PEngine::GetRenderer()
+pengine::Renderer* pengine::PEngine::GetRenderer()
 {
 	return renderer;
 }

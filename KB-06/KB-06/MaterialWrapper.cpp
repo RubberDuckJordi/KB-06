@@ -1,21 +1,21 @@
 #include "MaterialWrapper.h"
 
-Renderer::MaterialWrapper::MaterialWrapper(D3DMATERIAL9* _material)
+pengine::MaterialWrapper::MaterialWrapper(D3DMATERIAL9* _material)
 {
 	material = _material;
 }
 
-Renderer::MaterialWrapper::~MaterialWrapper()
+pengine::MaterialWrapper::~MaterialWrapper()
 {
 
 }
 
-void Renderer::MaterialWrapper::SetMaterial(D3DMATERIAL9* _material)
+void pengine::MaterialWrapper::SetMaterial(D3DMATERIAL9* _material)
 {
 	material = _material;
 }
 
-D3DMATERIAL9* Renderer::MaterialWrapper::GetMaterial()
+D3DMATERIAL9* pengine::MaterialWrapper::GetMaterial()
 {
 	return material;
 }

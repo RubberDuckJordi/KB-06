@@ -9,7 +9,7 @@
 #include "FaceDefinition.h"
 #include "Material.h"
 
-namespace Resource
+namespace pengine
 {
 	struct Subset
 	{

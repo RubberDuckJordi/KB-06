@@ -4,7 +4,7 @@
 #include "Scene.h"
 #include "SceneDefinition.h"
 
-namespace Resource
+namespace pengine
 {
 	class SceneLoader
 	{

@@ -3,7 +3,7 @@
 
 #include <string>
 
-namespace Resource
+namespace pengine
 {
 	struct SceneDefinition
 	{

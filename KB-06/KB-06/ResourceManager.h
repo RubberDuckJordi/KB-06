@@ -12,7 +12,7 @@
 #include <vector>
 #include <string>
 
-namespace Resource
+namespace pengine
 {
 	class ResourceManager
 	{
@@ -31,7 +31,7 @@ namespace Resource
 
 		std::map<std::string, Material>* loadMaterials(std::string file);
 	private:
-		Logger::Logger* logger;
+		Logger* logger;
 
 		std::map<std::string, Mesh> meshes;
 		std::map<std::string, Material> materials;

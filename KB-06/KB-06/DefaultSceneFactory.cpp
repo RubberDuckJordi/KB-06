@@ -2,17 +2,17 @@
 #include "DefaultScene.h"
 #include "DefaultEntity.h"
 
-Scene::DefaultSceneFactory::DefaultSceneFactory()
+pengine::DefaultSceneFactory::DefaultSceneFactory()
 {
 
 }
 
-Scene::DefaultSceneFactory::~DefaultSceneFactory()
+pengine::DefaultSceneFactory::~DefaultSceneFactory()
 {
 
 }
 
-Scene::Scene* Scene::DefaultSceneFactory::CreateScene()
+pengine::Scene* pengine::DefaultSceneFactory::CreateScene()
 {
 	DefaultEntity* entity = new DefaultEntity();
 	DefaultEntity* entity2 = new DefaultEntity();
@@ -77,27 +77,27 @@ Scene::Scene* Scene::DefaultSceneFactory::CreateScene()
 	return defaultScene;
 }
 
-void Scene::DefaultSceneFactory::setMesh(Resource::Mesh* p_mesh)
+void pengine::DefaultSceneFactory::setMesh(pengine::Mesh* p_mesh)
 {
 	mesh = p_mesh;
 }
 
-void Scene::DefaultSceneFactory::setMesh2(Resource::Mesh* p_mesh)
+void pengine::DefaultSceneFactory::setMesh2(pengine::Mesh* p_mesh)
 {
 	mesh2 = p_mesh;
 }
 
-void Scene::DefaultSceneFactory::setMesh3(Resource::Mesh* p_mesh)
+void pengine::DefaultSceneFactory::setMesh3(pengine::Mesh* p_mesh)
 {
 	mesh3 = p_mesh;
 }
 
-void Scene::DefaultSceneFactory::SetXModel(Resource::XModel* p_xModel)
+void pengine::DefaultSceneFactory::SetXModel(pengine::XModel* p_xModel)
 {
 	xModel = p_xModel;
 }
 
-void Scene::DefaultSceneFactory::SetXModel2(Resource::XModel* p_xModel)
+void pengine::DefaultSceneFactory::SetXModel2(pengine::XModel* p_xModel)
 {
 	xModel2 = p_xModel;
 }

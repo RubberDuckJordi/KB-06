@@ -9,8 +9,10 @@
 #include <list>
 #include <map>
 
-namespace Scene {
-	class SceneManager {
+namespace pengine
+{
+	class SceneManager 
+	{
 	public:
 		SceneManager();
 		~SceneManager();
@@ -19,15 +21,15 @@ namespace Scene {
 		void AddScene(Scene* scene);
 		void RemoveScene(Scene* scene);
 		void UpdateScene(Scene* scene);
-		void UpdateActiveScene(std::map<Input::Input, long>* actions);
-		void RenderActiveScene(Renderer::Renderer* renderer);
+		void UpdateActiveScene(std::map<Input, long>* actions);
+		void RenderActiveScene(Renderer* renderer);
 		void SetCurrentScene(Scene* scene);
 
 	private:
 		Scene* currentScene;
 		std::list<Scene*> scenes;
 		std::map<char*, SceneFactory*> sceneFactories;
-		Logger::Logger* logger;
+		Logger* logger;
 	};
 }
 #endif

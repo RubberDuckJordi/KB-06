@@ -3,7 +3,7 @@
 
 #include "BaseMeshLoader.h"
 
-namespace Resource
+namespace pengine
 {
 	class ObjMeshLoader : public BaseMeshLoader
 	{

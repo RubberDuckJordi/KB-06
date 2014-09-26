@@ -1,7 +1,7 @@
 #ifndef _RESOURCE_BINARYDATA_H_
 #define _RESOURCE_BINARYDATA_H_
 
-namespace Resource
+namespace pengine
 {
 	struct BinaryData{
 		std::string fileName;

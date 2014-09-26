@@ -2,7 +2,7 @@
 #include "LoggerPool.h"
 #include "Input.h"
 
-Input::DirectInputDeviceFactory::DirectInputDeviceFactory()
+pengine::DirectInputDeviceFactory::DirectInputDeviceFactory()
 {
 	dInput = NULL;
 	if (SUCCEEDED(DirectInput8Create(
@@ -22,12 +22,12 @@ Input::DirectInputDeviceFactory::DirectInputDeviceFactory()
 	CreateActionMapping();
 }
 
-void Input::DirectInputDeviceFactory::Initialise(HWND p_hwnd)
+void pengine::DirectInputDeviceFactory::Initialise(HWND p_hwnd)
 {
 	hwnd = p_hwnd;
 }
 
-Input::DirectInputDeviceFactory::~DirectInputDeviceFactory()
+pengine::DirectInputDeviceFactory::~DirectInputDeviceFactory()
 {
 	if (dInput != NULL)
 	{
@@ -39,7 +39,7 @@ Input::DirectInputDeviceFactory::~DirectInputDeviceFactory()
 	InputDeviceFactory::~InputDeviceFactory();
 }
 
-Input::InputDevice* Input::DirectInputDeviceFactory::CreateInputDevice(InputDevice::Type type)
+pengine::InputDevice* pengine::DirectInputDeviceFactory::CreateInputDevice(InputDevice::Type type)
 {
 	if (hwnd != NULL)
 	{
@@ -78,7 +78,7 @@ Input::InputDevice* Input::DirectInputDeviceFactory::CreateInputDevice(InputDevi
 	}
 }
 
-void Input::DirectInputDeviceFactory::CreateActionMapping()
+void pengine::DirectInputDeviceFactory::CreateActionMapping()
 {
 	actionMapping = new std::map<Input, int>();
 	// Map defines to int values, we can't create a pointer to preprocessor values

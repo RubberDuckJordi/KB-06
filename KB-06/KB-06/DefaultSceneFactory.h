@@ -5,25 +5,26 @@
 #include "Mesh.h"
 #include "XModel.h"
 
-namespace Scene{
+namespace pengine
+{
 	class DefaultSceneFactory : public SceneFactory
 	{
 	public:
 		DefaultSceneFactory();
 		~DefaultSceneFactory();
 		Scene* CreateScene();
-		void setMesh(Resource::Mesh* mesh);//debug!
-		void setMesh2(Resource::Mesh* mesh);//debug!
-		void setMesh3(Resource::Mesh* mesh);//debug!
-		void SetXModel(Resource::XModel*); //debug
-		void SetXModel2(Resource::XModel*); //debug
+		void setMesh(Mesh* mesh);//debug!
+		void setMesh2(Mesh* mesh);//debug!
+		void setMesh3(Mesh* mesh);//debug!
+		void SetXModel(XModel*); //debug
+		void SetXModel2(XModel*); //debug
 	private:
-		Resource::Mesh* mesh;//debug!
-		Resource::Mesh* mesh2;//debug!
-		Resource::Mesh* mesh3;//debug!
+		Mesh* mesh;//debug!
+		Mesh* mesh2;//debug!
+		Mesh* mesh3;//debug!
 
-		Resource::XModel* xModel; //debug.
-		Resource::XModel* xModel2; //debug.
+		XModel* xModel; //debug.
+		XModel* xModel2; //debug.
 	};
 }
 #endif
