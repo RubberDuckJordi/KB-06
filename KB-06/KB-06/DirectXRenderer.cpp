@@ -313,7 +313,10 @@ void Renderer::DirectXRenderer::SetLights()
 		1.0f,
 		sinf(timeGetTime() / 350.0f));
 	D3DXVec3Normalize((D3DXVECTOR3*)&light.Direction, &vecDir);
+
 	light.Range = 1000.0f;
+	light.Direction = vecDir;
+
 	g_pd3dDevice->SetLight(0, &light);
 	g_pd3dDevice->LightEnable(0, TRUE);
 	g_pd3dDevice->SetRenderState(D3DRS_LIGHTING, FALSE);
