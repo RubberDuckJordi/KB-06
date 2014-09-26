@@ -20,12 +20,45 @@ struct Array
 
 	Array<T, size>& operator=(Array<T, size> pA)
 	{
-		memcpy(data, pA.data, size * sizeof(T)); return *this;
+		memcpy(data, pA.data, size * sizeof(T));
+		return *this;
 	};
-	Array<T, size>& operator+=(Array<T, size> pA);
-	Array<T, size> operator*(const T pScalar);
-	Array<T, size> operator+(Array<T, size> pA);
-	Array<T, size> operator-(Array<T, size> pA);
+	Array<T, size>& operator+=(Array<T, size> pA)
+	{
+		for (int i = 0; i < size; i++)
+		{
+			data[i] += pA.data[i];
+		}
+		return *this;
+	}
+	Array<T, size> operator*(const T pScalar)
+	{
+		T rdata[size];
+		memcpy(rdata, data, size * sizeof(T));
+		for (int i = 0; i < size; i++)
+		{
+			rdata[i] *= pScalar;
+		}
+		return Array<T, size>(rdata);
+	};
+	Array<T, size> operator+(Array<T, size> pA)
+	{
+		T rdata[size];
+		for (int i = 0; i < size; i++)
+		{
+			rdata[i] = data[i] + pA.data[i];
+		}
+		return Array<T, size>(rdata);
+	};
+	Array<T, size> operator-(Array<T, size> pA)
+	{
+		T rdata[size];
+		for (int i = 0; i < size; i++)
+		{
+			rdata[i] = data[i] - pA.data[i];
+		}
+		return Array<T, size>(rdata);
+	};
 	T operator[](int index)const
 	{
 		return data[index];
@@ -70,49 +103,5 @@ Array<T, 2> Set2(T pu, T pv)
 	data[0] = pu;
 	data[1] = pv;
 	return Array<T, 2>(data);
-};
-
-template<typename T, int size>
-Array<T, size>& Array<T, size>::operator+=(Array<T, size> pA)
-{
-	for (int i = 0; i < size; i++)
-	{
-		data[i] += pA.data[i];
-	}
-	return *this;
-}
-
-template<typename T, int size>
-Array<T, size> Array<T, size>::operator*(const T pScalar)
-{
-	T rdata[size];
-	memcpy(rdata, data, size * sizeof(T));
-	for (int i = 0; i < size; i++)
-	{
-		rdata[i] *= pScalar;
-	}
-	return Array<T, size>(rdata);
-}
-
-template<typename T, int size>
-Array<T, size> Array<T, size>::operator+(Array<T, size> pA)
-{
-	T rdata[size];
-	for (int i = 0; i < size; i++)
-	{
-		rdata[i] = data[i] + pA.data[i];
-	}
-	return Array<T, size>(rdata);
-};
-
-template<typename T, int size>
-Array<T, size> Array<T, size>::operator-(Array<T, size> pA)
-{
-	T rdata[size];
-	for (int i = 0; i < size; i++)
-	{
-		rdata[i] = data[i] - pA.data[i];
-	}
-	return Array<T, size>(rdata);
 };
 #endif

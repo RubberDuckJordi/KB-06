@@ -1,21 +1,24 @@
 #ifndef _TRECT_H_
 #define _TRECT_H_
+
+#include "Vector.h"
+
 template <typename T>
-class trect
+class TRect
 {
 public:
 	T xs, ys, xe, ye;
-	trect(void) : xs(0), ys(0), xe(0), ye(0)
+	TRect(void) : xs(0), ys(0), xe(0), ye(0)
 	{
 	};
-	trect(const trect<T> &prect)
+	TRect(const TRect<T> &prect)
 	{
 		xs = prect.xs;
 		ys = prect.ys;
 		xe = prect.xe;
 		ye = prect.ye;
 	};
-	trect<T>& operator=(const trect<T> &prect)
+	TRect<T>& operator=(const TRect<T> &prect)
 	{
 		xs = prect.xs;
 		ys = prect.ys;
@@ -23,7 +26,7 @@ public:
 		ye = prect.ye;
 		return *this;
 	};
-	trect<T>& operator+=(const Vector<T> &pV)
+	TRect<T>& operator+=(const Vector<T> &pV)
 	{
 		xs += pV.x;
 		ys += pV.y;
@@ -42,7 +45,7 @@ public:
 	return *this;
 	};*/
 
-	trect(const T pxs, const T pys, const T pxe, const T pye)
+	TRect(const T pxs, const T pys, const T pxe, const T pye)
 	{
 		xs = pxs;
 		ys = pys;
@@ -119,7 +122,7 @@ public:
 	return true;
 	};*/
 
-	bool _fastcall InRect(const trect<T> &prect)
+	bool _fastcall InRect(const TRect<T> &prect)
 	{
 		if ((prect.xe <= xe) &&
 			(prect.ye <= ye) &&
@@ -130,7 +133,7 @@ public:
 		}
 		return false;
 	}
-	bool _fastcall Intersect(const trect<T> &prect)
+	bool _fastcall Intersect(const TRect<T> &prect)
 	{
 		if (prect.xe < xs)
 		{
@@ -150,7 +153,7 @@ public:
 		}
 		return true;
 	};
-	bool _fastcall Union(const trect<T> &prect)
+	bool _fastcall Union(const TRect<T> &prect)
 	{
 		if (!Intersect(prect))
 		{
