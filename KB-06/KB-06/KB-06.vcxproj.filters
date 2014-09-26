@@ -112,6 +112,12 @@
     <ClCompile Include="RenderMatrix.cpp">
       <Filter>Source\Renderer</Filter>
     </ClCompile>
+    <ClCompile Include="SuperXLoader.cpp">
+      <Filter>Source\Resource\RobertX</Filter>
+    </ClCompile>
+    <ClCompile Include="XMesh.cpp">
+      <Filter>Source\Resource\RobertX\Framework</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DefaultEntity.h">
@@ -286,6 +292,27 @@
     <ClInclude Include="RenderMatrix.h">
       <Filter>Header\Renderer</Filter>
     </ClInclude>
+    <ClInclude Include="SuperXLoader.h">
+      <Filter>Header\Resource\RobertX</Filter>
+    </ClInclude>
+    <ClInclude Include="XMesh.h">
+      <Filter>Header\Resource\RobertX\Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="Types.h">
+      <Filter>Header\Resource\RobertX\Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="3DMath.h">
+      <Filter>Header\Resource\RobertX\Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="XMaterial.h">
+      <Filter>Header\Resource\RobertX\Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="IO.h">
+      <Filter>Header\Resource\RobertX\Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="XFileStructs.h">
+      <Filter>Header\Resource\RobertX\ToolBox</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -365,6 +392,24 @@
     </Filter>
     <Filter Include="Source\Resource\X">
       <UniqueIdentifier>{0ba113e0-08d5-4e90-831c-b3c0bbce4b81}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header\Resource\RobertX">
+      <UniqueIdentifier>{96244d68-507c-4d05-9a8b-f997ad19f385}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Resource\RobertX">
+      <UniqueIdentifier>{880ee865-54c4-46fa-877a-025399780221}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header\Resource\RobertX\Framework">
+      <UniqueIdentifier>{1672a3f9-ae9c-4ecd-991c-fd40e3af5eb7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Resource\RobertX\Framework">
+      <UniqueIdentifier>{9d31a81d-228f-429c-87e3-e1aac80cc086}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header\Resource\RobertX\ToolBox">
+      <UniqueIdentifier>{933e1e4d-25c0-4547-b3f0-0af570d00796}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Resource\RobertX\ToolBox">
+      <UniqueIdentifier>{c129de2a-5df7-45a9-b101-662a0f544e48}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
