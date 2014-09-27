@@ -81,8 +81,8 @@ pengine::BinaryData pengine::ResourceManager::LoadBinaryFile(const std::string& 
 	file.seekg(0, std::ios::beg);
 
 	BinaryData texture;
-	texture.rawData = new char[size];
-	texture.size = size;
+	texture.rawData = new char[(unsigned int)size];
+	texture.size = (unsigned int)size;
 	texture.fileName = fileName;
 	if (file.read(texture.rawData, size))
 	{

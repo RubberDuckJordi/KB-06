@@ -86,9 +86,12 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Animation.h" />
+    <ClInclude Include="AnimationSet.h" />
     <ClInclude Include="Array.h" />
     <ClInclude Include="BaseMaterialLoader.h" />
     <ClInclude Include="BaseMeshLoader.h" />
+    <ClInclude Include="Bone.h" />
     <ClInclude Include="EntityCamera.h" />
     <ClInclude Include="FaceDefinition.h" />
     <ClInclude Include="IndexBufferWrapper.h" />
@@ -99,6 +102,7 @@
     <ClInclude Include="MenuButton.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="MeshWrapper.h" />
+    <ClInclude Include="Model3D.h" />
     <ClInclude Include="ObjMeshLoader.h" />
     <ClInclude Include="Quaternion.h" />
     <ClInclude Include="RenderMatrix.h" />
@@ -196,7 +200,6 @@
     <ClCompile Include="VertexBufferWrapper.cpp" />
     <ClCompile Include="Window.cpp" />
     <ClCompile Include="WindowManager.cpp" />
-    <ClCompile Include="XMesh.cpp" />
     <ClCompile Include="XModel.cpp" />
     <ClCompile Include="XModelLoader.cpp" />
   </ItemGroup>

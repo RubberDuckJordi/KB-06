@@ -76,6 +76,7 @@ pengine::InputDevice* pengine::DirectInputDeviceFactory::CreateInputDevice(Input
 	{
 		logger->Log(Logger::ERR, "Unable to create device, factory is not initialised");
 	}
+	return NULL;
 }
 
 void pengine::DirectInputDeviceFactory::CreateActionMapping()

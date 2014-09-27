@@ -282,10 +282,10 @@ void IO_Model_X::ProcessMesh(void)
 	int16 Token;
 	char Data[TEXT_BUFFER];
 
-	_LoadMesh = new Mesh;
+	_LoadMesh = new XMesh;
 	if (!_Object->_Meshes.empty())
 	{
-		Mesh* LastMesh = _Object->_Meshes.back();
+		XMesh* LastMesh = _Object->_Meshes.back();
 		_LoadMesh->_FirstVertex = LastMesh->_FirstVertex + LastMesh->_nVertices;
 		_LoadMesh->_FirstFace = LastMesh->_FirstFace + LastMesh->_nFaces;
 		_LoadMesh->_FirstTextureCoord = LastMesh->_FirstTextureCoord + LastMesh->_nTextureCoords;

@@ -10,7 +10,7 @@ namespace pengine
 	class MtlLoader : public BaseMaterialLoader
 	{
 	public:
-		std::map<std::string, Material> Load(std::string file);
+		std::map<std::string, Material> Load(const std::string file);
 		std::string GetExtension();
 	};
 }

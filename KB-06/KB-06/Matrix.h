@@ -2,6 +2,7 @@
 #define _MATRIX_H_
 
 #include "Vector.h"
+#include "Array.h"
 
 template <typename T>
 class Matrix
@@ -45,7 +46,7 @@ public:
 			Rdata[k] = data[k] + pm.data[k];
 		}
 		return Matrix<T>(Rdata);
-	}
+	};
 	Matrix<T> operator-(Matrix<T> pm)
 	{
 		T Rdata[16];
@@ -54,7 +55,7 @@ public:
 			Rdata[k] = data[k] - pm.data[k];
 		}
 		return Matrix<T>(Rdata);
-	}
+	};
 	Matrix<T> operator*(Matrix<T> pm)
 	{
 		T Rdata[16];
@@ -71,7 +72,7 @@ public:
 			}
 		}
 		return Matrix<T>(Rdata);
-	}
+	};
 	Matrix<T>& operator*=(Matrix<T> &pm)
 	{
 		T Rdata[16];
@@ -89,7 +90,7 @@ public:
 		}
 		memcpy(data, Rdata, 16 * sizeof(T));
 		return *this;
-	}
+	};
 	Matrix<T> operator*(T pT)
 	{
 		T Rdata[16];
@@ -99,7 +100,7 @@ public:
 			Rdata[k] *= pT;
 		}
 		return Matrix<T>(Rdata);
-	}
+	};
 	Vector<T> operator*(const Vector<T>& pV)
 	{
 		T vdata[4], pvdata[4];

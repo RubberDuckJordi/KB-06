@@ -115,9 +115,6 @@
     <ClCompile Include="SuperXLoader.cpp">
       <Filter>Source\Resource\RobertX</Filter>
     </ClCompile>
-    <ClCompile Include="XMesh.cpp">
-      <Filter>Source\Resource\RobertX\Framework</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DefaultEntity.h">
@@ -323,6 +320,18 @@
       <Filter>Header\Resource\RobertX</Filter>
     </ClInclude>
     <ClInclude Include="TRect.h">
+      <Filter>Header\Resource\RobertX\Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="Bone.h">
+      <Filter>Header\Resource\RobertX\Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="Animation.h">
+      <Filter>Header\Resource\RobertX\Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimationSet.h">
+      <Filter>Header\Resource\RobertX\Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="Model3D.h">
       <Filter>Header\Resource\RobertX\Framework</Filter>
     </ClInclude>
   </ItemGroup>

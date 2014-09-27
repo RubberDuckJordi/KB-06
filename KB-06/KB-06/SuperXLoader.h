@@ -1,11 +1,13 @@
-#pragma once
+#ifndef _SUPERXLOADER_H_
+#define _SUPERXLOADER_H_
 
 #define DEBUG
 
 #include "IO.h"
-#include <fstream>
-#include "XMesh.h"
 #include "XFileStructs.h"
+#include "Model3D.h"
+
+#include <fstream>
 
 class IO_Model_X : IO < Model3D* >
 {
@@ -28,7 +30,7 @@ public:
 private:
 	std::ifstream fin;
 	Bone* _LoadSkeletton;
-	Mesh* _LoadMesh;
+	XMesh* _LoadMesh;
 	AnimationSet* _LoadAnimationSet;
 	Model3D* _Object;
 
@@ -63,4 +65,4 @@ private:
 	void ProcessAnimationKeys(Animation* &pA);
 	void MapMeshToBones(Bone* &pBone);
 };
-
+#endif

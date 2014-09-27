@@ -13,43 +13,16 @@
 #include <list>
 #include <vector>
 
-class XMesh
-{
-public:
-	XMesh();
-	~XMesh();
-};
-
-class Bone
-{
-public:
-	Bone(void) : _nVertices(0), _Vertices(0), _Weights(0)
-	{
-		_MatrixPos.Identity(); _SkinOffset.Identity();
-	};
-	~Bone(void);
-	Bone* IsName(std::string &BoneName);
-	void UpdateIndices(uint16 pIndex);
-
-	Matrix<float> _MatrixPos, _SkinOffset;
-	uint32 _nVertices;
-	uint16* _Vertices;
-	float* _Weights;
-	std::string _MeshName;
-	std::string _Name;
-	std::list<Bone*> _Bones;
-};
-
 struct Subset
 {
 	uint16 Size;
 	Face* Faces;
 };
 
-class Mesh
+class XMesh
 {
 public:
-	Mesh(void) :_nVertices(0), _Vertices(0),
+	XMesh(void) :_nVertices(0), _Vertices(0),
 		_nFaces(0), _Faces(0),
 		_nTextureCoords(0), _TextureCoords(0),
 		_FaceMaterials(0),
@@ -62,8 +35,8 @@ public:
 		_FirstMaterial(0)
 	{
 	};
-	~Mesh(void);
-	Mesh* IsName(std::string &MeshName)
+	~XMesh(void);
+	XMesh* IsName(std::string &MeshName)
 	{
 		if (strcmp(_Name.c_str(), MeshName.c_str()) == 0)
 		{
@@ -94,88 +67,5 @@ public:
 	//list of Materials for that Mesh
 	std::list<XMaterial*> _Materials;
 	std::string _Name;
-};
-
-typedef struct
-{
-	uint32          Time;
-	Quaternion<float> Rotation;
-} RotateKey;
-
-typedef struct
-{
-	uint32     	Time;
-	Vertex	Translation;
-} PositionKey;
-
-typedef struct
-{
-	uint32       Time;
-	Vector<float>  Scale;
-} ScaleKey;
-
-typedef struct
-{
-	uint32      Time;
-	Matrix<float> Matrix;
-} MatrixKey;
-
-class Animation
-{
-public:
-	~Animation(void);
-	Animation* Get(void)
-	{
-		return this;
-	};
-	Animation* IsName(std::string &pText)
-	{
-		if (strcmp(_BoneName.c_str(), pText.c_str()) == 0)
-		{
-			return this;
-		}
-		return 0;
-	};
-
-	std::string _BoneName;
-	std::vector<ScaleKey*> _Scalings;
-	std::vector<RotateKey*> _Rotations;
-	std::vector<PositionKey*> _Translations;
-	std::vector<MatrixKey*> _Matrices;
-};
-
-class AnimationSet
-{
-public:
-	~AnimationSet(void);
-	AnimationSet* IsName(std::string &pText)
-	{
-		if (strcmp(_Name.c_str(), pText.c_str()) == 0)
-		{
-			return this;
-		}
-		return 0;
-	};
-	Animation* FindAnimation(std::string &pText);
-	std::string _Name;
-	std::list<Animation*> _Animations;
-	uint32 _MaxKey; //Maximum time key for the full animation set
-};
-
-class Model3D
-{
-public:
-	Model3D(void) : _Skeletton(0)
-	{
-	};
-	~Model3D(void);
-	Mesh* IsMeshName(std::string &pText);
-	void ConcatenateMeshes(void);
-	AnimationSet* FindAnimationSet(std::string &pText);
-	Bone* _Skeletton;
-	std::list<Mesh*> _Meshes;
-	std::list<AnimationSet*> _AnimationSets;
-private:
-	void UpdateBoneIndices(Bone* &pBone);
 };
 #endif
