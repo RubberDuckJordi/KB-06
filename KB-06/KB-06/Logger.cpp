@@ -33,6 +33,7 @@ void pengine::Logger::Log(int logType, std::string messageString)
 	char* message = new char[messageString.length() + 1];
 	strcpy_s(message, messageString.length() + 1, messageString.c_str());
 	Log(logType, message);
+	delete[] message;
 }
 
 void pengine::Logger::Log(int logType, char* message)

@@ -48,7 +48,7 @@ int _tmain(int argc, _TCHAR* argv[])
 
 	IO_Model_X* loader = new IO_Model_X();
 	Model3D* model = new Model3D();
-	loader->Load("resources/tiger.x", model);
+	loader->Load("resources/tiny/tiny_4anim.x", model);
 
 	pengine::DefaultSceneFactory* sceneFactory = new pengine::DefaultSceneFactory();
 	sceneFactory->setMesh(mesh);

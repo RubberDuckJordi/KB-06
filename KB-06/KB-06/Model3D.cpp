@@ -1,28 +1,45 @@
 #include "Model3D.h"
 
-Model3D::~Model3D(void){
-	if (_Skeletton != 0) delete _Skeletton;
-	while (!_Meshes.empty()) {
-		delete _Meshes.back(); _Meshes.pop_back();
+Model3D::~Model3D(void)
+{
+	if (_Skeletton != 0)
+	{
+		delete _Skeletton;
 	}
-	while (!_AnimationSets.empty()) {
-		delete _AnimationSets.back(); _AnimationSets.pop_back();
+	while (!_Meshes.empty())
+	{
+		delete _Meshes.back(); 
+		_Meshes.pop_back();
+	}
+	while (!_AnimationSets.empty())
+	{
+		delete _AnimationSets.back(); 
+		_AnimationSets.pop_back();
 	}
 }
 
-XMesh* Model3D::IsMeshName(std::string &pText){
+XMesh* Model3D::IsMeshName(std::string &pText)
+{
 	for (std::list<XMesh*>::iterator i = _Meshes.begin(); i != _Meshes.end(); i++)
+	{
 		if ((*i)->IsName(pText) != 0)
+		{
 			return (*i)->IsName(pText);
+		}
+	}
 	return 0;
 }
 
-void Model3D::ConcatenateMeshes(void){
+void Model3D::ConcatenateMeshes(void)
+{
 	//We only concatenate when there are at least two meshes
 	if (_Meshes.size() < 2)
+	{
 		return;
+	}
 
-	//MYTRACE("Concatenating Meshes ...");
+	logger->Log(0, "Model3D: Concatenating Meshes...");
+	
 
 	XMesh* ConcatMesh = new XMesh;
 	XMesh* LastMesh = _Meshes.back();
@@ -40,15 +57,19 @@ void Model3D::ConcatenateMeshes(void){
 	//Texture coordinates must be as numerous as Vertices or there must be none
 	//Normal vectors must be as numerous as Vertices or there must be none
 	if ((ConcatMesh->_nTextureCoords < ConcatMesh->_nVertices) && (ConcatMesh->_nTextureCoords != 0))
+	{
 		ConcatMesh->_nTextureCoords = ConcatMesh->_nVertices;
+	}
 	if ((ConcatMesh->_nNormals < ConcatMesh->_nVertices) && (ConcatMesh->_nNormals != 0))
+	{
 		ConcatMesh->_nNormals = ConcatMesh->_nVertices;
+	}
 
-	//MYTRACE("Final number of Vertices:", ConcatMesh->_nVertices);
-	//MYTRACE("Final number of Faces:", ConcatMesh->_nFaces);
-	//MYTRACE("Final number of TextureCoords:", ConcatMesh->_nTextureCoords);
-	//MYTRACE("Final number of Normals:", ConcatMesh->_nNormals);
-	//MYTRACE("Final number of Materials:", ConcatMesh->_nMaterials);
+	logger->Log(0, "Model3D: Final number of Vertices: " + ConcatMesh->_nVertices);
+	logger->Log(0, "Model3D: Final number of Faces: " + ConcatMesh->_nFaces);
+	logger->Log(0, "Model3D: Final number of TextureCoords: " + ConcatMesh->_nTextureCoords);
+	logger->Log(0, "Model3D: Final number of Normals: " + ConcatMesh->_nNormals);
+	logger->Log(0, "Model3D: Final number of Materials: " + ConcatMesh->_nMaterials);
 
 	//We create all the arrays:
 	// - Vertices and Faces
@@ -82,7 +103,9 @@ void Model3D::ConcatenateMeshes(void){
 		memcpy(&(ConcatMesh->_Faces[(*i)->_FirstFace]), (*i)->_Faces, (*i)->_nFaces * sizeof(Face));
 		memcpy(&(ConcatMesh->_FaceMaterials[(*i)->_FirstFace]), (*i)->_FaceMaterials, (*i)->_nFaces * sizeof(uint16));
 		if ((*i)->_nTextureCoords != 0)
+		{
 			memcpy(&(ConcatMesh->_TextureCoords[(*i)->_FirstTextureCoord]), (*i)->_TextureCoords, (*i)->_nTextureCoords * sizeof(TCoord));
+		}
 		if ((*i)->_nNormals != 0)
 		{
 			memcpy(&(ConcatMesh->_Normals[(*i)->_FirstNormal]), (*i)->_Normals, (*i)->_nNormals * sizeof(Vector<float>));
@@ -99,15 +122,18 @@ void Model3D::ConcatenateMeshes(void){
 	//OK. We now process the bone hierarchy to update the
 	//skinning indices
 
-	//MYTRACE("Adapting the Bone hierarchy ...");
+	logger->Log(0, "Model3D: Adapting the Bone hierarchy...");
 	if (_Skeletton != 0)
+	{
 		UpdateBoneIndices(_Skeletton);
+	}
 
 	//MYTRACE("Bone hierarchy adapted.");
 
 	//We eventually delete all the previous meshes
 	while (!_Meshes.empty()) {
-		delete _Meshes.back(); _Meshes.pop_back();
+		delete _Meshes.back();
+		_Meshes.pop_back();
 	}
 
 	//and push the new concatenated one
@@ -123,19 +149,30 @@ void Model3D::UpdateBoneIndices(Bone* &pBone)
 {
 	XMesh* BoneMesh = IsMeshName(pBone->_MeshName);
 	if (BoneMesh != 0)
+	{
 		pBone->UpdateIndices(BoneMesh->_FirstVertex);
+	}
 	pBone->_MeshName = "ConcatMesh";
 	if (!pBone->_Bones.empty())
+	{
 		for (std::list<Bone*>::iterator i = pBone->_Bones.begin(); i != pBone->_Bones.end(); i++)
+		{
 			UpdateBoneIndices(*i);
+		}
+	}
 }
 
 /*************************************************
 NEW- NEW- NEW- NEW- NEW- NEW- NEW- NEW- NEW- NEW*/
 
-AnimationSet* Model3D::FindAnimationSet(std::string &pText){
+AnimationSet* Model3D::FindAnimationSet(std::string &pText)
+{
 	for (std::list<AnimationSet*>::iterator i = _AnimationSets.begin(); i != _AnimationSets.end(); i++)
+	{
 		if ((*i)->IsName(pText) != 0)
+		{
 			return (*i)->IsName(pText);
+		}
+	}
 	return 0;
 }

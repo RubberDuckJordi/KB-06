@@ -2,6 +2,8 @@
 #include "XMesh.h"
 #include "Bone.h"
 
+#include "LoggerPool.h"
+
 class Model3D
 {
 public:
@@ -16,5 +18,6 @@ public:
 	std::list<XMesh*> _Meshes;
 	std::list<AnimationSet*> _AnimationSets;
 private:
+	pengine::Logger* logger = pengine::LoggerPool::GetInstance().GetLogger();
 	void UpdateBoneIndices(Bone* &pBone);
 };
