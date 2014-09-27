@@ -13,6 +13,9 @@
 #include "XModelLoader.h"
 #include "DirectXRenderer.h"
 
+
+#include "SuperXLoader.h"
+
 int _tmain(int argc, _TCHAR* argv[])
 {
 	pengine::PEngine pEngine;
@@ -41,6 +44,11 @@ int _tmain(int argc, _TCHAR* argv[])
 	pengine::Mesh* mesh = pEngine.GetResourceManager()->LoadMesh("resources/cube.obj.mesh", "obj.mesh");
 	pengine::Mesh* mesh2 = pEngine.GetResourceManager()->LoadMesh("resources/cubeClone.obj.mesh", "obj.mesh");
 	pengine::Mesh* mesh3 = pEngine.GetResourceManager()->LoadMesh("resources/cubeCloneClone.obj.mesh", "obj.mesh");
+
+
+	IO_Model_X* loader = new IO_Model_X();
+	Model3D* model = new Model3D();
+	loader->Load("resources/tiger.x", model);
 
 	pengine::DefaultSceneFactory* sceneFactory = new pengine::DefaultSceneFactory();
 	sceneFactory->setMesh(mesh);

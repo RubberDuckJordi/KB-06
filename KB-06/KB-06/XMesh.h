@@ -7,7 +7,6 @@
 #include "Matrix.h"
 #include "Quaternion.h"
 
-#define DEBUG
 //#include "Toolbox\Mytrace.h"
 
 #include <list>

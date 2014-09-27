@@ -161,6 +161,9 @@
     <ClInclude Include="XModelLoader.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Animation.cpp" />
+    <ClCompile Include="AnimationSet.cpp" />
+    <ClCompile Include="Bone.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="EntityCamera.cpp" />
     <ClCompile Include="DefaultScene.cpp" />
@@ -176,6 +179,7 @@
     <ClCompile Include="DirectKeyboard.cpp" />
     <ClCompile Include="MaterialWrapper.cpp" />
     <ClCompile Include="Menu.cpp" />
+    <ClCompile Include="Model3D.cpp" />
     <ClCompile Include="ObjMeshLoader.cpp" />
     <ClCompile Include="PEngine.cpp" />
     <ClCompile Include="RenderMatrix.cpp" />
@@ -200,6 +204,7 @@
     <ClCompile Include="VertexBufferWrapper.cpp" />
     <ClCompile Include="Window.cpp" />
     <ClCompile Include="WindowManager.cpp" />
+    <ClCompile Include="XMesh.cpp" />
     <ClCompile Include="XModel.cpp" />
     <ClCompile Include="XModelLoader.cpp" />
   </ItemGroup>

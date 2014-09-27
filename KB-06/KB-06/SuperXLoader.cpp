@@ -6,7 +6,6 @@
 
 #include "SuperXLoader.h"
 
-
 #define TEXT_BUFFER 255
 
 #define MAX_TEMPLATES 15
@@ -44,35 +43,38 @@ bool IO_Model_X::Load(std::string pFilename, Model3D* &pT)
 {
 	XFileHeader XHeader;
 
-	//MYTRACE("Processing file:", pFilename);
+	logger->Log(0, "SuperXLoader: Processing file:" + pFilename);
 
-	//!!!@@@!!!fin.open(pFilename.c_str(), ios::in);!!!@@@!!!
+	fin.open(pFilename.c_str(), std::ios::in);
 
 	if (fin.bad())
+	{
+		logger->Log(0, "SuperXLoader: Failed opening file:" + pFilename);
 		return false;
+	}
 
 	fin.read((char*)&XHeader, 16);
 	if (XHeader.Magic != XOFFILE_FORMAT_MAGIC)
 	{
-		//MYTRACE("Not a .X model file. Aborted...");
+		logger->Log(0, "SuperXLoader: Not a .X model file. Aborted.");
 		return false;
 	}
 
 	if (XHeader.Major_Version != XOFFILE_FORMAT_VERSION03)
 	{
-		//MYTRACE("Major version greater than 03. Aborted...");
+		logger->Log(0, "SuperXLoader: Major version greater than 03. Aborted.");
 		return false;
 	}
 
 	if ((XHeader.Minor_Version != XOFFILE_FORMAT_VERSION03) || (XHeader.Minor_Version != XOFFILE_FORMAT_VERSION02))
 	{
-		//MYTRACE("Minor version greater than 03. Aborted...");
+		logger->Log(0, "SuperXLoader: Minor version greater than 03. Aborted.");
 		return false;
 	}
 
 	if (XHeader.Format != XOFFILE_FORMAT_TEXT)
 	{
-		//MYTRACE("Not a text format. Aborted...");
+		logger->Log(0, "SuperXLoader: Not a text format. Aborted.");
 		return false;
 	}
 
@@ -80,24 +82,38 @@ bool IO_Model_X::Load(std::string pFilename, Model3D* &pT)
 
 	while (!fin.eof())
 	{
-		switch (ProcessBlock()) {
-		case X_ERROR: 
-			//MYTRACE("Stopped processing the file ..."); 
+		switch (ProcessBlock())
+		{
+		case X_ERROR:
+			logger->Log(0, "SuperXLoader: Stopped processing the file.");
 			return false;
-		case X_COMMENT: break; //nothing to do
-		case X_EBRACE: break; //end of a block ?!
-		case X_FRAME: ProcessBone((Bone*)0); break;
-		case X_MESH: ProcessMesh(); break;
-		case X_ANIMATIONSET: ProcessAnimationSets(); break;
+			break;
+		case X_COMMENT:
+			break; //nothing to do
+		case X_EBRACE:
+			break; //end of a block ?!
+		case X_FRAME:
+			ProcessBone((Bone*)0);
+			break;
+		case X_MESH:
+			ProcessMesh();
+			break;
+		case X_ANIMATIONSET:
+			ProcessAnimationSets();
+			break;
 		case X_OBRACE:
-		default: AvoidTemplate(); break;
+		default:
+			AvoidTemplate();
+			break;
 		}
 	}
 
 	if (_LoadSkeletton != 0)
+	{
 		MapMeshToBones(_LoadSkeletton);
+	}
 
-	//MYTRACE("Processed file:", pFilename, "OK");
+	logger->Log(0, "SuperXLoader: Processed file: " + pFilename);
 
 	fin.close();
 	return true;
@@ -118,14 +134,32 @@ int16 IO_Model_X::ProcessBlock(void)
 {
 	std::string Text;
 	char Token = fin.peek();
-	switch (Token) {
+	switch (Token)
+	{
 	case '\n':
 	case ' ':
-	case '\t': fin.get(); return X_COMMENT; //spaces are identified as comments
-	case '{': return X_OBRACE;
-	case '}': fin.get(); return X_EBRACE; //We arrived at the end of the block
-	case '/': fin.get(); if (fin.peek() != '/'){ return X_ERROR; } //we processed a block name starting with slash ?!
-	case '#': fin.ignore(TEXT_BUFFER, '\n'); return X_COMMENT;
+	case '\t':
+		fin.get();
+		return X_COMMENT; //spaces are identified as comments
+		break;
+	case '{':
+		return X_OBRACE;
+		break;
+	case '}':
+		fin.get();
+		return X_EBRACE; //We arrived at the end of the block
+		break;
+	case '/':
+		fin.get();
+		if (fin.peek() != '/')
+		{
+			return X_ERROR;
+		} //we processed a block name starting with slash ?!
+		break;
+	case '#':
+		fin.ignore(TEXT_BUFFER, '\n');
+		return X_COMMENT;
+		break;
 	default:
 		fin >> Text;
 		return BlockID(Text);
@@ -137,11 +171,13 @@ int16 IO_Model_X::BlockID(std::string &pText)
 	long Pos;
 
 	if (fin.eof())
+	{
 		return X_COMMENT;
+	}
 
 	if (pText.empty())
 	{
-		//MYTRACE("Error, no block read !");
+		logger->Log(0, "SuperXLoader: Error: no block read!");
 		return X_ERROR;
 	}
 
@@ -154,7 +190,7 @@ int16 IO_Model_X::BlockID(std::string &pText)
 			return Templates[i].TemplateID;
 		}
 	}
-	//MYTRACE("Unknown Block:", pText);
+	logger->Log(0, "SuperXLoader: Unknown block: " + pText);
 	return X_UNKNOWN;
 }
 
@@ -243,13 +279,13 @@ void IO_Model_X::ProcessBone(Bone* pBone)
 
 	if (pBone == 0)
 	{
-		//MYTRACE("Skeletton 1st bone:", cBone->_Name);
+		logger->Log(0, "SuperXLoader: Skeleton 1st bone: " + cBone->_Name);
 		_LoadSkeletton = cBone;
 		_Object->_Skeletton = _LoadSkeletton;
 	}
 	else
 	{
-		//MYTRACE("\t", pBone->_Name, "->", cBone->_Name);
+		logger->Log(0, "SuperXLoader: " + pBone->_Name + "->" + cBone->_Name);
 		pBone->_Bones.push_back(cBone);
 	}
 	Find('{');
@@ -257,15 +293,30 @@ void IO_Model_X::ProcessBone(Bone* pBone)
 	while (Token != X_EBRACE)
 	{
 		Token = ProcessBlock();
-		switch (Token) {
-		case X_COMMENT: break; //used for spaces and other kind of comments
-		case X_EBRACE: return; //this is the end, my only friend ...
-		case X_OBRACE: fin.getline(Data, TEXT_BUFFER, '}'); cBone->_MeshName = Data; break;
-		case X_FRAME: ProcessBone(cBone); break;
-		case X_FRAMETRANSFORMMATRIX: ProcessFrameTransformMatrix(cBone); break;
-		case X_MESH: ProcessMesh(); cBone->_MeshName = _LoadMesh->_Name; break;
+		switch (Token)
+		{
+		case X_COMMENT:
+			break; //used for spaces and other kind of comments
+		case X_EBRACE:
+			return; //this is the end, my only friend ...
+			break;
+		case X_OBRACE:
+			fin.getline(Data, TEXT_BUFFER, '}');
+			cBone->_MeshName = Data;
+			break;
+		case X_FRAME:
+			ProcessBone(cBone);
+			break;
+		case X_FRAMETRANSFORMMATRIX:
+			ProcessFrameTransformMatrix(cBone);
+			break;
+		case X_MESH:
+			ProcessMesh();
+			cBone->_MeshName = _LoadMesh->_Name;
+			break;
 		default:
-			AvoidTemplate(); break;
+			AvoidTemplate();
+			break;
 		}
 	}
 }
@@ -291,29 +342,38 @@ void IO_Model_X::ProcessMesh(void)
 		_LoadMesh->_FirstTextureCoord = LastMesh->_FirstTextureCoord + LastMesh->_nTextureCoords;
 		_LoadMesh->_FirstMaterial = LastMesh->_FirstMaterial + LastMesh->_nMaterials;
 		if (_LoadMesh->_FirstTextureCoord < _LoadMesh->_FirstVertex)
+		{
 			_LoadMesh->_FirstTextureCoord = _LoadMesh->_FirstVertex;
+		}
 		_LoadMesh->_FirstNormal = LastMesh->_FirstNormal + LastMesh->_nNormals;
 		if (_LoadMesh->_FirstNormal < _LoadMesh->_FirstVertex)
+		{
 			_LoadMesh->_FirstNormal = _LoadMesh->_FirstVertex;
-		//MYTRACE("Starting Vertex index:", _LoadMesh->_FirstVertex);
-		//MYTRACE("Starting Face index:", _LoadMesh->_FirstFace);
-		//MYTRACE("Starting TextureCoord index:", _LoadMesh->_FirstTextureCoord);
-		//MYTRACE("Starting Normal index:", _LoadMesh->_FirstNormal);
-		//MYTRACE("Starting Material index:", _LoadMesh->_FirstMaterial);
+		}
+
+		logger->Log(0, "SuperXLoader: Starting Vertex index: " + _LoadMesh->_FirstVertex);
+		logger->Log(0, "SuperXLoader: Starting Face index: " + _LoadMesh->_FirstFace);
+		logger->Log(0, "SuperXLoader: Starting TextureCoord index: " + _LoadMesh->_FirstTextureCoord);
+		logger->Log(0, "SuperXLoader: Starting Normal index: " + _LoadMesh->_FirstNormal);
+		logger->Log(0, "SuperXLoader: Starting Material index: " + _LoadMesh->_FirstMaterial);
 	}
 
 	Token = fin.peek();
 	if (Token != '{')
+	{
 		fin >> _LoadMesh->_Name;
+	}
 	else
+	{
 		_LoadMesh->_Name = SetUID('M');
+	}
 
 	Find('{');
-	//MYTRACE("Mesh:", _LoadMesh->_Name);
+	logger->Log(0, "SuperXLoader: Mesh: " + _LoadMesh->_Name);
 
 	fin.getline(Data, TEXT_BUFFER, ';');
 	_LoadMesh->_nVertices = (uint16)TextToNum(Data);
-	//MYTRACE("Number of vertices:", _LoadMesh->_nVertices);
+	logger->Log(0, "SuperXLoader: Number of vertices: " + _LoadMesh->_nVertices);
 	_LoadMesh->_Vertices = new Vertex[_LoadMesh->_nVertices];
 	//   _LoadMesh->_SkinnedVertices = new Frm::Vertex[_LoadMesh->_nVertices];
 	for (int i = 0; i < _LoadMesh->_nVertices; i++)
@@ -329,7 +389,7 @@ void IO_Model_X::ProcessMesh(void)
 
 	fin.getline(Data, TEXT_BUFFER, ';');
 	_LoadMesh->_nFaces = (uint16)TextToNum(Data);
-	///MYTRACE("Number of Faces:", _LoadMesh->_nFaces);
+	logger->Log(0, "SuperXLoader: Number of Faces: " + _LoadMesh->_nFaces);
 	_LoadMesh->_Faces = new Face[_LoadMesh->_nFaces];
 	for (uint32 i = 0; i < _LoadMesh->_nFaces; i++)
 	{
@@ -341,23 +401,43 @@ void IO_Model_X::ProcessMesh(void)
 		fin.getline(Data, TEXT_BUFFER, ';');
 		_LoadMesh->_Faces[i].data[2] = (uint16)TextToNum(Data);
 		fin.get(); //eats either the comma or the semicolon at the end of each face description
-		//      MYTRACE("Face:", i, ":", _LoadMesh->_Faces[i].data[0],_LoadMesh->_Faces[i].data[1],_LoadMesh->_Faces[i].data[2]);
+
+		logger->Log(0, "SuperXLoader: Face " + std::to_string(i) + ": "
+			+ std::to_string(_LoadMesh->_Faces[i].data[0]) + " "
+			+ std::to_string(_LoadMesh->_Faces[i].data[1]) + " "
+			+ std::to_string(_LoadMesh->_Faces[i].data[2]));
 	}
 
 	Token = X_COMMENT;
 	while (Token != X_EBRACE)
 	{
 		Token = ProcessBlock();
-		switch (Token) {
-		case X_COMMENT: break; //used for spaces and other kind of comments
-		case X_EBRACE: _Object->_Meshes.push_back(_LoadMesh); return; //this is the end, my only friend ...
-		case X_MESHNORMALS: ProcessMeshNormals(); break;
-		case X_MESHTEXTURECOORDS: ProcessMeshTextureCoords(); break;
-		case X_MESHMATERIALLIST: ProcessMeshMaterials(); break;
-		case X_SKINMESHHEADER: AvoidTemplate(); break;
-		case X_SKINWEIGHTS: ProcessSkinWeights(); break;
+		switch (Token)
+		{
+		case X_COMMENT:
+			break; //used for spaces and other kind of comments
+		case X_EBRACE:
+			_Object->_Meshes.push_back(_LoadMesh);
+			return; //this is the end, my only friend ...
+			break;
+		case X_MESHNORMALS:
+			ProcessMeshNormals();
+			break;
+		case X_MESHTEXTURECOORDS:
+			ProcessMeshTextureCoords();
+			break;
+		case X_MESHMATERIALLIST:
+			ProcessMeshMaterials();
+			break;
+		case X_SKINMESHHEADER:
+			AvoidTemplate();
+			break;
+		case X_SKINWEIGHTS:
+			ProcessSkinWeights();
+			break;
 		default:
-			AvoidTemplate(); break;
+			AvoidTemplate();
+			break;
 		}
 	}
 	_Object->_Meshes.push_back(_LoadMesh);
@@ -377,7 +457,7 @@ void IO_Model_X::ProcessMeshTextureCoords(void)
 
 	fin.getline(Data, TEXT_BUFFER, ';');
 	_LoadMesh->_nTextureCoords = (uint16)TextToNum(Data);
-	//MYTRACE("Number of Texture Coords:", _LoadMesh->_nTextureCoords);
+	logger->Log(0, "SuperXLoader: Number of Texture Coords: " + _LoadMesh->_nTextureCoords);
 	_LoadMesh->_TextureCoords = new TCoord[_LoadMesh->_nTextureCoords];
 	for (int i = 0; i < _LoadMesh->_nTextureCoords; i++)
 	{
@@ -403,7 +483,7 @@ void IO_Model_X::ProcessMeshNormals(void)
 	Find('{');
 	fin.getline(Data, TEXT_BUFFER, ';');
 	_LoadMesh->_nNormals = (uint16)TextToNum(Data);
-	//MYTRACE("Number of normals :", _LoadMesh->_nNormals);
+	logger->Log(0, "SuperXLoader: Number of normals: " + _LoadMesh->_nNormals);
 	_LoadMesh->_Normals = new Vector<float>[_LoadMesh->_nNormals];
 	for (int i = 0; i < _LoadMesh->_nNormals; i++)
 	{
@@ -427,7 +507,10 @@ void IO_Model_X::ProcessMeshNormals(void)
 		fin.getline(Data, TEXT_BUFFER, ';');
 		_LoadMesh->_FaceNormals[i].data[2] = (uint16)TextToNum(Data);
 		fin.get(); //eats either the comma or the semicolon at the end of each face description
-		//      MYTRACE("Face Normal indexes:", i, ":", _LoadMesh->_FaceNormals[i].data[0],_LoadMesh->_FaceNormals[i].data[1],_LoadMesh->_FaceNormals[i].data[2]);
+		logger->Log(0, "SuperXLoader: Face Normal index " + std::to_string(i) + ": "
+			+ std::to_string(_LoadMesh->_FaceNormals[i].data[0]) + " "
+			+ std::to_string(_LoadMesh->_FaceNormals[i].data[1]) + " "
+			+ std::to_string(_LoadMesh->_FaceNormals[i].data[2]));
 	}
 
 	Find('}');
@@ -450,7 +533,8 @@ void IO_Model_X::ProcessMeshMaterials(void)
 
 	fin.getline(Data, TEXT_BUFFER, ';');
 	_LoadMesh->_nMaterials = (uint16)TextToNum(Data);
-	//MYTRACE("Number of Materials:", (uint16)TextToNum(Data));
+	std::string meow = Data;//couldn't quickly find another way
+	logger->Log(0, "SuperXLoader: Number of Materials: " + meow);
 
 	fin.getline(Data, TEXT_BUFFER, ';');
 	_LoadMesh->_FaceMaterials = new uint16[(uint16)TextToNum(Data)];
@@ -467,12 +551,18 @@ void IO_Model_X::ProcessMeshMaterials(void)
 	while (Token != X_EBRACE)
 	{
 		Token = ProcessBlock();
-		switch (Token) {
-		case X_COMMENT: break; //used for spaces and other kind of comments
-		case X_EBRACE: return; //this is the end, my only friend ...
-		case X_MATERIAL: ProcessMaterial(); break;
+		switch (Token)
+		{
+		case X_COMMENT:
+			break; //used for spaces and other kind of comments
+		case X_EBRACE:
+			return; //this is the end, my only friend ...
+			break;
+		case X_MATERIAL: ProcessMaterial();
+			break;
 		default:
-			AvoidTemplate(); break;
+			AvoidTemplate();
+			break;
 		}
 	}
 }
@@ -519,9 +609,14 @@ void IO_Model_X::ProcessMaterial(void)
 	while (Token != '}')
 	{
 		Token = ProcessBlock();
-		switch (Token) {
-		case X_COMMENT: break; //used for spaces and other kind of comments
-		case X_EBRACE: _LoadMesh->_Materials.push_back(NewMaterial); return; //this is the end, my only friend ...
+		switch (Token)
+		{
+		case X_COMMENT:
+			break; //used for spaces and other kind of comments
+		case X_EBRACE:
+			_LoadMesh->_Materials.push_back(NewMaterial);
+			return; //this is the end, my only friend ...
+			break;
 		case X_TEXTUREFILENAME:
 			Find('{');
 			Find('"');
@@ -530,7 +625,8 @@ void IO_Model_X::ProcessMaterial(void)
 			Find('}');
 			break;
 		default:
-			AvoidTemplate(); break;
+			AvoidTemplate();
+			break;
 		}
 	}
 	_LoadMesh->_Materials.push_back(NewMaterial);
@@ -553,7 +649,7 @@ void IO_Model_X::ProcessSkinWeights(void)
 	temp = Data;
 	cBone = _LoadSkeletton->IsName(temp);
 	//   cBone->_Mesh = _LoadMesh;
-	//MYTRACE("Skinning bone:", cBone->_Name);
+	logger->Log(0, "SuperXLoader: Skinning bone: " + cBone->_Name);
 	Find(';');
 
 	fin.getline(Data, TEXT_BUFFER, ';');
@@ -563,11 +659,11 @@ void IO_Model_X::ProcessSkinWeights(void)
 	{
 		fin.getline(Data, TEXT_BUFFER, ',');
 		cBone->_Vertices[i] = (uint16)TextToNum(Data);
-		//      MYTRACE("Vertex:", atoi(Data));/**/
+		logger->Log(0, "SuperXLoader: Vertex: " + atoi(Data));
 	}
 	fin.getline(Data, TEXT_BUFFER, ';');
 	cBone->_Vertices[cBone->_nVertices - 1] = (uint16)TextToNum(Data);
-	//   MYTRACE("Vertex:", atoi(Data));/**/
+	logger->Log(0, "SuperXLoader: Vertex: " + atoi(Data));
 
 	cBone->_Weights = new float[cBone->_nVertices];
 	for (uint32 i = 0; i < cBone->_nVertices - 1; i++)
@@ -609,28 +705,40 @@ void IO_Model_X::ProcessAnimationSets(void)
 
 	Token = fin.peek();
 	if (Token != '{')
+	{
 		fin >> _LoadAnimationSet->_Name;
+	}
 	else
+	{
 		_LoadAnimationSet->_Name = SetUID('A');
+	}
 
 	Find('{');
-	//MYTRACE("Animation Set:", _LoadAnimationSet->_Name);
+	logger->Log(0, "SuperXLoader: Animation Set: " + _LoadAnimationSet->_Name);
 
 	Token = X_COMMENT;
 	while (Token != X_EBRACE)
 	{
 		Token = ProcessBlock();
-		switch (Token) {
-		case X_COMMENT: break; //used for spaces and other kind of comments
-		case X_EBRACE: _LoadAnimationSet->_MaxKey = _MaxKey; //MYTRACE("MaxKey:", _MaxKey); 
-			_Object->_AnimationSets.push_back(_LoadAnimationSet); return; //this is the end, my only friend ...
-		case X_ANIMATION: ProcessAnimations(_LoadAnimationSet); break;
+		switch (Token)
+		{
+		case X_COMMENT:
+			break; //used for spaces and other kind of comments
+		case X_EBRACE:
+			_LoadAnimationSet->_MaxKey = _MaxKey;
+			logger->Log(0, "SuperXLoader: MaxKey: " + _MaxKey);
+			_Object->_AnimationSets.push_back(_LoadAnimationSet);
+			return; //this is the end, my only friend ...
+		case X_ANIMATION:
+			ProcessAnimations(_LoadAnimationSet);
+			break;
 		default:
-			AvoidTemplate(); break;
+			AvoidTemplate();
+			break;
 		}
 	}
 	_LoadAnimationSet->_MaxKey = _MaxKey;
-	//MYTRACE("MaxKey:", _MaxKey);
+	logger->Log(0, "SuperXLoader: MaxKey: " + _MaxKey);
 	_Object->_AnimationSets.push_back(_LoadAnimationSet);
 }
 
@@ -651,17 +759,24 @@ void IO_Model_X::ProcessAnimations(AnimationSet* &pAS)
 	while (Token != X_EBRACE)
 	{
 		Token = ProcessBlock();
-		switch (Token) {
-		case X_COMMENT: break; //used for spaces and other kind of comments
-		case X_EBRACE: pAS->_Animations.push_back(TempAnimation); return; //this is the end, my only friend ...
+		switch (Token)
+		{
+		case X_COMMENT:
+			break; //used for spaces and other kind of comments
+		case X_EBRACE:
+			pAS->_Animations.push_back(TempAnimation);
+			return; //this is the end, my only friend ...
+			break;
 		case X_OBRACE:
 			Find('{');
 			fin.getline(Data, TEXT_BUFFER, '}');
 			Remove(' ', Data);
 			TempAnimation->_BoneName = Data;
-			//MYTRACE("Animated Bone:", TempAnimation->_BoneName);
+			logger->Log(0, "SuperXLoader: Animated Bone: " + TempAnimation->_BoneName);
 			break;
-		case X_ANIMATIONKEY: ProcessAnimationKeys(TempAnimation); break;
+		case X_ANIMATIONKEY:
+			ProcessAnimationKeys(TempAnimation);
+			break;
 		default:
 			AvoidTemplate(); break;
 		}
@@ -689,9 +804,10 @@ void IO_Model_X::ProcessAnimationKeys(Animation* &pA)
 	fin.getline(Data, TEXT_BUFFER, ';');
 	Size = (uint16)atoi(Data);
 
-	switch (Type) {
+	switch (Type)
+	{
 	case 0:
-		//MYTRACE(Size, "Rotation Keys");
+		logger->Log(0, "SuperXLoader: " + Size + std::string(" Rotation Keys"));
 		pA->_Rotations.reserve(Size);
 		while (Size--)
 		{
@@ -699,7 +815,9 @@ void IO_Model_X::ProcessAnimationKeys(Animation* &pA)
 			fin.getline(Data, TEXT_BUFFER, ';');
 			TempRot->Time = (uint16)TextToNum(Data);
 			if (TempRot->Time > _MaxKey)
+			{
 				_MaxKey = TempRot->Time;
+			}
 			Find(';');
 			fin.getline(Data, TEXT_BUFFER, ',');
 			TempRot->Rotation[0] = TextToNum(Data);
@@ -715,7 +833,7 @@ void IO_Model_X::ProcessAnimationKeys(Animation* &pA)
 		}
 		break;
 	case 1:
-		//MYTRACE(Size, "Scaling Keys");
+		logger->Log(0, "SuperXLoader: " + Size + std::string(" Scaling Keys"));
 		pA->_Scalings.reserve(Size);
 		while (Size--)
 		{
@@ -723,7 +841,9 @@ void IO_Model_X::ProcessAnimationKeys(Animation* &pA)
 			fin.getline(Data, TEXT_BUFFER, ';');
 			TempScale->Time = (uint16)TextToNum(Data);
 			if (TempScale->Time > _MaxKey)
+			{
 				_MaxKey = TempScale->Time;
+			}
 			Find(';');
 			fin.getline(Data, TEXT_BUFFER, ',');
 			TempScale->Scale.x = TextToNum(Data);
@@ -737,7 +857,7 @@ void IO_Model_X::ProcessAnimationKeys(Animation* &pA)
 		}
 		break;
 	case 2:
-		//MYTRACE(Size, "Position Keys");
+		logger->Log(0, "SuperXLoader: " + Size + std::string(" Position Keys"));
 		pA->_Translations.reserve(Size);
 		while (Size--)
 		{
@@ -745,7 +865,9 @@ void IO_Model_X::ProcessAnimationKeys(Animation* &pA)
 			fin.getline(Data, TEXT_BUFFER, ';');
 			TempPos->Time = (uint16)TextToNum(Data);
 			if (TempPos->Time > _MaxKey)
+			{
 				_MaxKey = TempPos->Time;
+			}
 			Find(';');
 			fin.getline(Data, TEXT_BUFFER, ',');
 			TempPos->Translation[0] = TextToNum(Data);
@@ -759,7 +881,7 @@ void IO_Model_X::ProcessAnimationKeys(Animation* &pA)
 		}
 		break;
 	case 4:
-		//MYTRACE(Size, "Matrix Keys");
+		logger->Log(0, "SuperXLoader: " + Size + std::string(" Matrix Keys"));
 		pA->_Matrices.reserve(Size);
 		while (Size--)
 		{
@@ -767,7 +889,9 @@ void IO_Model_X::ProcessAnimationKeys(Animation* &pA)
 			fin.getline(Data, TEXT_BUFFER, ';');
 			TempMatrix->Time = (uint16)TextToNum(Data);
 			if (TempMatrix->Time > _MaxKey)
+			{
 				_MaxKey = TempMatrix->Time;
+			}
 			Find(';');
 			for (int i = 0; i < 15; i++)
 			{
@@ -781,7 +905,8 @@ void IO_Model_X::ProcessAnimationKeys(Animation* &pA)
 			pA->_Matrices.push_back(TempMatrix);
 		}
 		break;
-	default: //MYTRACE("Unknown Type", Type, " ..."); 
+	default:
+		logger->Log(0, "SuperXLoader: Unknown Type " + Type + std::string("..."));
 		break;
 	}
 
@@ -798,18 +923,22 @@ void IO_Model_X::ProcessAnimationKeys(Animation* &pA)
 void IO_Model_X::MapMeshToBones(Bone* &pBone)
 {
 	if (pBone->_MeshName.empty())
+	{
 		pBone->_MeshName = _LoadMesh->_Name;
+	}
 
-	//MYTRACE("Bone", pBone->_Name, "is linked to mesh", pBone->_MeshName);
+	logger->Log(0, "SuperXLoader: Bone " + pBone->_Name + std::string(" is linked to mesh ") + pBone->_MeshName);
 
 	if (!pBone->_Bones.empty())
+	{
 		for (std::list<Bone*>::iterator i = pBone->_Bones.begin(); i != pBone->_Bones.end(); i++)
 		{
-		if ((*i)->_MeshName.empty())
-		{
-			(*i)->_MeshName = pBone->_MeshName;
+			if ((*i)->_MeshName.empty())
+			{
+				(*i)->_MeshName = pBone->_MeshName;
+			}
+			MapMeshToBones(*i);
 		}
-		MapMeshToBones(*i);
-		}
+	}
 };
 

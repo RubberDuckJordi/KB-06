@@ -1,11 +1,10 @@
 #ifndef _SUPERXLOADER_H_
 #define _SUPERXLOADER_H_
 
-#define DEBUG
-
 #include "IO.h"
 #include "XFileStructs.h"
 #include "Model3D.h"
+#include "LoggerPool.h"
 
 #include <fstream>
 
@@ -28,6 +27,7 @@ public:
 	};
 
 private:
+	pengine::Logger* logger = pengine::LoggerPool::GetInstance().GetLogger();
 	std::ifstream fin;
 	Bone* _LoadSkeletton;
 	XMesh* _LoadMesh;

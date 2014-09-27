@@ -115,6 +115,21 @@
     <ClCompile Include="SuperXLoader.cpp">
       <Filter>Source\Resource\RobertX</Filter>
     </ClCompile>
+    <ClCompile Include="XMesh.cpp">
+      <Filter>Source\Resource\RobertX\Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="Bone.cpp">
+      <Filter>Source\Resource\RobertX\Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="Animation.cpp">
+      <Filter>Source\Resource\RobertX\Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimationSet.cpp">
+      <Filter>Source\Resource\RobertX\Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="Model3D.cpp">
+      <Filter>Source\Resource\RobertX\Framework</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DefaultEntity.h">
@@ -313,12 +328,6 @@
     <ClInclude Include="Array.h">
       <Filter>Header\Resource\RobertX\Framework</Filter>
     </ClInclude>
-    <ClInclude Include="Matrix.h">
-      <Filter>Header\Resource\RobertX</Filter>
-    </ClInclude>
-    <ClInclude Include="Quaternion.h">
-      <Filter>Header\Resource\RobertX</Filter>
-    </ClInclude>
     <ClInclude Include="TRect.h">
       <Filter>Header\Resource\RobertX\Framework</Filter>
     </ClInclude>
@@ -332,6 +341,12 @@
       <Filter>Header\Resource\RobertX\Framework</Filter>
     </ClInclude>
     <ClInclude Include="Model3D.h">
+      <Filter>Header\Resource\RobertX\Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="Matrix.h">
+      <Filter>Header\Resource\RobertX\Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="Quaternion.h">
       <Filter>Header\Resource\RobertX\Framework</Filter>
     </ClInclude>
   </ItemGroup>
