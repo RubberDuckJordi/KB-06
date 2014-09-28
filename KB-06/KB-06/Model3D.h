@@ -1,3 +1,6 @@
+#ifndef _MODEL3D_H_
+#define _MODEL3D_H_
+
 #include "AnimationSet.h"
 #include "XMesh.h"
 #include "Bone.h"
@@ -21,3 +24,4 @@ private:
 	pengine::Logger* logger = pengine::LoggerPool::GetInstance().GetLogger();
 	void UpdateBoneIndices(Bone* &pBone);
 };
+#endif

@@ -115,20 +115,26 @@
     <ClCompile Include="SuperXLoader.cpp">
       <Filter>Source\Resource\RobertX</Filter>
     </ClCompile>
-    <ClCompile Include="XMesh.cpp">
-      <Filter>Source\Resource\RobertX\Framework</Filter>
-    </ClCompile>
-    <ClCompile Include="Bone.cpp">
-      <Filter>Source\Resource\RobertX\Framework</Filter>
-    </ClCompile>
     <ClCompile Include="Animation.cpp">
-      <Filter>Source\Resource\RobertX\Framework</Filter>
+      <Filter>Source\Resource\RobertX</Filter>
     </ClCompile>
     <ClCompile Include="AnimationSet.cpp">
-      <Filter>Source\Resource\RobertX\Framework</Filter>
+      <Filter>Source\Resource\RobertX</Filter>
+    </ClCompile>
+    <ClCompile Include="Bone.cpp">
+      <Filter>Source\Resource\RobertX</Filter>
     </ClCompile>
     <ClCompile Include="Model3D.cpp">
-      <Filter>Source\Resource\RobertX\Framework</Filter>
+      <Filter>Source\Resource\RobertX</Filter>
+    </ClCompile>
+    <ClCompile Include="XMesh.cpp">
+      <Filter>Source\Resource\RobertX</Filter>
+    </ClCompile>
+    <ClCompile Include="Object3D.cpp">
+      <Filter>Source\Resource\RobertX</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectBone.cpp">
+      <Filter>Source\Resource\RobertX</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -308,46 +314,52 @@
       <Filter>Header\Resource\RobertX</Filter>
     </ClInclude>
     <ClInclude Include="XMesh.h">
-      <Filter>Header\Resource\RobertX\Framework</Filter>
-    </ClInclude>
-    <ClInclude Include="Types.h">
-      <Filter>Header\Resource\RobertX\Framework</Filter>
-    </ClInclude>
-    <ClInclude Include="XMaterial.h">
-      <Filter>Header\Resource\RobertX\Framework</Filter>
-    </ClInclude>
-    <ClInclude Include="IO.h">
-      <Filter>Header\Resource\RobertX\Framework</Filter>
-    </ClInclude>
-    <ClInclude Include="XFileStructs.h">
-      <Filter>Header\Resource\RobertX\ToolBox</Filter>
-    </ClInclude>
-    <ClInclude Include="Vector.h">
-      <Filter>Header\Resource\RobertX\Framework</Filter>
-    </ClInclude>
-    <ClInclude Include="Array.h">
-      <Filter>Header\Resource\RobertX\Framework</Filter>
-    </ClInclude>
-    <ClInclude Include="TRect.h">
-      <Filter>Header\Resource\RobertX\Framework</Filter>
-    </ClInclude>
-    <ClInclude Include="Bone.h">
-      <Filter>Header\Resource\RobertX\Framework</Filter>
+      <Filter>Header\Resource\RobertX</Filter>
     </ClInclude>
     <ClInclude Include="Animation.h">
-      <Filter>Header\Resource\RobertX\Framework</Filter>
+      <Filter>Header\Resource\RobertX</Filter>
     </ClInclude>
     <ClInclude Include="AnimationSet.h">
-      <Filter>Header\Resource\RobertX\Framework</Filter>
+      <Filter>Header\Resource\RobertX</Filter>
     </ClInclude>
-    <ClInclude Include="Model3D.h">
-      <Filter>Header\Resource\RobertX\Framework</Filter>
+    <ClInclude Include="Array.h">
+      <Filter>Header\Resource\RobertX</Filter>
+    </ClInclude>
+    <ClInclude Include="Bone.h">
+      <Filter>Header\Resource\RobertX</Filter>
+    </ClInclude>
+    <ClInclude Include="IO.h">
+      <Filter>Header\Resource\RobertX</Filter>
     </ClInclude>
     <ClInclude Include="Matrix.h">
-      <Filter>Header\Resource\RobertX\Framework</Filter>
+      <Filter>Header\Resource\RobertX</Filter>
+    </ClInclude>
+    <ClInclude Include="Model3D.h">
+      <Filter>Header\Resource\RobertX</Filter>
     </ClInclude>
     <ClInclude Include="Quaternion.h">
-      <Filter>Header\Resource\RobertX\Framework</Filter>
+      <Filter>Header\Resource\RobertX</Filter>
+    </ClInclude>
+    <ClInclude Include="TRect.h">
+      <Filter>Header\Resource\RobertX</Filter>
+    </ClInclude>
+    <ClInclude Include="Types.h">
+      <Filter>Header\Resource\RobertX</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector.h">
+      <Filter>Header\Resource\RobertX</Filter>
+    </ClInclude>
+    <ClInclude Include="XMaterial.h">
+      <Filter>Header\Resource\RobertX</Filter>
+    </ClInclude>
+    <ClInclude Include="XFileStructs.h">
+      <Filter>Header\Resource\RobertX</Filter>
+    </ClInclude>
+    <ClInclude Include="Object3D.h">
+      <Filter>Header\Resource\RobertX</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectBone.h">
+      <Filter>Header\Resource\RobertX</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -434,18 +446,6 @@
     </Filter>
     <Filter Include="Source\Resource\RobertX">
       <UniqueIdentifier>{880ee865-54c4-46fa-877a-025399780221}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header\Resource\RobertX\Framework">
-      <UniqueIdentifier>{1672a3f9-ae9c-4ecd-991c-fd40e3af5eb7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source\Resource\RobertX\Framework">
-      <UniqueIdentifier>{9d31a81d-228f-429c-87e3-e1aac80cc086}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header\Resource\RobertX\ToolBox">
-      <UniqueIdentifier>{933e1e4d-25c0-4547-b3f0-0af570d00796}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source\Resource\RobertX\ToolBox">
-      <UniqueIdentifier>{c129de2a-5df7-45a9-b101-662a0f544e48}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

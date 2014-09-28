@@ -15,6 +15,7 @@
 
 
 #include "SuperXLoader.h"
+#include "Object3D.h"
 
 int _tmain(int argc, _TCHAR* argv[])
 {
@@ -50,6 +51,14 @@ int _tmain(int argc, _TCHAR* argv[])
 	Model3D* model = new Model3D();
 	loader->Load("resources/tiny/tiny_4anim.x", model);
 
+	Object3D MyObject;
+	MyObject.SetupModel(model);
+	unsigned short int index = 0;
+	MyObject.MapAnimationSet(index);
+	//We set the interval of animation in steps
+	MyObject.SetAnimationStep(80);
+	MyObject.Update();
+
 	pengine::DefaultSceneFactory* sceneFactory = new pengine::DefaultSceneFactory();
 	sceneFactory->setMesh(mesh);
 	sceneFactory->setMesh2(mesh2);
@@ -77,6 +86,7 @@ int _tmain(int argc, _TCHAR* argv[])
 		pEngine.GetRenderer()->BeginScene();
 		pEngine.GetRenderer()->SetLights();
 		pEngine.GetSceneManager()->RenderActiveScene(pEngine.GetRenderer());
+		MyObject.Draw(pEngine.GetRenderer());
 
 		pEngine.GetRenderer()->EndScene();
 		pEngine.GetRenderer()->PresentScene(pEngine.GetWindowManager()->GetLastWindow()->GetHWND());

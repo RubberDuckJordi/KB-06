@@ -1,3 +1,6 @@
+#ifndef _BONE_H_
+#define _BONE_H_
+
 #include "Matrix.h"
 #include "Types.h"
 
@@ -23,3 +26,4 @@ public:
 	std::string _Name;
 	std::list<Bone*> _Bones;
 };
+#endif

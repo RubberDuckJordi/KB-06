@@ -43,38 +43,38 @@ bool IO_Model_X::Load(std::string pFilename, Model3D* &pT)
 {
 	XFileHeader XHeader;
 
-	logger->LogAll(0, "SuperXLoader: Processing file:", pFilename);
+	////logger->LogAll(0, "SuperXLoader: Processing file:", pFilename);
 
 	fin.open(pFilename.c_str(), std::ios::in);
 
 	if (fin.bad())
 	{
-		logger->LogAll(0, "SuperXLoader: Failed opening file:", pFilename);
+		////logger->LogAll(0, "SuperXLoader: Failed opening file:", pFilename);
 		return false;
 	}
 
 	fin.read((char*)&XHeader, 16);
 	if (XHeader.Magic != XOFFILE_FORMAT_MAGIC)
 	{
-		logger->Log(0, "SuperXLoader: Not a .X model file. Aborted.");
+		////logger->Log(0, "SuperXLoader: Not a .X model file. Aborted.");
 		return false;
 	}
 
 	if (XHeader.Major_Version != XOFFILE_FORMAT_VERSION03)
 	{
-		logger->Log(0, "SuperXLoader: Major version greater than 03. Aborted.");
+		////logger->Log(0, "SuperXLoader: Major version greater than 03. Aborted.");
 		return false;
 	}
 
 	if ((XHeader.Minor_Version != XOFFILE_FORMAT_VERSION03) || (XHeader.Minor_Version != XOFFILE_FORMAT_VERSION02))
 	{
-		logger->Log(0, "SuperXLoader: Minor version greater than 03. Aborted.");
+		////logger->Log(0, "SuperXLoader: Minor version greater than 03. Aborted.");
 		return false;
 	}
 
 	if (XHeader.Format != XOFFILE_FORMAT_TEXT)
 	{
-		logger->Log(0, "SuperXLoader: Not a text format. Aborted.");
+		////logger->Log(0, "SuperXLoader: Not a text format. Aborted.");
 		return false;
 	}
 
@@ -85,7 +85,7 @@ bool IO_Model_X::Load(std::string pFilename, Model3D* &pT)
 		switch (ProcessBlock())
 		{
 		case X_ERROR:
-			logger->Log(0, "SuperXLoader: Stopped processing the file.");
+			////logger->Log(0, "SuperXLoader: Stopped processing the file.");
 			return false;
 			break;
 		case X_COMMENT:
@@ -113,9 +113,15 @@ bool IO_Model_X::Load(std::string pFilename, Model3D* &pT)
 		MapMeshToBones(_LoadSkeletton);
 	}
 
-	logger->LogAll(0, "SuperXLoader: Processed file:", pFilename);
+	////logger->LogAll(0, "SuperXLoader: Processed file:", pFilename);
 
 	fin.close();
+	for (int i = 0; i < _LoadMesh->_nVertices; ++i)
+	{
+		/*////logger->LogAll(0, "GVD1", _LoadMesh->_Vertices[i].data[0]);
+		////logger->LogAll(0, "GVD2", _LoadMesh->_Vertices[i].data[1]);
+		////logger->LogAll(0, "GVD3", _LoadMesh->_Vertices[i].data[2]);*/
+	}
 	return true;
 }
 
@@ -177,7 +183,7 @@ int16 IO_Model_X::BlockID(std::string &pText)
 
 	if (pText.empty())
 	{
-		logger->Log(0, "SuperXLoader: Error: no block read!");
+		////logger->Log(0, "SuperXLoader: Error: no block read!");
 		return X_ERROR;
 	}
 
@@ -190,7 +196,7 @@ int16 IO_Model_X::BlockID(std::string &pText)
 			return Templates[i].TemplateID;
 		}
 	}
-	logger->LogAll(0, "SuperXLoader: Unknown block:", pText);
+	////logger->LogAll(0, "SuperXLoader: Unknown block:", pText);
 	return X_UNKNOWN;
 }
 
@@ -222,7 +228,7 @@ char* IO_Model_X::SetUID(char pType)
 	//This is a quick hack to derive a Unique ID for blocks with
 	//no identifier names like in the tiny_4anim.x example.
 
-	//!!!@@@!!!_X_UID.Integer = GetTickCount(); //This function return a 4 byte wide number
+	_X_UID.Integer = GetTickCount(); //This function return a 4 byte wide number
 	_X_UID.Text[4] = pType; //We set the 5th byte with a significant character
 
 	//If any of the first 4 bytes are under 32 we add 32
@@ -279,13 +285,13 @@ void IO_Model_X::ProcessBone(Bone* pBone)
 
 	if (pBone == 0)
 	{
-		logger->LogAll(0, "SuperXLoader: Skeleton 1st bone:", cBone->_Name);
+		////logger->LogAll(0, "SuperXLoader: Skeleton 1st bone:", cBone->_Name);
 		_LoadSkeletton = cBone;
 		_Object->_Skeletton = _LoadSkeletton;
 	}
 	else
 	{
-		logger->LogAll(0, "SuperXLoader:", pBone->_Name, "", "->" + cBone->_Name);
+		////logger->LogAll(0, "SuperXLoader:", pBone->_Name, "", "->" + cBone->_Name);
 		pBone->_Bones.push_back(cBone);
 	}
 	Find('{');
@@ -333,7 +339,7 @@ void IO_Model_X::ProcessMesh(void)
 	int16 Token;
 	char Data[TEXT_BUFFER];
 
-	_LoadMesh = new XMesh;
+	_LoadMesh = new XMesh();
 	if (!_Object->_Meshes.empty())
 	{
 		XMesh* LastMesh = _Object->_Meshes.back();
@@ -351,11 +357,11 @@ void IO_Model_X::ProcessMesh(void)
 			_LoadMesh->_FirstNormal = _LoadMesh->_FirstVertex;
 		}
 
-		logger->LogAll(0, "SuperXLoader: Starting Vertex index:", _LoadMesh->_FirstVertex);
-		logger->LogAll(0, "SuperXLoader: Starting Face index:", _LoadMesh->_FirstFace);
-		logger->LogAll(0, "SuperXLoader: Starting TextureCoord index:", _LoadMesh->_FirstTextureCoord);
-		logger->LogAll(0, "SuperXLoader: Starting Normal index:", _LoadMesh->_FirstNormal);
-		logger->LogAll(0, "SuperXLoader: Starting Material index:", _LoadMesh->_FirstMaterial);
+		////logger->LogAll(0, "SuperXLoader: Starting Vertex index:", _LoadMesh->_FirstVertex);
+		////logger->LogAll(0, "SuperXLoader: Starting Face index:", _LoadMesh->_FirstFace);
+		////logger->LogAll(0, "SuperXLoader: Starting TextureCoord index:", _LoadMesh->_FirstTextureCoord);
+		////logger->LogAll(0, "SuperXLoader: Starting Normal index:", _LoadMesh->_FirstNormal);
+		////logger->LogAll(0, "SuperXLoader: Starting Material index:", _LoadMesh->_FirstMaterial);
 	}
 
 	Token = fin.peek();
@@ -369,11 +375,11 @@ void IO_Model_X::ProcessMesh(void)
 	}
 
 	Find('{');
-	logger->LogAll(0, "SuperXLoader: Mesh:", _LoadMesh->_Name);
+	////logger->LogAll(0, "SuperXLoader: Mesh:", _LoadMesh->_Name);
 
 	fin.getline(Data, TEXT_BUFFER, ';');
 	_LoadMesh->_nVertices = (uint16)TextToNum(Data);
-	logger->LogAll(0, "SuperXLoader: Number of vertices:", _LoadMesh->_nVertices);
+	////logger->LogAll(0, "SuperXLoader: Number of vertices:", _LoadMesh->_nVertices);
 	_LoadMesh->_Vertices = new Vertex[_LoadMesh->_nVertices];
 	//   _LoadMesh->_SkinnedVertices = new Frm::Vertex[_LoadMesh->_nVertices];
 	for (int i = 0; i < _LoadMesh->_nVertices; i++)
@@ -389,9 +395,9 @@ void IO_Model_X::ProcessMesh(void)
 
 	fin.getline(Data, TEXT_BUFFER, ';');
 	_LoadMesh->_nFaces = (uint16)TextToNum(Data);
-	logger->LogAll(0, "SuperXLoader: Number of Faces:", _LoadMesh->_nFaces);
-	_LoadMesh->_Faces = new Face[_LoadMesh->_nFaces];
-	for (uint32 i = 0; i < _LoadMesh->_nFaces; i++)
+	////logger->LogAll(0, "SuperXLoader: Number of Faces:", _LoadMesh->_nFaces);
+	_LoadMesh->_Faces = new Face[_LoadMesh->_nFaces]();
+	for (uint32 i = 0; i < _LoadMesh->_nFaces; ++i)
 	{
 		Find(';');
 		fin.getline(Data, TEXT_BUFFER, ',');
@@ -402,10 +408,10 @@ void IO_Model_X::ProcessMesh(void)
 		_LoadMesh->_Faces[i].data[2] = (uint16)TextToNum(Data);
 		fin.get(); //eats either the comma or the semicolon at the end of each face description
 
-		logger->LogAll(0, "SuperXLoader: Face", std::to_string(i), ":",
-			std::to_string(_LoadMesh->_Faces[i].data[0]), "",
-			std::to_string(_LoadMesh->_Faces[i].data[1]), "",
-			std::to_string(_LoadMesh->_Faces[i].data[2]));
+		////logger->LogAll(0, "SuperXLoader: Face", std::to_string(i), ":",
+		//	std::to_string(_LoadMesh->_Faces[i].data[0]), 
+		//	std::to_string(_LoadMesh->_Faces[i].data[1]), 
+		//	std::to_string(_LoadMesh->_Faces[i].data[2]));
 	}
 
 	Token = X_COMMENT;
@@ -457,7 +463,7 @@ void IO_Model_X::ProcessMeshTextureCoords(void)
 
 	fin.getline(Data, TEXT_BUFFER, ';');
 	_LoadMesh->_nTextureCoords = (uint16)TextToNum(Data);
-	logger->LogAll(0, "SuperXLoader: Number of Texture Coords:", _LoadMesh->_nTextureCoords);
+	////logger->LogAll(0, "SuperXLoader: Number of Texture Coords:", _LoadMesh->_nTextureCoords);
 	_LoadMesh->_TextureCoords = new TCoord[_LoadMesh->_nTextureCoords];
 	for (int i = 0; i < _LoadMesh->_nTextureCoords; i++)
 	{
@@ -483,7 +489,7 @@ void IO_Model_X::ProcessMeshNormals(void)
 	Find('{');
 	fin.getline(Data, TEXT_BUFFER, ';');
 	_LoadMesh->_nNormals = (uint16)TextToNum(Data);
-	logger->LogAll(0, "SuperXLoader: Number of normals:", _LoadMesh->_nNormals);
+	////logger->LogAll(0, "SuperXLoader: Number of normals:", _LoadMesh->_nNormals);
 	_LoadMesh->_Normals = new Vector<float>[_LoadMesh->_nNormals];
 	for (int i = 0; i < _LoadMesh->_nNormals; i++)
 	{
@@ -507,10 +513,10 @@ void IO_Model_X::ProcessMeshNormals(void)
 		fin.getline(Data, TEXT_BUFFER, ';');
 		_LoadMesh->_FaceNormals[i].data[2] = (uint16)TextToNum(Data);
 		fin.get(); //eats either the comma or the semicolon at the end of each face description
-		logger->LogAll(0, "SuperXLoader: Face Normal index", std::to_string(i) + ":",
-			std::to_string(_LoadMesh->_FaceNormals[i].data[0]), "",
-			std::to_string(_LoadMesh->_FaceNormals[i].data[1]), "",
-			std::to_string(_LoadMesh->_FaceNormals[i].data[2]));
+		////logger->LogAll(0, "SuperXLoader: Face Normal index", std::to_string(i) + ":",
+		//	std::to_string(_LoadMesh->_FaceNormals[i].data[0]), 
+		//	std::to_string(_LoadMesh->_FaceNormals[i].data[1]), 
+		//	std::to_string(_LoadMesh->_FaceNormals[i].data[2]));
 	}
 
 	Find('}');
@@ -533,7 +539,7 @@ void IO_Model_X::ProcessMeshMaterials(void)
 
 	fin.getline(Data, TEXT_BUFFER, ';');
 	_LoadMesh->_nMaterials = (uint16)TextToNum(Data);
-	logger->LogAll(0, "SuperXLoader: Number of Materials:", Data);
+	////logger->LogAll(0, "SuperXLoader: Number of Materials:", Data);
 
 	fin.getline(Data, TEXT_BUFFER, ';');
 	_LoadMesh->_FaceMaterials = new uint16[(uint16)TextToNum(Data)];
@@ -648,7 +654,7 @@ void IO_Model_X::ProcessSkinWeights(void)
 	temp = Data;
 	cBone = _LoadSkeletton->IsName(temp);
 	//   cBone->_Mesh = _LoadMesh;
-	logger->LogAll(0, "SuperXLoader: Skinning bone:", cBone->_Name);
+	////logger->LogAll(0, "SuperXLoader: Skinning bone:", cBone->_Name);
 	Find(';');
 
 	fin.getline(Data, TEXT_BUFFER, ';');
@@ -658,11 +664,11 @@ void IO_Model_X::ProcessSkinWeights(void)
 	{
 		fin.getline(Data, TEXT_BUFFER, ',');
 		cBone->_Vertices[i] = (uint16)TextToNum(Data);
-		logger->LogAll(0, "SuperXLoader: Vertex:", atoi(Data));
+		////logger->LogAll(0, "SuperXLoader: Vertex:", atoi(Data));
 	}
 	fin.getline(Data, TEXT_BUFFER, ';');
 	cBone->_Vertices[cBone->_nVertices - 1] = (uint16)TextToNum(Data);
-	logger->LogAll(0, "SuperXLoader: Vertex:", atoi(Data));
+	////logger->LogAll(0, "SuperXLoader: Vertex:", atoi(Data));
 
 	cBone->_Weights = new float[cBone->_nVertices];
 	for (uint32 i = 0; i < cBone->_nVertices - 1; i++)
@@ -670,12 +676,12 @@ void IO_Model_X::ProcessSkinWeights(void)
 		fin.getline(Data, TEXT_BUFFER, ',');
 		cBone->_Weights[i] = TextToNum(Data);
 		//      MYTRACE("Weight:", atof(Data));/**/
-		logger->LogAll(0, "SuperXLoader: Weight:", atof(Data));
+		////logger->LogAll(0, "SuperXLoader: Weight:", atof(Data));
 	}
 	fin.getline(Data, TEXT_BUFFER, ';');
 	cBone->_Weights[cBone->_nVertices - 1] = TextToNum(Data);
 	//   MYTRACE("Weight:", atof(Data));/**/
-	logger->LogAll(0, "SuperXLoader: Weight:", atof(Data));
+	////logger->LogAll(0, "SuperXLoader: Weight:", atof(Data));
 
 	for (int i = 0; i < 15; i++)
 	{
@@ -715,7 +721,7 @@ void IO_Model_X::ProcessAnimationSets(void)
 	}
 
 	Find('{');
-	logger->LogAll(0, "SuperXLoader: Animation Set:", _LoadAnimationSet->_Name);
+	////logger->LogAll(0, "SuperXLoader: Animation Set:", _LoadAnimationSet->_Name);
 
 	Token = X_COMMENT;
 	while (Token != X_EBRACE)
@@ -727,7 +733,7 @@ void IO_Model_X::ProcessAnimationSets(void)
 			break; //used for spaces and other kind of comments
 		case X_EBRACE:
 			_LoadAnimationSet->_MaxKey = _MaxKey;
-			logger->LogAll(0, "SuperXLoader: MaxKey:", _MaxKey);
+			////logger->LogAll(0, "SuperXLoader: MaxKey:", _MaxKey);
 			_Object->_AnimationSets.push_back(_LoadAnimationSet);
 			return; //this is the end, my only friend ...
 		case X_ANIMATION:
@@ -739,7 +745,7 @@ void IO_Model_X::ProcessAnimationSets(void)
 		}
 	}
 	_LoadAnimationSet->_MaxKey = _MaxKey;
-	logger->LogAll(0, "SuperXLoader: MaxKey:", _MaxKey);
+	////logger->LogAll(0, "SuperXLoader: MaxKey:", _MaxKey);
 	_Object->_AnimationSets.push_back(_LoadAnimationSet);
 }
 
@@ -773,7 +779,7 @@ void IO_Model_X::ProcessAnimations(AnimationSet* &pAS)
 			fin.getline(Data, TEXT_BUFFER, '}');
 			Remove(' ', Data);
 			TempAnimation->_BoneName = Data;
-			logger->LogAll(0, "SuperXLoader: Animated Bone:", TempAnimation->_BoneName);
+			////logger->LogAll(0, "SuperXLoader: Animated Bone:", TempAnimation->_BoneName);
 			break;
 		case X_ANIMATIONKEY:
 			ProcessAnimationKeys(TempAnimation);
@@ -808,7 +814,7 @@ void IO_Model_X::ProcessAnimationKeys(Animation* &pA)
 	switch (Type)
 	{
 	case 0:
-		logger->LogAll(0, "SuperXLoader:", Size, "Rotation Keys");
+		////logger->LogAll(0, "SuperXLoader:", Size, "Rotation Keys");
 		pA->_Rotations.reserve(Size);
 		while (Size--)
 		{
@@ -834,7 +840,7 @@ void IO_Model_X::ProcessAnimationKeys(Animation* &pA)
 		}
 		break;
 	case 1:
-		logger->LogAll(0, "SuperXLoader:", Size, "Scaling Keys");
+		////logger->LogAll(0, "SuperXLoader:", Size, "Scaling Keys");
 		pA->_Scalings.reserve(Size);
 		while (Size--)
 		{
@@ -858,7 +864,7 @@ void IO_Model_X::ProcessAnimationKeys(Animation* &pA)
 		}
 		break;
 	case 2:
-		logger->LogAll(0, "SuperXLoader:", Size, "Position Keys");
+		////logger->LogAll(0, "SuperXLoader:", Size, "Position Keys");
 		pA->_Translations.reserve(Size);
 		while (Size--)
 		{
@@ -882,7 +888,7 @@ void IO_Model_X::ProcessAnimationKeys(Animation* &pA)
 		}
 		break;
 	case 4:
-		logger->LogAll(0, "SuperXLoader:", Size, "Matrix Keys");
+		////logger->LogAll(0, "SuperXLoader:", Size, "Matrix Keys");
 		pA->_Matrices.reserve(Size);
 		while (Size--)
 		{
@@ -907,7 +913,7 @@ void IO_Model_X::ProcessAnimationKeys(Animation* &pA)
 		}
 		break;
 	default:
-		logger->LogAll(0, "SuperXLoader: Unknown Type", Type, "...");
+		////logger->LogAll(0, "SuperXLoader: Unknown Type", Type, "...");
 		break;
 	}
 
@@ -928,7 +934,7 @@ void IO_Model_X::MapMeshToBones(Bone* &pBone)
 		pBone->_MeshName = _LoadMesh->_Name;
 	}
 
-	logger->LogAll(0, "SuperXLoader: Bone", pBone->_Name, "is linked to mesh ", pBone->_MeshName);
+	////logger->LogAll(0, "SuperXLoader: Bone", pBone->_Name, "is linked to mesh ", pBone->_MeshName);
 
 	if (!pBone->_Bones.empty())
 	{

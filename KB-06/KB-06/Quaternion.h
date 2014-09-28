@@ -3,6 +3,8 @@
 
 #define MINFLOAT 1.17549435E-38F
 
+#include "PengineDefinitions.h"
+
 template <typename T>
 class Quaternion {
 public:
@@ -67,7 +69,7 @@ public:
 
 		if (Angle < MINFLOAT)
 		{
-			return quaternion<T>(*this);
+			return Quaternion<T>(*this);
 		}
 		//We calculate the interpolated angle and deduce the resulting quaternion
 		T InvAngleSin = (T)(1.0f / sin(Angle));

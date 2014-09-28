@@ -30,7 +30,7 @@ struct Array
 			data[i] += pA.data[i];
 		}
 		return *this;
-	}
+	};
 	Array<T, size> operator*(const T pScalar)
 	{
 		T rdata[size];

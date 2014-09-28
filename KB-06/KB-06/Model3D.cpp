@@ -142,7 +142,7 @@ void Model3D::ConcatenateMeshes(void)
 	//We create the subsets
 	ConcatMesh->CreateSubsets();
 
-	//MYTRACE("All meshes are concatenated.");
+	logger->Log(0, "Model3D: All meshes are concatenated.");
 }
 
 void Model3D::UpdateBoneIndices(Bone* &pBone)
