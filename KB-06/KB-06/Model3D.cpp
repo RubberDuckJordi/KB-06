@@ -8,12 +8,12 @@ Model3D::~Model3D(void)
 	}
 	while (!_Meshes.empty())
 	{
-		delete _Meshes.back(); 
+		delete _Meshes.back();
 		_Meshes.pop_back();
 	}
 	while (!_AnimationSets.empty())
 	{
-		delete _AnimationSets.back(); 
+		delete _AnimationSets.back();
 		_AnimationSets.pop_back();
 	}
 }
@@ -39,7 +39,7 @@ void Model3D::ConcatenateMeshes(void)
 	}
 
 	logger->Log(0, "Model3D: Concatenating Meshes...");
-	
+
 
 	XMesh* ConcatMesh = new XMesh;
 	XMesh* LastMesh = _Meshes.back();
@@ -65,11 +65,11 @@ void Model3D::ConcatenateMeshes(void)
 		ConcatMesh->_nNormals = ConcatMesh->_nVertices;
 	}
 
-	logger->Log(0, "Model3D: Final number of Vertices: " + ConcatMesh->_nVertices);
-	logger->Log(0, "Model3D: Final number of Faces: " + ConcatMesh->_nFaces);
-	logger->Log(0, "Model3D: Final number of TextureCoords: " + ConcatMesh->_nTextureCoords);
-	logger->Log(0, "Model3D: Final number of Normals: " + ConcatMesh->_nNormals);
-	logger->Log(0, "Model3D: Final number of Materials: " + ConcatMesh->_nMaterials);
+	logger->LogAll(0, "Model3D: Final number of Vertices:", ConcatMesh->_nVertices);
+	logger->LogAll(0, "Model3D: Final number of Faces:", ConcatMesh->_nFaces);
+	logger->LogAll(0, "Model3D: Final number of TextureCoords:", ConcatMesh->_nTextureCoords);
+	logger->LogAll(0, "Model3D: Final number of Normals:", ConcatMesh->_nNormals);
+	logger->LogAll(0, "Model3D: Final number of Materials:", ConcatMesh->_nMaterials);
 
 	//We create all the arrays:
 	// - Vertices and Faces
@@ -128,7 +128,7 @@ void Model3D::ConcatenateMeshes(void)
 		UpdateBoneIndices(_Skeletton);
 	}
 
-	//MYTRACE("Bone hierarchy adapted.");
+	logger->Log(0, "Model3D: Bone hierarchy adapted.");
 
 	//We eventually delete all the previous meshes
 	while (!_Meshes.empty()) {

@@ -43,13 +43,13 @@ bool IO_Model_X::Load(std::string pFilename, Model3D* &pT)
 {
 	XFileHeader XHeader;
 
-	logger->Log(0, "SuperXLoader: Processing file:" + pFilename);
+	logger->LogAll(0, "SuperXLoader: Processing file:", pFilename);
 
 	fin.open(pFilename.c_str(), std::ios::in);
 
 	if (fin.bad())
 	{
-		logger->Log(0, "SuperXLoader: Failed opening file:" + pFilename);
+		logger->LogAll(0, "SuperXLoader: Failed opening file:", pFilename);
 		return false;
 	}
 
@@ -113,7 +113,7 @@ bool IO_Model_X::Load(std::string pFilename, Model3D* &pT)
 		MapMeshToBones(_LoadSkeletton);
 	}
 
-	logger->Log(0, "SuperXLoader: Processed file: " + pFilename);
+	logger->LogAll(0, "SuperXLoader: Processed file:", pFilename);
 
 	fin.close();
 	return true;
@@ -190,7 +190,7 @@ int16 IO_Model_X::BlockID(std::string &pText)
 			return Templates[i].TemplateID;
 		}
 	}
-	logger->Log(0, "SuperXLoader: Unknown block: " + pText);
+	logger->LogAll(0, "SuperXLoader: Unknown block:", pText);
 	return X_UNKNOWN;
 }
 
@@ -279,13 +279,13 @@ void IO_Model_X::ProcessBone(Bone* pBone)
 
 	if (pBone == 0)
 	{
-		logger->Log(0, "SuperXLoader: Skeleton 1st bone: " + cBone->_Name);
+		logger->LogAll(0, "SuperXLoader: Skeleton 1st bone:", cBone->_Name);
 		_LoadSkeletton = cBone;
 		_Object->_Skeletton = _LoadSkeletton;
 	}
 	else
 	{
-		logger->Log(0, "SuperXLoader: " + pBone->_Name + "->" + cBone->_Name);
+		logger->LogAll(0, "SuperXLoader:", pBone->_Name, "", "->" + cBone->_Name);
 		pBone->_Bones.push_back(cBone);
 	}
 	Find('{');
@@ -351,11 +351,11 @@ void IO_Model_X::ProcessMesh(void)
 			_LoadMesh->_FirstNormal = _LoadMesh->_FirstVertex;
 		}
 
-		logger->Log(0, "SuperXLoader: Starting Vertex index: " + _LoadMesh->_FirstVertex);
-		logger->Log(0, "SuperXLoader: Starting Face index: " + _LoadMesh->_FirstFace);
-		logger->Log(0, "SuperXLoader: Starting TextureCoord index: " + _LoadMesh->_FirstTextureCoord);
-		logger->Log(0, "SuperXLoader: Starting Normal index: " + _LoadMesh->_FirstNormal);
-		logger->Log(0, "SuperXLoader: Starting Material index: " + _LoadMesh->_FirstMaterial);
+		logger->LogAll(0, "SuperXLoader: Starting Vertex index:", _LoadMesh->_FirstVertex);
+		logger->LogAll(0, "SuperXLoader: Starting Face index:", _LoadMesh->_FirstFace);
+		logger->LogAll(0, "SuperXLoader: Starting TextureCoord index:", _LoadMesh->_FirstTextureCoord);
+		logger->LogAll(0, "SuperXLoader: Starting Normal index:", _LoadMesh->_FirstNormal);
+		logger->LogAll(0, "SuperXLoader: Starting Material index:", _LoadMesh->_FirstMaterial);
 	}
 
 	Token = fin.peek();
@@ -369,11 +369,11 @@ void IO_Model_X::ProcessMesh(void)
 	}
 
 	Find('{');
-	logger->Log(0, "SuperXLoader: Mesh: " + _LoadMesh->_Name);
+	logger->LogAll(0, "SuperXLoader: Mesh:", _LoadMesh->_Name);
 
 	fin.getline(Data, TEXT_BUFFER, ';');
 	_LoadMesh->_nVertices = (uint16)TextToNum(Data);
-	logger->Log(0, "SuperXLoader: Number of vertices: " + _LoadMesh->_nVertices);
+	logger->LogAll(0, "SuperXLoader: Number of vertices:", _LoadMesh->_nVertices);
 	_LoadMesh->_Vertices = new Vertex[_LoadMesh->_nVertices];
 	//   _LoadMesh->_SkinnedVertices = new Frm::Vertex[_LoadMesh->_nVertices];
 	for (int i = 0; i < _LoadMesh->_nVertices; i++)
@@ -389,7 +389,7 @@ void IO_Model_X::ProcessMesh(void)
 
 	fin.getline(Data, TEXT_BUFFER, ';');
 	_LoadMesh->_nFaces = (uint16)TextToNum(Data);
-	logger->Log(0, "SuperXLoader: Number of Faces: " + _LoadMesh->_nFaces);
+	logger->LogAll(0, "SuperXLoader: Number of Faces:", _LoadMesh->_nFaces);
 	_LoadMesh->_Faces = new Face[_LoadMesh->_nFaces];
 	for (uint32 i = 0; i < _LoadMesh->_nFaces; i++)
 	{
@@ -402,10 +402,10 @@ void IO_Model_X::ProcessMesh(void)
 		_LoadMesh->_Faces[i].data[2] = (uint16)TextToNum(Data);
 		fin.get(); //eats either the comma or the semicolon at the end of each face description
 
-		logger->Log(0, "SuperXLoader: Face " + std::to_string(i) + ": "
-			+ std::to_string(_LoadMesh->_Faces[i].data[0]) + " "
-			+ std::to_string(_LoadMesh->_Faces[i].data[1]) + " "
-			+ std::to_string(_LoadMesh->_Faces[i].data[2]));
+		logger->LogAll(0, "SuperXLoader: Face", std::to_string(i), ":",
+			std::to_string(_LoadMesh->_Faces[i].data[0]), "",
+			std::to_string(_LoadMesh->_Faces[i].data[1]), "",
+			std::to_string(_LoadMesh->_Faces[i].data[2]));
 	}
 
 	Token = X_COMMENT;
@@ -457,7 +457,7 @@ void IO_Model_X::ProcessMeshTextureCoords(void)
 
 	fin.getline(Data, TEXT_BUFFER, ';');
 	_LoadMesh->_nTextureCoords = (uint16)TextToNum(Data);
-	logger->Log(0, "SuperXLoader: Number of Texture Coords: " + _LoadMesh->_nTextureCoords);
+	logger->LogAll(0, "SuperXLoader: Number of Texture Coords:", _LoadMesh->_nTextureCoords);
 	_LoadMesh->_TextureCoords = new TCoord[_LoadMesh->_nTextureCoords];
 	for (int i = 0; i < _LoadMesh->_nTextureCoords; i++)
 	{
@@ -483,7 +483,7 @@ void IO_Model_X::ProcessMeshNormals(void)
 	Find('{');
 	fin.getline(Data, TEXT_BUFFER, ';');
 	_LoadMesh->_nNormals = (uint16)TextToNum(Data);
-	logger->Log(0, "SuperXLoader: Number of normals: " + _LoadMesh->_nNormals);
+	logger->LogAll(0, "SuperXLoader: Number of normals:", _LoadMesh->_nNormals);
 	_LoadMesh->_Normals = new Vector<float>[_LoadMesh->_nNormals];
 	for (int i = 0; i < _LoadMesh->_nNormals; i++)
 	{
@@ -507,10 +507,10 @@ void IO_Model_X::ProcessMeshNormals(void)
 		fin.getline(Data, TEXT_BUFFER, ';');
 		_LoadMesh->_FaceNormals[i].data[2] = (uint16)TextToNum(Data);
 		fin.get(); //eats either the comma or the semicolon at the end of each face description
-		logger->Log(0, "SuperXLoader: Face Normal index " + std::to_string(i) + ": "
-			+ std::to_string(_LoadMesh->_FaceNormals[i].data[0]) + " "
-			+ std::to_string(_LoadMesh->_FaceNormals[i].data[1]) + " "
-			+ std::to_string(_LoadMesh->_FaceNormals[i].data[2]));
+		logger->LogAll(0, "SuperXLoader: Face Normal index", std::to_string(i) + ":",
+			std::to_string(_LoadMesh->_FaceNormals[i].data[0]), "",
+			std::to_string(_LoadMesh->_FaceNormals[i].data[1]), "",
+			std::to_string(_LoadMesh->_FaceNormals[i].data[2]));
 	}
 
 	Find('}');
@@ -533,8 +533,7 @@ void IO_Model_X::ProcessMeshMaterials(void)
 
 	fin.getline(Data, TEXT_BUFFER, ';');
 	_LoadMesh->_nMaterials = (uint16)TextToNum(Data);
-	std::string meow = Data;//couldn't quickly find another way
-	logger->Log(0, "SuperXLoader: Number of Materials: " + meow);
+	logger->LogAll(0, "SuperXLoader: Number of Materials:", Data);
 
 	fin.getline(Data, TEXT_BUFFER, ';');
 	_LoadMesh->_FaceMaterials = new uint16[(uint16)TextToNum(Data)];
@@ -649,7 +648,7 @@ void IO_Model_X::ProcessSkinWeights(void)
 	temp = Data;
 	cBone = _LoadSkeletton->IsName(temp);
 	//   cBone->_Mesh = _LoadMesh;
-	logger->Log(0, "SuperXLoader: Skinning bone: " + cBone->_Name);
+	logger->LogAll(0, "SuperXLoader: Skinning bone:", cBone->_Name);
 	Find(';');
 
 	fin.getline(Data, TEXT_BUFFER, ';');
@@ -659,11 +658,11 @@ void IO_Model_X::ProcessSkinWeights(void)
 	{
 		fin.getline(Data, TEXT_BUFFER, ',');
 		cBone->_Vertices[i] = (uint16)TextToNum(Data);
-		logger->Log(0, "SuperXLoader: Vertex: " + atoi(Data));
+		logger->LogAll(0, "SuperXLoader: Vertex:", atoi(Data));
 	}
 	fin.getline(Data, TEXT_BUFFER, ';');
 	cBone->_Vertices[cBone->_nVertices - 1] = (uint16)TextToNum(Data);
-	logger->Log(0, "SuperXLoader: Vertex: " + atoi(Data));
+	logger->LogAll(0, "SuperXLoader: Vertex:", atoi(Data));
 
 	cBone->_Weights = new float[cBone->_nVertices];
 	for (uint32 i = 0; i < cBone->_nVertices - 1; i++)
@@ -671,10 +670,12 @@ void IO_Model_X::ProcessSkinWeights(void)
 		fin.getline(Data, TEXT_BUFFER, ',');
 		cBone->_Weights[i] = TextToNum(Data);
 		//      MYTRACE("Weight:", atof(Data));/**/
+		logger->LogAll(0, "SuperXLoader: Weight:", atof(Data));
 	}
 	fin.getline(Data, TEXT_BUFFER, ';');
 	cBone->_Weights[cBone->_nVertices - 1] = TextToNum(Data);
 	//   MYTRACE("Weight:", atof(Data));/**/
+	logger->LogAll(0, "SuperXLoader: Weight:", atof(Data));
 
 	for (int i = 0; i < 15; i++)
 	{
@@ -714,7 +715,7 @@ void IO_Model_X::ProcessAnimationSets(void)
 	}
 
 	Find('{');
-	logger->Log(0, "SuperXLoader: Animation Set: " + _LoadAnimationSet->_Name);
+	logger->LogAll(0, "SuperXLoader: Animation Set:", _LoadAnimationSet->_Name);
 
 	Token = X_COMMENT;
 	while (Token != X_EBRACE)
@@ -726,7 +727,7 @@ void IO_Model_X::ProcessAnimationSets(void)
 			break; //used for spaces and other kind of comments
 		case X_EBRACE:
 			_LoadAnimationSet->_MaxKey = _MaxKey;
-			logger->Log(0, "SuperXLoader: MaxKey: " + _MaxKey);
+			logger->LogAll(0, "SuperXLoader: MaxKey:", _MaxKey);
 			_Object->_AnimationSets.push_back(_LoadAnimationSet);
 			return; //this is the end, my only friend ...
 		case X_ANIMATION:
@@ -738,7 +739,7 @@ void IO_Model_X::ProcessAnimationSets(void)
 		}
 	}
 	_LoadAnimationSet->_MaxKey = _MaxKey;
-	logger->Log(0, "SuperXLoader: MaxKey: " + _MaxKey);
+	logger->LogAll(0, "SuperXLoader: MaxKey:", _MaxKey);
 	_Object->_AnimationSets.push_back(_LoadAnimationSet);
 }
 
@@ -772,7 +773,7 @@ void IO_Model_X::ProcessAnimations(AnimationSet* &pAS)
 			fin.getline(Data, TEXT_BUFFER, '}');
 			Remove(' ', Data);
 			TempAnimation->_BoneName = Data;
-			logger->Log(0, "SuperXLoader: Animated Bone: " + TempAnimation->_BoneName);
+			logger->LogAll(0, "SuperXLoader: Animated Bone:", TempAnimation->_BoneName);
 			break;
 		case X_ANIMATIONKEY:
 			ProcessAnimationKeys(TempAnimation);
@@ -807,7 +808,7 @@ void IO_Model_X::ProcessAnimationKeys(Animation* &pA)
 	switch (Type)
 	{
 	case 0:
-		logger->Log(0, "SuperXLoader: " + Size + std::string(" Rotation Keys"));
+		logger->LogAll(0, "SuperXLoader:", Size, "Rotation Keys");
 		pA->_Rotations.reserve(Size);
 		while (Size--)
 		{
@@ -833,7 +834,7 @@ void IO_Model_X::ProcessAnimationKeys(Animation* &pA)
 		}
 		break;
 	case 1:
-		logger->Log(0, "SuperXLoader: " + Size + std::string(" Scaling Keys"));
+		logger->LogAll(0, "SuperXLoader:", Size, "Scaling Keys");
 		pA->_Scalings.reserve(Size);
 		while (Size--)
 		{
@@ -857,7 +858,7 @@ void IO_Model_X::ProcessAnimationKeys(Animation* &pA)
 		}
 		break;
 	case 2:
-		logger->Log(0, "SuperXLoader: " + Size + std::string(" Position Keys"));
+		logger->LogAll(0, "SuperXLoader:", Size, "Position Keys");
 		pA->_Translations.reserve(Size);
 		while (Size--)
 		{
@@ -881,7 +882,7 @@ void IO_Model_X::ProcessAnimationKeys(Animation* &pA)
 		}
 		break;
 	case 4:
-		logger->Log(0, "SuperXLoader: " + Size + std::string(" Matrix Keys"));
+		logger->LogAll(0, "SuperXLoader:", Size, "Matrix Keys");
 		pA->_Matrices.reserve(Size);
 		while (Size--)
 		{
@@ -906,7 +907,7 @@ void IO_Model_X::ProcessAnimationKeys(Animation* &pA)
 		}
 		break;
 	default:
-		logger->Log(0, "SuperXLoader: Unknown Type " + Type + std::string("..."));
+		logger->LogAll(0, "SuperXLoader: Unknown Type", Type, "...");
 		break;
 	}
 
@@ -927,7 +928,7 @@ void IO_Model_X::MapMeshToBones(Bone* &pBone)
 		pBone->_MeshName = _LoadMesh->_Name;
 	}
 
-	logger->Log(0, "SuperXLoader: Bone " + pBone->_Name + std::string(" is linked to mesh ") + pBone->_MeshName);
+	logger->LogAll(0, "SuperXLoader: Bone", pBone->_Name, "is linked to mesh ", pBone->_MeshName);
 
 	if (!pBone->_Bones.empty())
 	{

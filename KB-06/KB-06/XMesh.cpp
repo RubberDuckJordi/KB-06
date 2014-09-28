@@ -97,5 +97,3 @@ void XMesh::CreateSubsets(void)
 		_Subsets.push_back(MeshSubset);
 	}
 }
-/*************************************************/
-

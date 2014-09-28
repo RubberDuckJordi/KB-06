@@ -5,6 +5,9 @@
 #include <windows.h>
 #include <map>
 #include <fstream>
+#include <iostream>
+#include <string>
+#include <sstream>
 
 namespace pengine
 {
@@ -27,6 +30,29 @@ namespace pengine
 		void NewFile();
 		void Log(int logType, char* text);
 		void Log(int logType, std::string text);
+
+		template <typename T>
+		void MagicLog(std::ostream& o, T t)
+		{
+			o << " " << t;
+		}
+
+		template<typename T, typename... Args>
+		void MagicLog(std::ostream& o, T t, Args... args) // recursive variadic function
+		{
+			MagicLog(o, t);
+			MagicLog(o, args...);
+		}
+
+		template<typename T, typename... Args>
+		void LogAll(int logType, T t, Args... args)
+		{
+			std::ostringstream oss;
+			oss << t;
+			MagicLog(oss, args...);
+			Log(logType, oss.str());
+		}
+
 		void LogMemoryDump(int logType, void* const p_address, const int p_size, char* const p_name);
 		void SetLogLevel(int logLevel);
 		void Reset();
