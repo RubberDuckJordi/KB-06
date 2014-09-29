@@ -25,7 +25,7 @@ void Object3D::MapAnimationSet(uint16 &index)
 	{
 		index = 0;
 	}
-	logger->LogAll(0, "Object3D:", _Model->_AnimationSets.size(), "Animation Sets. Playing:", index);
+	logger->LogAll(0, "Object3D: ", _Model->_AnimationSets.size(), " Animation Sets. Playing: ", index);
 	std::list<AnimationSet*>::iterator i = _Model->_AnimationSets.begin();
 	if (index != 0)
 	{
@@ -141,7 +141,7 @@ void Object3D::GetBoneAnimation(ObjectBone* &pBone)
 	pBone->_Animation = _cAnimationSet->FindAnimation(pBone->_BoneName);
 	if (pBone->_Animation == 0)
 	{
-		logger->LogAll(0, "Object3D:", pBone->_BoneName, "is not linked to an animation.");
+		logger->LogAll(0, "Object3D: ", pBone->_BoneName, " is not linked to an animation.");
 	}
 	pBone->_AnimationIndexMat = 0;
 	pBone->_AnimationIndexR = 0;
@@ -200,10 +200,11 @@ void Object3D::SkinMesh(ObjectBone* pBone)
 {
 	if (!pBone->_Bones.empty())
 	{
-		//for (std::list<ObjectBone*>::iterator i = pBone->_Bones.begin(); i != pBone->_Bones.end(); i++)
-		//{
-		//SkinMesh(pBone->_Bones.pop_front());/**/
-		//}
+		logger->LogAll(0, "Object3D: Bones is not empty");
+		for (std::list<ObjectBone*>::iterator i = pBone->_Bones.begin(); i != pBone->_Bones.end(); i++)
+		{
+			SkinMesh(*i);
+		}
 	}
 
 	Vertex* MeshVertices = _Mesh->_Vertices;
@@ -255,8 +256,7 @@ void Object3D::ComputeBoundingBoxSphere(void)
 	_Center[1] = _Low[1] + (_High[1] - _Low[1])*0.5f;
 	_Center[2] = _Low[2] + (_High[2] - _Low[2])*0.5f;
 
-	logger->LogAll(0, "Object3D:", "AABB Low:", _Low[0], "x", _Low[1], "x", _Low[2]);
-	logger->LogAll(0, "Object3D:", "AABB High:", _High[0], "x", _High[1], "x", _High[2]);
-	logger->LogAll(0, "Object3D:", "AABB Center:", _Center[0], "x", _Center[1], "x", _Center[2]);
-
+	logger->LogAll(0, "Object3D: ", "AABB Low: ", _Low[0], "x", _Low[1], "x", _Low[2]);
+	logger->LogAll(0, "Object3D: ", "AABB High: ", _High[0], "x", _High[1], "x", _High[2]);
+	logger->LogAll(0, "Object3D: ", "AABB Center: ", _Center[0], "x", _Center[1], "x", _Center[2]);
 }

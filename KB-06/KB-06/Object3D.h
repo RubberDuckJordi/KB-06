@@ -18,9 +18,19 @@
 class Object3D
 {
 public:
-	Object3D(void) :_Skeletton(0), _SkinnedVertices(0), _Model(0), _AnimationStep(1){};
-	~Object3D(void){ if (_SkinnedVertices != 0) delete[] _SkinnedVertices; /*if (_Skeletton!=0) delete _Skeletton;/**/ }
-	void SetupModel(Model3D* &pModel){
+	Object3D(void) :_Skeletton(0), _SkinnedVertices(0), _Model(0), _AnimationStep(1)
+	{
+	};
+	~Object3D(void)
+	{
+		if (_SkinnedVertices != 0)
+		{
+			delete[] _SkinnedVertices;
+		}
+		/*if (_Skeletton!=0) delete _Skeletton;/**/
+	}
+	void SetupModel(Model3D* &pModel)
+	{
 		_Model = pModel;
 		_Mesh = _Model->_Meshes.back();
 		_SkinnedVertices = new Vertex[_Mesh->_nVertices];
@@ -28,16 +38,50 @@ public:
 	};
 
 	//Vertices to render
-	void ClearSkinnedVertices(void){ memset(_SkinnedVertices, 0, _Mesh->_nVertices * sizeof(Vertex)); };
+	void ClearSkinnedVertices(void)
+	{
+		memset(_SkinnedVertices, 0, _Mesh->_nVertices * sizeof(Vertex));
+	};
 
 	//Animation Based
-	void SetAnimationStep(uint16 pStep){ _AnimationStep = pStep; };
+	void SetAnimationStep(uint16 pStep)
+	{
+		_AnimationStep = pStep;
+	};
 	void MapAnimationSet(std::string pText = "None");
 	void MapAnimationSet(uint16 &index);
-	void UpdateAnimation(void){ _cKey += _AnimationStep; if (_cKey > _cAnimationSet->_MaxKey) _cKey = 0; CalcAnimation(_Skeletton); ComputeBoundingBoxSphere(); CalcAttitude(_Skeletton, 0); SkinMesh(_Skeletton); };
-	void UpdateBindSpace(void){ CalcBindSpace(_Skeletton); CalcAttitude(_Skeletton, 0); SkinMesh(_Skeletton); };
-	inline void CalcAnimation(void){ _cKey += _AnimationStep; if (_cKey > _cAnimationSet->_MaxKey)	_cKey = 0; CalcAnimation(_Skeletton); ComputeBoundingBoxSphere(); };
-	inline void CalcBindSpace(void){ CalcBindSpace(_Skeletton); };
+	void UpdateAnimation(void)
+	{
+		_cKey += _AnimationStep; 
+		if (_cKey > _cAnimationSet->_MaxKey)
+		{
+			_cKey = 0;
+		}
+		CalcAnimation(_Skeletton);
+		ComputeBoundingBoxSphere(); 
+		CalcAttitude(_Skeletton, 0); 
+		SkinMesh(_Skeletton);
+	};
+	void UpdateBindSpace(void)
+	{
+		CalcBindSpace(_Skeletton); 
+		CalcAttitude(_Skeletton, 0); 
+		SkinMesh(_Skeletton);
+	};
+	inline void CalcAnimation(void)
+	{
+		_cKey += _AnimationStep; 
+		if (_cKey > _cAnimationSet->_MaxKey)
+		{
+			_cKey = 0;
+		}
+		CalcAnimation(_Skeletton); 
+		ComputeBoundingBoxSphere();
+	};
+	inline void CalcBindSpace(void)
+	{
+		CalcBindSpace(_Skeletton);
+	};
 	inline void Update(void)
 	{ 
 		CalcAttitude(_Skeletton, 0); 
