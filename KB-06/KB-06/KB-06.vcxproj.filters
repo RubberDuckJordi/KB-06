@@ -361,6 +361,9 @@
     <ClInclude Include="ObjectBone.h">
       <Filter>Header\Resource\RobertX</Filter>
     </ClInclude>
+    <ClInclude Include="CustomD3DVertex.h">
+      <Filter>Header\Renderer</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
