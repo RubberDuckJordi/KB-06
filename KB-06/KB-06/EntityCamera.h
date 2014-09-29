@@ -13,7 +13,7 @@ namespace pengine
 	public:
 		EntityCamera();
 		~EntityCamera();
-		void UpdateLogic(std::map<Input, long>* actions);
+		void UpdateLogic(float deltaTime, std::map<Input, long>* actions);
 		void Draw(Renderer* renderer);
 		Vertex* GetPosition();
 		CameraData GetCameraData();

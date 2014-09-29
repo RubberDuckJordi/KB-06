@@ -12,7 +12,7 @@ pengine::DefaultScene::~DefaultScene()
 
 }
 
-void pengine::DefaultScene::Update(std::map<Input, long>* actions)
+void pengine::DefaultScene::Update(float deltaTime, std::map<Input, long>* actions)
 {
-	Scene::Update(actions);
+	Scene::Update(deltaTime, actions);
 }

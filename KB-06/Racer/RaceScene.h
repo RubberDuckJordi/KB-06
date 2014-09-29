@@ -11,7 +11,7 @@ namespace racer
 	public:
 		RaceScene();
 		~RaceScene();
-		void Update(std::map<pengine::Input, long>* actions);
+		void Update(float deltaTime, std::map<pengine::Input, long>* actions);
 		void SetRaceCart(pengine::Entity*);
 		void Render(pengine::Renderer* renderer);
 

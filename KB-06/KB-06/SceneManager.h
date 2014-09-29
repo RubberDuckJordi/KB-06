@@ -21,7 +21,7 @@ namespace pengine
 		void AddScene(Scene* scene);
 		void RemoveScene(Scene* scene);
 		void UpdateScene(Scene* scene);
-		void UpdateActiveScene(std::map<Input, long>* actions);
+		void UpdateActiveScene(float deltaTime, std::map<Input, long>* actions);
 		void RenderActiveScene(Renderer* renderer);
 		void SetCurrentScene(Scene* scene);
 

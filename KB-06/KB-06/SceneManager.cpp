@@ -39,9 +39,9 @@ void pengine::SceneManager::UpdateScene(Scene* scene)
 
 }
 
-void pengine::SceneManager::UpdateActiveScene(std::map<pengine::Input, long>* actions)
+void pengine::SceneManager::UpdateActiveScene(float deltaTime, std::map<pengine::Input, long>* actions)
 {
-	currentScene->Update(actions);
+	currentScene->Update(deltaTime, actions);
 }
 
 void pengine::SceneManager::RenderActiveScene(pengine::Renderer* renderer)

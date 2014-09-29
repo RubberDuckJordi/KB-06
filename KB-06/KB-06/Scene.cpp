@@ -17,13 +17,13 @@ void pengine::Scene::AddEntity(Entity* entity)
 	entities.push_back(entity);
 }
 
-void pengine::Scene::Update(std::map<pengine::Input, long>* actions)
+void pengine::Scene::Update(float deltaTime, std::map<pengine::Input, long>* actions)
 {
 	for (std::list<Entity*>::iterator i = entities.begin(); i != entities.end(); ++i)
 	{
-		(*i)->UpdateLogic(actions);
+		(*i)->UpdateLogic(deltaTime, actions);
 	}
-	currentCamera->UpdateLogic(actions);
+	currentCamera->UpdateLogic(deltaTime, actions);
 }
 
 

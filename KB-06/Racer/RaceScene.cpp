@@ -10,9 +10,9 @@ racer::RaceScene::~RaceScene()
 
 }
 
-void racer::RaceScene::Update(std::map<pengine::Input, long>* actions)
+void racer::RaceScene::Update(float deltaTime, std::map<pengine::Input, long>* actions)
 {
-	Scene::Update(actions);
+	Scene::Update(deltaTime, actions);
 	GetCurrentCamera()->SetThirdPersonEntity(raceCart, 10.0f, 5.0f);
 }
 

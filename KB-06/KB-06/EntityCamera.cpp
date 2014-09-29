@@ -14,7 +14,7 @@ pengine::EntityCamera::~EntityCamera()
 
 }
 
-void pengine::EntityCamera::UpdateLogic(std::map<Input, long>* actions)
+void pengine::EntityCamera::UpdateLogic(float deltaTime, std::map<Input, long>* actions)
 {
 	typedef std::map<Input, long>::iterator it_type;
 	for (it_type iterator = (*actions).begin(); iterator != (*actions).end(); iterator++)

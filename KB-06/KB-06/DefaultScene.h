@@ -11,7 +11,7 @@ namespace pengine
 	public:
 		DefaultScene();
 		~DefaultScene();
-		void Update(std::map<Input, long>* actions);
+		void Update(float deltaTime, std::map<Input, long>* actions);
 	};
 }
 #endif

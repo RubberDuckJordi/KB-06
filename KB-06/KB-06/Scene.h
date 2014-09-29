@@ -15,7 +15,7 @@ namespace pengine
 	public:
 		Scene();
 		~Scene();
-		virtual void Update(std::map<Input, long>* actions);
+		virtual void Update(float deltaTime, std::map<Input, long>* actions);
 		void AddEntity(Entity* entity);
 		void Render(Renderer* renderer);
 

@@ -23,13 +23,21 @@ namespace pengine
 		Vertex* GetRotation();
 		Vertex* GetScale();
 
+		void SetVelocity(float);
+		void SetForce(float);
+		void SetMass(float);
+
+		float GetVelocity();
+		float GetForce();
+		float GetMass();
+
 		void AddPosition(float x, float y, float z);//No need for a seperate substract for all these, as you can add negative values to substract
 		void AddRotation(float yaw, float pitch, float roll);
 		void AddScale(float scaleX, float scaleY, float scaleZ);
 		void AddAll(float x, float y, float z, float yaw, float pitch, float roll, float scaleX, float scaleY, float scaleZ);
 
 		virtual void Draw(Renderer* renderer) = 0;
-		virtual void UpdateLogic(std::map<Input, long>* actions) = 0;
+		virtual void UpdateLogic(float deltaTime, std::map<Input, long>* actions);
 
 	protected:
 		Vertex position;

@@ -12,7 +12,7 @@ namespace pengine
 	public:
 		DefaultEntity();
 		~DefaultEntity();
-		void UpdateLogic(std::map<Input, long>* actions);
+		void UpdateLogic(float deltaTime, std::map<Input, long>* actions);
 		void Draw(Renderer* renderer);
 		void SetMesh(Mesh* mesh);
 		float rotationMod = 0.0f;

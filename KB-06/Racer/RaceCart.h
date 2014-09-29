@@ -13,7 +13,7 @@ namespace racer
 	public:
 		RaceCart();
 		~RaceCart();
-		void UpdateLogic(std::map<pengine::Input, long>* actions);
+		void UpdateLogic(float deltaTime, std::map<pengine::Input, long>* actions);
 		void Draw(pengine::Renderer* renderer);
 		void SetXModel(pengine::XModel*); //debug
 

@@ -11,9 +11,10 @@ pengine::DefaultEntity::~DefaultEntity()
 {
 }
 
-void pengine::DefaultEntity::UpdateLogic(std::map<Input, long>* actions)
+void pengine::DefaultEntity::UpdateLogic(float deltaTime, std::map<Input, long>* actions)
 {
 	AddRotation(rotationMod, rotationMod, rotationMod);
+	Entity::UpdateLogic(deltaTime, actions);
 }
 
 void pengine::DefaultEntity::SetMesh(Mesh* mesh)

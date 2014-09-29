@@ -132,3 +132,9 @@ float pengine::Entity::GetMass()
 {
 	return mass;
 }
+
+void pengine::Entity::UpdateLogic(float deltaTime, std::map<pengine::Input, long>* actions)
+{
+	velocity = velocity + (force / mass) * deltaTime;
+	AddPosition(0.0f, 0.0f, velocity * deltaTime);
+}

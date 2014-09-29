@@ -79,7 +79,7 @@ int _tmain(int argc, _TCHAR* argv[])
 		// Logics
 		std::map<pengine::Input, long>* actions = pEngine.GetInputManager()->GetCurrentActions();
 
-		pEngine.GetSceneManager()->UpdateActiveScene(actions);
+		pEngine.GetSceneManager()->UpdateActiveScene(1.0f, actions);
 
 		// Visuals
 		pEngine.GetRenderer()->ClearScene(0UL, 0UL, color, 1.0f, 0UL);
