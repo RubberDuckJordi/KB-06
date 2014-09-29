@@ -14,9 +14,8 @@ int main(int argc, const char* argv[])
 	pengine::Logger* logger = pengine::LoggerPool::GetInstance().GetInstance().GetLogger();
 	pEngine.Init();
 
-	pEngine.GetWindowManager()->AddWindowListener(pEngine.GetInputManager());
-	pEngine.GetWindowManager()->NewWindow(10, 10, 500, 500);
-	pEngine.GetRenderer()->InitD3D(pEngine.GetWindowManager()->GetLastWindow()->GetHWND());
+	pEngine.NewWindow(10, 10, 500, 500);
+	pEngine.InitRenderer();
 
 	pengine::XModel* xmodel = new pengine::XModel();
 	pengine::XModelLoader* xmodelLoader = new pengine::XModelLoader();
@@ -35,30 +34,11 @@ int main(int argc, const char* argv[])
 	sceneFactory->SetXModel(xmodel);
 	sceneFactory->SetXModel2(xmodel2);
 
-	pEngine.GetSceneManager()->AddSceneFactory("raceScene", sceneFactory);
-	pengine::Scene* scene = pEngine.GetSceneManager()->AddScene("raceScene");
-	pEngine.GetSceneManager()->SetCurrentScene(scene);
+	pEngine.AddSceneFactory("raceScene", sceneFactory);
+	pengine::Scene* scene = pEngine.AddScene("raceScene");
+	pEngine.SetCurrentScene(scene);
+	pEngine.GameLoop();
 
-	pEngine.GetRenderer()->SetProjectionMatrix(M_PI / 4, 100.0f);
-	pEngine.GetRenderer()->SetDefaultRenderStates();
-	while (pEngine.GetWindowManager()->HasActiveWindow())
-	{
-		pEngine.GetWindowManager()->UpdateWindows();
-
-		// Logics
-		std::map<pengine::Input, long>* actions = pEngine.GetInputManager()->GetCurrentActions();
-
-		pEngine.GetSceneManager()->UpdateActiveScene(1.0f, actions);
-
-		// Visuals
-		pEngine.GetRenderer()->ClearScene(0UL, 0UL, color, 1.0f, 0UL);
-		pEngine.GetRenderer()->BeginScene();
-		pEngine.GetRenderer()->SetLights();
-		pEngine.GetSceneManager()->RenderActiveScene(pEngine.GetRenderer());
-
-		pEngine.GetRenderer()->EndScene();
-		pEngine.GetRenderer()->PresentScene(pEngine.GetWindowManager()->GetLastWindow()->GetHWND());
-	}
 	pengine::LoggerPool::GetInstance().ReturnLogger(logger);
 
 	return 0;
