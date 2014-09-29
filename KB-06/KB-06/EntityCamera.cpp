@@ -186,7 +186,12 @@ void pengine::EntityCamera::SetThirdPersonEntity(Entity* entity, float distance,
 	Vertex* cameraPosition = new Vertex();
 
 	SetPosition(entityPosition->x, entityPosition->y, entityPosition->z);
-	AddPosition(0.0f, height, distance);
+
+	float xDelta = (distance * sin((M_PI / 180)* + entity->GetRotation()->x));
+	float yDelta = (distance * sin((M_PI / 180)*(entity->GetRotation()->y))) * (cos((M_PI / 180)* entity->GetRotation()->x));
+	float zDelta = (distance * cos((M_PI / 180)*(entity->GetRotation()->y))) * (cos((M_PI / 180)* entity->GetRotation()->x));
+
+	AddPosition(xDelta, yDelta + height, zDelta);
 
 	SetLookAtEntity(entity);
 }

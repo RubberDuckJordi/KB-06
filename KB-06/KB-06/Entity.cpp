@@ -1,4 +1,5 @@
 #include "Entity.h"
+#include "PengineDefinitions.h"
 
 pengine::Entity::Entity()
 {
@@ -136,5 +137,13 @@ float pengine::Entity::GetMass()
 void pengine::Entity::UpdateLogic(float deltaTime, std::map<pengine::Input, long>* actions)
 {
 	velocity += (force / mass) * deltaTime;
-	AddPosition(0.0f, 0.0f, velocity);
+	if (velocity != 0.0f)
+	{
+		float xDelta = (velocity * sin((M_PI / 180)*+rotation.x));
+		float yDelta = (velocity * sin((M_PI / 180)*(rotation.y))) * (cos((M_PI / 180)*rotation.x));
+		float zDelta = (velocity * cos((M_PI / 180)*(rotation.y))) * (cos((M_PI / 180)*rotation.x));
+
+		AddPosition(xDelta, yDelta, zDelta);
+	}
+	
 }
