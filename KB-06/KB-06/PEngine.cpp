@@ -94,7 +94,7 @@ void pengine::PEngine::GameLoop(){
 
 		// Logics
 		std::map<pengine::Input, long>* actions = GetInputManager()->GetCurrentActions();
-		GetSceneManager()->UpdateActiveScene(actions);
+		GetSceneManager()->UpdateActiveScene(1.0f, actions);
 
 		// Visuals
 		GetRenderer()->ClearScene(0UL, 0UL, color, 1.0f, 0UL);
