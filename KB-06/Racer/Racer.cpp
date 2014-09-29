@@ -12,7 +12,7 @@
 #include "XModelLoader.h"
 #include "DirectXRenderer.h"
 
-int main(int argc, char* argv[])
+int main(int argc, const char* argv[])
 {
 	pengine::PEngine pEngine;
 	pengine::Logger* logger = pengine::LoggerPool::GetInstance().GetInstance().GetLogger();
@@ -37,14 +37,7 @@ int main(int argc, char* argv[])
 	color.b = 1.0f;
 	color.a = 1.0f;
 
-	pengine::Mesh* mesh = pEngine.GetResourceManager()->LoadMesh("resources/cube.obj.mesh", "obj.mesh");
-	pengine::Mesh* mesh2 = pEngine.GetResourceManager()->LoadMesh("resources/cubeClone.obj.mesh", "obj.mesh");
-	pengine::Mesh* mesh3 = pEngine.GetResourceManager()->LoadMesh("resources/cubeCloneClone.obj.mesh", "obj.mesh");
-
 	pengine::DefaultSceneFactory* sceneFactory = new pengine::DefaultSceneFactory();
-	sceneFactory->setMesh(mesh);
-	sceneFactory->setMesh2(mesh2);
-	sceneFactory->setMesh3(mesh3);
 	sceneFactory->SetXModel(xmodel);
 	sceneFactory->SetXModel2(xmodel2);
 
@@ -73,5 +66,7 @@ int main(int argc, char* argv[])
 		pEngine.GetRenderer()->PresentScene(pEngine.GetWindowManager()->GetLastWindow()->GetHWND());
 	}
 	pengine::LoggerPool::GetInstance().ReturnLogger(logger);
+
+	return 0;
 }
 

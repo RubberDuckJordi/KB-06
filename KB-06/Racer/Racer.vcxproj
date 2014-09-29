@@ -41,6 +41,8 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
+    <IncludePath>$(DXSDK_DIR)Include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(DXSDK_DIR)lib/x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -56,7 +58,7 @@
       <AdditionalIncludeDirectories>..\KB-06</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <SubSystem>Windows</SubSystem>
+      <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>d3dx9.lib;d3d9.lib;dxguid.lib;dinput8.lib;Winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
@@ -84,6 +86,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="RaceScene.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\KB-06\KB-06.vcxproj">
+      <Project>{92daf88f-03e3-49fb-8cd4-cc217c022cfc}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
