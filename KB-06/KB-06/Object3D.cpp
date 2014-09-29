@@ -83,25 +83,7 @@ void Object3D::Draw(pengine::Renderer* renderer)
 			indices[i + 2] = _Mesh->_Faces[i / 3].data[2];
 		}
 
-		/*for (int i = 0; i < _Mesh->_nVertices; ++i)
-		{
-		D3DCustomVertex newVertex;
-		Face TempFace = _Mesh->_Faces[i];
-		newVertex.x = _Mesh->_Vertices[i].data[0];
-		newVertex.y = _Mesh->_Vertices[i].data[1];
-		newVertex.z = _Mesh->_Vertices[i].data[2];
-		newVertex.tu = _Mesh->_TextureCoords[TempFace.data[0]].data[0];
-		newVertex.tv = _Mesh->_TextureCoords[TempFace.data[0]].data[1];
-
-		indices[++indexCount] = indexCount;//not sure...
-		indices[++indexCount] = indexCount;//not sure...
-		indices[++indexCount] = indexCount;//not sure...
-
-
-		d3dVertices[++vertexCount] = newVertex;
-		}*/
-
-		VOID* pVoid;
+		void* pVoid;
 
 		LPDIRECT3DVERTEXBUFFER9 v_buffer;
 		d3dMesh->GetVertexBuffer(&v_buffer);
@@ -126,6 +108,11 @@ void Object3D::Draw(pengine::Renderer* renderer)
 			amountOfVertices,// NumVertices
 			0,// StartIndex
 			_Mesh->_nFaces);// PrimitiveCount
+		v_buffer->Release();
+		i_buffer->Release();
+		d3dMesh->Release();
+		delete[] d3dVertices;
+		delete[] indices;
 	}
 }
 
