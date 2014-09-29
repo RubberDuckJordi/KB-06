@@ -44,40 +44,13 @@ void Object3D::MapAnimationSet(uint16 &index)
 
 void Object3D::Draw(pengine::Renderer* renderer)
 {
-	Face TempFace;
-
-	//pengine::DirectXRenderer meow;
 	LPDIRECT3DDEVICE9 g_pd3dDevice = *((pengine::DirectXRenderer*)renderer)->GetDevice();
 
-	/*while (j != _Mesh->_Materials.end())
-	{
-	//renderer->SetMaterial(*j);
-	TempSubset = *i;
-	//glBegin(GL_TRIANGLES);
-	for (int k = 0; k < TempSubset->Size; k++)
-	{
-	TempFace = TempSubset->Faces[k];
-	glTexCoord2fv(_Mesh->_TextureCoords[TempFace.data[0]].data);
-	glVertex3fv(_SkinnedVertices[TempFace.data[0]].data);
-	//glTexCoord2fv(_Mesh->_TextureCoords[TempFace.data[1]].data);
-	//glVertex3fv(_SkinnedVertices[TempFace.data[1]].data);
-	//glTexCoord2fv(_Mesh->_TextureCoords[TempFace.data[2]].data);
-	//glVertex3fv(_SkinnedVertices[TempFace.data[2]].data);
-	}
-	//glEnd();
-	i++;
-	j++;
-	}*/
-
-
-	//logger->Log(Logger::DEBUG, "Mesh \"" + mesh->fileName + "\" not converted to LPD3DXMESH yet.");
-
 	LPD3DXMESH d3dMesh;
-	int	amountOfVertices = 0;
-	int amountOfIndices = 0;
+	int	amountOfVertices = _Mesh->_nVertices;
+	int amountOfIndices = _Mesh->_nFaces * 3;//3 indices per face
 
-	amountOfVertices = _Mesh->_nVertices;
-	amountOfIndices = _Mesh->_nVertices * 3;
+	//logger->LogAll(0, "Amount of vertices: ", amountOfVertices, ", faces:", _Mesh->_nFaces, ", indices: ", amountOfIndices);
 
 	if (FAILED(D3DXCreateMeshFVF(amountOfIndices, amountOfVertices, 0, D3DCustomVertexFVF, g_pd3dDevice, &d3dMesh)))
 	{
@@ -87,110 +60,45 @@ void Object3D::Draw(pengine::Renderer* renderer)
 	else
 	{
 		D3DCustomVertex* d3dVertices = new D3DCustomVertex[amountOfVertices];
-		unsigned short* indices = new unsigned short[amountOfIndices * 3];
+		unsigned short* indices = new unsigned short[amountOfIndices];
 
 		int vertexCount = -1;
 		int indexCount = -1;
-		/*for (unsigned int i = 0; i < mesh->subsets.size(); ++i)
+
+		for (int i = 0; i < amountOfVertices; ++i)//first do all the vertices, then set the indices to the right vertices
 		{
-		for (unsigned int j = 0; j < mesh->subsets.at(i).vertices.size(); ++j)
+			D3DCustomVertex newVertex;
+			newVertex.x = _Mesh->_Vertices[i].data[0];//x
+			newVertex.y = _Mesh->_Vertices[i].data[1];//y
+			newVertex.z = _Mesh->_Vertices[i].data[2];//z
+			newVertex.tu = _Mesh->_TextureCoords[i].data[0];//hopefully we got texture information for each vertex...
+			newVertex.tv = _Mesh->_TextureCoords[i].data[1];//hopefully we got texture information for each vertex...
+			d3dVertices[i] = newVertex;
+		}
+
+		for (int i = 0; i < amountOfIndices; i += 3)//now get all the indices...
+		{
+			indices[i] = _Mesh->_Faces[i / 3].data[0];
+			indices[i + 1] = _Mesh->_Faces[i / 3].data[1];
+			indices[i + 2] = _Mesh->_Faces[i / 3].data[2];
+		}
+
+		/*for (int i = 0; i < _Mesh->_nVertices; ++i)
 		{
 		D3DCustomVertex newVertex;
-		newVertex.x = mesh->subsets.at(i).vertices.at(j).x;
-		newVertex.y = mesh->subsets.at(i).vertices.at(j).y;
-		newVertex.z = mesh->subsets.at(i).vertices.at(j).z;
-		newVertex.tu = mesh->subsets.at(i).textureCoordinates.at(j).u;
-		newVertex.tv = mesh->subsets.at(i).textureCoordinates.at(j).v;
+		Face TempFace = _Mesh->_Faces[i];
+		newVertex.x = _Mesh->_Vertices[i].data[0];
+		newVertex.y = _Mesh->_Vertices[i].data[1];
+		newVertex.z = _Mesh->_Vertices[i].data[2];
+		newVertex.tu = _Mesh->_TextureCoords[TempFace.data[0]].data[0];
+		newVertex.tv = _Mesh->_TextureCoords[TempFace.data[0]].data[1];
+
+		indices[++indexCount] = indexCount;//not sure...
+		indices[++indexCount] = indexCount;//not sure...
+		indices[++indexCount] = indexCount;//not sure...
+
+
 		d3dVertices[++vertexCount] = newVertex;
-		}
-		for (unsigned int j = 0; j < mesh->subsets.at(i).faceDefinitions.size(); ++j)
-		{
-		indices[++indexCount] = mesh->subsets.at(i).faceDefinitions.at(j).v1;
-		indices[++indexCount] = mesh->subsets.at(i).faceDefinitions.at(j).v2;
-		indices[++indexCount] = mesh->subsets.at(i).faceDefinitions.at(j).v3;
-		int test = 10;
-		}
-		}*/
-		//logger->LogAll(0, "MEOW", _Mesh->_nVertices);
-		for (int i = 0; i < _Mesh->_nVertices; ++i)
-		{
-			/*logger->LogAll(0, "GARGAR", _Mesh->_Vertices[i].data[0]);
-			logger->LogAll(0, "GARGAR2", _Mesh->_Vertices[i].data[1]);
-			logger->LogAll(0, "GARGAR3", _Mesh->_Vertices[i].data[2]);*/
-
-			D3DCustomVertex newVertex;
-			TempFace = _Mesh->_Faces[i];
-			newVertex.x = _Mesh->_Vertices[i].data[0];// _SkinnedVertices[TempFace.data[0]].data[0];//just hoping this is x...
-			newVertex.y = _Mesh->_Vertices[i].data[1];// _SkinnedVertices[TempFace.data[0]].data[1];//just hoping this is y...
-			newVertex.z = _Mesh->_Vertices[i].data[2];// _SkinnedVertices[TempFace.data[0]].data[2];//just hoping this is z...
-			newVertex.tu = _Mesh->_TextureCoords[TempFace.data[0]].data[0];//just hoping this is tu...
-			newVertex.tv = _Mesh->_TextureCoords[TempFace.data[0]].data[1];//just hoping this is tv...
-
-			/*newVertex.x = _SkinnedVertices[TempFace.data[1]].data[0];//just hoping this is x...
-			newVertex.y = _SkinnedVertices[TempFace.data[1]].data[1];//just hoping this is y...
-			newVertex.z = _SkinnedVertices[TempFace.data[1]].data[2];//just hoping this is z...
-			newVertex.tu = _Mesh->_TextureCoords[TempFace.data[1]].data[0];//just hoping this is tu...
-			newVertex.tv = _Mesh->_TextureCoords[TempFace.data[1]].data[1];//just hoping this is tv...
-
-			newVertex.x = _SkinnedVertices[TempFace.data[2]].data[0];//just hoping this is x...
-			newVertex.y = _SkinnedVertices[TempFace.data[2]].data[1];//just hoping this is y...
-			newVertex.z = _SkinnedVertices[TempFace.data[2]].data[2];//just hoping this is z...
-			newVertex.tu = _Mesh->_TextureCoords[TempFace.data[2]].data[0];//just hoping this is tu...
-			newVertex.tv = _Mesh->_TextureCoords[TempFace.data[2]].data[1];//just hoping this is tv...*/
-
-			indices[++indexCount] = indexCount;//not sure...
-			indices[++indexCount] = indexCount;//not sure...
-			indices[++indexCount] = indexCount;//not sure...
-
-
-			d3dVertices[++vertexCount] = newVertex;
-		}
-		//std::list<Subset*>::iterator i = _Mesh->_Subsets.begin();
-		//std::list<XMaterial*>::iterator j = _Mesh->_Materials.begin();
-
-		/*while (i != _Mesh->_Subsets.end())
-		{
-			Subset* TempSubset = *i;
-
-			for (int k = 0; k < TempSubset->Size; k++)
-			{
-				D3DCustomVertex newVertex;
-				TempFace = TempSubset->Faces[k];
-				//glTexCoord2fv(_Mesh->_TextureCoords[TempFace.data[0]].data);
-				//glVertex3fv(_SkinnedVertices[TempFace.data[0]].data);
-				//glTexCoord2fv(_Mesh->_TextureCoords[TempFace.data[1]].data);
-				//glVertex3fv(_SkinnedVertices[TempFace.data[1]].data);
-				//glTexCoord2fv(_Mesh->_TextureCoords[TempFace.data[2]].data);
-				//glVertex3fv(_SkinnedVertices[TempFace.data[2]].data);
-				newVertex.x = _SkinnedVertices[TempFace.data[0]].data[0];//just hoping this is x...
-				newVertex.y = _SkinnedVertices[TempFace.data[0]].data[1];//just hoping this is y...
-				newVertex.z = _SkinnedVertices[TempFace.data[0]].data[2];//just hoping this is z...
-				newVertex.tu = _Mesh->_TextureCoords[TempFace.data[0]].data[0];//just hoping this is tu...
-				newVertex.tv = _Mesh->_TextureCoords[TempFace.data[0]].data[1];//just hoping this is tv...
-
-				newVertex.x = _SkinnedVertices[TempFace.data[1]].data[0];//just hoping this is x...
-				newVertex.y = _SkinnedVertices[TempFace.data[1]].data[1];//just hoping this is y...
-				newVertex.z = _SkinnedVertices[TempFace.data[1]].data[2];//just hoping this is z...
-				newVertex.tu = _Mesh->_TextureCoords[TempFace.data[1]].data[0];//just hoping this is tu...
-				newVertex.tv = _Mesh->_TextureCoords[TempFace.data[1]].data[1];//just hoping this is tv...
-
-				newVertex.x = _SkinnedVertices[TempFace.data[2]].data[0];//just hoping this is x...
-				newVertex.y = _SkinnedVertices[TempFace.data[2]].data[1];//just hoping this is y...
-				newVertex.z = _SkinnedVertices[TempFace.data[2]].data[2];//just hoping this is z...
-				newVertex.tu = _Mesh->_TextureCoords[TempFace.data[2]].data[0];//just hoping this is tu...
-				newVertex.tv = _Mesh->_TextureCoords[TempFace.data[2]].data[1];//just hoping this is tv...
-
-				indices[++indexCount] = indexCount;//not sure...
-				indices[++indexCount] = indexCount;//not sure...
-				indices[++indexCount] = indexCount;//not sure...
-
-
-				d3dVertices[++vertexCount] = newVertex;
-			}
-
-			++i;
-			++j;
-
 		}*/
 
 		VOID* pVoid;
@@ -206,22 +114,8 @@ void Object3D::Draw(pengine::Renderer* renderer)
 		d3dMesh->GetIndexBuffer(&i_buffer);
 		// lock i_buffer and load the indices into it
 		i_buffer->Lock(0, 0, (void**)&pVoid, 0);
-		memcpy(pVoid, indices, amountOfIndices * 3 * sizeof(unsigned short));
+		memcpy(pVoid, indices, amountOfIndices * sizeof(unsigned short));
 		i_buffer->Unlock();
-
-		//logger->Log(pengine::Logger::DEBUG, "Mesh \"" + mesh->fileName + "\" converted to LPD3DXMESH.");
-
-		/*if (mesh->fileName == "resources/cubeClone.obj.mesh")
-		{
-		//D3DXCreateBox(g_pd3dDevice, 1.0f, 1.0f, 1.0f, &d3dMesh, NULL);
-		D3DXCreateSphere(g_pd3dDevice, 1.0f, 10, 10, &d3dMesh, NULL);
-		logger->Log(3, "The meow is great in this one.");
-		}
-		if (mesh->fileName == "resources/cubeCloneClone.obj.mesh")
-		{
-		D3DXCreateTeapot(g_pd3dDevice, &d3dMesh, NULL);
-		logger->Log(3, "The meow is greater in this one.");
-		}*/
 
 		g_pd3dDevice->SetStreamSource(0, v_buffer, 0, sizeof(D3DCustomVertex));
 		g_pd3dDevice->SetFVF(D3DCustomVertexFVF);
@@ -231,18 +125,8 @@ void Object3D::Draw(pengine::Renderer* renderer)
 			0,// MinIndex
 			amountOfVertices,// NumVertices
 			0,// StartIndex
-			amountOfVertices / 3);// PrimitiveCount
+			_Mesh->_nFaces);// PrimitiveCount
 	}
-	//meshCache[mesh] = d3dMesh;
-	//D3DXSaveMeshToX(L"test.x", d3dMesh, NULL, NULL, NULL, 0, 1); //save mesh to xfile to debug
-
-
-	/*for (unsigned int i = 0; i < mesh->subsets.size(); ++i){ // So we start at 1 instead of 0
-		SetMaterial(&mesh->subsets.at(i).defaultMaterial);
-		SetTexture(&mesh->subsets.at(i).defaultMaterial.defaultTexture);
-		meshCache[mesh]->DrawSubset(i);
-
-		}*/
 }
 
 ObjectBone* Object3D::ReplicateSkeletton(Bone* &pBone)

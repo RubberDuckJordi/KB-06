@@ -364,6 +364,9 @@
     <ClInclude Include="ObjectBone.h">
       <Filter>Header\Resource\RobertX</Filter>
     </ClInclude>
+    <ClInclude Include="CustomD3DVertex.h">
+      <Filter>Header\Renderer</Filter>
+    </ClInclude>
     <ClInclude Include="Skybox.h">
       <Filter>Header\Resource\SkyBox</Filter>
     </ClInclude>

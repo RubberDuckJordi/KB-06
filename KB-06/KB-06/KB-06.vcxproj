@@ -92,6 +92,7 @@
     <ClInclude Include="BaseMaterialLoader.h" />
     <ClInclude Include="BaseMeshLoader.h" />
     <ClInclude Include="Bone.h" />
+    <ClInclude Include="CustomD3DVertex.h" />
     <ClInclude Include="EntityCamera.h" />
     <ClInclude Include="FaceDefinition.h" />
     <ClInclude Include="IndexBufferWrapper.h" />
