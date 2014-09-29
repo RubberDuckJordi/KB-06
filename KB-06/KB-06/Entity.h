@@ -19,6 +19,10 @@ namespace pengine
 		void SetScale(float scaleX, float scaleY, float scaleZ);
 		void SetAll(float x, float y, float z, float yaw, float pitch, float roll, float scaleX, float scaleY, float scaleZ);
 
+		Vertex* GetPosition();
+		Vertex* GetRotation();
+		Vertex* GetScale();
+
 		void AddPosition(float x, float y, float z);//No need for a seperate substract for all these, as you can add negative values to substract
 		void AddRotation(float yaw, float pitch, float roll);
 		void AddScale(float scaleX, float scaleY, float scaleZ);

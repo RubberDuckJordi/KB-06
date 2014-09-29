@@ -18,6 +18,8 @@ namespace pengine
 		Vertex* GetPosition();
 		CameraData GetCameraData();
 		void SetLookAtPosition(float x, float y, float z, float rollDegrees);
+		void SetLookAtEntity(Entity*);
+		void SetThirdPersonEntity(Entity*, float distance, float height);
 
 		Mesh* myMesh;//debug!
 		Mesh* myMesh2;//debug!

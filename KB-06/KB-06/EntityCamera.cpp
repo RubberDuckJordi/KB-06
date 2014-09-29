@@ -124,7 +124,7 @@ void pengine::EntityCamera::Draw(pengine::Renderer* renderer)
 			RenderMatrix* lookAt = new RenderMatrix();//should be global
 			lookAt->CreateMatrix(lookAtPosition.x, lookAtPosition.y, lookAtPosition.z, 0.0f, 0.0f, 0.0f, 0.5f, 0.5f, 0.5f, lookAt->theMatrix);//should only be called when needed (when any value has updated)
 			renderer->SetActiveMatrix(lookAt->theMatrix);//should be called every frame
-			renderer->Draw(myMesh);
+			//renderer->Draw(myMesh);
 
 			RenderMatrix* cameraM = new RenderMatrix();//should be global
 			cameraM->CreateMatrix(position.x, position.y, position.z, 0, 0, 0, 0.1f, 0.1f, 0.1f, cameraM->theMatrix);//should only be called when needed (when any value has updated)
@@ -171,6 +171,24 @@ pengine::CameraData pengine::EntityCamera::GetCameraData()
 {
 	CameraData d = { position.x, position.y, position.z, lookAtPosition.x, lookAtPosition.y, lookAtPosition.z, 0.0f, 1.0f, 0.0f };
 	return d;
+}
+
+void pengine::EntityCamera::SetLookAtEntity(Entity* entity)
+{
+	Vertex* position = entity->GetPosition();
+	SetLookAtPosition(position->x, position->y, position->z, 0.0f);
+}
+
+void pengine::EntityCamera::SetThirdPersonEntity(Entity* entity, float distance, float height)
+{
+	// TODO: rotation & calculate axis
+	Vertex* entityPosition = entity->GetPosition();
+	Vertex* cameraPosition = new Vertex();
+
+	SetPosition(entityPosition->x, entityPosition->y, entityPosition->z);
+	AddPosition(0.0f, height, distance);
+
+	SetLookAtEntity(entity);
 }
 
 void pengine::EntityCamera::SetLookAtPosition(float x, float y, float z, float rollDegrees)

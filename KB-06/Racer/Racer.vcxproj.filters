@@ -18,9 +18,24 @@
     <ClCompile Include="Racer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="RaceScene.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="RaceSceneFactory.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="RaceCart.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="RaceScene.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RaceSceneFactory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RaceCart.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
