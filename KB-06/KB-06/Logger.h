@@ -34,7 +34,7 @@ namespace pengine
 		template <typename T>
 		void MagicLog(std::ostream& o, T t)
 		{
-			o << " " << t;
+			o << t;
 		}
 
 		template<typename T, typename... Args>
@@ -44,11 +44,13 @@ namespace pengine
 			MagicLog(o, args...);
 		}
 
-		template<typename T, typename... Args>
-		void LogAll(int logType, T t, Args... args)
+		/*
+		Will log all given arguments, there is nothing between them.
+		*/
+		template<typename... Args>
+		void LogAll(int logType, Args... args)
 		{
 			std::ostringstream oss;
-			oss << t;
 			MagicLog(oss, args...);
 			Log(logType, oss.str());
 		}
