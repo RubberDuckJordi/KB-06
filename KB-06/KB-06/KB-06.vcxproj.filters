@@ -136,6 +136,9 @@
     <ClCompile Include="ObjectBone.cpp">
       <Filter>Source\Resource\RobertX</Filter>
     </ClCompile>
+    <ClCompile Include="Skybox.cpp">
+      <Filter>Header\Resource\SkyBox</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DefaultEntity.h">
@@ -361,6 +364,9 @@
     <ClInclude Include="ObjectBone.h">
       <Filter>Header\Resource\RobertX</Filter>
     </ClInclude>
+    <ClInclude Include="Skybox.h">
+      <Filter>Header\Resource\SkyBox</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -446,6 +452,9 @@
     </Filter>
     <Filter Include="Source\Resource\RobertX">
       <UniqueIdentifier>{880ee865-54c4-46fa-877a-025399780221}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header\Resource\SkyBox">
+      <UniqueIdentifier>{acce316f-c8fd-4cc5-99e3-8841883264c1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
