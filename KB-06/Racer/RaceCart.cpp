@@ -12,6 +12,8 @@ racer::RaceCart::~RaceCart()
 
 void racer::RaceCart::UpdateLogic(float deltaTime, std::map<pengine::Input, long>* actions)
 {
+	force = 0.0f;
+
 	typedef std::map<pengine::Input, long>::iterator it_type;
 	for (it_type iterator = (*actions).begin(); iterator != (*actions).end(); iterator++)
 	{
@@ -20,14 +22,10 @@ void racer::RaceCart::UpdateLogic(float deltaTime, std::map<pengine::Input, long
 		switch (iterator->first)
 		{
 		case pengine::Input::KEY_S:
-			force += 0.5f;
-			logger->Log(pengine::Logger::DEBUG, "Increasing force");
-			logger->Log(pengine::Logger::DEBUG, std::to_string(force));
+			force = 0.01f;
 			break;
 		case pengine::Input::KEY_W:
-			force -= 0.5f;
-			logger->Log(pengine::Logger::DEBUG, "Decreasing force");
-			logger->Log(pengine::Logger::DEBUG, std::to_string(force));
+			force = -0.01f;
 			break;
 		case pengine::Input::KEY_D:
 			this->AddPosition(-0.5f, 0.0f, 0.0f);
@@ -39,6 +37,8 @@ void racer::RaceCart::UpdateLogic(float deltaTime, std::map<pengine::Input, long
 			break;
 		}
 	}
+
+	pengine::Entity::UpdateLogic(deltaTime, actions);
 }
 
 void racer::RaceCart::Draw(pengine::Renderer* renderer)

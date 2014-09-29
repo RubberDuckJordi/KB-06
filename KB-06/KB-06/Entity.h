@@ -44,9 +44,9 @@ namespace pengine
 		Vertex rotation;
 		Vertex scale;
 
-		float velocity;
-		float force;
-		float mass;
+		float velocity = 0.0f;
+		float force = 0.0f;
+		float mass = 1.0f;
 
 		RenderMatrix* myCachedMatrix;
 
