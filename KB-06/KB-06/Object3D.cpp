@@ -68,9 +68,9 @@ void Object3D::Draw(pengine::Renderer* renderer)
 		for (int i = 0; i < amountOfVertices; ++i)//first do all the vertices, then set the indices to the right vertices
 		{
 			D3DCustomVertex newVertex;
-			newVertex.x = _Mesh->_Vertices[i].data[0];//x
-			newVertex.y = _Mesh->_Vertices[i].data[1];//y
-			newVertex.z = _Mesh->_Vertices[i].data[2];//z
+			newVertex.x = _SkinnedVertices[i].data[0];//x
+			newVertex.y = _SkinnedVertices[i].data[1];//y
+			newVertex.z = _SkinnedVertices[i].data[2];//z
 			newVertex.tu = _Mesh->_TextureCoords[i].data[0];//hopefully we got texture information for each vertex...
 			newVertex.tv = _Mesh->_TextureCoords[i].data[1];//hopefully we got texture information for each vertex...
 			d3dVertices[i] = newVertex;
@@ -200,7 +200,7 @@ void Object3D::SkinMesh(ObjectBone* pBone)
 {
 	if (!pBone->_Bones.empty())
 	{
-		logger->LogAll(0, "Object3D: Bones is not empty");
+		//logger->LogAll(0, "Object3D: Bones is not empty");
 		for (std::list<ObjectBone*>::iterator i = pBone->_Bones.begin(); i != pBone->_Bones.end(); i++)
 		{
 			SkinMesh(*i);

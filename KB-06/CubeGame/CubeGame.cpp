@@ -16,6 +16,7 @@
 
 #include "SuperXLoader.h"
 #include "Object3D.h"
+#include "RenderMatrix.h"
 
 int _tmain(int argc, _TCHAR* argv[])
 {
@@ -86,10 +87,25 @@ int _tmain(int argc, _TCHAR* argv[])
 		pEngine.GetRenderer()->BeginScene();
 		pEngine.GetRenderer()->SetLights();
 		pEngine.GetSceneManager()->RenderActiveScene(pEngine.GetRenderer());
+		pengine::RenderMatrix* aMatrix = new pengine::RenderMatrix();
+		aMatrix->CreateMatrix(0.0f, -25.0f, 0.0f, 0.0f, -90.0f, 0.0f, 0.001f, 0.001f, 0.001f, aMatrix->theMatrix);
+		typedef std::map<pengine::Input, long>::iterator it_type;
+		for (it_type iterator = (*actions).begin(); iterator != (*actions).end(); iterator++)
+		{
+			switch (iterator->first)
+			{
+			case pengine::Input::KEY_HOME:
+				MyObject.Update();
+				break;
+			}
+		}
+		//MyObject.Update();
+		pEngine.GetRenderer()->SetActiveMatrix(aMatrix->theMatrix);
 		MyObject.Draw(pEngine.GetRenderer());
 
 		pEngine.GetRenderer()->EndScene();
 		pEngine.GetRenderer()->PresentScene(pEngine.GetWindowManager()->GetLastWindow()->GetHWND());
+		//delete aMatrix;
 	}
 	pengine::LoggerPool::GetInstance().ReturnLogger(logger);
 }
