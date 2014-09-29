@@ -50,6 +50,21 @@ void pengine::Entity::SetAll(float x, float y, float z, float yaw, float pitch, 
 	myCachedMatrix->CreateMatrix(position.x, position.y, position.z, rotation.x, rotation.y, rotation.z, scale.x, scale.y, scale.z, myCachedMatrix->theMatrix);//should only be called when needed (when any value has updated)
 }
 
+pengine::Vertex* pengine::Entity::GetPosition()
+{
+	return &position;
+}
+
+pengine::Vertex* pengine::Entity::GetRotation()
+{
+	return &rotation;
+}
+
+pengine::Vertex* pengine::Entity::GetScale()
+{
+	return &scale;
+}
+
 void pengine::Entity::AddPosition(float x, float y, float z)
 {
 	position.x += x;

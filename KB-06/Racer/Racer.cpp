@@ -2,12 +2,8 @@
 //
 
 #include "PEngine.h"
-#include "ObjMeshLoader.h"
-#include "MtlLoader.h"
 #include "RGBAColor.h"
-#include "Mesh.h"
-#include "SceneFactory.h"
-#include "DefaultSceneFactory.h"
+#include "RaceSceneFactory.h"
 
 #include "XModelLoader.h"
 #include "DirectXRenderer.h"
@@ -21,8 +17,6 @@ int main(int argc, const char* argv[])
 	pEngine.GetWindowManager()->AddWindowListener(pEngine.GetInputManager());
 	pEngine.GetWindowManager()->NewWindow(10, 10, 500, 500);
 	pEngine.GetRenderer()->InitD3D(pEngine.GetWindowManager()->GetLastWindow()->GetHWND());
-	pEngine.GetResourceManager()->AddMeshLoader(new pengine::ObjMeshLoader());
-	pEngine.GetResourceManager()->AddMaterialLoader(new pengine::MtlLoader());
 
 	pengine::XModel* xmodel = new pengine::XModel();
 	pengine::XModelLoader* xmodelLoader = new pengine::XModelLoader();
@@ -37,12 +31,12 @@ int main(int argc, const char* argv[])
 	color.b = 1.0f;
 	color.a = 1.0f;
 
-	pengine::DefaultSceneFactory* sceneFactory = new pengine::DefaultSceneFactory();
+	racer::RaceSceneFactory* sceneFactory = new racer::RaceSceneFactory();
 	sceneFactory->SetXModel(xmodel);
 	sceneFactory->SetXModel2(xmodel2);
 
-	pEngine.GetSceneManager()->AddSceneFactory("iets", sceneFactory);
-	pengine::Scene* scene = pEngine.GetSceneManager()->AddScene("iets");
+	pEngine.GetSceneManager()->AddSceneFactory("raceScene", sceneFactory);
+	pengine::Scene* scene = pEngine.GetSceneManager()->AddScene("raceScene");
 	pEngine.GetSceneManager()->SetCurrentScene(scene);
 
 	pEngine.GetRenderer()->SetProjectionMatrix(M_PI / 4, 100.0f);
