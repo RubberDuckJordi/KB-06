@@ -28,10 +28,10 @@ void racer::RaceCart::UpdateLogic(float deltaTime, std::map<pengine::Input, long
 			force = -0.01f;
 			break;
 		case pengine::Input::KEY_D:
-			this->AddRotation(1.0f, 0.0f, 0.0f);
+			this->AddRotation(2.0f, 0.0f, 0.0f);
 			break;
 		case pengine::Input::KEY_A:
-			this->AddRotation(-1.0f, 0.0f, 0.0f);
+			this->AddRotation(-2.0f, 0.0f, 0.0f);
 			break;
 		default:
 			break;
