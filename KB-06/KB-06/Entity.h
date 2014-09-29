@@ -36,6 +36,10 @@ namespace pengine
 		Vertex rotation;
 		Vertex scale;
 
+		float velocity;
+		float force;
+		float mass;
+
 		RenderMatrix* myCachedMatrix;
 
 		Logger* logger;//Really? We keep track of a pointer to a logger in every entity? Isn't that what the singleton loggerpool is for?

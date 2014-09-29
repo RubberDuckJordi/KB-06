@@ -102,3 +102,33 @@ void pengine::Entity::AddAll(float x, float y, float z, float yaw, float pitch, 
 	scale.z += scaleZ;
 	myCachedMatrix->CreateMatrix(position.x, position.y, position.z, rotation.x, rotation.y, rotation.z, scale.x, scale.y, scale.z, myCachedMatrix->theMatrix);
 }
+
+void pengine::Entity::SetVelocity(float p_velocity)
+{
+	velocity = p_velocity;
+}
+
+void pengine::Entity::SetForce(float p_force)
+{
+	force = p_force;
+}
+
+void pengine::Entity::SetMass(float p_mass)
+{
+	mass = p_mass;
+}
+
+float pengine::Entity::GetVelocity()
+{
+	return velocity;
+}
+
+float pengine::Entity::GetForce()
+{
+	return force;
+}
+
+float pengine::Entity::GetMass()
+{
+	return mass;
+}
