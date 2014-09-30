@@ -9,6 +9,7 @@
 #include "Mesh.h"
 #include "SceneFactory.h"
 #include "DefaultSceneFactory.h"
+#include "Skybox.h"
 
 #include "XModelLoader.h"
 #include "DirectXRenderer.h"
@@ -27,6 +28,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	pEngine.GetWindowManager()->AddWindowListener(pEngine.GetInputManager());
 	pEngine.GetWindowManager()->NewWindow(10, 10, 500, 500);
 	pEngine.GetRenderer()->InitD3D(pEngine.GetWindowManager()->GetLastWindow()->GetHWND());
+	pEngine.InitSkybox(pEngine.GetRenderer(), "resources/grass.jpg");
 	pEngine.GetResourceManager()->AddMeshLoader(new pengine::ObjMeshLoader());
 	pEngine.GetResourceManager()->AddMaterialLoader(new pengine::MtlLoader());
 
@@ -76,6 +78,8 @@ int _tmain(int argc, _TCHAR* argv[])
 	while (pEngine.GetWindowManager()->HasActiveWindow())
 	{
 		pEngine.GetWindowManager()->UpdateWindows();
+
+		pEngine.GetSkyBox()->Draw(pEngine.GetRenderer());
 
 		// Logics
 		std::map<pengine::Input, long>* actions = pEngine.GetInputManager()->GetCurrentActions();

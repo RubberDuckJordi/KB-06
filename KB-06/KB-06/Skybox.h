@@ -1,24 +1,37 @@
-#ifndef _RESOURCE_MESH_H_
-#define _RESOURCE_MESH_H_
+#ifndef _SKYBOX_H_
+#define _SKYBOX_H_
 
 #include "TextureWrapper.h"
+#include "Renderer.h"
+#include "DirectXRenderer.h" // HACKING VOLGENS ROBERT
 #include "CustomD3DVertex.h"
 
+
+
 namespace pengine
-{ 
-class Skybox
 {
-public:
-	Skybox(TextureWrapper* texture);
-	~Skybox();
+	class Skybox
+	{
+	public:
+		Skybox(Renderer* renderer, std::string textureString);
+		~Skybox();
+		D3DCustomVertex* GetSkyboxVertices();
+		int* GetSkyboxIndices();
+		TextureWrapper* GetTexture();
+
+		void Draw(Renderer* renderer);
 
 
-private:
-	D3DCustomVertex* aSkyboxVertices;
-	int* aSkyboxIndices;
-	TextureWrapper* texture;
+	private:
+		D3DCustomVertex* aSkyboxVertices;
+		int* aSkyboxIndices;
+		TextureWrapper* texture;
+		int amountOfVertices;
+		int amountOfIndices;
+		LPDIRECT3DVERTEXBUFFER9 v_buffer;
+		LPDIRECT3DINDEXBUFFER9 i_buffer;
 
-};
+	};
 
 }
 
