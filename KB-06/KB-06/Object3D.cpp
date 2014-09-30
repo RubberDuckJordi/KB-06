@@ -215,6 +215,12 @@ void Object3D::SkinMesh(ObjectBone* pBone)
 	for (int i = 0; i < nIndices; i++)
 	{
 		_SkinnedVertices[VertexIndices[i]] = _SkinnedVertices[VertexIndices[i]] + (pBone->_FinalMatrix * MeshVertices[VertexIndices[i]]) * Weights[i];
+		//pengine::RenderMatrix::PrintMatrix(pBone->_FinalMatrix);
+		//pengine::LoggerPool::GetInstance().GetLogger()->LogAll(
+		//	pBone->_FinalMatrix.data[0], " : ", pBone->_FinalMatrix.data[1], " : ", pBone->_FinalMatrix.data[2], " : ", pBone->_FinalMatrix.data[3], " :\n ",
+		//	pBone->_FinalMatrix.data[4], " : ", pBone->_FinalMatrix.data[5], " : ", pBone->_FinalMatrix.data[6], " : ", pBone->_FinalMatrix.data[7], " :\n ", 
+		//	pBone->_FinalMatrix.data[8], " : ", pBone->_FinalMatrix.data[9], " : ", pBone->_FinalMatrix.data[10], " : ", pBone->_FinalMatrix.data[11], " :\n ", 
+		//	pBone->_FinalMatrix.data[12], " : ", pBone->_FinalMatrix.data[13], " : ", pBone->_FinalMatrix.data[14], " : ", pBone->_FinalMatrix.data[15], " :\n ");
 	}
 
 }/**/

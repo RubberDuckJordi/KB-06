@@ -1,4 +1,5 @@
 #include "ObjectBone.h"
+#include "LoggerPool.h"
 
 ObjectBone::~ObjectBone(void){
 	while (!_Bones.empty())
@@ -68,7 +69,7 @@ void ObjectBone::CalcAnimation(uint16 &pKey){
 		_TransformMatrix = Mat;
 	}
 	else
-	{
+	{		
 		Quaternion<float> Quat;
 		Vector<float> Scale;
 		Vertex Translate;

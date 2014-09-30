@@ -53,10 +53,11 @@ int _tmain(int argc, _TCHAR* argv[])
 	IO_Model_X* loader = new IO_Model_X();
 	Model3D* model = new Model3D();
 	loader->Load("resources/tiny/tiny_4anim.x", model);
+	model->ConcatenateMeshes();
 
 	Object3D MyObject;
 	MyObject.SetupModel(model);
-	unsigned short int index = 0;
+	unsigned short int index = 1;
 	MyObject.MapAnimationSet(index);
 	//We set the interval of animation in steps
 	MyObject.SetAnimationStep(80);
@@ -91,19 +92,20 @@ int _tmain(int argc, _TCHAR* argv[])
 		pEngine.GetRenderer()->BeginScene();
 		pEngine.GetRenderer()->SetLights();
 		pEngine.GetSceneManager()->RenderActiveScene(pEngine.GetRenderer());
-		pengine::RenderMatrix* aMatrix = new pengine::RenderMatrix();
-		aMatrix->CreateMatrix(0.0f, -25.0f, 0.0f, 0.0f, -90.0f, 0.0f, 0.001f, 0.001f, 0.001f, aMatrix->theMatrix);
+		
 		typedef std::map<pengine::Input, long>::iterator it_type;
 		for (it_type iterator = (*actions).begin(); iterator != (*actions).end(); iterator++)
 		{
 			switch (iterator->first)
 			{
 			case pengine::Input::KEY_HOME:
+				//MyObject.UpdateAnimation();
 				MyObject.Update();
 				break;
 			}
 		}
-		//MyObject.Update();
+		pengine::RenderMatrix* aMatrix = new pengine::RenderMatrix();
+		aMatrix->CreateMatrix(0.0f, -25.0f, 0.0f, 0.0f, -90.0f, 0.0f, 0.001f, 0.001f, 0.001f, aMatrix->theMatrix);
 		pEngine.GetRenderer()->SetActiveMatrix(aMatrix->theMatrix);
 		MyObject.Draw(pEngine.GetRenderer());
 
