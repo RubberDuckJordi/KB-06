@@ -116,7 +116,7 @@ void pengine::EntityCamera::UpdateLogic(float deltaTime, std::map<Input, long>* 
 // Camera's worden niet getekend
 void pengine::EntityCamera::Draw(pengine::Renderer* renderer)
 {
-	bool debug = true;
+	bool debug = false;
 	if (debug)
 	{
 		if (xModel != NULL)

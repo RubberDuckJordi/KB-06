@@ -19,7 +19,7 @@ namespace pengine
 		static void CreateMatrix(float x, float y, float z, float yaw, float pitch, float roll, float scaleX, float scaleY, float scaleZ, PEngineMatrix* matrix);
 		static void MultiplyMatrices(PEngineMatrix* m1, PEngineMatrix* m2, PEngineMatrix* receiver);
 		static void PrintMatrix(PEngineMatrix* matrix);
-		PEngineMatrix* theMatrix;
+		PEngineMatrix* theMatrix = NULL;
 	};
 }
 #endif
