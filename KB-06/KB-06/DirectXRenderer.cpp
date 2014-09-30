@@ -330,5 +330,25 @@ void pengine::DirectXRenderer::SetLights()
 
 void pengine::DirectXRenderer::SetMatrixCache(PEngineMatrix* matrix)
 {
-	matrixCache = (D3DXMATRIX*)matrix;;
+	//matrixCache = (D3DXMATRIX*)matrix;;
+	matrixCache->_11 = matrix->_11;
+	matrixCache->_12 = matrix->_12;
+	matrixCache->_13 = matrix->_13;
+	matrixCache->_14 = matrix->_14;
+
+	matrixCache->_21 = matrix->_21;
+	matrixCache->_22 = matrix->_22;
+	matrixCache->_23 = matrix->_23;
+	matrixCache->_24 = matrix->_24;
+
+	matrixCache->_31 = matrix->_31;
+	matrixCache->_32 = matrix->_32;
+	matrixCache->_33 = matrix->_33;
+	matrixCache->_34 = matrix->_34;
+
+	matrixCache->_41 = matrix->_41;
+	matrixCache->_42 = matrix->_42;
+	matrixCache->_43 = matrix->_43;
+	matrixCache->_44 = matrix->_44;
+
 }
