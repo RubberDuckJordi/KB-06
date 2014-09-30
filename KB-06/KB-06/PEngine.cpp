@@ -83,7 +83,7 @@ void pengine::PEngine::AddSceneFactory(char* key, SceneFactory* sceneFactory){
 }
 
 pengine::Scene* pengine::PEngine::AddScene(char* sceneFactory){
-	return sceneManager->AddScene(sceneFactory);
+	return sceneManager->SetScene(sceneFactory);
 }
 
 void pengine::PEngine::SetCurrentScene(Scene* scene){
@@ -102,7 +102,6 @@ void pengine::PEngine::GameLoop(){
 	color.g = 0.25f;
 	color.b = 1.0f;
 	color.a = 1.0f;
-
 	double t = 0.0;
 	std::chrono::high_resolution_clock::time_point currentTime = std::chrono::high_resolution_clock::now();
 	while (GetWindowManager()->HasActiveWindow())

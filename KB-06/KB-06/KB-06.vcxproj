@@ -113,6 +113,7 @@
     <ClInclude Include="PEngine.h" />
     <ClInclude Include="PengineDefinitions.h" />
     <ClInclude Include="RGBAColor.h" />
+    <ClInclude Include="SceneCallback.h" />
     <ClInclude Include="SceneDefinition.h" />
     <ClInclude Include="SceneLoader.h" />
     <ClInclude Include="Skybox.h" />

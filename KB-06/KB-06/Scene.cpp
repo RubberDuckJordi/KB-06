@@ -50,3 +50,7 @@ void pengine::Scene::SetCurrentCamera(EntityCamera* camera)
 {
 	currentCamera = camera;
 }
+
+void pengine::Scene::SetSceneCallback(SceneCallback* callback){
+	this->callback = callback;
+}

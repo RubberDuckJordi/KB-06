@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "SceneManager.h"
+#include "SceneCallback.h"
 
 pengine::SceneManager::SceneManager()
 {
@@ -16,18 +17,20 @@ void pengine::SceneManager::AddSceneFactory(char* key, SceneFactory* sceneFactor
 	sceneFactories[key] = sceneFactory;
 }
 
-pengine::Scene* pengine::SceneManager::AddScene(char* sceneFactory)
+pengine::Scene* pengine::SceneManager::SetScene(char* sceneFactory)
 {
-	Scene* newScene = sceneFactories.at(sceneFactory)->CreateScene();
-	scenes.push_back(newScene);
-	return newScene;
+	if (sceneFactories.find(sceneFactory) != sceneFactories.end())
+	{
+		Scene* currentScene = sceneFactories.at(sceneFactory)->CreateScene();
+		currentScene->SetSceneCallback(this);
+		return currentScene;
+	}
+	else 
+	{
+		logger->Log(Logger::ERR, "SceneFactory \"" + std::string(sceneFactory) + "\" not found");
+		return NULL;
+	}
 }
-
-void pengine::SceneManager::AddScene(Scene* scene)
-{
-	scenes.push_back(scene);
-}
-
 
 void pengine::SceneManager::RemoveScene(Scene* scene)
 {
@@ -65,4 +68,13 @@ void pengine::SceneManager::RenderActiveScene(pengine::Renderer* renderer)
 void pengine::SceneManager::SetCurrentScene(Scene* scene)
 {
 	currentScene = scene;
+}
+
+pengine::Scene* pengine::SceneManager::GetCurrentScene()
+{
+	return currentScene;
+}
+
+void pengine::SceneManager::ChangeScene(char* identifier){
+	SetScene(identifier);
 }
