@@ -26,7 +26,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	pEngine.Init();
 
 	pEngine.GetWindowManager()->AddWindowListener(pEngine.GetInputManager());
-	pEngine.GetWindowManager()->NewWindow(10, 10, 500, 500);
+	pEngine.GetWindowManager()->NewWindow(750, 750, 500, 500);
 	pEngine.GetRenderer()->InitD3D(pEngine.GetWindowManager()->GetLastWindow()->GetHWND());
 	pEngine.InitSkybox(pEngine.GetRenderer(), "resources/grass.jpg");
 	pEngine.GetResourceManager()->AddMeshLoader(new pengine::ObjMeshLoader());
@@ -57,7 +57,7 @@ int _tmain(int argc, _TCHAR* argv[])
 
 	Object3D MyObject;
 	MyObject.SetupModel(model);
-	unsigned short int index = 1;
+	unsigned short int index = 2;
 	MyObject.MapAnimationSet(index);
 	//We set the interval of animation in steps
 	MyObject.SetAnimationStep(80);
@@ -99,13 +99,21 @@ int _tmain(int argc, _TCHAR* argv[])
 			switch (iterator->first)
 			{
 			case pengine::Input::KEY_HOME:
-				//MyObject.UpdateAnimation();
-				MyObject.Update();
+				MyObject.ClearSkinnedVertices();
+				MyObject.UpdateAnimation();
+				//logger->LogAll(0, "finalmatrix: ");
+				break;
+			case pengine::Input::KEY_ADD:
+				++index;
+				MyObject.MapAnimationSet(index);
+				//logger->LogAll(0, "finalmatrix: ");
+				break;
+			default:
 				break;
 			}
 		}
 		pengine::RenderMatrix* aMatrix = new pengine::RenderMatrix();
-		aMatrix->CreateMatrix(0.0f, -25.0f, 0.0f, 0.0f, -90.0f, 0.0f, 0.001f, 0.001f, 0.001f, aMatrix->theMatrix);
+		aMatrix->CreateMatrix(0.0f, -25.0f, 0.0f, 0.0f, -90.0f, 0.0f, 0.1f, 0.1f, 0.1f, aMatrix->theMatrix);
 		pEngine.GetRenderer()->SetActiveMatrix(aMatrix->theMatrix);
 		MyObject.Draw(pEngine.GetRenderer());
 

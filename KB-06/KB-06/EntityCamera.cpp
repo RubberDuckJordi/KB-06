@@ -88,23 +88,29 @@ void pengine::EntityCamera::UpdateLogic(float deltaTime, std::map<Input, long>* 
 			{
 			case Input::KEY_NUMPAD2:
 				this->AddPosition(0.0f, 0.0f, 0.5f);
+				this->SetLookAtPosition(lookAtPosition.x, lookAtPosition.y, lookAtPosition.z + 0.5f, 0.0f);
 				break;
 			case Input::KEY_NUMPAD8:
 				this->AddPosition(0.0f, 0.0f, -0.5f);
+				this->SetLookAtPosition(lookAtPosition.x, lookAtPosition.y, lookAtPosition.z - 0.5f, 0.0f);
 				break;
 			case Input::KEY_NUMPAD6:
 				this->AddPosition(-0.5f, 0.0f, 0.0f);
+				this->SetLookAtPosition(lookAtPosition.x - 0.5f, lookAtPosition.y, lookAtPosition.z, 0.0f);
 				break;
 			case Input::KEY_NUMPAD4:
 				this->AddPosition(0.5f, 0.0f, 0.0f);
+				this->SetLookAtPosition(lookAtPosition.x + 0.5f, lookAtPosition.y, lookAtPosition.z, 0.0f);
 				break;
 
 			case Input::KEY_NUMPAD7:
 				this->AddPosition(0.0f, 0.5f, 0.0f);
+				this->SetLookAtPosition(lookAtPosition.x, lookAtPosition.y + 0.5f, lookAtPosition.z, 0.0f);
 				break;
 
 			case Input::KEY_NUMPAD1:
 				this->AddPosition(0.0f, -0.5f, 0.0f);
+				this->SetLookAtPosition(lookAtPosition.x, lookAtPosition.y - 0.5f, lookAtPosition.z, 0.0f);
 				break;
 			default:
 				break;
@@ -187,7 +193,7 @@ void pengine::EntityCamera::SetThirdPersonEntity(Entity* entity, float distance,
 
 	SetPosition(entityPosition->x, entityPosition->y, entityPosition->z);
 
-	float xDelta = (distance * sin((M_PI / 180)* + entity->GetRotation()->x));
+	float xDelta = (distance * sin((M_PI / 180)* +entity->GetRotation()->x));
 	float yDelta = (distance * sin((M_PI / 180)*(entity->GetRotation()->y))) * (cos((M_PI / 180)* entity->GetRotation()->x));
 	float zDelta = (distance * cos((M_PI / 180)*(entity->GetRotation()->y))) * (cos((M_PI / 180)* entity->GetRotation()->x));
 

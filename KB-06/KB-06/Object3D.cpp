@@ -73,6 +73,10 @@ void Object3D::Draw(pengine::Renderer* renderer)
 			newVertex.z = _SkinnedVertices[i].data[2];//z
 			newVertex.tu = _Mesh->_TextureCoords[i].data[0];//hopefully we got texture information for each vertex...
 			newVertex.tv = _Mesh->_TextureCoords[i].data[1];//hopefully we got texture information for each vertex...
+			/*if (i % 1000 == 0)
+			{
+				logger->LogAll(pengine::Logger::NONE, "X: ", newVertex.x, " Y: ", newVertex.y, " Z: ", newVertex.z);
+			}*/
 			d3dVertices[i] = newVertex;
 		}
 
@@ -262,7 +266,7 @@ void Object3D::ComputeBoundingBoxSphere(void)
 	_Center[1] = _Low[1] + (_High[1] - _Low[1])*0.5f;
 	_Center[2] = _Low[2] + (_High[2] - _Low[2])*0.5f;
 
-	logger->LogAll(0, "Object3D: ", "AABB Low: ", _Low[0], "x", _Low[1], "x", _Low[2]);
+	/*logger->LogAll(0, "Object3D: ", "AABB Low: ", _Low[0], "x", _Low[1], "x", _Low[2]);
 	logger->LogAll(0, "Object3D: ", "AABB High: ", _High[0], "x", _High[1], "x", _High[2]);
-	logger->LogAll(0, "Object3D: ", "AABB Center: ", _Center[0], "x", _Center[1], "x", _Center[2]);
+	logger->LogAll(0, "Object3D: ", "AABB Center: ", _Center[0], "x", _Center[1], "x", _Center[2]);*/
 }
