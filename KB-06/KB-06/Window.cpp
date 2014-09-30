@@ -35,7 +35,7 @@ pengine::Window::~Window()
 	//delete _hwnd;
 }
 
-void pengine::Window::SetTitle(char* title)
+void pengine::Window::SetTitle(const char* title)
 {
 	size_t origsize = strlen(title) + 1;
 	const size_t newsize = 100;

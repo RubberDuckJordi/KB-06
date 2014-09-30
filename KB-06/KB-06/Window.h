@@ -35,7 +35,7 @@ namespace pengine
 		*/
 		HWND Create(int x, int y, int nWidth, int nHeight, HWND hParent, HMENU hMenu, HINSTANCE hInstance);
 		void Resize();
-		void SetTitle(char* title);
+		void SetTitle(const char* title);
 		HWND GetHWND();
 		WindowState GetWindowState();
 
