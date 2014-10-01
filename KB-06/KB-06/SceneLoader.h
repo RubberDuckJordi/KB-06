@@ -1,8 +1,10 @@
-#ifndef _SCENELOADER_H_
-#define _SCENELOADER_H_
+#ifndef _PENGINE_SCENELOADER_H_
+#define _PENGINE_SCENELOADER_H_
 
 #include "Scene.h"
 #include "SceneDefinition.h"
+
+#include <vector>
 
 namespace pengine
 {

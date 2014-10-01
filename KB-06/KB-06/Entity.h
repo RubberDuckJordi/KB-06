@@ -1,5 +1,5 @@
-#ifndef __SCENE_ENTITY_H__
-#define __SCENE_ENTITY_H__
+#ifndef _PENGINE_ENTITY_H_
+#define _PENGINE_ENTITY_H_
 
 #include "Renderer.h"
 #include "Vertex.h"
@@ -50,7 +50,7 @@ namespace pengine
 
 		RenderMatrix* myCachedMatrix;
 
-		Logger* logger;//Really? We keep track of a pointer to a logger in every entity? Isn't that what the singleton loggerpool is for?
+		Logger* logger;
 	};
 }
 #endif

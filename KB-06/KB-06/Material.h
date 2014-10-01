@@ -1,5 +1,5 @@
-#ifndef _RESOURCE_MATERIAL_H_
-#define _RESOURCE_MATERIAL_H_
+#ifndef _PENGINE_MATERIAL_H_
+#define _PENGINE_MATERIAL_H_
 
 #include "RGBColor.h"
 #include <string>

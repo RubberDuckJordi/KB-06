@@ -1,11 +1,11 @@
-#ifndef _SKYBOX_H_
-#define _SKYBOX_H_
+#ifndef _PENGINE_SKYBOX_H_
+#define _PENGINE_SKYBOX_H_
 
 #include "TextureWrapper.h"
 #include "Renderer.h"
 #include "DirectXRenderer.h" // HACKING VOLGENS ROBERT
 #include "CustomD3DVertex.h"
-
+#include "Vertex.h"
 
 
 namespace pengine

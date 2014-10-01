@@ -3,10 +3,7 @@
 
 #include "stdafx.h"
 #include "PEngine.h"
-#include "ObjMeshLoader.h"
-#include "MtlLoader.h"
 #include "RGBAColor.h"
-#include "Mesh.h"
 #include "SceneFactory.h"
 #include "DefaultSceneFactory.h"
 #include "Skybox.h"
@@ -28,8 +25,8 @@ int _tmain(int argc, _TCHAR* argv[])
 	pEngine.GetWindowManager()->AddWindowListener(pEngine.GetInputManager());
 	pEngine.GetWindowManager()->NewWindow(750, 10, 500, 500);
 	pEngine.GetRenderer()->InitD3D(pEngine.GetWindowManager()->GetLastWindow()->GetHWND());
-	pEngine.GetResourceManager()->AddMeshLoader(new pengine::ObjMeshLoader());
-	pEngine.GetResourceManager()->AddMaterialLoader(new pengine::MtlLoader());
+	//pEngine.GetResourceManager()->AddMeshLoader(new pengine::ObjMeshLoader());
+	//pEngine.GetResourceManager()->AddMaterialLoader(new pengine::MtlLoader());
 
 	pengine::XModel* xmodel = new pengine::XModel();
 	pengine::XModelLoader* xmodelLoader = new pengine::XModelLoader();
@@ -44,36 +41,37 @@ int _tmain(int argc, _TCHAR* argv[])
 	color.b = 1.0f;
 	color.a = 1.0f;
 
-	pengine::Mesh* mesh = pEngine.GetResourceManager()->LoadMesh("resources/cube.obj.mesh", "obj.mesh");
-	pengine::Mesh* mesh2 = pEngine.GetResourceManager()->LoadMesh("resources/cubeClone.obj.mesh", "obj.mesh");
-	pengine::Mesh* mesh3 = pEngine.GetResourceManager()->LoadMesh("resources/cubeCloneClone.obj.mesh", "obj.mesh");
+	//pengine::Mesh* mesh = pEngine.GetResourceManager()->LoadMesh("resources/cube.obj.mesh", "obj.mesh");
+	//pengine::Mesh* mesh2 = pEngine.GetResourceManager()->LoadMesh("resources/cubeClone.obj.mesh", "obj.mesh");
+	//pengine::Mesh* mesh3 = pEngine.GetResourceManager()->LoadMesh("resources/cubeCloneClone.obj.mesh", "obj.mesh");
 
 
-	IO_Model_X* loader = new IO_Model_X();
-	Model3D* model = new Model3D();
+	pengine::IO_Model_X* loader = new pengine::IO_Model_X();
+	pengine::Model3D* model = new pengine::Model3D();
 	loader->Load("resources/tiny/tiny_4anim.x", model);
 
-	for (std::list<XMesh*>::iterator i = model->_Meshes.begin(); i != model->_Meshes.end(); ++i)
+	for (std::list<pengine::XMesh*>::iterator i = model->_Meshes.begin(); i != model->_Meshes.end(); ++i)
 	{
-		for (std::list<XMaterial*>::iterator j = (*i)->_Materials.begin(); j != (*i)->_Materials.end(); ++j)
+		for (std::list<pengine::XMaterial*>::iterator j = (*i)->_Materials.begin(); j != (*i)->_Materials.end(); ++j)
 		{
 			logger->LogAll(0, "Texture name CubeGame: ", (*j)->_TextureName);
 		}
 	}
 	model->ConcatenateMeshes();
 
-	Object3D MyObject;
+	pengine::Object3D MyObject;
 	MyObject.SetupModel(model);
 	unsigned short int index = 0;
 	MyObject.MapAnimationSet(index);
 	//We set the interval of animation in steps
 	MyObject.SetAnimationStep(80);
-	MyObject.Update();
+	MyObject.ClearSkinnedVertices();
+	MyObject.UpdateAnimation();
 
 	pengine::DefaultSceneFactory* sceneFactory = new pengine::DefaultSceneFactory();
-	sceneFactory->setMesh(mesh);
+	/*sceneFactory->setMesh(mesh);
 	sceneFactory->setMesh2(mesh2);
-	sceneFactory->setMesh3(mesh3);
+	sceneFactory->setMesh3(mesh3);*/
 	sceneFactory->SetXModel(xmodel);
 	sceneFactory->SetXModel2(xmodel2);
 
@@ -84,11 +82,10 @@ int _tmain(int argc, _TCHAR* argv[])
 
 	pEngine.GetRenderer()->SetProjectionMatrix(M_PI / 4, 100.0f);
 	pEngine.GetRenderer()->SetDefaultRenderStates();
+	bool pressPlus = false;
 	while (pEngine.GetWindowManager()->HasActiveWindow())
 	{
 		pEngine.GetWindowManager()->UpdateWindows();
-
-
 
 		// Logics
 		std::map<pengine::Input, long>* actions = pEngine.GetInputManager()->GetCurrentActions();
@@ -101,24 +98,35 @@ int _tmain(int argc, _TCHAR* argv[])
 
 		pEngine.GetRenderer()->SetLights();
 		pEngine.GetSceneManager()->RenderActiveScene(pEngine.GetRenderer());
-		
+
+
+		bool holdPlus = false;
 		typedef std::map<pengine::Input, long>::iterator it_type;
 		for (it_type iterator = (*actions).begin(); iterator != (*actions).end(); iterator++)
 		{
 			switch (iterator->first)
 			{
-			case pengine::Input::KEY_HOME:
-				MyObject.ClearSkinnedVertices();
-				MyObject.UpdateAnimation();
-				break;
 			case pengine::Input::KEY_ADD:
-				++index;
-				MyObject.MapAnimationSet(index);
+				if (!pressPlus)
+				{
+					++index;
+					MyObject.MapAnimationSet(index);
+					//MyObject.ClearSkinnedVertices();
+					//MyObject.UpdateAnimation();
+					pressPlus = true;
+				}
+				holdPlus = true;
 				break;
 			default:
 				break;
 			}
 		}
+		if (!holdPlus && pressPlus)
+		{
+			pressPlus = false;
+		}
+		MyObject.ClearSkinnedVertices();
+		MyObject.UpdateAnimation();
 		pengine::RenderMatrix* aMatrix = new pengine::RenderMatrix();
 		aMatrix->CreateMatrix(0.0f, -25.0f, 0.0f, 0.0f, -90.0f, 0.0f, 0.1f, 0.1f, 0.1f, aMatrix->theMatrix);
 		pEngine.GetRenderer()->SetActiveMatrix(aMatrix->theMatrix);

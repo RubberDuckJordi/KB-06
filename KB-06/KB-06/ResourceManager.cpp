@@ -1,8 +1,6 @@
 #include "stdafx.h"
 #include "ResourceManager.h"
 #include "StringHelper.h"
-#include "ObjMeshLoader.h"
-#include "MtlLoader.h"
 
 pengine::ResourceManager::ResourceManager()
 {
@@ -14,7 +12,7 @@ pengine::ResourceManager::~ResourceManager()
 	LoggerPool::GetInstance().ReturnLogger(logger);
 }
 
-pengine::Mesh* pengine::ResourceManager::LoadMesh(const std::string& fileName, const std::string& extension)
+/*pengine::Mesh* pengine::ResourceManager::LoadMesh(const std::string& fileName, const std::string& extension)
 {
 	if (meshes.find(fileName) == meshes.end())
 	{
@@ -42,19 +40,19 @@ pengine::Mesh* pengine::ResourceManager::LoadMesh(const std::string& fileName, c
 		}
 	}
 	return &meshes[fileName];
-}
+}*/
 
-void pengine::ResourceManager::AddMeshLoader(pengine::BaseMeshLoader* newMeshLoader)
+/*void pengine::ResourceManager::AddMeshLoader(pengine::BaseMeshLoader* newMeshLoader)
 {
 	meshLoaders[newMeshLoader->GetExtension()] = newMeshLoader;
-}
+}*/
 
-void pengine::ResourceManager::AddMaterialLoader(pengine::BaseMaterialLoader* newMaterialLoader)
+/*void pengine::ResourceManager::AddMaterialLoader(pengine::BaseMaterialLoader* newMaterialLoader)
 {
 	materialLoaders[newMaterialLoader->GetExtension()] = newMaterialLoader;
-}
+}*/
 
-pengine::Material* pengine::ResourceManager::LoadMaterial(const std::string& fileName, const std::string& extension)
+/*pengine::Material* pengine::ResourceManager::LoadMaterial(const std::string& fileName, const std::string& extension)
 {
 	std::map<std::string, Material> newMaterials;
 	if (extension == "mtl")
@@ -70,7 +68,7 @@ pengine::Material* pengine::ResourceManager::LoadMaterial(const std::string& fil
 		materials.insert(newMaterials.begin(), newMaterials.end());
 	}
 	return NULL;
-}
+}*/
 
 pengine::BinaryData pengine::ResourceManager::LoadBinaryFile(const std::string& fileName)
 {

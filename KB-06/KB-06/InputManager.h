@@ -1,5 +1,5 @@
-#ifndef __INPUT_INPUTMANAGER_H__
-#define __INPUT_INPUTMANAGER_H__
+#ifndef _PENGINE_INPUTMANAGER_H_
+#define _PENGINE_INPUTMANAGER_H_
 
 #include "InputDeviceFactory.h"
 #include "Window.h"

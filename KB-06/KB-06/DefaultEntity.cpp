@@ -17,10 +17,10 @@ void pengine::DefaultEntity::UpdateLogic(float deltaTime, std::map<Input, long>*
 	Entity::UpdateLogic(deltaTime, actions);
 }
 
-void pengine::DefaultEntity::SetMesh(Mesh* mesh)
-{
-	myMesh = mesh;
-}
+//void pengine::DefaultEntity::SetMesh(Mesh* mesh)
+//{
+//	myMesh = mesh;
+//}
 
 void pengine::DefaultEntity::Draw(Renderer* renderer)
 {

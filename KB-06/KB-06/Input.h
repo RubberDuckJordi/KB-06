@@ -1,5 +1,5 @@
-#ifndef __INPUT_KEY_H__
-#define __INPUT_KEY_H__
+#ifndef _PENGINE_KEY_H_
+#define _PENGINE_KEY_H_
 
 namespace pengine
 {

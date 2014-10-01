@@ -1,5 +1,5 @@
-#ifndef _WINDOW_WINDOW_H_
-#define _WINDOW_WINDOW_H_
+#ifndef _PENGINE_WINDOW_H_
+#define _PENGINE_WINDOW_H_
 
 #include "Scene.h"
 #include "Renderer.h"

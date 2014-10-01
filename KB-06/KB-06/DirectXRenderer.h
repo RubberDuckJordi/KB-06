@@ -1,5 +1,5 @@
-#ifndef _RENDERER_DIRECTXRENDERER_H_
-#define _RENDERER_DIRECTXRENDERER_H_
+#ifndef _PENGINE_DIRECTXRENDERER_H_
+#define _PENGINE_DIRECTXRENDERER_H_
 
 #include <d3dx9.h>
 #include "Renderer.h"
@@ -35,27 +35,27 @@ namespace pengine
 		void SetTexture(TextureWrapper* wrapper);
 		void SetFvF(PENGINEDWORD* fvf);
 
-		void DrawPrimitive(Mesh mesh);
+		//void DrawPrimitive(Mesh mesh);
 		void DrawSubset(MeshWrapper* wrapper, int subset);
 
 		void SetStreamSource(); //??
 		void SetIndices(); //??
 
 		LPDIRECT3DDEVICE9* GetDevice();
-		void Draw(Mesh* mesh);
+		//void Draw(Mesh* mesh);
 		void SetActiveMatrix(PEngineMatrix* matrix);
 
 		void SetLights();
 
 	private:
-		void SetTexture(BinaryData* texture);
-		void SetMaterial(Material* material);
+		//void SetTexture(BinaryData* texture);
+		//void SetMaterial(Material* material);
 		void SetMatrixCache(PEngineMatrix* matrix);
 
 		LPDIRECT3D9 g_pD3D;
 		LPDIRECT3DDEVICE9 g_pd3dDevice;
-		std::map<Mesh*, LPD3DXMESH> meshCache;
-		std::map<BinaryData*, LPDIRECT3DTEXTURE9> textureCache;
+		//std::map<Mesh*, LPD3DXMESH> meshCache;
+		//std::map<BinaryData*, LPDIRECT3DTEXTURE9> textureCache;
 
 		D3DXMATRIX* matrixCache;
 	};
