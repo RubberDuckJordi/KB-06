@@ -228,7 +228,7 @@ char* IO_Model_X::SetUID(char pType)
 	//This is a quick hack to derive a Unique ID for blocks with
 	//no identifier names like in the tiny_4anim.x example.
 
-	_X_UID.Integer = GetTickCount(); //This function return a 4 byte wide number
+	_X_UID.Integer = rand();// 4 bytes semi-random, it's the same random number every app launch, but random enough... for now atleast
 	_X_UID.Text[4] = pType; //We set the 5th byte with a significant character
 
 	//If any of the first 4 bytes are under 32 we add 32
