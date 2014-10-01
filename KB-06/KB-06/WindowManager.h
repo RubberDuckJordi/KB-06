@@ -1,5 +1,5 @@
-#ifndef _WINDOW_WINDOWMANAGER_H_
-#define _WINDOW_WINDOWMANAGER_H_
+#ifndef _PENGINE_WINDOWMANAGER_H_
+#define _PENGINE_WINDOWMANAGER_H_
 
 #include "Window.h"
 #include "WindowListener.h"

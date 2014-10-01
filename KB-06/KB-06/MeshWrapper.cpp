@@ -1,21 +1,24 @@
 #include "MeshWrapper.h"
 
-pengine::MeshWrapper::MeshWrapper(LPD3DXMESH* _mesh)
+namespace pengine
 {
-	mesh = _mesh;
-}
+	MeshWrapper::MeshWrapper(LPD3DXMESH* _mesh)
+	{
+		mesh = _mesh;
+	}
 
-pengine::MeshWrapper::~MeshWrapper()
-{
+	MeshWrapper::~MeshWrapper()
+	{
 
-}
+	}
 
-void pengine::MeshWrapper::SetMesh(LPD3DXMESH* _mesh)
-{
-	mesh = _mesh;
-}
+	void MeshWrapper::SetMesh(LPD3DXMESH* _mesh)
+	{
+		mesh = _mesh;
+	}
 
-LPD3DXMESH* pengine::MeshWrapper::GetMesh()
-{
-	return mesh;
+	LPD3DXMESH* MeshWrapper::GetMesh()
+	{
+		return mesh;
+	}
 }

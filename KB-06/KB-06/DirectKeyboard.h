@@ -1,5 +1,5 @@
-#ifndef __INPUT_DIRECTKEYBOARD_H__
-#define __INPUT_DIRECTKEYBOARD_H__
+#ifndef _PENGINE_DIRECTKEYBOARD_H_
+#define _PENGINE_DIRECTKEYBOARD_H_
 
 #include "DirectInputDevice.h"
 #include "LoggerPool.h"

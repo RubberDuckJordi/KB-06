@@ -1,5 +1,5 @@
-#ifndef __SCENE_DEFAULT_SCENE_H__
-#define __SCENE_DEFAULT_SCENE_H__
+#ifndef _PENGINE_DEFAULT_SCENE_H_
+#define _PENGINE_DEFAULT_SCENE_H_
 
 #include "Scene.h"
 #include "Logger.h"

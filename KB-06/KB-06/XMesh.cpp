@@ -6,94 +6,97 @@
 
 #include "XMesh.h"
 
-XMesh::~XMesh(void)
+namespace pengine
 {
-	if (_Vertices != 0)
+	Mesh::~Mesh(void)
 	{
-		delete[] _Vertices;
-	}
-	if (_Faces != 0)
-	{
-		delete[] _Faces;
-	}
-	if (_Normals != 0)
-	{
-		delete[] _Normals;
-	}
-	if (_TextureCoords != 0)
-	{
-		delete[] _TextureCoords;
-	}
-	while (!_Materials.empty())
-	{
-		delete _Materials.back();
-		_Materials.pop_back();
-	}
-	if (_FaceMaterials != 0)
-	{
-		delete[] _FaceMaterials;
-	}
-	while (!_Subsets.empty())
-	{
-		delete[] _Subsets.back()->Faces;
-		delete _Subsets.back();
-		_Subsets.pop_back();
-	}
-}
-
-void XMesh::UpdateIndices(void)
-{
-	for (uint32 i = 0; i < _nFaces; i++)
-	{
-		_Faces[i].data[0] += _FirstVertex;
-		_Faces[i].data[1] += _FirstVertex;
-		_Faces[i].data[2] += _FirstVertex;
-
-		_FaceMaterials[i] += _FirstMaterial;
+		if (_Vertices != 0)
+		{
+			delete[] _Vertices;
+		}
+		if (_Faces != 0)
+		{
+			delete[] _Faces;
+		}
+		if (_Normals != 0)
+		{
+			delete[] _Normals;
+		}
+		if (_TextureCoords != 0)
+		{
+			delete[] _TextureCoords;
+		}
+		while (!_Materials.empty())
+		{
+			delete _Materials.back();
+			_Materials.pop_back();
+		}
+		if (_FaceMaterials != 0)
+		{
+			delete[] _FaceMaterials;
+		}
+		while (!_Subsets.empty())
+		{
+			delete[] _Subsets.back()->Faces;
+			delete _Subsets.back();
+			_Subsets.pop_back();
+		}
 	}
 
-	if (_nNormals != 0)
+	void Mesh::UpdateIndices(void)
 	{
 		for (uint32 i = 0; i < _nFaces; i++)
 		{
-			_FaceNormals[i].data[0] += _FirstNormal;
-			_FaceNormals[i].data[1] += _FirstNormal;
-			_FaceNormals[i].data[2] += _FirstNormal;
+			_Faces[i].data[0] += _FirstVertex;
+			_Faces[i].data[1] += _FirstVertex;
+			_Faces[i].data[2] += _FirstVertex;
+
+			_FaceMaterials[i] += _FirstMaterial;
+		}
+
+		if (_nNormals != 0)
+		{
+			for (uint32 i = 0; i < _nFaces; i++)
+			{
+				_FaceNormals[i].data[0] += _FirstNormal;
+				_FaceNormals[i].data[1] += _FirstNormal;
+				_FaceNormals[i].data[2] += _FirstNormal;
+			}
 		}
 	}
-}
 
-void XMesh::CreateSubsets(void)
-{
-	uint32 FaceCount;
-	Subset* MeshSubset;
-
-	//For each material
-	for (unsigned int i = 0; i < _Materials.size(); i++)
+	void Mesh::CreateSubsets(void)
 	{
-		//We count the number of faces using this material
-		FaceCount = 0;
-		for (unsigned int j = 0; j < _nFaces; j++)
+		uint32 FaceCount;
+		Subset* MeshSubset;
+
+		//For each material
+		for (unsigned int i = 0; i < _Materials.size(); i++)
 		{
-			if (_FaceMaterials[j] == i)
+			//We count the number of faces using this material
+			FaceCount = 0;
+			for (unsigned int j = 0; j < _nFaces; j++)
 			{
-				++FaceCount;
+				if (_FaceMaterials[j] == i)
+				{
+					++FaceCount;
+				}
 			}
-		}
-		//We initialise the mesh subset
-		MeshSubset = new Subset;
-		MeshSubset->Size = (uint16)FaceCount;
-		MeshSubset->Faces = new Face[FaceCount];
-		int k = 0;
-		//We fill in the Mesh subset
-		for (unsigned int j = 0; j < _nFaces; j++)
-		{
-			if (_FaceMaterials[j] == i)
+			//We initialise the mesh subset
+			MeshSubset = new Subset;
+			MeshSubset->Size = (uint16)FaceCount;
+			MeshSubset->Faces = new Face[FaceCount];
+			int k = 0;
+			//We fill in the Mesh subset
+			for (unsigned int j = 0; j < _nFaces; j++)
 			{
-				MeshSubset->Faces[k++] = _Faces[j];
+				if (_FaceMaterials[j] == i)
+				{
+					MeshSubset->Faces[k++] = _Faces[j];
+				}
 			}
+			//And we add that subset to the list
+			_Subsets.push_back(MeshSubset);
 		}
-		//And we add that subset to the list
-		_Subsets.push_back(MeshSubset);
 	}
 }

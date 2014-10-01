@@ -27,7 +27,7 @@ pengine::Scene* racer::RaceSceneFactory::CreateScene()
 	
 	racecart1->AddAll(7.5f, 0.0f, 5.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f);
 	racecart2->AddAll(7.5f, 0.0f, -5.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f);
-	racecart3->AddAll(7.5f, 0.0f, 10.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f);
+	racecart3->AddAll(7.5f, -1.0f, 10.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f);
 
 
 	racecart1->SetXModel(xModel);

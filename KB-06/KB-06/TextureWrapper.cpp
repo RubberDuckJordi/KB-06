@@ -1,21 +1,24 @@
 #include "TextureWrapper.h"
 
-pengine::TextureWrapper::TextureWrapper(LPDIRECT3DTEXTURE9* _texture)
+namespace pengine
 {
-	texture = _texture;
-}
+	TextureWrapper::TextureWrapper(LPDIRECT3DTEXTURE9* _texture)
+	{
+		texture = _texture;
+	}
 
-pengine::TextureWrapper::~TextureWrapper()
-{
+	TextureWrapper::~TextureWrapper()
+	{
 
-}
+	}
 
-void pengine::TextureWrapper::SetTexture(LPDIRECT3DTEXTURE9* _texture)
-{
-	texture = _texture;
-}
+	void TextureWrapper::SetTexture(LPDIRECT3DTEXTURE9* _texture)
+	{
+		texture = _texture;
+	}
 
-LPDIRECT3DTEXTURE9* pengine::TextureWrapper::GetTexture()
-{
-	return texture;
+	LPDIRECT3DTEXTURE9* TextureWrapper::GetTexture()
+	{
+		return texture;
+	}
 }

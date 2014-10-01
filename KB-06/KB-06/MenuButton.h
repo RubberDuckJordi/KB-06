@@ -1,5 +1,5 @@
-#ifndef _RESOURCE_MENUBUTTON_H_
-#define _RESOURCE_MENUBUTTON_H_
+#ifndef _PENGINE_MENUBUTTON_H_
+#define _PENGINE_MENUBUTTON_H_
 
 #include <string>
 
