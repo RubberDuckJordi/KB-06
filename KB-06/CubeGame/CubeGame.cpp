@@ -72,7 +72,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	pEngine.GetSceneManager()->AddSceneFactory("iets", sceneFactory);
 	pengine::Scene* scene = pEngine.GetSceneManager()->SetScene("iets");
 	pEngine.GetSceneManager()->SetCurrentScene(scene);
-	pEngine.GetSceneManager()->GetCurrentScene()->InitSkybox(pEngine.GetRenderer(), "resources/grass.jpg");
+	pEngine.GetSceneManager()->GetCurrentScene()->InitSkybox(pEngine.GetRenderer(), "resources/dome.jpg");
 
 	pEngine.GetRenderer()->SetProjectionMatrix(M_PI / 4, 100.0f);
 	pEngine.GetRenderer()->SetDefaultRenderStates();

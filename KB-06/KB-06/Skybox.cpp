@@ -248,7 +248,7 @@ void pengine::Skybox::Draw(Renderer* renderer, Vertex* position)
 		g_pd3dDevice->SetStreamSource(0, v_buffer, 0, sizeof(D3DCustomVertex));
 		g_pd3dDevice->SetFVF(D3DCustomVertexFVF);
 		g_pd3dDevice->SetIndices(i_buffer);
-//		g_pd3dDevice->SetTexture(0, static_cast<IDirect3DBaseTexture9*>(texture->GetTexture()));
+		g_pd3dDevice->SetTexture(0, *texture->GetTexture());
 		g_pd3dDevice->DrawIndexedPrimitive(D3DPT_TRIANGLELIST,// PrimitiveType
 			0,// BaseVertexIndex
 			0,// MinIndex
