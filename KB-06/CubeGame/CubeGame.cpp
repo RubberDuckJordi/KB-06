@@ -52,6 +52,14 @@ int _tmain(int argc, _TCHAR* argv[])
 	IO_Model_X* loader = new IO_Model_X();
 	Model3D* model = new Model3D();
 	loader->Load("resources/tiny/tiny_4anim.x", model);
+
+	for (std::list<XMesh*>::iterator i = model->_Meshes.begin(); i != model->_Meshes.end(); ++i)
+	{
+		for (std::list<XMaterial*>::iterator j = (*i)->_Materials.begin(); j != (*i)->_Materials.end(); ++j)
+		{
+			logger->LogAll(0, "Texture name CubeGame: ", (*j)->_TextureName);
+		}
+	}
 	model->ConcatenateMeshes();
 
 	Object3D MyObject;
