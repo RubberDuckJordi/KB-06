@@ -539,7 +539,7 @@ void IO_Model_X::ProcessMeshMaterials(void)
 
 	fin.getline(Data, TEXT_BUFFER, ';');
 	_LoadMesh->_nMaterials = (uint16)TextToNum(Data);
-	////logger->LogAll(0, "SuperXLoader: Number of Materials:", Data);
+	logger->LogAll(0, "SuperXLoader: Number of Materials:", Data);
 
 	fin.getline(Data, TEXT_BUFFER, ';');
 	_LoadMesh->_FaceMaterials = new uint16[(uint16)TextToNum(Data)];
@@ -627,6 +627,7 @@ void IO_Model_X::ProcessMaterial(void)
 			Find('"');
 			fin.getline(Data, TEXT_BUFFER, '"');
 			NewMaterial->_TextureName = Data;
+			logger->LogAll(0, "Texture file: ", NewMaterial->_TextureName);
 			Find('}');
 			break;
 		default:
