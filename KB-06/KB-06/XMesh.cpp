@@ -8,7 +8,7 @@
 
 namespace pengine
 {
-	XMesh::~XMesh(void)
+	Mesh::~Mesh(void)
 	{
 		if (_Vertices != 0)
 		{
@@ -43,7 +43,7 @@ namespace pengine
 		}
 	}
 
-	void XMesh::UpdateIndices(void)
+	void Mesh::UpdateIndices(void)
 	{
 		for (uint32 i = 0; i < _nFaces; i++)
 		{
@@ -65,7 +65,7 @@ namespace pengine
 		}
 	}
 
-	void XMesh::CreateSubsets(void)
+	void Mesh::CreateSubsets(void)
 	{
 		uint32 FaceCount;
 		Subset* MeshSubset;

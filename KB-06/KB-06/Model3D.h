@@ -16,14 +16,14 @@ namespace pengine
 		{
 		};
 		~Model3D(void);
-		XMesh* IsMeshName(std::string &pText);
+		Mesh* IsMeshName(std::string &pText);
 		void ConcatenateMeshes(void);
 		AnimationSet* FindAnimationSet(std::string &pText);
 		Bone* _Skeletton;
-		std::list<XMesh*> _Meshes;
+		std::list<Mesh*> _Meshes;
 		std::list<AnimationSet*> _AnimationSets;
 	private:
-		pengine::Logger* logger = pengine::LoggerPool::GetInstance().GetLogger();
+		Logger* logger = LoggerPool::GetInstance().GetLogger();
 		void UpdateBoneIndices(Bone* &pBone);
 	};
 }

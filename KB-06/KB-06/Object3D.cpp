@@ -44,9 +44,9 @@ namespace pengine
 	}
 	/***END*******************************************/
 
-	void Object3D::Draw(pengine::Renderer* renderer)
+	void Object3D::Draw(Renderer* renderer)
 	{
-		LPDIRECT3DDEVICE9 g_pd3dDevice = *((pengine::DirectXRenderer*)renderer)->GetDevice();
+		LPDIRECT3DDEVICE9 g_pd3dDevice = *((DirectXRenderer*)renderer)->GetDevice();
 
 		LPD3DXMESH d3dMesh;
 		int	amountOfVertices = _Mesh->_nVertices;
@@ -56,7 +56,7 @@ namespace pengine
 
 		if (FAILED(D3DXCreateMeshFVF(amountOfIndices, amountOfVertices, 0, D3DCustomVertexFVF, g_pd3dDevice, &d3dMesh)))
 		{
-			logger->Log(pengine::Logger::ERR, "Failed to create a D3DXCreateMeshFVF. Generating a cube");
+			logger->Log(Logger::ERR, "Failed to create a D3DXCreateMeshFVF. Generating a cube");
 			D3DXCreateBox(g_pd3dDevice, 1.0f, 1.0f, 1.0f, &d3dMesh, NULL);
 		}
 		else
@@ -77,7 +77,7 @@ namespace pengine
 				newVertex.tv = _Mesh->_TextureCoords[i].data[1];//hopefully we got texture information for each vertex...
 				/*if (i % 1000 == 0)
 				{
-				logger->LogAll(pengine::Logger::NONE, "X: ", newVertex.x, " Y: ", newVertex.y, " Z: ", newVertex.z);
+				logger->LogAll(Logger::NONE, "X: ", newVertex.x, " Y: ", newVertex.y, " Z: ", newVertex.z);
 				}*/
 				d3dVertices[i] = newVertex;
 			}
@@ -221,8 +221,8 @@ namespace pengine
 		for (unsigned int i = 0; i < nIndices; i++)
 		{
 			_SkinnedVertices[VertexIndices[i]] = _SkinnedVertices[VertexIndices[i]] + (pBone->_FinalMatrix * MeshVertices[VertexIndices[i]]) * Weights[i];
-			//pengine::RenderMatrix::PrintMatrix(pBone->_FinalMatrix);
-			//pengine::LoggerPool::GetInstance().GetLogger()->LogAll(
+			//RenderMatrix::PrintMatrix(pBone->_FinalMatrix);
+			//LoggerPool::GetInstance().GetLogger()->LogAll(
 			//	pBone->_FinalMatrix.data[0], " : ", pBone->_FinalMatrix.data[1], " : ", pBone->_FinalMatrix.data[2], " : ", pBone->_FinalMatrix.data[3], " :\n ",
 			//	pBone->_FinalMatrix.data[4], " : ", pBone->_FinalMatrix.data[5], " : ", pBone->_FinalMatrix.data[6], " : ", pBone->_FinalMatrix.data[7], " :\n ", 
 			//	pBone->_FinalMatrix.data[8], " : ", pBone->_FinalMatrix.data[9], " : ", pBone->_FinalMatrix.data[10], " : ", pBone->_FinalMatrix.data[11], " :\n ", 

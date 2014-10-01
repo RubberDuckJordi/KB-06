@@ -10,6 +10,7 @@
 #include "LoggerPool.h"
 #include "RGBAColor.h"
 #include "RenderMatrix.h"
+#include "Material.h"
 
 namespace pengine
 {
@@ -37,7 +38,8 @@ namespace pengine
 		virtual void CreateVertexBuffer(int heightmapvertex, PENGINEDWORD* usage, PENGINEDWORD* fvf, PENGINEPOOL* pool, VertexBufferWrapper* vertexbuffer, HANDLE handle) = 0;
 		virtual void CreateIndexBuffer(int length, PENGINEDWORD* usage, PENGINEFORMAT* format, PENGINEPOOL* pool, IndexBufferWrapper* Indexbuffer, HANDLE* handle) = 0;
 
-		virtual void SetMaterial(MaterialWrapper* wrapper) = 0;
+		virtual void SetMaterialWrapper(MaterialWrapper* wrapper) = 0;
+		virtual void SetMaterial(Material* material) = 0;
 		virtual void SetTexture(TextureWrapper* wrapper) = 0;
 		virtual void SetFvF(DWORD* fvf) = 0;
 

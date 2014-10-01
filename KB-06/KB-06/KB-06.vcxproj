@@ -114,7 +114,6 @@
     <ClInclude Include="Skybox.h" />
     <ClInclude Include="Sound.h" />
     <ClInclude Include="StringHelper.h" />
-    <ClInclude Include="Material.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="DefaultScene.h" />
     <ClInclude Include="DefaultSceneFactory.h" />
@@ -150,7 +149,7 @@
     <ClInclude Include="WindowListener.h" />
     <ClInclude Include="WindowManager.h" />
     <ClInclude Include="XFileStructs.h" />
-    <ClInclude Include="XMaterial.h" />
+    <ClInclude Include="Material.h" />
     <ClInclude Include="XMesh.h" />
     <ClInclude Include="XModel.h" />
     <ClInclude Include="XModelLoader.h" />

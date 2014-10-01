@@ -29,10 +29,10 @@ namespace pengine
 		};
 
 	private:
-		pengine::Logger* logger = pengine::LoggerPool::GetInstance().GetLogger();
+		Logger* logger = LoggerPool::GetInstance().GetLogger();
 		std::ifstream fin;
 		Bone* _LoadSkeletton;
-		XMesh* _LoadMesh;
+		Mesh* _LoadMesh;
 		AnimationSet* _LoadAnimationSet;
 		Model3D* _Object;
 

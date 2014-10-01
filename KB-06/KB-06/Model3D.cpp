@@ -20,9 +20,9 @@ namespace pengine
 		}
 	}
 
-	XMesh* Model3D::IsMeshName(std::string &pText)
+	Mesh* Model3D::IsMeshName(std::string &pText)
 	{
-		for (std::list<XMesh*>::iterator i = _Meshes.begin(); i != _Meshes.end(); i++)
+		for (std::list<Mesh*>::iterator i = _Meshes.begin(); i != _Meshes.end(); i++)
 		{
 			if ((*i)->IsName(pText) != 0)
 			{
@@ -43,8 +43,8 @@ namespace pengine
 		logger->Log(0, "Model3D: Concatenating Meshes...");
 
 
-		XMesh* ConcatMesh = new XMesh;
-		XMesh* LastMesh = _Meshes.back();
+		Mesh* ConcatMesh = new Mesh;
+		Mesh* LastMesh = _Meshes.back();
 
 		ConcatMesh->_Name = "ConcatMesh";
 
@@ -98,7 +98,7 @@ namespace pengine
 		}
 
 		//We fill up the arrays with each array from the _Meshes container
-		for (std::list<XMesh*>::iterator i = _Meshes.begin(); i != _Meshes.end(); i++)
+		for (std::list<Mesh*>::iterator i = _Meshes.begin(); i != _Meshes.end(); i++)
 		{
 			(*i)->UpdateIndices();
 			memcpy(&(ConcatMesh->_Vertices[(*i)->_FirstVertex]), (*i)->_Vertices, (*i)->_nVertices * sizeof(Vertex));
@@ -149,7 +149,7 @@ namespace pengine
 
 	void Model3D::UpdateBoneIndices(Bone* &pBone)
 	{
-		XMesh* BoneMesh = IsMeshName(pBone->_MeshName);
+		Mesh* BoneMesh = IsMeshName(pBone->_MeshName);
 		if (BoneMesh != 0)
 		{
 			pBone->UpdateIndices(BoneMesh->_FirstVertex);

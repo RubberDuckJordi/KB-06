@@ -204,9 +204,6 @@
     <ClInclude Include="ResourceManager.h">
       <Filter>Header\Resource</Filter>
     </ClInclude>
-    <ClInclude Include="Material.h">
-      <Filter>Header\Resource\Material</Filter>
-    </ClInclude>
     <ClInclude Include="StringHelper.h">
       <Filter>Header\Logger</Filter>
     </ClInclude>
@@ -316,9 +313,6 @@
     <ClInclude Include="Vector.h">
       <Filter>Header\Resource\RobertX</Filter>
     </ClInclude>
-    <ClInclude Include="XMaterial.h">
-      <Filter>Header\Resource\RobertX</Filter>
-    </ClInclude>
     <ClInclude Include="XFileStructs.h">
       <Filter>Header\Resource\RobertX</Filter>
     </ClInclude>
@@ -336,6 +330,9 @@
     </ClInclude>
     <ClInclude Include="SceneCallback.h">
       <Filter>Header\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Material.h">
+      <Filter>Header\Resource\RobertX</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

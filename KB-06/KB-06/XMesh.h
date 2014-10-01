@@ -3,7 +3,7 @@
 
 #include "Types.h"
 //#include "framework\frm_Quaternion.h"
-#include "XMaterial.h"
+#include "Material.h"
 #include "Matrix.h"
 #include "Quaternion.h"
 #include "Vertex.h"
@@ -21,10 +21,10 @@ namespace pengine
 		Face* Faces;
 	};
 
-	class XMesh
+	class Mesh
 	{
 	public:
-		XMesh(void) :_nVertices(0), _Vertices(0),
+		Mesh(void) :_nVertices(0), _Vertices(0),
 			_nFaces(0), _Faces(0),
 			_nTextureCoords(0), _TextureCoords(0),
 			_FaceMaterials(0),
@@ -37,8 +37,8 @@ namespace pengine
 			_FirstMaterial(0)
 		{
 		};
-		~XMesh(void);
-		XMesh* IsName(std::string &MeshName)
+		~Mesh(void);
+		Mesh* IsName(std::string &MeshName)
 		{
 			if (strcmp(_Name.c_str(), MeshName.c_str()) == 0)
 			{
@@ -67,7 +67,7 @@ namespace pengine
 		uint16 _nMaterials, _FirstMaterial;
 		uint16* _FaceMaterials;
 		//list of Materials for that Mesh
-		std::list<XMaterial*> _Materials;
+		std::list<Material*> _Materials;
 		std::string _Name;
 	};
 }

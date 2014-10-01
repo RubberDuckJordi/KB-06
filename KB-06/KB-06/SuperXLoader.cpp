@@ -342,10 +342,10 @@ namespace pengine
 		int16 Token;
 		char Data[TEXT_BUFFER];
 
-		_LoadMesh = new XMesh();
+		_LoadMesh = new Mesh();
 		if (!_Object->_Meshes.empty())
 		{
-			XMesh* LastMesh = _Object->_Meshes.back();
+			Mesh* LastMesh = _Object->_Meshes.back();
 			_LoadMesh->_FirstVertex = LastMesh->_FirstVertex + LastMesh->_nVertices;
 			_LoadMesh->_FirstFace = LastMesh->_FirstFace + LastMesh->_nFaces;
 			_LoadMesh->_FirstTextureCoord = LastMesh->_FirstTextureCoord + LastMesh->_nTextureCoords;
@@ -587,30 +587,39 @@ namespace pengine
 		int16 Token;
 		char Data[TEXT_BUFFER];
 
-		XMaterial* NewMaterial = new XMaterial;
+		Material* NewMaterial = new Material;
 
 		Find('{');
-		for (int i = 0; i < 4; i++)
-		{
-			fin.getline(Data, TEXT_BUFFER, ';');
-			NewMaterial->_FaceColor.data[i] = TextToNum(Data);
-		}
+
+		fin.getline(Data, TEXT_BUFFER, ';');
+		NewMaterial->diffuse.r = TextToNum(Data);
+		fin.getline(Data, TEXT_BUFFER, ';');
+		NewMaterial->diffuse.g = TextToNum(Data);
+		fin.getline(Data, TEXT_BUFFER, ';');
+		NewMaterial->diffuse.b = TextToNum(Data);
+		fin.getline(Data, TEXT_BUFFER, ';');
+		NewMaterial->diffuse.a = TextToNum(Data);
+
 		fin.get(); //eats the last semicolon
 		fin.getline(Data, TEXT_BUFFER, ';');
-		NewMaterial->_power = TextToNum(Data);
+		NewMaterial->power = TextToNum(Data);
 
-		for (int i = 0; i < 3; i++)
-		{
-			fin.getline(Data, TEXT_BUFFER, ';');
-			NewMaterial->_SpecularColor.data[i] = TextToNum(Data);
-		}
+		fin.getline(Data, TEXT_BUFFER, ';');
+		NewMaterial->specular.r = TextToNum(Data);
+		fin.getline(Data, TEXT_BUFFER, ';');
+		NewMaterial->specular.g = TextToNum(Data);
+		fin.getline(Data, TEXT_BUFFER, ';');
+		NewMaterial->specular.b = TextToNum(Data);
+
 		fin.get();//eats the last semicolon
 
-		for (int i = 0; i < 3; i++)
-		{
-			fin.getline(Data, TEXT_BUFFER, ';');
-			NewMaterial->_EmissiveColor.data[i] = TextToNum(Data);
-		}
+		fin.getline(Data, TEXT_BUFFER, ';');
+		NewMaterial->emissive.r = TextToNum(Data);
+		fin.getline(Data, TEXT_BUFFER, ';');
+		NewMaterial->emissive.g = TextToNum(Data);
+		fin.getline(Data, TEXT_BUFFER, ';');
+		NewMaterial->emissive.b = TextToNum(Data);
+
 		fin.get();//eats the last semicolon
 
 		Token = X_COMMENT;
@@ -629,8 +638,7 @@ namespace pengine
 				Find('{');
 				Find('"');
 				fin.getline(Data, TEXT_BUFFER, '"');
-				NewMaterial->_TextureName = Data;
-				logger->LogAll(0, "Texture file: ", NewMaterial->_TextureName);
+				NewMaterial->texturePath = Data;
 				Find('}');
 				break;
 			default:

@@ -31,7 +31,8 @@ namespace pengine
 		void CreateVertexBuffer(int heightmapvertex, PENGINEDWORD* usage, PENGINEDWORD* fvf, PENGINEPOOL* pool, VertexBufferWrapper* vertexbuffer, HANDLE handle);
 		void CreateIndexBuffer(int length, PENGINEDWORD* usage, PENGINEFORMAT* format, PENGINEPOOL* pool, IndexBufferWrapper* Indexbuffer, HANDLE* handle);
 
-		void SetMaterial(MaterialWrapper* wrapper);
+		void SetMaterialWrapper(MaterialWrapper* wrapper);
+		void SetMaterial(Material* material);
 		void SetTexture(TextureWrapper* wrapper);
 		void SetFvF(PENGINEDWORD* fvf);
 

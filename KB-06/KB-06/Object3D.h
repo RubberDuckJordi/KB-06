@@ -89,7 +89,7 @@ namespace pengine
 			CalcAttitude(_Skeletton, 0);
 			SkinMesh(_Skeletton);
 		};
-		void Draw(pengine::Renderer* renderer);
+		void Draw(Renderer* renderer);
 
 		void ComputeBoundingBoxSphere(void);
 		//Elements for the AABB (_Low & _High)
@@ -98,9 +98,9 @@ namespace pengine
 		float _Radius;
 
 	private:
-		pengine::Logger* logger = pengine::LoggerPool::GetInstance().GetLogger();
+		Logger* logger = LoggerPool::GetInstance().GetLogger();
 		ObjectBone* _Skeletton;
-		XMesh* _Mesh; //pointer to Model Mesh
+		Mesh* _Mesh; //pointer to Model Mesh
 		Vertex* _SkinnedVertices;
 		Model3D* _Model;
 		AnimationSet* _cAnimationSet;

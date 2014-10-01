@@ -25,8 +25,6 @@ int _tmain(int argc, _TCHAR* argv[])
 	pEngine.GetWindowManager()->AddWindowListener(pEngine.GetInputManager());
 	pEngine.GetWindowManager()->NewWindow(750, 10, 500, 500);
 	pEngine.GetRenderer()->InitD3D(pEngine.GetWindowManager()->GetLastWindow()->GetHWND());
-	//pEngine.GetResourceManager()->AddMeshLoader(new pengine::ObjMeshLoader());
-	//pEngine.GetResourceManager()->AddMaterialLoader(new pengine::MtlLoader());
 
 	pengine::XModel* xmodel = new pengine::XModel();
 	pengine::XModelLoader* xmodelLoader = new pengine::XModelLoader();
@@ -41,20 +39,15 @@ int _tmain(int argc, _TCHAR* argv[])
 	color.b = 1.0f;
 	color.a = 1.0f;
 
-	//pengine::Mesh* mesh = pEngine.GetResourceManager()->LoadMesh("resources/cube.obj.mesh", "obj.mesh");
-	//pengine::Mesh* mesh2 = pEngine.GetResourceManager()->LoadMesh("resources/cubeClone.obj.mesh", "obj.mesh");
-	//pengine::Mesh* mesh3 = pEngine.GetResourceManager()->LoadMesh("resources/cubeCloneClone.obj.mesh", "obj.mesh");
-
-
 	pengine::IO_Model_X* loader = new pengine::IO_Model_X();
 	pengine::Model3D* model = new pengine::Model3D();
 	loader->Load("resources/tiny/tiny_4anim.x", model);
 
-	for (std::list<pengine::XMesh*>::iterator i = model->_Meshes.begin(); i != model->_Meshes.end(); ++i)
+	for (std::list<pengine::Mesh*>::iterator i = model->_Meshes.begin(); i != model->_Meshes.end(); ++i)
 	{
-		for (std::list<pengine::XMaterial*>::iterator j = (*i)->_Materials.begin(); j != (*i)->_Materials.end(); ++j)
+		for (std::list<pengine::Material*>::iterator j = (*i)->_Materials.begin(); j != (*i)->_Materials.end(); ++j)
 		{
-			logger->LogAll(0, "Texture name CubeGame: ", (*j)->_TextureName);
+			logger->LogAll(0, "Texture name CubeGame: ", (*j)->texturePath);
 		}
 	}
 	model->ConcatenateMeshes();
@@ -69,9 +62,6 @@ int _tmain(int argc, _TCHAR* argv[])
 	MyObject.UpdateAnimation();
 
 	pengine::DefaultSceneFactory* sceneFactory = new pengine::DefaultSceneFactory();
-	/*sceneFactory->setMesh(mesh);
-	sceneFactory->setMesh2(mesh2);
-	sceneFactory->setMesh3(mesh3);*/
 	sceneFactory->SetXModel(xmodel);
 	sceneFactory->SetXModel2(xmodel2);
 
@@ -111,8 +101,6 @@ int _tmain(int argc, _TCHAR* argv[])
 				{
 					++index;
 					MyObject.MapAnimationSet(index);
-					//MyObject.ClearSkinnedVertices();
-					//MyObject.UpdateAnimation();
 					pressPlus = true;
 				}
 				holdPlus = true;
@@ -135,7 +123,7 @@ int _tmain(int argc, _TCHAR* argv[])
 
 		pEngine.GetRenderer()->EndScene();
 		pEngine.GetRenderer()->PresentScene(pEngine.GetWindowManager()->GetLastWindow()->GetHWND());
-		//delete aMatrix;
+		delete aMatrix;
 	}
 	pengine::LoggerPool::GetInstance().ReturnLogger(logger);
 }

@@ -1,11 +1,14 @@
 #include "SceneFactory.h"
 
-pengine::SceneFactory::SceneFactory()
+namespace pengine
 {
+	SceneFactory::SceneFactory()
+	{
 
-}
+	}
 
-pengine::SceneFactory::~SceneFactory()
-{
+	SceneFactory::~SceneFactory()
+	{
 
+	}
 }
