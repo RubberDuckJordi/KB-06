@@ -32,7 +32,7 @@ pengine::Scene* racer::RaceSceneFactory::CreateScene()
 
 	racecart1->SetXModel(xModel);
 	racecart2->SetXModel(xModel);
-	racecart3->SetXModel(xModel2);
+	racecart3->SetXModel(xModel);
 
 	RaceScene* raceScene = new RaceScene();
 	raceScene->AddEntity(racecart);
