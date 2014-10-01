@@ -56,7 +56,7 @@ int _tmain(int argc, _TCHAR* argv[])
 
 	Object3D MyObject;
 	MyObject.SetupModel(model);
-	unsigned short int index = 2;
+	unsigned short int index = 0;
 	MyObject.MapAnimationSet(index);
 	//We set the interval of animation in steps
 	MyObject.SetAnimationStep(80);
@@ -102,12 +102,10 @@ int _tmain(int argc, _TCHAR* argv[])
 			case pengine::Input::KEY_HOME:
 				MyObject.ClearSkinnedVertices();
 				MyObject.UpdateAnimation();
-				//logger->LogAll(0, "finalmatrix: ");
 				break;
 			case pengine::Input::KEY_ADD:
 				++index;
 				MyObject.MapAnimationSet(index);
-				//logger->LogAll(0, "finalmatrix: ");
 				break;
 			default:
 				break;
