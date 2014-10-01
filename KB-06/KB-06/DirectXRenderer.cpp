@@ -24,6 +24,64 @@ pengine::DirectXRenderer::~DirectXRenderer()
 	LoggerPool::GetInstance().ReturnLogger(logger);
 }
 
+void pengine::DirectXRenderer::CreateD2DFactory()
+{
+	D2D1CreateFactory(D2D1_FACTORY_TYPE_SINGLE_THREADED, &d2dFactory);
+}
+
+void pengine::DirectXRenderer::CreateRenderTarget(HWND hWnd)
+{
+	RECT rectangle;
+	GetClientRect(hWnd, &rectangle);
+
+	D2D1_SIZE_U size = D2D1::SizeU(rectangle.right - rectangle.left, rectangle.bottom - rectangle.top);
+
+	d2dFactory->CreateHwndRenderTarget(
+		D2D1::RenderTargetProperties(),
+		D2D1::HwndRenderTargetProperties(hWnd, size),
+		&d2dRenderTarget
+		);
+}
+
+void pengine::DirectXRenderer::CreateWICImagingFactory()
+{
+	CoCreateInstance(CLSID_WICImagingFactory, NULL, CLSCTX_INPROC_SERVER, __uuidof(IWICImagingFactory), (void**)(&iwicFactory));
+}
+
+void pengine::DirectXRenderer::CreateDecoder(std::string path)
+{
+	iwicBmpDecoder = NULL;
+	iwicFactory->CreateDecoderFromFilename(
+		path.c_str(),                      // Image to be decoded
+		NULL,                            // Do not prefer a particular vendor
+		GENERIC_READ,                    // Desired read access to the file
+		WICDecodeMetadataCacheOnDemand,  // Cache metadata when needed
+		&iwicBmpDecoder                      // Pointer to the decoder
+		);
+}
+
+void pengine::DirectXRenderer::CreateFormatConverter()
+{
+	iwicFactory->CreateFormatConverter(&iwicFormatConverter);
+}
+
+void pengine::DirectXRenderer::GetBitmapFrame()
+{
+	bitmapFrame = NULL;
+	
+	iwicBmpDecoder->GetFrame(0, &bitmapFrame);
+}
+
+void pengine::DirectXRenderer::CreateBitmapFromWIC()
+{
+	d2dRenderTarget->CreateBitmapFromWicBitmap(iwicFormatConverter, NULL, &d2dBmp);
+}
+
+void pengine::DirectXRenderer::D2DDraw()
+{
+	d2dRenderTarget->DrawBitmap(d2dBmp);
+}
+
 void pengine::DirectXRenderer::InitD3D(HWND hWnd)
 {
 	if (NULL == (g_pD3D = Direct3DCreate9(D3D_SDK_VERSION)))

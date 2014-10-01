@@ -1,8 +1,10 @@
 #ifndef _RENDERER_DIRECTXRENDERER_H_
 #define _RENDERER_DIRECTXRENDERER_H_
 
+#include <d2d1.h>
 #include <d3dx9.h>
 #include "Renderer.h"
+#include <wincodec.h>
 
 namespace pengine
 {
@@ -11,6 +13,15 @@ namespace pengine
 	public:
 		DirectXRenderer();
 		~DirectXRenderer();
+
+		void CreateD2DFactory();
+		void CreateRenderTarget(HWND hWnd);
+		void CreateWICImagingFactory();
+		void CreateDecoder(std::string path);
+		void GetBitmapFrame();
+		void CreateFormatConverter();
+		void CreateBitmapFromWIC();
+		void D2DDraw();
 
 		void InitD3D(HWND hWnd);
 		void SetDefaultRenderStates();
@@ -51,6 +62,15 @@ namespace pengine
 		void SetTexture(BinaryData* texture);
 		void SetMaterial(Material* material);
 		void SetMatrixCache(PEngineMatrix* matrix);
+
+		IWICBitmapDecoder* iwicBmpDecoder;
+		IWICImagingFactory* iwicFactory;
+		IWICBitmapFrameDecode *bitmapFrame;
+		IWICFormatConverter* iwicFormatConverter;
+		ID2D1Bitmap* d2dBmp;
+
+		ID2D1Factory* d2dFactory;
+		ID2D1HwndRenderTarget* d2dRenderTarget;
 
 		LPDIRECT3D9 g_pD3D;
 		LPDIRECT3DDEVICE9 g_pd3dDevice;
