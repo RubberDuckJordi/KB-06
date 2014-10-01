@@ -48,6 +48,10 @@ int _tmain(int argc, _TCHAR* argv[])
 		for (std::list<pengine::Material*>::iterator j = (*i)->_Materials.begin(); j != (*i)->_Materials.end(); ++j)
 		{
 			logger->LogAll(0, "Texture name CubeGame: ", (*j)->texturePath);
+			if ((*j)->texturePath != "")
+			{
+				(*j)->texture = pEngine.GetResourceManager()->LoadBinaryFile("resources/tiny/" + (*j)->texturePath);
+			}
 		}
 	}
 	model->ConcatenateMeshes();
@@ -86,7 +90,7 @@ int _tmain(int argc, _TCHAR* argv[])
 		pEngine.GetRenderer()->ClearScene(0UL, 0UL, color, 1.0f, 0UL);
 		pEngine.GetRenderer()->BeginScene();
 
-		pEngine.GetRenderer()->SetLights();
+		pEngine.GetRenderer()->SetLights();//every time?
 		pEngine.GetSceneManager()->RenderActiveScene(pEngine.GetRenderer());
 
 

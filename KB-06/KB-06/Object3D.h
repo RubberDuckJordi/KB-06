@@ -7,7 +7,7 @@
 #ifndef _PENGINE_OBJECT3D_H_
 #define _PENGINE_OBJECT3D_H_
 
-#include "XMesh.h" //based on the correct Mesh element
+#include "Mesh.h" //based on the correct Mesh element
 #include "Matrix.h"
 #include "Bone.h"
 #include "AnimationSet.h"

@@ -50,11 +50,8 @@ namespace pengine
 
 		LPD3DXMESH d3dMesh;
 		int	amountOfVertices = _Mesh->_nVertices;
-		int amountOfIndices = _Mesh->_nFaces * 3;//3 indices per face
 
-		//logger->LogAll(0, "Amount of vertices: ", amountOfVertices, ", faces:", _Mesh->_nFaces, ", indices: ", amountOfIndices);
-
-		if (FAILED(D3DXCreateMeshFVF(amountOfIndices, amountOfVertices, 0, D3DCustomVertexFVF, g_pd3dDevice, &d3dMesh)))
+		if (FAILED(D3DXCreateMeshFVF(_Mesh->_nFaces * 3, amountOfVertices, 0, D3DCustomVertexFVF, g_pd3dDevice, &d3dMesh)))
 		{
 			logger->Log(Logger::ERR, "Failed to create a D3DXCreateMeshFVF. Generating a cube");
 			D3DXCreateBox(g_pd3dDevice, 1.0f, 1.0f, 1.0f, &d3dMesh, NULL);
@@ -62,10 +59,7 @@ namespace pengine
 		else
 		{
 			D3DCustomVertex* d3dVertices = new D3DCustomVertex[amountOfVertices];
-			unsigned short* indices = new unsigned short[amountOfIndices];
 
-			int vertexCount = -1;
-			int indexCount = -1;
 
 			for (int i = 0; i < amountOfVertices; ++i)//first do all the vertices, then set the indices to the right vertices
 			{
@@ -75,22 +69,10 @@ namespace pengine
 				newVertex.z = _SkinnedVertices[i].z;//z
 				newVertex.tu = _Mesh->_TextureCoords[i].data[0];//hopefully we got texture information for each vertex...
 				newVertex.tv = _Mesh->_TextureCoords[i].data[1];//hopefully we got texture information for each vertex...
-				/*if (i % 1000 == 0)
-				{
-				logger->LogAll(Logger::NONE, "X: ", newVertex.x, " Y: ", newVertex.y, " Z: ", newVertex.z);
-				}*/
 				d3dVertices[i] = newVertex;
 			}
 
-			for (int i = 0; i < amountOfIndices; i += 3)//now get all the indices...
-			{
-				indices[i] = _Mesh->_Faces[i / 3].data[0];
-				indices[i + 1] = _Mesh->_Faces[i / 3].data[1];
-				indices[i + 2] = _Mesh->_Faces[i / 3].data[2];
-			}
-
 			void* pVoid;
-
 			LPDIRECT3DVERTEXBUFFER9 v_buffer;
 			d3dMesh->GetVertexBuffer(&v_buffer);
 			// lock v_buffer and load the vertices into it
@@ -98,27 +80,96 @@ namespace pengine
 			memcpy(pVoid, d3dVertices, amountOfVertices*sizeof(D3DCustomVertex));
 			v_buffer->Unlock();
 
-			LPDIRECT3DINDEXBUFFER9 i_buffer;
-			d3dMesh->GetIndexBuffer(&i_buffer);
-			// lock i_buffer and load the indices into it
-			i_buffer->Lock(0, 0, (void**)&pVoid, 0);
-			memcpy(pVoid, indices, amountOfIndices * sizeof(unsigned short));
-			i_buffer->Unlock();
-
 			g_pd3dDevice->SetStreamSource(0, v_buffer, 0, sizeof(D3DCustomVertex));
 			g_pd3dDevice->SetFVF(D3DCustomVertexFVF);
-			g_pd3dDevice->SetIndices(i_buffer);
-			g_pd3dDevice->DrawIndexedPrimitive(D3DPT_TRIANGLELIST,// PrimitiveType
-				0,// BaseVertexIndex
-				0,// MinIndex
-				amountOfVertices,// NumVertices
-				0,// StartIndex
-				_Mesh->_nFaces);// PrimitiveCount
+
+			//for (std::list<Subset*>::iterator i = _Mesh->_Subsets.begin(); i != _Mesh->_Subsets.end(); ++i)
+			//{
+			//	unsigned int indicesForSubset = (*i)->Size * 3;//amount of faces * 3
+			//	unsigned short* indices = new unsigned short[indicesForSubset];
+			//	for (int i = 0; i < amountOfIndices; i += 3)//now get all the indices...
+			//	{
+			//		indices[i] = _Mesh->_Faces[i / 3].data[0];
+			//		indices[i + 1] = _Mesh->_Faces[i / 3].data[1];
+			//		indices[i + 2] = _Mesh->_Faces[i / 3].data[2];
+			//	}
+
+
+			//	LPDIRECT3DINDEXBUFFER9 i_buffer;
+			//	d3dMesh->GetIndexBuffer(&i_buffer);
+			//	// lock i_buffer and load the indices into it
+			//	i_buffer->Lock(0, 0, (void**)&pVoid, 0);
+			//	memcpy(pVoid, indices, amountOfIndices * sizeof(unsigned short));
+			//	i_buffer->Unlock();
+
+			//	g_pd3dDevice->SetIndices(i_buffer);
+			//	g_pd3dDevice->DrawIndexedPrimitive(D3DPT_TRIANGLELIST,// PrimitiveType
+			//		0,// BaseVertexIndex
+			//		0,// MinIndex
+			//		amountOfVertices,// NumVertices
+			//		0,// StartIndex
+			//		_Mesh->_nFaces);// PrimitiveCount
+			//	i_buffer->Release();
+			//	delete[] indices;
+			//}
+
+			Subset* tempSubset;
+			Face tempFace;
+			std::list<Subset*>::iterator i = _Mesh->_Subsets.begin();
+			std::list<Material*>::iterator j = _Mesh->_Materials.begin();
+
+			while (j != _Mesh->_Materials.end())
+			{
+				renderer->SetMaterial(*j);
+				tempSubset = *i;
+
+				unsigned int indicesForSubset = tempSubset->Size * 3;//amount of faces * 3
+				unsigned short* indices = new unsigned short[indicesForSubset];
+				unsigned int currentIndex = -1;
+
+				for (int k = 0; k < tempSubset->Size; k++)
+				{
+					tempFace = tempSubset->Faces[k];
+					indices[++currentIndex] = tempFace.data[0];
+					indices[++currentIndex] = tempFace.data[1];
+					indices[++currentIndex] = tempFace.data[2];
+
+
+
+					/*_Mesh->_TextureCoords[tempFace.data[0]].data;
+					_SkinnedVertices[tempFace.data[0]].x;
+					_Mesh->_TextureCoords[tempFace.data[1]].data;
+					_SkinnedVertices[tempFace.data[1]].y;
+					_Mesh->_TextureCoords[tempFace.data[2]].data;
+					_SkinnedVertices[tempFace.data[2]].z;*/
+
+
+				}
+
+				LPDIRECT3DINDEXBUFFER9 i_buffer;
+				d3dMesh->GetIndexBuffer(&i_buffer);
+				// lock i_buffer and load the indices into it
+				i_buffer->Lock(0, 0, (void**)&pVoid, 0);
+				memcpy(pVoid, indices, indicesForSubset * sizeof(unsigned short));
+				i_buffer->Unlock();
+
+				g_pd3dDevice->SetIndices(i_buffer);
+				g_pd3dDevice->DrawIndexedPrimitive(D3DPT_TRIANGLELIST,// PrimitiveType
+					0,// BaseVertexIndex, adds +arg to every vertex number in the index buffer
+					0,// MinIndex
+					amountOfVertices,// NumVertices
+					0,// StartIndex
+					tempSubset->Size);// PrimitiveCount
+				i_buffer->Release();
+				delete[] indices;
+
+				i++;
+				j++;
+			}
+
 			v_buffer->Release();
-			i_buffer->Release();
 			d3dMesh->Release();
 			delete[] d3dVertices;
-			delete[] indices;
 		}
 	}
 

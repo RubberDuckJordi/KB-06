@@ -150,7 +150,7 @@
     <ClInclude Include="WindowManager.h" />
     <ClInclude Include="XFileStructs.h" />
     <ClInclude Include="Material.h" />
-    <ClInclude Include="XMesh.h" />
+    <ClInclude Include="Mesh.h" />
     <ClInclude Include="XModel.h" />
     <ClInclude Include="XModelLoader.h" />
   </ItemGroup>

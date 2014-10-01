@@ -40,8 +40,10 @@ namespace pengine
 		d3dpp.Windowed = true;
 		d3dpp.SwapEffect = D3DSWAPEFFECT_DISCARD;
 		d3dpp.BackBufferFormat = D3DFMT_UNKNOWN;
-		d3dpp.EnableAutoDepthStencil = TRUE;
+		//d3dpp.BackBufferFormat = D3DFMT_A8R8G8B8;//The higher you can set this, the more accurate the z-buffer is, current seems to be the highest working.
+		d3dpp.EnableAutoDepthStencil = true;
 		d3dpp.AutoDepthStencilFormat = D3DFMT_D16;
+		//d3dpp.AutoDepthStencilFormat = D3DFMT_D24S8;//The higher you can set this, the more accurate the z-buffer is, current seems to be the highest working.
 
 		if (FAILED(g_pD3D->CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, hWnd,
 			D3DCREATE_SOFTWARE_VERTEXPROCESSING,
@@ -54,8 +56,8 @@ namespace pengine
 
 	void DirectXRenderer::SetDefaultRenderStates()
 	{
-		this->g_pd3dDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);	//Counter Clockwise Cullmode
-		this->g_pd3dDevice->SetRenderState(D3DRS_ZENABLE, TRUE); //Z buffer on
+		this->g_pd3dDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);	//Counter Clockwise Cullmode
+		this->g_pd3dDevice->SetRenderState(D3DRS_ZENABLE, true); //Z buffer on
 		this->g_pd3dDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, true); //Turn Alphablending on
 		this->g_pd3dDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA); //Type alphablending
 		this->g_pd3dDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA); //Type alphablending
@@ -143,7 +145,35 @@ namespace pengine
 
 	void DirectXRenderer::SetMaterial(Material* material)
 	{
+		D3DMATERIAL9 mat;
+		mat.Ambient.r = material->ambient.r;
+		mat.Ambient.g = material->ambient.g;
+		mat.Ambient.b = material->ambient.b;
 
+		mat.Diffuse.r = material->diffuse.r;
+		mat.Diffuse.g = material->diffuse.g;
+		mat.Diffuse.b = material->diffuse.b;
+
+		mat.Specular.r = material->specular.r;
+		mat.Specular.g = material->specular.g;
+		mat.Specular.b = material->specular.b;
+		mat.Power = material->power;
+
+		g_pd3dDevice->SetMaterial(&mat);
+
+		if (material->texture != NULL)
+		{
+			if (textureCache.find(material->texture) == textureCache.end())
+			{
+				logger->LogAll(Logger::DEBUG, "Texture \"", material->texturePath, "\" not converted to LPDIRECT3DTEXTURE9 yet.");
+				LPDIRECT3DTEXTURE9 d3DTexture;
+
+				HRESULT result = D3DXCreateTextureFromFileInMemory(g_pd3dDevice, material->texture->rawData, material->texture->size, &d3DTexture);
+				textureCache[material->texture] = d3DTexture;
+				logger->LogAll(Logger::DEBUG, "Texture \"", material->texturePath, "\" converted to LPDIRECT3DTEXTURE9.");
+			}
+			g_pd3dDevice->SetTexture(0, textureCache[material->texture]);
+		}
 	}
 
 	void DirectXRenderer::SetTexture(TextureWrapper* wrapper)
@@ -269,38 +299,6 @@ namespace pengine
 	}
 	}*/
 
-	/*void DirectXRenderer::SetTexture(BinaryData* texture)
-	{
-	if (textureCache.find(texture) == textureCache.end())
-	{
-	logger->Log(Logger::DEBUG, "Texture \"" + texture->fileName + "\" not converted to LPDIRECT3DTEXTURE9 yet.");
-	LPDIRECT3DTEXTURE9 d3DTexture;
-
-	D3DXCreateTextureFromFileInMemory(g_pd3dDevice, texture->rawData, texture->size, &d3DTexture);
-	textureCache[texture] = d3DTexture;
-	logger->Log(Logger::DEBUG, "Texture \"" + texture->fileName + "\" converted to LPDIRECT3DTEXTURE9.");
-	}
-	g_pd3dDevice->SetTexture(0, textureCache[texture]);
-	}*/
-
-	/*void DirectXRenderer::SetMaterial(Material* material)
-	{
-	D3DMATERIAL9 mat;
-	mat.Ambient.r = material->ambientColor.r;
-	mat.Ambient.g = material->ambientColor.g;
-	mat.Ambient.b = material->ambientColor.b;
-
-	mat.Diffuse.r = material->diffuseColor.r;
-	mat.Diffuse.g = material->diffuseColor.g;
-	mat.Diffuse.b = material->diffuseColor.b;
-
-	mat.Specular.r = material->SpecularColor.r;
-	mat.Specular.g = material->SpecularColor.g;
-	mat.Specular.b = material->SpecularColor.b;
-	mat.Power = material->specularWeight;
-
-	g_pd3dDevice->SetMaterial(&mat);
-	}*/
 
 	void DirectXRenderer::SetActiveMatrix(PEngineMatrix* matrix)
 	{
@@ -334,6 +332,17 @@ namespace pengine
 		material.Ambient = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);    // set ambient color to white
 
 		g_pd3dDevice->SetMaterial(&material);    // set the globably-used material to &material
+		
+		/*//Turn on ambient lighting 
+		g_pd3dDevice->SetRenderState(D3DRS_AMBIENT, 0xffffffff);
+
+		g_pd3dDevice->SetTextureStageState(0, D3DTSS_COLOROP, D3DTOP_SELECTARG1);
+		g_pd3dDevice->SetTextureStageState(0, D3DTSS_COLORARG1, D3DTA_TEXTURE);
+		g_pd3dDevice->SetTextureStageState(0, D3DTSS_COLORARG2, D3DTA_DIFFUSE);
+
+		/*g_pd3dDevice->SetTextureStageState(0, D3DTSS_ALPHAOP, D3DTOP_SELECTARG1);
+		g_pd3dDevice->SetTextureStageState(0, D3DTSS_ALPHAARG1, D3DTA_TEXTURE);
+		g_pd3dDevice->SetTextureStageState(0, D3DTSS_ALPHAARG2, D3DTA_DIFFUSE);*/
 	}
 
 	void DirectXRenderer::SetMatrixCache(PEngineMatrix* matrix)

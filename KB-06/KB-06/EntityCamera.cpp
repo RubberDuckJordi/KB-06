@@ -96,21 +96,21 @@ namespace pengine
 					this->AddPosition(0.0f, 0.0f, -0.5f);
 					this->SetLookAtPosition(lookAtPosition.x, lookAtPosition.y, lookAtPosition.z - 0.5f, 0.0f);
 					break;
-				case Input::KEY_F:
+				case Input::KEY_H:
 					this->AddPosition(-0.5f, 0.0f, 0.0f);
 					this->SetLookAtPosition(lookAtPosition.x - 0.5f, lookAtPosition.y, lookAtPosition.z, 0.0f);
 					break;
-				case Input::KEY_H:
+				case Input::KEY_F:
 					this->AddPosition(0.5f, 0.0f, 0.0f);
 					this->SetLookAtPosition(lookAtPosition.x + 0.5f, lookAtPosition.y, lookAtPosition.z, 0.0f);
 					break;
 
-				case Input::KEY_R:
+				case Input::KEY_Y:
 					this->AddPosition(0.0f, 0.5f, 0.0f);
 					this->SetLookAtPosition(lookAtPosition.x, lookAtPosition.y + 0.5f, lookAtPosition.z, 0.0f);
 					break;
 
-				case Input::KEY_V:
+				case Input::KEY_R:
 					this->AddPosition(0.0f, -0.5f, 0.0f);
 					this->SetLookAtPosition(lookAtPosition.x, lookAtPosition.y - 0.5f, lookAtPosition.z, 0.0f);
 					break;

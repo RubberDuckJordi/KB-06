@@ -19,14 +19,14 @@ namespace pengine
 
 		//Mesh* LoadMesh(const std::string& fileName, const std::string& extension);
 		Material* LoadMaterial(const std::string& fileName, const std::string& extension);
-		BinaryData LoadBinaryFile(const std::string& fileName);
+		BinaryData* LoadBinaryFile(const std::string& fileName);
 		//Mesh* LoadSound(const std::string& fileName, const std::string& extension);
 
 		//void AddMeshLoader(BaseMeshLoader*);
 		//void AddMaterialLoader(BaseMaterialLoader*);
 		//void AddSoundLoader(BaseMeshLoader*);
 
-		std::map<std::string, Material>* loadMaterials(std::string file);
+		//std::map<std::string, Material>* LoadMaterials(std::string file);
 	private:
 		Logger* logger;
 

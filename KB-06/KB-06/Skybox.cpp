@@ -125,13 +125,19 @@ namespace pengine
 
 	void Skybox::Draw(Renderer* renderer, Vertex* position)
 	{
-
+		Material mat;
+		mat.ambient = { 0.0f, 0.0f, 1.0f};
+		mat.diffuse = { 0.0f, 0.0f, 1.0f, 1.0f };
+		mat.emissive = { 0.0f, 0.0f, 1.0f };
+		mat.power = 0;
+		mat.specular = { 0.0f, 0.0f, 1.0f };
 
 		RenderMatrix* aMatrix = new RenderMatrix();
 
 		aMatrix->CreateMatrix(position->x, position->y, position->z, 0, 0, 0, 1, 1, 1, aMatrix->theMatrix);
 
 		renderer->SetActiveMatrix(aMatrix->theMatrix);
+		renderer->SetMaterial(&mat);
 
 
 		LPDIRECT3DDEVICE9 g_pd3dDevice = *((DirectXRenderer*)renderer)->GetDevice();

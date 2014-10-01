@@ -56,7 +56,7 @@ namespace pengine
 		LPDIRECT3D9 g_pD3D;
 		LPDIRECT3DDEVICE9 g_pd3dDevice;
 		//std::map<Mesh*, LPD3DXMESH> meshCache;
-		//std::map<BinaryData*, LPDIRECT3DTEXTURE9> textureCache;
+		std::map<BinaryData*, LPDIRECT3DTEXTURE9> textureCache;
 
 		D3DXMATRIX* matrixCache;
 	};

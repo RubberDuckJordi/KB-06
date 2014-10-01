@@ -10,7 +10,10 @@ namespace pengine
 
 	Scene::~Scene()
 	{
-		while (!entities.empty()) delete entities.front(), entities.pop_front();
+		while (!entities.empty())
+		{
+			delete entities.front(), entities.pop_front();
+		}
 		LoggerPool::GetInstance().ReturnLogger(logger);
 	}
 

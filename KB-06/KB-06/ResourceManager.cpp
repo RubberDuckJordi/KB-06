@@ -72,21 +72,22 @@ namespace pengine
 	return NULL;
 	}*/
 
-	BinaryData ResourceManager::LoadBinaryFile(const std::string& fileName)
+	BinaryData* ResourceManager::LoadBinaryFile(const std::string& fileName)
 	{
-		std::ifstream file("resources/" + fileName, std::ios::binary);
+		logger->LogAll(0, "Going to load texture file: " + fileName);
+		std::ifstream file(fileName, std::ios::binary);
 		file.seekg(0, std::ios::end);
 		std::streamsize size = file.tellg();
 		file.clear();
 		file.seekg(0, std::ios::beg);
 
-		BinaryData texture;
-		texture.rawData = new char[(unsigned int)size];
-		texture.size = (unsigned int)size;
-		texture.fileName = fileName;
-		if (file.read(texture.rawData, size))
+		BinaryData* texture = new BinaryData();
+		texture->rawData = new char[(unsigned int)size];
+		texture->size = (unsigned int)size;
+		texture->fileName = fileName;
+		if (file.read(texture->rawData, size))
 		{
-			textures[fileName] = texture;
+			textures[fileName] = *texture;
 			return texture;
 		}
 		return texture;

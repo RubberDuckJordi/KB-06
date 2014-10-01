@@ -2,7 +2,7 @@
 #define _PENGINE_MODEL3D_H_
 
 #include "AnimationSet.h"
-#include "XMesh.h"
+#include "Mesh.h"
 #include "Bone.h"
 
 #include "LoggerPool.h"

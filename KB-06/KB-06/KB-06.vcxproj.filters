@@ -277,9 +277,6 @@
     <ClInclude Include="SuperXLoader.h">
       <Filter>Header\Resource\RobertX</Filter>
     </ClInclude>
-    <ClInclude Include="XMesh.h">
-      <Filter>Header\Resource\RobertX</Filter>
-    </ClInclude>
     <ClInclude Include="Animation.h">
       <Filter>Header\Resource\RobertX</Filter>
     </ClInclude>
@@ -332,6 +329,9 @@
       <Filter>Header\Scene</Filter>
     </ClInclude>
     <ClInclude Include="Material.h">
+      <Filter>Header\Resource\RobertX</Filter>
+    </ClInclude>
+    <ClInclude Include="Mesh.h">
       <Filter>Header\Resource\RobertX</Filter>
     </ClInclude>
   </ItemGroup>

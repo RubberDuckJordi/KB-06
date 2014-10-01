@@ -4,7 +4,7 @@
 //
 /////////////////////////////////////////////////////////
 
-#include "XMesh.h"
+#include "Mesh.h"
 
 namespace pengine
 {
@@ -75,7 +75,7 @@ namespace pengine
 		{
 			//We count the number of faces using this material
 			FaceCount = 0;
-			for (unsigned int j = 0; j < _nFaces; j++)
+			for (unsigned int j = 0; j < _nFaces; ++j)
 			{
 				if (_FaceMaterials[j] == i)
 				{
@@ -88,7 +88,7 @@ namespace pengine
 			MeshSubset->Faces = new Face[FaceCount];
 			int k = 0;
 			//We fill in the Mesh subset
-			for (unsigned int j = 0; j < _nFaces; j++)
+			for (unsigned int j = 0; j < _nFaces; ++j)
 			{
 				if (_FaceMaterials[j] == i)
 				{
