@@ -18,14 +18,15 @@ void racer::RaceCart::UpdateLogic(float deltaTime, std::map<pengine::Input, long
 		for (it_type iterator = (*actions).begin(); iterator != (*actions).end(); ++iterator)
 		{
 			float speed = static_cast<float>(iterator->second);
-			Vector3 collision = *new Vector3(5.0f, 0.0f, 0.0f);
+			Vector3 vector = *new Vector3(0.0f, 0.0f, 0.0f); // Must be declared before the switch
+
 			switch (iterator->first)
 			{
 			case pengine::Input::KEY_S:
-				AddForceForward(-1.0f);
+				Brake(1.0f);
 				break;
 			case pengine::Input::KEY_W:
-				AddForceForward(1.0f);
+				Throttle(1.0f);
 				break;
 			case pengine::Input::KEY_D:
 				this->AddRotation(2.0f, 0.0f, 0.0f);
@@ -35,7 +36,8 @@ void racer::RaceCart::UpdateLogic(float deltaTime, std::map<pengine::Input, long
 				break;
 			case pengine::Input::KEY_0:
 				// Imaginary collision
-				AddForce(&collision);
+				vector.z = -5.0f;
+				AddRelativeForce(&vector);
 				break;
 			default:
 				break;
@@ -74,4 +76,27 @@ void racer::RaceCart::SetXModel(pengine::XModel* p_xModel)
 void racer::RaceCart::SetControllable(bool p_controllable)
 {
 	controllable = p_controllable;
+}
+
+void racer::RaceCart::SetHorsePower(float p_horsePower)
+{
+	horsePower = p_horsePower;
+}
+
+float racer::RaceCart::GetHorsePower()
+{
+	return horsePower;
+}
+
+void racer::RaceCart::Brake(float percentage)
+{
+	// 5.0f could be replaced by braking power
+	ApplyFriction(5.0f * percentage);
+}
+
+void racer::RaceCart::Throttle(float percentage)
+{
+	Vector3 vector;
+	vector.z = horsePower * percentage;
+	AddRelativeForce(&vector);
 }

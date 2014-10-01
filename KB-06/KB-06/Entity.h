@@ -30,7 +30,7 @@ namespace pengine
 		void AddForce(Vector3*);
 		void SetMass(float);
 
-		void AddForceForward(float);
+		void AddRelativeForce(Vector3*);
 
 		float GetFriction();
 		float GetMass();
@@ -45,6 +45,7 @@ namespace pengine
 		virtual void UpdateLogic(float deltaTime, std::map<Input, long>* actions);
 
 	protected:
+		void ApplyFriction(float);
 
 		RenderMatrix* myCachedMatrix;
 		Vertex position;
@@ -54,7 +55,6 @@ namespace pengine
 		float mass = 1.0f;
 		float friction = 1.0f;
 		Vector3 movementVector;
-
 
 		Logger* logger;
 	};

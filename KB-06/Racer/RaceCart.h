@@ -17,8 +17,16 @@ namespace racer
 		void Draw(pengine::Renderer* renderer);
 		void SetXModel(pengine::XModel*); //debug
 		void SetControllable(bool);
+		
+		void SetHorsePower(float);
+		float GetHorsePower();
+		
+		void Brake(float percentage);
+		void Throttle(float percentage);
 
 	private:
+		float horsePower = 10;
+
 		pengine::XModel* xModel; //debug
 		bool controllable;
 	};

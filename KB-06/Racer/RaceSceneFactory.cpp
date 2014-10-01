@@ -17,7 +17,8 @@ pengine::Scene* racer::RaceSceneFactory::CreateScene()
 {
 	RaceCart* racecart = new RaceCart();
 	racecart->SetControllable(true);
-	racecart->SetMass(10.0f);
+	racecart->SetMass(100.0f);
+	racecart->SetHorsePower(10.0f);
 	racecart->AddAll(7.5f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f);
 	racecart->SetXModel(xModel);
 

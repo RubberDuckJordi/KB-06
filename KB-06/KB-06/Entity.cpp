@@ -149,6 +149,7 @@ namespace pengine
 
 	void Entity::UpdateLogic(float deltaTime, std::map<pengine::Input, long>* actions)
 	{
+		ApplyFriction(friction);
 
 		float xDelta = (deltaTime * movementVector.x);
 		float zDelta = (deltaTime * movementVector.z);
@@ -157,12 +158,31 @@ namespace pengine
 		AddPosition(xDelta, yDelta, zDelta);
 	}
 
-	void Entity::AddForceForward(float force)
+	void Entity::AddRelativeForce(Vector3* p_vector)
 	{
-		Vector3 vector = *new Vector3(0.0f, 0.0f, 0.0f);
-		vector.x = (-force * sin((M_PI / 180)*+rotation.x));
-		vector.y = (-force * sin((M_PI / 180)*(rotation.y))) * (cos((M_PI / 180)*rotation.x));
-		vector.z = (-force* cos((M_PI / 180)*(rotation.y))) * (cos((M_PI / 180)*rotation.x));
-		AddForce(&vector);
+		Vector3 relativeVector;
+
+		// Z Axis
+		relativeVector.x += -p_vector->z * sin((M_PI / 180)*+rotation.x);
+		relativeVector.z += -p_vector->z * cos((M_PI / 180)*rotation.x);
+
+		// X Axis
+		relativeVector.z += -p_vector->x * sin((M_PI / 180)*-rotation.x);
+		relativeVector.x += -p_vector->x * cos((M_PI / 180)*rotation.x);
+
+		//TODO: Y AXIS, PITCH, ROLL
+
+		AddForce(&relativeVector);
+	}
+
+	void Entity::ApplyFriction(float p_friction)
+	{
+		Vector3 inverted;
+
+		inverted.x = movementVector.x * (-p_friction);
+		inverted.y = movementVector.y * (-p_friction);
+		inverted.z = movementVector.z * (-p_friction);
+
+		AddForce(&inverted);
 	}
 }
