@@ -50,7 +50,7 @@ namespace pengine
 
 		RenderMatrix* myCachedMatrix;
 
-		Logger* logger;//Really? We keep track of a pointer to a logger in every entity? Isn't that what the singleton loggerpool is for?
+		Logger* logger;
 	};
 }
 #endif
