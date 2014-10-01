@@ -131,6 +131,12 @@ pengine::TextureWrapper* pengine::Skybox::GetTexture()
 {
 	return texture;
 }
+
+void pengine::Skybox::SetTexture(TextureWrapper* textureNew)
+{
+	texture = textureNew;
+}
+
 void pengine::Skybox::Draw(Renderer* renderer, Vertex* position)
 {
 
