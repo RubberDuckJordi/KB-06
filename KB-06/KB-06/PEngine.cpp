@@ -69,10 +69,7 @@ pengine::Renderer* pengine::PEngine::GetRenderer()
 	return renderer;
 }
 
-pengine::Skybox* pengine::PEngine::GetSkyBox()
-{
-	return skybox;
-}
+
 
 void pengine::PEngine::NewWindow(int x, int y, int width, int height){
 	GetWindowManager()->NewWindow(x, y, width, height);
@@ -90,11 +87,7 @@ void pengine::PEngine::SetCurrentScene(Scene* scene){
 	sceneManager->SetCurrentScene(scene);
 }
 
-void pengine::PEngine::InitSkybox(Renderer* renderer, std::string texture)
-{
-	Skybox* box = new Skybox(renderer, texture);
-	skybox = box;
-}
+
 
 void pengine::PEngine::GameLoop(){
 	pengine::RGBAColor color;

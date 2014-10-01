@@ -5,7 +5,6 @@
 #include "InputManager.h"
 #include "ResourceManager.h"
 #include "WindowManager.h"
-#include "Skybox.h"
 
 namespace pengine
 {
@@ -19,7 +18,6 @@ namespace pengine
 		ResourceManager* GetResourceManager();
 		SceneManager* GetSceneManager();
 		InputManager* GetInputManager();
-		Skybox* GetSkyBox();
 
 		Renderer* GetRenderer();
 		void Init();
@@ -29,7 +27,6 @@ namespace pengine
 
 		void AddScene();
 		void InitRenderer();
-		void InitSkybox(Renderer* renderer, std::string texture);
 		Scene* AddScene(char* sceneFactory);
 		void SetCurrentScene(Scene* scene);
 		void GameLoop();
@@ -42,7 +39,6 @@ namespace pengine
 		InputManager* inputManager;
 		Renderer* renderer;
 		Logger* logger;
-		Skybox* skybox;
 	};
 }
 

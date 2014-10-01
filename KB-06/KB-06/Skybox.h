@@ -19,7 +19,7 @@ namespace pengine
 		int* GetSkyboxIndices();
 		TextureWrapper* GetTexture();
 
-		void Draw(Renderer* renderer);
+		void Draw(Renderer* renderer, Vertex* position);
 
 
 	private:

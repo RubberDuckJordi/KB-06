@@ -26,9 +26,8 @@ int _tmain(int argc, _TCHAR* argv[])
 	pEngine.Init();
 
 	pEngine.GetWindowManager()->AddWindowListener(pEngine.GetInputManager());
-	pEngine.GetWindowManager()->NewWindow(750, 750, 500, 500);
+	pEngine.GetWindowManager()->NewWindow(750, 10, 500, 500);
 	pEngine.GetRenderer()->InitD3D(pEngine.GetWindowManager()->GetLastWindow()->GetHWND());
-	pEngine.InitSkybox(pEngine.GetRenderer(), "resources/grass.jpg");
 	pEngine.GetResourceManager()->AddMeshLoader(new pengine::ObjMeshLoader());
 	pEngine.GetResourceManager()->AddMaterialLoader(new pengine::MtlLoader());
 
@@ -73,6 +72,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	pEngine.GetSceneManager()->AddSceneFactory("iets", sceneFactory);
 	pengine::Scene* scene = pEngine.GetSceneManager()->SetScene("iets");
 	pEngine.GetSceneManager()->SetCurrentScene(scene);
+	pEngine.GetSceneManager()->GetCurrentScene()->InitSkybox(pEngine.GetRenderer(), "resources/grass.jpg");
 
 	pEngine.GetRenderer()->SetProjectionMatrix(M_PI / 4, 100.0f);
 	pEngine.GetRenderer()->SetDefaultRenderStates();
@@ -117,7 +117,7 @@ int _tmain(int argc, _TCHAR* argv[])
 		aMatrix->CreateMatrix(0.0f, -25.0f, 0.0f, 0.0f, -90.0f, 0.0f, 0.1f, 0.1f, 0.1f, aMatrix->theMatrix);
 		pEngine.GetRenderer()->SetActiveMatrix(aMatrix->theMatrix);
 		MyObject.Draw(pEngine.GetRenderer());
-		pEngine.GetSkyBox()->Draw(pEngine.GetRenderer());
+		//pEngine.GetSkyBox()->Draw(pEngine.GetRenderer(), aMatrix);
 
 		pEngine.GetRenderer()->EndScene();
 		pEngine.GetRenderer()->PresentScene(pEngine.GetWindowManager()->GetLastWindow()->GetHWND());

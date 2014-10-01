@@ -131,11 +131,13 @@ pengine::TextureWrapper* pengine::Skybox::GetTexture()
 {
 	return texture;
 }
-void pengine::Skybox::Draw(Renderer* renderer)
+void pengine::Skybox::Draw(Renderer* renderer, Vertex* position)
 {
+
+
 	RenderMatrix* aMatrix = new RenderMatrix();
 
-	aMatrix->CreateMatrix(0, 0, 0, 0, 0, 0, 1, 1, 1, aMatrix->theMatrix);
+	aMatrix->CreateMatrix(position->x, position->y, position->z, 0, 0, 0, 1, 1, 1, aMatrix->theMatrix);
 
 	renderer->SetActiveMatrix(aMatrix->theMatrix);
 
@@ -246,6 +248,7 @@ void pengine::Skybox::Draw(Renderer* renderer)
 		g_pd3dDevice->SetStreamSource(0, v_buffer, 0, sizeof(D3DCustomVertex));
 		g_pd3dDevice->SetFVF(D3DCustomVertexFVF);
 		g_pd3dDevice->SetIndices(i_buffer);
+//		g_pd3dDevice->SetTexture(0, static_cast<IDirect3DBaseTexture9*>(texture->GetTexture()));
 		g_pd3dDevice->DrawIndexedPrimitive(D3DPT_TRIANGLELIST,// PrimitiveType
 			0,// BaseVertexIndex
 			0,// MinIndex
