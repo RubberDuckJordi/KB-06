@@ -86,29 +86,29 @@ void pengine::EntityCamera::UpdateLogic(float deltaTime, std::map<Input, long>* 
 		{
 			switch (iterator->first)
 			{
-			case Input::KEY_1:
+			case Input::KEY_G:
 				this->AddPosition(0.0f, 0.0f, 0.5f);
 				this->SetLookAtPosition(lookAtPosition.x, lookAtPosition.y, lookAtPosition.z + 0.5f, 0.0f);
 				break;
-			case Input::KEY_2:
+			case Input::KEY_T:
 				this->AddPosition(0.0f, 0.0f, -0.5f);
 				this->SetLookAtPosition(lookAtPosition.x, lookAtPosition.y, lookAtPosition.z - 0.5f, 0.0f);
 				break;
-			case Input::KEY_3:
+			case Input::KEY_F:
 				this->AddPosition(-0.5f, 0.0f, 0.0f);
 				this->SetLookAtPosition(lookAtPosition.x - 0.5f, lookAtPosition.y, lookAtPosition.z, 0.0f);
 				break;
-			case Input::KEY_4:
+			case Input::KEY_H:
 				this->AddPosition(0.5f, 0.0f, 0.0f);
 				this->SetLookAtPosition(lookAtPosition.x + 0.5f, lookAtPosition.y, lookAtPosition.z, 0.0f);
 				break;
 
-			case Input::KEY_NUMPAD7:
+			case Input::KEY_R:
 				this->AddPosition(0.0f, 0.5f, 0.0f);
 				this->SetLookAtPosition(lookAtPosition.x, lookAtPosition.y + 0.5f, lookAtPosition.z, 0.0f);
 				break;
 
-			case Input::KEY_NUMPAD1:
+			case Input::KEY_V:
 				this->AddPosition(0.0f, -0.5f, 0.0f);
 				this->SetLookAtPosition(lookAtPosition.x, lookAtPosition.y - 0.5f, lookAtPosition.z, 0.0f);
 				break;
