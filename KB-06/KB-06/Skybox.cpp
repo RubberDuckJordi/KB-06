@@ -49,7 +49,6 @@ namespace pengine
 		aSkyboxIndices[30] = 20; aSkyboxIndices[31] = 21; aSkyboxIndices[32] = 22;//bottom
 		aSkyboxIndices[33] = 20; aSkyboxIndices[34] = 22; aSkyboxIndices[35] = 23;
 
-
 		/*
 		aSkyboxIndices[0] = 16; aSkyboxIndices[2] = 17; aSkyboxIndices[1] = 18;//front
 		aSkyboxIndices[3] = 16; aSkyboxIndices[5] = 18; aSkyboxIndices[4] = 19;
@@ -66,11 +65,7 @@ namespace pengine
 
 		*/
 
-
-
 		LPDIRECT3DDEVICE9 g_pd3dDevice = *((DirectXRenderer*)renderer)->GetDevice();
-
-
 
 		if (FAILED(D3DXCreateMeshFVF(amountOfIndices, amountOfVertices, 0, D3DCustomVertexFVF, g_pd3dDevice, &d3dMesh)))
 		{
@@ -81,33 +76,22 @@ namespace pengine
 		{
 			void* pVoid;
 
-
-
-
 			d3dMesh->GetVertexBuffer(&v_buffer);
 			// lock v_buffer and load the vertices into it
 			v_buffer->Lock(0, 0, (void**)&pVoid, 0);
 			memcpy(pVoid, aSkyboxVertices, amountOfVertices * sizeof(D3DCustomVertex));
 			v_buffer->Unlock();
 
-
-
-
 			d3dMesh->GetIndexBuffer(&i_buffer);
 			// lock i_buffer and load the indices into it
 			i_buffer->Lock(0, 0, (void**)&pVoid, 0);
 			memcpy(pVoid, aSkyboxIndices, amountOfIndices * sizeof(int));
 			i_buffer->Unlock();
-
-
-
 		}
-
 
 		LPDIRECT3DTEXTURE9* textureNew = new LPDIRECT3DTEXTURE9();
 		HRESULT result = D3DXCreateTextureFromFileA(g_pd3dDevice, textureString.c_str(), textureNew);
 		texture = new TextureWrapper(textureNew);
-
 	}
 
 	Skybox::~Skybox()
@@ -133,6 +117,12 @@ namespace pengine
 	{
 		return texture;
 	}
+
+	void Skybox::SetTexture(TextureWrapper* textureNew)
+	{
+		texture = textureNew;
+	}
+
 	void Skybox::Draw(Renderer* renderer, Vertex* position)
 	{
 

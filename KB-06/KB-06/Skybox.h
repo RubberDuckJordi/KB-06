@@ -18,6 +18,7 @@ namespace pengine
 		D3DCustomVertex* GetSkyboxVertices();
 		int* GetSkyboxIndices();
 		TextureWrapper* GetTexture();
+		void SetTexture(TextureWrapper* textureNew);
 
 		void Draw(Renderer* renderer, Vertex* position);
 
