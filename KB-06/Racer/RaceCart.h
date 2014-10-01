@@ -16,9 +16,11 @@ namespace racer
 		void UpdateLogic(float deltaTime, std::map<pengine::Input, long>* actions);
 		void Draw(pengine::Renderer* renderer);
 		void SetXModel(pengine::XModel*); //debug
+		void SetControllable(bool);
 
 	private:
 		pengine::XModel* xModel; //debug
+		bool controllable;
 	};
 }
 #endif

@@ -15,29 +15,32 @@ racer::RaceSceneFactory::~RaceSceneFactory()
 
 pengine::Scene* racer::RaceSceneFactory::CreateScene()
 {
-	pengine::DefaultEntity* entity = new pengine::DefaultEntity();
 	RaceCart* racecart = new RaceCart();
-	pengine::DefaultEntity* entity3 = new pengine::DefaultEntity();
-	pengine::DefaultEntity* entity4 = new pengine::DefaultEntity();
-
-	entity->AddAll(7.5f, 0.0f, 5.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f);
+	racecart->SetControllable(true);
 	racecart->AddAll(7.5f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f);
-	entity3->AddAll(7.5f, 0.0f, -5.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f);
-	entity4->AddAll(7.5f, 0.0f, 10.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f);
-
-	entity->SetXModel(xModel);
 	racecart->SetXModel(xModel);
-	entity3->SetXModel(xModel);
-	entity4->SetXModel(xModel);
+
+	RaceCart* racecart1 = new RaceCart();
+	RaceCart* racecart2 = new RaceCart();
+	RaceCart* racecart3 = new RaceCart();
+
+	
+	racecart1->AddAll(7.5f, 0.0f, 5.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f);
+	racecart2->AddAll(7.5f, 0.0f, -5.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f);
+	racecart3->AddAll(7.5f, 0.0f, 10.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f);
+
+
+	racecart1->SetXModel(xModel);
+	racecart2->SetXModel(xModel);
+	racecart3->SetXModel(xModel);
 
 	RaceScene* raceScene = new RaceScene();
-	raceScene->AddEntity(entity);
 	raceScene->AddEntity(racecart);
-	raceScene->AddEntity(entity3);
-	raceScene->AddEntity(entity4);
+	raceScene->AddEntity(racecart1);
+	raceScene->AddEntity(racecart2);
+	raceScene->AddEntity(racecart3);
 
 	pengine::EntityCamera* camera = new pengine::EntityCamera();
-	camera->AddPosition(0.0f, 20.0f, 0.1f);
 	camera->useInput = false;
 	raceScene->SetCurrentCamera(camera);
 	raceScene->SetRaceCart(racecart);

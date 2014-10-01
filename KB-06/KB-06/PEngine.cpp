@@ -3,6 +3,10 @@
 #include "DirectInputDeviceFactory.h"
 #include "DirectXRenderer.h"
 
+#include <chrono>
+#include <ctime>
+#include <ratio>
+
 pengine::PEngine::PEngine()
 {
 	logger = LoggerPool::GetInstance().GetLogger();
@@ -79,7 +83,7 @@ void pengine::PEngine::AddSceneFactory(char* key, SceneFactory* sceneFactory){
 }
 
 pengine::Scene* pengine::PEngine::AddScene(char* sceneFactory){
-	return sceneManager->AddScene(sceneFactory);
+	return sceneManager->SetScene(sceneFactory);
 }
 
 void pengine::PEngine::SetCurrentScene(Scene* scene){
@@ -98,14 +102,22 @@ void pengine::PEngine::GameLoop(){
 	color.g = 0.25f;
 	color.b = 1.0f;
 	color.a = 1.0f;
-
+	double t = 0.0;
+	std::chrono::high_resolution_clock::time_point currentTime = std::chrono::high_resolution_clock::now();
 	while (GetWindowManager()->HasActiveWindow())
 	{
+		std::chrono::high_resolution_clock::time_point newTime = std::chrono::high_resolution_clock::now();
+		float deltaTime = std::chrono::duration_cast<std::chrono::duration<float>>(newTime - currentTime).count();
+		currentTime = std::chrono::high_resolution_clock::now();
+		
+		const int fps = 1 / deltaTime;
+
+		GetWindowManager()->GetLastWindow()->SetTitle(("fps: " + std::to_string(fps)).c_str());
 		GetWindowManager()->UpdateWindows();
 
 		// Logics
 		std::map<pengine::Input, long>* actions = GetInputManager()->GetCurrentActions();
-		GetSceneManager()->UpdateActiveScene(1.0f, actions);
+		GetSceneManager()->UpdateActiveScene(deltaTime, actions);
 
 		// Visuals
 		GetRenderer()->ClearScene(0UL, 0UL, color, 1.0f, 0UL);

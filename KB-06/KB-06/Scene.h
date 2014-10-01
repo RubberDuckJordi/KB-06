@@ -7,6 +7,8 @@
 #include "Renderer.h"
 #include "LoggerPool.h"
 #include "Input.h"
+#include "SceneCallback.h"
+#include <functional>
 
 namespace pengine
 {
@@ -21,6 +23,8 @@ namespace pengine
 
 		EntityCamera* GetCurrentCamera();
 		void SetCurrentCamera(EntityCamera* camera);
+		void SetSceneCallback(SceneCallback* callback);
+		SceneCallback* callback;
 	protected:
 		std::list<Entity*> entities;
 		EntityCamera* currentCamera;

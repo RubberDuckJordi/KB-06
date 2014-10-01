@@ -26,7 +26,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	pEngine.Init();
 
 	pEngine.GetWindowManager()->AddWindowListener(pEngine.GetInputManager());
-	pEngine.GetWindowManager()->NewWindow(10, 10, 500, 500);
+	pEngine.GetWindowManager()->NewWindow(750, 750, 500, 500);
 	pEngine.GetRenderer()->InitD3D(pEngine.GetWindowManager()->GetLastWindow()->GetHWND());
 	pEngine.InitSkybox(pEngine.GetRenderer(), "resources/grass.jpg");
 	pEngine.GetResourceManager()->AddMeshLoader(new pengine::ObjMeshLoader());
@@ -53,10 +53,11 @@ int _tmain(int argc, _TCHAR* argv[])
 	IO_Model_X* loader = new IO_Model_X();
 	Model3D* model = new Model3D();
 	loader->Load("resources/tiny/tiny_4anim.x", model);
+	model->ConcatenateMeshes();
 
 	Object3D MyObject;
 	MyObject.SetupModel(model);
-	unsigned short int index = 0;
+	unsigned short int index = 2;
 	MyObject.MapAnimationSet(index);
 	//We set the interval of animation in steps
 	MyObject.SetAnimationStep(80);
@@ -70,7 +71,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	sceneFactory->SetXModel2(xmodel2);
 
 	pEngine.GetSceneManager()->AddSceneFactory("iets", sceneFactory);
-	pengine::Scene* scene = pEngine.GetSceneManager()->AddScene("iets");
+	pengine::Scene* scene = pEngine.GetSceneManager()->SetScene("iets");
 	pEngine.GetSceneManager()->SetCurrentScene(scene);
 
 	pEngine.GetRenderer()->SetProjectionMatrix(M_PI / 4, 100.0f);
@@ -92,19 +93,28 @@ int _tmain(int argc, _TCHAR* argv[])
 
 		pEngine.GetRenderer()->SetLights();
 		pEngine.GetSceneManager()->RenderActiveScene(pEngine.GetRenderer());
-		pengine::RenderMatrix* aMatrix = new pengine::RenderMatrix();
-		aMatrix->CreateMatrix(0.0f, -25.0f, 0.0f, 0.0f, -90.0f, 0.0f, 0.001f, 0.001f, 0.001f, aMatrix->theMatrix);
+		
 		typedef std::map<pengine::Input, long>::iterator it_type;
 		for (it_type iterator = (*actions).begin(); iterator != (*actions).end(); iterator++)
 		{
 			switch (iterator->first)
 			{
 			case pengine::Input::KEY_HOME:
-				MyObject.Update();
+				MyObject.ClearSkinnedVertices();
+				MyObject.UpdateAnimation();
+				//logger->LogAll(0, "finalmatrix: ");
+				break;
+			case pengine::Input::KEY_ADD:
+				++index;
+				MyObject.MapAnimationSet(index);
+				//logger->LogAll(0, "finalmatrix: ");
+				break;
+			default:
 				break;
 			}
 		}
-		//MyObject.Update();
+		pengine::RenderMatrix* aMatrix = new pengine::RenderMatrix();
+		aMatrix->CreateMatrix(0.0f, -25.0f, 0.0f, 0.0f, -90.0f, 0.0f, 0.1f, 0.1f, 0.1f, aMatrix->theMatrix);
 		pEngine.GetRenderer()->SetActiveMatrix(aMatrix->theMatrix);
 		MyObject.Draw(pEngine.GetRenderer());
 		pEngine.GetSkyBox()->Draw(pEngine.GetRenderer());

@@ -145,5 +145,5 @@ void pengine::Entity::UpdateLogic(float deltaTime, std::map<pengine::Input, long
 
 		AddPosition(xDelta, yDelta, zDelta);
 	}
-	
+
 }

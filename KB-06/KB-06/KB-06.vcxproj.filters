@@ -370,6 +370,9 @@
     <ClInclude Include="Skybox.h">
       <Filter>Header\Resource\SkyBox</Filter>
     </ClInclude>
+    <ClInclude Include="SceneCallback.h">
+      <Filter>Header\Scene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
