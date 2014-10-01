@@ -61,7 +61,7 @@ void racer::RaceCart::Draw(pengine::Renderer* renderer)
 		int textureCount;
 		xModel->GetTextures(textureWrapper, textureCount);
 
-		renderer->SetMaterial(materialWrapper);
+		renderer->SetMaterialWrapper(materialWrapper);
 		renderer->SetTexture(textureWrapper);
 		renderer->DrawSubset(xModel->GetMesh(), 0);
 	}
