@@ -84,80 +84,6 @@ namespace pengine
 		myCachedMatrix->CreateMatrix(position.x, position.y, position.z, rotation.x, rotation.y, rotation.z, scale.x, scale.y, scale.z, myCachedMatrix->theMatrix);
 	}
 
-<<<<<<< HEAD
-void pengine::Entity::AddAll(float x, float y, float z, float yaw, float pitch, float roll, float scaleX, float scaleY, float scaleZ)
-{
-	position.x += x;
-	position.y += y;
-	position.z += z;
-	rotation.x += yaw;
-	rotation.y += pitch;
-	rotation.z += roll;
-	scale.x += scaleX;
-	scale.y += scaleY;
-	scale.z += scaleZ;
-	myCachedMatrix->CreateMatrix(position.x, position.y, position.z, rotation.x, rotation.y, rotation.z, scale.x, scale.y, scale.z, myCachedMatrix->theMatrix);
-}
-
-void pengine::Entity::SetMass(float p_mass)
-{
-	mass = p_mass;
-}
-
-float pengine::Entity::GetMass()
-{
-	return mass;
-}
-
-void pengine::Entity::SetFriction(float p_friction)
-{
-	friction = p_friction;
-}
-
-void pengine::Entity::AddFriction(float p_friction)
-{
-	friction += p_friction;
-}
-
-float pengine::Entity::GetFriction()
-{
-	return friction;
-}
-
-Vector3* pengine::Entity::GetMovementVector()
-{
-	return &movementVector;
-}
-
-void pengine::Entity::SetMovementVector(Vector3* p_movementDirection)
-{
-	movementVector = *p_movementDirection;
-}
-
-void pengine::Entity::AddForce(Vector3* p_direction)
-{
-	// mass
-	movementVector = *p_direction;
-}
-
-
-void pengine::Entity::UpdateLogic(float deltaTime, std::map<pengine::Input, long>* actions)
-{
-
-	float xDelta = (deltaTime * sin((M_PI / 180) *  movementVector.x));
-	float zDelta = (deltaTime *  cos((M_PI / 180) * (movementVector.y))) * (cos((M_PI / 180) * movementVector.x));
-	//TODO Y axis
-
-	AddPosition(xDelta, 0.0f, zDelta);
-}
-=======
-	void Entity::AddScale(float scaleX, float scaleY, float scaleZ)
-	{
-		scale.x += scaleX;
-		scale.y += scaleY;
-		scale.z += scaleZ;
-		myCachedMatrix->CreateMatrix(position.x, position.y, position.z, rotation.x, rotation.y, rotation.z, scale.x, scale.y, scale.z, myCachedMatrix->theMatrix);
-	}
 
 	void Entity::AddAll(float x, float y, float z, float yaw, float pitch, float roll, float scaleX, float scaleY, float scaleZ)
 	{
@@ -173,29 +99,9 @@ void pengine::Entity::UpdateLogic(float deltaTime, std::map<pengine::Input, long
 		myCachedMatrix->CreateMatrix(position.x, position.y, position.z, rotation.x, rotation.y, rotation.z, scale.x, scale.y, scale.z, myCachedMatrix->theMatrix);
 	}
 
-	void Entity::SetVelocity(float p_velocity)
-	{
-		velocity = p_velocity;
-	}
-
-	void Entity::SetForce(float p_force)
-	{
-		force = p_force;
-	}
-
 	void Entity::SetMass(float p_mass)
 	{
 		mass = p_mass;
-	}
-
-	float Entity::GetVelocity()
-	{
-		return velocity;
-	}
-
-	float Entity::GetForce()
-	{
-		return force;
 	}
 
 	float Entity::GetMass()
@@ -203,17 +109,45 @@ void pengine::Entity::UpdateLogic(float deltaTime, std::map<pengine::Input, long
 		return mass;
 	}
 
-	void Entity::UpdateLogic(float deltaTime, std::map<Input, long>* actions)
+	void Entity::SetFriction(float p_friction)
 	{
-		velocity += (force / mass) * deltaTime;
-		if (velocity != 0.0f)
-		{
-			float xDelta = (velocity * sin((M_PI / 180)*+rotation.x));
-			float yDelta = (velocity * sin((M_PI / 180)*(rotation.y))) * (cos((M_PI / 180)*rotation.x));
-			float zDelta = (velocity * cos((M_PI / 180)*(rotation.y))) * (cos((M_PI / 180)*rotation.x));
+		friction = p_friction;
+	}
 
-			AddPosition(xDelta, yDelta, zDelta);
-		}
+	void Entity::AddFriction(float p_friction)
+	{
+		friction += p_friction;
+	}
+
+	float Entity::GetFriction()
+	{
+		return friction;
+	}
+
+	Vector3* Entity::GetMovementVector()
+	{
+		return &movementVector;
+	}
+
+	void Entity::SetMovementVector(Vector3* p_movementDirection)
+	{
+		movementVector = *p_movementDirection;
+	}
+
+	void Entity::AddForce(Vector3* p_direction)
+	{
+		// mass
+		movementVector = *p_direction;
+	}
+
+
+	void Entity::UpdateLogic(float deltaTime, std::map<pengine::Input, long>* actions)
+	{
+
+		float xDelta = (deltaTime * sin((M_PI / 180) *  movementVector.x));
+		float zDelta = (deltaTime *  cos((M_PI / 180) * (movementVector.y))) * (cos((M_PI / 180) * movementVector.x));
+		//TODO Y axis
+
+		AddPosition(xDelta, 0.0f, zDelta);
 	}
 }
->>>>>>> origin/master

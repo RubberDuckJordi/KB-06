@@ -49,17 +49,13 @@ namespace pengine
 		Vertex rotation;
 		Vertex scale;
 
-		Logger* logger;//Really? We keep track of a pointer to a logger in every entity? Isn't that what the singleton loggerpool is for?
-
 		float mass = 1.0f;
 		float friction = 1.0f;
 		float force = 0.0f;
 		Vector3 movementVector;
 
-<<<<<<< HEAD
-=======
+
 		Logger* logger;
->>>>>>> origin/master
 	};
 }
 #endif
