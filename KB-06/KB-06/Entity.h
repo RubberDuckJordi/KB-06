@@ -30,6 +30,8 @@ namespace pengine
 		void AddForce(Vector3*);
 		void SetMass(float);
 
+		void AddForceForward(float);
+
 		float GetFriction();
 		float GetMass();
 		Vector3* GetMovementVector();
@@ -51,7 +53,6 @@ namespace pengine
 
 		float mass = 1.0f;
 		float friction = 1.0f;
-		float force = 0.0f;
 		Vector3 movementVector;
 
 

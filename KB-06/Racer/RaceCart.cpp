@@ -12,31 +12,30 @@ racer::RaceCart::~RaceCart()
 
 void racer::RaceCart::UpdateLogic(float deltaTime, std::map<pengine::Input, long>* actions)
 {
-	force = 0.0f;
-
 	if (controllable)
 	{
 		typedef std::map<pengine::Input, long>::iterator it_type;
 		for (it_type iterator = (*actions).begin(); iterator != (*actions).end(); ++iterator)
 		{
 			float speed = static_cast<float>(iterator->second);
-			Vector3* vector = new Vector3(0.0f, 0.0f, 0.0f);
-
+			Vector3 collision = *new Vector3(5.0f, 0.0f, 0.0f);
 			switch (iterator->first)
 			{
 			case pengine::Input::KEY_S:
-				vector->x = -0.5f;
-				AddForce(vector);
+				AddForceForward(-1.0f);
 				break;
 			case pengine::Input::KEY_W:
-				vector->x = 0.5f;
-				AddForce(vector);
+				AddForceForward(1.0f);
 				break;
 			case pengine::Input::KEY_D:
 				this->AddRotation(2.0f, 0.0f, 0.0f);
 				break;
 			case pengine::Input::KEY_A:
 				this->AddRotation(-2.0f, 0.0f, 0.0f);
+				break;
+			case pengine::Input::KEY_0:
+				// Imaginary collision
+				AddForce(&collision);
 				break;
 			default:
 				break;

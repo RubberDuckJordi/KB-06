@@ -136,18 +136,33 @@ namespace pengine
 
 	void Entity::AddForce(Vector3* p_direction)
 	{
-		// mass
-		movementVector = *p_direction;
+		// Inertia calculation
+		// Acceleration = force / mass
+		p_direction->x = p_direction->x / mass;
+		p_direction->y = p_direction->y / mass;
+		p_direction->z = p_direction->z / mass;
+
+		movementVector = movementVector + *p_direction;
+
 	}
 
 
 	void Entity::UpdateLogic(float deltaTime, std::map<pengine::Input, long>* actions)
 	{
 
-		float xDelta = (deltaTime * sin((M_PI / 180) *  movementVector.x));
-		float zDelta = (deltaTime *  cos((M_PI / 180) * (movementVector.y))) * (cos((M_PI / 180) * movementVector.x));
-		//TODO Y axis
+		float xDelta = (deltaTime * movementVector.x);
+		float zDelta = (deltaTime * movementVector.z);
+		float yDelta = (deltaTime * movementVector.y);
 
-		AddPosition(xDelta, 0.0f, zDelta);
+		AddPosition(xDelta, yDelta, zDelta);
+	}
+
+	void Entity::AddForceForward(float force)
+	{
+		Vector3 vector = *new Vector3(0.0f, 0.0f, 0.0f);
+		vector.x = (-force * sin((M_PI / 180)*+rotation.x));
+		vector.y = (-force * sin((M_PI / 180)*(rotation.y))) * (cos((M_PI / 180)*rotation.x));
+		vector.z = (-force* cos((M_PI / 180)*(rotation.y))) * (cos((M_PI / 180)*rotation.x));
+		AddForce(&vector);
 	}
 }
