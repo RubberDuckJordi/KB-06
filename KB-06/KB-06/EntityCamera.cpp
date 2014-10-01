@@ -86,16 +86,16 @@ void pengine::EntityCamera::UpdateLogic(float deltaTime, std::map<Input, long>* 
 		{
 			switch (iterator->first)
 			{
-			case Input::KEY_NUMPAD2:
+			case Input::KEY_1:
 				this->AddPosition(0.0f, 0.0f, 0.5f);
 				break;
-			case Input::KEY_NUMPAD8:
+			case Input::KEY_2:
 				this->AddPosition(0.0f, 0.0f, -0.5f);
 				break;
-			case Input::KEY_NUMPAD6:
+			case Input::KEY_3:
 				this->AddPosition(-0.5f, 0.0f, 0.0f);
 				break;
-			case Input::KEY_NUMPAD4:
+			case Input::KEY_4:
 				this->AddPosition(0.5f, 0.0f, 0.0f);
 				break;
 

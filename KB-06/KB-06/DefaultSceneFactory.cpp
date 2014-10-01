@@ -58,7 +58,7 @@ pengine::Scene* pengine::DefaultSceneFactory::CreateScene()
 	defaultScene->AddEntity(entity6);
 
 	EntityCamera* camera = new EntityCamera();
-	camera->AddPosition(0.0f, 20.0f, 100.0f);
+	camera->AddPosition(0.0f, 200.0f, 0.1f);
 	camera->myMesh = mesh2;
 	camera->myMesh2 = mesh3;
 	camera->useInput = false;

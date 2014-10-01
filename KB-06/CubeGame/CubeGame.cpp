@@ -79,7 +79,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	{
 		pEngine.GetWindowManager()->UpdateWindows();
 
-		pEngine.GetSkyBox()->Draw(pEngine.GetRenderer());
+
 
 		// Logics
 		std::map<pengine::Input, long>* actions = pEngine.GetInputManager()->GetCurrentActions();
@@ -89,6 +89,7 @@ int _tmain(int argc, _TCHAR* argv[])
 		// Visuals
 		pEngine.GetRenderer()->ClearScene(0UL, 0UL, color, 1.0f, 0UL);
 		pEngine.GetRenderer()->BeginScene();
+
 		pEngine.GetRenderer()->SetLights();
 		pEngine.GetSceneManager()->RenderActiveScene(pEngine.GetRenderer());
 		pengine::RenderMatrix* aMatrix = new pengine::RenderMatrix();
@@ -106,6 +107,7 @@ int _tmain(int argc, _TCHAR* argv[])
 		//MyObject.Update();
 		pEngine.GetRenderer()->SetActiveMatrix(aMatrix->theMatrix);
 		MyObject.Draw(pEngine.GetRenderer());
+		pEngine.GetSkyBox()->Draw(pEngine.GetRenderer());
 
 		pEngine.GetRenderer()->EndScene();
 		pEngine.GetRenderer()->PresentScene(pEngine.GetWindowManager()->GetLastWindow()->GetHWND());
