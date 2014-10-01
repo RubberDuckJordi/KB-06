@@ -1,5 +1,5 @@
-#ifndef __SCENE_SCENE_H__
-#define __SCENE_SCENE_H__
+#ifndef _PENGINE_SCENE_H_
+#define _PENGINE_SCENE_H_
 
 #include <list>
 #include "Entity.h"

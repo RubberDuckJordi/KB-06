@@ -1,5 +1,5 @@
-#ifndef __INPUT_INPUTDEVICE_H__
-#define __INPUT_INPUTDEVICE_H__
+#ifndef _PENGINE_INPUTDEVICE_H_
+#define _PENGINE_INPUTDEVICE_H_
 
 #include "LoggerPool.h"
 #include "Window.h"

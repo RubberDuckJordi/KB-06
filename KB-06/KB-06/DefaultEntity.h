@@ -1,5 +1,5 @@
-#ifndef __SCENE_DEFAULT_ENTITY_H__
-#define __SCENE_DEFAULT_ENTITY_H__
+#ifndef _PENGINE_DEFAULT_ENTITY_H_
+#define _PENGINE_DEFAULT_ENTITY_H_
 
 #include "Entity.h"
 #include "Logger.h"
@@ -14,13 +14,13 @@ namespace pengine
 		~DefaultEntity();
 		void UpdateLogic(float deltaTime, std::map<Input, long>* actions);
 		void Draw(Renderer* renderer);
-		void SetMesh(Mesh* mesh);
+		//void SetMesh(Mesh* mesh);
 		float rotationMod = 0.0f;
 		void SetXModel(XModel*); //debug
 
 	private:
 		XModel* xModel; //debug
-		Mesh* myMesh;
+		//Mesh* myMesh;
 	};
 }
 #endif

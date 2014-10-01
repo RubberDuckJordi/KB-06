@@ -1,5 +1,5 @@
-#ifndef _PENGINE_H_
-#define _PENGINE_H_
+#ifndef _PENGINE_PENGINE_H_
+#define _PENGINE_PENGINE_H_
 
 #include "SceneManager.h"
 #include "InputManager.h"

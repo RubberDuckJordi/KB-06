@@ -1,5 +1,5 @@
-#ifndef _SCENELIST_H_
-#define _SCENELIST_H_
+#ifndef _PENGINE_SCENEDEFINITION_H_
+#define _PENGINE_SCENEDEFINITION_H_
 
 #include <string>
 

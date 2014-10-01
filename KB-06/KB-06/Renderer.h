@@ -1,5 +1,5 @@
-#ifndef _RENDERER_RENDERER_H_
-#define _RENDERER_RENDERER_H_
+#ifndef _PENGINE_RENDERER_H_
+#define _PENGINE_RENDERER_H_
 
 #include "PengineDefinitions.h"
 #include "MaterialWrapper.h"
@@ -7,7 +7,6 @@
 #include "MeshWrapper.h"
 #include "VertexBufferWrapper.h"
 #include "IndexBufferWrapper.h"
-#include "Mesh.h"
 #include "LoggerPool.h"
 #include "RGBAColor.h"
 #include "RenderMatrix.h"
@@ -42,13 +41,13 @@ namespace pengine
 		virtual void SetTexture(TextureWrapper* wrapper) = 0;
 		virtual void SetFvF(DWORD* fvf) = 0;
 
-		virtual void DrawPrimitive(Mesh mesh) = 0;
+		//virtual void DrawPrimitive(Mesh mesh) = 0;
 		virtual void DrawSubset(MeshWrapper* wrapper, int subset) = 0;
 
 		virtual void SetStreamSource() = 0; //??
 		virtual void SetIndices() = 0; //??
 
-		virtual void Draw(Mesh* mesh) = 0;
+		//virtual void Draw(Mesh* mesh) = 0;
 		virtual void SetActiveMatrix(PEngineMatrix* matrix) = 0;
 
 		virtual void SetLights() = 0;

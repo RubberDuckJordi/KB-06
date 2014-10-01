@@ -28,12 +28,12 @@ pengine::Scene* pengine::DefaultSceneFactory::CreateScene()
 	entity5->AddAll(0.0f, 0.0f, -7.5f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f);
 	entity6->AddAll(0.0f, 0.0f, 7.5f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f);
 
-	entity->SetMesh(mesh);
+	/*entity->SetMesh(mesh);
 	entity2->SetMesh(mesh);
 	entity3->SetMesh(mesh);
 	entity4->SetMesh(mesh);
 	entity5->SetMesh(mesh);
-	entity6->SetMesh(mesh);
+	entity6->SetMesh(mesh);*/
 
 	entity->SetXModel(xModel);
 	entity2->SetXModel(xModel);
@@ -59,15 +59,15 @@ pengine::Scene* pengine::DefaultSceneFactory::CreateScene()
 
 	EntityCamera* camera = new EntityCamera();
 	camera->AddPosition(0.0f, 0.0f, 100.0f);
-	camera->myMesh = mesh2;
-	camera->myMesh2 = mesh3;
+	/*camera->myMesh = mesh2;
+	camera->myMesh2 = mesh3;*/
 	camera->useInput = false;
 	defaultScene->SetCurrentCamera(camera);
 
 	EntityCamera* camera2 = new EntityCamera();//this is a testing camera
 	camera2->AddPosition(0.0f, 0.0f, 0.0f);
-	camera2->myMesh = mesh2;
-	camera2->myMesh2 = mesh3;
+	/*camera2->myMesh = mesh2;
+	camera2->myMesh2 = mesh3;*/
 	camera2->SetXModel(xModel2);
 	camera2->useInput = true;
 
@@ -77,20 +77,20 @@ pengine::Scene* pengine::DefaultSceneFactory::CreateScene()
 	return defaultScene;
 }
 
-void pengine::DefaultSceneFactory::setMesh(pengine::Mesh* p_mesh)
-{
-	mesh = p_mesh;
-}
+//void pengine::DefaultSceneFactory::setMesh(pengine::Mesh* p_mesh)
+//{
+//	mesh = p_mesh;
+//}
 
-void pengine::DefaultSceneFactory::setMesh2(pengine::Mesh* p_mesh)
-{
-	mesh2 = p_mesh;
-}
-
-void pengine::DefaultSceneFactory::setMesh3(pengine::Mesh* p_mesh)
-{
-	mesh3 = p_mesh;
-}
+//void pengine::DefaultSceneFactory::setMesh2(pengine::Mesh* p_mesh)
+//{
+//	mesh2 = p_mesh;
+//}
+//
+//void pengine::DefaultSceneFactory::setMesh3(pengine::Mesh* p_mesh)
+//{
+//	mesh3 = p_mesh;
+//}
 
 void pengine::DefaultSceneFactory::SetXModel(pengine::XModel* p_xModel)
 {

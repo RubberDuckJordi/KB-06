@@ -1,5 +1,5 @@
-#ifndef __INPUT_DIRECTMOUSE_H__
-#define __INPUT_DIRECTMOUSE_H__
+#ifndef _PENGINE_DIRECTMOUSE_H_
+#define _PENGINE_DIRECTMOUSE_H_
 
 #include "DirectInputDevice.h"
 #include "LoggerPool.h"

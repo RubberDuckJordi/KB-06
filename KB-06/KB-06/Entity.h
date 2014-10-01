@@ -1,5 +1,5 @@
-#ifndef __SCENE_ENTITY_H__
-#define __SCENE_ENTITY_H__
+#ifndef _PENGINE_ENTITY_H_
+#define _PENGINE_ENTITY_H_
 
 #include "Renderer.h"
 #include "Vertex.h"

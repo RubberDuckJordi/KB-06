@@ -149,10 +149,10 @@ void pengine::DirectXRenderer::SetFvF(PENGINEDWORD* fvf)
 	g_pd3dDevice->SetFVF(*fvf);
 }
 
-void pengine::DirectXRenderer::DrawPrimitive(pengine::Mesh mesh)
+/*void pengine::DirectXRenderer::DrawPrimitive(pengine::Mesh mesh)
 {
 	//g_pd3dDevice->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, mesh.vertices.size, 0, mesh.faceDefinitions.size * 3);
-}
+}*/
 
 void pengine::DirectXRenderer::DrawSubset(MeshWrapper* wrapper, int subset)
 {
@@ -175,7 +175,7 @@ LPDIRECT3DDEVICE9* pengine::DirectXRenderer::GetDevice()
 	return &g_pd3dDevice;
 }
 
-void pengine::DirectXRenderer::Draw(pengine::Mesh* mesh)
+/*void pengine::DirectXRenderer::Draw(pengine::Mesh* mesh)
 {
 	if (meshCache.find(mesh) == meshCache.end())
 	{
@@ -260,9 +260,9 @@ void pengine::DirectXRenderer::Draw(pengine::Mesh* mesh)
 		SetTexture(&mesh->subsets.at(i).defaultMaterial.defaultTexture);
 		meshCache[mesh]->DrawSubset(i);
 	}
-}
+}*/
 
-void pengine::DirectXRenderer::SetTexture(pengine::BinaryData* texture)
+/*void pengine::DirectXRenderer::SetTexture(pengine::BinaryData* texture)
 {
 	if (textureCache.find(texture) == textureCache.end())
 	{
@@ -274,9 +274,9 @@ void pengine::DirectXRenderer::SetTexture(pengine::BinaryData* texture)
 		logger->Log(Logger::DEBUG, "Texture \"" + texture->fileName + "\" converted to LPDIRECT3DTEXTURE9.");
 	}
 	g_pd3dDevice->SetTexture(0, textureCache[texture]);
-}
+}*/
 
-void pengine::DirectXRenderer::SetMaterial(pengine::Material* material)
+/*void pengine::DirectXRenderer::SetMaterial(pengine::Material* material)
 {
 	D3DMATERIAL9 mat;
 	mat.Ambient.r = material->ambientColor.r;
@@ -293,7 +293,7 @@ void pengine::DirectXRenderer::SetMaterial(pengine::Material* material)
 	mat.Power = material->specularWeight;
 
 	g_pd3dDevice->SetMaterial(&mat);
-}
+}*/
 
 void pengine::DirectXRenderer::SetActiveMatrix(PEngineMatrix* matrix)
 {

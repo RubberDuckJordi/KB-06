@@ -103,7 +103,7 @@ void pengine::PEngine::GameLoop(){
 		float deltaTime = std::chrono::duration_cast<std::chrono::duration<float>>(newTime - currentTime).count();
 		currentTime = std::chrono::high_resolution_clock::now();
 		
-		const int fps = 1 / deltaTime;
+		const int fps = int(1 / deltaTime);
 
 		GetWindowManager()->GetLastWindow()->SetTitle(("fps: " + std::to_string(fps)).c_str());
 		GetWindowManager()->UpdateWindows();

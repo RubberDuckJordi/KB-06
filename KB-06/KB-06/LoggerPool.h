@@ -1,5 +1,5 @@
-#ifndef _LOGGER_LOGGERPOOL_H_
-#define _LOGGER_LOGGERPOOL_H_
+#ifndef _PENGINE_LOGGERPOOL_H_
+#define _PENGINE_LOGGERPOOL_H_
 
 #include "logger.h"
 #include <list>

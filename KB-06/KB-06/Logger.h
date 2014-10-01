@@ -1,5 +1,5 @@
-#ifndef _LOGGER_LOGGER_H_
-#define _LOGGER_LOGGER_H_
+#ifndef _PENGINE_LOGGER_H_
+#define _PENGINE_LOGGER_H_
 
 #include <string>
 #include <windows.h>

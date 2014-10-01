@@ -1,5 +1,5 @@
-#ifndef _RESOURCE_BINARYDATA_H_
-#define _RESOURCE_BINARYDATA_H_
+#ifndef _PENGINE_BINARYDATA_H_
+#define _PENGINE_BINARYDATA_H_
 
 namespace pengine
 {
