@@ -104,29 +104,9 @@ void pengine::Entity::AddAll(float x, float y, float z, float yaw, float pitch, 
 	myCachedMatrix->CreateMatrix(position.x, position.y, position.z, rotation.x, rotation.y, rotation.z, scale.x, scale.y, scale.z, myCachedMatrix->theMatrix);
 }
 
-void pengine::Entity::SetVelocity(float p_velocity)
-{
-	velocity = p_velocity;
-}
-
-void pengine::Entity::SetForce(float p_force)
-{
-	force = p_force;
-}
-
 void pengine::Entity::SetMass(float p_mass)
 {
 	mass = p_mass;
-}
-
-float pengine::Entity::GetVelocity()
-{
-	return velocity;
-}
-
-float pengine::Entity::GetForce()
-{
-	return force;
 }
 
 float pengine::Entity::GetMass()
@@ -134,16 +114,44 @@ float pengine::Entity::GetMass()
 	return mass;
 }
 
+void pengine::Entity::SetFriction(float p_friction)
+{
+	friction = p_friction;
+}
+
+void pengine::Entity::AddFriction(float p_friction)
+{
+	friction += p_friction;
+}
+
+float pengine::Entity::GetFriction()
+{
+	return friction;
+}
+
+Vector3* pengine::Entity::GetMovementVector()
+{
+	return &movementVector;
+}
+
+void pengine::Entity::SetMovementVector(Vector3* p_movementDirection)
+{
+	movementVector = *p_movementDirection;
+}
+
+void pengine::Entity::AddForce(Vector3* p_direction)
+{
+	// mass
+	movementVector = *p_direction;
+}
+
+
 void pengine::Entity::UpdateLogic(float deltaTime, std::map<pengine::Input, long>* actions)
 {
-	velocity += (force / mass) * deltaTime;
-	if (velocity != 0.0f)
-	{
-		float xDelta = (velocity * sin((M_PI / 180)*+rotation.x));
-		float yDelta = (velocity * sin((M_PI / 180)*(rotation.y))) * (cos((M_PI / 180)*rotation.x));
-		float zDelta = (velocity * cos((M_PI / 180)*(rotation.y))) * (cos((M_PI / 180)*rotation.x));
 
-		AddPosition(xDelta, yDelta, zDelta);
-	}
+	float xDelta = (deltaTime * sin((M_PI / 180) *  movementVector.x));
+	float zDelta = (deltaTime *  cos((M_PI / 180) * (movementVector.y))) * (cos((M_PI / 180) * movementVector.x));
+	//TODO Y axis
 
+	AddPosition(xDelta, 0.0f, zDelta);
 }

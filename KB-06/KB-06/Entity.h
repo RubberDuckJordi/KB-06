@@ -5,6 +5,7 @@
 #include "Vertex.h"
 #include "logger.h"
 #include "Input.h"
+#include "Vector3.h"
 
 namespace pengine
 {
@@ -23,13 +24,15 @@ namespace pengine
 		Vertex* GetRotation();
 		Vertex* GetScale();
 
-		void SetVelocity(float);
-		void SetForce(float);
+		void SetMovementVector(Vector3*);
+		void SetFriction(float);
+		void AddFriction(float);
+		void AddForce(Vector3*);
 		void SetMass(float);
 
-		float GetVelocity();
-		float GetForce();
+		float GetFriction();
 		float GetMass();
+		Vector3* GetMovementVector();
 
 		void AddPosition(float x, float y, float z);//No need for a seperate substract for all these, as you can add negative values to substract
 		void AddRotation(float yaw, float pitch, float roll);
@@ -40,17 +43,19 @@ namespace pengine
 		virtual void UpdateLogic(float deltaTime, std::map<Input, long>* actions);
 
 	protected:
+
+		RenderMatrix* myCachedMatrix;
 		Vertex position;
 		Vertex rotation;
 		Vertex scale;
 
-		float velocity = 0.0f;
-		float force = 0.0f;
-		float mass = 1.0f;
-
-		RenderMatrix* myCachedMatrix;
-
 		Logger* logger;//Really? We keep track of a pointer to a logger in every entity? Isn't that what the singleton loggerpool is for?
+
+		float mass = 1.0f;
+		float friction = 1.0f;
+		float force = 0.0f;
+		Vector3 movementVector;
+
 	};
 }
 #endif

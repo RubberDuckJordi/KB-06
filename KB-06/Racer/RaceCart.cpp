@@ -20,14 +20,17 @@ void racer::RaceCart::UpdateLogic(float deltaTime, std::map<pengine::Input, long
 		for (it_type iterator = (*actions).begin(); iterator != (*actions).end(); ++iterator)
 		{
 			float speed = static_cast<float>(iterator->second);
+			Vector3* vector = new Vector3(0.0f, 0.0f, 0.0f);
 
 			switch (iterator->first)
 			{
 			case pengine::Input::KEY_S:
-				force = 0.2f;
+				vector->x = -0.5f;
+				AddForce(vector);
 				break;
 			case pengine::Input::KEY_W:
-				force = -0.2f;
+				vector->x = 0.5f;
+				AddForce(vector);
 				break;
 			case pengine::Input::KEY_D:
 				this->AddRotation(2.0f, 0.0f, 0.0f);
