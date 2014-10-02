@@ -149,7 +149,9 @@ namespace pengine
 
 	void Entity::UpdateLogic(float deltaTime, std::map<pengine::Input, long>* actions)
 	{
+		// Ground friction
 		ApplyFriction(friction);
+		ApplyFriction(friction * 0.05f * movementVector.GetMagnitude());
 
 		float xDelta = (deltaTime * movementVector.x);
 		float zDelta = (deltaTime * movementVector.z);

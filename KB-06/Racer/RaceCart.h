@@ -23,6 +23,7 @@ namespace racer
 		
 		void Brake(float percentage);
 		void Throttle(float percentage);
+		void Steer(float percentage);
 
 	private:
 		float horsePower = 10;

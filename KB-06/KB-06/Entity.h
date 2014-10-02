@@ -53,7 +53,7 @@ namespace pengine
 		Vertex scale;
 
 		float mass = 1.0f;
-		float friction = 1.0f;
+		float friction = 0.5f;
 		Vector3 movementVector;
 
 		Logger* logger;
