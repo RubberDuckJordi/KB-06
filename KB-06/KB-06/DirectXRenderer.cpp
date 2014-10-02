@@ -48,11 +48,45 @@ void pengine::DirectXRenderer::CreateWICImagingFactory()
 	CoCreateInstance(CLSID_WICImagingFactory, NULL, CLSCTX_INPROC_SERVER, __uuidof(IWICImagingFactory), (void**)(&iwicFactory));
 }
 
+/*
+
+// Create and display a C style string, and then use it
+// to create different kinds of strings.
+char *orig = "Hello, World!";
+cout << orig << " (char *)" << endl;
+
+// newsize describes the length of the
+// wchar_t string called wcstring in terms of the number
+// of wide characters, not the number of bytes.
+size_t newsize = strlen(orig) + 1;
+
+// The following creates a buffer large enough to contain
+// the exact number of characters in the original string
+// in the new format. If you want to add more characters
+// to the end of the string, increase the value of newsize
+// to increase the size of the buffer.
+wchar_t * wcstring = new wchar_t[newsize];
+
+// Convert char* string to a wchar_t* string.
+size_t convertedChars = 0;
+mbstowcs_s(&convertedChars, wcstring, newsize, orig, _TRUNCATE);
+// Display the result and indicate the type of string that it is.
+wcout << wcstring << _T(" (wchar_t *)") << endl;
+*/
+
 void pengine::DirectXRenderer::CreateDecoder(std::string path)
 {
+	size_t newSize = strlen(path.c_str()) + 1;
+
+	wchar_t* wPath = new wchar_t[newSize];
+
+	size_t convertedCharacters = 0;
+
+	mbstowcs_s(&convertedCharacters, wPath, newSize, path.c_str(), _TRUNCATE);
+
 	iwicBmpDecoder = NULL;
 	iwicFactory->CreateDecoderFromFilename(
-		path.c_str(),                      // Image to be decoded
+		wPath,                      // Image to be decoded
 		NULL,                            // Do not prefer a particular vendor
 		GENERIC_READ,                    // Desired read access to the file
 		WICDecodeMetadataCacheOnDemand,  // Cache metadata when needed
