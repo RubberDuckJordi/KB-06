@@ -26,7 +26,7 @@ int main(int argc, const char* argv[])
 	xmodelLoader->LoadXModel("resources/tiger.x", static_cast<pengine::DirectXRenderer*>(pEngine.GetRenderer()), xmodel);
 
 	pengine::XModel* xmodel2 = new pengine::XModel();
-	xmodelLoader->LoadXModel("resources/camera.x", static_cast<pengine::DirectXRenderer*>(pEngine.GetRenderer()), xmodel2);
+	xmodelLoader->LoadXModel("resources/rechtdoor.x", static_cast<pengine::DirectXRenderer*>(pEngine.GetRenderer()), xmodel2);
 
 	pengine::RGBAColor color;
 	color.r = 1.0f;

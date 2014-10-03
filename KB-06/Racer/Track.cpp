@@ -31,9 +31,22 @@ void Track::SetScale(float scaleX, float scaleY, float scaleZ){
 	}
 }
 
-void Track::SetAll(float x, float y, float z, float yaw, float pitch, float roll, float scaleX, float scaleY, float scaleZ){
-	pengine::Entity::SetAll(x, y, z, yaw, pitch, roll, scaleX, scaleY, scaleZ);
+void Track::SetAll(float x, float y, float z, float yaw, float pitch, float roll, float scaleX, float scaleY, float scaleZ)
+{
+	Entity::SetAll(x, y, z, yaw, pitch, roll, scaleX, scaleY, scaleZ);
 	for (auto iterator = trackBlocks.begin(); iterator != trackBlocks.end(); ++iterator) {
-		// todo
+		(*iterator)->SetAll(x + offsetX, y + offsetY, z + offsetZ, yaw, pitch, roll, scaleX, scaleY, scaleZ);
+		offsetZ -= (*iterator)->width;
 	}
+}
+
+void Track::Draw(pengine::Renderer* renderer)
+{
+	for (auto iterator = trackBlocks.begin(); iterator != trackBlocks.end(); ++iterator) {
+		(*iterator)->Draw(renderer);
+	}
+}
+
+void Track::AddTrackBlock(TrackBlock* trackBlock){
+	trackBlocks.push_back(trackBlock);
 }
