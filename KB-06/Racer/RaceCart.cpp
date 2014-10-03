@@ -120,5 +120,5 @@ void racer::RaceCart::Steer(float percentage)
 	AddRelativeForce(&vector);
 
 	// Add friction
-	ApplyFriction(percentage * 5.0f);
+	ApplyFriction(abs(percentage) * 5.0f);
 }
