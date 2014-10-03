@@ -1,10 +1,14 @@
 #include "Skybox.h"
 #include "logger.h"
+#include "DirectXRenderer.h"
 
 namespace pengine
 {
+
 	Skybox::Skybox(Renderer* renderer, std::string textureString)
 	{
+		
+
 		amountOfVertices = 24;
 		amountOfIndices = 36;
 
@@ -66,28 +70,33 @@ namespace pengine
 		*/
 
 		LPDIRECT3DDEVICE9 g_pd3dDevice = *((DirectXRenderer*)renderer)->GetDevice();
+		g_pd3dDevice->CreateVertexBuffer(amountOfVertices * sizeof(D3DCustomVertex), 0, D3DCustomVertexFVF, D3DPOOL_DEFAULT, &v_buffer, NULL);
 
+		g_pd3dDevice->CreateIndexBuffer(amountOfIndices * sizeof(int), 0, D3DFMT_INDEX32, D3DPOOL_DEFAULT, &i_buffer, NULL);
+
+		/*
 		if (FAILED(D3DXCreateMeshFVF(amountOfIndices, amountOfVertices, 0, D3DCustomVertexFVF, g_pd3dDevice, &d3dMesh)))
 		{
 			//logger->Log(Logger::ERR, "Failed to create a D3DXCreateMeshFVF. Generating a cube");
 			D3DXCreateBox(g_pd3dDevice, 1.0f, 1.0f, 1.0f, &d3dMesh, NULL);
 		}
 		else
-		{
+		*/
+		
 			void* pVoid;
 
-			d3dMesh->GetVertexBuffer(&v_buffer);
+			//d3dMesh->GetVertexBuffer(&v_buffer);
 			// lock v_buffer and load the vertices into it
 			v_buffer->Lock(0, 0, (void**)&pVoid, 0);
 			memcpy(pVoid, aSkyboxVertices, amountOfVertices * sizeof(D3DCustomVertex));
 			v_buffer->Unlock();
 
-			d3dMesh->GetIndexBuffer(&i_buffer);
+			//d3dMesh->GetIndexBuffer(&i_buffer);
 			// lock i_buffer and load the indices into it
 			i_buffer->Lock(0, 0, (void**)&pVoid, 0);
 			memcpy(pVoid, aSkyboxIndices, amountOfIndices * sizeof(int));
 			i_buffer->Unlock();
-		}
+		
 
 		LPDIRECT3DTEXTURE9* textureNew = new LPDIRECT3DTEXTURE9();
 		HRESULT result = D3DXCreateTextureFromFileA(g_pd3dDevice, textureString.c_str(), textureNew);
@@ -96,11 +105,11 @@ namespace pengine
 
 	Skybox::~Skybox()
 	{
-		/*
+		
 		v_buffer->Release();
 		i_buffer->Release();
-		d3dMesh->Release();
-		*/
+		//d3dMesh->Release();
+		
 		delete[] aSkyboxVertices;
 		delete[] aSkyboxIndices;
 	}
@@ -142,6 +151,7 @@ namespace pengine
 
 		LPDIRECT3DDEVICE9 g_pd3dDevice = *((DirectXRenderer*)renderer)->GetDevice();
 		g_pd3dDevice->SetRenderState(D3DRS_ZENABLE, false);
+		g_pd3dDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 
 		//g_pd3dDevice->SetStreamSource(0, v_buffer, 0, sizeof(D3DCustomVertex));
 		//g_pd3dDevice->SetFVF(D3DCustomVertexFVF);
@@ -154,10 +164,10 @@ namespace pengine
 		//	0,// StartIndex
 		//	amountOfIndices/3);// PrimitiveCount
 
-		LPD3DXMESH d3dMesh;
+		//LPD3DXMESH d3dMesh;
 		amountOfVertices = 24;
 		amountOfIndices = 36;
-
+		/*
 		aSkyboxVertices = new D3DCustomVertex[amountOfVertices];
 		aSkyboxVertices[0] = { -50.0f, -50.0f, 50.0f, 0.25f, 0.6666f };//front
 		aSkyboxVertices[1] = { 50.0f, -50.0f, 50.0f, 0.50f, 0.6666f };
@@ -199,15 +209,18 @@ namespace pengine
 		aSkyboxIndices[30] = 20; aSkyboxIndices[31] = 21; aSkyboxIndices[32] = 22;//bottom
 		aSkyboxIndices[33] = 20; aSkyboxIndices[34] = 22; aSkyboxIndices[35] = 23;
 
-		//logger->LogAll(0, "Amount of vertices: ", amountOfVertices, ", faces:", _Mesh->_nFaces, ", indices: ", amountOfIndices);
+        */
 
+		//logger->LogAll(0, "Amount of vertices: ", amountOfVertices, ", faces:", _Mesh->_nFaces, ", indices: ", amountOfIndices);
+		/*
 		if (FAILED(D3DXCreateMeshFVF(amountOfIndices, amountOfVertices, 0, D3DCustomVertexFVF, g_pd3dDevice, &d3dMesh)))
 		{
 			//logger->Log(Logger::ERR, "Failed to create a D3DXCreateMeshFVF. Generating a cube");
 			D3DXCreateBox(g_pd3dDevice, 1.0f, 1.0f, 1.0f, &d3dMesh, NULL);
 		}
 		else
-		{
+			*/
+		
 			D3DCustomVertex* d3dVertices = new D3DCustomVertex[amountOfVertices];
 			unsigned short* indices = new unsigned short[amountOfIndices];
 
@@ -229,19 +242,8 @@ namespace pengine
 
 			void* pVoid;
 
-			LPDIRECT3DVERTEXBUFFER9 v_buffer;
-			d3dMesh->GetVertexBuffer(&v_buffer);
-			// lock v_buffer and load the vertices into it
-			v_buffer->Lock(0, 0, (void**)&pVoid, 0);
-			memcpy(pVoid, d3dVertices, amountOfVertices*sizeof(D3DCustomVertex));
-			v_buffer->Unlock();
+			
 
-			LPDIRECT3DINDEXBUFFER9 i_buffer;
-			d3dMesh->GetIndexBuffer(&i_buffer);
-			// lock i_buffer and load the indices into it
-			i_buffer->Lock(0, 0, (void**)&pVoid, 0);
-			memcpy(pVoid, indices, amountOfIndices * sizeof(unsigned short));
-			i_buffer->Unlock();
 
 			g_pd3dDevice->SetStreamSource(0, v_buffer, 0, sizeof(D3DCustomVertex));
 			g_pd3dDevice->SetFVF(D3DCustomVertexFVF);
@@ -253,14 +255,15 @@ namespace pengine
 				amountOfVertices,// NumVertices
 				0,// StartIndex
 				12);// PrimitiveCount
-			v_buffer->Release();
-			i_buffer->Release();
-			d3dMesh->Release();
-			delete[] d3dVertices;
-			delete[] indices;
-		}
+			//v_buffer->Release();
+			//i_buffer->Release();
+			//d3dMesh->Release();
+			//delete[] d3dVertices;
+			//delete[] indices;
+		
 
 		(*((DirectXRenderer*)renderer)->GetDevice())->SetRenderState(D3DRS_ZENABLE, true);
+		g_pd3dDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 
 	}
 }

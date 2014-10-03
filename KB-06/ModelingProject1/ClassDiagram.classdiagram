@@ -246,58 +246,6 @@
       <class Id="4ddd44e1-d822-474b-b0c4-bda77de5196f" name="ResourceManager" isAbstract="false" isLeaf="false" isActiveClass="false">
         <elementDefinition Id="715b93e3-44b6-45dd-a804-09470469b19a" />
         <targetEnds>
-          <association Id="799c79a3-d873-45ab-8fcb-0e4646fb2082" isDerived="false" sourceEndRoleName="" targetEndRoleName="" isLeaf="false" isAbstract="false">
-            <classMoniker Id="5603c0cf-0f99-424e-8551-1b0630a44c03" LastKnownName="MeshLoader" />
-            <relationshipOwnedElementsInternal>
-              <associationHasOwnedEnds>
-                <memberEnd Id="af6f9169-b5fa-4496-8d37-5d81900793dd" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
-                  <elementDefinition Id="81c5db29-a529-4926-a596-64bffcc327cb" />
-                </memberEnd>
-              </associationHasOwnedEnds>
-              <associationHasOwnedEnds>
-                <memberEnd Id="02ee5f67-e38a-47f3-83f6-c224003c04bb" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
-                  <lowerValueInternal>
-                    <literalString Id="caa1de59-e1a8-418d-80cb-bcb8faaf5fed" name="Lower" value="*">
-                      <elementDefinition Id="dc0568ce-f55e-403f-b18d-49ee6a2c4505" />
-                    </literalString>
-                  </lowerValueInternal>
-                  <upperValueInternal>
-                    <literalString Id="cd677e87-b825-47eb-9a8c-dd18d83dab82" name="Upper" value="*">
-                      <elementDefinition Id="16a8bf0e-771d-4fa7-b5a5-035de8ca141d" />
-                    </literalString>
-                  </upperValueInternal>
-                  <elementDefinition Id="0eeb132d-c29a-4713-8539-c91c89c39dda" />
-                </memberEnd>
-              </associationHasOwnedEnds>
-            </relationshipOwnedElementsInternal>
-            <elementDefinition Id="eaec3651-3a70-46d5-b413-ff84b627d915" />
-          </association>
-          <association Id="2886824c-1fd7-4d3e-bb87-5727e5d42670" isDerived="false" sourceEndRoleName="" targetEndRoleName="" isLeaf="false" isAbstract="false">
-            <classMoniker Id="8cfd4df9-985f-4706-88e4-922ae40da717" LastKnownName="Sound" />
-            <relationshipOwnedElementsInternal>
-              <associationHasOwnedEnds>
-                <memberEnd Id="973514cc-c791-493b-8c35-0ad3dbe2f051" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
-                  <elementDefinition Id="67eb0b46-aaf1-4cea-89ff-9fa7da89605d" />
-                </memberEnd>
-              </associationHasOwnedEnds>
-              <associationHasOwnedEnds>
-                <memberEnd Id="6d05c283-257d-4742-afb9-b947776182a3" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
-                  <lowerValueInternal>
-                    <literalString Id="3c85922c-ddd4-4ddc-89b5-931763224317" name="Lower" value="*">
-                      <elementDefinition Id="4f81365d-a353-4966-9594-2090bf30e28f" />
-                    </literalString>
-                  </lowerValueInternal>
-                  <upperValueInternal>
-                    <literalString Id="5497925b-bb63-4e41-be78-fb9ed4c19b65" name="Upper" value="*">
-                      <elementDefinition Id="b7988849-7837-4c19-88ec-554250058166" />
-                    </literalString>
-                  </upperValueInternal>
-                  <elementDefinition Id="27862ed9-d035-4558-a21d-7b57afd22121" />
-                </memberEnd>
-              </associationHasOwnedEnds>
-            </relationshipOwnedElementsInternal>
-            <elementDefinition Id="69732892-0379-45fd-954e-7af94140e842" />
-          </association>
           <association Id="60a37d3e-b254-495f-8b18-b5bfc2b7efad" isDerived="false" sourceEndRoleName="" targetEndRoleName="" isLeaf="false" isAbstract="false">
             <classMoniker Id="c3c0bfc6-7006-4371-bc7e-80dfe3e444ed" LastKnownName="SceneFile" />
             <relationshipOwnedElementsInternal>
@@ -401,74 +349,6 @@
               </associationHasOwnedEnds>
             </relationshipOwnedElementsInternal>
             <elementDefinition Id="64246c98-db77-4215-926e-3872c9f07aaf" />
-          </association>
-          <association Id="118e1613-b4e7-4848-919e-6df268493756" isDerived="false" sourceEndRoleName="" targetEndRoleName="" isLeaf="false" isAbstract="false">
-            <classMoniker Id="a7f81b83-f0e0-462f-b910-9066970cc6d6" LastKnownName="SoundLoader" />
-            <relationshipOwnedElementsInternal>
-              <associationHasOwnedEnds>
-                <memberEnd Id="ed2dcfb2-660f-437b-8165-d52ddbd0ed9e" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
-                  <elementDefinition Id="bbcd976a-3156-4720-906f-3110e385e159" />
-                </memberEnd>
-              </associationHasOwnedEnds>
-              <associationHasOwnedEnds>
-                <memberEnd Id="4f3fe036-d6bd-4cd2-8fc6-9a99eaf5dc11" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
-                  <lowerValueInternal>
-                    <literalString Id="eb1a3c34-23f4-4c55-b5c5-e28936e63904" name="Lower" value="*">
-                      <elementDefinition Id="0f5769dc-f59f-4ead-8c07-c7f30d6d4a07" />
-                    </literalString>
-                  </lowerValueInternal>
-                  <upperValueInternal>
-                    <literalString Id="6b1ae06a-fd71-4728-b4d9-bb44c23acc09" name="Upper" value="*">
-                      <elementDefinition Id="4a030380-2534-41a3-af55-68ced384f0cc" />
-                    </literalString>
-                  </upperValueInternal>
-                  <elementDefinition Id="02a31ce4-f274-42c7-8e4c-9457d33ecbcd" />
-                </memberEnd>
-              </associationHasOwnedEnds>
-            </relationshipOwnedElementsInternal>
-            <elementDefinition Id="97963854-fa44-4d33-9982-765211b8501a" />
-          </association>
-          <association Id="244b7541-a591-421a-b671-f0f03e3502c8" isDerived="false" sourceEndRoleName="" targetEndRoleName="" isLeaf="false" isAbstract="false">
-            <classMoniker Id="8b43071c-ea1b-4ffd-ab44-0cebc81f955d" LastKnownName="MaterialLoader" />
-            <relationshipOwnedElementsInternal>
-              <associationHasOwnedEnds>
-                <memberEnd Id="8501cbcf-561e-4e4c-9bd3-218fde8a79e7" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
-                  <elementDefinition Id="5a94a310-a881-4e29-831a-96b8057e8f56" />
-                </memberEnd>
-              </associationHasOwnedEnds>
-              <associationHasOwnedEnds>
-                <memberEnd Id="7bcfda22-b19a-4859-bb8c-836593ae60e7" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
-                  <lowerValueInternal>
-                    <literalString Id="dcfb0d5a-d8c2-48bc-b106-f2b4d34ae004" name="Lower" value="*">
-                      <elementDefinition Id="7345291a-c09c-40c1-bbaf-713f455d51d2" />
-                    </literalString>
-                  </lowerValueInternal>
-                  <upperValueInternal>
-                    <literalString Id="532a96e7-2ffd-4a3d-938e-1bfea972010f" name="Upper" value="*">
-                      <elementDefinition Id="9853bb0f-c0ba-4e58-b487-c3e6db053bf8" />
-                    </literalString>
-                  </upperValueInternal>
-                  <elementDefinition Id="da815d30-499c-48bb-82b6-b61c5a1e9f5e" />
-                </memberEnd>
-              </associationHasOwnedEnds>
-            </relationshipOwnedElementsInternal>
-            <elementDefinition Id="841230b4-de64-4cd5-bc36-6ff6b83da2a8" />
-          </association>
-          <association Id="c8b4603f-0f59-434d-af7b-09139874e54c" isDerived="false" sourceEndRoleName="" targetEndRoleName="" isLeaf="false" isAbstract="false">
-            <classMoniker Id="2f301055-27ba-4f5c-b4c3-62e061605e37" LastKnownName="TextureLoader" />
-            <relationshipOwnedElementsInternal>
-              <associationHasOwnedEnds>
-                <memberEnd Id="7efa65ea-de4e-42e4-a202-af9bd65c3b6a" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
-                  <elementDefinition Id="dc79e8c7-baa7-4d6d-8ac8-2db9c9c277e8" />
-                </memberEnd>
-              </associationHasOwnedEnds>
-              <associationHasOwnedEnds>
-                <memberEnd Id="da9d24a8-3cce-420f-90c9-ab8f230a8c42" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
-                  <elementDefinition Id="fb1e43cc-fbbd-4f08-8aa8-e449e6976956" />
-                </memberEnd>
-              </associationHasOwnedEnds>
-            </relationshipOwnedElementsInternal>
-            <elementDefinition Id="7af26f72-87c0-4835-8c42-07f5f1d0b05f" />
           </association>
         </targetEnds>
       </class>
@@ -587,6 +467,26 @@
           <dependency Id="c9e982c3-252f-4564-b7b0-e52dfb87d232">
             <classMoniker Id="a3c5129d-473d-4bce-83ec-d9771eaea98a" LastKnownName="Window" />
             <elementDefinition Id="ff343b33-849b-41e3-b75b-4dd18c8c0daa" />
+          </dependency>
+          <dependency Id="eb03a7ab-bdad-45ef-8977-f7a92ea7309d">
+            <classMoniker Id="d9ccb4ff-aad9-442a-8196-70957c5ff7b9" LastKnownName="VertexBufferWrapper" />
+            <elementDefinition Id="afd41dee-ee24-4147-9797-d8e067ce8e76" />
+          </dependency>
+          <dependency Id="1ffdbba0-b869-41d9-b5a8-da649e1b2a52">
+            <classMoniker Id="2dc5a69b-0f58-4a90-9823-713342f82c38" LastKnownName="TextureWrapper" />
+            <elementDefinition Id="d9ca5a39-eef0-4af5-b779-258de78cc85f" />
+          </dependency>
+          <dependency Id="14ba8e2f-2412-447b-b53a-d83a7895128b">
+            <classMoniker Id="32ac6783-4d70-400e-b259-a9bbf6085790" LastKnownName="IndexBufferWrapper" />
+            <elementDefinition Id="53605cfe-48f4-4238-aad1-9126f3a96388" />
+          </dependency>
+          <dependency Id="15344418-7555-46e0-9a37-1a5d8f303fa2">
+            <classMoniker Id="05e85aa9-f29d-4960-a735-e053288fc044" LastKnownName="MaterialWrapper" />
+            <elementDefinition Id="709b22b3-10c6-4a7a-812e-25f030ca8a1e" />
+          </dependency>
+          <dependency Id="dc6fcbc9-e4f2-4f39-ba3c-4679ff94caaa">
+            <classMoniker Id="bb7f2b48-5e7f-413c-bb6b-4a5c5da490eb" LastKnownName="MeshWrapper" />
+            <elementDefinition Id="a651f362-b485-4ab6-9d04-484eff0958ca" />
           </dependency>
         </suppliersInternal>
       </class>
@@ -802,52 +702,8 @@
       </class>
     </logicalClassDesignerModelHasTypes>
     <logicalClassDesignerModelHasTypes>
-      <class Id="329da756-fd39-49c7-b760-a664ba17e60c" name="MtlLoader" isAbstract="false" isLeaf="false" isActiveClass="false">
-        <elementDefinition Id="a9c8ac50-9dc3-488d-b753-e9260d29cc95" />
-        <suppliersInternal>
-          <dependency Id="2905d188-52ef-4122-a8e3-a0310fdc7a18">
-            <classMoniker Id="dc73bae7-05dd-4b22-8f0f-7b13d98bf9ca" LastKnownName="Material" />
-            <elementDefinition Id="5f00e0a1-9b35-4a33-89a6-10191fb83a1d" />
-          </dependency>
-        </suppliersInternal>
-        <generalsInternal>
-          <generalization Id="8767a3ec-516d-4759-9f87-c0fc3c1be4c5" isSubstitutable="false">
-            <classMoniker Id="8b43071c-ea1b-4ffd-ab44-0cebc81f955d" LastKnownName="MaterialLoader" />
-            <elementDefinition Id="fcfc1c7f-298f-413b-bd08-160a3cd7f2d3" />
-          </generalization>
-        </generalsInternal>
-        <ownedAttributesInternal>
-          <property Id="875e2b20-dc19-484e-82f6-14dc9f5a3cee" name="string defaultTexture" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
-            <elementDefinition Id="4e3e4646-e59e-4150-a9bd-9790ecd8676e" />
-          </property>
-        </ownedAttributesInternal>
-      </class>
-    </logicalClassDesignerModelHasTypes>
-    <logicalClassDesignerModelHasTypes>
-      <class Id="5603c0cf-0f99-424e-8551-1b0630a44c03" name="MeshLoader" isAbstract="true" isLeaf="false" isActiveClass="false">
-        <elementDefinition Id="92cd113c-eab4-4389-b4d4-16263e91fe72" />
-      </class>
-    </logicalClassDesignerModelHasTypes>
-    <logicalClassDesignerModelHasTypes>
       <class Id="dc73bae7-05dd-4b22-8f0f-7b13d98bf9ca" name="Material" isAbstract="false" isLeaf="false" isActiveClass="false">
         <elementDefinition Id="223afeb2-ffba-432a-a4b3-e7b28494879f" />
-      </class>
-    </logicalClassDesignerModelHasTypes>
-    <logicalClassDesignerModelHasTypes>
-      <class Id="8a310cfa-1772-48ab-ab51-f93b3b0dee82" name="ObjLoader" isAbstract="false" isLeaf="false" isActiveClass="false">
-        <elementDefinition Id="0f3026db-2cd0-4028-a69e-f692d0727482" />
-        <suppliersInternal>
-          <dependency Id="bbe6fab7-70b2-43c6-bc51-6df97177c437">
-            <classMoniker Id="4120a0df-8793-436e-b785-ce8a4573a806" LastKnownName="Mesh" />
-            <elementDefinition Id="3f1355fd-4da1-44a6-b46c-c636e17244e8" />
-          </dependency>
-        </suppliersInternal>
-        <generalsInternal>
-          <generalization Id="a331da13-b853-4684-b7f2-3fc4ec89ce4a" isSubstitutable="false">
-            <classMoniker Id="5603c0cf-0f99-424e-8551-1b0630a44c03" LastKnownName="MeshLoader" />
-            <elementDefinition Id="5cf6df3a-b0ec-4499-9c49-0557d1a5beb2" />
-          </generalization>
-        </generalsInternal>
       </class>
     </logicalClassDesignerModelHasTypes>
     <logicalClassDesignerModelHasTypes>
@@ -858,11 +714,6 @@
             <elementDefinition Id="78b5f447-ccb5-44ea-a5c8-aecfef01598f" />
           </property>
         </ownedAttributesInternal>
-      </class>
-    </logicalClassDesignerModelHasTypes>
-    <logicalClassDesignerModelHasTypes>
-      <class Id="8cfd4df9-985f-4706-88e4-922ae40da717" name="Sound" isAbstract="false" isLeaf="false" isActiveClass="false">
-        <elementDefinition Id="c112788b-9509-4368-90ca-329b360f21d3" />
       </class>
     </logicalClassDesignerModelHasTypes>
     <logicalClassDesignerModelHasTypes>
@@ -884,55 +735,6 @@
     <logicalClassDesignerModelHasTypes>
       <class Id="2be06ca4-64a9-4cda-a27a-95b09ba239f9" name="Texture" isAbstract="false" isLeaf="false" isActiveClass="false">
         <elementDefinition Id="03b170d6-0dfd-472e-8cda-aa0ed5dcf6da" />
-      </class>
-    </logicalClassDesignerModelHasTypes>
-    <logicalClassDesignerModelHasTypes>
-      <class Id="fe268e96-2555-4494-86c0-677a82c6a30a" name="BMPLoader" isAbstract="false" isLeaf="false" isActiveClass="false">
-        <elementDefinition Id="a17b099a-6abf-40e6-b09d-f6cbf0f219c4" />
-        <suppliersInternal>
-          <dependency Id="6f286b89-fc05-48ff-b0f1-c5fcaa7784cb">
-            <classMoniker Id="2be06ca4-64a9-4cda-a27a-95b09ba239f9" LastKnownName="Texture" />
-            <elementDefinition Id="0d30bb8e-38d2-4daf-9fa2-a6f34a4ca1d1" />
-          </dependency>
-        </suppliersInternal>
-        <generalsInternal>
-          <generalization Id="2b3ee2ec-400a-4a12-8241-f992d81cc12c" isSubstitutable="false">
-            <classMoniker Id="2f301055-27ba-4f5c-b4c3-62e061605e37" LastKnownName="TextureLoader" />
-            <elementDefinition Id="d1e0351e-a81e-43be-a4c3-e83d5620b005" />
-          </generalization>
-        </generalsInternal>
-      </class>
-    </logicalClassDesignerModelHasTypes>
-    <logicalClassDesignerModelHasTypes>
-      <class Id="8b43071c-ea1b-4ffd-ab44-0cebc81f955d" name="MaterialLoader" isAbstract="true" isLeaf="false" isActiveClass="false">
-        <elementDefinition Id="35f03b26-11b0-4b84-a178-b1dcffca2237" />
-      </class>
-    </logicalClassDesignerModelHasTypes>
-    <logicalClassDesignerModelHasTypes>
-      <class Id="2f301055-27ba-4f5c-b4c3-62e061605e37" name="TextureLoader" isAbstract="true" isLeaf="false" isActiveClass="false">
-        <elementDefinition Id="5619576d-fc2f-4ba8-b923-8f2846721738" />
-      </class>
-    </logicalClassDesignerModelHasTypes>
-    <logicalClassDesignerModelHasTypes>
-      <class Id="a7f81b83-f0e0-462f-b910-9066970cc6d6" name="SoundLoader" isAbstract="false" isLeaf="false" isActiveClass="false">
-        <elementDefinition Id="fe775db3-d36f-4222-9377-724fd8caaed2" />
-      </class>
-    </logicalClassDesignerModelHasTypes>
-    <logicalClassDesignerModelHasTypes>
-      <class Id="4826aaf9-cdc1-4a68-9b17-fe18ef44d1a6" name="SoundLoaderImpl" isAbstract="false" isLeaf="false" isActiveClass="false">
-        <elementDefinition Id="d1d7e02a-d4d8-4ad0-972d-14f72447c6a1" />
-        <suppliersInternal>
-          <dependency Id="5ddee11b-9069-4191-b965-4753d5468a63">
-            <classMoniker Id="8cfd4df9-985f-4706-88e4-922ae40da717" LastKnownName="Sound" />
-            <elementDefinition Id="a586281c-ad16-4388-b4d3-c3033e3095cf" />
-          </dependency>
-        </suppliersInternal>
-        <generalsInternal>
-          <generalization Id="d1ce3ced-0de8-4e63-b8f8-00104586f411" isSubstitutable="false">
-            <classMoniker Id="a7f81b83-f0e0-462f-b910-9066970cc6d6" LastKnownName="SoundLoader" />
-            <elementDefinition Id="07ef7b8e-7e97-400a-b62a-4a627bb3d571" />
-          </generalization>
-        </generalsInternal>
       </class>
     </logicalClassDesignerModelHasTypes>
     <logicalClassDesignerModelHasTypes>
@@ -1148,6 +950,130 @@
           </association>
         </targetEnds>
       </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="32ac6783-4d70-400e-b259-a9bbf6085790" name="IndexBufferWrapper" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="0b9ad9db-ab1c-4655-aa36-a0c7df476cc2" />
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="05e85aa9-f29d-4960-a735-e053288fc044" name="MaterialWrapper" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="c2babf14-0842-4048-8141-0660644b6461" />
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="bb7f2b48-5e7f-413c-bb6b-4a5c5da490eb" name="MeshWrapper" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="ea07da31-e922-48f9-a331-53bcc9fff8de" />
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="2dc5a69b-0f58-4a90-9823-713342f82c38" name="TextureWrapper" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="9df6805f-d4ff-4eaa-b4ad-469cf81886d4" />
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="d9ccb4ff-aad9-442a-8196-70957c5ff7b9" name="VertexBufferWrapper" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="abc209d6-0b09-42f2-a752-ba03c3105f70" />
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="0038eb33-87e7-4faa-8748-e78628696d0b" name="XModelLoader" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="38657cc3-2d0c-44b7-8354-9e9be1bd1360" />
+        <suppliersInternal>
+          <dependency Id="7ffde76d-a8e2-418f-b653-9d0e0db742c7">
+            <classMoniker Id="e0f3dd9a-f9aa-4c92-a5a6-e6bb17ff021c" LastKnownName="XModel" />
+            <elementDefinition Id="ef79448a-7912-4f7b-9fb9-44f327f8d2d5" />
+          </dependency>
+        </suppliersInternal>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="e0f3dd9a-f9aa-4c92-a5a6-e6bb17ff021c" name="XModel" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="7c97390e-8766-45c4-8f88-8f7087fa2363" />
+        <suppliersInternal>
+          <dependency Id="23fe52d8-aeb4-4ada-9e69-3f8c380f5020">
+            <classMoniker Id="bb7f2b48-5e7f-413c-bb6b-4a5c5da490eb" LastKnownName="MeshWrapper" />
+            <elementDefinition Id="ec732127-50e5-422a-92c0-65162b519454" />
+          </dependency>
+          <dependency Id="19957da0-30b2-458f-a4f1-5778fb23f102">
+            <classMoniker Id="2dc5a69b-0f58-4a90-9823-713342f82c38" LastKnownName="TextureWrapper" />
+            <elementDefinition Id="4b1b7849-b0f0-4f2d-8cf2-57b287692501" />
+          </dependency>
+          <dependency Id="d6f91570-b74e-44e0-af1e-c1974c25ec5b">
+            <classMoniker Id="05e85aa9-f29d-4960-a735-e053288fc044" LastKnownName="MaterialWrapper" />
+            <elementDefinition Id="c9c59a37-de72-4339-a750-2ef01a902dbc" />
+          </dependency>
+        </suppliersInternal>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="007bbc7c-1c4d-4da4-a409-3b5a2345c291" name="CustomD3DVertex" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="987e1839-7ff4-4f76-90b9-a65cc7c8adff" />
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="d334baf4-0817-478c-b09a-8c40d4c746a2" name="Object3D" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="9b241801-6bab-4767-b4c6-6f507eb610e1" />
+        <suppliersInternal>
+          <dependency Id="b421cdbe-f572-4cb6-932a-7e25df3b0e14">
+            <classMoniker Id="007bbc7c-1c4d-4da4-a409-3b5a2345c291" LastKnownName="CustomD3DVertex" />
+            <elementDefinition Id="7d1b3213-d85a-4125-9e5c-866a00b04e99" />
+          </dependency>
+        </suppliersInternal>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="8f8c23be-187c-486a-9880-a5e4336f8cbc" name="Skybox" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="7b7a1bd4-98b2-4813-bec6-883dde34466e" />
+        <suppliersInternal>
+          <dependency Id="ef40f3a7-6ac5-4e3a-be9f-30171b09b5f8">
+            <classMoniker Id="007bbc7c-1c4d-4da4-a409-3b5a2345c291" LastKnownName="CustomD3DVertex" />
+            <elementDefinition Id="91f6aa4a-f04f-4f5e-9f05-e1df46764913" />
+          </dependency>
+        </suppliersInternal>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <Interface Id="b4cd74e5-9eb7-4fca-8886-122b2a766f1a" name="Animation" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="1b7b3d5d-c64f-452b-9e13-eddddfeed7cb" />
+      </Interface>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="914a3e9c-8215-4ab3-ace1-86214c769c93" name="SuperXLoader" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="fd2f6177-5746-43c6-9843-750784439729" />
+        <suppliersInternal>
+          <dependency Id="420b0410-6642-4715-b819-4cb1f91e2473">
+            <interfaceMoniker Id="b4cd74e5-9eb7-4fca-8886-122b2a766f1a" LastKnownName="Animation" />
+            <elementDefinition Id="291fb546-2992-4668-a86e-72d829bc3132" />
+          </dependency>
+        </suppliersInternal>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="96045c8e-f7f3-4714-8ca8-c6dbb1f63271" name="AnimationSet" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="2794db81-fb29-4456-a73f-f8c3ee7e5bd9" />
+        <suppliersInternal>
+          <dependency Id="8ab74938-4dbe-4485-a347-8437d65a3b77">
+            <interfaceMoniker Id="b4cd74e5-9eb7-4fca-8886-122b2a766f1a" LastKnownName="Animation" />
+            <elementDefinition Id="ca839e16-c570-4e71-ade5-b35de9e19657" />
+          </dependency>
+        </suppliersInternal>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <Interface Id="56058d59-24e2-4466-86d7-9bf51a5a73a2" name="RGBAColor" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="e9adfee4-4aa6-4809-b71b-ee4fa685dfa7" />
+      </Interface>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <Interface Id="cc4ba895-7f19-4fe1-a098-0e7c543481ce" name="RGBColor" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="5ea63984-d8e9-4ac0-96db-c14e07e161ab" />
+      </Interface>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <Interface Id="5f8a0972-b5d6-48f8-96b0-31be84a8ced0" name="Array" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="432120ce-5b49-43b9-a142-178a767f8f9e" />
+      </Interface>
     </logicalClassDesignerModelHasTypes>
   </packagedElements>
   <package Id="fdc58c98-cb0e-4ddf-8523-a34ffc8744e0" name="ModelingProject1">

@@ -64,7 +64,7 @@ void racer::RaceCart::Draw(pengine::Renderer* renderer)
 
 		renderer->SetMaterialWrapper(materialWrapper);
 		renderer->SetTexture(textureWrapper);
-		renderer->DrawSubset(xModel->GetMesh(), 0);
+		//renderer->DrawSubset(xModel->GetMesh(), 0);
 	}
 }
 
