@@ -34,9 +34,6 @@
     <ClCompile Include="Logger.cpp">
       <Filter>Source\Logger</Filter>
     </ClCompile>
-    <ClCompile Include="LoggerPool.cpp">
-      <Filter>Source\Logger</Filter>
-    </ClCompile>
     <ClCompile Include="MeshWrapper.cpp">
       <Filter>Source\Renderer\Wrap Containers</Filter>
     </ClCompile>
@@ -132,6 +129,9 @@
     </ClCompile>
     <ClCompile Include="Skybox.cpp">
       <Filter>Source\Resource\Skybox</Filter>
+    </ClCompile>
+    <ClCompile Include="LoggerPool.cpp">
+      <Filter>Header</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

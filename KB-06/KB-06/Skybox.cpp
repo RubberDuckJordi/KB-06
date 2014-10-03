@@ -53,7 +53,7 @@ namespace pengine
 		aSkyboxIndices[30] = 20; aSkyboxIndices[31] = 21; aSkyboxIndices[32] = 22;//bottom
 		aSkyboxIndices[33] = 20; aSkyboxIndices[34] = 22; aSkyboxIndices[35] = 23;
 
-		
+
 
 		LPDIRECT3DDEVICE9 g_pd3dDevice = *((DirectXRenderer*)renderer)->GetDevice();
 		g_pd3dDevice->CreateVertexBuffer(amountOfVertices * sizeof(D3DCustomVertex), 0, D3DCustomVertexFVF, D3DPOOL_DEFAULT, &v_buffer, NULL);
@@ -134,8 +134,8 @@ namespace pengine
 
 		amountOfVertices = 24;
 		amountOfIndices = 36;
-		
-		
+
+
 			D3DCustomVertex* d3dVertices = new D3DCustomVertex[amountOfVertices];
 			unsigned short* indices = new unsigned short[amountOfIndices];
 

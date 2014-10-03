@@ -29,10 +29,10 @@ void racer::RaceCart::UpdateLogic(float deltaTime, std::map<pengine::Input, long
 				Throttle(1.0f);
 				break;
 			case pengine::Input::KEY_D:
-				this->AddRotation(2.0f, 0.0f, 0.0f);
+				Steer(0.5f);
 				break;
 			case pengine::Input::KEY_A:
-				this->AddRotation(-2.0f, 0.0f, 0.0f);
+				Steer(-0.5f);
 				break;
 			case pengine::Input::KEY_0:
 				// Imaginary collision
@@ -99,4 +99,26 @@ void racer::RaceCart::Throttle(float percentage)
 	Vector3 vector;
 	vector.z = horsePower * percentage;
 	AddRelativeForce(&vector);
+}
+
+void racer::RaceCart::Steer(float percentage)
+{
+	Vector3 vector;
+
+	// Get current movement magnitude
+	float magnitude = movementVector.GetMagnitude();
+	// Rotate the object according to the speed
+	this->AddRotation(percentage * sqrt(magnitude) * 2.0f, 0.0f, 0.0f);
+
+	// Reset the speed
+	movementVector.x = 0.0f;
+	movementVector.y = 0.0f;
+	movementVector.z = 0.0f;
+
+	// Move the object forward relative to itself
+	vector.z = magnitude * mass;
+	AddRelativeForce(&vector);
+
+	// Add friction
+	ApplyFriction(abs(percentage) * 5.0f);
 }

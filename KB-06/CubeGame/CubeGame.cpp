@@ -23,8 +23,17 @@ int _tmain(int argc, _TCHAR* argv[])
 	pEngine.Init();
 
 	pEngine.GetWindowManager()->AddWindowListener(pEngine.GetInputManager());
-	pEngine.GetWindowManager()->NewWindow(750, 10, 500, 500);
+	pEngine.GetWindowManager()->NewWindow(750, 750, 500, 500);
+	
 	pEngine.GetRenderer()->InitD3D(pEngine.GetWindowManager()->GetLastWindow()->GetHWND());
+	pEngine.GetRenderer()->CreateD2DFactory();
+	pEngine.GetRenderer()->CreateRenderTarget(pEngine.GetWindowManager()->GetLastWindow()->GetHWND());
+	pEngine.GetRenderer()->CreateWICImagingFactory();
+	pEngine.GetRenderer()->CreateDecoder("resources/testHUD.bmp");
+	pEngine.GetRenderer()->CreateFormatConverter();
+	pEngine.GetRenderer()->GetBitmapFrame();
+	pEngine.GetRenderer()->InitializeBMP();
+	pEngine.GetRenderer()->CreateBitmapFromWIC();
 
 	pengine::XModel* xmodel = new pengine::XModel();
 	pengine::XModelLoader* xmodelLoader = new pengine::XModelLoader();
@@ -47,7 +56,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	{
 		for (std::list<pengine::Material*>::iterator j = (*i)->_Materials.begin(); j != (*i)->_Materials.end(); ++j)
 		{
-			logger->LogAll(0, "Texture name CubeGame: ", (*j)->texturePath);
+			//logger->LogAll(0, "Texture name CubeGame: ", (*j)->texturePath);
 			if ((*j)->texturePath != "")
 			{
 				(*j)->texture = pEngine.GetResourceManager()->LoadBinaryFile("resources/tiny/" + (*j)->texturePath);
@@ -76,7 +85,7 @@ int _tmain(int argc, _TCHAR* argv[])
 
 	pEngine.GetRenderer()->SetProjectionMatrix(M_PI / 4, 100.0f);
 	pEngine.GetRenderer()->SetDefaultRenderStates();
-	bool pressPlus = false;
+	
 	while (pEngine.GetWindowManager()->HasActiveWindow())
 	{
 		pEngine.GetWindowManager()->UpdateWindows();
@@ -92,10 +101,12 @@ int _tmain(int argc, _TCHAR* argv[])
 
 		pEngine.GetRenderer()->SetLights();//every time?
 		pEngine.GetSceneManager()->RenderActiveScene(pEngine.GetRenderer());
-
-
+		
+		bool pressPlus = false;
 		bool holdPlus = false;
+
 		typedef std::map<pengine::Input, long>::iterator it_type;
+		
 		for (it_type iterator = (*actions).begin(); iterator != (*actions).end(); iterator++)
 		{
 			switch (iterator->first)
@@ -103,8 +114,8 @@ int _tmain(int argc, _TCHAR* argv[])
 			case pengine::Input::KEY_ADD:
 				if (!pressPlus)
 				{
-					++index;
-					MyObject.MapAnimationSet(index);
+				++index;
+				MyObject.MapAnimationSet(index);
 					pressPlus = true;
 				}
 				holdPlus = true;
@@ -124,11 +135,14 @@ int _tmain(int argc, _TCHAR* argv[])
 		pEngine.GetRenderer()->SetActiveMatrix(aMatrix->theMatrix);
 		MyObject.Draw(pEngine.GetRenderer());
 		//pEngine.GetSkyBox()->Draw(pEngine.GetRenderer(), aMatrix);
+		pEngine.GetRenderer()->D2DDraw();
 
 		pEngine.GetRenderer()->EndScene();
 		pEngine.GetRenderer()->PresentScene(pEngine.GetWindowManager()->GetLastWindow()->GetHWND());
 		delete aMatrix;
 	}
+
+
 	pengine::LoggerPool::GetInstance().ReturnLogger(logger);
 }
 

@@ -67,11 +67,11 @@ namespace pengine
 			ConcatMesh->_nNormals = ConcatMesh->_nVertices;
 		}
 
-		logger->LogAll(0, "Model3D: Final number of Vertices:", ConcatMesh->_nVertices);
-		logger->LogAll(0, "Model3D: Final number of Faces:", ConcatMesh->_nFaces);
-		logger->LogAll(0, "Model3D: Final number of TextureCoords:", ConcatMesh->_nTextureCoords);
-		logger->LogAll(0, "Model3D: Final number of Normals:", ConcatMesh->_nNormals);
-		logger->LogAll(0, "Model3D: Final number of Materials:", ConcatMesh->_nMaterials);
+		//logger->LogAll(0, "Model3D: Final number of Vertices:", ConcatMesh->_nVertices);
+		//logger->LogAll(0, "Model3D: Final number of Faces:", ConcatMesh->_nFaces);
+		//logger->LogAll(0, "Model3D: Final number of TextureCoords:", ConcatMesh->_nTextureCoords);
+		//logger->LogAll(0, "Model3D: Final number of Normals:", ConcatMesh->_nNormals);
+		//logger->LogAll(0, "Model3D: Final number of Materials:", ConcatMesh->_nMaterials);
 
 		//We create all the arrays:
 		// - Vertices and Faces
