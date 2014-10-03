@@ -27,7 +27,17 @@ int _tmain(int argc, _TCHAR* argv[])
 
 	pEngine.GetWindowManager()->AddWindowListener(pEngine.GetInputManager());
 	pEngine.GetWindowManager()->NewWindow(750, 750, 500, 500);
+	
 	pEngine.GetRenderer()->InitD3D(pEngine.GetWindowManager()->GetLastWindow()->GetHWND());
+	pEngine.GetRenderer()->CreateD2DFactory();
+	pEngine.GetRenderer()->CreateRenderTarget(pEngine.GetWindowManager()->GetLastWindow()->GetHWND());
+	pEngine.GetRenderer()->CreateWICImagingFactory();
+	pEngine.GetRenderer()->CreateDecoder("resources/testHUD.bmp");
+	pEngine.GetRenderer()->CreateFormatConverter();
+	pEngine.GetRenderer()->GetBitmapFrame();
+	pEngine.GetRenderer()->InitializeBMP();
+	pEngine.GetRenderer()->CreateBitmapFromWIC();
+
 	pEngine.InitSkybox(pEngine.GetRenderer(), "resources/grass.jpg");
 	pEngine.GetResourceManager()->AddMeshLoader(new pengine::ObjMeshLoader());
 	pEngine.GetResourceManager()->AddMaterialLoader(new pengine::MtlLoader());
@@ -76,6 +86,7 @@ int _tmain(int argc, _TCHAR* argv[])
 
 	pEngine.GetRenderer()->SetProjectionMatrix(M_PI / 4, 100.0f);
 	pEngine.GetRenderer()->SetDefaultRenderStates();
+	
 	while (pEngine.GetWindowManager()->HasActiveWindow())
 	{
 		pEngine.GetWindowManager()->UpdateWindows();
@@ -93,7 +104,10 @@ int _tmain(int argc, _TCHAR* argv[])
 		pEngine.GetRenderer()->SetLights();
 		pEngine.GetSceneManager()->RenderActiveScene(pEngine.GetRenderer());
 		
+		
+
 		typedef std::map<pengine::Input, long>::iterator it_type;
+		
 		for (it_type iterator = (*actions).begin(); iterator != (*actions).end(); iterator++)
 		{
 			switch (iterator->first)
@@ -116,11 +130,14 @@ int _tmain(int argc, _TCHAR* argv[])
 		aMatrix->CreateMatrix(0.0f, -25.0f, 0.0f, 0.0f, -90.0f, 0.0f, 0.1f, 0.1f, 0.1f, aMatrix->theMatrix);
 		pEngine.GetRenderer()->SetActiveMatrix(aMatrix->theMatrix);
 		MyObject.Draw(pEngine.GetRenderer());
+		pEngine.GetRenderer()->D2DDraw();
 
 		pEngine.GetRenderer()->EndScene();
 		pEngine.GetRenderer()->PresentScene(pEngine.GetWindowManager()->GetLastWindow()->GetHWND());
 		//delete aMatrix;
 	}
+
+
 	pengine::LoggerPool::GetInstance().ReturnLogger(logger);
 }
 

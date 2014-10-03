@@ -31,7 +31,7 @@ void pengine::DirectXRenderer::CreateD2DFactory()
 
 void pengine::DirectXRenderer::CreateRenderTarget(HWND hWnd)
 {
-	RECT rectangle;
+	
 	GetClientRect(hWnd, &rectangle);
 
 	D2D1_SIZE_U size = D2D1::SizeU(rectangle.right - rectangle.left, rectangle.bottom - rectangle.top);
@@ -47,32 +47,6 @@ void pengine::DirectXRenderer::CreateWICImagingFactory()
 {
 	CoCreateInstance(CLSID_WICImagingFactory, NULL, CLSCTX_INPROC_SERVER, __uuidof(IWICImagingFactory), (void**)(&iwicFactory));
 }
-
-/*
-
-// Create and display a C style string, and then use it
-// to create different kinds of strings.
-char *orig = "Hello, World!";
-cout << orig << " (char *)" << endl;
-
-// newsize describes the length of the
-// wchar_t string called wcstring in terms of the number
-// of wide characters, not the number of bytes.
-size_t newsize = strlen(orig) + 1;
-
-// The following creates a buffer large enough to contain
-// the exact number of characters in the original string
-// in the new format. If you want to add more characters
-// to the end of the string, increase the value of newsize
-// to increase the size of the buffer.
-wchar_t * wcstring = new wchar_t[newsize];
-
-// Convert char* string to a wchar_t* string.
-size_t convertedChars = 0;
-mbstowcs_s(&convertedChars, wcstring, newsize, orig, _TRUNCATE);
-// Display the result and indicate the type of string that it is.
-wcout << wcstring << _T(" (wchar_t *)") << endl;
-*/
 
 void pengine::DirectXRenderer::CreateDecoder(std::string path)
 {
@@ -106,6 +80,11 @@ void pengine::DirectXRenderer::GetBitmapFrame()
 	iwicBmpDecoder->GetFrame(0, &bitmapFrame);
 }
 
+void pengine::DirectXRenderer::InitializeBMP()
+{
+	iwicFormatConverter->Initialize(bitmapFrame, GUID_WICPixelFormat32bppPBGRA, WICBitmapDitherTypeNone, NULL, 0.f, WICBitmapPaletteTypeMedianCut);
+}
+
 void pengine::DirectXRenderer::CreateBitmapFromWIC()
 {
 	d2dRenderTarget->CreateBitmapFromWicBitmap(iwicFormatConverter, NULL, &d2dBmp);
@@ -113,7 +92,8 @@ void pengine::DirectXRenderer::CreateBitmapFromWIC()
 
 void pengine::DirectXRenderer::D2DDraw()
 {
-	d2dRenderTarget->DrawBitmap(d2dBmp);
+	D2D1_RECT_F test = D2D1::RectF(0, 0, rectangle.right-rectangle.left, rectangle.top-rectangle.bottom);
+	d2dRenderTarget->DrawBitmap(d2dBmp, test);
 }
 
 void pengine::DirectXRenderer::InitD3D(HWND hWnd)

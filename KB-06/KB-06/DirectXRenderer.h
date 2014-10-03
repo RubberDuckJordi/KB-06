@@ -19,6 +19,7 @@ namespace pengine
 		void CreateWICImagingFactory();
 		void CreateDecoder(std::string path);
 		void GetBitmapFrame();
+		void InitializeBMP();
 		void CreateFormatConverter();
 		void CreateBitmapFromWIC();
 		void D2DDraw();
@@ -62,6 +63,8 @@ namespace pengine
 		void SetTexture(BinaryData* texture);
 		void SetMaterial(Material* material);
 		void SetMatrixCache(PEngineMatrix* matrix);
+
+		RECT rectangle;
 
 		IWICBitmapDecoder* iwicBmpDecoder;
 		IWICImagingFactory* iwicFactory;
