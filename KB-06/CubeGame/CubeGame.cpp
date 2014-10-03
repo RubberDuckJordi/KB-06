@@ -87,6 +87,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	pengine::Scene* scene = pEngine.GetSceneManager()->SetScene("iets");
 	pEngine.GetSceneManager()->SetCurrentScene(scene);
 	pEngine.GetSceneManager()->GetCurrentScene()->InitSkybox(pEngine.GetRenderer(), "resources/dome.jpg");
+	pEngine.GetSceneManager()->GetCurrentScene()->SetGround(ground);
 
 	pEngine.GetRenderer()->SetProjectionMatrix(M_PI / 4, 100.0f);
 	pEngine.GetRenderer()->SetDefaultRenderStates();
@@ -140,7 +141,6 @@ int _tmain(int argc, _TCHAR* argv[])
 		pEngine.GetRenderer()->SetActiveMatrix(aMatrix->theMatrix);
 		MyObject.Draw(pEngine.GetRenderer());
 		//pEngine.GetSkyBox()->Draw(pEngine.GetRenderer(), aMatrix);
-
 		
 
 		pEngine.GetRenderer()->EndScene();

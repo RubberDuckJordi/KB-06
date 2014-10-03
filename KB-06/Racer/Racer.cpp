@@ -7,12 +7,16 @@
 
 #include "XModelLoader.h"
 #include "DirectXRenderer.h"
+#include "HeightmapLoader.h"
 
 int main(int argc, const char* argv[])
 {
 	pengine::PEngine pEngine;
 	pengine::Logger* logger = pengine::LoggerPool::GetInstance().GetInstance().GetLogger();
 	pEngine.Init();
+
+	pengine::HeightmapLoader heightmapLoader;
+	pengine::Ground* ground = heightmapLoader.LoadHeightmap("resources/heightmap.bmp");
 
 	pEngine.NewWindow(10, 10, 500, 500);
 	pEngine.InitRenderer();
@@ -38,6 +42,7 @@ int main(int argc, const char* argv[])
 	pengine::Scene* scene = pEngine.AddScene("raceScene");
 	pEngine.SetCurrentScene(scene);
 	pEngine.GetSceneManager()->GetCurrentScene()->InitSkybox(pEngine.GetRenderer(), "resources/dome.jpg");
+	pEngine.GetSceneManager()->GetCurrentScene()->SetGround(ground);
 	pEngine.GameLoop();
 
 	pengine::LoggerPool::GetInstance().ReturnLogger(logger);

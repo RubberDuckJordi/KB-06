@@ -55,6 +55,7 @@ namespace pengine
 
 		//virtual void DrawPrimitive(Mesh mesh) = 0;
 		virtual void DrawSubset(MeshWrapper* wrapper, int subset) = 0;
+		//virtual void Draw(Vertex* vertexBuffer, int amountOfIndices);
 
 		virtual void SetStreamSource() = 0; //??
 		virtual void SetIndices() = 0; //??

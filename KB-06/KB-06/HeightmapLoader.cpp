@@ -61,7 +61,7 @@ namespace pengine
 	void HeightmapLoader::BuildGround(byte* p_vertices, Ground& ground)
 	{
 		ground.SetAmountOfIndices(((ground.GetWidth() - 1) * (ground.GetHeight() - 1) * 6));
-		Vertex* vertex = new Vertex[ground.GetAmountOfIndices()];
+		D3DCustomVertex* vertex = new D3DCustomVertex[ground.GetAmountOfIndices()];
 		ground.SetVertices(vertex);
 		int vertexIndex = 0;
 
@@ -77,14 +77,14 @@ namespace pengine
 				int point4Index = ((x)+((z))*ground.GetWidth());
 
 				//First triangle for the square
-				AddPosition(vertexIndex + 0, point1Index, p_vertices[point1Index], ground);
+				AddPosition(vertexIndex + 0, point3Index, p_vertices[point3Index], ground);
 				AddPosition(vertexIndex + 1, point2Index, p_vertices[point2Index], ground);
-				AddPosition(vertexIndex + 2, point3Index, p_vertices[point3Index], ground);
+				AddPosition(vertexIndex + 2, point1Index, p_vertices[point1Index], ground);
 
 				//Second triangle for the square
-				AddPosition(vertexIndex + 5, point4Index, p_vertices[point4Index], ground);
+				AddPosition(vertexIndex + 5, point3Index, p_vertices[point3Index], ground);
 				AddPosition(vertexIndex + 4, point2Index, p_vertices[point2Index], ground);
-				AddPosition(vertexIndex + 3, point3Index, p_vertices[point3Index], ground);
+				AddPosition(vertexIndex + 3, point4Index, p_vertices[point4Index], ground);
 
 				vertexIndex += 6;
 			}
@@ -103,13 +103,13 @@ namespace pengine
 		float tu = (1 / static_cast<float>(ground.GetWidth())) * static_cast<float>(x);
 		float tv = (1 / static_cast<float>(ground.GetHeight())) * static_cast<float>(z);
 
-		Vertex* vertex = ground.GetVertices();
+		D3DCustomVertex* vertex = ground.GetVertices();
 
 		vertex[p_vertexIndex].x = x * ground.GetCellSize();
 		vertex[p_vertexIndex].y = p_y;
 		vertex[p_vertexIndex].z = z * ground.GetCellSize();
-		vertex[p_vertexIndex].u = tu;
-		vertex[p_vertexIndex].v = tv;
+		vertex[p_vertexIndex].tu = tu;
+		vertex[p_vertexIndex].tv = tv;
 	}
 
 	/*

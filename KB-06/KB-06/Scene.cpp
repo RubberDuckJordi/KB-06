@@ -15,6 +15,8 @@ namespace pengine
 			delete entities.front(), entities.pop_front();
 		}
 		LoggerPool::GetInstance().ReturnLogger(logger);
+
+		delete ground;
 	}
 
 	void Scene::AddEntity(Entity* entity)
@@ -54,6 +56,8 @@ namespace pengine
 		{
 			entity->Draw(renderer);
 		}
+
+		ground->Render(renderer);
 	}
 
 	EntityCamera* Scene::GetCurrentCamera()
@@ -68,5 +72,10 @@ namespace pengine
 
 	void Scene::SetSceneCallback(SceneCallback* callback){
 		this->callback = callback;
+	}
+
+	void Scene::SetGround(Ground* p_ground)
+	{
+		ground = p_ground;
 	}
 }

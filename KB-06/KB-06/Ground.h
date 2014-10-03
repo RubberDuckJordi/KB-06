@@ -1,8 +1,9 @@
 #ifndef _GROUND_H_
 #define _GROUND_H_
 
-#include "Vertex.h"
+#include "CustomD3DVertex.h"
 #include "Renderer.h"
+#include "LoggerPool.h"
 
 namespace pengine
 {
@@ -10,6 +11,8 @@ namespace pengine
 	{
 
 	public:
+		Ground();
+		~Ground();
 		long GetHeight();
 		long GetWidth();
 		void SetHeight(long);
@@ -19,14 +22,16 @@ namespace pengine
 		
 		void SetAmountOfIndices(int);
 		int GetAmountOfIndices();
-		void SetVertices(Vertex* vertex);
-		Vertex* GetVertices();
+		void SetVertices(D3DCustomVertex* vertex);
+		D3DCustomVertex* GetVertices();
 
-		void Render(Renderer& renderer);
+		void Render(Renderer* renderer);
 
 	private:
+		Logger* logger;
 		int amountOfIndices;
-		Vertex* vertices;
+		D3DCustomVertex* vertices;
+		LPDIRECT3DVERTEXBUFFER9 vertexBuffer;
 
 		long height;
 		long width;
