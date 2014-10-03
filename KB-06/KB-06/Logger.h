@@ -9,14 +9,13 @@
 #include <string>
 #include <sstream>
 
-namespace pengine
-{
+namespace pengine {
 	class Logger
 	{
 	public:
-
-		enum LogLevel
-		{
+		~Logger();
+		Logger();
+		static enum LogLevel{
 			NONE = 0,
 			ERR = 1,
 			WARNING = 2,
@@ -24,49 +23,21 @@ namespace pengine
 			INFO = 4
 		};
 
-		~Logger();
-		Logger();
-
 		void NewFile();
 		void Log(int logType, char* text);
 		void Log(int logType, std::string text);
-
-		template <typename T>
-		void MagicLog(std::ostream& o, T t)
-		{
-			o << t;
-		}
-
-		template<typename T, typename... Args>
-		void MagicLog(std::ostream& o, T t, Args... args) // recursive variadic function
-		{
-			MagicLog(o, t);
-			MagicLog(o, args...);
-		}
-
-		/*
-		Will log all given arguments, there is nothing between them.
-		*/
-		template<typename... Args>
-		void LogAll(int logType, Args... args)
-		{
-			std::ostringstream oss;
-			MagicLog(oss, args...);
-			Log(logType, oss.str());
-		}
-
 		void LogMemoryDump(int logType, void* const p_address, const int p_size, char* const p_name);
 		void SetLogLevel(int logLevel);
 		void Reset();
-
 	private:
-		std::ofstream outfile;
+		void PrintConsole(int logType, char* text);
+		char* BuildLogEntry(int logType, char* messasge);
+
 		int logLevel = INFO;
 		int consoleColorCodeInfo = gray;
 		int consoleColorCodeDebug = white;
 		int consoleColorCodeWarning = yellow;
 		int consoleColorCodeError = red;
-		int consoleColorCodeNone = blue;
 		HANDLE consoleHandle;
 		char* logFile = "log.txt";
 		char* previousLogFile = "log_old.txt";

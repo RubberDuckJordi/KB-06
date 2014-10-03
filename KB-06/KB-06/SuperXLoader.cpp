@@ -542,7 +542,7 @@ namespace pengine
 
 		fin.getline(Data, TEXT_BUFFER, ';');
 		_LoadMesh->_nMaterials = (uint16)TextToNum(Data);
-		logger->LogAll(0, "SuperXLoader: Number of Materials:", Data);
+		//logger->LogAll(0, "SuperXLoader: Number of Materials:", Data); 
 
 		fin.getline(Data, TEXT_BUFFER, ';');
 		_LoadMesh->_FaceMaterials = new uint16[(uint16)TextToNum(Data)];

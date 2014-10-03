@@ -237,12 +237,12 @@ namespace pengine
 		{
 			if (textureCache.find(material->texture) == textureCache.end())
 			{
-				logger->LogAll(Logger::DEBUG, "Texture \"", material->texturePath, "\" not converted to LPDIRECT3DTEXTURE9 yet.");
+				//logger->LogAll(Logger::DEBUG, "Texture \"", material->texturePath, "\" not converted to LPDIRECT3DTEXTURE9 yet.");
 				LPDIRECT3DTEXTURE9 d3DTexture;
 
 				HRESULT result = D3DXCreateTextureFromFileInMemory(g_pd3dDevice, material->texture->rawData, material->texture->size, &d3DTexture);
 				textureCache[material->texture] = d3DTexture;
-				logger->LogAll(Logger::DEBUG, "Texture \"", material->texturePath, "\" converted to LPDIRECT3DTEXTURE9.");
+				//logger->LogAll(Logger::DEBUG, "Texture \"", material->texturePath, "\" converted to LPDIRECT3DTEXTURE9.");
 			}
 			g_pd3dDevice->SetTexture(0, textureCache[material->texture]);
 		}
