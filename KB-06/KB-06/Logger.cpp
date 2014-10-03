@@ -5,7 +5,7 @@
 #include <sstream>
 #include <windows.h>
 #include <ctime>
-#include <sstream>
+#include <iomanip>
 
 /*
 Do NOT directly instaniate this class, use the loggerpool instead!
@@ -34,7 +34,7 @@ void pengine::Logger::Log(int logType, std::string messageString){
 
 void pengine::Logger::Log(int logType, char* message){
 	if (logLevel >= logType && logType > 0){
-		char* entry = BuildLogEntry(logType, message);
+		std::string entry = BuildLogEntry(logType, message);
 		PrintConsole(logType, entry);
 		std::ofstream outfile;
 		outfile.open(logFile, std::ios_base::app);
@@ -42,7 +42,7 @@ void pengine::Logger::Log(int logType, char* message){
 	}
 }
 
-void pengine::Logger::PrintConsole(int logType, char* message)
+void pengine::Logger::PrintConsole(int logType, std::string message)
 {
 	int color;
 	switch (logType) {
@@ -68,19 +68,28 @@ void pengine::Logger::SetLogLevel(int newLogLevel){
 	logLevel = newLogLevel;
 }
 
-char* pengine::Logger::BuildLogEntry(int logType, char* message){
+std::string pengine::Logger::BuildLogEntry(int logType, char* message){
+	std::stringstream logEntry;
 	SYSTEMTIME systemTime;
 	GetLocalTime(&systemTime);
-	char* logTypeString = new char[7];
+	logEntry << "["
+		<< std::setfill('0') << std::setw(2) << systemTime.wHour
+		<< ":"
+		<< std::setfill('0') << std::setw(2) << systemTime.wMinute
+		<< ":"
+		<< std::setfill('0') << std::setw(2) << systemTime.wSecond
+		<< "."
+		<< std::right << std::setfill('0') << std::setw(3) << systemTime.wMilliseconds
+		<< "] ";
+
 	switch (logType) {
-	case INFO: logTypeString = "INFO   ";	break;
-	case DEBUG:logTypeString = "DEBUG  "; break;
-	case WARNING:logTypeString = "WARNING"; break;
-	case ERR: logTypeString = "ERROR  "; break;
+		case INFO: logEntry << "INFO   ";	break;
+		case DEBUG:logEntry << "DEBUG  "; break;
+		case WARNING: logEntry << "WARNING"; break;
+		case ERR: logEntry << "ERROR  "; break;
 	}
-	char* logEntry = new char[240 + sizeof(message) + sizeof(logTypeString)];
-	sprintf_s(logEntry, 240, "[%02d:%02d:%02d.%03d] %s %s", systemTime.wHour, systemTime.wMinute, systemTime.wSecond, systemTime.wMilliseconds, logTypeString, message);
-	return logEntry;
+	logEntry << message;
+	return logEntry.str();
 }
 
 void pengine::Logger::LogMemoryDump(int logType, void* const p_address, const int p_size, char* const p_name)

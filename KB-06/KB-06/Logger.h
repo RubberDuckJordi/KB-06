@@ -30,8 +30,8 @@ namespace pengine {
 		void SetLogLevel(int logLevel);
 		void Reset();
 	private:
-		void PrintConsole(int logType, char* text);
-		char* BuildLogEntry(int logType, char* messasge);
+		void PrintConsole(int logType, std::string entry);
+		std::string BuildLogEntry(int logType, char* messasge);
 
 		int logLevel = INFO;
 		int consoleColorCodeInfo = gray;
