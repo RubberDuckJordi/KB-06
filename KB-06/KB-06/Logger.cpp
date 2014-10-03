@@ -5,7 +5,7 @@
 #include <sstream>
 #include <windows.h>
 #include <ctime>
-#include <sstream>
+#include <iomanip>
 
 /*
 Do NOT directly instaniate this class, use the loggerpool instead!
@@ -16,33 +16,47 @@ The logger defaults to the highest loglevel
 pengine::Logger::Logger()
 {
 	consoleHandle = GetStdHandle(STD_OUTPUT_HANDLE);
+	SetDefaultValues();
 }
 
-void pengine::Logger::Reset(){
+void pengine::Logger::Reset()
+{
+	outfile.close();
+	SetDefaultValues();
+}
+
+void pengine::Logger::SetDefaultValues()
+{
 	logLevel = INFO;
+	logFile = defaultLogFile;
 }
 
-void pengine::Logger::NewFile(){
-	remove(previousLogFile);
-	rename(logFile, previousLogFile);
-}
-void pengine::Logger::Log(int logType, std::string messageString){
-	char* message = new char[messageString.length() + 1];
-	strcpy_s(message, messageString.length() + 1, messageString.c_str());
-	Log(logType, message);
+void pengine::Logger::RemoveLogs()
+{
+	std::string command = "del /Q ";
+	std::string path = "*" + logExtension;
+	system(command.append(path).c_str()); // Dangerous code.. Should be changed
 }
 
-void pengine::Logger::Log(int logType, char* message){
+void pengine::Logger::SetFile(std::string fileName)
+{
+	logFile = fileName;
+}
+
+void pengine::Logger::Log(int logType, std::string messageString)
+{
 	if (logLevel >= logType && logType > 0){
-		char* entry = BuildLogEntry(logType, message);
+		std::string entry = BuildLogEntry(logType, messageString);
 		PrintConsole(logType, entry);
-		std::ofstream outfile;
-		outfile.open(logFile, std::ios_base::app);
+
+		std::ofstream outfile; // needs to be reopened every time so multiple objects can use it
+		outfile.open(logFile+logExtension, std::ios_base::app);
 		outfile << entry << "\n";
+		outfile.close();
 	}
 }
 
-void pengine::Logger::PrintConsole(int logType, char* message)
+void pengine::Logger::PrintConsole(int logType, std::string message)
 {
 	int color;
 	switch (logType) {
@@ -64,23 +78,35 @@ void pengine::Logger::PrintConsole(int logType, char* message)
 	std::cout << message << std::endl;
 }
 
-void pengine::Logger::SetLogLevel(int newLogLevel){
+void pengine::Logger::SetLogLevel(int newLogLevel)
+{
 	logLevel = newLogLevel;
 }
 
-char* pengine::Logger::BuildLogEntry(int logType, char* message){
+std::string pengine::Logger::BuildLogEntry(int logType, std::string message)
+{
+	std::stringstream logEntry;
 	SYSTEMTIME systemTime;
 	GetLocalTime(&systemTime);
-	char* logTypeString = new char[7];
+	logEntry << "["
+		<< std::setfill('0') << std::setw(2) << systemTime.wHour
+		<< ":"
+		<< std::setfill('0') << std::setw(2) << systemTime.wMinute
+		<< ":"
+		<< std::setfill('0') << std::setw(2) << systemTime.wSecond
+		<< "."
+		<< std::right << std::setfill('0') << std::setw(3) << systemTime.wMilliseconds
+		<< "] ";
+
+	logEntry << std::left << std::setfill(' ') << std::setw(8);
 	switch (logType) {
-	case INFO: logTypeString = "INFO   ";	break;
-	case DEBUG:logTypeString = "DEBUG  "; break;
-	case WARNING:logTypeString = "WARNING"; break;
-	case ERR: logTypeString = "ERROR  "; break;
+		case INFO: logEntry << "INFO";	break;
+		case DEBUG:logEntry  << "DEBUG"; break;
+		case WARNING: logEntry << "WARNING"; break;
+		case ERR: logEntry << "ERROR"; break;
 	}
-	char* logEntry = new char[240 + sizeof(message) + sizeof(logTypeString)];
-	sprintf_s(logEntry, 240, "[%02d:%02d:%02d.%03d] %s %s", systemTime.wHour, systemTime.wMinute, systemTime.wSecond, systemTime.wMilliseconds, logTypeString, message);
-	return logEntry;
+	logEntry << message;
+	return logEntry.str();
 }
 
 void pengine::Logger::LogMemoryDump(int logType, void* const p_address, const int p_size, char* const p_name)
@@ -102,4 +128,9 @@ void pengine::Logger::LogMemoryDump(int logType, void* const p_address, const in
 
 	sstr << "]";
 	Log(logType, sstr.str());
+}
+
+bool has_suffix(const std::string& s, const std::string& suffix)
+{
+	return (s.size() >= suffix.size()) && equal(suffix.rbegin(), suffix.rend(), s.rbegin());
 }

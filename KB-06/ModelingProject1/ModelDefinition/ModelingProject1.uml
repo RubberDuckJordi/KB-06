@@ -1229,6 +1229,41 @@
               LastKnownName="Window"
               LastKnownLocation="ModelingProject1.uml" />
           </dependency>
+          <dependency
+            Id="afd41dee-ee24-4147-9797-d8e067ce8e76">
+            <classMoniker
+              Id="abc209d6-0b09-42f2-a752-ba03c3105f70"
+              LastKnownName="VertexBufferWrapper"
+              LastKnownLocation="ModelingProject1.uml" />
+          </dependency>
+          <dependency
+            Id="d9ca5a39-eef0-4af5-b779-258de78cc85f">
+            <classMoniker
+              Id="9df6805f-d4ff-4eaa-b4ad-469cf81886d4"
+              LastKnownName="TextureWrapper"
+              LastKnownLocation="ModelingProject1.uml" />
+          </dependency>
+          <dependency
+            Id="53605cfe-48f4-4238-aad1-9126f3a96388">
+            <classMoniker
+              Id="0b9ad9db-ab1c-4655-aa36-a0c7df476cc2"
+              LastKnownName="IndexBufferWrapper"
+              LastKnownLocation="ModelingProject1.uml" />
+          </dependency>
+          <dependency
+            Id="709b22b3-10c6-4a7a-812e-25f030ca8a1e">
+            <classMoniker
+              Id="c2babf14-0842-4048-8141-0660644b6461"
+              LastKnownName="MaterialWrapper"
+              LastKnownLocation="ModelingProject1.uml" />
+          </dependency>
+          <dependency
+            Id="a651f362-b485-4ab6-9d04-484eff0958ca">
+            <classMoniker
+              Id="ea07da31-e922-48f9-a331-53bcc9fff8de"
+              LastKnownName="MeshWrapper"
+              LastKnownLocation="ModelingProject1.uml" />
+          </dependency>
         </suppliersInternal>
       </class>
     </packageHasNamedElement>
@@ -2616,6 +2651,212 @@
         isAbstract="false"
         isLeaf="false"
         isActiveClass="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="666e32d2-2aac-4fbf-97b5-119c1bf2257b"
+        name="Class1"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="0b9ad9db-ab1c-4655-aa36-a0c7df476cc2"
+        name="IndexBufferWrapper"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="c2babf14-0842-4048-8141-0660644b6461"
+        name="MaterialWrapper"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="ea07da31-e922-48f9-a331-53bcc9fff8de"
+        name="MeshWrapper"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="9df6805f-d4ff-4eaa-b4ad-469cf81886d4"
+        name="TextureWrapper"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="abc209d6-0b09-42f2-a752-ba03c3105f70"
+        name="VertexBufferWrapper"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="38657cc3-2d0c-44b7-8354-9e9be1bd1360"
+        name="XModelLoader"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <suppliersInternal>
+          <dependency
+            Id="ef79448a-7912-4f7b-9fb9-44f327f8d2d5">
+            <classMoniker
+              Id="7c97390e-8766-45c4-8f88-8f7087fa2363"
+              LastKnownName="XModel"
+              LastKnownLocation="ModelingProject1.uml" />
+          </dependency>
+        </suppliersInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="7c97390e-8766-45c4-8f88-8f7087fa2363"
+        name="XModel"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <suppliersInternal>
+          <dependency
+            Id="ec732127-50e5-422a-92c0-65162b519454">
+            <classMoniker
+              Id="ea07da31-e922-48f9-a331-53bcc9fff8de"
+              LastKnownName="MeshWrapper"
+              LastKnownLocation="ModelingProject1.uml" />
+          </dependency>
+          <dependency
+            Id="4b1b7849-b0f0-4f2d-8cf2-57b287692501">
+            <classMoniker
+              Id="9df6805f-d4ff-4eaa-b4ad-469cf81886d4"
+              LastKnownName="TextureWrapper"
+              LastKnownLocation="ModelingProject1.uml" />
+          </dependency>
+          <dependency
+            Id="c9c59a37-de72-4339-a750-2ef01a902dbc">
+            <classMoniker
+              Id="c2babf14-0842-4048-8141-0660644b6461"
+              LastKnownName="MaterialWrapper"
+              LastKnownLocation="ModelingProject1.uml" />
+          </dependency>
+        </suppliersInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="987e1839-7ff4-4f76-90b9-a65cc7c8adff"
+        name="CustomD3DVertex"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="9b241801-6bab-4767-b4c6-6f507eb610e1"
+        name="Object3D"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <suppliersInternal>
+          <dependency
+            Id="7d1b3213-d85a-4125-9e5c-866a00b04e99">
+            <classMoniker
+              Id="987e1839-7ff4-4f76-90b9-a65cc7c8adff"
+              LastKnownName="CustomD3DVertex"
+              LastKnownLocation="ModelingProject1.uml" />
+          </dependency>
+        </suppliersInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="7b7a1bd4-98b2-4813-bec6-883dde34466e"
+        name="Skybox"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <suppliersInternal>
+          <dependency
+            Id="91f6aa4a-f04f-4f5e-9f05-e1df46764913">
+            <classMoniker
+              Id="987e1839-7ff4-4f76-90b9-a65cc7c8adff"
+              LastKnownName="CustomD3DVertex"
+              LastKnownLocation="ModelingProject1.uml" />
+          </dependency>
+        </suppliersInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <Interface
+        Id="1b7b3d5d-c64f-452b-9e13-eddddfeed7cb"
+        name="Animation"
+        isAbstract="false"
+        isLeaf="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="fd2f6177-5746-43c6-9843-750784439729"
+        name="SuperXLoader"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <suppliersInternal>
+          <dependency
+            Id="291fb546-2992-4668-a86e-72d829bc3132">
+            <interfaceMoniker
+              Id="1b7b3d5d-c64f-452b-9e13-eddddfeed7cb"
+              LastKnownName="Animation"
+              LastKnownLocation="ModelingProject1.uml" />
+          </dependency>
+        </suppliersInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="2794db81-fb29-4456-a73f-f8c3ee7e5bd9"
+        name="AnimationSet"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <suppliersInternal>
+          <dependency
+            Id="ca839e16-c570-4e71-ade5-b35de9e19657">
+            <interfaceMoniker
+              Id="1b7b3d5d-c64f-452b-9e13-eddddfeed7cb"
+              LastKnownName="Animation"
+              LastKnownLocation="ModelingProject1.uml" />
+          </dependency>
+        </suppliersInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <Interface
+        Id="e9adfee4-4aa6-4809-b71b-ee4fa685dfa7"
+        name="RGBAColor"
+        isAbstract="false"
+        isLeaf="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <Interface
+        Id="5ea63984-d8e9-4ac0-96db-c14e07e161ab"
+        name="RGBColor"
+        isAbstract="false"
+        isLeaf="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <Interface
+        Id="432120ce-5b49-43b9-a142-178a767f8f9e"
+        name="Array"
+        isAbstract="false"
+        isLeaf="false" />
     </packageHasNamedElement>
   </packagedElements>
   <primitiveType
