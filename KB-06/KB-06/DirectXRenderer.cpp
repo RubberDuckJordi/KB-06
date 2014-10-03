@@ -26,12 +26,12 @@ namespace pengine
 	LoggerPool::GetInstance().ReturnLogger(logger);
 }
 
-void pengine::DirectXRenderer::CreateD2DFactory()
+void DirectXRenderer::CreateD2DFactory()
 {
 	D2D1CreateFactory(D2D1_FACTORY_TYPE_SINGLE_THREADED, &d2dFactory);
 }
 
-void pengine::DirectXRenderer::CreateRenderTarget(HWND hWnd)
+void DirectXRenderer::CreateRenderTarget(HWND hWnd)
 {
 	
 	GetClientRect(hWnd, &rectangle);
@@ -45,12 +45,12 @@ void pengine::DirectXRenderer::CreateRenderTarget(HWND hWnd)
 		);
 }
 
-void pengine::DirectXRenderer::CreateWICImagingFactory()
+void DirectXRenderer::CreateWICImagingFactory()
 {
 	CoCreateInstance(CLSID_WICImagingFactory, NULL, CLSCTX_INPROC_SERVER, __uuidof(IWICImagingFactory), (void**)(&iwicFactory));
 }
 
-void pengine::DirectXRenderer::CreateDecoder(std::string path)
+void DirectXRenderer::CreateDecoder(std::string path)
 {
 	size_t newSize = strlen(path.c_str()) + 1;
 
@@ -70,35 +70,35 @@ void pengine::DirectXRenderer::CreateDecoder(std::string path)
 		);
 }
 
-void pengine::DirectXRenderer::CreateFormatConverter()
+void DirectXRenderer::CreateFormatConverter()
 {
 	iwicFactory->CreateFormatConverter(&iwicFormatConverter);
 }
 
-void pengine::DirectXRenderer::GetBitmapFrame()
+void DirectXRenderer::GetBitmapFrame()
 {
 	bitmapFrame = NULL;
 	
 	iwicBmpDecoder->GetFrame(0, &bitmapFrame);
 }
 
-void pengine::DirectXRenderer::InitializeBMP()
+void DirectXRenderer::InitializeBMP()
 {
 	iwicFormatConverter->Initialize(bitmapFrame, GUID_WICPixelFormat32bppPBGRA, WICBitmapDitherTypeNone, NULL, 0.f, WICBitmapPaletteTypeMedianCut);
 }
 
-void pengine::DirectXRenderer::CreateBitmapFromWIC()
+void DirectXRenderer::CreateBitmapFromWIC()
 {
 	d2dRenderTarget->CreateBitmapFromWicBitmap(iwicFormatConverter, NULL, &d2dBmp);
 }
 
-void pengine::DirectXRenderer::D2DDraw()
+void DirectXRenderer::D2DDraw()
 {
 	D2D1_RECT_F test = D2D1::RectF(0, 0, rectangle.right-rectangle.left, rectangle.top-rectangle.bottom);
 	d2dRenderTarget->DrawBitmap(d2dBmp, test);
 }
 
-void pengine::DirectXRenderer::InitD3D(HWND hWnd)
+void DirectXRenderer::InitD3D(HWND hWnd)
 {
 	if (NULL == (g_pD3D = Direct3DCreate9(D3D_SDK_VERSION)))
 	{

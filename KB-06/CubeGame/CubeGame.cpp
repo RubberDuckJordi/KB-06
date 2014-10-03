@@ -35,10 +35,6 @@ int _tmain(int argc, _TCHAR* argv[])
 	pEngine.GetRenderer()->InitializeBMP();
 	pEngine.GetRenderer()->CreateBitmapFromWIC();
 
-	pEngine.InitSkybox(pEngine.GetRenderer(), "resources/grass.jpg");
-	pEngine.GetResourceManager()->AddMeshLoader(new pengine::ObjMeshLoader());
-	pEngine.GetResourceManager()->AddMaterialLoader(new pengine::MtlLoader());
-
 	pengine::XModel* xmodel = new pengine::XModel();
 	pengine::XModelLoader* xmodelLoader = new pengine::XModelLoader();
 	xmodelLoader->LoadXModel("resources/tiger.x", static_cast<pengine::DirectXRenderer*>(pEngine.GetRenderer()), xmodel);
