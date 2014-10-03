@@ -135,10 +135,13 @@ int _tmain(int argc, _TCHAR* argv[])
 		pEngine.GetRenderer()->SetActiveMatrix(aMatrix->theMatrix);
 		MyObject.Draw(pEngine.GetRenderer());
 		//pEngine.GetSkyBox()->Draw(pEngine.GetRenderer(), aMatrix);
-		pEngine.GetRenderer()->D2DDraw();
+
+		
 
 		pEngine.GetRenderer()->EndScene();
 		pEngine.GetRenderer()->PresentScene(pEngine.GetWindowManager()->GetLastWindow()->GetHWND());
+
+		pEngine.GetRenderer()->D2DDraw();
 		delete aMatrix;
 	}
 

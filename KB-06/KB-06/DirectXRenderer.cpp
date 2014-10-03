@@ -33,7 +33,6 @@ namespace pengine
 
 	void DirectXRenderer::CreateRenderTarget(HWND hWnd)
 	{
-
 		GetClientRect(hWnd, &rectangle);
 
 		D2D1_SIZE_U size = D2D1::SizeU(rectangle.right - rectangle.left, rectangle.bottom - rectangle.top);
@@ -94,8 +93,10 @@ namespace pengine
 
 	void DirectXRenderer::D2DDraw()
 	{
-		D2D1_RECT_F test = D2D1::RectF(0, 0, rectangle.right - rectangle.left, rectangle.top - rectangle.bottom);
+		d2dRenderTarget->BeginDraw();
+		D2D1_RECT_F test = D2D1::RectF(0, 0, 200, 200);
 		d2dRenderTarget->DrawBitmap(d2dBmp, test);
+		d2dRenderTarget->EndDraw();
 	}
 
 	void DirectXRenderer::InitD3D(HWND hWnd)
