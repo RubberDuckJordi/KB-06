@@ -129,8 +129,3 @@ void pengine::Logger::LogMemoryDump(int logType, void* const p_address, const in
 	sstr << "]";
 	Log(logType, sstr.str());
 }
-
-bool has_suffix(const std::string& s, const std::string& suffix)
-{
-	return (s.size() >= suffix.size()) && equal(suffix.rbegin(), suffix.rend(), s.rbegin());
-}
