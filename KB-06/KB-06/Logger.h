@@ -23,15 +23,17 @@ namespace pengine {
 			INFO = 4
 		};
 
-		void NewFile();
-		void Log(int logType, char* text);
 		void Log(int logType, std::string text);
 		void LogMemoryDump(int logType, void* const p_address, const int p_size, char* const p_name);
 		void SetLogLevel(int logLevel);
 		void Reset();
+		void SetFile(std::string fileName);
+		void RemoveLogs();
 	private:
+		void SetDefaultValues();
+		std::ofstream outfile;
 		void PrintConsole(int logType, std::string entry);
-		std::string BuildLogEntry(int logType, char* messasge);
+		std::string BuildLogEntry(int logType, std::string messasge);
 
 		int logLevel = INFO;
 		int consoleColorCodeInfo = gray;
@@ -39,8 +41,11 @@ namespace pengine {
 		int consoleColorCodeWarning = yellow;
 		int consoleColorCodeError = red;
 		HANDLE consoleHandle;
-		char* logFile = "log.txt";
-		char* previousLogFile = "log_old.txt";
+
+		std::string logFile;
+		std::string defaultLogFile = "log";
+		const std::string logExtension = ".log";
+
 		enum Consolecolor
 		{
 			black = 0,
