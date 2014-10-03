@@ -133,6 +133,12 @@
     <ClCompile Include="LoggerPool.cpp">
       <Filter>Header</Filter>
     </ClCompile>
+    <ClCompile Include="HeightmapLoader.cpp">
+      <Filter>Source\Resource\Heightmap</Filter>
+    </ClCompile>
+    <ClCompile Include="Ground.cpp">
+      <Filter>Source\Scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DefaultEntity.h">
@@ -334,6 +340,12 @@
     <ClInclude Include="Mesh.h">
       <Filter>Header\Resource\RobertX</Filter>
     </ClInclude>
+    <ClInclude Include="HeightmapLoader.h">
+      <Filter>Header\Resource\Heightmap</Filter>
+    </ClInclude>
+    <ClInclude Include="Ground.h">
+      <Filter>Header\Scene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -422,6 +434,12 @@
     </Filter>
     <Filter Include="Source\Resource\Skybox">
       <UniqueIdentifier>{377148d9-ce31-422f-9d47-533ee6a465ae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header\Resource\Heightmap">
+      <UniqueIdentifier>{971e64f4-0023-4057-ae0d-b86d2af88118}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Resource\Heightmap">
+      <UniqueIdentifier>{919bf794-d07d-4680-81a5-c6f8733e296a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

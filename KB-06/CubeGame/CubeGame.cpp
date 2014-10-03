@@ -16,8 +16,13 @@
 #include "Object3D.h"
 #include "RenderMatrix.h"
 
+#include "HeightmapLoader.h"
+
 int _tmain(int argc, _TCHAR* argv[])
 {
+	pengine::HeightmapLoader heightmapLoader;
+	pengine::Ground* ground = heightmapLoader.LoadHeightmap("resources/heightmap.bmp");
+
 	pengine::PEngine pEngine;
 	pengine::Logger* logger = pengine::LoggerPool::GetInstance().GetInstance().GetLogger();
 	pEngine.Init();
