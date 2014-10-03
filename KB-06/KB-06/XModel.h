@@ -1,5 +1,5 @@
-#ifndef __RESOURCE_XMODEL_H__
-#define __RESOURCE_XMODEL_H__
+#ifndef __PENGINE_XMODEL_H__
+#define __PENGINE_XMODEL_H__
 
 #include "MeshWrapper.h"
 #include "TextureWrapper.h"

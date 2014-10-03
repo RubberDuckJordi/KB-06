@@ -1,5 +1,5 @@
-#ifndef _RESOURCE_XMODELLOADER_H_
-#define _RESOURCE_XMODELLOADER_H_
+#ifndef _PENGINE_XMODELLOADER_H_
+#define _PENGINE_XMODELLOADER_H_
 
 #include "XModel.h"
 #include "DirectXRenderer.h"

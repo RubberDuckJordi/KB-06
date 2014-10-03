@@ -4,182 +4,185 @@
 #include "LoggerPool.h"
 #include <iostream>
 
-pengine::Window::Window()
+namespace pengine
 {
-	Logger* logger = LoggerPool::GetInstance().GetLogger();
-
-	//Set the default data for the window class.
-	//These can be reset in the derived class's constructor.
-	_WndClass.cbSize = sizeof(_WndClass);
-	_WndClass.style = CS_DBLCLKS | CS_HREDRAW | CS_VREDRAW;;
-	_WndClass.lpfnWndProc = BaseWndProc;
-	_WndClass.cbClsExtra = 0;
-	_WndClass.cbWndExtra = 0;
-	_WndClass.hInstance = NULL;
-	_WndClass.hIcon = NULL;
-	_WndClass.hCursor = LoadCursor(NULL, IDC_ARROW);
-	_WndClass.hbrBackground = (HBRUSH)GetStockObject(WHITE_BRUSH);
-	_WndClass.lpszMenuName = NULL;
-	_WndClass.hIconSm = NULL;
-
-	_dwExtendedStyle = NULL;
-	_dwStyle = WS_OVERLAPPEDWINDOW | WS_VISIBLE;
-	_pszClassName = L"Window";
-	_pszTitle = L"Default title, go set it!";
-}
-
-pengine::Window::~Window()
-{
-	//logger->Log(Logger::Logger::INFO, "Destructed window");
-	//Logger::LoggerPool::GetInstance().ReturnLogger(logger);
-	//delete _hwnd;
-}
-
-void pengine::Window::SetTitle(const char* title)
-{
-	size_t origsize = strlen(title) + 1;
-	const size_t newsize = 100;
-	size_t convertedChars = 0;
-	wchar_t wcstring[newsize];
-	mbstowcs_s(&convertedChars, wcstring, origsize, title, _TRUNCATE);
-
-	_pszTitle = wcstring;
-	SetWindowText(_hwnd, wcstring);
-
-	//	delete[] wcstring;
-}
-
-LRESULT pengine::Window::WindowProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
-{
-	std::list<WindowListener*>::iterator listenersIt;
-
-	switch (msg)
+	Window::Window()
 	{
-	case WM_ACTIVATE:
-		for (listenersIt = windowListeners.begin(); listenersIt != windowListeners.end(); ++listenersIt)
+		Logger* logger = LoggerPool::GetInstance().GetLogger();
+
+		//Set the default data for the window class.
+		//These can be reset in the derived class's constructor.
+		_WndClass.cbSize = sizeof(_WndClass);
+		_WndClass.style = CS_DBLCLKS | CS_HREDRAW | CS_VREDRAW;;
+		_WndClass.lpfnWndProc = BaseWndProc;
+		_WndClass.cbClsExtra = 0;
+		_WndClass.cbWndExtra = 0;
+		_WndClass.hInstance = NULL;
+		_WndClass.hIcon = NULL;
+		_WndClass.hCursor = LoadCursor(NULL, IDC_ARROW);
+		_WndClass.hbrBackground = (HBRUSH)GetStockObject(WHITE_BRUSH);
+		_WndClass.lpszMenuName = NULL;
+		_WndClass.hIconSm = NULL;
+
+		_dwExtendedStyle = NULL;
+		_dwStyle = WS_OVERLAPPEDWINDOW | WS_VISIBLE;
+		_pszClassName = L"Window";
+		_pszTitle = L"Default title, go set it!";
+	}
+
+	Window::~Window()
+	{
+		//logger->Log(Logger::Logger::INFO, "Destructed window");
+		//Logger::LoggerPool::GetInstance().ReturnLogger(logger);
+		//delete _hwnd;
+	}
+
+	void Window::SetTitle(const char* title)
+	{
+		size_t origsize = strlen(title) + 1;
+		const size_t newsize = 100;
+		size_t convertedChars = 0;
+		wchar_t wcstring[newsize];
+		mbstowcs_s(&convertedChars, wcstring, origsize, title, _TRUNCATE);
+
+		_pszTitle = wcstring;
+		SetWindowText(_hwnd, wcstring);
+
+		//	delete[] wcstring;
+	}
+
+	LRESULT Window::WindowProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
+	{
+		std::list<WindowListener*>::iterator listenersIt;
+
+		switch (msg)
 		{
-			if (wParam == WA_INACTIVE)
+		case WM_ACTIVATE:
+			for (listenersIt = windowListeners.begin(); listenersIt != windowListeners.end(); ++listenersIt)
 			{
-				(*listenersIt)->OnWindowFocusLost(this);
+				if (wParam == WA_INACTIVE)
+				{
+					(*listenersIt)->OnWindowFocusLost(this);
+				}
+				else
+				{
+					(*listenersIt)->OnWindowFocusGained(this);
+				}
 			}
-			else
-			{
-				(*listenersIt)->OnWindowFocusGained(this);
-			}
+			break;
+		case WM_PAINT:
+			render(NULL);
+			break;
+		case WM_CLOSE:
+			DestroyWindow(hwnd);
+			break;
+		case WM_DESTROY:
+			state = closed;
+			PostQuitMessage(0);
+			break;
+		case WM_SIZE:
+			Resize();
+			break;
+		default:
+			return DefWindowProc(hwnd, msg, wParam, lParam);
 		}
-		break;
-	case WM_PAINT:
-		render(NULL);
-		break;
-	case WM_CLOSE:
-		DestroyWindow(hwnd);
-		break;
-	case WM_DESTROY:
-		state = closed;
+		return 0;
+	}
+
+	void Window::Resize()
+	{
+		RECT rect;
+		if (GetWindowRect(_hwnd, &rect))
+		{
+			int width = rect.right - rect.left;
+			int height = rect.bottom - rect.top;
+			//renderer->setRenderSize(width, height);
+		}
+	}
+
+	void Window::OnDestroy(HWND hwnd)
+	{
 		PostQuitMessage(0);
-		break;
-	case WM_SIZE:
-		Resize();
-		break;
-	default:
-		return DefWindowProc(hwnd, msg, wParam, lParam);
 	}
-	return 0;
-}
 
-void pengine::Window::Resize()
-{
-	RECT rect;
-	if (GetWindowRect(_hwnd, &rect))
+	HWND Window::Create(int x, int y, int nWidth, int nHeight, HWND hParent, HMENU hMenu, HINSTANCE hInstance)
 	{
-		int width = rect.right - rect.left;
-		int height = rect.bottom - rect.top;
-		//renderer->setRenderSize(width, height);
+		_WndClass.lpszClassName = _pszClassName;
+		_WndClass.hInstance = hInstance;
+
+		//If we're already registered, this call will fail.
+		RegisterClassEx(&_WndClass);
+
+		_hwnd = CreateWindowEx(_dwExtendedStyle, _pszClassName, _pszTitle, _dwStyle, x, y, nWidth, nHeight, hParent, hMenu, hInstance, (void*)this);
+		state = normal;
+		return _hwnd;
 	}
-}
 
-void pengine::Window::OnDestroy(HWND hwnd)
-{
-	PostQuitMessage(0);
-}
-
-HWND pengine::Window::Create(int x, int y, int nWidth, int nHeight, HWND hParent, HMENU hMenu, HINSTANCE hInstance)
-{
-	_WndClass.lpszClassName = _pszClassName;
-	_WndClass.hInstance = hInstance;
-
-	//If we're already registered, this call will fail.
-	RegisterClassEx(&_WndClass);
-
-	_hwnd = CreateWindowEx(_dwExtendedStyle, _pszClassName, _pszTitle, _dwStyle, x, y, nWidth, nHeight, hParent, hMenu, hInstance, (void*)this);
-	state = normal;
-	return _hwnd;
-}
-
-LRESULT CALLBACK pengine::Window::BaseWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
-{
-	//A pointer to the object is passed in the CREATESTRUCT
-	if (msg == WM_NCCREATE)
+	LRESULT CALLBACK Window::BaseWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 	{
-		SetWindowLongPtr(hwnd, GWLP_USERDATA,
-			(LONG_PTR)((LPCREATESTRUCT)lParam)->lpCreateParams);
+		//A pointer to the object is passed in the CREATESTRUCT
+		if (msg == WM_NCCREATE)
+		{
+			SetWindowLongPtr(hwnd, GWLP_USERDATA,
+				(LONG_PTR)((LPCREATESTRUCT)lParam)->lpCreateParams);
+		}
+
+		//Retrieve the pointer
+		Window *pObj = (Window *)GetWindowLongPtr(hwnd, GWLP_USERDATA);
+
+		//Filter message through child classes
+		if (pObj)
+		{
+			return pObj->WindowProc(hwnd, msg, wParam, lParam);
+		}
+		return 0;
 	}
 
-	//Retrieve the pointer
-	Window *pObj = (Window *)GetWindowLongPtr(hwnd, GWLP_USERDATA);
-
-	//Filter message through child classes
-	if (pObj)
+	void Window::render(Scene *scene)
 	{
-		return pObj->WindowProc(hwnd, msg, wParam, lParam);
+		if (scene)
+		{
+			//scene->updateEntities();
+		}
+		RECT rect;
+		HDC hDC = GetDC(_hwnd);
+		PAINTSTRUCT PaintStruct;
+		BeginPaint(_hwnd, &PaintStruct);
+		GetClientRect(_hwnd, &rect);
+		DrawText(hDC, L"Hello, screen that is damn hard to get!", 39, &rect, DT_VCENTER | DT_CENTER | DT_SINGLELINE);
+		EndPaint(_hwnd, &PaintStruct);
+		ReleaseDC(_hwnd, hDC);
+		//renderer->Render(_hwnd, scene);
 	}
-	return 0;
-}
 
-void pengine::Window::render(pengine::Scene *scene)
-{
-	if (scene)
+	HWND Window::GetHWND()
 	{
-		//scene->updateEntities();
+		return _hwnd;
 	}
-	RECT rect;
-	HDC hDC = GetDC(_hwnd);
-	PAINTSTRUCT PaintStruct;
-	BeginPaint(_hwnd, &PaintStruct);
-	GetClientRect(_hwnd, &rect);
-	DrawText(hDC, L"Hello, screen that is damn hard to get!", 39, &rect, DT_VCENTER | DT_CENTER | DT_SINGLELINE);
-	EndPaint(_hwnd, &PaintStruct);
-	ReleaseDC(_hwnd, hDC);
-	//renderer->Render(_hwnd, scene);
-}
 
-HWND pengine::Window::GetHWND()
-{
-	return _hwnd;
-}
-
-pengine::WindowState pengine::Window::GetWindowState()
-{
-	return state;
-}
-
-void pengine::Window::AddWindowListener(WindowListener* p_windowListener)
-{
-	if (p_windowListener != NULL)
+	WindowState Window::GetWindowState()
 	{
-		windowListeners.push_back(p_windowListener);
+		return state;
 	}
-}
 
-void pengine::Window::RemoveWindowListener(WindowListener* p_windowListener)
-{
-	if (p_windowListener != NULL)
+	void Window::AddWindowListener(WindowListener* p_windowListener)
 	{
-		windowListeners.remove(p_windowListener);
+		if (p_windowListener != NULL)
+		{
+			windowListeners.push_back(p_windowListener);
+		}
 	}
-}
 
-void pengine::Window::ClearWindowListeners()
-{
-	windowListeners.clear();
+	void Window::RemoveWindowListener(WindowListener* p_windowListener)
+	{
+		if (p_windowListener != NULL)
+		{
+			windowListeners.remove(p_windowListener);
+		}
+	}
+
+	void Window::ClearWindowListeners()
+	{
+		windowListeners.clear();
+	}
 }

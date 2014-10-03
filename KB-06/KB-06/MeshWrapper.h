@@ -1,5 +1,5 @@
-#ifndef _MESHWRAPPER_H_
-#define _MESHWRAPPER_H_
+#ifndef _PENGINE_MESHWRAPPER_H_
+#define _PENGINE_MESHWRAPPER_H_
 
 #include <d3dx9.h>
 

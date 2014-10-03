@@ -1,5 +1,5 @@
-#ifndef _MATERIALWRAPPER_H_
-#define _MATERIALWRAPPER_H_
+#ifndef _PENGINE_MATERIALWRAPPER_H_
+#define _PENGINE_MATERIALWRAPPER_H_
 
 #include <d3dx9.h>
 

@@ -1,5 +1,5 @@
-#ifndef __SCENE_SCENE_FACTORY_H__
-#define __SCENE_SCENE_FACTORY_H__
+#ifndef _PENGINE_SCENEFACTORY_H_
+#define _PENGINE_SCENEFACTORY_H_
 
 #include "Scene.h"
 #include <map>

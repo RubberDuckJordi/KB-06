@@ -2,15 +2,17 @@
 #include "CustomD3DVertex.h"
 #include "BinaryData.h"
 
-pengine::DirectXRenderer::DirectXRenderer()
+namespace pengine
 {
+	DirectXRenderer::DirectXRenderer()
+	{
 	logger = LoggerPool::GetInstance().GetLogger();
 	g_pD3D = NULL;
 	g_pd3dDevice = NULL;
 	matrixCache = new D3DXMATRIX();
 }
 
-pengine::DirectXRenderer::~DirectXRenderer()
+	DirectXRenderer::~DirectXRenderer()
 {
 	if (g_pd3dDevice != NULL)
 	{
@@ -110,8 +112,10 @@ void pengine::DirectXRenderer::InitD3D(HWND hWnd)
 	d3dpp.Windowed = true;
 	d3dpp.SwapEffect = D3DSWAPEFFECT_DISCARD;
 	d3dpp.BackBufferFormat = D3DFMT_UNKNOWN;
-	d3dpp.EnableAutoDepthStencil = TRUE;
+		//d3dpp.BackBufferFormat = D3DFMT_A8R8G8B8;//The higher you can set this, the more accurate the z-buffer is, current seems to be the highest working.
+		d3dpp.EnableAutoDepthStencil = true;
 	d3dpp.AutoDepthStencilFormat = D3DFMT_D16;
+		//d3dpp.AutoDepthStencilFormat = D3DFMT_D24S8;//The higher you can set this, the more accurate the z-buffer is, current seems to be the highest working.
 
 	if (FAILED(g_pD3D->CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, hWnd,
 		D3DCREATE_SOFTWARE_VERTEXPROCESSING,
@@ -122,21 +126,22 @@ void pengine::DirectXRenderer::InitD3D(HWND hWnd)
 	}
 }
 
-void pengine::DirectXRenderer::SetDefaultRenderStates()
+	void DirectXRenderer::SetDefaultRenderStates()
 {
 	this->g_pd3dDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);	//Counter Clockwise Cullmode
-	this->g_pd3dDevice->SetRenderState(D3DRS_ZENABLE, TRUE); //Z buffer on
+		this->g_pd3dDevice->SetRenderState(D3DRS_ZENABLE, true); //Z buffer on
 	this->g_pd3dDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, true); //Turn Alphablending on
 	this->g_pd3dDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA); //Type alphablending
 	this->g_pd3dDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA); //Type alphablending
+		//this->g_pd3dDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
 };
 
-void pengine::DirectXRenderer::SetRenderState(PENGINERENDERSTATETYPE* state, PENGINEDWORD* dword)
+	void DirectXRenderer::SetRenderState(PENGINERENDERSTATETYPE* state, PENGINEDWORD* dword)
 {
 	this->g_pd3dDevice->SetRenderState(static_cast<D3DRENDERSTATETYPE>(*state), static_cast<DWORD>(*dword));
 }
 
-void pengine::DirectXRenderer::SetActiveCamera(CameraData camera)
+	void DirectXRenderer::SetActiveCamera(CameraData camera)
 {
 	// Set up our view matrix. A view matrix can be defined given an eye point,
 	// a point to lookat, and a direction for which way is up. Here, we set the
@@ -150,13 +155,13 @@ void pengine::DirectXRenderer::SetActiveCamera(CameraData camera)
 	g_pd3dDevice->SetTransform(D3DTS_VIEW, matrixCache);
 }
 
-void pengine::DirectXRenderer::SetProjectionMatrix(PEngineMatrix* projectionMatrix)
+	void DirectXRenderer::SetProjectionMatrix(PEngineMatrix* projectionMatrix)
 {
 	SetMatrixCache(projectionMatrix);
 	this->g_pd3dDevice->SetTransform(D3DTS_PROJECTION, matrixCache);
 }
 
-void pengine::DirectXRenderer::SetProjectionMatrix(float FOV, float farClippingPlane)
+	void DirectXRenderer::SetProjectionMatrix(float FOV, float farClippingPlane)
 {
 	// For the projection matrix, we set up a perspective transform (which
 	// transforms geometry from 3D view space to 2D viewport space, with
@@ -169,84 +174,117 @@ void pengine::DirectXRenderer::SetProjectionMatrix(float FOV, float farClippingP
 	g_pd3dDevice->SetTransform(D3DTS_PROJECTION, &matProj);
 }
 
-void pengine::DirectXRenderer::BeginScene()
+	void DirectXRenderer::BeginScene()
 {
 	this->g_pd3dDevice->BeginScene();
 }
 
-void pengine::DirectXRenderer::ClearScene(PENGINEDWORD* count, PENGINEDWORD* flags, PENGINECOLOR* color, float z, PENGINEDWORD* stencil)
+	void DirectXRenderer::ClearScene(PENGINEDWORD* count, PENGINEDWORD* flags, PENGINECOLOR* color, float z, PENGINEDWORD* stencil)
 {
 	this->g_pd3dDevice->Clear(*count, NULL, *flags, *color, z, *stencil);
 }
 
-void pengine::DirectXRenderer::ClearScene(unsigned long count, unsigned long flags, pengine::RGBAColor color, float z, unsigned long stencil){
+	void DirectXRenderer::ClearScene(unsigned long count, unsigned long flags, RGBAColor color, float z, unsigned long stencil){
 	flags = D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER;
 	g_pd3dDevice->Clear(PENGINEDWORD(count), NULL, PENGINEDWORD(flags),
 		D3DCOLOR_COLORVALUE(color.r, color.g, color.b, color.a), z, PENGINEDWORD(stencil));
 }
 
-void pengine::DirectXRenderer::PresentScene(HWND hWnd)
+	void DirectXRenderer::PresentScene(HWND hWnd)
 {
 	this->g_pd3dDevice->Present(NULL, NULL, hWnd, NULL);
 }
 
-void pengine::DirectXRenderer::EndScene()
+	void DirectXRenderer::EndScene()
 {
 	this->g_pd3dDevice->EndScene();
 }
 
-void pengine::DirectXRenderer::CreateVertexBuffer(int heightmapvertex, PENGINEDWORD* usage, PENGINEDWORD* fvf, PENGINEPOOL* pool, VertexBufferWrapper* vertexbuffer, HANDLE handle)
+	void DirectXRenderer::CreateVertexBuffer(int heightmapvertex, PENGINEDWORD* usage, PENGINEDWORD* fvf, PENGINEPOOL* pool, VertexBufferWrapper* vertexbuffer, HANDLE handle)
 {
 	this->g_pd3dDevice->CreateVertexBuffer(heightmapvertex, *usage, *fvf, static_cast<D3DPOOL>(*pool), vertexbuffer->GetVertexBuffer(), &handle);
 };
 
-void pengine::DirectXRenderer::CreateIndexBuffer(int length, PENGINEDWORD* usage, PENGINEFORMAT* format, PENGINEPOOL* pool, IndexBufferWrapper* Indexbuffer, HANDLE* handle)
+	void DirectXRenderer::CreateIndexBuffer(int length, PENGINEDWORD* usage, PENGINEFORMAT* format, PENGINEPOOL* pool, IndexBufferWrapper* Indexbuffer, HANDLE* handle)
 {
 	this->g_pd3dDevice->CreateIndexBuffer(length, *usage, static_cast<D3DFORMAT>(*format), static_cast<D3DPOOL>(*pool), Indexbuffer->GetIndexBuffer(), NULL);
 }
 
-void pengine::DirectXRenderer::SetMaterial(MaterialWrapper* wrapper)
+	void DirectXRenderer::SetMaterialWrapper(MaterialWrapper* wrapper)
 {
 	g_pd3dDevice->SetMaterial(wrapper->GetMaterial());
 }
 
-void pengine::DirectXRenderer::SetTexture(TextureWrapper* wrapper)
+	void DirectXRenderer::SetMaterial(Material* material)
+	{
+		D3DMATERIAL9 mat;
+		mat.Ambient.r = material->ambient.r;
+		mat.Ambient.g = material->ambient.g;
+		mat.Ambient.b = material->ambient.b;
+
+		mat.Diffuse.r = material->diffuse.r;
+		mat.Diffuse.g = material->diffuse.g;
+		mat.Diffuse.b = material->diffuse.b;
+
+		mat.Specular.r = material->specular.r;
+		mat.Specular.g = material->specular.g;
+		mat.Specular.b = material->specular.b;
+		mat.Power = material->power;
+
+		g_pd3dDevice->SetMaterial(&mat);
+
+		if (material->texture != NULL)
+		{
+			if (textureCache.find(material->texture) == textureCache.end())
+			{
+				logger->LogAll(Logger::DEBUG, "Texture \"", material->texturePath, "\" not converted to LPDIRECT3DTEXTURE9 yet.");
+				LPDIRECT3DTEXTURE9 d3DTexture;
+
+				HRESULT result = D3DXCreateTextureFromFileInMemory(g_pd3dDevice, material->texture->rawData, material->texture->size, &d3DTexture);
+				textureCache[material->texture] = d3DTexture;
+				logger->LogAll(Logger::DEBUG, "Texture \"", material->texturePath, "\" converted to LPDIRECT3DTEXTURE9.");
+			}
+			g_pd3dDevice->SetTexture(0, textureCache[material->texture]);
+		}
+	}
+
+	void DirectXRenderer::SetTexture(TextureWrapper* wrapper)
 {
 	g_pd3dDevice->SetTexture(0, *wrapper->GetTexture());
 }
 
-void pengine::DirectXRenderer::SetFvF(PENGINEDWORD* fvf)
+	void DirectXRenderer::SetFvF(PENGINEDWORD* fvf)
 {
 	g_pd3dDevice->SetFVF(*fvf);
 }
 
-void pengine::DirectXRenderer::DrawPrimitive(pengine::Mesh mesh)
+	/*void DirectXRenderer::DrawPrimitive(Mesh mesh)
 {
 	//g_pd3dDevice->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, mesh.vertices.size, 0, mesh.faceDefinitions.size * 3);
-}
+	}*/
 
-void pengine::DirectXRenderer::DrawSubset(MeshWrapper* wrapper, int subset)
+	void DirectXRenderer::DrawSubset(MeshWrapper* wrapper, int subset)
 {
 	(*wrapper->GetMesh())->DrawSubset(subset);
 }
 
 //??
-void pengine::DirectXRenderer::SetStreamSource() //??
+	void DirectXRenderer::SetStreamSource() //??
 {
 
 }
 
-void pengine::DirectXRenderer::SetIndices() //??
+	void DirectXRenderer::SetIndices() //??
 {
 
 }
 
-LPDIRECT3DDEVICE9* pengine::DirectXRenderer::GetDevice()
+	LPDIRECT3DDEVICE9* DirectXRenderer::GetDevice()
 {
 	return &g_pd3dDevice;
 }
 
-void pengine::DirectXRenderer::Draw(pengine::Mesh* mesh)
+	/*void DirectXRenderer::Draw(Mesh* mesh)
 {
 	if (meshCache.find(mesh) == meshCache.end())
 	{
@@ -331,48 +369,16 @@ void pengine::DirectXRenderer::Draw(pengine::Mesh* mesh)
 		SetTexture(&mesh->subsets.at(i).defaultMaterial.defaultTexture);
 		meshCache[mesh]->DrawSubset(i);
 	}
-}
+	}*/
 
-void pengine::DirectXRenderer::SetTexture(pengine::BinaryData* texture)
-{
-	if (textureCache.find(texture) == textureCache.end())
-	{
-		logger->Log(Logger::DEBUG, "Texture \"" + texture->fileName + "\" not converted to LPDIRECT3DTEXTURE9 yet.");
-		LPDIRECT3DTEXTURE9 d3DTexture;
 
-		D3DXCreateTextureFromFileInMemory(g_pd3dDevice, texture->rawData, texture->size, &d3DTexture);
-		textureCache[texture] = d3DTexture;
-		logger->Log(Logger::DEBUG, "Texture \"" + texture->fileName + "\" converted to LPDIRECT3DTEXTURE9.");
-	}
-	g_pd3dDevice->SetTexture(0, textureCache[texture]);
-}
-
-void pengine::DirectXRenderer::SetMaterial(pengine::Material* material)
-{
-	D3DMATERIAL9 mat;
-	mat.Ambient.r = material->ambientColor.r;
-	mat.Ambient.g = material->ambientColor.g;
-	mat.Ambient.b = material->ambientColor.b;
-
-	mat.Diffuse.r = material->diffuseColor.r;
-	mat.Diffuse.g = material->diffuseColor.g;
-	mat.Diffuse.b = material->diffuseColor.b;
-
-	mat.Specular.r = material->SpecularColor.r;
-	mat.Specular.g = material->SpecularColor.g;
-	mat.Specular.b = material->SpecularColor.b;
-	mat.Power = material->specularWeight;
-
-	g_pd3dDevice->SetMaterial(&mat);
-}
-
-void pengine::DirectXRenderer::SetActiveMatrix(PEngineMatrix* matrix)
+	void DirectXRenderer::SetActiveMatrix(PEngineMatrix* matrix)
 {
 	SetMatrixCache(matrix);
 	g_pd3dDevice->SetTransform(D3DTS_WORLD, matrixCache);
 }
 
-void pengine::DirectXRenderer::SetLights()
+	void DirectXRenderer::SetLights()
 {
 	D3DXVECTOR3 vecDir;
 	D3DLIGHT9 light;
@@ -398,9 +404,20 @@ void pengine::DirectXRenderer::SetLights()
 	material.Ambient = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);    // set ambient color to white
 
 	g_pd3dDevice->SetMaterial(&material);    // set the globably-used material to &material
+		
+		/*//Turn on ambient lighting 
+		g_pd3dDevice->SetRenderState(D3DRS_AMBIENT, 0xffffffff);
+
+		g_pd3dDevice->SetTextureStageState(0, D3DTSS_COLOROP, D3DTOP_SELECTARG1);
+		g_pd3dDevice->SetTextureStageState(0, D3DTSS_COLORARG1, D3DTA_TEXTURE);
+		g_pd3dDevice->SetTextureStageState(0, D3DTSS_COLORARG2, D3DTA_DIFFUSE);
+
+		/*g_pd3dDevice->SetTextureStageState(0, D3DTSS_ALPHAOP, D3DTOP_SELECTARG1);
+		g_pd3dDevice->SetTextureStageState(0, D3DTSS_ALPHAARG1, D3DTA_TEXTURE);
+		g_pd3dDevice->SetTextureStageState(0, D3DTSS_ALPHAARG2, D3DTA_DIFFUSE);*/
 }
 
-void pengine::DirectXRenderer::SetMatrixCache(PEngineMatrix* matrix)
+	void DirectXRenderer::SetMatrixCache(PEngineMatrix* matrix)
 {
 	//matrixCache = (D3DXMATRIX*)matrix;;
 	matrixCache->_11 = matrix->_11;
@@ -423,4 +440,5 @@ void pengine::DirectXRenderer::SetMatrixCache(PEngineMatrix* matrix)
 	matrixCache->_43 = matrix->_43;
 	matrixCache->_44 = matrix->_44;
 
+}
 }

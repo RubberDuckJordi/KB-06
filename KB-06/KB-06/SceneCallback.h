@@ -1,5 +1,6 @@
-#ifndef __SCENE_SCENECALLBACK_H__
-#define __SCENE_SCENECALLBACK_H__
+#ifndef _PENGINE_SCENECALLBACK_H_
+#define _PENGINE_SCENECALLBACK_H_
+
 #include <string>
 
 namespace pengine

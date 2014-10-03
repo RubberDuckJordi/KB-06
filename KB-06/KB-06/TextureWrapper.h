@@ -1,5 +1,5 @@
-#ifndef _TEXTUREWRAPPER_H_
-#define _TEXTUREWRAPPER_H_
+#ifndef _PENGINE_TEXTUREWRAPPER_H_
+#define _PENGINE_TEXTUREWRAPPER_H_
 
 #include <d3dx9.h>
 

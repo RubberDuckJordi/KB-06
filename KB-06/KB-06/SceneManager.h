@@ -1,5 +1,5 @@
-#ifndef __SCENE_SCENE_MANAGER_H__
-#define __SCENE_SCENE_MANAGER_H__
+#ifndef _PENGINE_SCENEMANAGER_H_
+#define _PENGINE_SCENEMANAGER_H_
 
 #include "Scene.h"
 #include "SceneFactory.h"

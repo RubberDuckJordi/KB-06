@@ -1,5 +1,5 @@
-#ifndef __INPUT_DIRECTINPUTDEVICE_H__
-#define __INPUT_DIRECTINPUTDEVICE_H__
+#ifndef _PENGINE_DIRECTINPUTDEVICE_H_
+#define _PENGINE_DIRECTINPUTDEVICE_H_
 
 //Define version to directinput version 8.
 //If not defined, it will default to version 8 as well, but we like a sense of security.

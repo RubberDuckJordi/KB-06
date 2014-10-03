@@ -37,6 +37,7 @@ int main(int argc, const char* argv[])
 	pEngine.AddSceneFactory("raceScene", sceneFactory);
 	pengine::Scene* scene = pEngine.AddScene("raceScene");
 	pEngine.SetCurrentScene(scene);
+	pEngine.GetSceneManager()->GetCurrentScene()->InitSkybox(pEngine.GetRenderer(), "resources/dome.jpg");
 	pEngine.GameLoop();
 
 	pengine::LoggerPool::GetInstance().ReturnLogger(logger);

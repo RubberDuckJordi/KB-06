@@ -1,5 +1,5 @@
-#ifndef _CUSTOMD3DVERTEX_H_
-#define _CUSTOMD3DVERTEX_H_
+#ifndef _PENGINE_CUSTOMD3DVERTEX_H_
+#define _PENGINE_CUSTOMD3DVERTEX_H_
 
 #include <d3dx9.h>
 #include <d3dx9.h>

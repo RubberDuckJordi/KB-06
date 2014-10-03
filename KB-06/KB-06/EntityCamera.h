@@ -1,9 +1,8 @@
-#ifndef __SCENE_ENTITYCAMERA_H__
-#define __SCENE_ENTITYCAMERA_H__
+#ifndef _PENGINE_ENTITYCAMERA_H_
+#define _PENGINE_ENTITYCAMERA_H_
 
 #include "Entity.h"
 #include "Vertex.h"
-#include "Mesh.h"
 #include "XModel.h"
 
 namespace pengine
@@ -21,8 +20,8 @@ namespace pengine
 		void SetLookAtEntity(Entity*);
 		void SetThirdPersonEntity(Entity*, float distance, float height);
 
-		Mesh* myMesh;//debug!
-		Mesh* myMesh2;//debug!
+		//Mesh* myMesh;//debug!
+		//Mesh* myMesh2;//debug!
 		void SetXModel(XModel*); //debug
 		bool useInput = false;
 

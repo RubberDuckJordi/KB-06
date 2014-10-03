@@ -1,5 +1,5 @@
-#ifndef _LOGGER_STRINGHELPER_H_
-#define _LOGGER_STRINGHELPER_H_
+#ifndef _PENGINE_STRINGHELPER_H_
+#define _PENGINE_STRINGHELPER_H_
 
 #include <vector>
 #include <string>

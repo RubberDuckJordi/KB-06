@@ -86,11 +86,15 @@
     <ClCompile Include="Racer.cpp" />
     <ClCompile Include="RaceScene.cpp" />
     <ClCompile Include="RaceSceneFactory.cpp" />
+    <ClCompile Include="Track.cpp" />
+    <ClCompile Include="TrackBlock.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="RaceCart.h" />
     <ClInclude Include="RaceScene.h" />
     <ClInclude Include="RaceSceneFactory.h" />
+    <ClInclude Include="Track.h" />
+    <ClInclude Include="TrackBlock.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\KB-06\KB-06.vcxproj">

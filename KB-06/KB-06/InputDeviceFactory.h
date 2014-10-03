@@ -1,5 +1,5 @@
-#ifndef __INPUT_INPUTDEVICEFACTORY_H__
-#define __INPUT_INPUTDEVICEFACTORY_H__
+#ifndef _PENGINE_INPUTDEVICEFACTORY_H_
+#define _PENGINE_INPUTDEVICEFACTORY_H_
 
 #include "InputDevice.h"
 #include "LoggerPool.h"

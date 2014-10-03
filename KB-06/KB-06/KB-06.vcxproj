@@ -89,24 +89,19 @@
     <ClInclude Include="Animation.h" />
     <ClInclude Include="AnimationSet.h" />
     <ClInclude Include="Array.h" />
-    <ClInclude Include="BaseMaterialLoader.h" />
-    <ClInclude Include="BaseMeshLoader.h" />
     <ClInclude Include="Bone.h" />
     <ClInclude Include="CustomD3DVertex.h" />
     <ClInclude Include="EntityCamera.h" />
-    <ClInclude Include="FaceDefinition.h" />
     <ClInclude Include="IndexBufferWrapper.h" />
     <ClInclude Include="IO.h" />
     <ClInclude Include="MaterialWrapper.h" />
     <ClInclude Include="Matrix.h" />
     <ClInclude Include="Menu.h" />
     <ClInclude Include="MenuButton.h" />
-    <ClInclude Include="Mesh.h" />
     <ClInclude Include="MeshWrapper.h" />
     <ClInclude Include="Model3D.h" />
     <ClInclude Include="Object3D.h" />
     <ClInclude Include="ObjectBone.h" />
-    <ClInclude Include="ObjMeshLoader.h" />
     <ClInclude Include="Quaternion.h" />
     <ClInclude Include="RenderMatrix.h" />
     <ClInclude Include="RGBColor.h" />
@@ -119,7 +114,6 @@
     <ClInclude Include="Skybox.h" />
     <ClInclude Include="Sound.h" />
     <ClInclude Include="StringHelper.h" />
-    <ClInclude Include="Material.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="DefaultScene.h" />
     <ClInclude Include="DefaultSceneFactory.h" />
@@ -135,10 +129,6 @@
     <ClInclude Include="Logger.h" />
     <ClInclude Include="LoggerPool.h" />
     <ClInclude Include="DirectMouse.h" />
-    <ClInclude Include="Subset.h" />
-    <ClInclude Include="MtlLoader.h" />
-    <ClInclude Include="Normal.h" />
-    <ClInclude Include="ParameterSpaceVertex.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="Scene.h" />
@@ -148,7 +138,6 @@
     <ClInclude Include="SuperXLoader.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="BinaryData.h" />
-    <ClInclude Include="TextureCoordinate.h" />
     <ClInclude Include="TextureWrapper.h" />
     <ClInclude Include="TRect.h" />
     <ClInclude Include="Types.h" />
@@ -160,8 +149,8 @@
     <ClInclude Include="WindowListener.h" />
     <ClInclude Include="WindowManager.h" />
     <ClInclude Include="XFileStructs.h" />
-    <ClInclude Include="XMaterial.h" />
-    <ClInclude Include="XMesh.h" />
+    <ClInclude Include="Material.h" />
+    <ClInclude Include="Mesh.h" />
     <ClInclude Include="XModel.h" />
     <ClInclude Include="XModelLoader.h" />
   </ItemGroup>
@@ -187,7 +176,6 @@
     <ClCompile Include="Model3D.cpp" />
     <ClCompile Include="Object3D.cpp" />
     <ClCompile Include="ObjectBone.cpp" />
-    <ClCompile Include="ObjMeshLoader.cpp" />
     <ClCompile Include="PEngine.cpp" />
     <ClCompile Include="RenderMatrix.cpp" />
     <ClCompile Include="SceneLoader.cpp" />
@@ -197,7 +185,6 @@
     <ClCompile Include="LoggerPool.cpp" />
     <ClCompile Include="DirectMouse.cpp" />
     <ClCompile Include="MeshWrapper.cpp" />
-    <ClCompile Include="MtlLoader.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="Scene.cpp" />

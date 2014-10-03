@@ -1,11 +1,14 @@
 #include "stdafx.h"
 #include "Renderer.h"
 
-pengine::Renderer::Renderer()
+namespace pengine
 {
-}
+	Renderer::Renderer()
+	{
+	}
 
 
-pengine::Renderer::~Renderer()
-{
+	Renderer::~Renderer()
+	{
+	}
 }

@@ -1,5 +1,5 @@
-#ifndef __SCENE_MENU_H__
-#define __SCENE_MENU_H__
+#ifndef _PENGINE_MENU_H_
+#define _PENGINE_MENU_H_
 
 #include "MenuButton.h"
 #include <vector>

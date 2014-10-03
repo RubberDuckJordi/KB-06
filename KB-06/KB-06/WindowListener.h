@@ -1,5 +1,5 @@
-#ifndef __WINDOW_WINDOWLISTENER_H__
-#define __WINDOW_WINDOWLISTENER_H__
+#ifndef _PENGINE_WINDOWLISTENER_H_
+#define _PENGINE_WINDOWLISTENER_H_
 
 #include "Window.h"
 

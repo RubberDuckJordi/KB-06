@@ -1,22 +1,24 @@
 #include "VertexBufferWrapper.h"
 
-pengine::VertexBufferWrapper::VertexBufferWrapper(IDirect3DVertexBuffer9** _VertexBuffer)
+namespace pengine
 {
-	VertexBuffer = _VertexBuffer;
+	VertexBufferWrapper::VertexBufferWrapper(IDirect3DVertexBuffer9** _VertexBuffer)
+	{
+		VertexBuffer = _VertexBuffer;
+	}
+
+	VertexBufferWrapper::~VertexBufferWrapper()
+	{
+
+	}
+
+	void VertexBufferWrapper::SetVertexBuffer(IDirect3DVertexBuffer9** _VertexBuffer)
+	{
+		VertexBuffer = _VertexBuffer;
+	}
+
+	IDirect3DVertexBuffer9** VertexBufferWrapper::GetVertexBuffer()
+	{
+		return VertexBuffer;
+	}
 }
-
-pengine::VertexBufferWrapper::~VertexBufferWrapper()
-{
-
-}
-
-void pengine::VertexBufferWrapper::SetVertexBuffer(IDirect3DVertexBuffer9** _VertexBuffer)
-{
-	VertexBuffer = _VertexBuffer;
-}
-
-IDirect3DVertexBuffer9** pengine::VertexBufferWrapper::GetVertexBuffer()
-{
-	return VertexBuffer;
-}
-

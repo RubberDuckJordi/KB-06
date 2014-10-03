@@ -4,9 +4,11 @@
 //
 /////////////////////////////////////////////////////////
 
-#ifndef _XFILESTRUCTS_H
-#define _XFILESTRUCTS_H
+#ifndef _PENGINE_XFILESTRUCTS_H
+#define _PENGINE_XFILESTRUCTS_H
 
+namespace pengine
+{
 #define XOFFILE_FORMAT_MAGIC \
 	((long)'x' + ((long)'o' << 8) + ((long)'f' << 16) + ((long)' ' << 24))
 
@@ -32,13 +34,13 @@
 	((long)'0' + ((long)'0' << 8) + ((long)'6' << 16) + ((long)'4' << 24))
 
 
-struct XFileHeader {
-	unsigned long Magic;
-	unsigned short Major_Version;
-	unsigned short Minor_Version;
-	unsigned long Format;
-	unsigned long Float_Size;
-};
+	struct XFileHeader {
+		unsigned long Magic;
+		unsigned short Major_Version;
+		unsigned short Minor_Version;
+		unsigned long Format;
+		unsigned long Float_Size;
+	};
 
 #define X_NAME         			 1
 #define X_STRING       			 2
@@ -70,18 +72,18 @@ struct XFileHeader {
 #define X_VOID        			 48
 #define X_LPSTR       			 49
 #define X_UNICODE     			 50
-#define X_CSTRING		     		 51
+#define X_CSTRING		     	 51
 #define X_ARRAY       			 52
 
-//Personal tokens
+	//Personal tokens
 #define X_ERROR					 -1
 #define X_TEMPLATE 				 60
-#define X_HEADER 					 61
-#define X_FRAME 					 62
-#define X_FRAMETRANSFORMMATRIX 63
+#define X_HEADER 				 61
+#define X_FRAME 				 62
+#define X_FRAMETRANSFORMMATRIX	 63
 #define X_MESH 					 64
 #define X_MESHTEXTURECOORDS 	 65
-#define X_MESHMATERIALLIST 	 66
+#define X_MESHMATERIALLIST		 66
 #define X_MATERIAL 				 67
 #define X_SKINMESHHEADER 		 68
 #define X_SKINWEIGHTS 			 69
@@ -91,9 +93,7 @@ struct XFileHeader {
 #define X_ANIMATION			 	 73
 #define X_ANIMATIONKEY		 	 74
 
-#define X_COMMENT					 254
-#define X_UNKNOWN					 255 //unknown block
-
-
-
+#define X_COMMENT				 254
+#define X_UNKNOWN				 255 //unknown block
+}
 #endif

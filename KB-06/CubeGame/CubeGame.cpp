@@ -3,10 +3,7 @@
 
 #include "stdafx.h"
 #include "PEngine.h"
-#include "ObjMeshLoader.h"
-#include "MtlLoader.h"
 #include "RGBAColor.h"
-#include "Mesh.h"
 #include "SceneFactory.h"
 #include "DefaultSceneFactory.h"
 #include "Skybox.h"
@@ -55,34 +52,40 @@ int _tmain(int argc, _TCHAR* argv[])
 	color.b = 1.0f;
 	color.a = 1.0f;
 
-	pengine::Mesh* mesh = pEngine.GetResourceManager()->LoadMesh("resources/cube.obj.mesh", "obj.mesh");
-	pengine::Mesh* mesh2 = pEngine.GetResourceManager()->LoadMesh("resources/cubeClone.obj.mesh", "obj.mesh");
-	pengine::Mesh* mesh3 = pEngine.GetResourceManager()->LoadMesh("resources/cubeCloneClone.obj.mesh", "obj.mesh");
-
-
-	IO_Model_X* loader = new IO_Model_X();
-	Model3D* model = new Model3D();
+	pengine::IO_Model_X* loader = new pengine::IO_Model_X();
+	pengine::Model3D* model = new pengine::Model3D();
 	loader->Load("resources/tiny/tiny_4anim.x", model);
+
+	for (std::list<pengine::Mesh*>::iterator i = model->_Meshes.begin(); i != model->_Meshes.end(); ++i)
+	{
+		for (std::list<pengine::Material*>::iterator j = (*i)->_Materials.begin(); j != (*i)->_Materials.end(); ++j)
+		{
+			logger->LogAll(0, "Texture name CubeGame: ", (*j)->texturePath);
+			if ((*j)->texturePath != "")
+			{
+				(*j)->texture = pEngine.GetResourceManager()->LoadBinaryFile("resources/tiny/" + (*j)->texturePath);
+			}
+		}
+	}
 	model->ConcatenateMeshes();
 
-	Object3D MyObject;
+	pengine::Object3D MyObject;
 	MyObject.SetupModel(model);
-	unsigned short int index = 2;
+	unsigned short int index = 0;
 	MyObject.MapAnimationSet(index);
 	//We set the interval of animation in steps
 	MyObject.SetAnimationStep(80);
-	MyObject.Update();
+	MyObject.ClearSkinnedVertices();
+	MyObject.UpdateAnimation();
 
 	pengine::DefaultSceneFactory* sceneFactory = new pengine::DefaultSceneFactory();
-	sceneFactory->setMesh(mesh);
-	sceneFactory->setMesh2(mesh2);
-	sceneFactory->setMesh3(mesh3);
 	sceneFactory->SetXModel(xmodel);
 	sceneFactory->SetXModel2(xmodel2);
 
 	pEngine.GetSceneManager()->AddSceneFactory("iets", sceneFactory);
 	pengine::Scene* scene = pEngine.GetSceneManager()->SetScene("iets");
 	pEngine.GetSceneManager()->SetCurrentScene(scene);
+	pEngine.GetSceneManager()->GetCurrentScene()->InitSkybox(pEngine.GetRenderer(), "resources/dome.jpg");
 
 	pEngine.GetRenderer()->SetProjectionMatrix(M_PI / 4, 100.0f);
 	pEngine.GetRenderer()->SetDefaultRenderStates();
@@ -90,8 +93,6 @@ int _tmain(int argc, _TCHAR* argv[])
 	while (pEngine.GetWindowManager()->HasActiveWindow())
 	{
 		pEngine.GetWindowManager()->UpdateWindows();
-
-		pEngine.GetSkyBox()->Draw(pEngine.GetRenderer());
 
 		// Logics
 		std::map<pengine::Input, long>* actions = pEngine.GetInputManager()->GetCurrentActions();
@@ -101,10 +102,12 @@ int _tmain(int argc, _TCHAR* argv[])
 		// Visuals
 		pEngine.GetRenderer()->ClearScene(0UL, 0UL, color, 1.0f, 0UL);
 		pEngine.GetRenderer()->BeginScene();
-		pEngine.GetRenderer()->SetLights();
+
+		pEngine.GetRenderer()->SetLights();//every time?
 		pEngine.GetSceneManager()->RenderActiveScene(pEngine.GetRenderer());
 		
-		
+		bool pressPlus = false;
+		bool holdPlus = false;
 
 		typedef std::map<pengine::Input, long>::iterator it_type;
 		
@@ -112,29 +115,35 @@ int _tmain(int argc, _TCHAR* argv[])
 		{
 			switch (iterator->first)
 			{
-			case pengine::Input::KEY_HOME:
-				MyObject.ClearSkinnedVertices();
-				MyObject.UpdateAnimation();
-				//logger->LogAll(0, "finalmatrix: ");
-				break;
 			case pengine::Input::KEY_ADD:
+				if (!pressPlus)
+				{
 				++index;
 				MyObject.MapAnimationSet(index);
-				//logger->LogAll(0, "finalmatrix: ");
+					pressPlus = true;
+				}
+				holdPlus = true;
 				break;
 			default:
 				break;
 			}
 		}
+		if (!holdPlus && pressPlus)
+		{
+			pressPlus = false;
+		}
+		MyObject.ClearSkinnedVertices();
+		MyObject.UpdateAnimation();
 		pengine::RenderMatrix* aMatrix = new pengine::RenderMatrix();
 		aMatrix->CreateMatrix(0.0f, -25.0f, 0.0f, 0.0f, -90.0f, 0.0f, 0.1f, 0.1f, 0.1f, aMatrix->theMatrix);
 		pEngine.GetRenderer()->SetActiveMatrix(aMatrix->theMatrix);
 		MyObject.Draw(pEngine.GetRenderer());
+		//pEngine.GetSkyBox()->Draw(pEngine.GetRenderer(), aMatrix);
 		pEngine.GetRenderer()->D2DDraw();
 
 		pEngine.GetRenderer()->EndScene();
 		pEngine.GetRenderer()->PresentScene(pEngine.GetWindowManager()->GetLastWindow()->GetHWND());
-		//delete aMatrix;
+		delete aMatrix;
 	}
 
 

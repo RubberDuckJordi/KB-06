@@ -1,11 +1,11 @@
-#ifndef _SKYBOX_H_
-#define _SKYBOX_H_
+#ifndef _PENGINE_SKYBOX_H_
+#define _PENGINE_SKYBOX_H_
 
 #include "TextureWrapper.h"
 #include "Renderer.h"
 #include "DirectXRenderer.h" // HACKING VOLGENS ROBERT
 #include "CustomD3DVertex.h"
-
+#include "Vertex.h"
 
 
 namespace pengine
@@ -18,8 +18,9 @@ namespace pengine
 		D3DCustomVertex* GetSkyboxVertices();
 		int* GetSkyboxIndices();
 		TextureWrapper* GetTexture();
+		void SetTexture(TextureWrapper* textureNew);
 
-		void Draw(Renderer* renderer);
+		void Draw(Renderer* renderer, Vertex* position);
 
 
 	private:
@@ -30,7 +31,7 @@ namespace pengine
 		int amountOfIndices;
 		LPDIRECT3DVERTEXBUFFER9 v_buffer;
 		LPDIRECT3DINDEXBUFFER9 i_buffer;
-
+		LPD3DXMESH d3dMesh;
 	};
 
 }
