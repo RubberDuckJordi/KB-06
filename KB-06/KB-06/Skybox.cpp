@@ -199,7 +199,7 @@ namespace pengine
 		aSkyboxIndices[30] = 20; aSkyboxIndices[31] = 21; aSkyboxIndices[32] = 22;//bottom
 		aSkyboxIndices[33] = 20; aSkyboxIndices[34] = 22; aSkyboxIndices[35] = 23;
 
-		//logger->LogAll(0, "Amount of vertices: ", amountOfVertices, ", faces:", _Mesh->_nFaces, ", indices: ", amountOfIndices);
+		//logger->LogAll(Logger::DEBUG, "Amount of vertices: ", amountOfVertices, ", faces:", _Mesh->_nFaces, ", indices: ", amountOfIndices);
 
 		if (FAILED(D3DXCreateMeshFVF(amountOfIndices, amountOfVertices, 0, D3DCustomVertexFVF, g_pd3dDevice, &d3dMesh)))
 		{

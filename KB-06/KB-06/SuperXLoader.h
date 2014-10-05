@@ -56,15 +56,16 @@ namespace pengine
 		uint32 _MaxKey; //Max animation key for a loaded animation set
 		void ProcessFrameTransformMatrix(Bone* &pB);
 		void ProcessBone(Bone* pBone);
-		void ProcessMesh(void);
-		void ProcessMeshTextureCoords(void);
-		void ProcessMeshMaterials(void);
-		void ProcessMeshNormals(void);
-		void ProcessMaterial(void);
-		void ProcessSkinWeights(void);
-		void ProcessAnimationSets(void);
+		void ProcessMesh();
+		void ProcessMeshTextureCoords();
+		void ProcessMeshMaterials();
+		void ProcessMeshNormals();
+		void ProcessMaterial();
+		void ProcessSkinWeights();
+		void ProcessAnimationSets();
 		void ProcessAnimations(AnimationSet* &pAS);
 		void ProcessAnimationKeys(Animation* &pA);
+		void ProcessDeclData();
 		void MapMeshToBones(Bone* &pBone);
 	};
 }

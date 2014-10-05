@@ -10,15 +10,16 @@ namespace pengine
 	}
 
 	Logger* LoggerPool::GetLogger(){
+		
 		if (pool.empty())
 		{
 			return new Logger();
 		}
 		else
 		{
-			Logger* logger = pool.front();
-			pool.pop_front();
-			return logger;
+			//Logger* logger = pool.front();
+			//pool.pop_front();temp fix
+			return pool.front();//temp fix
 		}
 	}
 

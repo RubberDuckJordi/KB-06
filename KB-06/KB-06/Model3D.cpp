@@ -40,10 +40,10 @@ namespace pengine
 			return;
 		}
 
-		logger->Log(0, "Model3D: Concatenating Meshes...");
+		logger->Log(Logger::DEBUG, "Model3D: Concatenating Meshes...");
 
 
-		Mesh* ConcatMesh = new Mesh;
+		Mesh* ConcatMesh = new Mesh();
 		Mesh* LastMesh = _Meshes.back();
 
 		ConcatMesh->_Name = "ConcatMesh";
@@ -67,11 +67,11 @@ namespace pengine
 			ConcatMesh->_nNormals = ConcatMesh->_nVertices;
 		}
 
-		logger->LogAll(0, "Model3D: Final number of Vertices:", ConcatMesh->_nVertices);
-		logger->LogAll(0, "Model3D: Final number of Faces:", ConcatMesh->_nFaces);
-		logger->LogAll(0, "Model3D: Final number of TextureCoords:", ConcatMesh->_nTextureCoords);
-		logger->LogAll(0, "Model3D: Final number of Normals:", ConcatMesh->_nNormals);
-		logger->LogAll(0, "Model3D: Final number of Materials:", ConcatMesh->_nMaterials);
+		logger->LogAll(Logger::DEBUG, "Model3D: Final number of Vertices:", ConcatMesh->_nVertices);
+		logger->LogAll(Logger::DEBUG, "Model3D: Final number of Faces:", ConcatMesh->_nFaces);
+		logger->LogAll(Logger::DEBUG, "Model3D: Final number of TextureCoords:", ConcatMesh->_nTextureCoords);
+		logger->LogAll(Logger::DEBUG, "Model3D: Final number of Normals:", ConcatMesh->_nNormals);
+		logger->LogAll(Logger::DEBUG, "Model3D: Final number of Materials:", ConcatMesh->_nMaterials);
 
 		//We create all the arrays:
 		// - Vertices and Faces
@@ -103,7 +103,18 @@ namespace pengine
 			(*i)->UpdateIndices();
 			memcpy(&(ConcatMesh->_Vertices[(*i)->_FirstVertex]), (*i)->_Vertices, (*i)->_nVertices * sizeof(Vertex));
 			memcpy(&(ConcatMesh->_Faces[(*i)->_FirstFace]), (*i)->_Faces, (*i)->_nFaces * sizeof(Face));
+
+
+			int offset = ConcatMesh->_Materials.size();
+			for (int j = 0; j < (*i)->_nFaceMaterials; j++)
+			{
+				(*i)->_FaceMaterials[j] += offset;
+			}
 			memcpy(&(ConcatMesh->_FaceMaterials[(*i)->_FirstFace]), (*i)->_FaceMaterials, (*i)->_nFaces * sizeof(uint16));
+
+			//std::vector<std::vector<int>*> stupid = (*i)->facesPerMaterial;
+			//ConcatMesh->facesPerMaterial.insert(ConcatMesh->facesPerMaterial.end(), (*i)->facesPerMaterial.begin(), (*i)->facesPerMaterial.end());
+
 			if ((*i)->_nTextureCoords != 0)
 			{
 				memcpy(&(ConcatMesh->_TextureCoords[(*i)->_FirstTextureCoord]), (*i)->_TextureCoords, (*i)->_nTextureCoords * sizeof(TCoord));
@@ -124,13 +135,13 @@ namespace pengine
 		//OK. We now process the bone hierarchy to update the
 		//skinning indices
 
-		logger->Log(0, "Model3D: Adapting the Bone hierarchy...");
+		logger->Log(Logger::DEBUG, "Model3D: Adapting the Bone hierarchy...");
 		if (_Skeletton != 0)
 		{
 			UpdateBoneIndices(_Skeletton);
 		}
 
-		logger->Log(0, "Model3D: Bone hierarchy adapted.");
+		logger->Log(Logger::DEBUG, "Model3D: Bone hierarchy adapted.");
 
 		//We eventually delete all the previous meshes
 		while (!_Meshes.empty()) {
@@ -144,7 +155,7 @@ namespace pengine
 		//We create the subsets
 		ConcatMesh->CreateSubsets();
 
-		logger->Log(0, "Model3D: All meshes are concatenated.");
+		logger->Log(Logger::DEBUG, "Model3D: All meshes are concatenated.");
 	}
 
 	void Model3D::UpdateBoneIndices(Bone* &pBone)

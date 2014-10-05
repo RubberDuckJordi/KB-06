@@ -41,16 +41,16 @@ int _tmain(int argc, _TCHAR* argv[])
 
 	pengine::IO_Model_X* loader = new pengine::IO_Model_X();
 	pengine::Model3D* model = new pengine::Model3D();
-	loader->Load("resources/tiny/tiny_4anim.x", model);
+	loader->Load("resources/camera.x", model);
 
 	for (std::list<pengine::Mesh*>::iterator i = model->_Meshes.begin(); i != model->_Meshes.end(); ++i)
 	{
-		for (std::list<pengine::Material*>::iterator j = (*i)->_Materials.begin(); j != (*i)->_Materials.end(); ++j)
+		for (std::deque<pengine::Material*>::iterator j = (*i)->_Materials.begin(); j != (*i)->_Materials.end(); ++j)
 		{
-			logger->LogAll(0, "Texture name CubeGame: ", (*j)->texturePath);
+			logger->LogAll(pengine::Logger::DEBUG, "Texture name CubeGame: ", (*j)->texturePath);
 			if ((*j)->texturePath != "")
 			{
-				(*j)->texture = pEngine.GetResourceManager()->LoadBinaryFile("resources/tiny/" + (*j)->texturePath);
+				(*j)->texture = pEngine.GetResourceManager()->LoadBinaryFile("resources/" + (*j)->texturePath);
 			}
 		}
 	}
@@ -61,9 +61,9 @@ int _tmain(int argc, _TCHAR* argv[])
 	unsigned short int index = 0;
 	MyObject.MapAnimationSet(index);
 	//We set the interval of animation in steps
-	MyObject.SetAnimationStep(80);
-	MyObject.ClearSkinnedVertices();
+	MyObject.SetAnimationStep(80);//should use deltatime*80 here, and set it every time...
 	MyObject.UpdateAnimation();
+	MyObject.showWarning = false;
 
 	pengine::DefaultSceneFactory* sceneFactory = new pengine::DefaultSceneFactory();
 	sceneFactory->SetXModel(xmodel);
@@ -77,6 +77,8 @@ int _tmain(int argc, _TCHAR* argv[])
 	pEngine.GetRenderer()->SetProjectionMatrix(M_PI / 4, 100.0f);
 	pEngine.GetRenderer()->SetDefaultRenderStates();
 	bool pressPlus = false;
+	pEngine.GetRenderer()->SetLights();//every time?
+
 	while (pEngine.GetWindowManager()->HasActiveWindow())
 	{
 		pEngine.GetWindowManager()->UpdateWindows();
@@ -90,7 +92,6 @@ int _tmain(int argc, _TCHAR* argv[])
 		pEngine.GetRenderer()->ClearScene(0UL, 0UL, color, 1.0f, 0UL);
 		pEngine.GetRenderer()->BeginScene();
 
-		pEngine.GetRenderer()->SetLights();//every time?
 		pEngine.GetSceneManager()->RenderActiveScene(pEngine.GetRenderer());
 
 
@@ -117,10 +118,9 @@ int _tmain(int argc, _TCHAR* argv[])
 		{
 			pressPlus = false;
 		}
-		MyObject.ClearSkinnedVertices();
-		MyObject.UpdateAnimation();
+		//MyObject.UpdateAnimation();
 		pengine::RenderMatrix* aMatrix = new pengine::RenderMatrix();
-		aMatrix->CreateMatrix(0.0f, -25.0f, 0.0f, 0.0f, -90.0f, 0.0f, 0.1f, 0.1f, 0.1f, aMatrix->theMatrix);
+		aMatrix->CreateMatrix(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.1f, 0.1f, 0.1f, aMatrix->theMatrix);
 		pEngine.GetRenderer()->SetActiveMatrix(aMatrix->theMatrix);
 		MyObject.Draw(pEngine.GetRenderer());
 		//pEngine.GetSkyBox()->Draw(pEngine.GetRenderer(), aMatrix);

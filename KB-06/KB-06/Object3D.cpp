@@ -23,11 +23,15 @@ namespace pengine
 
 	void Object3D::MapAnimationSet(uint16 &index)
 	{
+		if (_Model->_AnimationSets.size() == 0)
+		{
+			return;
+		}
 		if (index >= _Model->_AnimationSets.size())
 		{
 			index = 0;
 		}
-		logger->LogAll(0, "Object3D: ", _Model->_AnimationSets.size(), " Animation Sets. Playing: ", index);
+		logger->LogAll(Logger::INFO, "Object3D: ", _Model->_AnimationSets.size(), " Animation Sets. Playing: ", index);
 		std::list<AnimationSet*>::iterator i = _Model->_AnimationSets.begin();
 		if (index != 0)
 		{
@@ -64,9 +68,19 @@ namespace pengine
 			for (int i = 0; i < amountOfVertices; ++i)//first do all the vertices, then set the indices to the right vertices
 			{
 				D3DCustomVertex newVertex;
-				newVertex.x = _SkinnedVertices[i].x;//x
-				newVertex.y = _SkinnedVertices[i].y;//y
-				newVertex.z = _SkinnedVertices[i].z;//z
+				if (_Mesh->_Subsets.size() != 0)
+				{
+					newVertex.x = _SkinnedVertices[i].x;//x
+					newVertex.y = _SkinnedVertices[i].y;//y
+					newVertex.z = _SkinnedVertices[i].z;//z
+				}
+				else
+				{
+					newVertex.x = _Mesh->_Vertices[i].x;//x
+					newVertex.y = _Mesh->_Vertices[i].y;//y
+					newVertex.z = _Mesh->_Vertices[i].z;//z
+				}
+
 				newVertex.tu = _Mesh->_TextureCoords[i].data[0];//hopefully we got texture information for each vertex...
 				newVertex.tv = _Mesh->_TextureCoords[i].data[1];//hopefully we got texture information for each vertex...
 				d3dVertices[i] = newVertex;
@@ -83,17 +97,137 @@ namespace pengine
 			g_pd3dDevice->SetStreamSource(0, v_buffer, 0, sizeof(D3DCustomVertex));
 			g_pd3dDevice->SetFVF(D3DCustomVertexFVF);
 
-			//for (std::list<Subset*>::iterator i = _Mesh->_Subsets.begin(); i != _Mesh->_Subsets.end(); ++i)
-			//{
-			//	unsigned int indicesForSubset = (*i)->Size * 3;//amount of faces * 3
-			//	unsigned short* indices = new unsigned short[indicesForSubset];
-			//	for (int i = 0; i < amountOfIndices; i += 3)//now get all the indices...
-			//	{
-			//		indices[i] = _Mesh->_Faces[i / 3].data[0];
-			//		indices[i + 1] = _Mesh->_Faces[i / 3].data[1];
-			//		indices[i + 2] = _Mesh->_Faces[i / 3].data[2];
-			//	}
+			/*if (_Mesh->_Subsets.size() == 0)
+			{
+			//				logger->Log(Logger::DEBUG, "Object3D: We have no subsets to render!");
+			Face tempFace;
+			std::list<Material*>::iterator j = _Mesh->_Materials.begin();
 
+			renderer->SetMaterial(_Mesh->_Materials.front());//We have one mesh, that can only have 1 texture...
+
+			unsigned int indicesForSubset = _Mesh->_nFaces * 3;//amount of faces * 3
+			unsigned short* indices = new unsigned short[indicesForSubset];
+			unsigned int currentIndex = -1;
+
+			for (int k = 0; k < _Mesh->_nFaces; k++)
+			{
+			tempFace = _Mesh->_Faces[k];
+			indices[++currentIndex] = tempFace.data[0];
+			indices[++currentIndex] = tempFace.data[1];
+			indices[++currentIndex] = tempFace.data[2];
+			}
+
+			LPDIRECT3DINDEXBUFFER9 i_buffer;
+			d3dMesh->GetIndexBuffer(&i_buffer);
+			// lock i_buffer and load the indices into it
+			i_buffer->Lock(0, 0, (void**)&pVoid, 0);
+			memcpy(pVoid, indices, indicesForSubset * sizeof(unsigned short));
+			i_buffer->Unlock();
+
+			g_pd3dDevice->SetIndices(i_buffer);
+			g_pd3dDevice->DrawIndexedPrimitive(D3DPT_TRIANGLELIST,// PrimitiveType
+			0,// BaseVertexIndex, adds +arg to every vertex number in the index buffer
+			0,// MinIndex
+			amountOfVertices,// NumVertices
+			0,// StartIndex
+			_Mesh->_nFaces);// PrimitiveCount
+			i_buffer->Release();
+			delete[] indices;
+			j++;
+			}
+			else
+			{
+			Subset* tempSubset;
+			Face tempFace;
+			std::list<Subset*>::iterator i = _Mesh->_Subsets.begin();
+			std::list<Material*>::iterator j = _Mesh->_Materials.begin();
+
+			while (j != _Mesh->_Materials.end())
+			{
+			renderer->SetMaterial(*j);
+
+			tempSubset = *i;
+			unsigned int indicesForSubset = tempSubset->Size * 3;//amount of faces * 3
+			unsigned short* indices = new unsigned short[indicesForSubset];
+			unsigned int currentIndex = -1;
+
+			for (int k = 0; k < tempSubset->Size; k++)
+			{
+			tempFace = tempSubset->Faces[k];
+			indices[++currentIndex] = tempFace.data[0];
+			indices[++currentIndex] = tempFace.data[1];
+			indices[++currentIndex] = tempFace.data[2];
+			}
+
+			LPDIRECT3DINDEXBUFFER9 i_buffer;
+			d3dMesh->GetIndexBuffer(&i_buffer);
+			// lock i_buffer and load the indices into it
+			i_buffer->Lock(0, 0, (void**)&pVoid, 0);
+			memcpy(pVoid, indices, indicesForSubset * sizeof(unsigned short));
+			i_buffer->Unlock();
+
+			g_pd3dDevice->SetIndices(i_buffer);
+			g_pd3dDevice->DrawIndexedPrimitive(D3DPT_TRIANGLELIST,// PrimitiveType
+			0,// BaseVertexIndex, adds +arg to every vertex number in the index buffer
+			0,// MinIndex
+			amountOfVertices,// NumVertices
+			0,// StartIndex
+			tempSubset->Size);// PrimitiveCount
+			i_buffer->Release();
+			delete[] indices;
+
+			i++;
+			j++;
+			}
+			}*/
+			/*_Mesh->_Materials;
+			if (_Mesh->_Materials.size() > 1)
+			{*/
+			int mekker = _Mesh->facesPerMaterial->size();
+			for (int i = 0; i < _Mesh->facesPerMaterial->size(); i++)
+				{
+					renderer->SetMaterial(_Mesh->_Materials[i]);
+					unsigned int amountOfIndices = _Mesh->facesPerMaterial[i].size() * 3;// * 3 because there are 3 indices per face...
+					unsigned short* indices = new unsigned short[amountOfIndices];
+					for (int j = 0; j < _Mesh->facesPerMaterial[i].size(); ++j)
+					{
+						_Mesh->facesPerMaterial[i][j];
+						Face tempFace = _Mesh->_Faces[_Mesh->facesPerMaterial[i][j]];
+						indices[j * 3 + 0] = tempFace.data[0];
+						indices[j * 3 + 1] = tempFace.data[1];
+						indices[j * 3 + 2] = tempFace.data[2];
+					}
+
+					LPDIRECT3DINDEXBUFFER9 i_buffer;
+					d3dMesh->GetIndexBuffer(&i_buffer);
+					// lock i_buffer and load the indices into it
+					i_buffer->Lock(0, 0, (void**)&pVoid, 0);
+					memcpy(pVoid, indices, amountOfIndices * sizeof(unsigned short));
+					i_buffer->Unlock();
+
+					g_pd3dDevice->SetIndices(i_buffer);
+					g_pd3dDevice->DrawIndexedPrimitive(D3DPT_TRIANGLELIST,// PrimitiveType
+						0,// BaseVertexIndex, adds +arg to every vertex number in the index buffer
+						0,// MinIndex
+						amountOfVertices,// NumVertices
+						0,// StartIndex
+						_Mesh->facesPerMaterial[i].size());// PrimitiveCount
+					i_buffer->Release();
+					delete[] indices;
+				}
+			//}
+			//else
+			//{
+			//	renderer->SetMaterial(_Mesh->_Materials[1]);
+			//	unsigned int amountOfIndices = _Mesh->_nFaces * 3;// * 3 because there are 3 indices per face...
+			//	unsigned short* indices = new unsigned short[amountOfIndices];
+			//	for (int j = 0; j < _Mesh->_nFaces; ++j)
+			//	{
+			//		Face tempFace = _Mesh->_Faces[j];
+			//		indices[j * 3 + 0] = tempFace.data[0];
+			//		indices[j * 3 + 1] = tempFace.data[1];
+			//		indices[j * 3 + 2] = tempFace.data[2];
+			//	}
 
 			//	LPDIRECT3DINDEXBUFFER9 i_buffer;
 			//	d3dMesh->GetIndexBuffer(&i_buffer);
@@ -104,69 +238,15 @@ namespace pengine
 
 			//	g_pd3dDevice->SetIndices(i_buffer);
 			//	g_pd3dDevice->DrawIndexedPrimitive(D3DPT_TRIANGLELIST,// PrimitiveType
-			//		0,// BaseVertexIndex
+			//		0,// BaseVertexIndex, adds +arg to every vertex number in the index buffer
 			//		0,// MinIndex
 			//		amountOfVertices,// NumVertices
 			//		0,// StartIndex
-			//		_Mesh->_nFaces);// PrimitiveCount
+			//		amountOfIndices / 3);// PrimitiveCount
 			//	i_buffer->Release();
 			//	delete[] indices;
 			//}
-
-			Subset* tempSubset;
-			Face tempFace;
-			std::list<Subset*>::iterator i = _Mesh->_Subsets.begin();
-			std::list<Material*>::iterator j = _Mesh->_Materials.begin();
-
-			while (j != _Mesh->_Materials.end())
-			{
-				renderer->SetMaterial(*j);
-				tempSubset = *i;
-
-				unsigned int indicesForSubset = tempSubset->Size * 3;//amount of faces * 3
-				unsigned short* indices = new unsigned short[indicesForSubset];
-				unsigned int currentIndex = -1;
-
-				for (int k = 0; k < tempSubset->Size; k++)
-				{
-					tempFace = tempSubset->Faces[k];
-					indices[++currentIndex] = tempFace.data[0];
-					indices[++currentIndex] = tempFace.data[1];
-					indices[++currentIndex] = tempFace.data[2];
-
-
-
-					/*_Mesh->_TextureCoords[tempFace.data[0]].data;
-					_SkinnedVertices[tempFace.data[0]].x;
-					_Mesh->_TextureCoords[tempFace.data[1]].data;
-					_SkinnedVertices[tempFace.data[1]].y;
-					_Mesh->_TextureCoords[tempFace.data[2]].data;
-					_SkinnedVertices[tempFace.data[2]].z;*/
-
-
-				}
-
-				LPDIRECT3DINDEXBUFFER9 i_buffer;
-				d3dMesh->GetIndexBuffer(&i_buffer);
-				// lock i_buffer and load the indices into it
-				i_buffer->Lock(0, 0, (void**)&pVoid, 0);
-				memcpy(pVoid, indices, indicesForSubset * sizeof(unsigned short));
-				i_buffer->Unlock();
-
-				g_pd3dDevice->SetIndices(i_buffer);
-				g_pd3dDevice->DrawIndexedPrimitive(D3DPT_TRIANGLELIST,// PrimitiveType
-					0,// BaseVertexIndex, adds +arg to every vertex number in the index buffer
-					0,// MinIndex
-					amountOfVertices,// NumVertices
-					0,// StartIndex
-					tempSubset->Size);// PrimitiveCount
-				i_buffer->Release();
-				delete[] indices;
-
-				i++;
-				j++;
-			}
-
+			
 			v_buffer->Release();
 			d3dMesh->Release();
 			delete[] d3dVertices;
@@ -175,20 +255,23 @@ namespace pengine
 
 	ObjectBone* Object3D::ReplicateSkeletton(Bone* &pBone)
 	{
-		ObjectBone* NBone = new ObjectBone;
-
-		NBone->_BoneName = pBone->_Name;
-		NBone->_Bone = pBone;
-		NBone->_TransformMatrix = pBone->_MatrixPos;
-
-		if (!pBone->_Bones.empty())
+		if (pBone != NULL)
 		{
-			for (std::list<Bone*>::iterator i = pBone->_Bones.begin(); i != pBone->_Bones.end(); i++)
+			ObjectBone* NBone = new ObjectBone;
+
+			NBone->_BoneName = pBone->_Name;
+			NBone->_Bone = pBone;
+			NBone->_TransformMatrix = pBone->_MatrixPos;
+
+			if (!pBone->_Bones.empty())
 			{
-				NBone->_Bones.push_back(ReplicateSkeletton(*i));
+				for (std::list<Bone*>::iterator i = pBone->_Bones.begin(); i != pBone->_Bones.end(); i++)
+				{
+					NBone->_Bones.push_back(ReplicateSkeletton(*i));
+				}
 			}
+			return NBone;
 		}
-		return NBone;
 	}
 
 	/*************************************************
@@ -198,7 +281,7 @@ namespace pengine
 		pBone->_Animation = _cAnimationSet->FindAnimation(pBone->_BoneName);
 		if (pBone->_Animation == 0)
 		{
-			logger->LogAll(0, "Object3D: ", pBone->_BoneName, " is not linked to an animation.");
+			logger->LogAll(Logger::INFO, "Object3D: ", pBone->_BoneName, " is not linked to an animation.");
 		}
 		pBone->_AnimationIndexMat = 0;
 		pBone->_AnimationIndexR = 0;
@@ -257,7 +340,7 @@ namespace pengine
 	{
 		if (!pBone->_Bones.empty())
 		{
-			//logger->LogAll(0, "Object3D: Bones is not empty");
+			//logger->LogAll(Logger::DEBUG, "Object3D: Bones is not empty");
 			for (std::list<ObjectBone*>::iterator i = pBone->_Bones.begin(); i != pBone->_Bones.end(); i++)
 			{
 				SkinMesh(*i);
@@ -272,15 +355,9 @@ namespace pengine
 		for (unsigned int i = 0; i < nIndices; i++)
 		{
 			_SkinnedVertices[VertexIndices[i]] = _SkinnedVertices[VertexIndices[i]] + (pBone->_FinalMatrix * MeshVertices[VertexIndices[i]]) * Weights[i];
-			//RenderMatrix::PrintMatrix(pBone->_FinalMatrix);
-			//LoggerPool::GetInstance().GetLogger()->LogAll(
-			//	pBone->_FinalMatrix.data[0], " : ", pBone->_FinalMatrix.data[1], " : ", pBone->_FinalMatrix.data[2], " : ", pBone->_FinalMatrix.data[3], " :\n ",
-			//	pBone->_FinalMatrix.data[4], " : ", pBone->_FinalMatrix.data[5], " : ", pBone->_FinalMatrix.data[6], " : ", pBone->_FinalMatrix.data[7], " :\n ", 
-			//	pBone->_FinalMatrix.data[8], " : ", pBone->_FinalMatrix.data[9], " : ", pBone->_FinalMatrix.data[10], " : ", pBone->_FinalMatrix.data[11], " :\n ", 
-			//	pBone->_FinalMatrix.data[12], " : ", pBone->_FinalMatrix.data[13], " : ", pBone->_FinalMatrix.data[14], " : ", pBone->_FinalMatrix.data[15], " :\n ");
 		}
 
-	}/**/
+	}
 
 	void Object3D::ComputeBoundingBoxSphere(void)
 	{
@@ -319,8 +396,8 @@ namespace pengine
 		_Center.y = _Low.y + (_High.y - _Low.y)*0.5f;
 		_Center.z = _Low.z + (_High.z - _Low.z)*0.5f;
 
-		/*logger->LogAll(0, "Object3D: ", "AABB Low: ", _Low[0], "x", _Low[1], "x", _Low[2]);
-		logger->LogAll(0, "Object3D: ", "AABB High: ", _High[0], "x", _High[1], "x", _High[2]);
-		logger->LogAll(0, "Object3D: ", "AABB Center: ", _Center[0], "x", _Center[1], "x", _Center[2]);*/
+		/*logger->LogAll(Logger::DEBUG, "Object3D: ", "AABB Low: ", _Low[0], "x", _Low[1], "x", _Low[2]);
+		logger->LogAll(Logger::DEBUG, "Object3D: ", "AABB High: ", _High[0], "x", _High[1], "x", _High[2]);
+		logger->LogAll(Logger::DEBUG, "Object3D: ", "AABB Center: ", _Center[0], "x", _Center[1], "x", _Center[2]);*/
 	}
 }

@@ -34,7 +34,7 @@ namespace pengine
 		void SetupModel(Model3D* &pModel)
 		{
 			_Model = pModel;
-			_Mesh = _Model->_Meshes.back();
+			_Mesh = _Model->_Meshes.front();
 			_SkinnedVertices = new Vertex[_Mesh->_nVertices];
 			_Skeletton = ReplicateSkeletton(_Model->_Skeletton);
 		};
@@ -54,15 +54,24 @@ namespace pengine
 		void MapAnimationSet(uint16 &index);
 		void UpdateAnimation(void)
 		{
-			_cKey += _AnimationStep;
-			if (_cKey > _cAnimationSet->_MaxKey)
+			if (showWarning && _Mesh->_Subsets.size() == 0)
 			{
-				_cKey = 0;
+				//this warning should be in the future PEngine manual instead, with just a crash...
+				logger->Log(Logger::WARNING, "There are no subsets, don't call UpdateAnimation!");
 			}
-			CalcAnimation(_Skeletton);
-			ComputeBoundingBoxSphere();
-			CalcAttitude(_Skeletton, 0);
-			SkinMesh(_Skeletton);
+			else
+			{
+				ClearSkinnedVertices();
+				_cKey += _AnimationStep;
+				if (_cKey > _cAnimationSet->_MaxKey)
+				{
+					_cKey = 0;
+				}
+				CalcAnimation(_Skeletton);
+				ComputeBoundingBoxSphere();
+				CalcAttitude(_Skeletton, 0);
+				SkinMesh(_Skeletton);
+			}
 		};
 		void UpdateBindSpace(void)
 		{
@@ -96,7 +105,7 @@ namespace pengine
 		//and bounding sphere (_Center & _Radius)
 		Vertex _Low, _High, _Center;
 		float _Radius;
-
+		bool showWarning = true;
 	private:
 		Logger* logger = LoggerPool::GetInstance().GetLogger();
 		ObjectBone* _Skeletton;
