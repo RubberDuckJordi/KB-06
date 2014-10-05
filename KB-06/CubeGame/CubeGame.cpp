@@ -16,15 +16,29 @@
 #include "Object3D.h"
 #include "RenderMatrix.h"
 
+#include "HeightmapLoader.h"
+
 int _tmain(int argc, _TCHAR* argv[])
 {
+	pengine::HeightmapLoader heightmapLoader;
+	pengine::Ground* ground = heightmapLoader.LoadHeightmap("resources/heightmap.bmp");
+
 	pengine::PEngine pEngine;
 	pengine::Logger* logger = pengine::LoggerPool::GetInstance().GetInstance().GetLogger();
 	pEngine.Init();
 
 	pEngine.GetWindowManager()->AddWindowListener(pEngine.GetInputManager());
-	pEngine.GetWindowManager()->NewWindow(750, 10, 500, 500);
+	pEngine.GetWindowManager()->NewWindow(750, 750, 500, 500);
+	
 	pEngine.GetRenderer()->InitD3D(pEngine.GetWindowManager()->GetLastWindow()->GetHWND());
+	pEngine.GetRenderer()->CreateD2DFactory();
+	pEngine.GetRenderer()->CreateRenderTarget(pEngine.GetWindowManager()->GetLastWindow()->GetHWND());
+	pEngine.GetRenderer()->CreateWICImagingFactory();
+	pEngine.GetRenderer()->CreateDecoder("resources/testHUD.bmp");
+	pEngine.GetRenderer()->CreateFormatConverter();
+	pEngine.GetRenderer()->GetBitmapFrame();
+	pEngine.GetRenderer()->InitializeBMP();
+	pEngine.GetRenderer()->CreateBitmapFromWIC();
 
 	pengine::XModel* xmodel = new pengine::XModel();
 	pengine::XModelLoader* xmodelLoader = new pengine::XModelLoader();
@@ -41,16 +55,16 @@ int _tmain(int argc, _TCHAR* argv[])
 
 	pengine::IO_Model_X* loader = new pengine::IO_Model_X();
 	pengine::Model3D* model = new pengine::Model3D();
-	loader->Load("resources/camera.x", model);
+	loader->Load("resources/tiny/tiny_4anim.x", model);
 
 	for (std::list<pengine::Mesh*>::iterator i = model->_Meshes.begin(); i != model->_Meshes.end(); ++i)
 	{
 		for (std::deque<pengine::Material*>::iterator j = (*i)->_Materials.begin(); j != (*i)->_Materials.end(); ++j)
 		{
-			logger->LogAll(pengine::Logger::DEBUG, "Texture name CubeGame: ", (*j)->texturePath);
+			logger->Log(pengine::Logger::ERR, "Texture name CubeGame: "+ (*j)->texturePath);
 			if ((*j)->texturePath != "")
 			{
-				(*j)->texture = pEngine.GetResourceManager()->LoadBinaryFile("resources/" + (*j)->texturePath);
+				(*j)->texture = pEngine.GetResourceManager()->LoadBinaryFile("resources/tiny/" + (*j)->texturePath);
 			}
 		}
 	}
@@ -61,9 +75,9 @@ int _tmain(int argc, _TCHAR* argv[])
 	unsigned short int index = 0;
 	MyObject.MapAnimationSet(index);
 	//We set the interval of animation in steps
-	MyObject.SetAnimationStep(80);//should use deltatime*80 here, and set it every time...
+	MyObject.SetAnimationStep(80);
+	MyObject.ClearSkinnedVertices();
 	MyObject.UpdateAnimation();
-	MyObject.showWarning = false;
 
 	pengine::DefaultSceneFactory* sceneFactory = new pengine::DefaultSceneFactory();
 	sceneFactory->SetXModel(xmodel);
@@ -73,12 +87,11 @@ int _tmain(int argc, _TCHAR* argv[])
 	pengine::Scene* scene = pEngine.GetSceneManager()->SetScene("iets");
 	pEngine.GetSceneManager()->SetCurrentScene(scene);
 	pEngine.GetSceneManager()->GetCurrentScene()->InitSkybox(pEngine.GetRenderer(), "resources/dome.jpg");
+	pEngine.GetSceneManager()->GetCurrentScene()->SetGround(ground);
 
 	pEngine.GetRenderer()->SetProjectionMatrix(M_PI / 4, 100.0f);
 	pEngine.GetRenderer()->SetDefaultRenderStates();
-	bool pressPlus = false;
-	pEngine.GetRenderer()->SetLights();//every time?
-
+	
 	while (pEngine.GetWindowManager()->HasActiveWindow())
 	{
 		pEngine.GetWindowManager()->UpdateWindows();
@@ -92,11 +105,14 @@ int _tmain(int argc, _TCHAR* argv[])
 		pEngine.GetRenderer()->ClearScene(0UL, 0UL, color, 1.0f, 0UL);
 		pEngine.GetRenderer()->BeginScene();
 
+		pEngine.GetRenderer()->SetLights();//every time?
 		pEngine.GetSceneManager()->RenderActiveScene(pEngine.GetRenderer());
-
-
+		
+		bool pressPlus = false;
 		bool holdPlus = false;
+
 		typedef std::map<pengine::Input, long>::iterator it_type;
+		
 		for (it_type iterator = (*actions).begin(); iterator != (*actions).end(); iterator++)
 		{
 			switch (iterator->first)
@@ -104,8 +120,8 @@ int _tmain(int argc, _TCHAR* argv[])
 			case pengine::Input::KEY_ADD:
 				if (!pressPlus)
 				{
-					++index;
-					MyObject.MapAnimationSet(index);
+				++index;
+				MyObject.MapAnimationSet(index);
 					pressPlus = true;
 				}
 				holdPlus = true;
@@ -118,17 +134,20 @@ int _tmain(int argc, _TCHAR* argv[])
 		{
 			pressPlus = false;
 		}
-		//MyObject.UpdateAnimation();
+		MyObject.ClearSkinnedVertices();
+		MyObject.UpdateAnimation();
 		pengine::RenderMatrix* aMatrix = new pengine::RenderMatrix();
-		aMatrix->CreateMatrix(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.1f, 0.1f, 0.1f, aMatrix->theMatrix);
+		aMatrix->CreateMatrix(0.0f, -25.0f, 0.0f, 0.0f, -90.0f, 0.0f, 0.1f, 0.1f, 0.1f, aMatrix->theMatrix);
 		pEngine.GetRenderer()->SetActiveMatrix(aMatrix->theMatrix);
 		MyObject.Draw(pEngine.GetRenderer());
 		//pEngine.GetSkyBox()->Draw(pEngine.GetRenderer(), aMatrix);
+		
 
 		pEngine.GetRenderer()->EndScene();
 		pEngine.GetRenderer()->PresentScene(pEngine.GetWindowManager()->GetLastWindow()->GetHWND());
+
+		pEngine.GetRenderer()->D2DDraw();
 		delete aMatrix;
 	}
 	pengine::LoggerPool::GetInstance().ReturnLogger(logger);
 }
-

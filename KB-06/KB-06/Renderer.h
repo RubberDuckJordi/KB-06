@@ -23,6 +23,16 @@ namespace pengine
 		virtual void InitD3D(HWND hWnd) = 0;
 		virtual void SetDefaultRenderStates() = 0;
 
+		virtual void CreateD2DFactory() = 0;
+		virtual void CreateRenderTarget(HWND hWnd) = 0;
+		virtual void CreateWICImagingFactory() = 0;
+		virtual void CreateDecoder(std::string path) = 0;
+		virtual void GetBitmapFrame() = 0;
+		virtual void InitializeBMP() = 0;
+		virtual void CreateFormatConverter() = 0;
+		virtual void CreateBitmapFromWIC() = 0;
+		virtual void D2DDraw() = 0;
+
 		virtual void SetRenderState(PENGINERENDERSTATETYPE* state, PENGINEDWORD* dword) = 0;
 
 		virtual void SetActiveCamera(CameraData camera) = 0;
@@ -45,6 +55,7 @@ namespace pengine
 
 		//virtual void DrawPrimitive(Mesh mesh) = 0;
 		virtual void DrawSubset(MeshWrapper* wrapper, int subset) = 0;
+		//virtual void Draw(Vertex* vertexBuffer, int amountOfIndices);
 
 		virtual void SetStreamSource() = 0; //??
 		virtual void SetIndices() = 0; //??

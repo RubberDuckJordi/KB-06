@@ -12,7 +12,7 @@ namespace pengine
 	PEngine::PEngine()
 	{
 		logger = LoggerPool::GetInstance().GetLogger();
-		logger->NewFile();
+		logger->RemoveLogs();
 	}
 
 	PEngine::~PEngine()

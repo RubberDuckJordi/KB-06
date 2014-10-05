@@ -8,6 +8,7 @@
 #include "LoggerPool.h"
 #include "Input.h"
 #include "Skybox.h"
+#include "Ground.h"
 #include "SceneCallback.h"
 #include <functional>
 
@@ -26,12 +27,14 @@ namespace pengine
 		void SetCurrentCamera(EntityCamera* camera);
 		void SetSceneCallback(SceneCallback* callback);
 		void InitSkybox(Renderer* renderer, std::string texture);
+		void SetGround(Ground* ground);
 		SceneCallback* callback;
 	protected:
 		std::list<Entity*> entities;
 		EntityCamera* currentCamera;
 		Logger* logger;
 		Skybox* skybox;
+		Ground* ground;
 	};
 }
 #endif

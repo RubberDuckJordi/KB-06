@@ -92,6 +92,8 @@
     <ClInclude Include="Bone.h" />
     <ClInclude Include="CustomD3DVertex.h" />
     <ClInclude Include="EntityCamera.h" />
+    <ClInclude Include="Ground.h" />
+    <ClInclude Include="HeightmapLoader.h" />
     <ClInclude Include="IndexBufferWrapper.h" />
     <ClInclude Include="IO.h" />
     <ClInclude Include="MaterialWrapper.h" />
@@ -165,6 +167,8 @@
     <ClCompile Include="DirectInputDeviceFactory.cpp" />
     <ClCompile Include="DirectXRenderer.cpp" />
     <ClCompile Include="DirectInputDevice.cpp" />
+    <ClCompile Include="Ground.cpp" />
+    <ClCompile Include="HeightmapLoader.cpp" />
     <ClCompile Include="InputDevice.cpp" />
     <ClCompile Include="InputDeviceFactory.cpp" />
     <ClCompile Include="IndexBufferWrapper.cpp" />

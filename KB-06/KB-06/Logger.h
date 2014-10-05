@@ -9,27 +9,19 @@
 #include <string>
 #include <sstream>
 
-namespace pengine
-{
+namespace pengine {
 	class Logger
 	{
 	public:
-
-		enum LogLevel
-		{
+		~Logger();
+		Logger();
+		static enum LogLevel{
 			NONE = 0,
 			ERR = 1,
 			WARNING = 2,
 			DEBUG = 3,
 			INFO = 4
 		};
-
-		~Logger();
-		Logger();
-
-		void NewFile();
-		void Log(int logType, char* text);
-		void Log(int logType, std::string text);
 
 		template <typename T>
 		void MagicLog(std::ostream& o, T t)
@@ -55,21 +47,29 @@ namespace pengine
 			Log(logType, oss.str());
 		}
 
+		void Log(int logType, std::string text);
 		void LogMemoryDump(int logType, void* const p_address, const int p_size, char* const p_name);
 		void SetLogLevel(int logLevel);
 		void Reset();
-
+		void SetFile(std::string fileName);
+		void RemoveLogs();
 	private:
+		void SetDefaultValues();
 		std::ofstream outfile;
+		void PrintConsole(int logType, std::string entry);
+		std::string BuildLogEntry(int logType, std::string messasge);
+
 		int logLevel = INFO;
 		int consoleColorCodeInfo = gray;
 		int consoleColorCodeDebug = white;
 		int consoleColorCodeWarning = yellow;
 		int consoleColorCodeError = red;
-		int consoleColorCodeNone = blue;
 		HANDLE consoleHandle;
-		char* logFile = "log.txt";
-		char* previousLogFile = "log_old.txt";
+
+		std::string logFile;
+		std::string defaultLogFile = "log";
+		const std::string logExtension = ".log";
+
 		enum Consolecolor
 		{
 			black = 0,

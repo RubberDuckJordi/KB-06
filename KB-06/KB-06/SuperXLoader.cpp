@@ -128,7 +128,7 @@ namespace pengine
 			{
 				if (_LoadMesh->_FaceMaterials[j] == i)
 				{
-					logger->LogAll(Logger::INFO, ": face ", j, " uses material ", i);
+					//logger->LogAll(Logger::INFO, ": face ", j, " uses material ", i);
 					_LoadMesh->facesPerMaterial[i].push_back(j);
 				}
 			}

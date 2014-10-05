@@ -3,15 +3,18 @@
 
 #include "Renderer.h"
 #include "Entity.h"
+#include "Logger.h"
+#include "XModel.h"
 
 class TrackBlock : public pengine::Entity
 {
 public:
-	TrackBlock();
+	TrackBlock(float width, float height);
 	~TrackBlock();
 
-	void Draw(pengine::Renderer* renderer){};
-
+	void Draw(pengine::Renderer* renderer);
+	void SetXModel(pengine::XModel*); //debug
+	
 	// mesh?
 	// texture?
 
@@ -20,5 +23,10 @@ public:
 	// void onEnter(RaceKart Kart);
 	// void onPassedHalfway(RaceKart Kart);
 	// void onLeave(RaceKart Kart);
+
+	float height;
+	float width;
+private:
+	pengine::XModel* xModel; //debug
 };
 #endif

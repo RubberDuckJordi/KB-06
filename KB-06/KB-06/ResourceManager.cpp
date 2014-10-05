@@ -75,6 +75,7 @@ namespace pengine
 	BinaryData* ResourceManager::LoadBinaryFile(const std::string& fileName)
 	{
 		logger->LogAll(Logger::DEBUG, "Going to load texture file: " + fileName);
+
 		std::ifstream file(fileName, std::ios::binary);
 		file.seekg(0, std::ios::end);
 		std::streamsize size = file.tellg();

@@ -22,6 +22,9 @@ void racer::RaceCart::UpdateLogic(float deltaTime, std::map<pengine::Input, long
 
 			switch (iterator->first)
 			{
+			case pengine::Input::KEY_E:
+				AddRotation(0.0f, 5.0f, 0.0f);
+				break;
 			case pengine::Input::KEY_S:
 				Brake(1.0f);
 				break;
@@ -120,5 +123,5 @@ void racer::RaceCart::Steer(float percentage)
 	AddRelativeForce(&vector);
 
 	// Add friction
-	ApplyFriction(percentage * 5.0f);
+	ApplyFriction(abs(percentage) * 5.0f);
 }

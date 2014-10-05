@@ -26,6 +26,79 @@ namespace pengine
 		LoggerPool::GetInstance().ReturnLogger(logger);
 	}
 
+	void DirectXRenderer::CreateD2DFactory()
+	{
+		D2D1CreateFactory(D2D1_FACTORY_TYPE_SINGLE_THREADED, &d2dFactory);
+	}
+
+	void DirectXRenderer::CreateRenderTarget(HWND hWnd)
+	{
+		GetClientRect(hWnd, &rectangle);
+
+		D2D1_SIZE_U size = D2D1::SizeU(rectangle.right - rectangle.left, rectangle.bottom - rectangle.top);
+
+		d2dFactory->CreateHwndRenderTarget(
+			D2D1::RenderTargetProperties(),
+			D2D1::HwndRenderTargetProperties(hWnd, size),
+			&d2dRenderTarget
+			);
+	}
+
+	void DirectXRenderer::CreateWICImagingFactory()
+	{
+		CoCreateInstance(CLSID_WICImagingFactory, NULL, CLSCTX_INPROC_SERVER, __uuidof(IWICImagingFactory), (void**)(&iwicFactory));
+	}
+
+	void DirectXRenderer::CreateDecoder(std::string path)
+	{
+		size_t newSize = strlen(path.c_str()) + 1;
+
+		wchar_t* wPath = new wchar_t[newSize];
+
+		size_t convertedCharacters = 0;
+
+		mbstowcs_s(&convertedCharacters, wPath, newSize, path.c_str(), _TRUNCATE);
+
+		iwicBmpDecoder = NULL;
+		iwicFactory->CreateDecoderFromFilename(
+			wPath,                      // Image to be decoded
+			NULL,                            // Do not prefer a particular vendor
+			GENERIC_READ,                    // Desired read access to the file
+			WICDecodeMetadataCacheOnDemand,  // Cache metadata when needed
+			&iwicBmpDecoder                      // Pointer to the decoder
+			);
+	}
+
+	void DirectXRenderer::CreateFormatConverter()
+	{
+		iwicFactory->CreateFormatConverter(&iwicFormatConverter);
+	}
+
+	void DirectXRenderer::GetBitmapFrame()
+	{
+		bitmapFrame = NULL;
+
+		iwicBmpDecoder->GetFrame(0, &bitmapFrame);
+	}
+
+	void DirectXRenderer::InitializeBMP()
+	{
+		iwicFormatConverter->Initialize(bitmapFrame, GUID_WICPixelFormat32bppPBGRA, WICBitmapDitherTypeNone, NULL, 0.f, WICBitmapPaletteTypeMedianCut);
+	}
+
+	void DirectXRenderer::CreateBitmapFromWIC()
+	{
+		d2dRenderTarget->CreateBitmapFromWicBitmap(iwicFormatConverter, NULL, &d2dBmp);
+	}
+
+	void DirectXRenderer::D2DDraw()
+	{
+		d2dRenderTarget->BeginDraw();
+		D2D1_RECT_F test = D2D1::RectF(0, 0, 200, 200);
+		d2dRenderTarget->DrawBitmap(d2dBmp, test);
+		d2dRenderTarget->EndDraw();
+	}
+
 	void DirectXRenderer::InitD3D(HWND hWnd)
 	{
 		if (NULL == (g_pD3D = Direct3DCreate9(D3D_SDK_VERSION)))
@@ -165,12 +238,12 @@ namespace pengine
 		{
 			if (textureCache.find(material->texture) == textureCache.end())
 			{
-				logger->LogAll(Logger::DEBUG, "Texture \"", material->texturePath, "\" not converted to LPDIRECT3DTEXTURE9 yet.");
+				//logger->LogAll(Logger::DEBUG, "Texture \"", material->texturePath, "\" not converted to LPDIRECT3DTEXTURE9 yet.");
 				LPDIRECT3DTEXTURE9 d3DTexture;
 
 				HRESULT result = D3DXCreateTextureFromFileInMemory(g_pd3dDevice, material->texture->rawData, material->texture->size, &d3DTexture);
 				textureCache[material->texture] = d3DTexture;
-				logger->LogAll(Logger::DEBUG, "Texture \"", material->texturePath, "\" converted to LPDIRECT3DTEXTURE9.");
+				//logger->LogAll(Logger::DEBUG, "Texture \"", material->texturePath, "\" converted to LPDIRECT3DTEXTURE9.");
 			}
 			g_pd3dDevice->SetTexture(0, textureCache[material->texture]);
 		}
@@ -187,9 +260,9 @@ namespace pengine
 	}
 
 	/*void DirectXRenderer::DrawPrimitive(Mesh mesh)
-	{
-	//g_pd3dDevice->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, mesh.vertices.size, 0, mesh.faceDefinitions.size * 3);
-	}*/
+{
+//g_pd3dDevice->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, mesh.vertices.size, 0, mesh.faceDefinitions.size * 3);
+}*/
 
 	void DirectXRenderer::DrawSubset(MeshWrapper* wrapper, int subset)
 	{
@@ -213,91 +286,91 @@ namespace pengine
 	}
 
 	/*void DirectXRenderer::Draw(Mesh* mesh)
-	{
-	if (meshCache.find(mesh) == meshCache.end())
-	{
-	logger->Log(Logger::DEBUG, "Mesh \"" + mesh->fileName + "\" not converted to LPD3DXMESH yet.");
+{
+if (meshCache.find(mesh) == meshCache.end())
+{
+logger->Log(Logger::DEBUG, "Mesh \"" + mesh->fileName + "\" not converted to LPD3DXMESH yet.");
 
-	LPD3DXMESH d3dMesh;
-	int	amountOfVertices = 0;
-	int amountOfIndices = 0;
-	for (unsigned int i = 0; i < mesh->subsets.size(); ++i)
-	{
-	amountOfVertices += mesh->subsets.at(i).vertices.size();
-	amountOfIndices += mesh->subsets.at(i).faceDefinitions.size();
-	}
-	if (FAILED(D3DXCreateMeshFVF(amountOfIndices, amountOfVertices, 0, D3DCustomVertexFVF, g_pd3dDevice, &d3dMesh)))
-	{
-	logger->Log(Logger::ERR, "Failed to create a D3DXCreateMeshFVF. Generating a cube");
-	D3DXCreateBox(g_pd3dDevice, 1.0f, 1.0f, 1.0f, &d3dMesh, NULL);
-	}
-	else
-	{
-	D3DCustomVertex* d3dVertices = new D3DCustomVertex[amountOfVertices];
-	unsigned short* indices = new unsigned short[amountOfIndices * 3];
+LPD3DXMESH d3dMesh;
+int	amountOfVertices = 0;
+int amountOfIndices = 0;
+for (unsigned int i = 0; i < mesh->subsets.size(); ++i)
+{
+amountOfVertices += mesh->subsets.at(i).vertices.size();
+amountOfIndices += mesh->subsets.at(i).faceDefinitions.size();
+}
+if (FAILED(D3DXCreateMeshFVF(amountOfIndices, amountOfVertices, 0, D3DCustomVertexFVF, g_pd3dDevice, &d3dMesh)))
+{
+logger->Log(Logger::ERR, "Failed to create a D3DXCreateMeshFVF. Generating a cube");
+D3DXCreateBox(g_pd3dDevice, 1.0f, 1.0f, 1.0f, &d3dMesh, NULL);
+}
+else
+{
+D3DCustomVertex* d3dVertices = new D3DCustomVertex[amountOfVertices];
+unsigned short* indices = new unsigned short[amountOfIndices * 3];
 
-	int vertexCount = -1;
-	int indexCount = -1;
-	for (unsigned int i = 0; i < mesh->subsets.size(); ++i)
-	{
-	for (unsigned int j = 0; j < mesh->subsets.at(i).vertices.size(); ++j)
-	{
-	D3DCustomVertex newVertex;
-	newVertex.x = mesh->subsets.at(i).vertices.at(j).x;
-	newVertex.y = mesh->subsets.at(i).vertices.at(j).y;
-	newVertex.z = mesh->subsets.at(i).vertices.at(j).z;
-	newVertex.tu = mesh->subsets.at(i).textureCoordinates.at(j).u;
-	newVertex.tv = mesh->subsets.at(i).textureCoordinates.at(j).v;
-	d3dVertices[++vertexCount] = newVertex;
-	}
-	for (unsigned int j = 0; j < mesh->subsets.at(i).faceDefinitions.size(); ++j)
-	{
-	indices[++indexCount] = mesh->subsets.at(i).faceDefinitions.at(j).v1;
-	indices[++indexCount] = mesh->subsets.at(i).faceDefinitions.at(j).v2;
-	indices[++indexCount] = mesh->subsets.at(i).faceDefinitions.at(j).v3;
-	int test = 10;
-	}
-	}
-	VOID* pVoid;
+int vertexCount = -1;
+int indexCount = -1;
+for (unsigned int i = 0; i < mesh->subsets.size(); ++i)
+{
+for (unsigned int j = 0; j < mesh->subsets.at(i).vertices.size(); ++j)
+{
+D3DCustomVertex newVertex;
+newVertex.x = mesh->subsets.at(i).vertices.at(j).x;
+newVertex.y = mesh->subsets.at(i).vertices.at(j).y;
+newVertex.z = mesh->subsets.at(i).vertices.at(j).z;
+newVertex.tu = mesh->subsets.at(i).textureCoordinates.at(j).u;
+newVertex.tv = mesh->subsets.at(i).textureCoordinates.at(j).v;
+d3dVertices[++vertexCount] = newVertex;
+}
+for (unsigned int j = 0; j < mesh->subsets.at(i).faceDefinitions.size(); ++j)
+{
+indices[++indexCount] = mesh->subsets.at(i).faceDefinitions.at(j).v1;
+indices[++indexCount] = mesh->subsets.at(i).faceDefinitions.at(j).v2;
+indices[++indexCount] = mesh->subsets.at(i).faceDefinitions.at(j).v3;
+int test = 10;
+}
+}
+VOID* pVoid;
 
-	LPDIRECT3DVERTEXBUFFER9 v_buffer;
-	d3dMesh->GetVertexBuffer(&v_buffer);
-	// lock v_buffer and load the vertices into it
-	v_buffer->Lock(0, 0, (void**)&pVoid, 0);
-	memcpy(pVoid, d3dVertices, amountOfVertices*sizeof(D3DCustomVertex));
-	v_buffer->Unlock();
+LPDIRECT3DVERTEXBUFFER9 v_buffer;
+d3dMesh->GetVertexBuffer(&v_buffer);
+// lock v_buffer and load the vertices into it
+v_buffer->Lock(0, 0, (void**)&pVoid, 0);
+memcpy(pVoid, d3dVertices, amountOfVertices*sizeof(D3DCustomVertex));
+v_buffer->Unlock();
 
-	LPDIRECT3DINDEXBUFFER9 i_buffer;
-	d3dMesh->GetIndexBuffer(&i_buffer);
-	// lock i_buffer and load the indices into it
-	i_buffer->Lock(0, 0, (void**)&pVoid, 0);
-	memcpy(pVoid, indices, amountOfIndices * 3 * sizeof(unsigned short));
-	i_buffer->Unlock();
+LPDIRECT3DINDEXBUFFER9 i_buffer;
+d3dMesh->GetIndexBuffer(&i_buffer);
+// lock i_buffer and load the indices into it
+i_buffer->Lock(0, 0, (void**)&pVoid, 0);
+memcpy(pVoid, indices, amountOfIndices * 3 * sizeof(unsigned short));
+i_buffer->Unlock();
 
-	logger->Log(Logger::DEBUG, "Mesh \"" + mesh->fileName + "\" converted to LPD3DXMESH.");
+logger->Log(Logger::DEBUG, "Mesh \"" + mesh->fileName + "\" converted to LPD3DXMESH.");
 
-	if (mesh->fileName == "resources/cubeClone.obj.mesh")
-	{
-	//D3DXCreateBox(g_pd3dDevice, 1.0f, 1.0f, 1.0f, &d3dMesh, NULL);
-	D3DXCreateSphere(g_pd3dDevice, 1.0f, 10, 10, &d3dMesh, NULL);
-	logger->Log(3, "The meow is great in this one.");
-	}
-	if (mesh->fileName == "resources/cubeCloneClone.obj.mesh")
-	{
-	D3DXCreateTeapot(g_pd3dDevice, &d3dMesh, NULL);
-	logger->Log(3, "The meow is greater in this one.");
-	}
-	}
-	meshCache[mesh] = d3dMesh;
-	//D3DXSaveMeshToX(L"test.x", d3dMesh, NULL, NULL, NULL, 0, 1); //save mesh to xfile to debug
-	}
+if (mesh->fileName == "resources/cubeClone.obj.mesh")
+{
+//D3DXCreateBox(g_pd3dDevice, 1.0f, 1.0f, 1.0f, &d3dMesh, NULL);
+D3DXCreateSphere(g_pd3dDevice, 1.0f, 10, 10, &d3dMesh, NULL);
+logger->Log(3, "The meow is great in this one.");
+}
+if (mesh->fileName == "resources/cubeCloneClone.obj.mesh")
+{
+D3DXCreateTeapot(g_pd3dDevice, &d3dMesh, NULL);
+logger->Log(3, "The meow is greater in this one.");
+}
+}
+meshCache[mesh] = d3dMesh;
+//D3DXSaveMeshToX(L"test.x", d3dMesh, NULL, NULL, NULL, 0, 1); //save mesh to xfile to debug
+}
 
-	for (unsigned int i = 0; i < mesh->subsets.size(); ++i){ // So we start at 1 instead of 0
-	SetMaterial(&mesh->subsets.at(i).defaultMaterial);
-	SetTexture(&mesh->subsets.at(i).defaultMaterial.defaultTexture);
-	meshCache[mesh]->DrawSubset(i);
-	}
-	}*/
+for (unsigned int i = 0; i < mesh->subsets.size(); ++i){ // So we start at 1 instead of 0
+SetMaterial(&mesh->subsets.at(i).defaultMaterial);
+SetTexture(&mesh->subsets.at(i).defaultMaterial.defaultTexture);
+meshCache[mesh]->DrawSubset(i);
+}
+}*/
 
 
 	void DirectXRenderer::SetActiveMatrix(PEngineMatrix* matrix)
@@ -332,8 +405,8 @@ namespace pengine
 		material.Ambient = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);    // set ambient color to white
 
 		g_pd3dDevice->SetMaterial(&material);    // set the globably-used material to &material
-		
-		/*//Turn on ambient lighting 
+
+		/*//Turn on ambient lighting
 		g_pd3dDevice->SetRenderState(D3DRS_AMBIENT, 0xffffffff);
 
 		g_pd3dDevice->SetTextureStageState(0, D3DTSS_COLOROP, D3DTOP_SELECTARG1);

@@ -32,6 +32,7 @@ namespace pengine
 			index = 0;
 		}
 		logger->LogAll(Logger::INFO, "Object3D: ", _Model->_AnimationSets.size(), " Animation Sets. Playing: ", index);
+
 		std::list<AnimationSet*>::iterator i = _Model->_AnimationSets.begin();
 		if (index != 0)
 		{
@@ -183,7 +184,7 @@ namespace pengine
 			/*_Mesh->_Materials;
 			if (_Mesh->_Materials.size() > 1)
 			{*/
-			int mekker = _Mesh->facesPerMaterial->size();
+			/*int mekker = _Mesh->facesPerMaterial->size();
 			for (int i = 0; i < _Mesh->facesPerMaterial->size(); i++)
 				{
 					renderer->SetMaterial(_Mesh->_Materials[i]);
@@ -214,7 +215,7 @@ namespace pengine
 						_Mesh->facesPerMaterial[i].size());// PrimitiveCount
 					i_buffer->Release();
 					delete[] indices;
-				}
+				}*/
 			//}
 			//else
 			//{

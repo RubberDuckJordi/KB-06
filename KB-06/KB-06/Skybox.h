@@ -1,3 +1,4 @@
+
 #ifndef _PENGINE_SKYBOX_H_
 #define _PENGINE_SKYBOX_H_
 
@@ -31,7 +32,7 @@ namespace pengine
 		int amountOfIndices;
 		LPDIRECT3DVERTEXBUFFER9 v_buffer;
 		LPDIRECT3DINDEXBUFFER9 i_buffer;
-		LPD3DXMESH d3dMesh;
+//		LPD3DXMESH d3dMesh;
 	};
 
 }
