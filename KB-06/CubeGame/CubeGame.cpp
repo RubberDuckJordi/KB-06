@@ -79,7 +79,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	MyObject.ClearSkinnedVertices();
 	MyObject.UpdateAnimation();
 
-	pengine::DefaultSceneFactory* sceneFactory = new pengine::DefaultSceneFactory();
+	pengine::DefaultSceneFactory* sceneFactory = new pengine::DefaultSceneFactory(pEngine.GetResourceManager());
 	sceneFactory->SetXModel(xmodel);
 	sceneFactory->SetXModel2(xmodel2);
 
