@@ -26,9 +26,10 @@ namespace pengine
 		EntityCamera* GetCurrentCamera();
 		void SetCurrentCamera(EntityCamera* camera);
 		void SetSceneCallback(SceneCallback* callback);
-		void InitSkybox(Renderer* renderer, std::string texture);
+		void SetSkybox(Skybox* skybox);
 		void SetGround(Ground* ground);
 		SceneCallback* callback;
+
 	protected:
 		std::list<Entity*> entities;
 		EntityCamera* currentCamera;

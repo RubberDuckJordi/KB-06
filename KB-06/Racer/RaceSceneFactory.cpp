@@ -5,6 +5,7 @@
 #include "track.h"
 #include "trackblock.h"
 #include "Ground.h"
+#include "Material.h"
 
 racer::RaceSceneFactory::RaceSceneFactory(pengine::ResourceManager* resourceManager)
 :SceneFactory(resourceManager)
@@ -53,6 +54,11 @@ pengine::Scene* racer::RaceSceneFactory::CreateScene()
 	track->SetAll(0, -1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f);
 
 	pengine::Ground* ground = resourceManager->LoadGround(groundResource, groundTexture);
+	pengine::Skybox* skybox = new pengine::Skybox();
+	pengine::Material* material = new pengine::Material();
+	material->texture = resourceManager->LoadBinaryFile(skyboxTexture);
+
+	skybox->SetMaterial(material);
 
 	RaceScene* raceScene = new RaceScene();
 	raceScene->AddEntity(racecart);
@@ -60,6 +66,7 @@ pengine::Scene* racer::RaceSceneFactory::CreateScene()
 	raceScene->AddEntity(racecart2);
 	raceScene->AddEntity(track);
 	raceScene->SetGround(ground);
+	raceScene->SetSkybox(skybox);
 
 	pengine::EntityCamera* camera = new pengine::EntityCamera();
 	camera->useInput = false;
@@ -77,14 +84,4 @@ void racer::RaceSceneFactory::SetXModel(pengine::XModel* p_xModel)
 void racer::RaceSceneFactory::SetXModel2(pengine::XModel* p_xModel)
 {
 	xModel2 = p_xModel;
-}
-
-void racer::RaceSceneFactory::SetGroundResource(std::string p_groundResource)
-{
-	groundResource = p_groundResource;
-}
-
-void racer::RaceSceneFactory::SetGroundTexture(std::string p_groundTexture)
-{
-	groundTexture = p_groundTexture;
 }

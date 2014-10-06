@@ -201,16 +201,6 @@ namespace pengine
 		this->g_pd3dDevice->EndScene();
 	}
 
-	void DirectXRenderer::CreateVertexBuffer(int heightmapvertex, PENGINEDWORD* usage, PENGINEDWORD* fvf, PENGINEPOOL* pool, VertexBufferWrapper* vertexbuffer, HANDLE handle)
-	{
-		this->g_pd3dDevice->CreateVertexBuffer(heightmapvertex, *usage, *fvf, static_cast<D3DPOOL>(*pool), vertexbuffer->GetVertexBuffer(), &handle);
-	};
-
-	void DirectXRenderer::CreateIndexBuffer(int length, PENGINEDWORD* usage, PENGINEFORMAT* format, PENGINEPOOL* pool, IndexBufferWrapper* Indexbuffer, HANDLE* handle)
-	{
-		this->g_pd3dDevice->CreateIndexBuffer(length, *usage, static_cast<D3DFORMAT>(*format), static_cast<D3DPOOL>(*pool), Indexbuffer->GetIndexBuffer(), NULL);
-	}
-
 	void DirectXRenderer::SetMaterialWrapper(MaterialWrapper* wrapper)
 	{
 		g_pd3dDevice->SetMaterial(wrapper->GetMaterial());
@@ -469,10 +459,42 @@ meshCache[mesh]->DrawSubset(i);
 		return vertexBufferWrapper;
 	}
 
+	IndexBufferWrapper* DirectXRenderer::CreateIndexBuffer(int* indices, int amountOfIndices)
+	{
+		IndexBufferWrapper* wrapper = new IndexBufferWrapper();
+		LPDIRECT3DINDEXBUFFER9* indexBuffer = new LPDIRECT3DINDEXBUFFER9();
+		wrapper->SetIndexBuffer(indexBuffer);
+
+		g_pd3dDevice->CreateIndexBuffer(amountOfIndices * sizeof(int), 0, D3DFMT_INDEX32, D3DPOOL_DEFAULT, indexBuffer, NULL);
+
+		void* pVoid;
+
+		//d3dMesh->GetIndexBuffer(&i_buffer);
+		// lock i_buffer and load the indices into it
+		(*indexBuffer)->Lock(0, 0, (void**)&pVoid, 0);
+		memcpy(pVoid, indices, amountOfIndices * sizeof(int));
+		(*indexBuffer)->Unlock();
+
+		return wrapper;
+	}
+
 	void DirectXRenderer::DrawVertexBuffer(VertexBufferWrapper* vertexBuffer, int amountOfIndices)
 	{
 		g_pd3dDevice->SetStreamSource(0, *vertexBuffer->GetVertexBuffer(), 0, sizeof(D3DCustomVertex));
 		g_pd3dDevice->SetFVF(D3DCustomVertexFVF);
 		g_pd3dDevice->DrawPrimitive(D3DPT_TRIANGLELIST, 0, amountOfIndices / 3);
+	}
+
+	void DirectXRenderer::DrawIndexedVertexBuffer(VertexBufferWrapper* v_buffer, IndexBufferWrapper* i_buffer, int amountOfVertices)
+	{
+		g_pd3dDevice->SetStreamSource(0, *v_buffer->GetVertexBuffer(), 0, sizeof(D3DCustomVertex));
+		g_pd3dDevice->SetFVF(D3DCustomVertexFVF);
+		g_pd3dDevice->SetIndices(*i_buffer->GetIndexBuffer());
+		g_pd3dDevice->DrawIndexedPrimitive(D3DPT_TRIANGLELIST,// PrimitiveType
+			0,// BaseVertexIndex
+			0,// MinIndex
+			amountOfVertices,// NumVertices
+			0,// StartIndex
+			12);// PrimitiveCount
 	}
 }

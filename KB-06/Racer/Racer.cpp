@@ -36,12 +36,11 @@ int main(int argc, const char* argv[])
 	sceneFactory->SetXModel2(xmodel2);
 	sceneFactory->SetGroundResource("resources/heightmap.bmp");
 	sceneFactory->SetGroundTexture("resources/heightmaptexture.bmp");
-
+	sceneFactory->SetSkyboxTexture("resources/dome2.jpg");
 
 	pEngine.AddSceneFactory("raceScene", sceneFactory);
 	pengine::Scene* scene = pEngine.AddScene("raceScene");
 	pEngine.SetCurrentScene(scene);
-	pEngine.GetSceneManager()->GetCurrentScene()->InitSkybox(pEngine.GetRenderer(), "resources/dome.jpg");
 	pEngine.GameLoop();
 
 	pengine::LoggerPool::GetInstance().ReturnLogger(logger);

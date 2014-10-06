@@ -24,10 +24,9 @@ namespace pengine
 		entities.push_back(entity);
 	}
 
-	void Scene::InitSkybox(Renderer* renderer, std::string texture)
+	void Scene::SetSkybox(Skybox* p_skybox)
 	{
-		Skybox* box = new Skybox(renderer, texture);
-		skybox = box;
+		skybox = p_skybox;
 	}
 
 	void Scene::Update(float deltaTime, std::map<Input, long>* actions)

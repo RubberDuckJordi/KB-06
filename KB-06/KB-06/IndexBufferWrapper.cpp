@@ -2,9 +2,9 @@
 
 namespace pengine
 {
-	IndexBufferWrapper::IndexBufferWrapper(IDirect3DIndexBuffer9** _IndexBuffer)
+	IndexBufferWrapper::IndexBufferWrapper()
 	{
-		IndexBuffer = _IndexBuffer;
+
 	}
 
 	IndexBufferWrapper::~IndexBufferWrapper()

@@ -14,25 +14,22 @@ namespace pengine
 	class Skybox
 	{
 	public:
-		Skybox(Renderer* renderer, std::string textureString);
+		Skybox();
 		~Skybox();
 		D3DCustomVertex* GetSkyboxVertices();
 		int* GetSkyboxIndices();
-		TextureWrapper* GetTexture();
-		void SetTexture(TextureWrapper* textureNew);
-
+		Material* GetMaterial();
+		void SetMaterial(Material*);
 		void Draw(Renderer* renderer, Vertex* position);
-
 
 	private:
 		D3DCustomVertex* aSkyboxVertices;
 		int* aSkyboxIndices;
-		TextureWrapper* texture;
+		Material* material;
 		int amountOfVertices;
 		int amountOfIndices;
-		LPDIRECT3DVERTEXBUFFER9 v_buffer;
-		LPDIRECT3DINDEXBUFFER9 i_buffer;
-//		LPD3DXMESH d3dMesh;
+		VertexBufferWrapper* v_buffer;
+		IndexBufferWrapper* i_buffer;
 	};
 
 }

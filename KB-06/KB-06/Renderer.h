@@ -46,9 +46,6 @@ namespace pengine
 		virtual void PresentScene(HWND hWnd) = 0;
 		virtual void EndScene() = 0;
 
-		virtual void CreateVertexBuffer(int heightmapvertex, PENGINEDWORD* usage, PENGINEDWORD* fvf, PENGINEPOOL* pool, VertexBufferWrapper* vertexbuffer, HANDLE handle) = 0;
-		virtual void CreateIndexBuffer(int length, PENGINEDWORD* usage, PENGINEFORMAT* format, PENGINEPOOL* pool, IndexBufferWrapper* Indexbuffer, HANDLE* handle) = 0;
-
 		virtual void SetMaterialWrapper(MaterialWrapper* wrapper) = 0;
 		virtual void SetMaterial(Material* material) = 0;
 		virtual void SetTexture(TextureWrapper* wrapper) = 0;
@@ -67,7 +64,9 @@ namespace pengine
 		virtual void SetLights() = 0;
 
 		virtual VertexBufferWrapper* CreateVertexBuffer(D3DCustomVertex*, int amountOfIndices, int fvf) = 0;
+		virtual IndexBufferWrapper* CreateIndexBuffer(int* indices, int amountOfIndices) = 0;
 		virtual void DrawVertexBuffer(VertexBufferWrapper*, int amountOfIndices) = 0;
+		virtual void DrawIndexedVertexBuffer(VertexBufferWrapper*, IndexBufferWrapper*, int amountOfVertices) = 0;
 
 	protected:
 		Logger* logger;

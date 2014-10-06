@@ -8,7 +8,7 @@ namespace pengine
 	class IndexBufferWrapper
 	{
 	public:
-		IndexBufferWrapper(IDirect3DIndexBuffer9** _IndexBuffer);
+		IndexBufferWrapper();
 		~IndexBufferWrapper();
 		void SetIndexBuffer(IDirect3DIndexBuffer9** _IndexBuffer);
 		IDirect3DIndexBuffer9** GetIndexBuffer();
