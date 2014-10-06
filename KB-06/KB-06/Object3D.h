@@ -59,7 +59,7 @@ namespace pengine
 				//this warning should be in the future PEngine manual instead, with just a crash...
 				logger->Log(Logger::WARNING, "There are no subsets, don't call UpdateAnimation!");
 			}
-			else
+			else if (_Mesh->_Subsets.size() != 0)
 			{
 				ClearSkinnedVertices();
 				_cKey += _AnimationStep;

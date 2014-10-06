@@ -98,112 +98,73 @@ namespace pengine
 			g_pd3dDevice->SetStreamSource(0, v_buffer, 0, sizeof(D3DCustomVertex));
 			g_pd3dDevice->SetFVF(D3DCustomVertexFVF);
 
-			/*if (_Mesh->_Subsets.size() == 0)
+			if (_Mesh->_Subsets.size() == 0)
 			{
-			//				logger->Log(Logger::DEBUG, "Object3D: We have no subsets to render!");
-			Face tempFace;
-			std::list<Material*>::iterator j = _Mesh->_Materials.begin();
+				//				logger->Log(Logger::DEBUG, "Object3D: We have no subsets to render!");
+				Face tempFace;
+				std::list<Material*>::iterator j = _Mesh->_Materials.begin();
 
-			renderer->SetMaterial(_Mesh->_Materials.front());//We have one mesh, that can only have 1 texture...
+				renderer->SetMaterial(_Mesh->_Materials.front());//We have one mesh, that can only have 1 texture...
 
-			unsigned int indicesForSubset = _Mesh->_nFaces * 3;//amount of faces * 3
-			unsigned short* indices = new unsigned short[indicesForSubset];
-			unsigned int currentIndex = -1;
+				unsigned int indicesForSubset = _Mesh->_nFaces * 3;//amount of faces * 3
+				unsigned short* indices = new unsigned short[indicesForSubset];
+				unsigned int currentIndex = -1;
 
-			for (int k = 0; k < _Mesh->_nFaces; k++)
-			{
-			tempFace = _Mesh->_Faces[k];
-			indices[++currentIndex] = tempFace.data[0];
-			indices[++currentIndex] = tempFace.data[1];
-			indices[++currentIndex] = tempFace.data[2];
-			}
+				for (int k = 0; k < _Mesh->_nFaces; k++)
+				{
+					tempFace = _Mesh->_Faces[k];
+					indices[++currentIndex] = tempFace.data[0];
+					indices[++currentIndex] = tempFace.data[1];
+					indices[++currentIndex] = tempFace.data[2];
+				}
 
-			LPDIRECT3DINDEXBUFFER9 i_buffer;
-			d3dMesh->GetIndexBuffer(&i_buffer);
-			// lock i_buffer and load the indices into it
-			i_buffer->Lock(0, 0, (void**)&pVoid, 0);
-			memcpy(pVoid, indices, indicesForSubset * sizeof(unsigned short));
-			i_buffer->Unlock();
+				LPDIRECT3DINDEXBUFFER9 i_buffer;
+				d3dMesh->GetIndexBuffer(&i_buffer);
+				// lock i_buffer and load the indices into it
+				i_buffer->Lock(0, 0, (void**)&pVoid, 0);
+				memcpy(pVoid, indices, indicesForSubset * sizeof(unsigned short));
+				i_buffer->Unlock();
 
-			g_pd3dDevice->SetIndices(i_buffer);
-			g_pd3dDevice->DrawIndexedPrimitive(D3DPT_TRIANGLELIST,// PrimitiveType
-			0,// BaseVertexIndex, adds +arg to every vertex number in the index buffer
-			0,// MinIndex
-			amountOfVertices,// NumVertices
-			0,// StartIndex
-			_Mesh->_nFaces);// PrimitiveCount
-			i_buffer->Release();
-			delete[] indices;
-			j++;
+				g_pd3dDevice->SetIndices(i_buffer);
+				g_pd3dDevice->DrawIndexedPrimitive(D3DPT_TRIANGLELIST,// PrimitiveType
+					0,// BaseVertexIndex, adds +arg to every vertex number in the index buffer
+					0,// MinIndex
+					amountOfVertices,// NumVertices
+					0,// StartIndex
+					_Mesh->_nFaces);// PrimitiveCount
+				i_buffer->Release();
+				delete[] indices;
+				j++;
 			}
 			else
 			{
-			Subset* tempSubset;
-			Face tempFace;
-			std::list<Subset*>::iterator i = _Mesh->_Subsets.begin();
-			std::list<Material*>::iterator j = _Mesh->_Materials.begin();
+				Subset* tempSubset;
+				Face tempFace;
+				std::list<Subset*>::iterator i = _Mesh->_Subsets.begin();
+				std::list<Material*>::iterator j = _Mesh->_Materials.begin();
 
-			while (j != _Mesh->_Materials.end())
-			{
-			renderer->SetMaterial(*j);
-
-			tempSubset = *i;
-			unsigned int indicesForSubset = tempSubset->Size * 3;//amount of faces * 3
-			unsigned short* indices = new unsigned short[indicesForSubset];
-			unsigned int currentIndex = -1;
-
-			for (int k = 0; k < tempSubset->Size; k++)
-			{
-			tempFace = tempSubset->Faces[k];
-			indices[++currentIndex] = tempFace.data[0];
-			indices[++currentIndex] = tempFace.data[1];
-			indices[++currentIndex] = tempFace.data[2];
-			}
-
-			LPDIRECT3DINDEXBUFFER9 i_buffer;
-			d3dMesh->GetIndexBuffer(&i_buffer);
-			// lock i_buffer and load the indices into it
-			i_buffer->Lock(0, 0, (void**)&pVoid, 0);
-			memcpy(pVoid, indices, indicesForSubset * sizeof(unsigned short));
-			i_buffer->Unlock();
-
-			g_pd3dDevice->SetIndices(i_buffer);
-			g_pd3dDevice->DrawIndexedPrimitive(D3DPT_TRIANGLELIST,// PrimitiveType
-			0,// BaseVertexIndex, adds +arg to every vertex number in the index buffer
-			0,// MinIndex
-			amountOfVertices,// NumVertices
-			0,// StartIndex
-			tempSubset->Size);// PrimitiveCount
-			i_buffer->Release();
-			delete[] indices;
-
-			i++;
-			j++;
-			}
-			}*/
-			/*_Mesh->_Materials;
-			if (_Mesh->_Materials.size() > 1)
-			{*/
-			/*int mekker = _Mesh->facesPerMaterial->size();
-			for (int i = 0; i < _Mesh->facesPerMaterial->size(); i++)
+				while (j != _Mesh->_Materials.end())
 				{
-					renderer->SetMaterial(_Mesh->_Materials[i]);
-					unsigned int amountOfIndices = _Mesh->facesPerMaterial[i].size() * 3;// * 3 because there are 3 indices per face...
-					unsigned short* indices = new unsigned short[amountOfIndices];
-					for (int j = 0; j < _Mesh->facesPerMaterial[i].size(); ++j)
+					renderer->SetMaterial(*j);
+
+					tempSubset = *i;
+					unsigned int indicesForSubset = tempSubset->Size * 3;//amount of faces * 3
+					unsigned short* indices = new unsigned short[indicesForSubset];
+					unsigned int currentIndex = -1;
+
+					for (int k = 0; k < tempSubset->Size; k++)
 					{
-						_Mesh->facesPerMaterial[i][j];
-						Face tempFace = _Mesh->_Faces[_Mesh->facesPerMaterial[i][j]];
-						indices[j * 3 + 0] = tempFace.data[0];
-						indices[j * 3 + 1] = tempFace.data[1];
-						indices[j * 3 + 2] = tempFace.data[2];
+						tempFace = tempSubset->Faces[k];
+						indices[++currentIndex] = tempFace.data[0];
+						indices[++currentIndex] = tempFace.data[1];
+						indices[++currentIndex] = tempFace.data[2];
 					}
 
 					LPDIRECT3DINDEXBUFFER9 i_buffer;
 					d3dMesh->GetIndexBuffer(&i_buffer);
 					// lock i_buffer and load the indices into it
 					i_buffer->Lock(0, 0, (void**)&pVoid, 0);
-					memcpy(pVoid, indices, amountOfIndices * sizeof(unsigned short));
+					memcpy(pVoid, indices, indicesForSubset * sizeof(unsigned short));
 					i_buffer->Unlock();
 
 					g_pd3dDevice->SetIndices(i_buffer);
@@ -212,10 +173,49 @@ namespace pengine
 						0,// MinIndex
 						amountOfVertices,// NumVertices
 						0,// StartIndex
-						_Mesh->facesPerMaterial[i].size());// PrimitiveCount
+						tempSubset->Size);// PrimitiveCount
 					i_buffer->Release();
 					delete[] indices;
-				}*/
+
+					i++;
+					j++;
+				}
+			}
+			/*_Mesh->_Materials;
+			if (_Mesh->_Materials.size() > 1)
+			{*/
+			/*int mekker = _Mesh->facesPerMaterial->size();
+			for (int i = 0; i < _Mesh->facesPerMaterial->size(); i++)
+			{
+			renderer->SetMaterial(_Mesh->_Materials[i]);
+			unsigned int amountOfIndices = _Mesh->facesPerMaterial[i].size() * 3;// * 3 because there are 3 indices per face...
+			unsigned short* indices = new unsigned short[amountOfIndices];
+			for (int j = 0; j < _Mesh->facesPerMaterial[i].size(); ++j)
+			{
+			_Mesh->facesPerMaterial[i][j];
+			Face tempFace = _Mesh->_Faces[_Mesh->facesPerMaterial[i][j]];
+			indices[j * 3 + 0] = tempFace.data[0];
+			indices[j * 3 + 1] = tempFace.data[1];
+			indices[j * 3 + 2] = tempFace.data[2];
+			}
+
+			LPDIRECT3DINDEXBUFFER9 i_buffer;
+			d3dMesh->GetIndexBuffer(&i_buffer);
+			// lock i_buffer and load the indices into it
+			i_buffer->Lock(0, 0, (void**)&pVoid, 0);
+			memcpy(pVoid, indices, amountOfIndices * sizeof(unsigned short));
+			i_buffer->Unlock();
+
+			g_pd3dDevice->SetIndices(i_buffer);
+			g_pd3dDevice->DrawIndexedPrimitive(D3DPT_TRIANGLELIST,// PrimitiveType
+			0,// BaseVertexIndex, adds +arg to every vertex number in the index buffer
+			0,// MinIndex
+			amountOfVertices,// NumVertices
+			0,// StartIndex
+			_Mesh->facesPerMaterial[i].size());// PrimitiveCount
+			i_buffer->Release();
+			delete[] indices;
+			}*/
 			//}
 			//else
 			//{
@@ -247,7 +247,7 @@ namespace pengine
 			//	i_buffer->Release();
 			//	delete[] indices;
 			//}
-			
+
 			v_buffer->Release();
 			d3dMesh->Release();
 			delete[] d3dVertices;

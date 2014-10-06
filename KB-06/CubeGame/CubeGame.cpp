@@ -70,6 +70,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	unsigned short int index = 0;
 	MyObject.MapAnimationSet(index);
 	//We set the interval of animation in steps
+	MyObject.showWarning = false;
 	MyObject.SetAnimationStep(80);
 	MyObject.ClearSkinnedVertices();
 	MyObject.UpdateAnimation();
@@ -85,7 +86,7 @@ int _tmain(int argc, _TCHAR* argv[])
 
 	pEngine.GetRenderer()->SetProjectionMatrix(M_PI / 4, 100.0f);
 	pEngine.GetRenderer()->SetDefaultRenderStates();
-	
+	bool pressPlus = false;
 	while (pEngine.GetWindowManager()->HasActiveWindow())
 	{
 		pEngine.GetWindowManager()->UpdateWindows();
@@ -102,7 +103,7 @@ int _tmain(int argc, _TCHAR* argv[])
 		pEngine.GetRenderer()->SetLights();//every time?
 		pEngine.GetSceneManager()->RenderActiveScene(pEngine.GetRenderer());
 		
-		bool pressPlus = false;
+
 		bool holdPlus = false;
 
 		typedef std::map<pengine::Input, long>::iterator it_type;
@@ -131,7 +132,7 @@ int _tmain(int argc, _TCHAR* argv[])
 		MyObject.ClearSkinnedVertices();
 		MyObject.UpdateAnimation();
 		pengine::RenderMatrix* aMatrix = new pengine::RenderMatrix();
-		aMatrix->CreateMatrix(0.0f, -25.0f, 0.0f, 0.0f, -90.0f, 0.0f, 0.1f, 0.1f, 0.1f, aMatrix->theMatrix);
+		aMatrix->CreateMatrix(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.1f, 0.1f, 0.1f, aMatrix->theMatrix);
 		pEngine.GetRenderer()->SetActiveMatrix(aMatrix->theMatrix);
 		MyObject.Draw(pEngine.GetRenderer());
 		//pEngine.GetSkyBox()->Draw(pEngine.GetRenderer(), aMatrix);
