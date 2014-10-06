@@ -27,7 +27,9 @@ namespace pengine
 		void InitD3D(HWND hWnd);
 		void SetDefaultRenderStates();
 
-		void SetRenderState(PENGINERENDERSTATETYPE* state, PENGINEDWORD* dword);
+		void SetCulling(CULLINGTYPE);
+		void SetZBuffer(bool);
+		void SetFillMode(FILLMODE);
 
 		void SetActiveCamera(CameraData camera);
 

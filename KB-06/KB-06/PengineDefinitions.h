@@ -235,6 +235,22 @@ namespace pengine
 
 		PENGINE_FORCE_DWORD = 0x7fffffff, /* force 32-bit size enum */
 	}; // end render state definitions
+
+	enum CULLINGTYPE
+	{
+		PENGINE_CULL_NONE = 1,
+		PENGINE_CULL_CW = 2,
+		PENGINE_CULL_CCW = 3,
+		PENGINE_CULL_FORCE_DWORD = 0x7fffffff, /* force 32-bit size enum */
+	};
+
+	enum FILLMODE
+	{
+		PENGINE_FILL_POINT = 1,
+		PENGINE_FILL_WIREFRAME = 2,
+		PENGINE_FILL_SOLID = 3,
+		PENGINE_FILL_FORCE_DWORD = 0x7fffffff, /* force 32-bit size enum */
+	};
 }
 
 #endif // end penginedefinitions

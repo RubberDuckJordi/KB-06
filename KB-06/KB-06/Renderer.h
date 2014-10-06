@@ -34,7 +34,9 @@ namespace pengine
 		virtual void CreateBitmapFromWIC() = 0;
 		virtual void D2DDraw() = 0;
 
-		virtual void SetRenderState(PENGINERENDERSTATETYPE* state, PENGINEDWORD* dword) = 0;
+		virtual void SetCulling(CULLINGTYPE) = 0;
+		virtual void SetZBuffer(bool) = 0;
+		virtual void SetFillMode(FILLMODE) = 0;
 
 		virtual void SetActiveCamera(CameraData camera) = 0;
 		virtual void SetProjectionMatrix(PEngineMatrix* ProjectionMatrix) = 0;

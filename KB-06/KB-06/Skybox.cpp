@@ -96,14 +96,12 @@ namespace pengine
 		renderer->SetActiveMatrix(aMatrix->theMatrix);
 		renderer->SetMaterial(material);
 
-		LPDIRECT3DDEVICE9 g_pd3dDevice = *((DirectXRenderer*)renderer)->GetDevice();
-		g_pd3dDevice->SetRenderState(D3DRS_ZENABLE, false);
-		g_pd3dDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
+		renderer->SetZBuffer(false);
+		renderer->SetCulling(PENGINE_CULL_NONE);
 
 		renderer->DrawIndexedVertexBuffer(v_buffer, i_buffer, amountOfVertices);
 
-		(*((DirectXRenderer*)renderer)->GetDevice())->SetRenderState(D3DRS_ZENABLE, true);
-		g_pd3dDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
-
+		renderer->SetZBuffer(true);
+		renderer->SetCulling(PENGINE_CULL_CCW);
 	}
 }

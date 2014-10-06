@@ -137,9 +137,20 @@ namespace pengine
 		//this->g_pd3dDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
 	};
 
-	void DirectXRenderer::SetRenderState(PENGINERENDERSTATETYPE* state, PENGINEDWORD* dword)
+	void DirectXRenderer::SetCulling(CULLINGTYPE cullingType)
 	{
-		this->g_pd3dDevice->SetRenderState(static_cast<D3DRENDERSTATETYPE>(*state), static_cast<DWORD>(*dword));
+		this->g_pd3dDevice->SetRenderState(D3DRS_CULLMODE, static_cast<D3DCULL>(cullingType));	
+	}
+
+	void DirectXRenderer::SetZBuffer(bool param)
+	{
+		this->g_pd3dDevice->SetRenderState(D3DRS_ZENABLE, param);
+	}
+
+	void DirectXRenderer::SetFillMode(FILLMODE fillmode)
+	{
+		this->g_pd3dDevice->SetRenderState(D3DRS_FILLMODE, static_cast<D3DFILLMODE>(fillmode));
+
 	}
 
 	void DirectXRenderer::SetActiveCamera(CameraData camera)
