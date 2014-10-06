@@ -59,7 +59,7 @@ int _tmain(int argc, _TCHAR* argv[])
 
 	for (std::list<pengine::Mesh*>::iterator i = model->_Meshes.begin(); i != model->_Meshes.end(); ++i)
 	{
-		for (std::deque<pengine::Material*>::iterator j = (*i)->_Materials.begin(); j != (*i)->_Materials.end(); ++j)
+		for (std::list<pengine::Material*>::iterator j = (*i)->_Materials.begin(); j != (*i)->_Materials.end(); ++j)
 		{
 			logger->Log(pengine::Logger::ERR, "Texture name CubeGame: "+ (*j)->texturePath);
 			if ((*j)->texturePath != "")

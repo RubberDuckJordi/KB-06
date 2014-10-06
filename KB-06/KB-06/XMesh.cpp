@@ -10,41 +10,36 @@ namespace pengine
 {
 	Mesh::~Mesh(void)
 	{
-		static int counter = 0;
-		++counter;
-		if (counter < 2)
+		if (_Vertices != NULL)
 		{
-			if (_Vertices != NULL)
-			{
-				delete[] _Vertices;
-			}
-			if (_Faces != NULL)
-			{
-				delete[] _Faces;
-			}
-			if (_Normals != NULL)
-			{
-				delete[] _Normals;
-			}
-			if (_TextureCoords != NULL)
-			{
-				delete[] _TextureCoords;
-			}
-			while (!_Materials.empty())
-			{
-				delete _Materials.back();
-				_Materials.pop_back();
-			}
-			if (_FaceMaterials != NULL)
-			{
-				delete[] _FaceMaterials;
-			}
-			while (!_Subsets.empty())
-			{
-				delete[] _Subsets.back()->Faces;
-				delete _Subsets.back();
-				_Subsets.pop_back();
-			}
+			delete[] _Vertices;
+		}
+		if (_Faces != NULL)
+		{
+			delete[] _Faces;
+		}
+		if (_Normals != NULL)
+		{
+			delete[] _Normals;
+		}
+		if (_TextureCoords != NULL)
+		{
+			delete[] _TextureCoords;
+		}
+		while (!_Materials.empty())
+		{
+			delete _Materials.back();
+			_Materials.pop_back();
+		}
+		if (_FaceMaterials != NULL)
+		{
+			delete[] _FaceMaterials;
+		}
+		while (!_Subsets.empty())
+		{
+			delete[] _Subsets.back()->Faces;
+			delete _Subsets.back();
+			_Subsets.pop_back();
 		}
 	}
 

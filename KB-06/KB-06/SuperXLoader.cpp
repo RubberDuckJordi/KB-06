@@ -120,19 +120,6 @@ namespace pengine
 			MapMeshToBones(_LoadSkeletton);
 		}
 
-		_LoadMesh->facesPerMaterial = new std::vector<int>[_LoadMesh->_nMaterials];//not sure if this is the right location to do this...
-		for (int i = 0; i < _LoadMesh->_nMaterials; ++i)
-		{
-			unsigned int totalFaces = 0;
-			for (int j = 0; j < _LoadMesh->_nFaceMaterials; j++)
-			{
-				if (_LoadMesh->_FaceMaterials[j] == i)
-				{
-					//logger->LogAll(Logger::INFO, ": face ", j, " uses material ", i);
-					_LoadMesh->facesPerMaterial[i].push_back(j);
-				}
-			}
-		}
 		logger->LogAll(0, "SuperXLoader: Processed file:", pFilename);
 
 		fin.close();
@@ -589,11 +576,8 @@ namespace pengine
 		logger->LogAll(0, "SuperXLoader: Number of Materials: ", _LoadMesh->_nMaterials);
 
 		fin.getline(Data, TEXT_BUFFER, ';');
-		_LoadMesh->_nFaceMaterials = (uint16)TextToNum(Data);
-		logger->LogAll(0, "SuperXLoader: _FaceMaterials: ", _LoadMesh->_nFaceMaterials);
-		_LoadMesh->_FaceMaterials = new uint16[_LoadMesh->_nFaceMaterials];
-		unsigned int num = (uint16)TextToNum(Data);
-		for (uint32 i = 0; i < num - 1; ++i)//num - 1 because the last number has no , behind it, just a ;
+		_LoadMesh->_FaceMaterials = new uint16[(uint16)TextToNum(Data)];
+		for (uint32 i = 0; i < _LoadMesh->_nFaces - 1; i++)
 		{
 			fin.getline(Data, TEXT_BUFFER, ',');
 			_LoadMesh->_FaceMaterials[i] = (uint16)TextToNum(Data);
@@ -1023,7 +1007,7 @@ namespace pengine
 
 	void IO_Model_X::ProcessDeclData()
 	{
-		logger->Log(Logger::DEBUG, "Processing DeclData...");
+		/*logger->Log(Logger::DEBUG, "Processing DeclData...");
 		Find('{');
 
 		int currentTextureCoordinateSet = 0;//needed if we find texture coordinates in our decldata block...
@@ -1201,6 +1185,6 @@ namespace pengine
 					break;
 				}
 			}
-		}
+		}*/
 	}
 }

@@ -70,7 +70,7 @@ namespace pengine
 		uint16 _nFaceMaterials;//actually not needed, as it should always be the same amount as nFaces
 		std::vector<int>* facesPerMaterial;//an vector of vectors containing face indices; one vector per material... this should speed things up... Yep, a 2 dimensional vector :D
 		//list of Materials for that Mesh
-		std::deque<Material*> _Materials;
+		std::list<Material*> _Materials;
 		std::string _Name;
 	};
 }

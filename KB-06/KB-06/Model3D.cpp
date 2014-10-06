@@ -105,12 +105,12 @@ namespace pengine
 			memcpy(&(ConcatMesh->_Faces[(*i)->_FirstFace]), (*i)->_Faces, (*i)->_nFaces * sizeof(Face));
 
 
-			int offset = ConcatMesh->_Materials.size();
+			/*int offset = ConcatMesh->_Materials.size();
 			for (int j = 0; j < (*i)->_nFaceMaterials; j++)
 			{
 				(*i)->_FaceMaterials[j] += offset;
 			}
-			memcpy(&(ConcatMesh->_FaceMaterials[(*i)->_FirstFace]), (*i)->_FaceMaterials, (*i)->_nFaces * sizeof(uint16));
+			memcpy(&(ConcatMesh->_FaceMaterials[(*i)->_FirstFace]), (*i)->_FaceMaterials, (*i)->_nFaces * sizeof(uint16));*/
 
 			//std::vector<std::vector<int>*> stupid = (*i)->facesPerMaterial;
 			//ConcatMesh->facesPerMaterial.insert(ConcatMesh->facesPerMaterial.end(), (*i)->facesPerMaterial.begin(), (*i)->facesPerMaterial.end());
