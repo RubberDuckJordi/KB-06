@@ -17,9 +17,9 @@ namespace pengine
 		}
 		else
 		{
-			//Logger* logger = pool.front();
-			//pool.pop_front();temp fix
-			return pool.front();//temp fix
+			Logger* logger = pool.front();
+			pool.pop_front();
+			return logger;
 		}
 	}
 
