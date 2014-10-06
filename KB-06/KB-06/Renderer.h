@@ -11,6 +11,7 @@
 #include "RGBAColor.h"
 #include "RenderMatrix.h"
 #include "Material.h"
+#include "CustomD3DVertex.h"
 
 namespace pengine
 {
@@ -64,6 +65,9 @@ namespace pengine
 		virtual void SetActiveMatrix(PEngineMatrix* matrix) = 0;
 
 		virtual void SetLights() = 0;
+
+		virtual VertexBufferWrapper* CreateVertexBuffer(D3DCustomVertex*, int amountOfIndices, int fvf) = 0;
+		virtual void DrawVertexBuffer(VertexBufferWrapper*, int amountOfIndices) = 0;
 
 	protected:
 		Logger* logger;

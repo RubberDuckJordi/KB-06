@@ -25,13 +25,18 @@ namespace pengine
 		void SetVertices(D3DCustomVertex* vertex);
 		D3DCustomVertex* GetVertices();
 
+		Material* GetMaterial();
+		void SetMaterial(Material* material);
+
 		void Render(Renderer* renderer);
 
 	private:
 		Logger* logger;
 		int amountOfIndices;
 		D3DCustomVertex* vertices;
-		LPDIRECT3DVERTEXBUFFER9 vertexBuffer;
+		VertexBufferWrapper* vertexBuffer;
+		Material* material;
+		RenderMatrix* location;
 
 		long height;
 		long width;

@@ -4,15 +4,17 @@
 #include "DefaultEntity.h"
 #include "track.h"
 #include "trackblock.h"
+#include "Ground.h"
 
-racer::RaceSceneFactory::RaceSceneFactory()
+racer::RaceSceneFactory::RaceSceneFactory(pengine::ResourceManager* resourceManager)
+:SceneFactory(resourceManager)
 {
 
 }
 
 racer::RaceSceneFactory::~RaceSceneFactory()
 {
-
+	pengine::SceneFactory::~SceneFactory();
 }
 
 pengine::Scene* racer::RaceSceneFactory::CreateScene()
@@ -27,7 +29,7 @@ pengine::Scene* racer::RaceSceneFactory::CreateScene()
 	RaceCart* racecart1 = new RaceCart();
 	RaceCart* racecart2 = new RaceCart();
 
-	
+
 	racecart1->AddAll(7.5f, 0.0f, 5.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f);
 	racecart2->AddAll(7.5f, 0.0f, -5.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f);
 	racecart1->SetXModel(xModel);
@@ -50,11 +52,14 @@ pengine::Scene* racer::RaceSceneFactory::CreateScene()
 	track->AddTrackBlock(trackBlock4);
 	track->SetAll(0, -1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f);
 
+	pengine::Ground* ground = resourceManager->LoadGround(groundResource, groundTexture);
+
 	RaceScene* raceScene = new RaceScene();
 	raceScene->AddEntity(racecart);
 	raceScene->AddEntity(racecart1);
 	raceScene->AddEntity(racecart2);
 	raceScene->AddEntity(track);
+	raceScene->SetGround(ground);
 
 	pengine::EntityCamera* camera = new pengine::EntityCamera();
 	camera->useInput = false;
@@ -72,4 +77,14 @@ void racer::RaceSceneFactory::SetXModel(pengine::XModel* p_xModel)
 void racer::RaceSceneFactory::SetXModel2(pengine::XModel* p_xModel)
 {
 	xModel2 = p_xModel;
+}
+
+void racer::RaceSceneFactory::SetGroundResource(std::string p_groundResource)
+{
+	groundResource = p_groundResource;
+}
+
+void racer::RaceSceneFactory::SetGroundTexture(std::string p_groundTexture)
+{
+	groundTexture = p_groundTexture;
 }

@@ -9,7 +9,7 @@ namespace pengine
 	class DefaultSceneFactory : public SceneFactory
 	{
 	public:
-		DefaultSceneFactory();
+		DefaultSceneFactory(ResourceManager* resourceManager);
 		~DefaultSceneFactory();
 		Scene* CreateScene();
 		//void setMesh(Mesh* mesh);//debug!

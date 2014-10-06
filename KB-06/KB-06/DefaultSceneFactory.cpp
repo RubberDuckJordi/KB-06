@@ -4,7 +4,8 @@
 
 namespace pengine
 {
-	DefaultSceneFactory::DefaultSceneFactory()
+	DefaultSceneFactory::DefaultSceneFactory(ResourceManager* resourceManager)
+		:SceneFactory(resourceManager)
 	{
 
 	}

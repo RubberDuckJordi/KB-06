@@ -93,4 +93,30 @@ namespace pengine
 		}
 		return texture;
 	}
+
+	Ground* ResourceManager::LoadGround(std::string filename, std::string textureFilename)
+	{
+		Ground* ground = NULL;
+
+		for (std::map<std::string, Ground>::iterator i = grounds.begin(); i != grounds.end(); ++i) 
+		{
+			if (i->first == filename)
+			{
+				ground = &i->second;
+			}
+		}
+
+		if (ground == NULL)
+		{
+			ground = heightmapLoader.LoadHeightmap(filename);
+			Material* material = new Material();
+			material->texture = LoadBinaryFile(textureFilename);
+			ground->SetMaterial(material);
+
+			grounds[filename] = *ground;
+		}
+		
+
+		return ground;
+	}
 }

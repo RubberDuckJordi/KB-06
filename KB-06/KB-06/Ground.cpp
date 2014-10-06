@@ -6,6 +6,9 @@ namespace pengine
 	Ground::Ground()
 	{
 		logger = LoggerPool::GetInstance().GetLogger();
+
+		location = new RenderMatrix();
+		location->CreateMatrix(0, 0, 0, 0, 0, 0, 1, 1, 1, location->theMatrix);
 	}
 
 	Ground::~Ground()
@@ -63,47 +66,26 @@ namespace pengine
 		vertices = vertex;
 	}
 
+	Material* Ground::GetMaterial()
+	{
+		return material;
+	}
+
+	void Ground::SetMaterial(Material* p_material)
+	{
+		material = p_material;
+	}
+
 	void Ground::Render(Renderer* renderer)
 	{
-		LPDIRECT3DDEVICE9 m_d3dDevice = *((DirectXRenderer*)renderer)->GetDevice();
-
 		if (vertexBuffer == NULL)
 		{
-			if (FAILED(m_d3dDevice->CreateVertexBuffer(amountOfIndices * sizeof(D3DCustomVertex),
-				0, D3DCustomVertexFVF, D3DPOOL_DEFAULT, &vertexBuffer, NULL)))
-			{
-				logger->Log(Logger::ERR, "Ground::Render() vertexbuffer create failed");
-			}
-
-			void* verticesBuffer;
-			int size = sizeof(D3DCustomVertex)*amountOfIndices;
-			if (FAILED((vertexBuffer)->Lock(0, size, (void**)&verticesBuffer, 0)))
-			{
-				logger->Log(Logger::ERR, "Ground::Render() vertexbuffer lock failed");
-			}
-
-			memcpy(verticesBuffer, this->vertices, size);
-			vertexBuffer->Unlock();
+			vertexBuffer = renderer->CreateVertexBuffer(vertices, amountOfIndices, D3DCustomVertexFVF);
 		}
 
-		Material mat;
-		mat.ambient = { 0.0f, 0.0f, 1.0f };
-		mat.diffuse = { 0.0f, 0.0f, 1.0f, 1.0f };
-		mat.emissive = { 0.0f, 0.0f, 1.0f };
-		mat.power = 0;
-		mat.specular = { 0.0f, 0.0f, 1.0f };
-
-		RenderMatrix* aMatrix = new RenderMatrix();
-
-		aMatrix->CreateMatrix(0, 0, 0, 0, 0, 0, 1, 1, 1, aMatrix->theMatrix);
-
-		renderer->SetActiveMatrix(aMatrix->theMatrix);
-		renderer->SetMaterial(&mat);
-
-		m_d3dDevice->SetTexture(0, NULL);
-		m_d3dDevice->SetStreamSource(0, vertexBuffer, 0, sizeof(D3DCustomVertex));
-		m_d3dDevice->SetFVF(D3DCustomVertexFVF);
-		m_d3dDevice->DrawPrimitive(D3DPT_TRIANGLELIST, 0, amountOfIndices / 3 );	
-
+		renderer->SetActiveMatrix(location->theMatrix);
+		renderer->SetMaterial(material);
+		
+		renderer->DrawVertexBuffer(vertexBuffer, amountOfIndices);
 	}
 }

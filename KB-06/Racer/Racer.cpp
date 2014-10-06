@@ -15,9 +15,6 @@ int main(int argc, const char* argv[])
 	pengine::Logger* logger = pengine::LoggerPool::GetInstance().GetInstance().GetLogger();
 	pEngine.Init();
 
-	pengine::HeightmapLoader heightmapLoader;
-	pengine::Ground* ground = heightmapLoader.LoadHeightmap("resources/heightmap.bmp");
-
 	pEngine.NewWindow(10, 10, 500, 500);
 	pEngine.InitRenderer();
 
@@ -34,15 +31,17 @@ int main(int argc, const char* argv[])
 	color.b = 1.0f;
 	color.a = 1.0f;
 
-	racer::RaceSceneFactory* sceneFactory = new racer::RaceSceneFactory();
+	racer::RaceSceneFactory* sceneFactory = new racer::RaceSceneFactory(pEngine.GetResourceManager());
 	sceneFactory->SetXModel(xmodel);
 	sceneFactory->SetXModel2(xmodel2);
+	sceneFactory->SetGroundResource("resources/heightmap.bmp");
+	sceneFactory->SetGroundTexture("resources/heightmaptexture.bmp");
+
 
 	pEngine.AddSceneFactory("raceScene", sceneFactory);
 	pengine::Scene* scene = pEngine.AddScene("raceScene");
 	pEngine.SetCurrentScene(scene);
 	pEngine.GetSceneManager()->GetCurrentScene()->InitSkybox(pEngine.GetRenderer(), "resources/dome.jpg");
-	pEngine.GetSceneManager()->GetCurrentScene()->SetGround(ground);
 	pEngine.GameLoop();
 
 	pengine::LoggerPool::GetInstance().ReturnLogger(logger);

@@ -60,6 +60,9 @@ namespace pengine
 
 		void SetLights();
 
+		VertexBufferWrapper* CreateVertexBuffer(D3DCustomVertex*, int amountOfIndices, int fvf);
+		void DrawVertexBuffer(VertexBufferWrapper*, int amountOfIndices);
+
 	private:
 		//void SetTexture(BinaryData* texture);
 		//void SetMaterial(Material* material);

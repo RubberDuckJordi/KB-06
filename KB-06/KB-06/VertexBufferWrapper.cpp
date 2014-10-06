@@ -2,9 +2,9 @@
 
 namespace pengine
 {
-	VertexBufferWrapper::VertexBufferWrapper(IDirect3DVertexBuffer9** _VertexBuffer)
+	VertexBufferWrapper::VertexBufferWrapper()
 	{
-		VertexBuffer = _VertexBuffer;
+
 	}
 
 	VertexBufferWrapper::~VertexBufferWrapper()

@@ -8,7 +8,7 @@ namespace pengine
 	class VertexBufferWrapper
 	{
 	public:
-		VertexBufferWrapper(IDirect3DVertexBuffer9** _VertexBuffer);
+		VertexBufferWrapper();
 		~VertexBufferWrapper();
 		void SetVertexBuffer(IDirect3DVertexBuffer9** _VertexBuffer);
 		IDirect3DVertexBuffer9** GetVertexBuffer();
