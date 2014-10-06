@@ -7,7 +7,7 @@ namespace pengine
 
 	Skybox::Skybox(Renderer* renderer, std::string textureString)
 	{
-		
+
 
 		amountOfVertices = 24;
 		amountOfIndices = 36;
@@ -60,21 +60,21 @@ namespace pengine
 
 		g_pd3dDevice->CreateIndexBuffer(amountOfIndices * sizeof(int), 0, D3DFMT_INDEX32, D3DPOOL_DEFAULT, &i_buffer, NULL);
 
-		
-			void* pVoid;
 
-			//d3dMesh->GetVertexBuffer(&v_buffer);
-			// lock v_buffer and load the vertices into it
-			v_buffer->Lock(0, 0, (void**)&pVoid, 0);
-			memcpy(pVoid, aSkyboxVertices, amountOfVertices * sizeof(D3DCustomVertex));
-			v_buffer->Unlock();
+		void* pVoid;
 
-			//d3dMesh->GetIndexBuffer(&i_buffer);
-			// lock i_buffer and load the indices into it
-			i_buffer->Lock(0, 0, (void**)&pVoid, 0);
-			memcpy(pVoid, aSkyboxIndices, amountOfIndices * sizeof(int));
-			i_buffer->Unlock();
-		
+		//d3dMesh->GetVertexBuffer(&v_buffer);
+		// lock v_buffer and load the vertices into it
+		v_buffer->Lock(0, 0, (void**)&pVoid, 0);
+		memcpy(pVoid, aSkyboxVertices, amountOfVertices * sizeof(D3DCustomVertex));
+		v_buffer->Unlock();
+
+		//d3dMesh->GetIndexBuffer(&i_buffer);
+		// lock i_buffer and load the indices into it
+		i_buffer->Lock(0, 0, (void**)&pVoid, 0);
+		memcpy(pVoid, aSkyboxIndices, amountOfIndices * sizeof(int));
+		i_buffer->Unlock();
+
 
 		LPDIRECT3DTEXTURE9* textureNew = new LPDIRECT3DTEXTURE9();
 		HRESULT result = D3DXCreateTextureFromFileA(g_pd3dDevice, textureString.c_str(), textureNew);
@@ -83,11 +83,11 @@ namespace pengine
 
 	Skybox::~Skybox()
 	{
-		
+
 		v_buffer->Release();
 		i_buffer->Release();
 		//d3dMesh->Release();
-		
+
 		delete[] aSkyboxVertices;
 		delete[] aSkyboxIndices;
 	}
@@ -113,7 +113,7 @@ namespace pengine
 	void Skybox::Draw(Renderer* renderer, Vertex* position)
 	{
 		Material mat;
-		mat.ambient = { 0.0f, 0.0f, 1.0f};
+		mat.ambient = { 0.0f, 0.0f, 1.0f };
 		mat.diffuse = { 0.0f, 0.0f, 1.0f, 1.0f };
 		mat.emissive = { 0.0f, 0.0f, 1.0f };
 		mat.power = 0;
@@ -137,46 +137,46 @@ namespace pengine
 
 
 
-			D3DCustomVertex* d3dVertices = new D3DCustomVertex[amountOfVertices];
-			unsigned short* indices = new unsigned short[amountOfIndices];
+		D3DCustomVertex* d3dVertices = new D3DCustomVertex[amountOfVertices];
+		unsigned short* indices = new unsigned short[amountOfIndices];
 
-			for (int i = 0; i < amountOfVertices; ++i)//first do all the vertices, then set the indices to the right vertices
-			{
-				D3DCustomVertex newVertex;
-				newVertex.x = aSkyboxVertices[i].x;//x
-				newVertex.y = aSkyboxVertices[i].y;//y
-				newVertex.z = aSkyboxVertices[i].z;//z
-				newVertex.tu = aSkyboxVertices[i].tu;//hopefully we got texture information for each vertex...
-				newVertex.tv = aSkyboxVertices[i].tv;//hopefully we got texture information for each vertex...
-				d3dVertices[i] = newVertex;
-			}
+		for (int i = 0; i < amountOfVertices; ++i)//first do all the vertices, then set the indices to the right vertices
+		{
+			D3DCustomVertex newVertex;
+			newVertex.x = aSkyboxVertices[i].x;//x
+			newVertex.y = aSkyboxVertices[i].y;//y
+			newVertex.z = aSkyboxVertices[i].z;//z
+			newVertex.tu = aSkyboxVertices[i].tu;//hopefully we got texture information for each vertex...
+			newVertex.tv = aSkyboxVertices[i].tv;//hopefully we got texture information for each vertex...
+			d3dVertices[i] = newVertex;
+		}
 
-			for (int i = 0; i < amountOfIndices; ++i)//now get all the indices...
-			{
-				indices[i] = aSkyboxIndices[i];
-			}
+		for (int i = 0; i < amountOfIndices; ++i)//now get all the indices...
+		{
+			indices[i] = aSkyboxIndices[i];
+		}
 
-			void* pVoid;
-
-			
+		void* pVoid;
 
 
-			g_pd3dDevice->SetStreamSource(0, v_buffer, 0, sizeof(D3DCustomVertex));
-			g_pd3dDevice->SetFVF(D3DCustomVertexFVF);
-			g_pd3dDevice->SetIndices(i_buffer);
-			g_pd3dDevice->SetTexture(0, *texture->GetTexture());
-			g_pd3dDevice->DrawIndexedPrimitive(D3DPT_TRIANGLELIST,// PrimitiveType
-				0,// BaseVertexIndex
-				0,// MinIndex
-				amountOfVertices,// NumVertices
-				0,// StartIndex
-				12);// PrimitiveCount
-			//v_buffer->Release();
-			//i_buffer->Release();
-			//d3dMesh->Release();
-			//delete[] d3dVertices;
-			//delete[] indices;
-		
+
+
+		g_pd3dDevice->SetStreamSource(0, v_buffer, 0, sizeof(D3DCustomVertex));
+		g_pd3dDevice->SetFVF(D3DCustomVertexFVF);
+		g_pd3dDevice->SetIndices(i_buffer);
+		g_pd3dDevice->SetTexture(0, *texture->GetTexture());
+		g_pd3dDevice->DrawIndexedPrimitive(D3DPT_TRIANGLELIST,// PrimitiveType
+			0,// BaseVertexIndex
+			0,// MinIndex
+			amountOfVertices,// NumVertices
+			0,// StartIndex
+			12);// PrimitiveCount
+		//v_buffer->Release();
+		//i_buffer->Release();
+		//d3dMesh->Release();
+		//delete[] d3dVertices;
+		//delete[] indices;
+
 
 		(*((DirectXRenderer*)renderer)->GetDevice())->SetRenderState(D3DRS_ZENABLE, true);
 		g_pd3dDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);

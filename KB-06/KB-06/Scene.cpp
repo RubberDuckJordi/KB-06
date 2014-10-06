@@ -56,8 +56,11 @@ namespace pengine
 		{
 			entity->Draw(renderer);
 		}
-
-		ground->Render(renderer);
+		
+		if (ground != NULL)
+		{
+			ground->Render(renderer);
+		}
 	}
 
 	EntityCamera* Scene::GetCurrentCamera()
