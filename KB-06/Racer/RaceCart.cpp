@@ -57,21 +57,13 @@ void racer::RaceCart::Draw(pengine::Renderer* renderer)
 	{
 		renderer->SetActiveMatrix(myCachedMatrix->theMatrix); //should be called every frame
 
-		pengine::MaterialWrapper* materialWrapper;
-		int materialCount;
-		xModel->GetMaterials(materialWrapper, materialCount);
-
-		pengine::TextureWrapper* textureWrapper;
-		int textureCount;
-		xModel->GetTextures(textureWrapper, textureCount);
-
-		renderer->SetMaterialWrapper(materialWrapper);
-		renderer->SetTexture(textureWrapper);
-		renderer->DrawSubset(xModel->GetMesh(), 0);
+		xModel->ClearSkinnedVertices();
+		xModel->UpdateAnimation();
+		xModel->Draw(renderer);
 	}
 }
 
-void racer::RaceCart::SetXModel(pengine::XModel* p_xModel)
+void racer::RaceCart::SetObject3D(pengine::Object3D* p_xModel)
 {
 	xModel = p_xModel;
 }

@@ -48,7 +48,7 @@ int _tmain(int argc, _TCHAR* argv[])
 
 	pengine::IO_Model_X* loader = new pengine::IO_Model_X();
 	pengine::Model3D* model = new pengine::Model3D();
-	loader->Load("resources/tiny/tiny_4anim.x", model);
+	loader->Load("resources/tiger.x", model);
 
 	for (std::list<pengine::Mesh*>::iterator i = model->_Meshes.begin(); i != model->_Meshes.end(); ++i)
 	{
@@ -57,7 +57,7 @@ int _tmain(int argc, _TCHAR* argv[])
 			logger->Log(pengine::Logger::ERR, "Texture name CubeGame: "+ (*j)->texturePath);
 			if ((*j)->texturePath != "")
 			{
-				(*j)->texture = pEngine.GetResourceManager()->LoadBinaryFile("resources/tiny/" + (*j)->texturePath);
+				(*j)->texture = pEngine.GetResourceManager()->LoadBinaryFile("resources/" + (*j)->texturePath);
 			}
 		}
 	}

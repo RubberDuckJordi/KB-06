@@ -4,7 +4,7 @@
 #include "Entity.h"
 #include "Logger.h"
 #include "Renderer.h"
-#include "XModel.h"
+#include "Object3D.h"
 
 namespace racer
 {
@@ -15,7 +15,7 @@ namespace racer
 		~RaceCart();
 		void UpdateLogic(float deltaTime, std::map<pengine::Input, long>* actions);
 		void Draw(pengine::Renderer* renderer);
-		void SetXModel(pengine::XModel*); //debug
+		void SetObject3D(pengine::Object3D*); //debug
 		void SetControllable(bool);
 		
 		void SetHorsePower(float);
@@ -28,7 +28,7 @@ namespace racer
 	private:
 		float horsePower = 10;
 
-		pengine::XModel* xModel; //debug
+		pengine::Object3D* xModel; //debug
 		bool controllable;
 	};
 }
