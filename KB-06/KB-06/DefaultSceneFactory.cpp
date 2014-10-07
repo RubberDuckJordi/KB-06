@@ -74,6 +74,13 @@ namespace pengine
 		camera2->SetXModel(xModel2);
 		camera2->useInput = true;
 
+		Skybox* skybox = new pengine::Skybox();
+		Material* material = new pengine::Material();
+		material->texture = resourceManager->LoadBinaryFile(skyboxTexture);
+		skybox->SetMaterial(material);
+
+		defaultScene->SetSkybox(skybox);
+
 		//defaultScene->AddEntity(camera);
 		defaultScene->AddEntity(camera2);
 

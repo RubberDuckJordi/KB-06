@@ -6,11 +6,9 @@
 #include "RGBAColor.h"
 #include "SceneFactory.h"
 #include "DefaultSceneFactory.h"
-#include "Skybox.h"
 
 #include "XModelLoader.h"
 #include "DirectXRenderer.h"
-
 
 #include "SuperXLoader.h"
 #include "Object3D.h"
@@ -78,11 +76,11 @@ int _tmain(int argc, _TCHAR* argv[])
 	pengine::DefaultSceneFactory* sceneFactory = new pengine::DefaultSceneFactory(pEngine.GetResourceManager());
 	sceneFactory->SetXModel(xmodel);
 	sceneFactory->SetXModel2(xmodel2);
+	sceneFactory->SetSkyboxTexture("resources/dome.jpg");
 
 	pEngine.GetSceneManager()->AddSceneFactory("iets", sceneFactory);
 	pengine::Scene* scene = pEngine.GetSceneManager()->SetScene("iets");
 	pEngine.GetSceneManager()->SetCurrentScene(scene);
-	pEngine.GetSceneManager()->GetCurrentScene()->InitSkybox(pEngine.GetRenderer(), "resources/dome.jpg");
 
 	pEngine.GetRenderer()->SetProjectionMatrix(M_PI / 4, 100.0f);
 	pEngine.GetRenderer()->SetDefaultRenderStates();
@@ -135,7 +133,6 @@ int _tmain(int argc, _TCHAR* argv[])
 		aMatrix->CreateMatrix(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.1f, 0.1f, 0.1f, aMatrix->theMatrix);
 		pEngine.GetRenderer()->SetActiveMatrix(aMatrix->theMatrix);
 		MyObject.Draw(pEngine.GetRenderer());
-		//pEngine.GetSkyBox()->Draw(pEngine.GetRenderer(), aMatrix);
 		
 
 		pEngine.GetRenderer()->EndScene();

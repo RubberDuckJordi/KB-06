@@ -49,7 +49,10 @@ namespace pengine
 
 		Vertex* cameraPosition = currentCamera->GetPosition();
 
-		skybox->Draw(renderer, cameraPosition);
+		if (skybox != NULL)
+		{
+			skybox->Draw(renderer, cameraPosition);
+		}
 
 		for each(Entity* entity in entities)
 		{
