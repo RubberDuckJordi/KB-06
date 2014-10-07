@@ -22,31 +22,7 @@ namespace pengine {
 			DEBUG = 3,
 			INFO = 4
 		};
-
-		template <typename T>
-		void MagicLog(std::ostream& o, T t)
-		{
-			o << t;
-		}
-
-		template<typename T, typename... Args>
-		void MagicLog(std::ostream& o, T t, Args... args) // recursive variadic function
-		{
-			MagicLog(o, t);
-			MagicLog(o, args...);
-		}
-
-		/*
-		Will log all given arguments, there is nothing between them.
-		*/
-		template<typename... Args>
-		void LogAll(int logType, Args... args)
-		{
-			std::ostringstream oss;
-			MagicLog(oss, args...);
-			Log(logType, oss.str());
-		}
-
+		
 		void Log(int logType, std::string text);
 		void LogMemoryDump(int logType, void* const p_address, const int p_size, char* const p_name);
 		void SetLogLevel(int logLevel);

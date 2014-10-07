@@ -31,7 +31,7 @@ namespace pengine
 		{
 			index = 0;
 		}
-		logger->LogAll(Logger::INFO, "Object3D: ", _Model->_AnimationSets.size(), " Animation Sets. Playing: ", index);
+		//logger->LogAll(Logger::INFO, "Object3D: ", _Model->_AnimationSets.size(), " Animation Sets. Playing: ", index);
 
 		std::list<AnimationSet*>::iterator i = _Model->_AnimationSets.begin();
 		if (index != 0)
@@ -282,7 +282,7 @@ namespace pengine
 		pBone->_Animation = _cAnimationSet->FindAnimation(pBone->_BoneName);
 		if (pBone->_Animation == 0)
 		{
-			logger->LogAll(Logger::INFO, "Object3D: ", pBone->_BoneName, " is not linked to an animation.");
+			//logger->LogAll(Logger::INFO, "Object3D: ", pBone->_BoneName, " is not linked to an animation.");
 		}
 		pBone->_AnimationIndexMat = 0;
 		pBone->_AnimationIndexR = 0;
