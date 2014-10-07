@@ -139,6 +139,9 @@
     <ClCompile Include="Ground.cpp">
       <Filter>Source\Scene</Filter>
     </ClCompile>
+    <ClCompile Include="Collidable.cpp">
+      <Filter>Source\Scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DefaultEntity.h">
@@ -344,6 +347,9 @@
       <Filter>Header\Resource\Heightmap</Filter>
     </ClInclude>
     <ClInclude Include="Ground.h">
+      <Filter>Header\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Collidable.h">
       <Filter>Header\Scene</Filter>
     </ClInclude>
   </ItemGroup>
