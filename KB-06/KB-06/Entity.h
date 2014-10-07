@@ -28,6 +28,8 @@ namespace pengine
 		void SetFriction(float);
 		void AddFriction(float);
 		void AddForce(Vector3*);
+		// Used for collisions, vector is multiplied by mass
+		void AddForce(Vector3*, float mass);
 		void SetMass(float);
 
 		void AddRelativeForce(Vector3*);

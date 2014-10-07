@@ -2,23 +2,13 @@
 #define _COLLIDABLE_H_
 
 #include "Vector3.h"
+#include "Rectangle.h"
 
 namespace pengine
 {
 	class Collidable
 	{
 	public:
-
-		struct RECTANGLE
-		{
-			float x;
-			float y;
-			float z;
-			float width;
-			float height;
-			float depth;
-		};
-
 		// Function called when the object collides with another collidable, must be implemented
 		virtual void OnCollide(Collidable*) = 0;
 		// Function that initializes the collisionBox, must be implemented

@@ -5,10 +5,12 @@
 #include "Logger.h"
 #include "Renderer.h"
 #include "Object3D.h"
+#include "Collidable.h"
+#include "Rectangle.h"
 
 namespace racer
 {
-	class RaceCart : public pengine::Entity 
+	class RaceCart : public pengine::Entity, public pengine::Collidable
 	{
 	public:
 		RaceCart();
@@ -24,6 +26,12 @@ namespace racer
 		void Brake(float percentage);
 		void Throttle(float percentage);
 		void Steer(float percentage);
+
+		// Collidable functions
+		void OnCollide(Collidable*);
+		void InitCollisionBox();
+		Vector3* GetCollisionForceVector();
+		float GetCollisionMass();
 
 	private:
 		float horsePower = 10;

@@ -360,6 +360,71 @@ namespace pengine
 
 	}
 
+	void Object3D::CreateCollisionBox(RECTANGLE& rect)
+	{
+		float minx, miny, minz;
+		float maxx, maxy, maxz;
+
+		//Initialise at first values
+		minx = this->_Mesh->_Vertices[0].x;
+		maxx = this->_Mesh->_Vertices[0].x;
+		miny = this->_Mesh->_Vertices[0].y;
+		maxy = this->_Mesh->_Vertices[0].y;
+		minz = this->_Mesh->_Vertices[0].z;
+		maxz = this->_Mesh->_Vertices[0].z;
+
+		for (int i = 0; i < this->_Mesh->_nVertices; ++i)
+		{
+			// Check min values 
+			if (this->_Mesh->_Vertices[i].x < minx)
+			{
+				minx = this->_Mesh->_Vertices[i].x;
+			}
+			if (this->_Mesh->_Vertices[i].y < miny)
+			{
+				miny = this->_Mesh->_Vertices[i].y;
+			}
+			if (this->_Mesh->_Vertices[i].z < minz)
+			{
+				minz = this->_Mesh->_Vertices[i].z;
+			}
+
+			// Check max values
+			if (this->_Mesh->_Vertices[i].x > maxx)
+			{
+				maxx = this->_Mesh->_Vertices[i].x;
+			}
+			if (this->_Mesh->_Vertices[i].y > maxy)
+			{
+				maxy = this->_Mesh->_Vertices[i].y;
+			}
+			if (this->_Mesh->_Vertices[i].z > maxz)
+			{
+				maxz = this->_Mesh->_Vertices[i].z;
+			}
+		}
+
+		// Calculate the rectangle 
+		rect.x = minx;
+		rect.y = miny;
+		rect.z = minz;
+
+		// In our first iteration of collision, we only work with cubes, no rectangles
+		float largestMeasurement = maxx - minx;
+		if (maxy - miny > largestMeasurement)
+		{
+			largestMeasurement = maxy - miny;
+		}
+		if (maxz - minz > largestMeasurement)
+		{
+			largestMeasurement = maxz - minz;
+		}
+		
+		rect.width = largestMeasurement;
+		rect.height = largestMeasurement;
+		rect.depth = largestMeasurement;
+	}
+
 	void Object3D::ComputeBoundingBoxSphere(void)
 	{
 		_Low = _SkinnedVertices[0];

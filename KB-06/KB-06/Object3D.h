@@ -14,6 +14,7 @@
 #include "Model3D.h"
 #include "Renderer.h"
 #include "ObjectBone.h"
+#include "Rectangle.h"
 
 namespace pengine
 {
@@ -100,6 +101,7 @@ namespace pengine
 		};
 		void Draw(Renderer* renderer);
 
+		void CreateCollisionBox(RECTANGLE& rect);
 		void ComputeBoundingBoxSphere(void);
 		//Elements for the AABB (_Low & _High)
 		//and bounding sphere (_Center & _Radius)

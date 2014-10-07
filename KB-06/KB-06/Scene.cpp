@@ -24,6 +24,11 @@ namespace pengine
 		entities.push_back(entity);
 	}
 
+	void Scene::AddCollidable(Collidable* collidable)
+	{
+		collidables.push_back(collidable);
+	}
+
 	void Scene::SetSkybox(Skybox* p_skybox)
 	{
 		skybox = p_skybox;
@@ -35,6 +40,30 @@ namespace pengine
 		{
 			(*i)->UpdateLogic(deltaTime, actions);
 		}
+
+		//The following code is highly inefficient ;)
+
+		// Init the collision boxes
+		for (std::list<Collidable*>::iterator i = collidables.begin(); i != collidables.end(); ++i)
+		{
+			(*i)->InitCollisionBox();
+		}
+
+		// Collision detection
+		for (std::list<Collidable*>::iterator i = collidables.begin(); i != collidables.end(); ++i)
+		{
+			for (std::list<Collidable*>::iterator j = collidables.begin(); j != collidables.end(); ++j)
+			{
+				if ((*i) != (*j))
+				{
+					if ((*i)->CheckCollision(*j))
+					{
+						(*i)->OnCollide(*j);
+					}
+				}
+			}
+		}
+
 		currentCamera->UpdateLogic(deltaTime, actions);
 	}
 

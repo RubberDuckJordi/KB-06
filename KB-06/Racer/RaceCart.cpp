@@ -117,3 +117,33 @@ void racer::RaceCart::Steer(float percentage)
 	// Add friction
 	ApplyFriction(abs(percentage) * 5.0f);
 }
+
+void racer::RaceCart::OnCollide(pengine::Collidable* collidable)
+{
+	logger->Log(pengine::Logger::DEBUG, "Collision!");
+	AddForce(collidable->GetCollisionForceVector(), collidable->GetCollisionMass());
+}
+
+void racer::RaceCart::InitCollisionBox()
+{
+	// Get bounds of model
+	pengine::RECTANGLE* rect = new pengine::RECTANGLE();
+	xModel->CreateCollisionBox(*rect);
+
+	// Add world transformation
+	rect->x += position.x;
+	rect->y += position.y;
+	rect->z += position.z;
+
+	collisionBox = *rect;
+}
+
+Vector3* racer::RaceCart::GetCollisionForceVector()
+{
+	return &movementVector;
+}
+
+float racer::RaceCart::GetCollisionMass()
+{
+	return mass;
+}

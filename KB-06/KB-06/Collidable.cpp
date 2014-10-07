@@ -2,7 +2,7 @@
 
 namespace pengine
 {
-	Collidable::RECTANGLE* Collidable::GetCollisionBox()
+	RECTANGLE* Collidable::GetCollisionBox()
 	{
 		return &collisionBox;
 	}

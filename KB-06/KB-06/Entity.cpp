@@ -7,6 +7,10 @@ namespace pengine
 	{
 		logger = LoggerPool::GetInstance().GetLogger();
 		myCachedMatrix = new RenderMatrix();
+
+		movementVector.x = 0;
+		movementVector.y = 0;
+		movementVector.z = 0;
 	}
 
 	Entity::~Entity()
@@ -146,6 +150,16 @@ namespace pengine
 
 	}
 
+	void Entity::AddForce(Vector3* p_direction, float mass)
+	{
+		Vector3 modifiedVector;
+
+		modifiedVector.x = p_direction->x * mass;
+		modifiedVector.y = p_direction->z * mass;
+		modifiedVector.z = p_direction->z * mass;
+
+		AddForce(&modifiedVector);
+	}
 
 	void Entity::UpdateLogic(float deltaTime, std::map<pengine::Input, long>* actions)
 	{
