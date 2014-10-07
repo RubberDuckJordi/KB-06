@@ -350,10 +350,13 @@
       <Filter>Header\Scene</Filter>
     </ClInclude>
     <ClInclude Include="Rectangle.h">
-      <Filter>Header\Scene\Collidable</Filter>
+      <Filter>Header\Scene\Collision</Filter>
     </ClInclude>
     <ClInclude Include="Collidable.h">
-      <Filter>Header\Scene\Collidable</Filter>
+      <Filter>Header\Scene\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionEffect.h">
+      <Filter>Header\Scene\Collision</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -453,7 +456,7 @@
     <Filter Include="Source\Scene\Collision">
       <UniqueIdentifier>{d60b4b2f-a03f-4b73-b524-5c170c6f790f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header\Scene\Collidable">
+    <Filter Include="Header\Scene\Collision">
       <UniqueIdentifier>{d39f956d-465a-43f0-8018-d4be67ce0dde}</UniqueIdentifier>
     </Filter>
   </ItemGroup>

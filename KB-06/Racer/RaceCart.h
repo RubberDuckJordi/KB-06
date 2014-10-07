@@ -5,7 +5,7 @@
 #include "Logger.h"
 #include "Renderer.h"
 #include "Object3D.h"
-#include "Collidable.h"
+#include "CollisionEffect.h"
 #include "Rectangle.h"
 
 namespace racer
@@ -28,7 +28,7 @@ namespace racer
 		void Steer(float percentage);
 
 		// Collidable functions
-		void OnCollide(Collidable*);
+		void OnCollide(pengine::COLLISIONEFFECT*);
 		void InitCollisionBox();
 		Vector3* GetCollisionForceVector();
 		float GetCollisionMass();

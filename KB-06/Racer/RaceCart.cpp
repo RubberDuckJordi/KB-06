@@ -118,10 +118,11 @@ void racer::RaceCart::Steer(float percentage)
 	ApplyFriction(abs(percentage) * 5.0f);
 }
 
-void racer::RaceCart::OnCollide(pengine::Collidable* collidable)
+void racer::RaceCart::OnCollide(pengine::COLLISIONEFFECT* effect)
 {
 	logger->Log(pengine::Logger::DEBUG, "Collision!");
-	AddForce(collidable->GetCollisionForceVector(), collidable->GetCollisionMass());
+	Vector3* vector = new Vector3(effect->forceVectorX, effect->forceVectorY, effect->forceVectorZ);
+	AddForce(vector, effect->mass);
 }
 
 void racer::RaceCart::InitCollisionBox()

@@ -155,7 +155,7 @@ namespace pengine
 		Vector3 modifiedVector;
 
 		modifiedVector.x = p_direction->x * mass;
-		modifiedVector.y = p_direction->z * mass;
+		modifiedVector.y = p_direction->y * mass;
 		modifiedVector.z = p_direction->z * mass;
 
 		AddForce(&modifiedVector);

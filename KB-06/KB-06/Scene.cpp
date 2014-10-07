@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "Scene.h"
+#include "CollisionEffect.h"
 
 namespace pengine
 {
@@ -49,6 +50,9 @@ namespace pengine
 			(*i)->InitCollisionBox();
 		}
 
+		// Keep track of effects, will be executed after this loop
+		std::list<COLLISIONEFFECT*> collisionEffects;
+
 		// Collision detection
 		for (std::list<Collidable*>::iterator i = collidables.begin(); i != collidables.end(); ++i)
 		{
@@ -58,10 +62,28 @@ namespace pengine
 				{
 					if ((*i)->CheckCollision(*j))
 					{
-						(*i)->OnCollide(*j);
+						COLLISIONEFFECT* effect = new COLLISIONEFFECT();
+						effect->collidable1 = (*i);
+						effect->collidable2 = (*j);
+
+						Vector3* vector = (*i)->GetCollisionForceVector();
+						Vector3* vectorj = (*j)->GetCollisionForceVector();
+						effect->forceVectorX = vector->x - vectorj->x;
+						effect->forceVectorY = vector->y - vectorj->y;
+						effect->forceVectorZ = vector->z - vectorj->z;
+
+						effect->mass = (*i)->GetCollisionMass();
+
+						collisionEffects.push_back(effect);
 					}
 				}
 			}
+		}
+
+		// Apply previously stored force changes
+		for (std::list<COLLISIONEFFECT*>::iterator i = collisionEffects.begin(); i != collisionEffects.end(); ++i)
+		{
+			(*i)->collidable2->OnCollide(*i);
 		}
 
 		currentCamera->UpdateLogic(deltaTime, actions);

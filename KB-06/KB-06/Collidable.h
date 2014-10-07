@@ -3,14 +3,17 @@
 
 #include "Vector3.h"
 #include "Rectangle.h"
+#include "CollisionEffect.h"
 
 namespace pengine
 {
+	struct COLLISIONEFFECT;
+
 	class Collidable
 	{
 	public:
 		// Function called when the object collides with another collidable, must be implemented
-		virtual void OnCollide(Collidable*) = 0;
+		virtual void OnCollide(COLLISIONEFFECT*) = 0;
 		// Function that initializes the collisionBox, must be implemented
 		virtual void InitCollisionBox() = 0;
 		// Function returns vector with current force. This can be used for a physical reaction to the impact.
