@@ -1,10 +1,10 @@
 #include "TrackBlock.h"
 
 
-TrackBlock::TrackBlock(float width, float height)
+TrackBlock::TrackBlock(float width, float lenght)
 {
 	this->width = width;
-	this->height = height;
+	this->lenght = lenght;
 }
 
 TrackBlock::~TrackBlock()

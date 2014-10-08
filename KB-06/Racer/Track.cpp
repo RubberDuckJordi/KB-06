@@ -36,7 +36,8 @@ void Track::SetAll(float x, float y, float z, float yaw, float pitch, float roll
 	Entity::SetAll(x, y, z, yaw, pitch, roll, scaleX, scaleY, scaleZ);
 	for (auto iterator = trackBlocks.begin(); iterator != trackBlocks.end(); ++iterator) {
 		(*iterator)->SetAll(x + offsetX, y + offsetY, z + offsetZ, yaw, pitch, roll, scaleX, scaleY, scaleZ);
-		offsetZ -= (*iterator)->width;
+		offsetZ += (*iterator)->lenght;
+		logger->Log(pengine::Logger::DEBUG, std::to_string(offsetZ));
 	}
 }
 

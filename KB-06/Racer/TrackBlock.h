@@ -9,7 +9,7 @@
 class TrackBlock : public pengine::Entity
 {
 public:
-	TrackBlock(float width, float height);
+	TrackBlock(float width, float lenght);
 	~TrackBlock();
 
 	void Draw(pengine::Renderer* renderer);
@@ -24,7 +24,7 @@ public:
 	// void onPassedHalfway(RaceKart Kart);
 	// void onLeave(RaceKart Kart);
 
-	float height;
+	float lenght;
 	float width;
 private:
 	pengine::XModel* xModel; //debug
