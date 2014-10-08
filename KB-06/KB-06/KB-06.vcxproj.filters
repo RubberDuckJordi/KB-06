@@ -142,6 +142,9 @@
     <ClCompile Include="Collidable.cpp">
       <Filter>Source\Scene\Collision</Filter>
     </ClCompile>
+    <ClCompile Include="Shader.cpp">
+      <Filter>Source\Resource\Shader</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DefaultEntity.h">
@@ -358,6 +361,9 @@
     <ClInclude Include="CollisionEffect.h">
       <Filter>Header\Scene\Collision</Filter>
     </ClInclude>
+    <ClInclude Include="Shader.h">
+      <Filter>Header\Resource\Shaders</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -458,6 +464,12 @@
     </Filter>
     <Filter Include="Header\Scene\Collision">
       <UniqueIdentifier>{d39f956d-465a-43f0-8018-d4be67ce0dde}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header\Resource\Shaders">
+      <UniqueIdentifier>{3f699882-b952-45a5-85a8-73f7e6232ec0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Resource\Shader">
+      <UniqueIdentifier>{39bfa152-6d55-4cde-8622-6a00dee7b05e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
