@@ -10,13 +10,11 @@
 
 namespace pengine
 {
-	class IO_Model_X : IO < Model3D* >
+	class SuperXLoader : IO < Model3D* >
 	{
 	public:
-		IO_Model_X(void)
-		{
-			_Type = IO_3DX;
-		};
+		SuperXLoader();
+		~SuperXLoader();
 		bool Load(std::string pFilename, Model3D* &pT);
 		bool Save(std::string pFilename, Model3D* &pT);
 		bool Load(std::string pFilename, std::vector<Model3D*> &pVT)
@@ -29,8 +27,10 @@ namespace pengine
 		};
 
 	private:
-		Logger* logger = LoggerPool::GetInstance().GetLogger();
+		Logger* logger;
 		std::ifstream fin;
+		std::map<std::string, Material *> globalMaterials;
+		std::map<std::string, Bone *> unlinkedSkinnedBones;
 		Bone* _LoadSkeletton;
 		Mesh* _LoadMesh;
 		AnimationSet* _LoadAnimationSet;
@@ -60,7 +60,7 @@ namespace pengine
 		void ProcessMeshTextureCoords();
 		void ProcessMeshMaterials();
 		void ProcessMeshNormals();
-		void ProcessMaterial();
+		void ProcessMaterial(bool global);
 		void ProcessSkinWeights();
 		void ProcessAnimationSets();
 		void ProcessAnimations(AnimationSet* &pAS);

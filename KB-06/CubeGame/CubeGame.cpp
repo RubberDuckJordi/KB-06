@@ -46,18 +46,18 @@ int _tmain(int argc, _TCHAR* argv[])
 	color.b = 1.0f;
 	color.a = 1.0f;
 
-	pengine::IO_Model_X* loader = new pengine::IO_Model_X();
+	pengine::SuperXLoader* loader = new pengine::SuperXLoader();
 	pengine::Model3D* model = new pengine::Model3D();
-	loader->Load("resources/tiger.x", model);
+	loader->Load("resources/boxes/x1.x", model);
 
 	for (std::list<pengine::Mesh*>::iterator i = model->_Meshes.begin(); i != model->_Meshes.end(); ++i)
 	{
 		for (std::list<pengine::Material*>::iterator j = (*i)->_Materials.begin(); j != (*i)->_Materials.end(); ++j)
 		{
-			logger->Log(pengine::Logger::ERR, "Texture name CubeGame: "+ (*j)->texturePath);
+			logger->Log(pengine::Logger::ERR, "Texture name CubeGame: "+ std::string((*j)->texturePath));
 			if ((*j)->texturePath != "")
 			{
-				(*j)->texture = pEngine.GetResourceManager()->LoadBinaryFile("resources/" + (*j)->texturePath);
+				(*j)->texture = pEngine.GetResourceManager()->LoadBinaryFile("resources/boxes/" + (*j)->texturePath);
 			}
 		}
 	}
@@ -130,7 +130,7 @@ int _tmain(int argc, _TCHAR* argv[])
 		MyObject.ClearSkinnedVertices();
 		MyObject.UpdateAnimation();
 		pengine::RenderMatrix* aMatrix = new pengine::RenderMatrix();
-		aMatrix->CreateMatrix(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.1f, 0.1f, 0.1f, aMatrix->theMatrix);
+		aMatrix->CreateMatrix(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.01f, 0.01f, 0.01f, aMatrix->theMatrix);
 		pEngine.GetRenderer()->SetActiveMatrix(aMatrix->theMatrix);
 		MyObject.Draw(pEngine.GetRenderer());
 		

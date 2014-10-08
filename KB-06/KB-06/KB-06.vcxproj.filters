@@ -130,9 +130,6 @@
     <ClCompile Include="Skybox.cpp">
       <Filter>Source\Resource\Skybox</Filter>
     </ClCompile>
-    <ClCompile Include="LoggerPool.cpp">
-      <Filter>Header</Filter>
-    </ClCompile>
     <ClCompile Include="HeightmapLoader.cpp">
       <Filter>Source\Resource\Heightmap</Filter>
     </ClCompile>
@@ -141,6 +138,9 @@
     </ClCompile>
     <ClCompile Include="Collidable.cpp">
       <Filter>Source\Scene\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="LoggerPool.cpp">
+      <Filter>Source\Logger</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
