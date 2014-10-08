@@ -119,6 +119,7 @@
     <ClInclude Include="SceneCallback.h" />
     <ClInclude Include="SceneDefinition.h" />
     <ClInclude Include="SceneLoader.h" />
+    <ClInclude Include="Shader.h" />
     <ClInclude Include="Skybox.h" />
     <ClInclude Include="Sound.h" />
     <ClInclude Include="StringHelper.h" />
@@ -190,6 +191,7 @@
     <ClCompile Include="PEngine.cpp" />
     <ClCompile Include="RenderMatrix.cpp" />
     <ClCompile Include="SceneLoader.cpp" />
+    <ClCompile Include="Shader.cpp" />
     <ClCompile Include="Skybox.cpp" />
     <ClCompile Include="StringHelper.cpp" />
     <ClCompile Include="Logger.cpp" />
