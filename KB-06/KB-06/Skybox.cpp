@@ -97,11 +97,7 @@ namespace pengine
 		renderer->SetMaterial(material);
 
 		renderer->SetZBuffer(false);
-		renderer->SetCulling(PENGINE_CULL_NONE);
-
 		renderer->DrawIndexedVertexBuffer(v_buffer, i_buffer, amountOfVertices);
-
 		renderer->SetZBuffer(true);
-		renderer->SetCulling(PENGINE_CULL_CCW);
 	}
 }
