@@ -7,6 +7,7 @@
 #include "Object3D.h"
 #include "CollisionEffect.h"
 #include "Rectangle.h"
+#include "Vector3.h"
 
 namespace racer
 {
@@ -30,7 +31,7 @@ namespace racer
 		// Collidable functions
 		void OnCollide(pengine::COLLISIONEFFECT*);
 		void InitCollisionBox();
-		Vector3* GetCollisionForceVector();
+		pengine::Vector3* GetCollisionForceVector();
 		float GetCollisionMass();
 		pengine::RenderMatrix* GetRenderMatrix();
 
