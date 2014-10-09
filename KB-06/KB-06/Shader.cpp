@@ -70,7 +70,7 @@ namespace pengine
 
 
 		// Create vertex shader
-		WCHAR strPath[512];
+		
 		LPD3DXBUFFER pCode;
 
 		D3DVERTEXELEMENT9 decl[] =
@@ -88,6 +88,11 @@ namespace pengine
 
 		DWORD dwShaderFlags = 0;
 
+		LPCWSTR strPath;
+
+		std::wstring strPathNew = L"resources/HLSLwithoutEffects.vsh";
+
+		strPath = strPathNew.c_str();
 
 		// Assemble the vertex shader from the file
 		D3DXCompileShaderFromFile(strPath, NULL, NULL, "Ripple",
@@ -104,6 +109,12 @@ namespace pengine
 
 	void Shader::DrawShader(Renderer* renderer)
 	{
+		(*((DirectXRenderer*)renderer)->GetDevice())->SetVertexDeclaration(g_pVertexDeclaration);
+		(*((DirectXRenderer*)renderer)->GetDevice())->SetVertexShader(g_pVertexShader);
+		(*((DirectXRenderer*)renderer)->GetDevice())->SetStreamSource(0, g_pVB, 0, sizeof(D3DXVECTOR2));
+		(*((DirectXRenderer*)renderer)->GetDevice())->SetIndices(g_pIB);
 
+		(*((DirectXRenderer*)renderer)->GetDevice())->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, g_dwNumVertices,
+			0, g_dwNumIndices / 3);
 	}
 }
