@@ -565,15 +565,15 @@ namespace pengine
 		logger->Log(Logger::DEBUG, "SuperXLoader: Number of Materials: " + std::to_string(_LoadMesh->_nMaterials));
 
 		fin.getline(data, TEXT_BUFFER, ';');
-		int nfaces = (uint16)TextToNum(data);
-		_LoadMesh->_FaceMaterials = new uint16[nfaces];
-		for (uint32 i = 0; i < nfaces - 1; i++)
+		int nFaces = (uint16)TextToNum(data);
+		_LoadMesh->_FaceMaterials = new uint16[nFaces];
+		for (uint32 i = 0; i < nFaces - 1; i++)
 		{
 			fin.getline(data, TEXT_BUFFER, ',');
 			_LoadMesh->_FaceMaterials[i] = (uint16)TextToNum(data);
 		}
 		fin.getline(data, TEXT_BUFFER, ';');
-		_LoadMesh->_FaceMaterials[_LoadMesh->_nFaces - 1] = (uint16)TextToNum(data);
+		_LoadMesh->_FaceMaterials[nFaces - 1] = (uint16)TextToNum(data);
 		if (fin.peek() == ';')
 		{
 			fin.get(); //eats the last semicolon if it's there
@@ -624,7 +624,14 @@ namespace pengine
 
 		Material* NewMaterial = new Material;
 
-		fin >> NewMaterial->name;
+		if (fin.peek() != '{')
+		{
+			fin >> NewMaterial->name;
+		}
+		else
+		{
+			NewMaterial->name = "Random glitters";
+		}
 
 		Find('{');
 

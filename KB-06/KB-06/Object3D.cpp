@@ -69,18 +69,26 @@ namespace pengine
 			for (int i = 0; i < amountOfVertices; ++i)//first do all the vertices, then set the indices to the right vertices
 			{
 				D3DCustomVertex newVertex;
-				if (_Mesh->_Subsets.size() != 0)
+				//if (_Mesh->_Subsets.size() != 0)
+				//{
+				//	newVertex.x = _SkinnedVertices[i].x;//x
+				//	newVertex.y = _SkinnedVertices[i].y;//y
+				//	newVertex.z = _SkinnedVertices[i].z;//z
+				//}
+				//else
+				//{
+				_Mesh->_Subsets.size();
+				unsigned N = 2;
+				if (_Mesh->_Subsets.size() > N)
 				{
-					newVertex.x = _SkinnedVertices[i].x;//x
-					newVertex.y = _SkinnedVertices[i].y;//y
-					newVertex.z = _SkinnedVertices[i].z;//z
+					std::list<Subset *>::iterator it = std::next(_Mesh->_Subsets.begin(), N);
+					it;
 				}
-				else
-				{
+
 					newVertex.x = _Mesh->_Vertices[i].x;//x
 					newVertex.y = _Mesh->_Vertices[i].y;//y
 					newVertex.z = _Mesh->_Vertices[i].z;//z
-				}
+				//}
 
 				newVertex.tu = _Mesh->_TextureCoords[i].data[0];//hopefully we got texture information for each vertex...
 				newVertex.tv = _Mesh->_TextureCoords[i].data[1];//hopefully we got texture information for each vertex...
