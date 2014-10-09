@@ -11,6 +11,10 @@ namespace pengine
 	RenderMatrix::RenderMatrix()
 	{
 		theMatrix = new PEngineMatrix();
+		theMatrix->_11 = 1.0f;
+		theMatrix->_22 = 1.0f;
+		theMatrix->_33 = 1.0f;
+		theMatrix->_44 = 1.0f;
 	}
 
 	RenderMatrix::~RenderMatrix()

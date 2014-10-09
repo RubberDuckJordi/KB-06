@@ -11,6 +11,9 @@ namespace pengine
 		float width;
 		float height;
 		float depth;
+		float rotationX;
+		float rotationY;
+		float rotationZ;
 	};
 }
 
