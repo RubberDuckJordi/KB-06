@@ -18,8 +18,7 @@ namespace pengine
 
 	void EntityCamera::UpdateLogic(float deltaTime, std::map<Input, long>* actions)
 	{
-		typedef std::map<Input, long>::iterator it_type;
-		for (it_type iterator = (*actions).begin(); iterator != (*actions).end(); iterator++)
+		for (auto iterator = (*actions).begin(); iterator != (*actions).end(); iterator++)
 		{
 			float speed = static_cast<float>(iterator->second);
 

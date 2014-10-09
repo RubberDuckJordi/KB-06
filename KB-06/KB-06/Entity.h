@@ -24,13 +24,13 @@ namespace pengine
 		Vertex* GetRotation();
 		Vertex* GetScale();
 
-		void SetMovementVector(Vector3*);
-		void SetFriction(float);
-		void AddFriction(float);
-		void AddForce(Vector3*);
+		void SetMovementVector(Vector3* vector);
+		void SetFriction(float friction);
+		void AddFriction(float friction);
+		void AddForce(Vector3* vector);
 		// Used for collisions, vector is multiplied by mass
-		void AddForce(Vector3*, float mass);
-		void SetMass(float);
+		void AddForce(Vector3* vector, float mass);
+		void SetMass(float mass);
 
 		void AddRelativeForce(Vector3*);
 
@@ -47,15 +47,15 @@ namespace pengine
 		virtual void UpdateLogic(float deltaTime, std::map<Input, long>* actions);
 
 	protected:
-		void ApplyFriction(float);
+		void ApplyFriction(float friction);
 
 		RenderMatrix* myCachedMatrix;
 		Vertex position;
 		Vertex rotation;
 		Vertex scale;
 
-		float mass = 1.0f;
-		float friction = 0.5f;
+		float mass;
+		float friction;
 		Vector3 movementVector;
 
 		Logger* logger;

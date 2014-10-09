@@ -3,6 +3,10 @@
 
 namespace pengine
 {
+	LoggerPool::LoggerPool()
+	{
+	}
+
 	LoggerPool& LoggerPool::GetInstance()
 	{
 		static LoggerPool instance;

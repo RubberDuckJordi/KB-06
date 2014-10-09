@@ -11,6 +11,8 @@ namespace pengine
 		movementVector.x = 0;
 		movementVector.y = 0;
 		movementVector.z = 0;
+		mass = 1.0f;
+		friction = 0.5f;
 	}
 
 	Entity::~Entity()
