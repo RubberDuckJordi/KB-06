@@ -47,7 +47,6 @@ namespace pengine
 		GetBoneAnimation(_Skeletton);
 		_cKey = 0;
 	}
-	/***END*******************************************/
 
 	void Object3D::Draw(Renderer* renderer)
 	{
@@ -86,6 +85,7 @@ namespace pengine
 
 			g_pd3dDevice->SetStreamSource(0, v_buffer, 0, sizeof(D3DCustomVertex));
 			g_pd3dDevice->SetFVF(D3DCustomVertexFVF);
+			_Model->_Meshes;
 
 			if (_Mesh->_Subsets.size() == 0)
 			{

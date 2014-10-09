@@ -35,7 +35,7 @@ namespace pengine
 		void SetupModel(Model3D* &pModel)
 		{
 			_Model = pModel;
-			_Mesh = _Model->_Meshes.front();
+			_Mesh = _Model->_Meshes.back();
 			_SkinnedVertices = new Vertex[_Mesh->_nVertices];
 			_Skeletton = ReplicateSkeletton(_Model->_Skeletton);
 		};
