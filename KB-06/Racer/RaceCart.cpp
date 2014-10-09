@@ -131,8 +131,8 @@ void racer::RaceCart::InitCollisionBox()
 	xModel->CreateCollisionBox(*rect);
 
 	// Add transformation
-	rect->x += position.x;
-	rect->y += position.y;
+	rect->x += position.x - rect->width / 2;
+	rect->y += position.y - rect->height / 4;
 	rect->z += position.z;
 
 	// Add rotation
@@ -151,9 +151,4 @@ Vector3* racer::RaceCart::GetCollisionForceVector()
 float racer::RaceCart::GetCollisionMass()
 {
 	return mass;
-}
-
-pengine::RenderMatrix* racer::RaceCart::GetRenderMatrix()
-{
-	return myCachedMatrix;
 }
