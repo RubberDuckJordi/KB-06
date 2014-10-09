@@ -114,6 +114,15 @@ namespace pengine
 		{
 			ground->Render(renderer);
 		}
+
+		renderer->SetCulling(PENGINE_CULL_NONE);
+		renderer->SetFillMode(PENGINE_FILL_WIREFRAME);
+		for (std::list<Collidable*>::iterator i = collidables.begin(); i != collidables.end(); ++i)
+		{
+			(*i)->DrawCollidable(renderer);
+		}
+		renderer->SetFillMode(PENGINE_FILL_SOLID);
+		renderer->SetCulling(PENGINE_CULL_CCW);
 	}
 
 	EntityCamera* Scene::GetCurrentCamera()
