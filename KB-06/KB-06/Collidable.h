@@ -4,6 +4,7 @@
 #include "Vector3.h"
 #include "Rectangle.h"
 #include "CollisionEffect.h"
+#include "Renderer.h"
 
 namespace pengine
 {
@@ -24,9 +25,16 @@ namespace pengine
 		RECTANGLE* GetCollisionBox();
 		// Checks collision with another collidable, can be overridden to provide an own implementation
 		virtual bool CheckCollision(Collidable*);
+		// Draws the collision box for debugging
+		virtual void DrawCollidable(Renderer*);
 
 	protected:
 		RECTANGLE collisionBox;
+
+		// For drawing
+		int amountOfIndices;
+		D3DCustomVertex* vertices;
+		VertexBufferWrapper* vertexBuffer;
 	};
 }
 

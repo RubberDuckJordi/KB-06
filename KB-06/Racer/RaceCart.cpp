@@ -120,7 +120,6 @@ void racer::RaceCart::Steer(float percentage)
 
 void racer::RaceCart::OnCollide(pengine::COLLISIONEFFECT* effect)
 {
-	logger->Log(pengine::Logger::DEBUG, "Collision!");
 	Vector3* vector = new Vector3(effect->forceVectorX, effect->forceVectorY, effect->forceVectorZ);
 	AddForce(vector, effect->mass);
 }
@@ -131,10 +130,15 @@ void racer::RaceCart::InitCollisionBox()
 	pengine::RECTANGLE* rect = new pengine::RECTANGLE();
 	xModel->CreateCollisionBox(*rect);
 
-	// Add world transformation
-	rect->x += position.x;
-	rect->y += position.y;
+	// Add transformation
+	rect->x += position.x - rect->width / 2;
+	rect->y += position.y - rect->height / 4;
 	rect->z += position.z;
+
+	// Add rotation
+	rect->rotationX = rotation.x;
+	rect->rotationY = rotation.y;
+	rect->rotationZ = rotation.z;
 
 	collisionBox = *rect;
 }

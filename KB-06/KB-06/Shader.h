@@ -26,6 +26,7 @@ namespace pengine
 		LPDIRECT3DVERTEXSHADER9         g_pVertexShader = NULL;
 		LPD3DXCONSTANTTABLE             g_pConstantTable = NULL;
 		LPDIRECT3DVERTEXDECLARATION9    g_pVertexDeclaration = NULL;
+		
 	};
 }
 

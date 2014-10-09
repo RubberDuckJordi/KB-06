@@ -71,7 +71,15 @@ namespace pengine
 		return renderer;
 	}
 
+	void PEngine::NewShader()
+	{
+		TestShader = new Shader();
+	}
 
+	Shader* PEngine::GetShader()
+	{
+		return TestShader;
+	}
 
 	void PEngine::NewWindow(int x, int y, int width, int height){
 		GetWindowManager()->NewWindow(x, y, width, height);

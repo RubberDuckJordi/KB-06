@@ -14,6 +14,8 @@
 #include "Object3D.h"
 #include "RenderMatrix.h"
 
+//#include "Shader.h"
+
 int _tmain(int argc, _TCHAR* argv[])
 {
 	pengine::PEngine pEngine;
@@ -82,6 +84,10 @@ int _tmain(int argc, _TCHAR* argv[])
 	pengine::Scene* scene = pEngine.GetSceneManager()->SetScene("iets");
 	pEngine.GetSceneManager()->SetCurrentScene(scene);
 
+	pEngine.NewShader();
+	pEngine.GetShader()->InitShader(pEngine.GetRenderer());
+	
+
 	pEngine.GetRenderer()->SetProjectionMatrix(M_PI / 4, 100.0f);
 	pEngine.GetRenderer()->SetDefaultRenderStates();
 	bool pressPlus = false;
@@ -134,6 +140,7 @@ int _tmain(int argc, _TCHAR* argv[])
 		pEngine.GetRenderer()->SetActiveMatrix(aMatrix->theMatrix);
 		MyObject.Draw(pEngine.GetRenderer());
 		
+		//pEngine.GetShader()->DrawShader(pEngine.GetRenderer());
 
 		pEngine.GetRenderer()->EndScene();
 		pEngine.GetRenderer()->PresentScene(pEngine.GetWindowManager()->GetLastWindow()->GetHWND());

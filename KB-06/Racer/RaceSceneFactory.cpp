@@ -23,10 +23,10 @@ pengine::Scene* racer::RaceSceneFactory::CreateScene()
 	RaceCart* racecart = new RaceCart();
 	racecart->SetControllable(true);
 	racecart->SetMass(100.0f);
-	racecart->SetHorsePower(10.0f);
-	racecart->AddAll(7.5f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f);
+	racecart->SetHorsePower(30.0f);
+	racecart->AddAll(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f);
 	racecart->SetObject3D(object3d);
-
+	
 	RaceCart* racecart1 = new RaceCart();
 	racecart1->SetMass(100.0f);
 	RaceCart* racecart2 = new RaceCart();
@@ -36,7 +36,6 @@ pengine::Scene* racer::RaceSceneFactory::CreateScene()
 	racecart2->AddAll(7.5f, 0.0f, -5.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f);
 	racecart1->SetObject3D(object3d);
 	racecart2->SetObject3D(object3d);
-
 
 	TrackBlock* trackBlock1 = new TrackBlock(10, 10);
 	trackBlock1->SetXModel(xModel2);
