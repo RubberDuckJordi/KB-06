@@ -14,7 +14,7 @@
 
 pengine::Object3D* kapotlelijk(pengine::ResourceManager* resourceManager)
 {
-	pengine::IO_Model_X* loader = new pengine::IO_Model_X();
+	pengine::SuperXLoader* loader = new pengine::SuperXLoader();
 	pengine::Model3D* model = new pengine::Model3D();
 	loader->Load("resources/tiger.x", model);
 
