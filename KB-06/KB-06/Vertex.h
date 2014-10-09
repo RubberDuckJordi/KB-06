@@ -5,7 +5,7 @@ namespace pengine
 {
 	struct Vertex
 	{
-		float x, y, z;
+		float x, y, z, tu, tv;
 
 		Vertex operator+(Vertex pA)
 		{

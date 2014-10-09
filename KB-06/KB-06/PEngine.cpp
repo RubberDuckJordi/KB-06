@@ -132,6 +132,7 @@ namespace pengine
 			{
 				GetRenderer()->PresentScene((*windowIt)->GetHWND());
 			}
+			GetWindowManager()->PurgeClosedWindows();
 		}
 	}
 }

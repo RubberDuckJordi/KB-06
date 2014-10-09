@@ -50,7 +50,7 @@ int _tmain(int argc, _TCHAR* argv[])
 
 	pengine::SuperXLoader* loader = new pengine::SuperXLoader();
 	pengine::Model3D* model = new pengine::Model3D();
-	loader->Load("resources/tiger.x", model);
+	loader->Load("resources/boxes/x1.x", model);
 
 	for (std::list<pengine::Mesh*>::iterator i = model->_Meshes.begin(); i != model->_Meshes.end(); ++i)
 	{
@@ -59,7 +59,7 @@ int _tmain(int argc, _TCHAR* argv[])
 			logger->Log(pengine::Logger::ERR, "Texture name CubeGame: "+ std::string((*j)->texturePath));
 			if ((*j)->texturePath != "")
 			{
-				(*j)->texture = pEngine.GetResourceManager()->LoadBinaryFile("resources/" + (*j)->texturePath);
+				(*j)->texture = pEngine.GetResourceManager()->LoadBinaryFile("resources/boxes/" + (*j)->texturePath);
 			}
 		}
 	}
@@ -147,6 +147,7 @@ int _tmain(int argc, _TCHAR* argv[])
 
 		//pEngine.GetRenderer()->D2DDraw();
 		delete aMatrix;
+		pEngine.GetWindowManager()->PurgeClosedWindows();
 	}
 	pengine::LoggerPool::GetInstance().ReturnLogger(logger);
 }

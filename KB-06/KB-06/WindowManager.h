@@ -46,6 +46,11 @@ namespace pengine
 		bool HasActiveWindow();
 
 		/*!
+		Looks for windows with WindowState::CLOSED and deletes them from memory
+		*/
+		void PurgeClosedWindows();
+
+		/*!
 		Gives back the last created window.
 
 		@return Window*: A pointer to the last window.

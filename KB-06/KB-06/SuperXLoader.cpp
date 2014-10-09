@@ -476,12 +476,6 @@ namespace pengine
 		_Object->_Meshes.push_back(_LoadMesh);
 	}
 
-	//////////////////////////////////////////////////////////
-	//
-	//       TEXTURE COORDS
-	//
-	//////////////////////////////////////////////////////////
-
 	void SuperXLoader::ProcessMeshTextureCoords(void)
 	{
 		char data[TEXT_BUFFER];
@@ -495,9 +489,11 @@ namespace pengine
 		for (int i = 0; i < _LoadMesh->_nTextureCoords; ++i)
 		{
 			fin.getline(data, TEXT_BUFFER, ';');
-			_LoadMesh->_TextureCoords[i].data[0] = TextToNum(data);
+			//_LoadMesh->_TextureCoords[i].data[0] = TextToNum(data);
+			_LoadMesh->_Vertices[i].tu = TextToNum(data);
 			fin.getline(data, TEXT_BUFFER, ';');
-			_LoadMesh->_TextureCoords[i].data[1] = TextToNum(data);
+			//_LoadMesh->_TextureCoords[i].data[1] = TextToNum(data);
+			_LoadMesh->_Vertices[i].tv = TextToNum(data);
 			fin.get();//eats the comma or the semicolon at the end
 		}
 		Find('}');
@@ -1120,8 +1116,8 @@ namespace pengine
 					}
 					float u = *(float*)&component[0];
 					float v = *(float*)&component[1];
-					_LoadMesh->_TextureCoords[j].data[0] = u;
-					_LoadMesh->_TextureCoords[j].data[1] = v;
+					_LoadMesh->_Vertices[currentTextureCoordinateSet].tu = u;
+					_LoadMesh->_Vertices[currentTextureCoordinateSet].tv = v;
 					logger->Log(Logger::DEBUG, "SuperXLoader: DeclData texture coordinates " + std::to_string(currentTextureCoordinateSet) + ": u: " + std::to_string(u) + "; v: " + std::to_string(v));
 					++currentTextureCoordinateSet;
 					break;
