@@ -4,7 +4,8 @@
 #include "TrackBlock.h"
 #include "Entity.h"
 
-class Track : public pengine::Entity 
+
+class Track : public pengine::Entity
 {
 public:
 	Track();
@@ -13,6 +14,7 @@ public:
 	void ValidateTrack();
 	void Draw(pengine::Renderer* renderer);
 	void AddTrackBlock(TrackBlock* trackBlock);
+	void AddTrackBlock(TrackBlock::TYPE trackBlockType, pengine::Object3D* model);
 
 	void SetPosition(float x, float y, float z);
 	void SetRotation(float yaw, float pitch, float roll);

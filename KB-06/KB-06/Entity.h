@@ -15,8 +15,8 @@ namespace pengine
 		Entity();
 		~Entity();
 
-		void SetPosition(float x, float y, float z);
-		void SetRotation(float yaw, float pitch, float roll);
+		virtual void SetPosition(float x, float y, float z);
+		virtual void SetRotation(float yaw, float pitch, float roll);
 		void SetScale(float scaleX, float scaleY, float scaleZ);
 		void SetAll(float x, float y, float z, float yaw, float pitch, float roll, float scaleX, float scaleY, float scaleZ);
 
