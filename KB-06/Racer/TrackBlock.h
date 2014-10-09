@@ -5,6 +5,7 @@
 #include "Entity.h"
 #include "Logger.h"
 #include "XModel.h"
+#include "Object3D.h"
 
 class TrackBlock : public pengine::Entity
 {
@@ -13,7 +14,7 @@ public:
 	~TrackBlock();
 
 	void Draw(pengine::Renderer* renderer);
-	void SetXModel(pengine::XModel*); //debug
+	void SetXModel(pengine::Object3D*); //debug
 	
 	// mesh?
 	// texture?
@@ -27,6 +28,6 @@ public:
 	float lenght;
 	float width;
 private:
-	pengine::XModel* xModel; //debug
+	pengine::Object3D* xModel; //debug
 };
 #endif

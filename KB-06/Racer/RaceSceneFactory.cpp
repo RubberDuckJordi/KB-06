@@ -38,21 +38,21 @@ pengine::Scene* racer::RaceSceneFactory::CreateScene()
 	racecart2->SetObject3D(object3d);
 
 
-	TrackBlock* trackBlock1 = new TrackBlock(10, 12);
+	TrackBlock* trackBlock1 = new TrackBlock(10, 10);
 	trackBlock1->SetXModel(xModel2);
-	TrackBlock* trackBlock2 = new TrackBlock(10, 12);
+	TrackBlock* trackBlock2 = new TrackBlock(10, 10);
 	trackBlock2->SetXModel(xModel2);
 	TrackBlock* trackBlock3 = new TrackBlock(10, 12);
-	trackBlock3->SetXModel(xModel2);
+	trackBlock3->SetXModel(xModel3);
 	TrackBlock* trackBlock4 = new TrackBlock(10, 12);
-	trackBlock4->SetXModel(xModel2);
+	trackBlock4->SetXModel(xModel3);
 
 	Track* track = new Track();
 	track->AddTrackBlock(trackBlock1);
 	track->AddTrackBlock(trackBlock2);
 	track->AddTrackBlock(trackBlock3);
 	track->AddTrackBlock(trackBlock4);
-	track->SetAll(0, -1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.1f, 0.1f, 0.1f);
+	track->SetAll(0, -1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f);
 
 	pengine::Ground* ground = resourceManager->LoadGround(groundResource, groundTexture);
 	pengine::Skybox* skybox = new pengine::Skybox();
@@ -85,9 +85,14 @@ void racer::RaceSceneFactory::SetXModel(pengine::XModel* p_xModel)
 	xModel = p_xModel;
 }
 
-void racer::RaceSceneFactory::SetXModel2(pengine::XModel* p_xModel)
+void racer::RaceSceneFactory::SetXModel2(pengine::Object3D* p_xModel)
 {
 	xModel2 = p_xModel;
+}
+
+void racer::RaceSceneFactory::SetXModel3(pengine::Object3D* p_xModel)
+{
+	xModel3 = p_xModel;
 }
 
 void racer::RaceSceneFactory::SetObject3D(pengine::Object3D* obj)
