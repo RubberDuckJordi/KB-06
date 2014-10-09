@@ -1,4 +1,3 @@
-#include "stdafx.h"
 #include "PEngine.h"
 #include "DirectInputDeviceFactory.h"
 #include "DirectXRenderer.h"

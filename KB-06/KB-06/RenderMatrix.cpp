@@ -1,4 +1,3 @@
-#include "stdafx.h"
 #include "RenderMatrix.h"
 #include <d3dx9.h>
 #include "PengineDefinitions.h"

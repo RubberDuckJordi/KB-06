@@ -1,6 +1,5 @@
 #include "WindowManager.h"
 #include "LoggerPool.h"
-#include "stdafx.h"
 
 #include <string>
 #include <sstream>

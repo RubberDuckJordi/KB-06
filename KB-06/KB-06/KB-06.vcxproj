@@ -143,7 +143,6 @@
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneFactory.h" />
     <ClInclude Include="SceneManager.h" />
-    <ClInclude Include="stdafx.h" />
     <ClInclude Include="SuperXLoader.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="BinaryData.h" />
@@ -204,10 +203,6 @@
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneFactory.cpp" />
     <ClCompile Include="SceneManager.cpp" />
-    <ClCompile Include="stdafx.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
-    </ClCompile>
     <ClCompile Include="SuperXLoader.cpp" />
     <ClCompile Include="TextureWrapper.cpp" />
     <ClCompile Include="VertexBufferWrapper.cpp" />
