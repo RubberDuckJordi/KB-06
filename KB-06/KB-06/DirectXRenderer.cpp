@@ -470,32 +470,6 @@ meshCache[mesh]->DrawSubset(i);
 		return vertexBufferWrapper;
 	}
 
-	VertexBufferWrapper* DirectXRenderer::CreateVertexBuffer(D3DColoredCustomVertex* p_vertices, int amountOfIndices, int fvf)
-	{
-		IDirect3DVertexBuffer9** buffer = new LPDIRECT3DVERTEXBUFFER9();
-		VertexBufferWrapper* vertexBufferWrapper = new VertexBufferWrapper();
-		vertexBufferWrapper->SetVertexBuffer(buffer);
-
-		if (FAILED(g_pd3dDevice->CreateVertexBuffer(amountOfIndices * sizeof(D3DCustomVertex),
-			0, fvf, D3DPOOL_DEFAULT, vertexBufferWrapper->GetVertexBuffer(), NULL)))
-		{
-			logger->Log(Logger::ERR, "DirectXRenderer::CreateVertexBuffer() vertexbuffer create failed");
-		}
-
-		void* verticesBuffer;
-		int size = sizeof(D3DColoredCustomVertex)*amountOfIndices;
-
-		if (FAILED((*vertexBufferWrapper->GetVertexBuffer())->Lock(0, size, (void**)&verticesBuffer, 0)))
-		{
-			logger->Log(Logger::ERR, "DirectXRenderer::CreateVertexBuffer() vertexbuffer lock failed");
-		}
-
-		memcpy(verticesBuffer, p_vertices, size);
-		(*vertexBufferWrapper->GetVertexBuffer())->Unlock();
-
-		return vertexBufferWrapper;
-	}
-
 	IndexBufferWrapper* DirectXRenderer::CreateIndexBuffer(int* indices, int amountOfIndices)
 	{
 		IndexBufferWrapper* wrapper = new IndexBufferWrapper();

@@ -66,7 +66,6 @@ namespace pengine
 		virtual void SetLights() = 0;
 
 		virtual VertexBufferWrapper* CreateVertexBuffer(D3DCustomVertex*, int amountOfIndices, int fvf) = 0;
-		virtual VertexBufferWrapper* CreateVertexBuffer(D3DColoredCustomVertex*, int amountOfIndices, int fvf) = 0;
 		virtual IndexBufferWrapper* CreateIndexBuffer(int* indices, int amountOfIndices) = 0;
 		virtual void DrawVertexBuffer(VertexBufferWrapper*, int amountOfIndices) = 0;
 		virtual void DrawIndexedVertexBuffer(VertexBufferWrapper*, IndexBufferWrapper*, int amountOfVertices) = 0;
