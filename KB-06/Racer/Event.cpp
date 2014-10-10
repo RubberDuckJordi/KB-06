@@ -19,3 +19,16 @@ void Event::Proc(){
 void Event::AddListener(EventListener* listener){
 	listeners.push_back(listener);
 }
+
+void Event::RemoveListener(EventListener* listener){
+	for (std::vector<EventListener*>::iterator it = listeners.begin(); it != listeners.end();) { // note the missing ++iter!; noted
+		if ((*it) == listener)
+		{
+			delete *it;
+			it = listeners.erase(it);
+		}
+		else {
+			++it;
+		}
+	}
+}

@@ -20,6 +20,10 @@ void EventManager::Subscribe(std::string name, EventListener* listener) {
 	{
 		events[name]->AddListener(listener);
 	}
+	else
+	{
+		CreateEvent(name);
+	}
 }
 
 void EventManager::Proc(std::string name)
@@ -27,5 +31,12 @@ void EventManager::Proc(std::string name)
 	if (events.count(name))
 	{
 		events[name]->Proc();
+	}
+}
+
+void EventManager::UnSubscribe(std::string name, EventListener* listener){
+	if (events.count(name))
+	{
+		events[name]->RemoveListener(listener);
 	}
 }

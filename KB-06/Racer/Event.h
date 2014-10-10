@@ -9,6 +9,7 @@ public:
 	~Event();
 	void Proc();
 	void AddListener(EventListener* listener);
+	void RemoveListener(EventListener* listener);
 private:
 	std::vector<EventListener*> listeners;
 	std::string name;
