@@ -18,22 +18,22 @@ namespace pengine
 	};
 
 	XOF_TEMPLATEID templates[MAX_TEMPLATES] = {
-			{ "template", X_TEMPLATE },
-			{ "FrameTransformMatrix", X_FRAMETRANSFORMMATRIX },
-			{ "Frame", X_FRAME },
-			{ "XSkinMeshHeader", X_SKINMESHHEADER },
-			{ "MeshTextureCoords", X_MESHTEXTURECOORDS },
-			{ "MeshMaterialList", X_MESHMATERIALLIST },
-			{ "MeshNormals", X_MESHNORMALS },
-			{ "Mesh", X_MESH },
-			{ "Material", X_MATERIAL },
-			{ "SkinWeights", X_SKINWEIGHTS },
-			{ "TextureFilename", X_TEXTUREFILENAME },
-			{ "AnimationSet", X_ANIMATIONSET },
-			{ "AnimationKey", X_ANIMATIONKEY },
-			{ "Animation", X_ANIMATION },
-			{ "Header", X_HEADER },
-			{ "DeclData", X_DECLDATA }
+		{ "template", X_TEMPLATE },
+		{ "FrameTransformMatrix", X_FRAMETRANSFORMMATRIX },
+		{ "Frame", X_FRAME },
+		{ "XSkinMeshHeader", X_SKINMESHHEADER },
+		{ "MeshTextureCoords", X_MESHTEXTURECOORDS },
+		{ "MeshMaterialList", X_MESHMATERIALLIST },
+		{ "MeshNormals", X_MESHNORMALS },
+		{ "Mesh", X_MESH },
+		{ "Material", X_MATERIAL },
+		{ "SkinWeights", X_SKINWEIGHTS },
+		{ "TextureFilename", X_TEXTUREFILENAME },
+		{ "AnimationSet", X_ANIMATIONSET },
+		{ "AnimationKey", X_ANIMATIONKEY },
+		{ "Animation", X_ANIMATION },
+		{ "Header", X_HEADER },
+		{ "DeclData", X_DECLDATA }
 	};
 
 	SuperXLoader::SuperXLoader()
@@ -122,12 +122,10 @@ namespace pengine
 			}
 		}
 
-		
-			if (_LoadSkeletton != NULL)
-			{
-				MapMeshToBones(_LoadSkeletton);
-			}
-		
+		if (_LoadSkeletton != NULL)
+		{
+			MapMeshToBones(_LoadSkeletton);
+		}
 
 		logger->Log(Logger::DEBUG, "SuperXLoader: Processed file:" + std::string(pFilename));
 
@@ -353,6 +351,9 @@ namespace pengine
 				ProcessMesh();
 				cBone->_MeshName = _LoadMesh->_Name;
 				break;
+			case X_SKINWEIGHTS://THIS SHOULD HAPPEN IN PROCESSMESH!
+				ProcessSkinWeights();//THIS SHOULD HAPPEN IN PROCESSMESH!
+				break;
 			default:
 				AvoidTemplate();
 				break;
@@ -364,7 +365,7 @@ namespace pengine
 	{
 		/*if (_LoadMesh != NULL)
 		{
-			_Object->_Meshes.push_back(_LoadMesh);
+		_Object->_Meshes.push_back(_LoadMesh);
 		}*/
 		_LoadMesh = new Mesh();
 
@@ -1076,13 +1077,13 @@ namespace pengine
 				case D3DDECLTYPE_UDEC3:
 				case D3DDECLTYPE_DEC3N:
 				{
-					DWORD w1 = words[i];
-					DWORD w2 = words[i + 1];
-					DWORD w3 = words[i + 2];
-					component[0] = w1;
-					component[1] = w2;
-					component[2] = w3;
-					i += 3;
+										  DWORD w1 = words[i];
+										  DWORD w2 = words[i + 1];
+										  DWORD w3 = words[i + 2];
+										  component[0] = w1;
+										  component[1] = w2;
+										  component[2] = w3;
+										  i += 3;
 				}
 					break;
 				case D3DDECLTYPE_FLOAT4:
@@ -1107,19 +1108,19 @@ namespace pengine
 				{
 				case D3DDECLUSAGE_TEXCOORD:
 				{
-					if (_LoadMesh->_TextureCoords == NULL)
-					{
-						_LoadMesh->_nTextureCoords = _LoadMesh->_nVertices;//technically not every vertex needs to have a texture coordinate...
-						logger->Log(Logger::DEBUG, "SuperXLoader: Number of Texture Coords: " + std::to_string(_LoadMesh->_nTextureCoords));
-						_LoadMesh->_TextureCoords = new TCoord[_LoadMesh->_nTextureCoords];
-					}
-					float u = *(float*)&component[0];
-					float v = *(float*)&component[1];
-					_LoadMesh->_Vertices[currentTextureCoordinateSet].tu = u;
-					_LoadMesh->_Vertices[currentTextureCoordinateSet].tv = v;
-					logger->Log(Logger::DEBUG, "SuperXLoader: DeclData texture coordinates " + std::to_string(currentTextureCoordinateSet) + ": u: " + std::to_string(u) + "; v: " + std::to_string(v));
-					++currentTextureCoordinateSet;
-					break;
+											  if (_LoadMesh->_TextureCoords == NULL)
+											  {
+												  _LoadMesh->_nTextureCoords = _LoadMesh->_nVertices;//technically not every vertex needs to have a texture coordinate...
+												  logger->Log(Logger::DEBUG, "SuperXLoader: Number of Texture Coords: " + std::to_string(_LoadMesh->_nTextureCoords));
+												  _LoadMesh->_TextureCoords = new TCoord[_LoadMesh->_nTextureCoords];
+											  }
+											  float u = *(float*)&component[0];
+											  float v = *(float*)&component[1];
+											  _LoadMesh->_Vertices[currentTextureCoordinateSet].tu = u;
+											  _LoadMesh->_Vertices[currentTextureCoordinateSet].tv = v;
+											  logger->Log(Logger::DEBUG, "SuperXLoader: DeclData texture coordinates " + std::to_string(currentTextureCoordinateSet) + ": u: " + std::to_string(u) + "; v: " + std::to_string(v));
+											  ++currentTextureCoordinateSet;
+											  break;
 				}
 				case D3DDECLUSAGE_BINORMAL:
 					logger->Log(Logger::WARNING, "SuperXLoader: DeclData found unsupported D3DDECLUSAGE: D3DDECLUSAGE_BINORMAL!");

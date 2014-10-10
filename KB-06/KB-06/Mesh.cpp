@@ -8,6 +8,36 @@
 
 namespace pengine
 {
+	Mesh::Mesh()
+	{
+		//Vertices
+		_nVertices = 0;
+		_FirstVertex = 0;
+		_Vertices = NULL;
+		//Texture Coords for each vertex
+		_nTextureCoords = 0;
+		_FirstTextureCoord = 0;
+		_TextureCoords = NULL;
+		//Faces
+		_nFaces = 0;
+		_FirstFace = 0;
+		_Faces = NULL;
+		//Subset of a mesh: there is one subset for each material used
+		//_Subsets = 0;
+		//Normals
+		_nNormals = 0;
+		_FirstNormal = 0;
+		_Normals = NULL;
+		_FaceNormals = NULL;
+		//Material index for each face
+		_nMaterials = 0;
+		_FirstMaterial = 0;
+		_FaceMaterials = NULL;
+		//list of Materials for that Mesh
+		//_Materials;
+		_Name = "Undefined";
+	}
+
 	Mesh::~Mesh(void)
 	{
 		if (_Vertices != NULL)

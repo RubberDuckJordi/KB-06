@@ -115,9 +115,6 @@
     <ClCompile Include="Model3D.cpp">
       <Filter>Source\Resource\RobertX</Filter>
     </ClCompile>
-    <ClCompile Include="XMesh.cpp">
-      <Filter>Source\Resource\RobertX</Filter>
-    </ClCompile>
     <ClCompile Include="Object3D.cpp">
       <Filter>Source\Resource\RobertX</Filter>
     </ClCompile>
@@ -144,6 +141,9 @@
     </ClCompile>
     <ClCompile Include="Vector3.cpp">
       <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Mesh.cpp">
+      <Filter>Source\Resource\RobertX</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

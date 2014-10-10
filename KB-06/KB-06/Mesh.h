@@ -25,19 +25,7 @@ namespace pengine
 	class Mesh
 	{
 	public:
-		Mesh(void) :_nVertices(0), _Vertices(0),
-			_nFaces(0), _Faces(0),
-			_nTextureCoords(0), _TextureCoords(0),
-			_FaceMaterials(0),
-			_nNormals(0), _Normals(0),
-			_nMaterials(0),
-			_FirstVertex(0),          //The _Firstxxx series are used
-			_FirstFace(0),            //for mesh concatenation
-			_FirstTextureCoord(0),
-			_FirstNormal(0),
-			_FirstMaterial(0)
-		{
-		};
+		Mesh();
 		~Mesh(void);
 		Mesh* IsName(std::string &MeshName)
 		{
@@ -67,8 +55,6 @@ namespace pengine
 		//Material index for each face
 		uint16 _nMaterials, _FirstMaterial;
 		uint16* _FaceMaterials;
-		uint16 _nFaceMaterials;//actually not needed, as it should always be the same amount as nFaces
-		std::vector<int>* facesPerMaterial;//an vector of vectors containing face indices; one vector per material... this should speed things up... Yep, a 2 dimensional vector :D
 		//list of Materials for that Mesh
 		std::list<Material*> _Materials;
 		std::string _Name;
