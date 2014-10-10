@@ -51,7 +51,7 @@ namespace pengine
 		logger->Log(Logger::DEBUG, "Model3D: Concatenating Meshes...");
 
 
-		concatenatedMesh = new Mesh();
+		Mesh* concatenatedMesh = new Mesh();
 		Mesh* LastMesh = _Meshes.back();
 
 		concatenatedMesh->_Name = "ConcatMesh";
@@ -91,7 +91,7 @@ namespace pengine
 		concatenatedMesh->_Faces = new Face[concatenatedMesh->_nFaces];
 		memset(concatenatedMesh->_Faces, 0, concatenatedMesh->_nFaces * sizeof(Face));
 		concatenatedMesh->_FaceMaterials = new uint16[concatenatedMesh->_nFaces];
-		memset(concatenatedMesh->_FaceMaterials, 0, concatenatedMesh->_nFaces * sizeof(uint16));//we need to do shit with this...
+		memset(concatenatedMesh->_FaceMaterials, 0, concatenatedMesh->_nFaces * sizeof(uint16));
 		if (concatenatedMesh->_nTextureCoords != 0)
 		{
 			concatenatedMesh->_TextureCoords = new TCoord[concatenatedMesh->_nTextureCoords];
@@ -121,6 +121,17 @@ namespace pengine
 				memcpy(&(concatenatedMesh->_Normals[(*i)->_FirstNormal]), (*i)->_Normals, (*i)->_nNormals * sizeof(Vector<float>));
 				memcpy(&(concatenatedMesh->_FaceNormals[(*i)->_FirstFace]), (*i)->_FaceNormals, (*i)->_nFaces * sizeof(Face));
 			}
+
+			if (i != _Meshes.begin())//if we don't check for this our crazy --i hack wouldn't work ;)
+			{
+				for (int j = 0; j < (*i)->_nFaces; j++)//(*i)->_nFaces is the amount of facematerials too, as every face has a material.
+				{
+					(*i)->_FaceMaterials[j] += (*--i)->_Materials.size();//crazy hacks, but always works! :D
+					++i;
+				}
+				memcpy(&(concatenatedMesh->_FaceMaterials[(*i)->_FirstFace]), (*i)->_FaceMaterials, (*i)->_nFaces * sizeof(uint16));
+			}
+
 			while (!(*i)->_Materials.empty())
 			{
 				concatenatedMesh->_Materials.push_back((*i)->_Materials.front());
@@ -138,7 +149,6 @@ namespace pengine
 		logger->Log(Logger::DEBUG, "Model3D: Bone hierarchy adapted.");
 
 		//We eventually delete all the previous meshes
-		_Meshes;
 		while (!_Meshes.empty()) {
 			delete _Meshes.back();
 			_Meshes.pop_back();

@@ -19,7 +19,6 @@ namespace pengine
 		Bone* _Skeletton;
 		std::list<Mesh*> _Meshes;
 		std::list<AnimationSet*> _AnimationSets;
-		Mesh* concatenatedMesh;
 	private:
 		Logger* logger;// = LoggerPool::GetInstance().GetLogger();
 		void UpdateBoneIndices(Bone* &pBone);

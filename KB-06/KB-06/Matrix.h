@@ -127,7 +127,6 @@ namespace pengine
 		{
 			T vdata[4], pvdata[4];
 
-			//memcpy(pvdata, pV.data, 3 * sizeof(T));
 			pvdata[0] = pV.x;
 			pvdata[1] = pV.y;
 			pvdata[2] = pV.z;
@@ -142,11 +141,8 @@ namespace pengine
 					vdata[col] += data[k + col] * pvdata[row];
 				}
 			}
-			/*Vertex theVertex;
-			theVertex.x = vdata[0];
-			theVertex.y = vdata[1];
-			theVertex.z = vdata[2];*/
-			return{ vdata[0], vdata[1], vdata[2] };
+
+			return{ vdata[0], vdata[1], vdata[2], pV.tu, pV.tv };
 		};
 
 		T operator[](int index)const

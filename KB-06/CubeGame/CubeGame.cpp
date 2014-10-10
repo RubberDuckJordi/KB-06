@@ -67,7 +67,7 @@ int main(int argc, const char* argv[])
 	MyObject.MapAnimationSet(index);
 	//We set the interval of animation in steps
 	MyObject.showWarning = false;
-	MyObject.SetAnimationStep(80);
+	MyObject.SetAnimationStep(1);
 	MyObject.ClearSkinnedVertices();
 	MyObject.UpdateAnimation();
 

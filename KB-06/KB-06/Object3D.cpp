@@ -64,15 +64,31 @@ namespace pengine
 		{
 			D3DCustomVertex* d3dVertices = new D3DCustomVertex[amountOfVertices];
 
-			for (int i = 0; i < amountOfVertices; ++i)//first do all the vertices, then set the indices to the right vertices
+			if (_cAnimationSet == NULL)
 			{
-				D3DCustomVertex newVertex;
-				newVertex.x = _Mesh->_Vertices[i].x;//x
-				newVertex.y = _Mesh->_Vertices[i].y;//y
-				newVertex.z = _Mesh->_Vertices[i].z;//z
-				newVertex.tu = _Mesh->_Vertices[i].tu;
-				newVertex.tv = _Mesh->_Vertices[i].tv;
-				d3dVertices[i] = newVertex;
+				for (int i = 0; i < amountOfVertices; ++i)//first do all the vertices, then set the indices to the right vertices
+				{
+					D3DCustomVertex newVertex;
+					newVertex.x = _Mesh->_Vertices[i].x;//x
+					newVertex.y = _Mesh->_Vertices[i].y;//y
+					newVertex.z = _Mesh->_Vertices[i].z;//z
+					newVertex.tu = _Mesh->_Vertices[i].tu;
+					newVertex.tv = _Mesh->_Vertices[i].tv;
+					d3dVertices[i] = newVertex;
+				}
+			}
+			else
+			{
+				for (int i = 0; i < amountOfVertices; ++i)//first do all the vertices, then set the indices to the right vertices
+				{
+					D3DCustomVertex newVertex;
+					newVertex.x = _SkinnedVertices[i].x;//x
+					newVertex.y = _SkinnedVertices[i].y;//y
+					newVertex.z = _SkinnedVertices[i].z;//z
+					newVertex.tu = _SkinnedVertices[i].tu;
+					newVertex.tv = _SkinnedVertices[i].tv;
+					d3dVertices[i] = newVertex;
+				}
 			}
 
 			void* pVoid;

@@ -53,7 +53,7 @@ namespace pengine
 		};
 		void MapAnimationSet(std::string pText = "None");
 		void MapAnimationSet(uint16 &index);
-		void UpdateAnimation(void)
+		void UpdateAnimation()
 		{
 			if (showWarning && _cAnimationSet == NULL)
 			{
