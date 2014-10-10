@@ -10,6 +10,7 @@ namespace pengine
 		g_pD3D = NULL;
 		g_pd3dDevice = NULL;
 		matrixCache = new D3DXMATRIX();
+		d2dBmp = NULL;
 	}
 
 	DirectXRenderer::~DirectXRenderer()
@@ -33,6 +34,10 @@ namespace pengine
 
 	void DirectXRenderer::CreateRenderTarget(HWND hWnd)
 	{
+		D3DXCreateTexture(g_pd3dDevice, 500, 500, 1, D3DUSAGE_RENDERTARGET, D3DFMT_A8R8G8B8, D3DPOOL_DEFAULT, &surfaceTexture); //LPDIRECT3DTEXTURE9
+		surfaceTexture->GetSurfaceLevel(0, &surfaceLevel); //IDirect3DSurface9
+		g_pd3dDevice->GetRenderTarget(0, &backbuffer); //IDirect3DSurface9
+		
 		GetClientRect(hWnd, &rectangle);
 
 		D2D1_SIZE_U size = D2D1::SizeU(rectangle.right - rectangle.left, rectangle.bottom - rectangle.top);
@@ -42,6 +47,8 @@ namespace pengine
 			D2D1::HwndRenderTargetProperties(hWnd, size),
 			&d2dRenderTarget
 			);
+		
+
 	}
 
 	void DirectXRenderer::CreateWICImagingFactory()
@@ -93,10 +100,13 @@ namespace pengine
 
 	void DirectXRenderer::D2DDraw()
 	{
+		g_pd3dDevice->SetRenderTarget(0, surfaceLevel);
 		d2dRenderTarget->BeginDraw();
 		D2D1_RECT_F test = D2D1::RectF(0, 0, 200, 200);
-		d2dRenderTarget->DrawBitmap(d2dBmp, test);
+		//d2dRenderTarget->DrawBitmap(d2dBmp, test);
+
 		d2dRenderTarget->EndDraw();
+		g_pd3dDevice->SetRenderTarget(0, backbuffer);
 	}
 
 	void DirectXRenderer::InitD3D(HWND hWnd)

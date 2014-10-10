@@ -80,8 +80,14 @@ namespace pengine
 		ID2D1Factory* d2dFactory;
 		ID2D1HwndRenderTarget* d2dRenderTarget;
 
+		LPDIRECT3DTEXTURE9 surfaceTexture;
+		IDirect3DSurface9* d3dSurface;
+		IDirect3DSurface9* surfaceLevel;
+		IDirect3DSurface9* backbuffer;
+
 		LPDIRECT3D9 g_pD3D;
 		LPDIRECT3DDEVICE9 g_pd3dDevice;
+		
 		//std::map<Mesh*, LPD3DXMESH> meshCache;
 		std::map<BinaryData*, LPDIRECT3DTEXTURE9> textureCache;
 

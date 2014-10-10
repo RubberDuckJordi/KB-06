@@ -24,14 +24,14 @@ int _tmain(int argc, _TCHAR* argv[])
 	pEngine.GetWindowManager()->NewWindow(750, 10, 500, 500);
 	
 	pEngine.GetRenderer()->InitD3D(pEngine.GetWindowManager()->GetLastWindow()->GetHWND());
-	/*pEngine.GetRenderer()->CreateD2DFactory();
+	pEngine.GetRenderer()->CreateD2DFactory();
 	pEngine.GetRenderer()->CreateRenderTarget(pEngine.GetWindowManager()->GetLastWindow()->GetHWND());
 	pEngine.GetRenderer()->CreateWICImagingFactory();
 	pEngine.GetRenderer()->CreateDecoder("resources/testHUD.bmp");
 	pEngine.GetRenderer()->CreateFormatConverter();
 	pEngine.GetRenderer()->GetBitmapFrame();
 	pEngine.GetRenderer()->InitializeBMP();
-	pEngine.GetRenderer()->CreateBitmapFromWIC();*/
+	pEngine.GetRenderer()->CreateBitmapFromWIC();
 
 	pengine::XModel* xmodel = new pengine::XModel();
 	pengine::XModelLoader* xmodelLoader = new pengine::XModelLoader();
@@ -85,6 +85,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	pEngine.GetRenderer()->SetProjectionMatrix(M_PI / 4, 100.0f);
 	pEngine.GetRenderer()->SetDefaultRenderStates();
 	bool pressPlus = false;
+
 	while (pEngine.GetWindowManager()->HasActiveWindow())
 	{
 		pEngine.GetWindowManager()->UpdateWindows();
@@ -134,11 +135,13 @@ int _tmain(int argc, _TCHAR* argv[])
 		pEngine.GetRenderer()->SetActiveMatrix(aMatrix->theMatrix);
 		MyObject.Draw(pEngine.GetRenderer());
 		
-
+		pEngine.GetRenderer()->D2DDraw();
+		
 		pEngine.GetRenderer()->EndScene();
 		pEngine.GetRenderer()->PresentScene(pEngine.GetWindowManager()->GetLastWindow()->GetHWND());
 
-		//pEngine.GetRenderer()->D2DDraw();
+		
+
 		delete aMatrix;
 	}
 	pengine::LoggerPool::GetInstance().ReturnLogger(logger);
