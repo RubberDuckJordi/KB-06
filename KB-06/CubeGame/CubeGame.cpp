@@ -25,14 +25,14 @@ int main(int argc, const char* argv[])
 	pEngine.GetWindowManager()->NewWindow(750, 10, 500, 500);
 	
 	pEngine.GetRenderer()->InitD3D(pEngine.GetWindowManager()->GetLastWindow()->GetHWND());
-	pEngine.GetRenderer()->CreateD2DFactory();
+	/*pEngine.GetRenderer()->CreateD2DFactory();
 	pEngine.GetRenderer()->CreateRenderTarget(pEngine.GetWindowManager()->GetLastWindow()->GetHWND());
 	pEngine.GetRenderer()->CreateWICImagingFactory();
 	pEngine.GetRenderer()->CreateDecoder("resources/testHUD.bmp");
 	pEngine.GetRenderer()->CreateFormatConverter();
 	pEngine.GetRenderer()->GetBitmapFrame();
 	pEngine.GetRenderer()->InitializeBMP();
-	pEngine.GetRenderer()->CreateBitmapFromWIC();
+	pEngine.GetRenderer()->CreateBitmapFromWIC();*/
 
 	pengine::XModel* xmodel = new pengine::XModel();
 	pengine::XModelLoader* xmodelLoader = new pengine::XModelLoader();
@@ -46,7 +46,7 @@ int main(int argc, const char* argv[])
 
 	pengine::SuperXLoader* loader = new pengine::SuperXLoader();
 	pengine::Model3D* model = new pengine::Model3D();
-	loader->Load("resources/tiger.x", model);
+	loader->Load("resources/boxes/x1.x", model);
 
 	for (std::list<pengine::Mesh*>::iterator i = model->_Meshes.begin(); i != model->_Meshes.end(); ++i)
 	{
@@ -55,7 +55,7 @@ int main(int argc, const char* argv[])
 			logger->Log(pengine::Logger::ERR, "Texture name CubeGame: "+ std::string((*j)->texturePath));
 			if ((*j)->texturePath != "")
 			{
-				(*j)->texture = pEngine.GetResourceManager()->LoadBinaryFile("resources/" + (*j)->texturePath);
+				(*j)->texture = pEngine.GetResourceManager()->LoadBinaryFile("resources/boxes/" + (*j)->texturePath);
 			}
 		}
 	}

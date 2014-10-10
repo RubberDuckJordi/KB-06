@@ -122,14 +122,12 @@ namespace pengine
 			}
 		}
 
-		if (_LoadMesh != NULL)
-		{
-			_Object->_Meshes.push_back(_LoadMesh);
+		
 			if (_LoadSkeletton != NULL)
 			{
 				MapMeshToBones(_LoadSkeletton);
 			}
-		}
+		
 
 		logger->Log(Logger::DEBUG, "SuperXLoader: Processed file:" + std::string(pFilename));
 

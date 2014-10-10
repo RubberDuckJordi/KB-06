@@ -2,6 +2,14 @@
 
 namespace pengine
 {
+	Model3D::Model3D(Bone* skeleton)
+	{
+		logger = LoggerPool::GetInstance().GetLogger();
+		logger->SetFile("SuperXLoader");
+		logger->SetLogLevel(Logger::INFO);
+		_Skeletton = skeleton;
+	};
+
 	Model3D::~Model3D(void)
 	{
 		if (_Skeletton != 0)
@@ -32,7 +40,7 @@ namespace pengine
 		return 0;
 	}
 
-	void Model3D::ConcatenateMeshes(void)
+	void Model3D::ConcatenateMeshes()
 	{
 		//We only concatenate when there are at least two meshes
 		if (_Meshes.size() < 2)
@@ -43,98 +51,84 @@ namespace pengine
 		logger->Log(Logger::DEBUG, "Model3D: Concatenating Meshes...");
 
 
-		Mesh* ConcatMesh = new Mesh();
+		concatenatedMesh = new Mesh();
 		Mesh* LastMesh = _Meshes.back();
 
-		ConcatMesh->_Name = "ConcatMesh";
+		concatenatedMesh->_Name = "ConcatMesh";
 
 		//We create the new mesh.
 		//We get the dimensions of the new mesh
-		ConcatMesh->_nVertices = LastMesh->_FirstVertex + LastMesh->_nVertices;
-		ConcatMesh->_nFaces = LastMesh->_FirstFace + LastMesh->_nFaces;
-		ConcatMesh->_nTextureCoords = LastMesh->_FirstTextureCoord + LastMesh->_nTextureCoords;
-		ConcatMesh->_nNormals = LastMesh->_FirstNormal + LastMesh->_nNormals;
+		concatenatedMesh->_nVertices = LastMesh->_FirstVertex + LastMesh->_nVertices;
+		concatenatedMesh->_nFaces = LastMesh->_FirstFace + LastMesh->_nFaces;
+		concatenatedMesh->_nTextureCoords = LastMesh->_FirstTextureCoord + LastMesh->_nTextureCoords;
+		concatenatedMesh->_nNormals = LastMesh->_FirstNormal + LastMesh->_nNormals;
 
 		//Here we have a control:
 		//Texture coordinates must be as numerous as Vertices or there must be none
 		//Normal vectors must be as numerous as Vertices or there must be none
-		if ((ConcatMesh->_nTextureCoords < ConcatMesh->_nVertices) && (ConcatMesh->_nTextureCoords != 0))
+		if ((concatenatedMesh->_nTextureCoords < concatenatedMesh->_nVertices) && (concatenatedMesh->_nTextureCoords != 0))
 		{
-			ConcatMesh->_nTextureCoords = ConcatMesh->_nVertices;
+			concatenatedMesh->_nTextureCoords = concatenatedMesh->_nVertices;
 		}
-		if ((ConcatMesh->_nNormals < ConcatMesh->_nVertices) && (ConcatMesh->_nNormals != 0))
+		if ((concatenatedMesh->_nNormals < concatenatedMesh->_nVertices) && (concatenatedMesh->_nNormals != 0))
 		{
-			ConcatMesh->_nNormals = ConcatMesh->_nVertices;
+			concatenatedMesh->_nNormals = concatenatedMesh->_nVertices;
 		}
 
-		logger->Log(Logger::DEBUG, "Model3D: Final number of Vertices: "+ std::to_string(ConcatMesh->_nVertices));
-		logger->Log(Logger::DEBUG, "Model3D: Final number of Faces: " + std::to_string(ConcatMesh->_nFaces));
-		logger->Log(Logger::DEBUG, "Model3D: Final number of TextureCoords: " + std::to_string(ConcatMesh->_nTextureCoords));
-		logger->Log(Logger::DEBUG, "Model3D: Final number of Normals: " + std::to_string(ConcatMesh->_nNormals));
-		logger->Log(Logger::DEBUG, "Model3D: Final number of Materials: " + std::to_string(ConcatMesh->_nMaterials));
+		logger->Log(Logger::DEBUG, "Model3D: Final number of Vertices: " + std::to_string(concatenatedMesh->_nVertices));
+		logger->Log(Logger::DEBUG, "Model3D: Final number of Faces: " + std::to_string(concatenatedMesh->_nFaces));
+		logger->Log(Logger::DEBUG, "Model3D: Final number of TextureCoords: " + std::to_string(concatenatedMesh->_nTextureCoords));
+		logger->Log(Logger::DEBUG, "Model3D: Final number of Normals: " + std::to_string(concatenatedMesh->_nNormals));
+		logger->Log(Logger::DEBUG, "Model3D: Final number of Materials: " + std::to_string(concatenatedMesh->_nMaterials));
 
 		//We create all the arrays:
 		// - Vertices and Faces
 		// - Material indices per face
 		// - Texture Coords
 		// - Normal vectors and Face Allocation of Normal vectors
-		ConcatMesh->_Vertices = new Vertex[ConcatMesh->_nVertices];
-		memset(ConcatMesh->_Vertices, 0, ConcatMesh->_nVertices * sizeof(Vertex));
-		ConcatMesh->_Faces = new Face[ConcatMesh->_nFaces];
-		memset(ConcatMesh->_Faces, 0, ConcatMesh->_nFaces * sizeof(Face));
-		ConcatMesh->_FaceMaterials = new uint16[ConcatMesh->_nFaces];
-		memset(ConcatMesh->_FaceMaterials, 0, ConcatMesh->_nFaces * sizeof(uint16));
-		if (ConcatMesh->_nTextureCoords != 0)
+		concatenatedMesh->_Vertices = new Vertex[concatenatedMesh->_nVertices];
+		memset(concatenatedMesh->_Vertices, 0, concatenatedMesh->_nVertices * sizeof(Vertex));
+		concatenatedMesh->_Faces = new Face[concatenatedMesh->_nFaces];
+		memset(concatenatedMesh->_Faces, 0, concatenatedMesh->_nFaces * sizeof(Face));
+		concatenatedMesh->_FaceMaterials = new uint16[concatenatedMesh->_nFaces];
+		memset(concatenatedMesh->_FaceMaterials, 0, concatenatedMesh->_nFaces * sizeof(uint16));//we need to do shit with this...
+		if (concatenatedMesh->_nTextureCoords != 0)
 		{
-			ConcatMesh->_TextureCoords = new TCoord[ConcatMesh->_nTextureCoords];
-			memset(ConcatMesh->_TextureCoords, 0, ConcatMesh->_nTextureCoords * sizeof(TCoord));
+			concatenatedMesh->_TextureCoords = new TCoord[concatenatedMesh->_nTextureCoords];
+			memset(concatenatedMesh->_TextureCoords, 0, concatenatedMesh->_nTextureCoords * sizeof(TCoord));
 		}
-		if (ConcatMesh->_nNormals != 0)
+		if (concatenatedMesh->_nNormals != 0)
 		{
-			ConcatMesh->_Normals = new Vector<float>[ConcatMesh->_nNormals];
-			ConcatMesh->_FaceNormals = new Face[ConcatMesh->_nFaces];
-			memset(ConcatMesh->_Normals, 0, ConcatMesh->_nNormals * sizeof(Vector<float>));
-			memset(ConcatMesh->_FaceNormals, 0, ConcatMesh->_nFaces * sizeof(Face));
+			concatenatedMesh->_Normals = new Vector<float>[concatenatedMesh->_nNormals];
+			concatenatedMesh->_FaceNormals = new Face[concatenatedMesh->_nFaces];
+			memset(concatenatedMesh->_Normals, 0, concatenatedMesh->_nNormals * sizeof(Vector<float>));
+			memset(concatenatedMesh->_FaceNormals, 0, concatenatedMesh->_nFaces * sizeof(Face));
 		}
 
 		//We fill up the arrays with each array from the _Meshes container
 		for (std::list<Mesh*>::iterator i = _Meshes.begin(); i != _Meshes.end(); i++)
 		{
 			(*i)->UpdateIndices();
-			memcpy(&(ConcatMesh->_Vertices[(*i)->_FirstVertex]), (*i)->_Vertices, (*i)->_nVertices * sizeof(Vertex));
-			memcpy(&(ConcatMesh->_Faces[(*i)->_FirstFace]), (*i)->_Faces, (*i)->_nFaces * sizeof(Face));
-
-
-			/*int offset = ConcatMesh->_Materials.size();
-			for (int j = 0; j < (*i)->_nFaceMaterials; j++)
-			{
-				(*i)->_FaceMaterials[j] += offset;
-			}
-			memcpy(&(ConcatMesh->_FaceMaterials[(*i)->_FirstFace]), (*i)->_FaceMaterials, (*i)->_nFaces * sizeof(uint16));*/
-
-			//std::vector<std::vector<int>*> stupid = (*i)->facesPerMaterial;
-			//ConcatMesh->facesPerMaterial.insert(ConcatMesh->facesPerMaterial.end(), (*i)->facesPerMaterial.begin(), (*i)->facesPerMaterial.end());
+			memcpy(&(concatenatedMesh->_Vertices[(*i)->_FirstVertex]), (*i)->_Vertices, (*i)->_nVertices * sizeof(Vertex));
+			memcpy(&(concatenatedMesh->_Faces[(*i)->_FirstFace]), (*i)->_Faces, (*i)->_nFaces * sizeof(Face));
 
 			if ((*i)->_nTextureCoords != 0)
 			{
-				memcpy(&(ConcatMesh->_TextureCoords[(*i)->_FirstTextureCoord]), (*i)->_TextureCoords, (*i)->_nTextureCoords * sizeof(TCoord));
+				memcpy(&(concatenatedMesh->_TextureCoords[(*i)->_FirstTextureCoord]), (*i)->_TextureCoords, (*i)->_nTextureCoords * sizeof(TCoord));
 			}
 			if ((*i)->_nNormals != 0)
 			{
-				memcpy(&(ConcatMesh->_Normals[(*i)->_FirstNormal]), (*i)->_Normals, (*i)->_nNormals * sizeof(Vector<float>));
-				memcpy(&(ConcatMesh->_FaceNormals[(*i)->_FirstFace]), (*i)->_FaceNormals, (*i)->_nFaces * sizeof(Face));
+				memcpy(&(concatenatedMesh->_Normals[(*i)->_FirstNormal]), (*i)->_Normals, (*i)->_nNormals * sizeof(Vector<float>));
+				memcpy(&(concatenatedMesh->_FaceNormals[(*i)->_FirstFace]), (*i)->_FaceNormals, (*i)->_nFaces * sizeof(Face));
 			}
 			while (!(*i)->_Materials.empty())
 			{
-				ConcatMesh->_Materials.push_back((*i)->_Materials.front());
+				concatenatedMesh->_Materials.push_back((*i)->_Materials.front());
 				(*i)->_Materials.pop_front();
 			}
 		}
 
-		////////////////////////////////////////////////////////////
-		//OK. We now process the bone hierarchy to update the
-		//skinning indices
-
+		//OK. We now process the bone hierarchy to update the skinning indices
 		logger->Log(Logger::DEBUG, "Model3D: Adapting the Bone hierarchy...");
 		if (_Skeletton != 0)
 		{
@@ -144,16 +138,17 @@ namespace pengine
 		logger->Log(Logger::DEBUG, "Model3D: Bone hierarchy adapted.");
 
 		//We eventually delete all the previous meshes
-		/*while (!_Meshes.empty()) {
+		_Meshes;
+		while (!_Meshes.empty()) {
 			delete _Meshes.back();
 			_Meshes.pop_back();
-		}*/
+		}
 
 		//and push the new concatenated one
-		_Meshes.push_back(ConcatMesh);
+		_Meshes.push_back(concatenatedMesh);
 
 		//We create the subsets
-		ConcatMesh->CreateSubsets();
+		concatenatedMesh->CreateSubsets();
 
 		logger->Log(Logger::DEBUG, "Model3D: All meshes are concatenated.");
 	}
@@ -174,9 +169,6 @@ namespace pengine
 			}
 		}
 	}
-
-	/*************************************************
-	NEW- NEW- NEW- NEW- NEW- NEW- NEW- NEW- NEW- NEW*/
 
 	AnimationSet* Model3D::FindAnimationSet(std::string &pText)
 	{
