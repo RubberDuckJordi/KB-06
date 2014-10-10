@@ -136,7 +136,7 @@ int main(int argc, const char* argv[])
 		pEngine.GetRenderer()->SetActiveMatrix(aMatrix->theMatrix);
 		MyObject.Draw(pEngine.GetRenderer());
 		
-		pEngine.GetRenderer()->D2DDraw();
+		//pEngine.GetRenderer()->D2DDraw();
 		//pEngine.GetShader()->DrawShader(pEngine.GetRenderer());
 
 		pEngine.GetRenderer()->EndScene();
