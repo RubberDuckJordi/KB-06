@@ -9,7 +9,8 @@ namespace pengine
 
 	VertexBufferWrapper::~VertexBufferWrapper()
 	{
-
+		(*VertexBuffer)->Release();
+		delete VertexBuffer;
 	}
 
 	void VertexBufferWrapper::SetVertexBuffer(IDirect3DVertexBuffer9** _VertexBuffer)

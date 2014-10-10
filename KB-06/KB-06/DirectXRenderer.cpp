@@ -473,7 +473,6 @@ meshCache[mesh]->DrawSubset(i);
 		{
 			logger->Log(Logger::ERR, "DirectXRenderer::CreateVertexBuffer() vertexbuffer lock failed");
 		}
-
 		memcpy(verticesBuffer, p_vertices, size);
 		(*vertexBufferWrapper->GetVertexBuffer())->Unlock();
 

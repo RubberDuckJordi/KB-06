@@ -139,7 +139,6 @@ void racer::RaceCart::InitCollisionBox()
 	rect->height = rect->height / 2;
 	rect->depth = rect->depth / 2;
 
-
 	// Add rotation
 	rect->rotationX = rotation.x;
 	rect->rotationY = rotation.y;

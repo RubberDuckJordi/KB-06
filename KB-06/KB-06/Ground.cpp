@@ -78,10 +78,12 @@ namespace pengine
 
 	void Ground::Render(Renderer* renderer)
 	{
-		if (vertexBuffer == NULL)
+		if (vertexBuffer != NULL)
 		{
-			vertexBuffer = renderer->CreateVertexBuffer(vertices, amountOfIndices, D3DCustomVertexFVF);
+			delete vertexBuffer;
 		}
+		
+		vertexBuffer = renderer->CreateVertexBuffer(vertices, amountOfIndices, D3DCustomVertexFVF);
 
 		renderer->SetActiveMatrix(location->theMatrix);
 		renderer->SetMaterial(material);

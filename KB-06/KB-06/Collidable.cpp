@@ -24,6 +24,16 @@ namespace pengine
 	void Collidable::DrawCollidable(Renderer* renderer)
 	{
 		amountOfIndices = 36;
+
+		if (vertices != NULL)
+		{
+			delete[] vertices;
+		}
+		if (vertexBuffer != NULL)
+		{
+			delete vertexBuffer;
+		}
+
 		vertices = new D3DCustomVertex[amountOfIndices];
 
 		vertices[0].x = collisionBox.x;
@@ -254,7 +264,6 @@ namespace pengine
 		vertices[35].tv = 1.0f;
 
 		vertexBuffer = renderer->CreateVertexBuffer(vertices, amountOfIndices, D3DCustomVertexFVF);
-
 		
 		RenderMatrix* renderMatrix = new RenderMatrix();
 		renderer->SetActiveMatrix(renderMatrix->theMatrix);
