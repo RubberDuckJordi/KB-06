@@ -5,7 +5,7 @@
 
 namespace pengine
 {
-	struct SceneCallback {
+	class SceneCallback {
 		virtual void ChangeScene(char* identifier) = 0;
 	};
 }

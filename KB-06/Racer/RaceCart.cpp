@@ -18,7 +18,7 @@ void racer::RaceCart::UpdateLogic(float deltaTime, std::map<pengine::Input, long
 		for (it_type iterator = (*actions).begin(); iterator != (*actions).end(); ++iterator)
 		{
 			float speed = static_cast<float>(iterator->second);
-			Vector3 vector = *new Vector3(0.0f, 0.0f, 0.0f); // Must be declared before the switch
+			pengine::Vector3 vector = *new pengine::Vector3(0.0f, 0.0f, 0.0f); // Must be declared before the switch
 
 			switch (iterator->first)
 			{
@@ -57,21 +57,13 @@ void racer::RaceCart::Draw(pengine::Renderer* renderer)
 	{
 		renderer->SetActiveMatrix(myCachedMatrix->theMatrix); //should be called every frame
 
-		pengine::MaterialWrapper* materialWrapper;
-		int materialCount;
-		xModel->GetMaterials(materialWrapper, materialCount);
-
-		pengine::TextureWrapper* textureWrapper;
-		int textureCount;
-		xModel->GetTextures(textureWrapper, textureCount);
-
-		renderer->SetMaterialWrapper(materialWrapper);
-		renderer->SetTexture(textureWrapper);
-		renderer->DrawSubset(xModel->GetMesh(), 0);
+		xModel->ClearSkinnedVertices();
+		xModel->UpdateAnimation();
+		xModel->Draw(renderer);
 	}
 }
 
-void racer::RaceCart::SetXModel(pengine::XModel* p_xModel)
+void racer::RaceCart::SetObject3D(pengine::Object3D* p_xModel)
 {
 	xModel = p_xModel;
 }
@@ -99,14 +91,14 @@ void racer::RaceCart::Brake(float percentage)
 
 void racer::RaceCart::Throttle(float percentage)
 {
-	Vector3 vector;
+	pengine::Vector3 vector;
 	vector.z = horsePower * percentage;
 	AddRelativeForce(&vector);
 }
 
 void racer::RaceCart::Steer(float percentage)
 {
-	Vector3 vector;
+	pengine::Vector3 vector;
 
 	// Get current movement magnitude
 	float magnitude = movementVector.GetMagnitude();
@@ -124,4 +116,39 @@ void racer::RaceCart::Steer(float percentage)
 
 	// Add friction
 	ApplyFriction(abs(percentage) * 5.0f);
+}
+
+void racer::RaceCart::OnCollide(pengine::COLLISIONEFFECT* effect)
+{
+	pengine::Vector3* vector = new pengine::Vector3(effect->forceVectorX, effect->forceVectorY, effect->forceVectorZ);
+	AddForce(vector, effect->mass);
+}
+
+void racer::RaceCart::InitCollisionBox()
+{
+	// Get bounds of model
+	pengine::RECTANGLE* rect = new pengine::RECTANGLE();
+	xModel->CreateCollisionBox(*rect);
+
+	// Add transformation
+	rect->x += position.x;
+	rect->y += position.y;
+	rect->z += position.z;
+
+	// Add rotation
+	rect->rotationX = rotation.x;
+	rect->rotationY = rotation.y;
+	rect->rotationZ = rotation.z;
+
+	collisionBox = *rect;
+}
+
+pengine::Vector3* racer::RaceCart::GetCollisionForceVector()
+{
+	return &movementVector;
+}
+
+float racer::RaceCart::GetCollisionMass()
+{
+	return mass;
 }

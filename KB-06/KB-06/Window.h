@@ -12,7 +12,7 @@ namespace pengine
 {
 	enum WindowState
 	{
-		fullscreen, maximized, normal, minimized, closed
+		FULLSCREEN, MAXIMIZED, NORMAL, MINIMIZED, CLOSED
 	};
 
 	class Window
@@ -38,13 +38,6 @@ namespace pengine
 		void SetTitle(const char* title);
 		HWND GetHWND();
 		WindowState GetWindowState();
-
-		/*!
-		Abstract method that renders the given scene.
-
-		@param *scene: The scene to be rendered.
-		*/
-		virtual void render(Scene *scene);
 
 		void AddWindowListener(WindowListener* p_windowListener);
 		void RemoveWindowListener(WindowListener* p_windowListener);

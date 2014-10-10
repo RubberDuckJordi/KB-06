@@ -1,10 +1,12 @@
 #include "TrackBlock.h"
 
-
-TrackBlock::TrackBlock(float width, float height)
+TrackBlock::TrackBlock(float x, float y, float z, float yaw, TYPE trackType, Direction trackdirection, pengine::Object3D* model)
 {
-	this->width = width;
-	this->height = height;
+	SetPositionOffset(x, y, z);
+	SetRotationOffset(yaw, 0, 0);
+	type = trackType;
+	direction = trackdirection;
+	xModel = model;
 }
 
 TrackBlock::~TrackBlock()
@@ -17,21 +19,48 @@ void TrackBlock::Draw(pengine::Renderer* renderer)
 	{
 		renderer->SetActiveMatrix(myCachedMatrix->theMatrix); //should be called every frame
 
-		pengine::MaterialWrapper* materialWrapper;
-		int materialCount;
-		xModel->GetMaterials(materialWrapper, materialCount);
-
-		pengine::TextureWrapper* textureWrapper;
-		int textureCount;
-		xModel->GetTextures(textureWrapper, textureCount);
-
-		renderer->SetMaterialWrapper(materialWrapper);
-		renderer->SetTexture(textureWrapper);
-		renderer->DrawSubset(xModel->GetMesh(), 0);
+		xModel->ClearSkinnedVertices();
+		//xModel->UpdateAnimation();
+		xModel->Draw(renderer);
 	}
 }
 
-void TrackBlock::SetXModel(pengine::XModel* p_xModel)
+void TrackBlock::SetXModel(pengine::Object3D* p_xModel)
 {
 	xModel = p_xModel;
+}
+Direction TrackBlock::GetDirection(){
+	return direction;
+}
+
+void TrackBlock::SetPosition(float x, float y, float z)
+{
+	Entity::SetPosition(x + positionOffset.x * scale.x, y + positionOffset.y * scale.y, z + positionOffset.z * scale.z);
+}
+
+void TrackBlock::SetPositionOffset(float x, float y, float z){
+	positionOffset.x = x;
+	positionOffset.y = y;
+	positionOffset.z = z;
+}
+
+pengine::Vertex* TrackBlock::GetPositionOffset()
+{
+	return &positionOffset;
+}
+
+void TrackBlock::SetRotation(float yaw, float pitch, float roll)
+{
+	Entity::SetRotation(yaw + rotationOffset.x, pitch + rotationOffset.y, roll + rotationOffset.z);
+}
+
+void TrackBlock::SetRotationOffset(float yaw, float pitch, float roll)
+{
+	rotationOffset.x = yaw;
+	rotationOffset.y = pitch;
+	rotationOffset.z = roll;
+}
+
+pengine::Vertex* TrackBlock::GetRotationOffset(){
+	return &rotationOffset;
 }

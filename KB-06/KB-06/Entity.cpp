@@ -7,6 +7,12 @@ namespace pengine
 	{
 		logger = LoggerPool::GetInstance().GetLogger();
 		myCachedMatrix = new RenderMatrix();
+
+		movementVector.x = 0;
+		movementVector.y = 0;
+		movementVector.z = 0;
+		mass = 1.0f;
+		friction = 0.5f;
 	}
 
 	Entity::~Entity()
@@ -41,16 +47,9 @@ namespace pengine
 
 	void Entity::SetAll(float x, float y, float z, float yaw, float pitch, float roll, float scaleX, float scaleY, float scaleZ)
 	{
-		position.x = x;
-		position.y = y;
-		position.z = z;
-		rotation.x = yaw;
-		rotation.y = pitch;
-		rotation.z = roll;
-		scale.x = scaleX;
-		scale.y = scaleY;
-		scale.z = scaleZ;
-		myCachedMatrix->CreateMatrix(position.x, position.y, position.z, rotation.x, rotation.y, rotation.z, scale.x, scale.y, scale.z, myCachedMatrix->theMatrix);//should only be called when needed (when any value has updated)
+		SetScale(scaleX, scaleY, scaleZ);
+		SetPosition(x, y, z);
+		SetRotation(yaw, pitch, roll);
 	}
 
 	Vertex* Entity::GetPosition()
@@ -146,6 +145,16 @@ namespace pengine
 
 	}
 
+	void Entity::AddForce(Vector3* p_direction, float mass)
+	{
+		Vector3 modifiedVector;
+
+		modifiedVector.x = p_direction->x * mass;
+		modifiedVector.y = p_direction->y * mass;
+		modifiedVector.z = p_direction->z * mass;
+
+		AddForce(&modifiedVector);
+	}
 
 	void Entity::UpdateLogic(float deltaTime, std::map<pengine::Input, long>* actions)
 	{

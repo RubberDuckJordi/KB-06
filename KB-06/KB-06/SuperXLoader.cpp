@@ -13,11 +13,11 @@
 namespace pengine
 {
 	struct XOF_TEMPLATEID{
-		char* TxtID;
-		uint16 TemplateID;
+		char* textID;
+		uint16 templateID;
 	};
 
-	XOF_TEMPLATEID Templates[MAX_TEMPLATES] = {
+	XOF_TEMPLATEID templates[MAX_TEMPLATES] = {
 			{ "template", X_TEMPLATE },
 			{ "FrameTransformMatrix", X_FRAMETRANSFORMMATRIX },
 			{ "Frame", X_FRAME },
@@ -36,46 +36,53 @@ namespace pengine
 			{ "DeclData", X_DECLDATA }
 	};
 
-	//////////////////////////////////////////////////////////
-	//
-	//       MAIN LOAD & SAVE FUNCTIONS
-	//
-	//////////////////////////////////////////////////////////
-
-	bool IO_Model_X::Load(std::string pFilename, Model3D* &pT)
+	SuperXLoader::SuperXLoader()
 	{
-		XFileHeader XHeader;
-		logger->LogAll(Logger::DEBUG, "SuperXLoader: Processing file:", pFilename);
+		_Type = IO_3DX;
+		logger = LoggerPool::GetInstance().GetLogger();
+		logger->SetFile("SuperXLoader");
+		logger->SetLogLevel(Logger::INFO);
+	}
+
+	SuperXLoader::~SuperXLoader()
+	{
+		LoggerPool::GetInstance().ReturnLogger(logger);
+	}
+
+	bool SuperXLoader::Load(std::string pFilename, Model3D* &pT)
+	{
+		XFileHeader xHeader;
+		logger->Log(Logger::DEBUG, "SuperXLoader: Processing file:" + std::string(pFilename));
 
 		fin.open(pFilename.c_str(), std::ios::in | std::ios::binary);
 
 		if (fin.bad())
 		{
-			logger->LogAll(Logger::DEBUG, "SuperXLoader: Failed opening file:", pFilename);
+			logger->Log(Logger::DEBUG, "SuperXLoader: Failed opening file:" + std::string(pFilename));
 			return false;
 		}
 
-		fin.read((char*)&XHeader, 16);
-		logger->LogAll(Logger::DEBUG, "SuperXLoader: XHeader size: ", XHeader.Float_Size, ", XHeader format: ", XHeader.Format, ", XHeader magic: ", XHeader.Magic, ", XHeader major: ", XHeader.Major_Version, ", XHeader minor: ", XHeader.Minor_Version);
-		if (XHeader.Magic != XOFFILE_FORMAT_MAGIC)
+		fin.read((char*)&xHeader, 16);
+		logger->Log(Logger::DEBUG, "SuperXLoader: XHeader size: " + std::to_string(xHeader.Float_Size) + ", XHeader format: " + std::to_string(xHeader.Format) + ", XHeader magic: " + std::to_string(xHeader.Magic) + ", XHeader major: " + std::to_string(xHeader.Major_Version) + ", XHeader minor: " + std::to_string(xHeader.Minor_Version));
+		if (xHeader.Magic != XOFFILE_FORMAT_MAGIC)
 		{
 			logger->Log(Logger::DEBUG, "SuperXLoader: Not a .X model file. Aborted.");
 			return false;
 		}
 
-		if (XHeader.Major_Version != XOFFILE_FORMAT_VERSION03)
+		if (xHeader.Major_Version != XOFFILE_FORMAT_VERSION03)
 		{
-			logger->LogAll(Logger::DEBUG, "SuperXLoader: Major version ", XHeader.Major_Version, " greater than 03. Aborted.");
+			logger->Log(Logger::DEBUG, "SuperXLoader: Major version " + std::to_string(xHeader.Major_Version) + " greater than 03. Aborted.");
 			return false;
 		}
 
-		if (XHeader.Minor_Version != XOFFILE_FORMAT_VERSION03 && XHeader.Minor_Version != XOFFILE_FORMAT_VERSION02)
+		if (xHeader.Minor_Version != XOFFILE_FORMAT_VERSION03 && xHeader.Minor_Version != XOFFILE_FORMAT_VERSION02)
 		{
-			logger->LogAll(Logger::DEBUG, "SuperXLoader: Minor version ", XHeader.Minor_Version, " is not ", XOFFILE_FORMAT_VERSION03, " or ", XOFFILE_FORMAT_VERSION02, ". Aborted.");
+			logger->Log(Logger::DEBUG, "SuperXLoader: Minor version " + std::to_string(xHeader.Minor_Version) + " is not " + std::to_string(XOFFILE_FORMAT_VERSION03) + " or " + std::to_string(XOFFILE_FORMAT_VERSION02) + ". Aborted.");
 			return false;
 		}
 
-		if (XHeader.Format != XOFFILE_FORMAT_TEXT)
+		if (xHeader.Format != XOFFILE_FORMAT_TEXT)
 		{
 			logger->Log(Logger::DEBUG, "SuperXLoader: Not a text format. Aborted.");
 			return false;
@@ -105,8 +112,8 @@ namespace pengine
 				ProcessAnimationSets();
 				break;
 			case X_MATERIAL:
-				ProcessMaterial();
-				logger->LogAll(Logger::DEBUG, "SuperXLoader: done processing a material...");
+				ProcessMaterial(true);
+				logger->Log(Logger::DEBUG, "SuperXLoader: done processing a material...");
 				break;
 			case X_OBRACE:
 			default:
@@ -115,33 +122,31 @@ namespace pengine
 			}
 		}
 
-		if (_LoadSkeletton != 0)
+		if (_LoadMesh != NULL)
 		{
-			MapMeshToBones(_LoadSkeletton);
+			_Object->_Meshes.push_back(_LoadMesh);
+			if (_LoadSkeletton != NULL)
+			{
+				MapMeshToBones(_LoadSkeletton);
+			}
 		}
 
-		logger->LogAll(Logger::DEBUG, "SuperXLoader: Processed file:", pFilename);
+		logger->Log(Logger::DEBUG, "SuperXLoader: Processed file:" + std::string(pFilename));
 
 		fin.close();
 		return true;
 	}
 
-	bool IO_Model_X::Save(std::string pFilename, Model3D* &pT)
+	bool SuperXLoader::Save(std::string pFilename, Model3D* &pT)
 	{
 		return false;
 	}
 
-	//////////////////////////////////////////////////////////
-	//
-	//       UTILITIES
-	//
-	//////////////////////////////////////////////////////////
-
-	int16 IO_Model_X::ProcessBlock(void)
+	int16 SuperXLoader::ProcessBlock(void)
 	{
-		std::string Text;
-		char Token = fin.peek();
-		switch (Token)
+		std::string text;
+		char token = fin.peek();
+		switch (token)
 		{
 		case '\n':
 		case '\r':
@@ -151,16 +156,16 @@ namespace pengine
 			return X_COMMENT; //spaces are identified as comments
 			break;
 		case '{':
-			logger->LogAll(Logger::DEBUG, "ProcessBlock char is: ", Token);
+			logger->Log(Logger::DEBUG, "ProcessBlock char is: {");
 			return X_OBRACE;
 			break;
 		case '}':
-			logger->LogAll(Logger::DEBUG, "ProcessBlock char is: ", Token);
+			logger->Log(Logger::DEBUG, "ProcessBlock char is: }");
 			fin.get();
 			return X_EBRACE; //We arrived at the end of the block
 			break;
 		case '/':
-			logger->LogAll(Logger::DEBUG, "ProcessBlock char is: ", Token);
+			logger->Log(Logger::DEBUG, "ProcessBlock char is: /");
 			fin.get();
 			if (fin.peek() == '/')
 			{
@@ -173,22 +178,22 @@ namespace pengine
 			}
 			break;
 		case '#':
-			logger->LogAll(Logger::DEBUG, "ProcessBlock char is: ", Token);
+			logger->Log(Logger::DEBUG, "ProcessBlock char is: " + std::string(1, token));
 			fin.ignore(TEXT_BUFFER, '\n');
 			return X_COMMENT;
 			break;
 		default:
-			fin >> Text;
-			return BlockID(Text);
+			fin >> text;
+			return BlockID(text);
 		};
 		return X_COMMENT;
 	}
 
-	int16 IO_Model_X::BlockID(std::string &pText)
+	int16 SuperXLoader::BlockID(std::string &pText)
 	{
-		long Pos;
+		long pos;
 
-		logger->LogAll(Logger::DEBUG, "SuperXLoader: BlockID: ", pText);
+		logger->Log(Logger::DEBUG, "SuperXLoader: BlockID: " + pText);
 
 		if (fin.eof())
 		{
@@ -204,32 +209,32 @@ namespace pengine
 
 		for (int i = 0; i < MAX_TEMPLATES; ++i)
 		{
-			Pos = pText.find(Templates[i].TxtID);
-			if (Pos > -1)
+			pos = pText.find(templates[i].textID);
+			if (pos > -1)
 			{
 				fin.get(); //eats the whitespace after the block name.
-				return Templates[i].TemplateID;
+				return templates[i].templateID;
 			}
 		}
-		logger->LogAll(Logger::DEBUG, "SuperXLoader: Unknown block: ", pText);
+		logger->Log(Logger::DEBUG, "SuperXLoader: Unknown block: " + pText);
 		return X_UNKNOWN;
 	}
 
-	void IO_Model_X::AvoidTemplate(void)
+	void SuperXLoader::AvoidTemplate(void)
 	{
 		logger->Log(Logger::DEBUG, "SuperXLoader: AvoidTemplate...");
-		char Token;
+		char token;
 
 		fin.ignore(TEXT_BUFFER, '{');
 
 		while (!fin.eof()){
-			Token = fin.peek();
-			if (Token == '{')
+			token = fin.peek();
+			if (token == '{')
 			{
 				logger->Log(Logger::DEBUG, "SuperXLoader: Recursive AvoidTemplate:");
 				AvoidTemplate();
 			}
-			if (Token == '}')
+			if (token == '}')
 			{
 				fin.get();
 				return;
@@ -238,12 +243,12 @@ namespace pengine
 		}
 	}
 
-	void IO_Model_X::Find(uchar pChar)
+	void SuperXLoader::Find(uchar pChar)
 	{
 		fin.ignore(TEXT_BUFFER, pChar);
 	}
 
-	char* IO_Model_X::SetUID(char pType)
+	char* SuperXLoader::SetUID(char pType)
 	{
 		//This is a quick hack to derive a Unique ID for blocks with
 		//no identifier names like in the tiny_4anim.x example.
@@ -273,65 +278,63 @@ namespace pengine
 		return _X_UID.Text;
 	}
 
-	//////////////////////////////////////////////////////////
-	//
-	//       TRANSFORM MATRIX
-	//
-	//////////////////////////////////////////////////////////
-
-	void IO_Model_X::ProcessFrameTransformMatrix(Bone* &pB)
+	void SuperXLoader::ProcessFrameTransformMatrix(Bone* &pB)
 	{
-		char Text[TEXT_BUFFER];
+		char text[TEXT_BUFFER];
 
 		Find('{');
 		for (int i = 0; i < 15; ++i)
 		{
-			fin.getline(Text, TEXT_BUFFER, ',');
-			pB->_MatrixPos[i] = TextToNum(Text);
+			fin.getline(text, TEXT_BUFFER, ',');
+			pB->_MatrixPos[i] = TextToNum(text);
 		}
-		fin.getline(Text, TEXT_BUFFER, ';');
-		pB->_MatrixPos[15] = TextToNum(Text);
+		fin.getline(text, TEXT_BUFFER, ';');
+		pB->_MatrixPos[15] = TextToNum(text);
 		//   pB->_TransMatrix = pB->_MatrixPos;
 		Find('}');
 	}
 
-	//////////////////////////////////////////////////////////
-	//
-	//       BONE WITHIN SKELETTON
-	//
-	//////////////////////////////////////////////////////////
-
-	void IO_Model_X::ProcessBone(Bone* pBone)
+	void SuperXLoader::ProcessBone(Bone* pBone)
 	{
 		Bone* cBone;
-		int16 Token;
-		char Data[TEXT_BUFFER];
+		int16 token;
+		char data[TEXT_BUFFER];
 
 		cBone = new Bone();
 
-		Token = fin.peek();
-		if (Token != '{')
+		token = fin.peek();
+		if (token != '{')
+		{
 			fin >> cBone->_Name;
+		}
 		else
+		{
 			cBone->_Name = SetUID('B');
+		}
+
+		if (unlinkedSkinnedBones[cBone->_Name] != NULL)
+		{
+			logger->Log(Logger::DEBUG, "We found a bone that we already have some skinweights for! The bone is: " + cBone->_Name);
+			cBone = unlinkedSkinnedBones[cBone->_Name];
+		}
 
 		if (pBone == 0)
 		{
-			logger->LogAll(Logger::DEBUG, "SuperXLoader: Skeleton 1st bone: ", cBone->_Name);
+			logger->Log(Logger::DEBUG, "SuperXLoader: Skeleton 1st bone: " + cBone->_Name);
 			_LoadSkeletton = cBone;
 			_Object->_Skeletton = _LoadSkeletton;
 		}
 		else
 		{
-			logger->LogAll(Logger::DEBUG, "SuperXLoader: ", pBone->_Name, "->" + cBone->_Name);
+			logger->Log(Logger::DEBUG, "SuperXLoader: " + pBone->_Name + "->" + cBone->_Name);
 			pBone->_Bones.push_back(cBone);
 		}
 		Find('{');
-		Token = X_OBRACE;
-		while (Token != X_EBRACE)
+		token = X_OBRACE;
+		while (token != X_EBRACE)
 		{
-			Token = ProcessBlock();
-			switch (Token)
+			token = ProcessBlock();
+			switch (token)
 			{
 			case X_COMMENT:
 				break; //used for spaces and other kind of comments
@@ -339,8 +342,8 @@ namespace pengine
 				return; //this is the end, my only friend ...
 				break;
 			case X_OBRACE:
-				fin.getline(Data, TEXT_BUFFER, '}');
-				cBone->_MeshName = Data;
+				fin.getline(data, TEXT_BUFFER, '}');
+				cBone->_MeshName = data;
 				break;
 			case X_FRAME:
 				ProcessBone(cBone);
@@ -359,19 +362,17 @@ namespace pengine
 		}
 	}
 
-	//////////////////////////////////////////////////////////
-	//
-	//       MESH
-	//
-	//////////////////////////////////////////////////////////
-
-	void IO_Model_X::ProcessMesh(void)
+	void SuperXLoader::ProcessMesh(void)
 	{
+		/*if (_LoadMesh != NULL)
+		{
+			_Object->_Meshes.push_back(_LoadMesh);
+		}*/
 		_LoadMesh = new Mesh();
 
-		std::string Text;
-		int16 Token;
-		char Data[TEXT_BUFFER];
+		std::string text;
+		int16 token;
+		char data[TEXT_BUFFER];
 
 
 		if (!_Object->_Meshes.empty())
@@ -391,15 +392,15 @@ namespace pengine
 				_LoadMesh->_FirstNormal = _LoadMesh->_FirstVertex;
 			}
 
-			logger->LogAll(Logger::DEBUG, "SuperXLoader: Starting Vertex index: ", _LoadMesh->_FirstVertex);
-			logger->LogAll(Logger::DEBUG, "SuperXLoader: Starting Face index: ", _LoadMesh->_FirstFace);
-			logger->LogAll(Logger::DEBUG, "SuperXLoader: Starting TextureCoord index: ", _LoadMesh->_FirstTextureCoord);
-			logger->LogAll(Logger::DEBUG, "SuperXLoader: Starting Normal index: ", _LoadMesh->_FirstNormal);
-			logger->LogAll(Logger::DEBUG, "SuperXLoader: Starting Material index: ", _LoadMesh->_FirstMaterial);
+			logger->Log(Logger::DEBUG, "SuperXLoader: Starting Vertex index: " + std::to_string(_LoadMesh->_FirstVertex));
+			logger->Log(Logger::DEBUG, "SuperXLoader: Starting Face index: " + std::to_string(_LoadMesh->_FirstFace));
+			logger->Log(Logger::DEBUG, "SuperXLoader: Starting TextureCoord index: " + std::to_string(_LoadMesh->_FirstTextureCoord));
+			logger->Log(Logger::DEBUG, "SuperXLoader: Starting Normal index: " + std::to_string(_LoadMesh->_FirstNormal));
+			logger->Log(Logger::DEBUG, "SuperXLoader: Starting Material index: " + std::to_string(_LoadMesh->_FirstMaterial));
 		}
 
-		Token = fin.peek();
-		if (Token != '{')
+		token = fin.peek();
+		if (token != '{')
 		{
 			fin >> _LoadMesh->_Name;
 		}
@@ -409,47 +410,47 @@ namespace pengine
 		}
 
 		Find('{');
-		logger->LogAll(Logger::DEBUG, "SuperXLoader: Mesh: ", _LoadMesh->_Name);
+		logger->Log(Logger::DEBUG, "SuperXLoader: Mesh: " + _LoadMesh->_Name);
 
-		fin.getline(Data, TEXT_BUFFER, ';');
-		_LoadMesh->_nVertices = (uint16)TextToNum(Data);
-		logger->LogAll(Logger::DEBUG, "SuperXLoader: Number of vertices: ", _LoadMesh->_nVertices);
+		fin.getline(data, TEXT_BUFFER, ';');
+		_LoadMesh->_nVertices = (uint16)TextToNum(data);
+		logger->Log(Logger::DEBUG, "SuperXLoader: Number of vertices: " + std::to_string(_LoadMesh->_nVertices));
 		_LoadMesh->_Vertices = new Vertex[_LoadMesh->_nVertices];
 		//   _LoadMesh->_SkinnedVertices = new Frm::Vertex[_LoadMesh->_nVertices];
 		for (int i = 0; i < _LoadMesh->_nVertices; ++i)
 		{
-			fin.getline(Data, TEXT_BUFFER, ';');
-			_LoadMesh->_Vertices[i].x = TextToNum(Data);
-			fin.getline(Data, TEXT_BUFFER, ';');
-			_LoadMesh->_Vertices[i].y = TextToNum(Data);
-			fin.getline(Data, TEXT_BUFFER, ';');
-			_LoadMesh->_Vertices[i].z = TextToNum(Data);
+			fin.getline(data, TEXT_BUFFER, ';');
+			_LoadMesh->_Vertices[i].x = TextToNum(data);
+			fin.getline(data, TEXT_BUFFER, ';');
+			_LoadMesh->_Vertices[i].y = TextToNum(data);
+			fin.getline(data, TEXT_BUFFER, ';');
+			_LoadMesh->_Vertices[i].z = TextToNum(data);
 			fin.get();//eats either the comma or the semicolon at the end of each vertex description
 		}
 
-		fin.getline(Data, TEXT_BUFFER, ';');
-		_LoadMesh->_nFaces = (uint16)TextToNum(Data);
-		logger->LogAll(Logger::DEBUG, "SuperXLoader: Number of Faces: ", _LoadMesh->_nFaces);
+		fin.getline(data, TEXT_BUFFER, ';');
+		_LoadMesh->_nFaces = (uint16)TextToNum(data);
+		logger->Log(Logger::DEBUG, "SuperXLoader: Number of Faces: " + std::to_string(_LoadMesh->_nFaces));
 		_LoadMesh->_Faces = new Face[_LoadMesh->_nFaces]();
 		for (uint32 i = 0; i < _LoadMesh->_nFaces; ++i)
 		{
 			Find(';');
-			fin.getline(Data, TEXT_BUFFER, ',');
-			_LoadMesh->_Faces[i].data[0] = (uint16)TextToNum(Data);
-			fin.getline(Data, TEXT_BUFFER, ',');
-			_LoadMesh->_Faces[i].data[1] = (uint16)TextToNum(Data);
-			fin.getline(Data, TEXT_BUFFER, ';');
-			_LoadMesh->_Faces[i].data[2] = (uint16)TextToNum(Data);
+			fin.getline(data, TEXT_BUFFER, ',');
+			_LoadMesh->_Faces[i].data[0] = (uint16)TextToNum(data);
+			fin.getline(data, TEXT_BUFFER, ',');
+			_LoadMesh->_Faces[i].data[1] = (uint16)TextToNum(data);
+			fin.getline(data, TEXT_BUFFER, ';');
+			_LoadMesh->_Faces[i].data[2] = (uint16)TextToNum(data);
 			fin.get(); //eats either the comma or the semicolon at the end of each face description
 
 			//logger->LogAll(Logger::DEBUG, "SuperXLoader: Face ", std::to_string(i), ": ", std::to_string(_LoadMesh->_Faces[i].data[0]), " ", std::to_string(_LoadMesh->_Faces[i].data[1]), " ", std::to_string(_LoadMesh->_Faces[i].data[2]));
 		}
 
-		Token = X_COMMENT;
-		while (Token != X_EBRACE)//might as well be while(true)...
+		token = X_COMMENT;
+		while (token != X_EBRACE)//might as well be while(true)...
 		{
-			Token = ProcessBlock();
-			switch (Token)
+			token = ProcessBlock();
+			switch (token)
 			{
 			case X_COMMENT:
 				break; //used for spaces and other kind of comments
@@ -483,28 +484,24 @@ namespace pengine
 		_Object->_Meshes.push_back(_LoadMesh);
 	}
 
-	//////////////////////////////////////////////////////////
-	//
-	//       TEXTURE COORDS
-	//
-	//////////////////////////////////////////////////////////
-
-	void IO_Model_X::ProcessMeshTextureCoords(void)
+	void SuperXLoader::ProcessMeshTextureCoords(void)
 	{
-		char Data[TEXT_BUFFER];
+		char data[TEXT_BUFFER];
 
 		Find('{');
 
-		fin.getline(Data, TEXT_BUFFER, ';');
-		_LoadMesh->_nTextureCoords = (uint16)TextToNum(Data);
-		logger->LogAll(Logger::DEBUG, "SuperXLoader: Number of Texture Coords: ", _LoadMesh->_nTextureCoords);
+		fin.getline(data, TEXT_BUFFER, ';');
+		_LoadMesh->_nTextureCoords = (uint16)TextToNum(data);
+		//logger->Log(Logger::DEBUG, "SuperXLoader: Number of Texture Coords: " + _LoadMesh->_nTextureCoords);
 		_LoadMesh->_TextureCoords = new TCoord[_LoadMesh->_nTextureCoords];
 		for (int i = 0; i < _LoadMesh->_nTextureCoords; ++i)
 		{
-			fin.getline(Data, TEXT_BUFFER, ';');
-			_LoadMesh->_TextureCoords[i].data[0] = TextToNum(Data);
-			fin.getline(Data, TEXT_BUFFER, ';');
-			_LoadMesh->_TextureCoords[i].data[1] = TextToNum(Data);
+			fin.getline(data, TEXT_BUFFER, ';');
+			//_LoadMesh->_TextureCoords[i].data[0] = TextToNum(data);
+			_LoadMesh->_Vertices[i].tu = TextToNum(data);
+			fin.getline(data, TEXT_BUFFER, ';');
+			//_LoadMesh->_TextureCoords[i].data[1] = TextToNum(data);
+			_LoadMesh->_Vertices[i].tv = TextToNum(data);
 			fin.get();//eats the comma or the semicolon at the end
 		}
 		Find('}');
@@ -516,23 +513,23 @@ namespace pengine
 	//
 	//////////////////////////////////////////////////////////
 
-	void IO_Model_X::ProcessMeshNormals(void)
+	void SuperXLoader::ProcessMeshNormals(void)
 	{
-		char Data[TEXT_BUFFER];
+		char data[TEXT_BUFFER];
 
 		Find('{');
-		fin.getline(Data, TEXT_BUFFER, ';');
-		_LoadMesh->_nNormals = (uint16)TextToNum(Data);
-		logger->LogAll(Logger::DEBUG, "SuperXLoader: Number of normals: ", _LoadMesh->_nNormals);
+		fin.getline(data, TEXT_BUFFER, ';');
+		_LoadMesh->_nNormals = (uint16)TextToNum(data);
+		logger->Log(Logger::DEBUG, "SuperXLoader: Number of normals: " + std::to_string(_LoadMesh->_nNormals));
 		_LoadMesh->_Normals = new Vector<float>[_LoadMesh->_nNormals];
 		for (int i = 0; i < _LoadMesh->_nNormals; ++i)
 		{
-			fin.getline(Data, TEXT_BUFFER, ';');
-			_LoadMesh->_Normals[i].x = TextToNum(Data);
-			fin.getline(Data, TEXT_BUFFER, ';');
-			_LoadMesh->_Normals[i].y = TextToNum(Data);
-			fin.getline(Data, TEXT_BUFFER, ';');
-			_LoadMesh->_Normals[i].z = TextToNum(Data);
+			fin.getline(data, TEXT_BUFFER, ';');
+			_LoadMesh->_Normals[i].x = TextToNum(data);
+			fin.getline(data, TEXT_BUFFER, ';');
+			_LoadMesh->_Normals[i].y = TextToNum(data);
+			fin.getline(data, TEXT_BUFFER, ';');
+			_LoadMesh->_Normals[i].z = TextToNum(data);
 			fin.get();//eats the comma or the semicolon at the end
 		}
 
@@ -540,12 +537,12 @@ namespace pengine
 		for (uint32 i = 0; i < _LoadMesh->_nFaces; ++i)
 		{
 			Find(';');
-			fin.getline(Data, TEXT_BUFFER, ',');
-			_LoadMesh->_FaceNormals[i].data[0] = (uint16)TextToNum(Data);
-			fin.getline(Data, TEXT_BUFFER, ',');
-			_LoadMesh->_FaceNormals[i].data[1] = (uint16)TextToNum(Data);
-			fin.getline(Data, TEXT_BUFFER, ';');
-			_LoadMesh->_FaceNormals[i].data[2] = (uint16)TextToNum(Data);
+			fin.getline(data, TEXT_BUFFER, ',');
+			_LoadMesh->_FaceNormals[i].data[0] = (uint16)TextToNum(data);
+			fin.getline(data, TEXT_BUFFER, ',');
+			_LoadMesh->_FaceNormals[i].data[1] = (uint16)TextToNum(data);
+			fin.getline(data, TEXT_BUFFER, ';');
+			_LoadMesh->_FaceNormals[i].data[2] = (uint16)TextToNum(data);
 			fin.get(); //eats either the comma or the semicolon at the end of each face description
 			//logger->LogAll(Logger::DEBUG, "SuperXLoader: Face Normal index ", std::to_string(i) + ": ", std::to_string(_LoadMesh->_FaceNormals[i].data[0]), " ", std::to_string(_LoadMesh->_FaceNormals[i].data[1]), " ", std::to_string(_LoadMesh->_FaceNormals[i].data[2]));
 		}
@@ -553,52 +550,53 @@ namespace pengine
 		Find('}');
 	}
 
-
-	//////////////////////////////////////////////////////////
-	//
-	//       MATERIALS USED IN MESH
-	//
-	//////////////////////////////////////////////////////////
-
-	void IO_Model_X::ProcessMeshMaterials(void)
+	void SuperXLoader::ProcessMeshMaterials()
 	{
-		std::string Text;
-		int16 Token;
-		char Data[TEXT_BUFFER];
+		int16 token;
+		char data[TEXT_BUFFER];
 
 		Find('{');
 
-		fin.getline(Data, TEXT_BUFFER, ';');
-		_LoadMesh->_nMaterials = (uint16)TextToNum(Data);
-		logger->LogAll(Logger::DEBUG, "SuperXLoader: Number of Materials: ", _LoadMesh->_nMaterials);
+		fin.getline(data, TEXT_BUFFER, ';');
+		_LoadMesh->_nMaterials = (uint16)TextToNum(data);
+		logger->Log(Logger::DEBUG, "SuperXLoader: Number of Materials: " + std::to_string(_LoadMesh->_nMaterials));
 
-		fin.getline(Data, TEXT_BUFFER, ';');
-		int nfaces = (uint16)TextToNum(Data);
-		_LoadMesh->_FaceMaterials = new uint16[nfaces];
-		for (uint32 i = 0; i < nfaces - 1; i++)
+		fin.getline(data, TEXT_BUFFER, ';');
+		int nFaces = (uint16)TextToNum(data);
+		_LoadMesh->_FaceMaterials = new uint16[nFaces];
+		for (uint32 i = 0; i < nFaces - 1; i++)
 		{
-			fin.getline(Data, TEXT_BUFFER, ',');
-			_LoadMesh->_FaceMaterials[i] = (uint16)TextToNum(Data);
+			fin.getline(data, TEXT_BUFFER, ',');
+			_LoadMesh->_FaceMaterials[i] = (uint16)TextToNum(data);
 		}
-		fin.getline(Data, TEXT_BUFFER, ';');
-		_LoadMesh->_FaceMaterials[_LoadMesh->_nFaces - 1] = (uint16)TextToNum(Data);
+		fin.getline(data, TEXT_BUFFER, ';');
+		_LoadMesh->_FaceMaterials[nFaces - 1] = (uint16)TextToNum(data);
 		if (fin.peek() == ';')
 		{
 			fin.get(); //eats the last semicolon if it's there
 		}
 
-		Token = X_COMMENT;
-		while (Token != X_EBRACE)
+		token = X_COMMENT;
+		while (token != X_EBRACE)
 		{
-			Token = ProcessBlock();
-			switch (Token)
+			token = ProcessBlock();
+			switch (token)
 			{
 			case X_OBRACE:
 				Find('{');
-				fin.getline(Data, TEXT_BUFFER, '}');
+				if (fin.peek() == ' ')
+				{
+					fin.get();
+				}
+				fin.getline(data, TEXT_BUFFER, ' ');
 				//NewMaterial->texturePath = Data;
-				logger->LogAll(Logger::DEBUG, "SuperXLoader: Interesting OBRACE that we should propbably handle: ", Data);
-				//Find('}');
+				logger->Log(Logger::DEBUG, "SuperXLoader: Interesting OBRACE that we should probably handle: " + std::string(data));
+				if (globalMaterials[std::string(data)] != NULL)
+				{
+					logger->Log(Logger::DEBUG, "SuperXLoader: We found a material that is globally known!");
+					_LoadMesh->_Materials.push_back(globalMaterials[std::string(data)]);//we don't have to do anything with special numbers to indicate which face uses which material, as it's always in order.
+				}
+				Find('}');
 				break;
 			case X_COMMENT:
 				break; //used for spaces and other kind of comments
@@ -606,8 +604,8 @@ namespace pengine
 				return; //this is the end, my only friend ...
 				break;
 			case X_MATERIAL:
-				ProcessMaterial();
-				logger->LogAll(Logger::DEBUG, "SuperXLoader: done processing a material...");
+				ProcessMaterial(false);
+				logger->Log(Logger::DEBUG, "SuperXLoader: done processing a non-global material...");
 				break;
 			default:
 				AvoidTemplate();
@@ -616,71 +614,80 @@ namespace pengine
 		}
 	}
 
-	//////////////////////////////////////////////////////////
-	//
-	//       MATERIAL DESCRIPTION
-	//
-	//////////////////////////////////////////////////////////
-
-	void IO_Model_X::ProcessMaterial(void)
+	void SuperXLoader::ProcessMaterial(bool global)
 	{
-		std::string Text;
-		int16 Token;
-		char Data[TEXT_BUFFER];
+		int16 token;
+		char data[TEXT_BUFFER];
 
 		Material* NewMaterial = new Material;
 
+		if (fin.peek() != '{')
+		{
+			fin >> NewMaterial->name;
+		}
+		else
+		{
+			NewMaterial->name = "Random glitters";
+		}
+
 		Find('{');
 
-		fin.getline(Data, TEXT_BUFFER, ';');
-		NewMaterial->diffuse.r = TextToNum(Data);
-		fin.getline(Data, TEXT_BUFFER, ';');
-		NewMaterial->diffuse.g = TextToNum(Data);
-		fin.getline(Data, TEXT_BUFFER, ';');
-		NewMaterial->diffuse.b = TextToNum(Data);
-		fin.getline(Data, TEXT_BUFFER, ';');
-		NewMaterial->diffuse.a = TextToNum(Data);
+		fin.getline(data, TEXT_BUFFER, ';');
+		NewMaterial->diffuse.r = TextToNum(data);
+		fin.getline(data, TEXT_BUFFER, ';');
+		NewMaterial->diffuse.g = TextToNum(data);
+		fin.getline(data, TEXT_BUFFER, ';');
+		NewMaterial->diffuse.b = TextToNum(data);
+		fin.getline(data, TEXT_BUFFER, ';');
+		NewMaterial->diffuse.a = TextToNum(data);
 
 		fin.get(); //eats the last semicolon
-		fin.getline(Data, TEXT_BUFFER, ';');
-		NewMaterial->power = TextToNum(Data);
+		fin.getline(data, TEXT_BUFFER, ';');
+		NewMaterial->power = TextToNum(data);
 
-		fin.getline(Data, TEXT_BUFFER, ';');
-		NewMaterial->specular.r = TextToNum(Data);
-		fin.getline(Data, TEXT_BUFFER, ';');
-		NewMaterial->specular.g = TextToNum(Data);
-		fin.getline(Data, TEXT_BUFFER, ';');
-		NewMaterial->specular.b = TextToNum(Data);
-
-		fin.get();//eats the last semicolon
-
-		fin.getline(Data, TEXT_BUFFER, ';');
-		NewMaterial->emissive.r = TextToNum(Data);
-		fin.getline(Data, TEXT_BUFFER, ';');
-		NewMaterial->emissive.g = TextToNum(Data);
-		fin.getline(Data, TEXT_BUFFER, ';');
-		NewMaterial->emissive.b = TextToNum(Data);
+		fin.getline(data, TEXT_BUFFER, ';');
+		NewMaterial->specular.r = TextToNum(data);
+		fin.getline(data, TEXT_BUFFER, ';');
+		NewMaterial->specular.g = TextToNum(data);
+		fin.getline(data, TEXT_BUFFER, ';');
+		NewMaterial->specular.b = TextToNum(data);
 
 		fin.get();//eats the last semicolon
 
-		Token = X_COMMENT;
-		while (Token != X_EBRACE)
+		fin.getline(data, TEXT_BUFFER, ';');
+		NewMaterial->emissive.r = TextToNum(data);
+		fin.getline(data, TEXT_BUFFER, ';');
+		NewMaterial->emissive.g = TextToNum(data);
+		fin.getline(data, TEXT_BUFFER, ';');
+		NewMaterial->emissive.b = TextToNum(data);
+
+		fin.get();//eats the last semicolon
+
+		token = X_COMMENT;
+		while (token != X_EBRACE)
 		{
-			Token = ProcessBlock();
-			switch (Token)
+			token = ProcessBlock();
+			switch (token)
 			{
 			case X_COMMENT:
 				break; //used for spaces and other kind of comments
 			case X_EBRACE:
-				_LoadMesh->_Materials.push_back(NewMaterial);
+				if (global)
+				{
+					globalMaterials[NewMaterial->name] = NewMaterial;
+				}
+				else
+				{
+					_LoadMesh->_Materials.push_back(NewMaterial);
+				}
 				return; //this is the end, my only friend ...
 				break;
 			case X_TEXTUREFILENAME:
 				Find('{');
 				Find('"');
-				fin.getline(Data, TEXT_BUFFER, '"');
-				NewMaterial->texturePath = Data;
-				logger->LogAll(Logger::DEBUG, "SuperXLoader: texturePath: ", Data);
+				fin.getline(data, TEXT_BUFFER, '"');
+				NewMaterial->texturePath = data;
+				logger->Log(Logger::DEBUG, "SuperXLoader: texturePath: " + std::string(data));
 				Find('}');
 				break;
 			default:
@@ -691,81 +698,73 @@ namespace pengine
 		_LoadMesh->_Materials.push_back(NewMaterial);
 	}
 
-	//////////////////////////////////////////////////////////
-	//
-	//       SKIN WEIGHTS
-	//
-	//////////////////////////////////////////////////////////
-	void IO_Model_X::ProcessSkinWeights(void)
+	void SuperXLoader::ProcessSkinWeights(void)
 	{
 		Bone* cBone;
 		std::string temp;
-		char Data[TEXT_BUFFER];
+		char data[TEXT_BUFFER];
 
 		Find('{');
 		Find('"');
-		fin.getline(Data, TEXT_BUFFER, '"');
-		temp = Data;
+		fin.getline(data, TEXT_BUFFER, '"');
+		temp = data;
 		cBone = _LoadSkeletton->IsName(temp);
-		//   cBone->_Mesh = _LoadMesh;
-		logger->LogAll(Logger::DEBUG, "SuperXLoader: Skinning bone: ", cBone->_Name);
+		if (cBone == NULL)
+		{
+			logger->Log(Logger::DEBUG, "We found skinweights for bone " + temp + " but we don't have that bone yet!");
+			unlinkedSkinnedBones[temp] = new Bone();
+			cBone = unlinkedSkinnedBones[temp];
+			cBone->_Name = temp;
+			cBone->_MeshName = _LoadMesh->_Name;
+		}
+		logger->Log(Logger::DEBUG, "SuperXLoader: Skinning bone: " + cBone->_Name);
 		Find(';');
 
-		fin.getline(Data, TEXT_BUFFER, ';');
-		cBone->_nVertices = (uint16)TextToNum(Data);
+		fin.getline(data, TEXT_BUFFER, ';');
+		cBone->_nVertices = (uint16)TextToNum(data);
 		cBone->_Vertices = new uint16[cBone->_nVertices];
 		for (uint32 i = 0; i < cBone->_nVertices - 1; ++i)
 		{
-			fin.getline(Data, TEXT_BUFFER, ',');
-			cBone->_Vertices[i] = (uint16)TextToNum(Data);
+			fin.getline(data, TEXT_BUFFER, ',');
+			cBone->_Vertices[i] = (uint16)TextToNum(data);
 			//logger->LogAll(Logger::DEBUG, "SuperXLoader: Vertex: ", atoi(Data));
 		}
-		fin.getline(Data, TEXT_BUFFER, ';');
-		cBone->_Vertices[cBone->_nVertices - 1] = (uint16)TextToNum(Data);
+		fin.getline(data, TEXT_BUFFER, ';');
+		cBone->_Vertices[cBone->_nVertices - 1] = (uint16)TextToNum(data);
 		//logger->LogAll(Logger::DEBUG, "SuperXLoader: Vertex: ", atoi(Data));
 
 		cBone->_Weights = new float[cBone->_nVertices];
 		for (uint32 i = 0; i < cBone->_nVertices - 1; ++i)
 		{
-			fin.getline(Data, TEXT_BUFFER, ',');
-			cBone->_Weights[i] = TextToNum(Data);
+			fin.getline(data, TEXT_BUFFER, ',');
+			cBone->_Weights[i] = TextToNum(data);
 			//      MYTRACE("Weight:", atof(Data));/**/
 			//logger->LogAll(Logger::DEBUG, "SuperXLoader: Weight: ", atof(Data));
 		}
-		fin.getline(Data, TEXT_BUFFER, ';');
-		cBone->_Weights[cBone->_nVertices - 1] = TextToNum(Data);
+		fin.getline(data, TEXT_BUFFER, ';');
+		cBone->_Weights[cBone->_nVertices - 1] = TextToNum(data);
 		//   MYTRACE("Weight:", atof(Data));/**/
-		logger->LogAll(Logger::DEBUG, "SuperXLoader: Weight: ", atof(Data));
+		logger->Log(Logger::DEBUG, "SuperXLoader: Weight: " + std::to_string(atof(data)));
 
 		for (int i = 0; i < 15; ++i)
 		{
-			fin.getline(Data, TEXT_BUFFER, ',');
-			cBone->_SkinOffset[i] = TextToNum(Data);
+			fin.getline(data, TEXT_BUFFER, ',');
+			cBone->_SkinOffset[i] = TextToNum(data);
 		}
-		fin.getline(Data, TEXT_BUFFER, ';');
-		cBone->_SkinOffset[15] = TextToNum(Data);
+		fin.getline(data, TEXT_BUFFER, ';');
+		cBone->_SkinOffset[15] = TextToNum(data);
 		Find('}');
 	}
 
-	/*************************************************
-	NEW- NEW- NEW- NEW- NEW- NEW- NEW- NEW- NEW- NEW*/
-
-	//////////////////////////////////////////////////////////
-	//
-	//       ANIMATION SET
-	//
-	//////////////////////////////////////////////////////////
-	void IO_Model_X::ProcessAnimationSets(void)
+	void SuperXLoader::ProcessAnimationSets(void)
 	{
-		//   std::string Text;
-		int16 Token;
-		//   char Data[TEXT_BUFFER];
+		int16 token;
 
 		_MaxKey = 0;
 		_LoadAnimationSet = new AnimationSet;
 
-		Token = fin.peek();
-		if (Token != '{')
+		token = fin.peek();
+		if (token != '{')
 		{
 			fin >> _LoadAnimationSet->_Name;
 		}
@@ -775,19 +774,19 @@ namespace pengine
 		}
 
 		Find('{');
-		logger->LogAll(Logger::DEBUG, "SuperXLoader: Animation Set: ", _LoadAnimationSet->_Name);
+		logger->Log(Logger::DEBUG, "SuperXLoader: Animation Set: " + _LoadAnimationSet->_Name);
 
-		Token = X_COMMENT;
-		while (Token != X_EBRACE)
+		token = X_COMMENT;
+		while (token != X_EBRACE)
 		{
-			Token = ProcessBlock();
-			switch (Token)
+			token = ProcessBlock();
+			switch (token)
 			{
 			case X_COMMENT:
 				break; //used for spaces and other kind of comments
 			case X_EBRACE:
 				_LoadAnimationSet->_MaxKey = _MaxKey;
-				logger->LogAll(Logger::DEBUG, "SuperXLoader: MaxKey: ", _MaxKey);
+				logger->Log(Logger::DEBUG, "SuperXLoader: MaxKey: " + std::to_string(_MaxKey));
 				_Object->_AnimationSets.push_back(_LoadAnimationSet);
 				return; //this is the end, my only friend ...
 			case X_ANIMATION:
@@ -799,196 +798,178 @@ namespace pengine
 			}
 		}
 		_LoadAnimationSet->_MaxKey = _MaxKey;
-		logger->LogAll(Logger::DEBUG, "SuperXLoader: MaxKey: ", _MaxKey);
+		logger->Log(Logger::DEBUG, "SuperXLoader: MaxKey: " + std::to_string(_MaxKey));
 		_Object->_AnimationSets.push_back(_LoadAnimationSet);
 	}
 
-	//////////////////////////////////////////////////////////
-	//
-	//       ANIMATION
-	//
-	//////////////////////////////////////////////////////////
-	void IO_Model_X::ProcessAnimations(AnimationSet* &pAS)
+	void SuperXLoader::ProcessAnimations(AnimationSet* &pAS)
 	{
-		int16 Token;
-		char Data[TEXT_BUFFER];
-		Animation* TempAnimation = new Animation;
+		int16 token;
+		char data[TEXT_BUFFER];
+		Animation* tempAnimation = new Animation;
 
 		Find('{');
 
-		Token = X_COMMENT;
-		while (Token != X_EBRACE)
+		token = X_COMMENT;
+		while (token != X_EBRACE)
 		{
-			Token = ProcessBlock();
-			switch (Token)
+			token = ProcessBlock();
+			switch (token)
 			{
 			case X_COMMENT:
 				break; //used for spaces and other kind of comments
 			case X_EBRACE:
-				pAS->_Animations.push_back(TempAnimation);
+				pAS->_Animations.push_back(tempAnimation);
 				return; //this is the end, my only friend ...
 				break;
 			case X_OBRACE:
 				Find('{');
-				fin.getline(Data, TEXT_BUFFER, '}');
-				Remove(' ', Data);
-				TempAnimation->_BoneName = Data;
-				logger->LogAll(Logger::DEBUG, "SuperXLoader: Animated Bone: ", TempAnimation->_BoneName);
+				fin.getline(data, TEXT_BUFFER, '}');
+				Remove(' ', data);
+				tempAnimation->_BoneName = data;
+				logger->Log(Logger::DEBUG, "SuperXLoader: Animated Bone: " + tempAnimation->_BoneName);
 				break;
 			case X_ANIMATIONKEY:
-				ProcessAnimationKeys(TempAnimation);
+				ProcessAnimationKeys(tempAnimation);
 				break;
 			default:
 				AvoidTemplate(); break;
 			}
 		}
-		pAS->_Animations.push_back(TempAnimation);
+		pAS->_Animations.push_back(tempAnimation);
 	}
 
-	//////////////////////////////////////////////////////////
-	//
-	//       ANIMATION KEY
-	//
-	//////////////////////////////////////////////////////////
-	void IO_Model_X::ProcessAnimationKeys(Animation* &pA)
+	void SuperXLoader::ProcessAnimationKeys(Animation* &pA)
 	{
-		int Type, Size;
-		char Data[TEXT_BUFFER];
-		RotateKey* 	TempRot;
-		ScaleKey*	   TempScale;
-		PositionKey* TempPos;
-		MatrixKey*	TempMatrix;
+		int type, size;
+		char data[TEXT_BUFFER];
+		RotateKey* tempRot;
+		ScaleKey* tempScale;
+		PositionKey* tempPos;
+		MatrixKey* tempMatrix;
 
 		Find('{');
-		fin.getline(Data, TEXT_BUFFER, ';');
-		Type = (uint16)atoi(Data);
-		fin.getline(Data, TEXT_BUFFER, ';');
-		Size = (uint16)atoi(Data);
+		fin.getline(data, TEXT_BUFFER, ';');
+		type = (uint16)atoi(data);
+		fin.getline(data, TEXT_BUFFER, ';');
+		size = (uint16)atoi(data);
 
-		switch (Type)
+		switch (type)
 		{
 		case 0:
-			logger->LogAll(Logger::DEBUG, "SuperXLoader: ", Size, " Rotation Keys");
-			pA->_Rotations.reserve(Size);
-			while (Size--)
+			logger->Log(Logger::DEBUG, "SuperXLoader: " + std::to_string(size) + " Rotation Keys");
+			pA->_Rotations.reserve(size);
+			while (size--)
 			{
-				TempRot = new RotateKey;
-				fin.getline(Data, TEXT_BUFFER, ';');
-				TempRot->Time = (uint16)TextToNum(Data);
-				if (TempRot->Time > _MaxKey)
+				tempRot = new RotateKey;
+				fin.getline(data, TEXT_BUFFER, ';');
+				tempRot->Time = (uint16)TextToNum(data);
+				if (tempRot->Time > _MaxKey)
 				{
-					_MaxKey = TempRot->Time;
+					_MaxKey = tempRot->Time;
 				}
 				Find(';');
-				fin.getline(Data, TEXT_BUFFER, ',');
-				TempRot->Rotation[0] = TextToNum(Data);
-				fin.getline(Data, TEXT_BUFFER, ',');
-				TempRot->Rotation[1] = TextToNum(Data);
-				fin.getline(Data, TEXT_BUFFER, ',');
-				TempRot->Rotation[2] = TextToNum(Data);
-				fin.getline(Data, TEXT_BUFFER, ';');
-				TempRot->Rotation[3] = TextToNum(Data);
+				fin.getline(data, TEXT_BUFFER, ',');
+				tempRot->Rotation[0] = TextToNum(data);
+				fin.getline(data, TEXT_BUFFER, ',');
+				tempRot->Rotation[1] = TextToNum(data);
+				fin.getline(data, TEXT_BUFFER, ',');
+				tempRot->Rotation[2] = TextToNum(data);
+				fin.getline(data, TEXT_BUFFER, ';');
+				tempRot->Rotation[3] = TextToNum(data);
 				Find(';');
 				fin.get();
-				pA->_Rotations.push_back(TempRot);
+				pA->_Rotations.push_back(tempRot);
 			}
 			break;
 		case 1:
-			logger->LogAll(Logger::DEBUG, "SuperXLoader: ", Size, " Scaling Keys");
-			pA->_Scalings.reserve(Size);
-			while (Size--)
+			logger->Log(Logger::DEBUG, "SuperXLoader: " + std::to_string(size) + " Scaling Keys");
+			pA->_Scalings.reserve(size);
+			while (size--)
 			{
-				TempScale = new ScaleKey;
-				fin.getline(Data, TEXT_BUFFER, ';');
-				TempScale->Time = (uint16)TextToNum(Data);
-				if (TempScale->Time > _MaxKey)
+				tempScale = new ScaleKey;
+				fin.getline(data, TEXT_BUFFER, ';');
+				tempScale->Time = (uint16)TextToNum(data);
+				if (tempScale->Time > _MaxKey)
 				{
-					_MaxKey = TempScale->Time;
+					_MaxKey = tempScale->Time;
 				}
 				Find(';');
-				fin.getline(Data, TEXT_BUFFER, ',');
-				TempScale->Scale.x = TextToNum(Data);
-				fin.getline(Data, TEXT_BUFFER, ',');
-				TempScale->Scale.y = TextToNum(Data);
-				fin.getline(Data, TEXT_BUFFER, ';');
-				TempScale->Scale.z = TextToNum(Data);
+				fin.getline(data, TEXT_BUFFER, ',');
+				tempScale->Scale.x = TextToNum(data);
+				fin.getline(data, TEXT_BUFFER, ',');
+				tempScale->Scale.y = TextToNum(data);
+				fin.getline(data, TEXT_BUFFER, ';');
+				tempScale->Scale.z = TextToNum(data);
 				Find(';');
 				fin.get();
-				pA->_Scalings.push_back(TempScale);
+				pA->_Scalings.push_back(tempScale);
 			}
 			break;
 		case 2:
-			logger->LogAll(Logger::DEBUG, "SuperXLoader: ", Size, " Position Keys");
-			pA->_Translations.reserve(Size);
-			while (Size--)
+			logger->Log(Logger::DEBUG, "SuperXLoader: " + std::to_string(size) + " Position Keys");
+			pA->_Translations.reserve(size);
+			while (size--)
 			{
-				TempPos = new PositionKey;
-				fin.getline(Data, TEXT_BUFFER, ';');
-				TempPos->Time = (uint16)TextToNum(Data);
-				if (TempPos->Time > _MaxKey)
+				tempPos = new PositionKey;
+				fin.getline(data, TEXT_BUFFER, ';');
+				tempPos->Time = (uint16)TextToNum(data);
+				if (tempPos->Time > _MaxKey)
 				{
-					_MaxKey = TempPos->Time;
+					_MaxKey = tempPos->Time;
 				}
 				Find(';');
-				fin.getline(Data, TEXT_BUFFER, ',');
-				TempPos->Translation.x = TextToNum(Data);
-				fin.getline(Data, TEXT_BUFFER, ',');
-				TempPos->Translation.y = TextToNum(Data);
-				fin.getline(Data, TEXT_BUFFER, ';');
-				TempPos->Translation.z = TextToNum(Data);
+				fin.getline(data, TEXT_BUFFER, ',');
+				tempPos->Translation.x = TextToNum(data);
+				fin.getline(data, TEXT_BUFFER, ',');
+				tempPos->Translation.y = TextToNum(data);
+				fin.getline(data, TEXT_BUFFER, ';');
+				tempPos->Translation.z = TextToNum(data);
 				Find(';');
 				fin.get();
-				pA->_Translations.push_back(TempPos);
+				pA->_Translations.push_back(tempPos);
 			}
 			break;
 		case 4:
-			logger->LogAll(Logger::DEBUG, "SuperXLoader: ", Size, " Matrix Keys");
-			pA->_Matrices.reserve(Size);
-			while (Size--)
+			logger->Log(Logger::DEBUG, "SuperXLoader: " + std::to_string(size) + " Matrix Keys");
+			pA->_Matrices.reserve(size);
+			while (size--)
 			{
-				TempMatrix = new MatrixKey;
-				fin.getline(Data, TEXT_BUFFER, ';');
-				TempMatrix->Time = (uint16)TextToNum(Data);
-				if (TempMatrix->Time > _MaxKey)
+				tempMatrix = new MatrixKey;
+				fin.getline(data, TEXT_BUFFER, ';');
+				tempMatrix->Time = (uint16)TextToNum(data);
+				if (tempMatrix->Time > _MaxKey)
 				{
-					_MaxKey = TempMatrix->Time;
+					_MaxKey = tempMatrix->Time;
 				}
 				Find(';');
 				for (int i = 0; i < 15; ++i)
 				{
-					fin.getline(Data, TEXT_BUFFER, ',');
-					TempMatrix->Matrix[i] = TextToNum(Data);
+					fin.getline(data, TEXT_BUFFER, ',');
+					tempMatrix->Matrix[i] = TextToNum(data);
 				}
-				fin.getline(Data, TEXT_BUFFER, ';');
-				TempMatrix->Matrix[15] = TextToNum(Data);
+				fin.getline(data, TEXT_BUFFER, ';');
+				tempMatrix->Matrix[15] = TextToNum(data);
 				Find(';');
 				fin.get();
-				pA->_Matrices.push_back(TempMatrix);
+				pA->_Matrices.push_back(tempMatrix);
 			}
 			break;
 		default:
-			logger->LogAll(Logger::DEBUG, "SuperXLoader: Unknown Type: ", Type);
+			logger->Log(Logger::DEBUG, "SuperXLoader: Unknown Type: " + std::to_string(type));
 			break;
 		}
-
 		Find('}');
 	}
 
-	/***END*******************************************/
-
-	//////////////////////////////////////////////////////////
-	//
-	//       MAP MESH TO BONES
-	//
-	//////////////////////////////////////////////////////////
-	void IO_Model_X::MapMeshToBones(Bone* &pBone)
+	void SuperXLoader::MapMeshToBones(Bone* &pBone)
 	{
 		if (pBone->_MeshName.empty())
 		{
 			pBone->_MeshName = _LoadMesh->_Name;
 		}
 
-		logger->LogAll(Logger::DEBUG, "SuperXLoader: Bone ", pBone->_Name, " is linked to mesh ", pBone->_MeshName);
+		logger->Log(Logger::DEBUG, "SuperXLoader: Bone " + pBone->_Name + " is linked to mesh " + pBone->_MeshName);
 
 		if (!pBone->_Bones.empty())
 		{
@@ -1003,31 +984,31 @@ namespace pengine
 		}
 	}
 
-	void IO_Model_X::ProcessDeclData()
+	void SuperXLoader::ProcessDeclData()
 	{
-		/*logger->Log(Logger::DEBUG, "Processing DeclData...");
+		logger->Log(Logger::DEBUG, "Processing DeclData...");
 		Find('{');
 
 		int currentTextureCoordinateSet = 0;//needed if we find texture coordinates in our decldata block...
 
-		char Data[TEXT_BUFFER];
+		char data[TEXT_BUFFER];
 
-		fin.getline(Data, TEXT_BUFFER, ';');
-		unsigned int additionalVertexElements = (unsigned int)TextToNum(Data);
+		fin.getline(data, TEXT_BUFFER, ';');
+		unsigned int additionalVertexElements = (unsigned int)TextToNum(data);
 		int* declTypes = new int[additionalVertexElements];
 		int* declMethods = new int[additionalVertexElements];
 		int* declUsages = new int[additionalVertexElements];
 		int* declUsageIndices = new int[additionalVertexElements];
 		for (unsigned int i = 0; i < additionalVertexElements; ++i)
 		{
-			fin.getline(Data, TEXT_BUFFER, ';');
-			declTypes[i] = (int)TextToNum(Data);
-			fin.getline(Data, TEXT_BUFFER, ';');
-			declMethods[i] = (int)TextToNum(Data);//anything other than default is not supported by us...
-			fin.getline(Data, TEXT_BUFFER, ';');
-			declUsages[i] = (int)TextToNum(Data);
-			fin.getline(Data, TEXT_BUFFER, ';');
-			declUsageIndices[i] = (int)TextToNum(Data);//irrelevant for our scope?
+			fin.getline(data, TEXT_BUFFER, ';');
+			declTypes[i] = (int)TextToNum(data);
+			fin.getline(data, TEXT_BUFFER, ';');
+			declMethods[i] = (int)TextToNum(data);//anything other than default is not supported by us...
+			fin.getline(data, TEXT_BUFFER, ';');
+			declUsages[i] = (int)TextToNum(data);
+			fin.getline(data, TEXT_BUFFER, ';');
+			declUsageIndices[i] = (int)TextToNum(data);//irrelevant for our scope?
 			fin.get();//Eat , or ;
 			if (declMethods[i] != D3DDECLMETHOD_DEFAULT)
 			{
@@ -1056,23 +1037,21 @@ namespace pengine
 					method = "UNKNOWN";
 					break;
 				}
-				logger->LogAll(Logger::ERR, "SuperXLoader: DeclData(): D3DDECLMETHOD_", method, " is not supported! The only one supported is D3DDECLMETHOD_DEFAULT. Expect a load of errors!");
+				logger->Log(Logger::ERR, "SuperXLoader: DeclData(): D3DDECLMETHOD_" + method + " is not supported! The only one supported is D3DDECLMETHOD_DEFAULT. Expect a load of errors!");
 				Find('}');
 				return;
 			}
 		}
-		fin.getline(Data, TEXT_BUFFER, ';');
-		unsigned int amountOfDWORDS = (unsigned int)TextToNum(Data);
+		fin.getline(data, TEXT_BUFFER, ';');
+		unsigned int amountOfDWORDS = (unsigned int)TextToNum(data);
 		DWORD* words = new DWORD[amountOfDWORDS];
 		for (unsigned int i = 0; i < amountOfDWORDS - 1; ++i)//amountOfDWORDS-1 because the last DWORD ends with ;
 		{
-			fin.getline(Data, TEXT_BUFFER, ',');
-			std::string sData = std::string(Data);
-			words[i] = std::stoul(sData);
+			fin.getline(data, TEXT_BUFFER, ',');
+			words[i] = std::stoul(std::string(data));
 		}
-		fin.getline(Data, TEXT_BUFFER, ';');
-		std::string sData = std::string(Data);
-		words[amountOfDWORDS - 1] = std::stoul(sData);
+		fin.getline(data, TEXT_BUFFER, ';');
+		words[amountOfDWORDS - 1] = std::stoul(std::string(data));
 
 		unsigned int i = 0;
 		while (i < amountOfDWORDS)
@@ -1098,10 +1077,15 @@ namespace pengine
 				case D3DDECLTYPE_FLOAT3:
 				case D3DDECLTYPE_UDEC3:
 				case D3DDECLTYPE_DEC3N:
-					component[0] = words[i];
-					component[1] = words[i + 1];
-					component[3] = words[i + 2];
+				{
+					DWORD w1 = words[i];
+					DWORD w2 = words[i + 1];
+					DWORD w3 = words[i + 2];
+					component[0] = w1;
+					component[1] = w2;
+					component[2] = w3;
 					i += 3;
+				}
 					break;
 				case D3DDECLTYPE_FLOAT4:
 				case D3DDECLTYPE_D3DCOLOR:
@@ -1113,8 +1097,8 @@ namespace pengine
 				case D3DDECLTYPE_FLOAT16_4:
 					component[0] = words[i];
 					component[1] = words[i + 1];
-					component[3] = words[i + 2];
-					component[4] = words[i + 3];
+					component[2] = words[i + 2];
+					component[3] = words[i + 3];
 					i += 4;
 					break;
 				default:
@@ -1128,14 +1112,14 @@ namespace pengine
 					if (_LoadMesh->_TextureCoords == NULL)
 					{
 						_LoadMesh->_nTextureCoords = _LoadMesh->_nVertices;//technically not every vertex needs to have a texture coordinate...
-						logger->LogAll(Logger::DEBUG, "SuperXLoader: Number of Texture Coords: ", _LoadMesh->_nTextureCoords);
+						logger->Log(Logger::DEBUG, "SuperXLoader: Number of Texture Coords: " + std::to_string(_LoadMesh->_nTextureCoords));
 						_LoadMesh->_TextureCoords = new TCoord[_LoadMesh->_nTextureCoords];
 					}
 					float u = *(float*)&component[0];
 					float v = *(float*)&component[1];
-					_LoadMesh->_TextureCoords[i].data[0] = u;
-					_LoadMesh->_TextureCoords[i].data[1] = v;
-					//logger->LogAll(Logger::DEBUG, "SuperXLoader: DeclData texture coordinates ", currentTextureCoordinateSet, ": u: ", u, "; v: ", v);
+					_LoadMesh->_Vertices[currentTextureCoordinateSet].tu = u;
+					_LoadMesh->_Vertices[currentTextureCoordinateSet].tv = v;
+					logger->Log(Logger::DEBUG, "SuperXLoader: DeclData texture coordinates " + std::to_string(currentTextureCoordinateSet) + ": u: " + std::to_string(u) + "; v: " + std::to_string(v));
 					++currentTextureCoordinateSet;
 					break;
 				}
@@ -1179,10 +1163,10 @@ namespace pengine
 					logger->Log(Logger::WARNING, "SuperXLoader: DeclData found unsupported D3DDECLUSAGE: D3DDECLUSAGE_TESSFACTOR!");
 					break;
 				default:
-					logger->LogAll(Logger::WARNING, "SuperXLoader: DeclData found unsupported D3DDECLUSAGE: ", declUsages[j], " (unknown value)");
+					logger->Log(Logger::WARNING, "SuperXLoader: DeclData found unsupported D3DDECLUSAGE: " + std::to_string(declUsages[j]) + " (unknown value)");
 					break;
 				}
 			}
-		}*/
+		}
 	}
 }

@@ -1,4 +1,3 @@
-#include "stdafx.h"
 #include "PEngine.h"
 #include "DirectInputDeviceFactory.h"
 #include "DirectXRenderer.h"
@@ -71,7 +70,15 @@ namespace pengine
 		return renderer;
 	}
 
+	void PEngine::NewShader()
+	{
+		TestShader = new Shader();
+	}
 
+	Shader* PEngine::GetShader()
+	{
+		return TestShader;
+	}
 
 	void PEngine::NewWindow(int x, int y, int width, int height){
 		GetWindowManager()->NewWindow(x, y, width, height);
@@ -124,6 +131,7 @@ namespace pengine
 			{
 				GetRenderer()->PresentScene((*windowIt)->GetHWND());
 			}
+			GetWindowManager()->PurgeClosedWindows();
 		}
 	}
 }

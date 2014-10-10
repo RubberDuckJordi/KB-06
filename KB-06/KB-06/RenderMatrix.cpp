@@ -1,4 +1,3 @@
-#include "stdafx.h"
 #include "RenderMatrix.h"
 #include <d3dx9.h>
 #include "PengineDefinitions.h"
@@ -11,6 +10,10 @@ namespace pengine
 	RenderMatrix::RenderMatrix()
 	{
 		theMatrix = new PEngineMatrix();
+		theMatrix->_11 = 1.0f;
+		theMatrix->_22 = 1.0f;
+		theMatrix->_33 = 1.0f;
+		theMatrix->_44 = 1.0f;
 	}
 
 	RenderMatrix::~RenderMatrix()
@@ -74,6 +77,6 @@ namespace pengine
 			<< "\n[" << matrix->_31 << ",\t" << matrix->_32 << ",\t" << matrix->_33 << ",\t" << matrix->_34 << "]"
 			<< "\n[" << matrix->_41 << ",\t" << matrix->_42 << ",\t" << matrix->_43 << ",\t" << matrix->_44 << "]";
 
-		LoggerPool::GetInstance().GetLogger()->Log(Logger::DEBUG, oss.str().c_str());
+		LoggerPool::GetInstance().GetLogger()->Log(Logger::DEBUG, oss.str());
 	}
 }

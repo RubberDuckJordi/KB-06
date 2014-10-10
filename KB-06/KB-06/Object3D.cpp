@@ -47,7 +47,6 @@ namespace pengine
 		GetBoneAnimation(_Skeletton);
 		_cKey = 0;
 	}
-	/***END*******************************************/
 
 	void Object3D::Draw(Renderer* renderer)
 	{
@@ -65,25 +64,14 @@ namespace pengine
 		{
 			D3DCustomVertex* d3dVertices = new D3DCustomVertex[amountOfVertices];
 
-
 			for (int i = 0; i < amountOfVertices; ++i)//first do all the vertices, then set the indices to the right vertices
 			{
 				D3DCustomVertex newVertex;
-				if (_Mesh->_Subsets.size() != 0)
-				{
-					newVertex.x = _SkinnedVertices[i].x;//x
-					newVertex.y = _SkinnedVertices[i].y;//y
-					newVertex.z = _SkinnedVertices[i].z;//z
-				}
-				else
-				{
-					newVertex.x = _Mesh->_Vertices[i].x;//x
-					newVertex.y = _Mesh->_Vertices[i].y;//y
-					newVertex.z = _Mesh->_Vertices[i].z;//z
-				}
-
-				newVertex.tu = _Mesh->_TextureCoords[i].data[0];//hopefully we got texture information for each vertex...
-				newVertex.tv = _Mesh->_TextureCoords[i].data[1];//hopefully we got texture information for each vertex...
+				newVertex.x = _Mesh->_Vertices[i].x;//x
+				newVertex.y = _Mesh->_Vertices[i].y;//y
+				newVertex.z = _Mesh->_Vertices[i].z;//z
+				newVertex.tu = _Mesh->_Vertices[i].tu;
+				newVertex.tv = _Mesh->_Vertices[i].tv;
 				d3dVertices[i] = newVertex;
 			}
 
@@ -97,6 +85,7 @@ namespace pengine
 
 			g_pd3dDevice->SetStreamSource(0, v_buffer, 0, sizeof(D3DCustomVertex));
 			g_pd3dDevice->SetFVF(D3DCustomVertexFVF);
+			_Model->_Meshes;
 
 			if (_Mesh->_Subsets.size() == 0)
 			{
@@ -104,7 +93,7 @@ namespace pengine
 				Face tempFace;
 				std::list<Material*>::iterator j = _Mesh->_Materials.begin();
 
-				renderer->SetMaterial(_Mesh->_Materials.front());//We have one mesh, that can only have 1 texture...
+				renderer->SetMaterial(_Mesh->_Materials.front());//We have one mesh, that can only have 1 texture... not true at all, needs fix
 
 				unsigned int indicesForSubset = _Mesh->_nFaces * 3;//amount of faces * 3
 				unsigned short* indices = new unsigned short[indicesForSubset];
@@ -181,72 +170,6 @@ namespace pengine
 					j++;
 				}
 			}
-			/*_Mesh->_Materials;
-			if (_Mesh->_Materials.size() > 1)
-			{*/
-			/*int mekker = _Mesh->facesPerMaterial->size();
-			for (int i = 0; i < _Mesh->facesPerMaterial->size(); i++)
-			{
-			renderer->SetMaterial(_Mesh->_Materials[i]);
-			unsigned int amountOfIndices = _Mesh->facesPerMaterial[i].size() * 3;// * 3 because there are 3 indices per face...
-			unsigned short* indices = new unsigned short[amountOfIndices];
-			for (int j = 0; j < _Mesh->facesPerMaterial[i].size(); ++j)
-			{
-			_Mesh->facesPerMaterial[i][j];
-			Face tempFace = _Mesh->_Faces[_Mesh->facesPerMaterial[i][j]];
-			indices[j * 3 + 0] = tempFace.data[0];
-			indices[j * 3 + 1] = tempFace.data[1];
-			indices[j * 3 + 2] = tempFace.data[2];
-			}
-
-			LPDIRECT3DINDEXBUFFER9 i_buffer;
-			d3dMesh->GetIndexBuffer(&i_buffer);
-			// lock i_buffer and load the indices into it
-			i_buffer->Lock(0, 0, (void**)&pVoid, 0);
-			memcpy(pVoid, indices, amountOfIndices * sizeof(unsigned short));
-			i_buffer->Unlock();
-
-			g_pd3dDevice->SetIndices(i_buffer);
-			g_pd3dDevice->DrawIndexedPrimitive(D3DPT_TRIANGLELIST,// PrimitiveType
-			0,// BaseVertexIndex, adds +arg to every vertex number in the index buffer
-			0,// MinIndex
-			amountOfVertices,// NumVertices
-			0,// StartIndex
-			_Mesh->facesPerMaterial[i].size());// PrimitiveCount
-			i_buffer->Release();
-			delete[] indices;
-			}*/
-			//}
-			//else
-			//{
-			//	renderer->SetMaterial(_Mesh->_Materials[1]);
-			//	unsigned int amountOfIndices = _Mesh->_nFaces * 3;// * 3 because there are 3 indices per face...
-			//	unsigned short* indices = new unsigned short[amountOfIndices];
-			//	for (int j = 0; j < _Mesh->_nFaces; ++j)
-			//	{
-			//		Face tempFace = _Mesh->_Faces[j];
-			//		indices[j * 3 + 0] = tempFace.data[0];
-			//		indices[j * 3 + 1] = tempFace.data[1];
-			//		indices[j * 3 + 2] = tempFace.data[2];
-			//	}
-
-			//	LPDIRECT3DINDEXBUFFER9 i_buffer;
-			//	d3dMesh->GetIndexBuffer(&i_buffer);
-			//	// lock i_buffer and load the indices into it
-			//	i_buffer->Lock(0, 0, (void**)&pVoid, 0);
-			//	memcpy(pVoid, indices, amountOfIndices * sizeof(unsigned short));
-			//	i_buffer->Unlock();
-
-			//	g_pd3dDevice->SetIndices(i_buffer);
-			//	g_pd3dDevice->DrawIndexedPrimitive(D3DPT_TRIANGLELIST,// PrimitiveType
-			//		0,// BaseVertexIndex, adds +arg to every vertex number in the index buffer
-			//		0,// MinIndex
-			//		amountOfVertices,// NumVertices
-			//		0,// StartIndex
-			//		amountOfIndices / 3);// PrimitiveCount
-			//	i_buffer->Release();
-			//	delete[] indices;
-			//}
 
 			v_buffer->Release();
 			d3dMesh->Release();
@@ -275,8 +198,6 @@ namespace pengine
 		}
 	}
 
-	/*************************************************
-	NEW- NEW- NEW- NEW- NEW- NEW- NEW- NEW- NEW- NEW*/
 	void Object3D::GetBoneAnimation(ObjectBone* &pBone)
 	{
 		pBone->_Animation = _cAnimationSet->FindAnimation(pBone->_BoneName);
@@ -296,7 +217,6 @@ namespace pengine
 			}
 		}
 	}
-	/***END*******************************************/
 
 	void Object3D::CalcAttitude(ObjectBone* pBone, ObjectBone* pParentBone)
 	{
@@ -310,8 +230,6 @@ namespace pengine
 		}
 	}
 
-	/*************************************************
-	NEW- NEW- NEW- NEW- NEW- NEW- NEW- NEW- NEW- NEW*/
 	void Object3D::CalcAnimation(ObjectBone* &pBone)
 	{
 		pBone->CalcAnimation(_cKey);
@@ -323,7 +241,6 @@ namespace pengine
 			}
 		}
 	}
-	/***END*******************************************/
 
 	void Object3D::CalcBindSpace(ObjectBone* &pBone)
 	{
@@ -358,6 +275,71 @@ namespace pengine
 			_SkinnedVertices[VertexIndices[i]] = _SkinnedVertices[VertexIndices[i]] + (pBone->_FinalMatrix * MeshVertices[VertexIndices[i]]) * Weights[i];
 		}
 
+	}
+
+	void Object3D::CreateCollisionBox(RECTANGLE& rect)
+	{
+		float minx, miny, minz;
+		float maxx, maxy, maxz;
+
+		//Initialise at first values
+		minx = this->_Mesh->_Vertices[0].x;
+		maxx = this->_Mesh->_Vertices[0].x;
+		miny = this->_Mesh->_Vertices[0].y;
+		maxy = this->_Mesh->_Vertices[0].y;
+		minz = this->_Mesh->_Vertices[0].z;
+		maxz = this->_Mesh->_Vertices[0].z;
+
+		for (int i = 0; i < this->_Mesh->_nVertices; ++i)
+		{
+			// Check min values 
+			if (this->_Mesh->_Vertices[i].x < minx)
+			{
+				minx = this->_Mesh->_Vertices[i].x;
+			}
+			if (this->_Mesh->_Vertices[i].y < miny)
+			{
+				miny = this->_Mesh->_Vertices[i].y;
+			}
+			if (this->_Mesh->_Vertices[i].z < minz)
+			{
+				minz = this->_Mesh->_Vertices[i].z;
+			}
+
+			// Check max values
+			if (this->_Mesh->_Vertices[i].x > maxx)
+			{
+				maxx = this->_Mesh->_Vertices[i].x;
+			}
+			if (this->_Mesh->_Vertices[i].y > maxy)
+			{
+				maxy = this->_Mesh->_Vertices[i].y;
+			}
+			if (this->_Mesh->_Vertices[i].z > maxz)
+			{
+				maxz = this->_Mesh->_Vertices[i].z;
+			}
+		}
+
+		// Calculate the rectangle 
+		rect.x = minx;
+		rect.y = miny;
+		rect.z = minz;
+
+		// In our first iteration of collision, we only worked with cubes, no rectangles
+		//float largestMeasurement = maxx - minx;
+		//if (maxy - miny > largestMeasurement)
+		//{
+		//	largestMeasurement = maxy - miny;
+		//}
+		//if (maxz - minz > largestMeasurement)
+		//{
+		//	largestMeasurement = maxz - minz;
+		//}
+		
+		rect.width = maxx - minx;
+		rect.height = maxy - miny;
+		rect.depth = maxz - minz;
 	}
 
 	void Object3D::ComputeBoundingBoxSphere(void)

@@ -10,6 +10,7 @@
 #include "Skybox.h"
 #include "Ground.h"
 #include "SceneCallback.h"
+#include "Collidable.h"
 #include <functional>
 
 namespace pengine
@@ -21,6 +22,7 @@ namespace pengine
 		~Scene();
 		virtual void Update(float deltaTime, std::map<Input, long>* actions);
 		void AddEntity(Entity* entity);
+		void AddCollidable(Collidable* collidable);
 		void Render(Renderer* renderer);
 
 		EntityCamera* GetCurrentCamera();
@@ -32,6 +34,7 @@ namespace pengine
 
 	protected:
 		std::list<Entity*> entities;
+		std::list<Collidable*> collidables;
 		EntityCamera* currentCamera;
 		Logger* logger;
 		Skybox* skybox;

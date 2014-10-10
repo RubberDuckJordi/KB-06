@@ -1,7 +1,6 @@
 // CubeGame.cpp : Defines the entry point for the console application.
 //
 
-#include "stdafx.h"
 #include "PEngine.h"
 #include "RGBAColor.h"
 #include "SceneFactory.h"
@@ -14,7 +13,9 @@
 #include "Object3D.h"
 #include "RenderMatrix.h"
 
-int _tmain(int argc, _TCHAR* argv[])
+//#include "Shader.h"
+
+int main(int argc, const char* argv[])
 {
 	pengine::PEngine pEngine;
 	pengine::Logger* logger = pengine::LoggerPool::GetInstance().GetInstance().GetLogger();
@@ -37,27 +38,24 @@ int _tmain(int argc, _TCHAR* argv[])
 	pengine::XModelLoader* xmodelLoader = new pengine::XModelLoader();
 	xmodelLoader->LoadXModel("resources/tiger.x", static_cast<pengine::DirectXRenderer*>(pEngine.GetRenderer()), xmodel);
 
-	pengine::XModel* xmodel2 = new pengine::XModel();
-	xmodelLoader->LoadXModel("resources/camera.x", static_cast<pengine::DirectXRenderer*>(pEngine.GetRenderer()), xmodel2);
-
 	pengine::RGBAColor color;
 	color.r = 1.0f;
 	color.g = 0.25f;
 	color.b = 1.0f;
 	color.a = 1.0f;
 
-	pengine::IO_Model_X* loader = new pengine::IO_Model_X();
+	pengine::SuperXLoader* loader = new pengine::SuperXLoader();
 	pengine::Model3D* model = new pengine::Model3D();
-	loader->Load("resources/tiny/tiny_4anim.x", model);
+	loader->Load("resources/tiger.x", model);
 
 	for (std::list<pengine::Mesh*>::iterator i = model->_Meshes.begin(); i != model->_Meshes.end(); ++i)
 	{
 		for (std::list<pengine::Material*>::iterator j = (*i)->_Materials.begin(); j != (*i)->_Materials.end(); ++j)
 		{
-			logger->Log(pengine::Logger::ERR, "Texture name CubeGame: "+ (*j)->texturePath);
+			logger->Log(pengine::Logger::ERR, "Texture name CubeGame: "+ std::string((*j)->texturePath));
 			if ((*j)->texturePath != "")
 			{
-				(*j)->texture = pEngine.GetResourceManager()->LoadBinaryFile("resources/tiny/" + (*j)->texturePath);
+				(*j)->texture = pEngine.GetResourceManager()->LoadBinaryFile("resources/" + (*j)->texturePath);
 			}
 		}
 	}
@@ -75,12 +73,15 @@ int _tmain(int argc, _TCHAR* argv[])
 
 	pengine::DefaultSceneFactory* sceneFactory = new pengine::DefaultSceneFactory(pEngine.GetResourceManager());
 	sceneFactory->SetXModel(xmodel);
-	sceneFactory->SetXModel2(xmodel2);
 	sceneFactory->SetSkyboxTexture("resources/dome.jpg");
 
 	pEngine.GetSceneManager()->AddSceneFactory("iets", sceneFactory);
 	pengine::Scene* scene = pEngine.GetSceneManager()->SetScene("iets");
 	pEngine.GetSceneManager()->SetCurrentScene(scene);
+
+	pEngine.NewShader();
+	pEngine.GetShader()->InitShader(pEngine.GetRenderer());
+	
 
 	pEngine.GetRenderer()->SetProjectionMatrix(M_PI / 4, 100.0f);
 	pEngine.GetRenderer()->SetDefaultRenderStates();
@@ -136,13 +137,15 @@ int _tmain(int argc, _TCHAR* argv[])
 		MyObject.Draw(pEngine.GetRenderer());
 		
 		pEngine.GetRenderer()->D2DDraw();
-		
+		//pEngine.GetShader()->DrawShader(pEngine.GetRenderer());
+
 		pEngine.GetRenderer()->EndScene();
 		pEngine.GetRenderer()->PresentScene(pEngine.GetWindowManager()->GetLastWindow()->GetHWND());
 
 		
 
 		delete aMatrix;
+		pEngine.GetWindowManager()->PurgeClosedWindows();
 	}
 	pengine::LoggerPool::GetInstance().ReturnLogger(logger);
 }

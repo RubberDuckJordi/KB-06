@@ -69,9 +69,6 @@ namespace pengine
 
 		EntityCamera* camera2 = new EntityCamera();//this is a testing camera
 		camera2->AddPosition(0.0f, 0.0f, 0.0f);
-		/*camera2->myMesh = mesh2;
-		camera2->myMesh2 = mesh3;*/
-		camera2->SetXModel(xModel2);
 		camera2->useInput = true;
 
 		Skybox* skybox = new pengine::Skybox();
@@ -87,28 +84,8 @@ namespace pengine
 		return defaultScene;
 	}
 
-	//void DefaultSceneFactory::setMesh(Mesh* p_mesh)
-	//{
-	//	mesh = p_mesh;
-	//}
-
-	//void DefaultSceneFactory::setMesh2(Mesh* p_mesh)
-	//{
-	//	mesh2 = p_mesh;
-	//}
-	//
-	//void DefaultSceneFactory::setMesh3(Mesh* p_mesh)
-	//{
-	//	mesh3 = p_mesh;
-	//}
-
 	void DefaultSceneFactory::SetXModel(XModel* p_xModel)
 	{
 		xModel = p_xModel;
-	}
-
-	void DefaultSceneFactory::SetXModel2(XModel* p_xModel)
-	{
-		xModel2 = p_xModel;
 	}
 }

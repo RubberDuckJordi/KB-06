@@ -93,6 +93,8 @@
     <ClInclude Include="AnimationSet.h" />
     <ClInclude Include="Array.h" />
     <ClInclude Include="Bone.h" />
+    <ClInclude Include="Collidable.h" />
+    <ClInclude Include="CollisionEffect.h" />
     <ClInclude Include="CustomD3DVertex.h" />
     <ClInclude Include="EntityCamera.h" />
     <ClInclude Include="Ground.h" />
@@ -108,6 +110,7 @@
     <ClInclude Include="Object3D.h" />
     <ClInclude Include="ObjectBone.h" />
     <ClInclude Include="Quaternion.h" />
+    <ClInclude Include="Rectangle.h" />
     <ClInclude Include="RenderMatrix.h" />
     <ClInclude Include="RGBColor.h" />
     <ClInclude Include="PEngine.h" />
@@ -116,6 +119,7 @@
     <ClInclude Include="SceneCallback.h" />
     <ClInclude Include="SceneDefinition.h" />
     <ClInclude Include="SceneLoader.h" />
+    <ClInclude Include="Shader.h" />
     <ClInclude Include="Skybox.h" />
     <ClInclude Include="Sound.h" />
     <ClInclude Include="StringHelper.h" />
@@ -139,7 +143,6 @@
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneFactory.h" />
     <ClInclude Include="SceneManager.h" />
-    <ClInclude Include="stdafx.h" />
     <ClInclude Include="SuperXLoader.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="BinaryData.h" />
@@ -163,6 +166,7 @@
     <ClCompile Include="Animation.cpp" />
     <ClCompile Include="AnimationSet.cpp" />
     <ClCompile Include="Bone.cpp" />
+    <ClCompile Include="Collidable.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="EntityCamera.cpp" />
     <ClCompile Include="DefaultScene.cpp" />
@@ -186,7 +190,9 @@
     <ClCompile Include="PEngine.cpp" />
     <ClCompile Include="RenderMatrix.cpp" />
     <ClCompile Include="SceneLoader.cpp" />
+    <ClCompile Include="Shader.cpp" />
     <ClCompile Include="Skybox.cpp" />
+    <ClCompile Include="Vector3.cpp" />
     <ClCompile Include="StringHelper.cpp" />
     <ClCompile Include="Logger.cpp" />
     <ClCompile Include="LoggerPool.cpp" />
@@ -197,10 +203,6 @@
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneFactory.cpp" />
     <ClCompile Include="SceneManager.cpp" />
-    <ClCompile Include="stdafx.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
-    </ClCompile>
     <ClCompile Include="SuperXLoader.cpp" />
     <ClCompile Include="TextureWrapper.cpp" />
     <ClCompile Include="VertexBufferWrapper.cpp" />

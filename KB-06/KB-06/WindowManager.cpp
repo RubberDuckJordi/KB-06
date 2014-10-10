@@ -1,6 +1,5 @@
 #include "WindowManager.h"
 #include "LoggerPool.h"
-#include "stdafx.h"
 
 #include <string>
 #include <sstream>
@@ -71,34 +70,21 @@ namespace pengine
 
 	bool WindowManager::HasActiveWindow()
 	{
-		/*for (int index = 0; index < windows.size(); ++index) {
-			//windows.at(index)->render(NULL);// Todo: get the scene that has to be rendered in this window...
-			if (windows.at(index)->state == closed)
-			{
-			//delete window
-			delete windows.at(index);
-			windows.erase(index);
-			}
-			}*/
+		return windows.size() != 0;
+	}
 
-		for (std::vector<Window*>::iterator it = windows.begin(); it != windows.end();) { // note the missing ++iter !; noted, does not work properly, attempts to destroy non instatiated objects
-
-			if ((*it)->GetWindowState() == closed)
+	void WindowManager::PurgeClosedWindows()
+	{
+		for (std::vector<Window*>::iterator it = windows.begin(); it != windows.end();) { // note the missing ++iter!; noted, does not work properly, attempts to destroy non instatiated objects
+			if ((*it)->GetWindowState() == CLOSED)
 			{
-				//delete window
-				delete * it;
+				delete *it;
 				it = windows.erase(it);
 			}
 			else {
 				++it;
 			}
 		}
-
-		if (windows.size() != 0)
-		{
-			return true;
-		}
-		return false;
 	}
 
 	Window* WindowManager::GetLastWindow()

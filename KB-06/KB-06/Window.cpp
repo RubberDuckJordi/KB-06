@@ -71,13 +71,12 @@ namespace pengine
 			}
 			break;
 		case WM_PAINT:
-			render(NULL);
 			break;
 		case WM_CLOSE:
 			DestroyWindow(hwnd);
 			break;
 		case WM_DESTROY:
-			state = closed;
+			state = CLOSED;
 			PostQuitMessage(0);
 			break;
 		case WM_SIZE:
@@ -98,6 +97,9 @@ namespace pengine
 			int height = rect.bottom - rect.top;
 			//renderer->setRenderSize(width, height);
 		}
+
+		PAINTSTRUCT PaintStruct;
+		BeginPaint(_hwnd, &PaintStruct);
 	}
 
 	void Window::OnDestroy(HWND hwnd)
@@ -114,7 +116,9 @@ namespace pengine
 		RegisterClassEx(&_WndClass);
 
 		_hwnd = CreateWindowEx(_dwExtendedStyle, _pszClassName, _pszTitle, _dwStyle, x, y, nWidth, nHeight, hParent, hMenu, hInstance, (void*)this);
-		state = normal;
+		state = NORMAL;
+		PAINTSTRUCT PaintStruct;
+		BeginPaint(_hwnd, &PaintStruct);
 		return _hwnd;
 	}
 
@@ -136,23 +140,6 @@ namespace pengine
 			return pObj->WindowProc(hwnd, msg, wParam, lParam);
 		}
 		return 0;
-	}
-
-	void Window::render(Scene *scene)
-	{
-		if (scene)
-		{
-			//scene->updateEntities();
-		}
-		RECT rect;
-		HDC hDC = GetDC(_hwnd);
-		PAINTSTRUCT PaintStruct;
-		BeginPaint(_hwnd, &PaintStruct);
-		GetClientRect(_hwnd, &rect);
-		DrawText(hDC, L"Hello, screen that is damn hard to get!", 39, &rect, DT_VCENTER | DT_CENTER | DT_SINGLELINE);
-		EndPaint(_hwnd, &PaintStruct);
-		ReleaseDC(_hwnd, hDC);
-		//renderer->Render(_hwnd, scene);
 	}
 
 	HWND Window::GetHWND()

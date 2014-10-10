@@ -38,8 +38,8 @@ namespace pengine
 
 		aSkyboxIndices = new int[amountOfIndices];
 
-		aSkyboxIndices[0] = 0; aSkyboxIndices[1] = 1; aSkyboxIndices[2] = 2;//front
-		aSkyboxIndices[3] = 0; aSkyboxIndices[4] = 2; aSkyboxIndices[5] = 3;
+		aSkyboxIndices[0] = 0; aSkyboxIndices[2] = 1; aSkyboxIndices[1] = 2;//front
+		aSkyboxIndices[3] = 0; aSkyboxIndices[5] = 2; aSkyboxIndices[4] = 3;
 		aSkyboxIndices[6] = 4; aSkyboxIndices[8] = 5; aSkyboxIndices[7] = 6;//right
 		aSkyboxIndices[9] = 4; aSkyboxIndices[11] = 6; aSkyboxIndices[10] = 7;
 		aSkyboxIndices[12] = 8; aSkyboxIndices[14] = 9; aSkyboxIndices[13] = 10;//back
@@ -48,8 +48,8 @@ namespace pengine
 		aSkyboxIndices[21] = 12; aSkyboxIndices[23] = 14; aSkyboxIndices[22] = 15;
 		aSkyboxIndices[24] = 16; aSkyboxIndices[26] = 17; aSkyboxIndices[25] = 18;//top
 		aSkyboxIndices[27] = 16; aSkyboxIndices[29] = 18; aSkyboxIndices[28] = 19;
-		aSkyboxIndices[30] = 20; aSkyboxIndices[31] = 21; aSkyboxIndices[32] = 22;//bottom
-		aSkyboxIndices[33] = 20; aSkyboxIndices[34] = 22; aSkyboxIndices[35] = 23;
+		aSkyboxIndices[30] = 20; aSkyboxIndices[32] = 21; aSkyboxIndices[31] = 22;//bottom
+		aSkyboxIndices[33] = 20; aSkyboxIndices[35] = 22; aSkyboxIndices[34] = 23;
 	}
 
 	Skybox::~Skybox()
@@ -97,11 +97,7 @@ namespace pengine
 		renderer->SetMaterial(material);
 
 		renderer->SetZBuffer(false);
-		renderer->SetCulling(PENGINE_CULL_NONE);
-
 		renderer->DrawIndexedVertexBuffer(v_buffer, i_buffer, amountOfVertices);
-
 		renderer->SetZBuffer(true);
-		renderer->SetCulling(PENGINE_CULL_CCW);
 	}
 }

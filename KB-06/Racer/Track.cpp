@@ -35,8 +35,7 @@ void Track::SetAll(float x, float y, float z, float yaw, float pitch, float roll
 {
 	Entity::SetAll(x, y, z, yaw, pitch, roll, scaleX, scaleY, scaleZ);
 	for (auto iterator = trackBlocks.begin(); iterator != trackBlocks.end(); ++iterator) {
-		(*iterator)->SetAll(x + offsetX, y + offsetY, z + offsetZ, yaw, pitch, roll, scaleX, scaleY, scaleZ);
-		offsetZ -= (*iterator)->width;
+		(*iterator)->SetAll(x, y, z, yaw, pitch, roll, scaleX, scaleY, scaleZ);
 	}
 }
 
@@ -49,4 +48,57 @@ void Track::Draw(pengine::Renderer* renderer)
 
 void Track::AddTrackBlock(TrackBlock* trackBlock){
 	trackBlocks.push_back(trackBlock);
+}
+
+void Track::AddTrackBlock(TrackBlock::TYPE trackBlockType, pengine::Object3D* model){
+	Direction direction = Direction::NORTH;
+	float x = 0;
+	float y = 0;
+	float z = 0;
+	float yaw = 0;
+	if (trackBlocks.size() > 0)
+	{
+		TrackBlock* prevTrackBLock = trackBlocks.back();
+		direction = prevTrackBLock->GetDirection();
+		x = prevTrackBLock->GetPositionOffset()->x;
+		y = prevTrackBLock->GetPositionOffset()->y;
+		z = prevTrackBLock->GetPositionOffset()->z;
+		
+		switch(direction)
+		{
+		case NORTH:	z -= 10; break;
+		case EAST: x -= 10;  break;
+		case SOUTH: z += 10; break;
+		case WEST: x += 10;	break;
+		}
+
+		int newDirectionValue = direction;
+		yaw  = direction * 90;
+
+		switch (trackBlockType)
+		{
+		case TrackBlock::TYPE::TURN_RIGHT:	newDirectionValue += 1;
+			yaw += 90;
+			if (newDirectionValue > 3)
+			{
+				newDirectionValue -= 4;
+			}
+			break;
+		case TrackBlock::TYPE::TURN_LEFT:	
+			yaw += 180;
+			newDirectionValue -= 1;
+			if (newDirectionValue < 0)
+			{
+				newDirectionValue += 4;
+			}
+			break;
+		}
+		switch (newDirectionValue){
+		case 0: direction = NORTH; break;
+		case 1: direction = EAST; break;
+		case 2: direction = SOUTH; break;
+		case 3: direction = WEST; break;
+		}
+	}
+	trackBlocks.push_back(new TrackBlock(x, y, z, yaw, trackBlockType, direction, model));
 }

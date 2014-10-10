@@ -14,6 +14,7 @@
 #include "Model3D.h"
 #include "Renderer.h"
 #include "ObjectBone.h"
+#include "Rectangle.h"
 
 namespace pengine
 {
@@ -34,7 +35,7 @@ namespace pengine
 		void SetupModel(Model3D* &pModel)
 		{
 			_Model = pModel;
-			_Mesh = _Model->_Meshes.front();
+			_Mesh = _Model->_Meshes.back();
 			_SkinnedVertices = new Vertex[_Mesh->_nVertices];
 			_Skeletton = ReplicateSkeletton(_Model->_Skeletton);
 		};
@@ -54,12 +55,12 @@ namespace pengine
 		void MapAnimationSet(uint16 &index);
 		void UpdateAnimation(void)
 		{
-			if (showWarning && _Mesh->_Subsets.size() == 0)
+			if (showWarning && _cAnimationSet == NULL)
 			{
 				//this warning should be in the future PEngine manual instead, with just a crash...
-				logger->Log(Logger::WARNING, "There are no subsets, don't call UpdateAnimation!");
+				logger->Log(Logger::WARNING, "There are no animations, don't call UpdateAnimation!");
 			}
-			else if (_Mesh->_Subsets.size() != 0)
+			else if (_cAnimationSet != NULL)
 			{
 				ClearSkinnedVertices();
 				_cKey += _AnimationStep;
@@ -100,6 +101,7 @@ namespace pengine
 		};
 		void Draw(Renderer* renderer);
 
+		void CreateCollisionBox(RECTANGLE& rect);
 		void ComputeBoundingBoxSphere(void);
 		//Elements for the AABB (_Low & _High)
 		//and bounding sphere (_Center & _Radius)

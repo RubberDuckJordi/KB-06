@@ -67,11 +67,11 @@ namespace pengine
 			ConcatMesh->_nNormals = ConcatMesh->_nVertices;
 		}
 
-		logger->LogAll(Logger::DEBUG, "Model3D: Final number of Vertices:", ConcatMesh->_nVertices);
-		logger->LogAll(Logger::DEBUG, "Model3D: Final number of Faces:", ConcatMesh->_nFaces);
-		logger->LogAll(Logger::DEBUG, "Model3D: Final number of TextureCoords:", ConcatMesh->_nTextureCoords);
-		logger->LogAll(Logger::DEBUG, "Model3D: Final number of Normals:", ConcatMesh->_nNormals);
-		logger->LogAll(Logger::DEBUG, "Model3D: Final number of Materials:", ConcatMesh->_nMaterials);
+		logger->Log(Logger::DEBUG, "Model3D: Final number of Vertices: "+ std::to_string(ConcatMesh->_nVertices));
+		logger->Log(Logger::DEBUG, "Model3D: Final number of Faces: " + std::to_string(ConcatMesh->_nFaces));
+		logger->Log(Logger::DEBUG, "Model3D: Final number of TextureCoords: " + std::to_string(ConcatMesh->_nTextureCoords));
+		logger->Log(Logger::DEBUG, "Model3D: Final number of Normals: " + std::to_string(ConcatMesh->_nNormals));
+		logger->Log(Logger::DEBUG, "Model3D: Final number of Materials: " + std::to_string(ConcatMesh->_nMaterials));
 
 		//We create all the arrays:
 		// - Vertices and Faces
@@ -144,10 +144,10 @@ namespace pengine
 		logger->Log(Logger::DEBUG, "Model3D: Bone hierarchy adapted.");
 
 		//We eventually delete all the previous meshes
-		while (!_Meshes.empty()) {
+		/*while (!_Meshes.empty()) {
 			delete _Meshes.back();
 			_Meshes.pop_back();
-		}
+		}*/
 
 		//and push the new concatenated one
 		_Meshes.push_back(ConcatMesh);

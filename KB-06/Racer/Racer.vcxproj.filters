@@ -16,21 +16,36 @@
     <Filter Include="Source Files\Scene">
       <UniqueIdentifier>{df6c3bfa-6f7d-4a7b-974b-1f17fa7549c9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\NewFilter1">
+    <Filter Include="Source Files\Scene\Track">
       <UniqueIdentifier>{b8f67ba6-6d10-4c67-a625-0a6fdf306a28}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Scene">
+      <UniqueIdentifier>{63dce1fb-1f3f-4490-909f-13a81ab50c79}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Scene\Track">
+      <UniqueIdentifier>{82a84d21-33fd-44df-8f5b-40ad5bfc9d3d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Scene\Powerup">
+      <UniqueIdentifier>{b31c92c5-bee9-4c79-818e-47fe808eb723}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Scene\Powerup">
+      <UniqueIdentifier>{e59fa9cf-d67a-4355-befd-b42583cf39eb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Scene\Kart">
+      <UniqueIdentifier>{c81afb6c-f5d3-4676-9c3a-3beba88a42e7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Event">
+      <UniqueIdentifier>{18822156-d7f5-44a4-b7d9-2a63f1a7d813}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Scene\Kart">
+      <UniqueIdentifier>{9f93b4a9-3b3b-4d97-b671-4456713b13fd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Event">
+      <UniqueIdentifier>{b539c346-f1b5-4aa4-b892-d0ce26ada20b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Racer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="RaceCart.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Track.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="TrackBlock.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="RaceSceneFactory.cpp">
@@ -39,22 +54,52 @@
     <ClCompile Include="RaceScene.cpp">
       <Filter>Source Files\Scene</Filter>
     </ClCompile>
+    <ClCompile Include="Track.cpp">
+      <Filter>Source Files\Scene\Track</Filter>
+    </ClCompile>
+    <ClCompile Include="TrackBlock.cpp">
+      <Filter>Source Files\Scene\Track</Filter>
+    </ClCompile>
+    <ClCompile Include="RaceCart.cpp">
+      <Filter>Source Files\Scene\Kart</Filter>
+    </ClCompile>
+    <ClCompile Include="BasePowerup.cpp">
+      <Filter>Source Files\Scene\Powerup</Filter>
+    </ClCompile>
+    <ClCompile Include="EventManager.cpp">
+      <Filter>Source Files\Event</Filter>
+    </ClCompile>
+    <ClCompile Include="Event.cpp">
+      <Filter>Source Files\Event</Filter>
+    </ClCompile>
+    <ClCompile Include="EventListener.h">
+      <Filter>Header Files\Event</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="RaceScene.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="RaceSceneFactory.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="RaceCart.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Track.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Scene\Track</Filter>
     </ClInclude>
     <ClInclude Include="TrackBlock.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Scene\Track</Filter>
+    </ClInclude>
+    <ClInclude Include="RaceCart.h">
+      <Filter>Header Files\Scene\Kart</Filter>
+    </ClInclude>
+    <ClInclude Include="BasePowerup.h">
+      <Filter>Header Files\Scene\Powerup</Filter>
+    </ClInclude>
+    <ClInclude Include="RaceSceneFactory.h">
+      <Filter>Header Files\Scene\Powerup</Filter>
+    </ClInclude>
+    <ClInclude Include="RaceScene.h">
+      <Filter>Header Files\Scene\Powerup</Filter>
+    </ClInclude>
+    <ClInclude Include="Event.h">
+      <Filter>Header Files\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="EventManager.h">
+      <Filter>Header Files\Event</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
