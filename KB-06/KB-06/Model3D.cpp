@@ -144,10 +144,10 @@ namespace pengine
 		logger->Log(Logger::DEBUG, "Model3D: Bone hierarchy adapted.");
 
 		//We eventually delete all the previous meshes
-		while (!_Meshes.empty()) {
+		/*while (!_Meshes.empty()) {
 			delete _Meshes.back();
 			_Meshes.pop_back();
-		}
+		}*/
 
 		//and push the new concatenated one
 		_Meshes.push_back(ConcatMesh);

@@ -14,7 +14,7 @@ namespace pengine
 
 	void Shader::InitShader(Renderer* renderer)
 	{
-		HRESULT hr;
+		/*HRESULT hr;
 
 		// Create and initialize index buffer
 		WORD* pIndices;
@@ -63,12 +63,6 @@ namespace pengine
 
 		hr = g_pVB->Unlock();
 
-
-
-
-
-
-
 		// Create vertex shader
 		
 		LPD3DXBUFFER pCode;
@@ -104,7 +98,7 @@ namespace pengine
 			&g_pVertexShader);
 		pCode->Release();
 		if (FAILED(hr));
-			//return DXTRACE_ERR(TEXT("CreateVertexShader"), hr);
+			//return DXTRACE_ERR(TEXT("CreateVertexShader"), hr);*/
 	}
 
 	void Shader::DrawShader(Renderer* renderer)

@@ -18,7 +18,7 @@ void racer::RaceCart::UpdateLogic(float deltaTime, std::map<pengine::Input, long
 		for (it_type iterator = (*actions).begin(); iterator != (*actions).end(); ++iterator)
 		{
 			float speed = static_cast<float>(iterator->second);
-			Vector3 vector = *new Vector3(0.0f, 0.0f, 0.0f); // Must be declared before the switch
+			pengine::Vector3 vector = *new pengine::Vector3(0.0f, 0.0f, 0.0f); // Must be declared before the switch
 
 			switch (iterator->first)
 			{
@@ -91,14 +91,14 @@ void racer::RaceCart::Brake(float percentage)
 
 void racer::RaceCart::Throttle(float percentage)
 {
-	Vector3 vector;
+	pengine::Vector3 vector;
 	vector.z = horsePower * percentage;
 	AddRelativeForce(&vector);
 }
 
 void racer::RaceCart::Steer(float percentage)
 {
-	Vector3 vector;
+	pengine::Vector3 vector;
 
 	// Get current movement magnitude
 	float magnitude = movementVector.GetMagnitude();
@@ -120,7 +120,7 @@ void racer::RaceCart::Steer(float percentage)
 
 void racer::RaceCart::OnCollide(pengine::COLLISIONEFFECT* effect)
 {
-	Vector3* vector = new Vector3(effect->forceVectorX, effect->forceVectorY, effect->forceVectorZ);
+	pengine::Vector3* vector = new pengine::Vector3(effect->forceVectorX, effect->forceVectorY, effect->forceVectorZ);
 	AddForce(vector, effect->mass);
 }
 
@@ -143,7 +143,7 @@ void racer::RaceCart::InitCollisionBox()
 	collisionBox = *rect;
 }
 
-Vector3* racer::RaceCart::GetCollisionForceVector()
+pengine::Vector3* racer::RaceCart::GetCollisionForceVector()
 {
 	return &movementVector;
 }

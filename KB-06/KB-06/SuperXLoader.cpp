@@ -122,9 +122,13 @@ namespace pengine
 			}
 		}
 
-		if (_LoadSkeletton != NULL && _LoadMesh != NULL)
+		if (_LoadMesh != NULL)
 		{
-			MapMeshToBones(_LoadSkeletton);
+			_Object->_Meshes.push_back(_LoadMesh);
+			if (_LoadSkeletton != NULL)
+			{
+				MapMeshToBones(_LoadSkeletton);
+			}
 		}
 
 		logger->Log(Logger::DEBUG, "SuperXLoader: Processed file:" + std::string(pFilename));
@@ -360,6 +364,10 @@ namespace pengine
 
 	void SuperXLoader::ProcessMesh(void)
 	{
+		/*if (_LoadMesh != NULL)
+		{
+			_Object->_Meshes.push_back(_LoadMesh);
+		}*/
 		_LoadMesh = new Mesh();
 
 		std::string text;
@@ -476,12 +484,6 @@ namespace pengine
 		_Object->_Meshes.push_back(_LoadMesh);
 	}
 
-	//////////////////////////////////////////////////////////
-	//
-	//       TEXTURE COORDS
-	//
-	//////////////////////////////////////////////////////////
-
 	void SuperXLoader::ProcessMeshTextureCoords(void)
 	{
 		char data[TEXT_BUFFER];
@@ -495,9 +497,11 @@ namespace pengine
 		for (int i = 0; i < _LoadMesh->_nTextureCoords; ++i)
 		{
 			fin.getline(data, TEXT_BUFFER, ';');
-			_LoadMesh->_TextureCoords[i].data[0] = TextToNum(data);
+			//_LoadMesh->_TextureCoords[i].data[0] = TextToNum(data);
+			_LoadMesh->_Vertices[i].tu = TextToNum(data);
 			fin.getline(data, TEXT_BUFFER, ';');
-			_LoadMesh->_TextureCoords[i].data[1] = TextToNum(data);
+			//_LoadMesh->_TextureCoords[i].data[1] = TextToNum(data);
+			_LoadMesh->_Vertices[i].tv = TextToNum(data);
 			fin.get();//eats the comma or the semicolon at the end
 		}
 		Find('}');
@@ -546,14 +550,7 @@ namespace pengine
 		Find('}');
 	}
 
-
-	//////////////////////////////////////////////////////////
-	//
-	//       MATERIALS USED IN MESH
-	//
-	//////////////////////////////////////////////////////////
-
-	void SuperXLoader::ProcessMeshMaterials(void)
+	void SuperXLoader::ProcessMeshMaterials()
 	{
 		int16 token;
 		char data[TEXT_BUFFER];
@@ -808,8 +805,8 @@ namespace pengine
 	void SuperXLoader::ProcessAnimations(AnimationSet* &pAS)
 	{
 		int16 token;
-		char Data[TEXT_BUFFER];
-		Animation* TempAnimation = new Animation;
+		char data[TEXT_BUFFER];
+		Animation* tempAnimation = new Animation;
 
 		Find('{');
 
@@ -822,40 +819,40 @@ namespace pengine
 			case X_COMMENT:
 				break; //used for spaces and other kind of comments
 			case X_EBRACE:
-				pAS->_Animations.push_back(TempAnimation);
+				pAS->_Animations.push_back(tempAnimation);
 				return; //this is the end, my only friend ...
 				break;
 			case X_OBRACE:
 				Find('{');
-				fin.getline(Data, TEXT_BUFFER, '}');
-				Remove(' ', Data);
-				TempAnimation->_BoneName = Data;
-				logger->Log(Logger::DEBUG, "SuperXLoader: Animated Bone: " + TempAnimation->_BoneName);
+				fin.getline(data, TEXT_BUFFER, '}');
+				Remove(' ', data);
+				tempAnimation->_BoneName = data;
+				logger->Log(Logger::DEBUG, "SuperXLoader: Animated Bone: " + tempAnimation->_BoneName);
 				break;
 			case X_ANIMATIONKEY:
-				ProcessAnimationKeys(TempAnimation);
+				ProcessAnimationKeys(tempAnimation);
 				break;
 			default:
 				AvoidTemplate(); break;
 			}
 		}
-		pAS->_Animations.push_back(TempAnimation);
+		pAS->_Animations.push_back(tempAnimation);
 	}
 
 	void SuperXLoader::ProcessAnimationKeys(Animation* &pA)
 	{
 		int type, size;
-		char Data[TEXT_BUFFER];
-		RotateKey* 	TempRot;
-		ScaleKey*	   TempScale;
-		PositionKey* TempPos;
-		MatrixKey*	TempMatrix;
+		char data[TEXT_BUFFER];
+		RotateKey* tempRot;
+		ScaleKey* tempScale;
+		PositionKey* tempPos;
+		MatrixKey* tempMatrix;
 
 		Find('{');
-		fin.getline(Data, TEXT_BUFFER, ';');
-		type = (uint16)atoi(Data);
-		fin.getline(Data, TEXT_BUFFER, ';');
-		size = (uint16)atoi(Data);
+		fin.getline(data, TEXT_BUFFER, ';');
+		type = (uint16)atoi(data);
+		fin.getline(data, TEXT_BUFFER, ';');
+		size = (uint16)atoi(data);
 
 		switch (type)
 		{
@@ -864,25 +861,25 @@ namespace pengine
 			pA->_Rotations.reserve(size);
 			while (size--)
 			{
-				TempRot = new RotateKey;
-				fin.getline(Data, TEXT_BUFFER, ';');
-				TempRot->Time = (uint16)TextToNum(Data);
-				if (TempRot->Time > _MaxKey)
+				tempRot = new RotateKey;
+				fin.getline(data, TEXT_BUFFER, ';');
+				tempRot->Time = (uint16)TextToNum(data);
+				if (tempRot->Time > _MaxKey)
 				{
-					_MaxKey = TempRot->Time;
+					_MaxKey = tempRot->Time;
 				}
 				Find(';');
-				fin.getline(Data, TEXT_BUFFER, ',');
-				TempRot->Rotation[0] = TextToNum(Data);
-				fin.getline(Data, TEXT_BUFFER, ',');
-				TempRot->Rotation[1] = TextToNum(Data);
-				fin.getline(Data, TEXT_BUFFER, ',');
-				TempRot->Rotation[2] = TextToNum(Data);
-				fin.getline(Data, TEXT_BUFFER, ';');
-				TempRot->Rotation[3] = TextToNum(Data);
+				fin.getline(data, TEXT_BUFFER, ',');
+				tempRot->Rotation[0] = TextToNum(data);
+				fin.getline(data, TEXT_BUFFER, ',');
+				tempRot->Rotation[1] = TextToNum(data);
+				fin.getline(data, TEXT_BUFFER, ',');
+				tempRot->Rotation[2] = TextToNum(data);
+				fin.getline(data, TEXT_BUFFER, ';');
+				tempRot->Rotation[3] = TextToNum(data);
 				Find(';');
 				fin.get();
-				pA->_Rotations.push_back(TempRot);
+				pA->_Rotations.push_back(tempRot);
 			}
 			break;
 		case 1:
@@ -890,23 +887,23 @@ namespace pengine
 			pA->_Scalings.reserve(size);
 			while (size--)
 			{
-				TempScale = new ScaleKey;
-				fin.getline(Data, TEXT_BUFFER, ';');
-				TempScale->Time = (uint16)TextToNum(Data);
-				if (TempScale->Time > _MaxKey)
+				tempScale = new ScaleKey;
+				fin.getline(data, TEXT_BUFFER, ';');
+				tempScale->Time = (uint16)TextToNum(data);
+				if (tempScale->Time > _MaxKey)
 				{
-					_MaxKey = TempScale->Time;
+					_MaxKey = tempScale->Time;
 				}
 				Find(';');
-				fin.getline(Data, TEXT_BUFFER, ',');
-				TempScale->Scale.x = TextToNum(Data);
-				fin.getline(Data, TEXT_BUFFER, ',');
-				TempScale->Scale.y = TextToNum(Data);
-				fin.getline(Data, TEXT_BUFFER, ';');
-				TempScale->Scale.z = TextToNum(Data);
+				fin.getline(data, TEXT_BUFFER, ',');
+				tempScale->Scale.x = TextToNum(data);
+				fin.getline(data, TEXT_BUFFER, ',');
+				tempScale->Scale.y = TextToNum(data);
+				fin.getline(data, TEXT_BUFFER, ';');
+				tempScale->Scale.z = TextToNum(data);
 				Find(';');
 				fin.get();
-				pA->_Scalings.push_back(TempScale);
+				pA->_Scalings.push_back(tempScale);
 			}
 			break;
 		case 2:
@@ -914,23 +911,23 @@ namespace pengine
 			pA->_Translations.reserve(size);
 			while (size--)
 			{
-				TempPos = new PositionKey;
-				fin.getline(Data, TEXT_BUFFER, ';');
-				TempPos->Time = (uint16)TextToNum(Data);
-				if (TempPos->Time > _MaxKey)
+				tempPos = new PositionKey;
+				fin.getline(data, TEXT_BUFFER, ';');
+				tempPos->Time = (uint16)TextToNum(data);
+				if (tempPos->Time > _MaxKey)
 				{
-					_MaxKey = TempPos->Time;
+					_MaxKey = tempPos->Time;
 				}
 				Find(';');
-				fin.getline(Data, TEXT_BUFFER, ',');
-				TempPos->Translation.x = TextToNum(Data);
-				fin.getline(Data, TEXT_BUFFER, ',');
-				TempPos->Translation.y = TextToNum(Data);
-				fin.getline(Data, TEXT_BUFFER, ';');
-				TempPos->Translation.z = TextToNum(Data);
+				fin.getline(data, TEXT_BUFFER, ',');
+				tempPos->Translation.x = TextToNum(data);
+				fin.getline(data, TEXT_BUFFER, ',');
+				tempPos->Translation.y = TextToNum(data);
+				fin.getline(data, TEXT_BUFFER, ';');
+				tempPos->Translation.z = TextToNum(data);
 				Find(';');
 				fin.get();
-				pA->_Translations.push_back(TempPos);
+				pA->_Translations.push_back(tempPos);
 			}
 			break;
 		case 4:
@@ -938,24 +935,24 @@ namespace pengine
 			pA->_Matrices.reserve(size);
 			while (size--)
 			{
-				TempMatrix = new MatrixKey;
-				fin.getline(Data, TEXT_BUFFER, ';');
-				TempMatrix->Time = (uint16)TextToNum(Data);
-				if (TempMatrix->Time > _MaxKey)
+				tempMatrix = new MatrixKey;
+				fin.getline(data, TEXT_BUFFER, ';');
+				tempMatrix->Time = (uint16)TextToNum(data);
+				if (tempMatrix->Time > _MaxKey)
 				{
-					_MaxKey = TempMatrix->Time;
+					_MaxKey = tempMatrix->Time;
 				}
 				Find(';');
 				for (int i = 0; i < 15; ++i)
 				{
-					fin.getline(Data, TEXT_BUFFER, ',');
-					TempMatrix->Matrix[i] = TextToNum(Data);
+					fin.getline(data, TEXT_BUFFER, ',');
+					tempMatrix->Matrix[i] = TextToNum(data);
 				}
-				fin.getline(Data, TEXT_BUFFER, ';');
-				TempMatrix->Matrix[15] = TextToNum(Data);
+				fin.getline(data, TEXT_BUFFER, ';');
+				tempMatrix->Matrix[15] = TextToNum(data);
 				Find(';');
 				fin.get();
-				pA->_Matrices.push_back(TempMatrix);
+				pA->_Matrices.push_back(tempMatrix);
 			}
 			break;
 		default:
@@ -1120,8 +1117,8 @@ namespace pengine
 					}
 					float u = *(float*)&component[0];
 					float v = *(float*)&component[1];
-					_LoadMesh->_TextureCoords[j].data[0] = u;
-					_LoadMesh->_TextureCoords[j].data[1] = v;
+					_LoadMesh->_Vertices[currentTextureCoordinateSet].tu = u;
+					_LoadMesh->_Vertices[currentTextureCoordinateSet].tv = v;
 					logger->Log(Logger::DEBUG, "SuperXLoader: DeclData texture coordinates " + std::to_string(currentTextureCoordinateSet) + ": u: " + std::to_string(u) + "; v: " + std::to_string(v));
 					++currentTextureCoordinateSet;
 					break;

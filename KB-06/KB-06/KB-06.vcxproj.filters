@@ -58,9 +58,6 @@
     <ClCompile Include="Window.cpp">
       <Filter>Source\Window</Filter>
     </ClCompile>
-    <ClCompile Include="stdafx.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
     <ClCompile Include="InputDevice.cpp">
       <Filter>Source\Input</Filter>
     </ClCompile>
@@ -141,9 +138,12 @@
     </ClCompile>
     <ClCompile Include="LoggerPool.cpp">
       <Filter>Source\Logger</Filter>
-	</ClCompile>
+    </ClCompile>
     <ClCompile Include="Shader.cpp">
       <Filter>Source\Resource\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="Vector3.cpp">
+      <Filter>Source</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -203,9 +203,6 @@
     </ClInclude>
     <ClInclude Include="Scene.h">
       <Filter>Header\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="stdafx.h">
-      <Filter>Header</Filter>
     </ClInclude>
     <ClInclude Include="targetver.h">
       <Filter>Header</Filter>
@@ -267,7 +264,6 @@
     <ClInclude Include="SceneLoader.h">
       <Filter>Header\Resource</Filter>
     </ClInclude>
-    <ClInclude Include="Vector3.h" />
     <ClInclude Include="XModel.h">
       <Filter>Header\Resource\X</Filter>
     </ClInclude>
@@ -363,6 +359,9 @@
     </ClInclude>
     <ClInclude Include="Shader.h">
       <Filter>Header\Resource\Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector3.h">
+      <Filter>Header</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

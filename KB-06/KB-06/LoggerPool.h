@@ -13,7 +13,7 @@ namespace pengine
 		Logger* GetLogger();
 		void ReturnLogger(Logger* logger);
 	private:
-		LoggerPool(){}
+		LoggerPool();
 		LoggerPool(LoggerPool const&);
 		void operator=(LoggerPool const&);
 		std::list<Logger*> pool;

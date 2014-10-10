@@ -46,6 +46,34 @@ pengine::Object3D* kapotlelijk(pengine::ResourceManager* resourceManager)
 	return MyObject;
 }
 
+pengine::Object3D* kapotlelijk(pengine::ResourceManager* resourceManager, std::string file)
+{
+	pengine::SuperXLoader* loader = new pengine::SuperXLoader();
+	pengine::Model3D* model = new pengine::Model3D();
+	loader->Load(file, model);
+
+	for (std::list<pengine::Mesh*>::iterator i = model->_Meshes.begin(); i != model->_Meshes.end(); ++i)
+	{
+		for (std::list<pengine::Material*>::iterator j = (*i)->_Materials.begin(); j != (*i)->_Materials.end(); ++j)
+		{
+			if ((*j)->texturePath != "")
+			{
+				(*j)->texture = resourceManager->LoadBinaryFile("resources/" + (*j)->texturePath);
+			}
+		}
+	}
+	model->ConcatenateMeshes();
+
+	pengine::Object3D* MyObject = new pengine::Object3D();
+	MyObject->SetupModel(model);
+	MyObject->showWarning = false;
+	MyObject->ClearSkinnedVertices();
+	delete loader;
+
+
+	return MyObject;
+}
+
 int main(int argc, const char* argv[])
 {
 	pengine::PEngine pEngine;
@@ -59,10 +87,11 @@ int main(int argc, const char* argv[])
 	pengine::XModelLoader* xmodelLoader = new pengine::XModelLoader();
 	xmodelLoader->LoadXModel("resources/tiger.x", static_cast<pengine::DirectXRenderer*>(pEngine.GetRenderer()), xmodel);
 
-	pengine::XModel* xmodel2 = new pengine::XModel();
-	xmodelLoader->LoadXModel("resources/rechtdoor.x", static_cast<pengine::DirectXRenderer*>(pEngine.GetRenderer()), xmodel2);
 
 	pengine::Object3D* object3d = kapotlelijk(pEngine.GetResourceManager());
+
+	pengine::Object3D* weg = kapotlelijk(pEngine.GetResourceManager(), "resources/rechtdoor.x");
+	pengine::Object3D* weg2 = kapotlelijk(pEngine.GetResourceManager(), "resources/niet-rechtdoor.x");
 
 	pengine::RGBAColor color;
 	color.r = 1.0f;
@@ -72,7 +101,8 @@ int main(int argc, const char* argv[])
 
 	racer::RaceSceneFactory* sceneFactory = new racer::RaceSceneFactory(pEngine.GetResourceManager());
 	sceneFactory->SetXModel(xmodel);
-	sceneFactory->SetXModel2(xmodel2);
+	sceneFactory->SetXModel2(weg);
+	sceneFactory->SetXModel3(weg2);
 	sceneFactory->SetObject3D(object3d);
 	sceneFactory->SetGroundResource("resources/heightmap.bmp");
 	sceneFactory->SetGroundTexture("resources/heightmaptexture.bmp");

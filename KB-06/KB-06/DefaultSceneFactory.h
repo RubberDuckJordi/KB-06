@@ -12,18 +12,10 @@ namespace pengine
 		DefaultSceneFactory(ResourceManager* resourceManager);
 		~DefaultSceneFactory();
 		Scene* CreateScene();
-		//void setMesh(Mesh* mesh);//debug!
-		//void setMesh2(Mesh* mesh);//debug!
-		//void setMesh3(Mesh* mesh);//debug!
 		void SetXModel(XModel*); //debug
-		void SetXModel2(XModel*); //debug
 	private:
-		//Mesh* mesh;//debug!
-		//Mesh* mesh2;//debug!
-		//Mesh* mesh3;//debug!
 
 		XModel* xModel; //debug.
-		XModel* xModel2; //debug.
 	};
 }
 #endif

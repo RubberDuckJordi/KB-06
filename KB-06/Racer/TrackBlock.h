@@ -5,28 +5,47 @@
 #include "Entity.h"
 #include "Logger.h"
 #include "XModel.h"
+#include "Object3D.h"
+
+enum Direction {
+	NORTH = 0,
+	EAST = 1,
+	SOUTH = 2,
+	WEST = 3
+};
+
 
 class TrackBlock : public pengine::Entity
 {
 public:
-	TrackBlock(float width, float lenght);
+	static enum TYPE {
+		STRAIGHT,
+		TURN_LEFT,
+		TURN_RIGHT
+	};
+
+	TrackBlock(float x, float y, float z, float yaw, TYPE type, Direction direction, pengine::Object3D* model);
 	~TrackBlock();
 
 	void Draw(pengine::Renderer* renderer);
-	void SetXModel(pengine::XModel*); //debug
+	void SetXModel(pengine::Object3D*); //debug
 	
-	// mesh?
-	// texture?
-
-	// std::map<Vector3, PowerUpEntity>
-
-	// void onEnter(RaceKart Kart);
-	// void onPassedHalfway(RaceKart Kart);
-	// void onLeave(RaceKart Kart);
-
 	float lenght;
 	float width;
+	Direction GetDirection();
+
+	void SetPosition(float x, float y, float z);
+	void SetPositionOffset(float x, float y, float z);
+	pengine::Vertex* GetPositionOffset();
+	void SetRotation(float yaw, float pitch, float roll);
+	void SetRotationOffset(float yaw, float pitch, float roll);
+	pengine::Vertex* GetRotationOffset();
+
 private:
-	pengine::XModel* xModel; //debug
+	pengine::Vertex positionOffset;
+	pengine::Vertex rotationOffset;
+	TYPE type;
+	Direction direction;
+	pengine::Object3D* xModel; //debug
 };
 #endif

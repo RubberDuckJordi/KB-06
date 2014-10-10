@@ -18,8 +18,7 @@ namespace pengine
 
 	void EntityCamera::UpdateLogic(float deltaTime, std::map<Input, long>* actions)
 	{
-		typedef std::map<Input, long>::iterator it_type;
-		for (it_type iterator = (*actions).begin(); iterator != (*actions).end(); iterator++)
+		for (std::map<Input, long>::iterator iterator = (*actions).begin(); iterator != (*actions).end(); iterator++)
 		{
 			float speed = static_cast<float>(iterator->second);
 
@@ -127,46 +126,7 @@ namespace pengine
 		bool debug = false;
 		if (debug)
 		{
-			if (xModel != NULL)
-			{
-				RenderMatrix* lookAt = new RenderMatrix();//should be global
-				lookAt->CreateMatrix(lookAtPosition.x, lookAtPosition.y, lookAtPosition.z, 0.0f, 0.0f, 0.0f, 0.5f, 0.5f, 0.5f, lookAt->theMatrix);//should only be called when needed (when any value has updated)
-				renderer->SetActiveMatrix(lookAt->theMatrix);//should be called every frame
-				//renderer->Draw(myMesh);
-
-				RenderMatrix* cameraM = new RenderMatrix();//should be global
-				cameraM->CreateMatrix(position.x, position.y, position.z, 0, 0, 0, 0.1f, 0.1f, 0.1f, cameraM->theMatrix);//should only be called when needed (when any value has updated)
-				cameraM->MultiplyMatrices(rotationMatrix, cameraM->theMatrix, cameraM->theMatrix);
-
-				renderer->SetActiveMatrix(cameraM->theMatrix);//should be called every frame
-
-				MaterialWrapper* materialWrapper;
-				int materialCount;
-				xModel->GetMaterials(materialWrapper, materialCount);
-
-				TextureWrapper* textureWrapper;
-				int textureCount;
-
-
-				renderer->SetMaterialWrapper(materialWrapper);
-				xModel->GetTextures(textureWrapper, textureCount);
-				renderer->SetTexture(textureWrapper);
-				renderer->DrawSubset(xModel->GetMesh(), 0);
-				xModel->GetTextures(textureWrapper, textureCount);
-
-				LPDIRECT3DTEXTURE9* textureArray = textureWrapper->GetTexture();
-
-				TextureWrapper* textureWrapperIndex = new TextureWrapper(&textureWrapper->GetTexture()[1]);
-				MaterialWrapper* materialWrapperIndex = new MaterialWrapper(&materialWrapper->GetMaterial()[1]);
-
-				renderer->SetTexture(textureWrapperIndex);//how do I get the second texture?
-				renderer->SetMaterialWrapper(materialWrapperIndex);
-				renderer->DrawSubset(xModel->GetMesh(), 1);
-			}
-			else
-			{
-				logger->Log(Logger::WARNING, "No xModel for entity!");
-			}
+			//could draw a hardcoded wireframe... (old code was old xloader based and stuff...)
 		}
 	}
 
@@ -237,10 +197,5 @@ namespace pengine
 		//RenderMatrix::PrintMatrix(rotationMatrix);
 
 		lookAtPosition = { x, y, z };
-	}
-
-	void EntityCamera::SetXModel(XModel* p_xmodel)
-	{
-		xModel = p_xmodel;
 	}
 }

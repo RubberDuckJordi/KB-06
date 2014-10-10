@@ -1,7 +1,6 @@
 // CubeGame.cpp : Defines the entry point for the console application.
 //
 
-#include "stdafx.h"
 #include "PEngine.h"
 #include "RGBAColor.h"
 #include "SceneFactory.h"
@@ -16,7 +15,7 @@
 
 //#include "Shader.h"
 
-int _tmain(int argc, _TCHAR* argv[])
+int main(int argc, const char* argv[])
 {
 	pengine::PEngine pEngine;
 	pengine::Logger* logger = pengine::LoggerPool::GetInstance().GetInstance().GetLogger();
@@ -38,9 +37,6 @@ int _tmain(int argc, _TCHAR* argv[])
 	pengine::XModel* xmodel = new pengine::XModel();
 	pengine::XModelLoader* xmodelLoader = new pengine::XModelLoader();
 	xmodelLoader->LoadXModel("resources/tiger.x", static_cast<pengine::DirectXRenderer*>(pEngine.GetRenderer()), xmodel);
-
-	pengine::XModel* xmodel2 = new pengine::XModel();
-	xmodelLoader->LoadXModel("resources/camera.x", static_cast<pengine::DirectXRenderer*>(pEngine.GetRenderer()), xmodel2);
 
 	pengine::RGBAColor color;
 	color.r = 1.0f;
@@ -77,7 +73,6 @@ int _tmain(int argc, _TCHAR* argv[])
 
 	pengine::DefaultSceneFactory* sceneFactory = new pengine::DefaultSceneFactory(pEngine.GetResourceManager());
 	sceneFactory->SetXModel(xmodel);
-	sceneFactory->SetXModel2(xmodel2);
 	sceneFactory->SetSkyboxTexture("resources/dome.jpg");
 
 	pEngine.GetSceneManager()->AddSceneFactory("iets", sceneFactory);
@@ -147,6 +142,7 @@ int _tmain(int argc, _TCHAR* argv[])
 
 		//pEngine.GetRenderer()->D2DDraw();
 		delete aMatrix;
+		pEngine.GetWindowManager()->PurgeClosedWindows();
 	}
 	pengine::LoggerPool::GetInstance().ReturnLogger(logger);
 }
