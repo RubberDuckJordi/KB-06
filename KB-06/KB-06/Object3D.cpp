@@ -417,20 +417,20 @@ namespace pengine
 		rect.y = miny;
 		rect.z = minz;
 
-		// In our first iteration of collision, we only work with cubes, no rectangles
-		float largestMeasurement = maxx - minx;
-		if (maxy - miny > largestMeasurement)
-		{
-			largestMeasurement = maxy - miny;
-		}
-		if (maxz - minz > largestMeasurement)
-		{
-			largestMeasurement = maxz - minz;
-		}
+		// In our first iteration of collision, we only worked with cubes, no rectangles
+		//float largestMeasurement = maxx - minx;
+		//if (maxy - miny > largestMeasurement)
+		//{
+		//	largestMeasurement = maxy - miny;
+		//}
+		//if (maxz - minz > largestMeasurement)
+		//{
+		//	largestMeasurement = maxz - minz;
+		//}
 		
-		rect.width = largestMeasurement;
-		rect.height = largestMeasurement;
-		rect.depth = largestMeasurement;
+		rect.width = maxx - minx;
+		rect.height = maxy - miny;
+		rect.depth = maxz - minz;
 	}
 
 	void Object3D::ComputeBoundingBoxSphere(void)
