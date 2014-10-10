@@ -9,6 +9,7 @@ namespace pengine
 		RenderMatrix* temp = new RenderMatrix();
 		temp->CreateMatrix(0, 0, 0, 0, 0, 0, 1, 1, 1, temp->theMatrix);
 		rotationMatrix = temp->theMatrix;
+		upVec = new Vector3(0, 1);
 	}
 
 	EntityCamera::~EntityCamera()
@@ -21,101 +22,78 @@ namespace pengine
 		for (std::map<Input, long>::iterator iterator = (*actions).begin(); iterator != (*actions).end(); iterator++)
 		{
 			float speed = static_cast<float>(iterator->second);
-
-			if (useInput)
+			switch (iterator->first)
 			{
-				switch (iterator->first)
-				{
-				case Input::KEY_S:
-					this->AddPosition(0.0f, 0.0f, 0.5f);
-					//SetLookAtPosition(lookAtPosition.x, lookAtPosition.y, lookAtPosition.z - 1.0f, 0.0f);
-					break;
-				case Input::KEY_W:
-					this->AddPosition(0.0f, 0.0f, -0.5f);
-					//SetLookAtPosition(lookAtPosition.x, lookAtPosition.y, lookAtPosition.z + 1.0f, 0.0f);
-					break;
-				case Input::KEY_D:
-					this->AddPosition(-0.5f, 0.0f, 0.0f);
-					//SetLookAtPosition(lookAtPosition.x - 1.0f, lookAtPosition.y, lookAtPosition.z, 0.0f);
-					break;
-				case Input::KEY_A:
-					this->AddPosition(0.5f, 0.0f, 0.0f);
-					//SetLookAtPosition(lookAtPosition.x + 1.0f, lookAtPosition.y, lookAtPosition.z, 0.0f);
-					break;
-
-				case Input::KEY_SPACE:
-					this->AddPosition(0.0f, 0.5f, 0.0f);
-					//SetLookAtPosition(lookAtPosition.x, lookAtPosition.y + 1.0f, lookAtPosition.z, 0.0f);
-					break;
-
-				case Input::KEY_LSHIFT:
-					this->AddPosition(0.0f, -0.5f, 0.0f);
-					//SetLookAtPosition(lookAtPosition.x, lookAtPosition.y - 1.0f, lookAtPosition.z, 0.0f);
-					break;
-
-				case Input::KEY_DOWN:
-					//this->AddPosition(0.0f, 0.0f, 0.5f);
-					SetLookAtPosition(lookAtPosition.x, lookAtPosition.y, lookAtPosition.z + 0.1f, 0.0f);
-					break;
-				case Input::KEY_UP:
-					//this->AddPosition(0.0f, 0.0f, -0.5f);
-					SetLookAtPosition(lookAtPosition.x, lookAtPosition.y, lookAtPosition.z - 0.1f, 0.0f);
-					break;
-				case Input::KEY_LEFT:
-					//this->AddPosition(-0.5f, 0.0f, 0.0f);
-					SetLookAtPosition(lookAtPosition.x + 0.1f, lookAtPosition.y, lookAtPosition.z, 0.0f);
-					break;
-				case Input::KEY_RIGHT:
-					//this->AddPosition(0.5f, 0.0f, 0.0f);
-					SetLookAtPosition(lookAtPosition.x - 0.1f, lookAtPosition.y, lookAtPosition.z, 0.0f);
-					break;
-
-				case Input::KEY_BACK:
-					//this->AddPosition(0.5f, 0.0f, 0.0f);
-					SetLookAtPosition(lookAtPosition.x, lookAtPosition.y + 0.1f, lookAtPosition.z, 0.0f);
-					break;
-
-				case Input::KEY_RETURN:
-					//this->AddPosition(0.5f, 0.0f, 0.0f);
-					SetLookAtPosition(lookAtPosition.x, lookAtPosition.y - 0.1f, lookAtPosition.z, 0.0f);
-					break;
-				default:
-					break;
-				}
-			}
-			else
-			{
-				switch (iterator->first)
-				{
-				case Input::KEY_G:
-					this->AddPosition(0.0f, 0.0f, 0.5f);
-					this->SetLookAtPosition(lookAtPosition.x, lookAtPosition.y, lookAtPosition.z + 0.5f, 0.0f);
-					break;
-				case Input::KEY_T:
-					this->AddPosition(0.0f, 0.0f, -0.5f);
-					this->SetLookAtPosition(lookAtPosition.x, lookAtPosition.y, lookAtPosition.z - 0.5f, 0.0f);
-					break;
-				case Input::KEY_H:
-					this->AddPosition(-0.5f, 0.0f, 0.0f);
-					this->SetLookAtPosition(lookAtPosition.x - 0.5f, lookAtPosition.y, lookAtPosition.z, 0.0f);
-					break;
-				case Input::KEY_F:
-					this->AddPosition(0.5f, 0.0f, 0.0f);
-					this->SetLookAtPosition(lookAtPosition.x + 0.5f, lookAtPosition.y, lookAtPosition.z, 0.0f);
-					break;
-
-				case Input::KEY_Y:
-					this->AddPosition(0.0f, 0.5f, 0.0f);
-					this->SetLookAtPosition(lookAtPosition.x, lookAtPosition.y + 0.5f, lookAtPosition.z, 0.0f);
-					break;
-
-				case Input::KEY_R:
-					this->AddPosition(0.0f, -0.5f, 0.0f);
-					this->SetLookAtPosition(lookAtPosition.x, lookAtPosition.y - 0.5f, lookAtPosition.z, 0.0f);
-					break;
-				default:
-					break;
-				}
+			case Input::KEY_S:
+				this->AddPosition(0.0f, 0.0f, 0.5f);
+				break;
+			case Input::KEY_W:
+				this->AddPosition(0.0f, 0.0f, -0.5f);
+				break;
+			case Input::KEY_D:
+				this->AddPosition(-0.5f, 0.0f, 0.0f);
+				break;
+			case Input::KEY_A:
+				this->AddPosition(0.5f, 0.0f, 0.0f);
+				break;
+			case Input::KEY_SPACE:
+				this->AddPosition(0.0f, 0.5f, 0.0f);
+				break;
+			case Input::KEY_LSHIFT:
+				this->AddPosition(0.0f, -0.5f, 0.0f);
+				break;
+			case Input::KEY_DOWN:
+				SetLookAtPosition(lookAtPosition.x, lookAtPosition.y, lookAtPosition.z + 0.1f, rollDegrees);
+				break;
+			case Input::KEY_UP:
+				SetLookAtPosition(lookAtPosition.x, lookAtPosition.y, lookAtPosition.z - 0.1f, rollDegrees);
+				break;
+			case Input::KEY_LEFT:
+				SetLookAtPosition(lookAtPosition.x + 0.1f, lookAtPosition.y, lookAtPosition.z, rollDegrees);
+				break;
+			case Input::KEY_RIGHT:
+				SetLookAtPosition(lookAtPosition.x - 0.1f, lookAtPosition.y, lookAtPosition.z, rollDegrees);
+				break;
+			case Input::KEY_BACK:
+				SetLookAtPosition(lookAtPosition.x, lookAtPosition.y + 0.1f, lookAtPosition.z, rollDegrees);
+				break;
+			case Input::KEY_RETURN:
+				SetLookAtPosition(lookAtPosition.x, lookAtPosition.y - 0.1f, lookAtPosition.z, rollDegrees);
+				break;
+			case Input::KEY_G:
+				this->AddPosition(0.0f, 0.0f, 0.5f);
+				this->SetLookAtPosition(lookAtPosition.x, lookAtPosition.y, lookAtPosition.z + 0.5f, rollDegrees);
+				break;
+			case Input::KEY_T:
+				this->AddPosition(0.0f, 0.0f, -0.5f);
+				this->SetLookAtPosition(lookAtPosition.x, lookAtPosition.y, lookAtPosition.z - 0.5f, rollDegrees);
+				break;
+			case Input::KEY_H:
+				this->AddPosition(-0.5f, 0.0f, 0.0f);
+				this->SetLookAtPosition(lookAtPosition.x - 0.5f, lookAtPosition.y, lookAtPosition.z, rollDegrees);
+				break;
+			case Input::KEY_F:
+				this->AddPosition(0.5f, 0.0f, 0.0f);
+				this->SetLookAtPosition(lookAtPosition.x + 0.5f, lookAtPosition.y, lookAtPosition.z, rollDegrees);
+				break;
+			case Input::KEY_Y:
+				this->AddPosition(0.0f, 0.5f, 0.0f);
+				this->SetLookAtPosition(lookAtPosition.x, lookAtPosition.y + 0.5f, lookAtPosition.z, rollDegrees);
+				break;
+			case Input::KEY_R:
+				this->AddPosition(0.0f, -0.5f, 0.0f);
+				this->SetLookAtPosition(lookAtPosition.x, lookAtPosition.y - 0.5f, lookAtPosition.z, rollDegrees);
+				break;
+			case Input::KEY_U:
+				++rollDegrees;
+				this->SetLookAtPosition(lookAtPosition.x, lookAtPosition.y, lookAtPosition.z, rollDegrees);
+				break;
+			case Input::KEY_E:
+				--rollDegrees;
+				this->SetLookAtPosition(lookAtPosition.x, lookAtPosition.y, lookAtPosition.z, rollDegrees);
+				break;
+			default:
+				break;
 			}
 		}
 	}
@@ -137,7 +115,7 @@ namespace pengine
 
 	CameraData EntityCamera::GetCameraData()
 	{
-		CameraData d = { position.x, position.y, position.z, lookAtPosition.x, lookAtPosition.y, lookAtPosition.z, 0.0f, 1.0f, 0.0f };
+		CameraData d = { position.x, position.y, position.z, lookAtPosition.x, lookAtPosition.y, lookAtPosition.z, upVec->x, upVec->y, upVec->z };
 		return d;
 	}
 
@@ -194,7 +172,16 @@ namespace pengine
 		rotationMatrix->_43 = 0.0f;
 		rotationMatrix->_44 = 1.0f;
 
-		//RenderMatrix::PrintMatrix(rotationMatrix);
+		if (lookAtPosition.z < position.z)
+		{
+			upVec->x = cos(RADIANS(rollDegrees + 90));
+			upVec->y = sin(RADIANS(rollDegrees + 90));
+		}
+		else
+		{
+			upVec->x = cos(RADIANS(-rollDegrees + 90));
+			upVec->y = sin(RADIANS(-rollDegrees + 90));
+		}
 
 		lookAtPosition = { x, y, z };
 	}

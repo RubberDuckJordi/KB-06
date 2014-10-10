@@ -16,6 +16,10 @@ namespace pengine
 		void Draw(Renderer* renderer);
 		Vertex* GetPosition();
 		CameraData GetCameraData();
+
+		/*!
+		Sets the position to look at with the camera
+		*/
 		void SetLookAtPosition(float x, float y, float z, float rollDegrees);
 		void SetLookAtEntity(Entity*);
 		void SetThirdPersonEntity(Entity*, float distance, float height);
@@ -28,6 +32,8 @@ namespace pengine
 	private:
 		CameraData cameraData;
 		PEngineMatrix* rotationMatrix;
+		Vector3* upVec;
+		float rollDegrees = 0.0f;
 	};
 }
 #endif
