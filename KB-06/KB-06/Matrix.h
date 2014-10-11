@@ -2,8 +2,8 @@
 #define _PENGINE_MATRIX_H_
 
 #include "Vector.h"
-#include "Array.h"
 #include "Vertex.h"
+#include "Types.h"
 
 namespace pengine
 {
@@ -183,7 +183,7 @@ namespace pengine
 			data[10] = pvT.z;
 		};
 
-		void TranslationMatrix(const Array<T, 3> &pAT)
+		void TranslationMatrix(const std::array<T, 3> &pAT)
 		{
 			Identity();
 			data[12] = pAT[0];

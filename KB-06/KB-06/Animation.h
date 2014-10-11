@@ -5,7 +5,6 @@
 #include "Vector.h"
 #include "Quaternion.h"
 #include "Matrix.h"
-#include "Array.h"
 #include "Vertex.h"
 
 #include <string>

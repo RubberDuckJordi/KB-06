@@ -499,11 +499,11 @@ namespace pengine
 		{
 			Find(';');
 			fin.getline(data, TEXT_BUFFER, ',');
-			_LoadMesh->_Faces[i].data[0] = (uint16)TextToNum(data);
+			_LoadMesh->_Faces[i][0] = (uint16)TextToNum(data);
 			fin.getline(data, TEXT_BUFFER, ',');
-			_LoadMesh->_Faces[i].data[1] = (uint16)TextToNum(data);
+			_LoadMesh->_Faces[i][1] = (uint16)TextToNum(data);
 			fin.getline(data, TEXT_BUFFER, ';');
-			_LoadMesh->_Faces[i].data[2] = (uint16)TextToNum(data);
+			_LoadMesh->_Faces[i][2] = (uint16)TextToNum(data);
 			fin.get(); //eats either the comma or the semicolon at the end of each face description
 
 			//logger->LogAll(Logger::DEBUG, "SuperXLoader: Face ", std::to_string(i), ": ", std::to_string(_LoadMesh->_Faces[i].data[0]), " ", std::to_string(_LoadMesh->_Faces[i].data[1]), " ", std::to_string(_LoadMesh->_Faces[i].data[2]));
@@ -595,11 +595,11 @@ namespace pengine
 		{
 			Find(';');
 			fin.getline(data, TEXT_BUFFER, ',');
-			_LoadMesh->_FaceNormals[i].data[0] = (uint16)TextToNum(data);
+			_LoadMesh->_FaceNormals[i][0] = (uint16)TextToNum(data);
 			fin.getline(data, TEXT_BUFFER, ',');
-			_LoadMesh->_FaceNormals[i].data[1] = (uint16)TextToNum(data);
+			_LoadMesh->_FaceNormals[i][1] = (uint16)TextToNum(data);
 			fin.getline(data, TEXT_BUFFER, ';');
-			_LoadMesh->_FaceNormals[i].data[2] = (uint16)TextToNum(data);
+			_LoadMesh->_FaceNormals[i][2] = (uint16)TextToNum(data);
 			fin.get(); //eats either the comma or the semicolon at the end of each face description
 			//logger->LogAll(Logger::DEBUG, "SuperXLoader: Face Normal index ", std::to_string(i) + ": ", std::to_string(_LoadMesh->_FaceNormals[i].data[0]), " ", std::to_string(_LoadMesh->_FaceNormals[i].data[1]), " ", std::to_string(_LoadMesh->_FaceNormals[i].data[2]));
 		}

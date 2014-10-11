@@ -198,9 +198,9 @@ namespace pengine
 				for (int k = 0; k < _Mesh->_nFaces; k++)
 				{
 					tempFace = _Mesh->_Faces[k];
-					indices[++currentIndex] = tempFace.data[0];
-					indices[++currentIndex] = tempFace.data[1];
-					indices[++currentIndex] = tempFace.data[2];
+					indices[++currentIndex] = tempFace[0];
+					indices[++currentIndex] = tempFace[1];
+					indices[++currentIndex] = tempFace[2];
 				}
 
 				LPDIRECT3DINDEXBUFFER9 i_buffer;
@@ -240,9 +240,9 @@ namespace pengine
 					for (int k = 0; k < tempSubset->Size; k++)
 					{
 						tempFace = tempSubset->Faces[k];
-						indices[++currentIndex] = tempFace.data[0];
-						indices[++currentIndex] = tempFace.data[1];
-						indices[++currentIndex] = tempFace.data[2];
+						indices[++currentIndex] = tempFace[0];
+						indices[++currentIndex] = tempFace[1];
+						indices[++currentIndex] = tempFace[2];
 					}
 
 					LPDIRECT3DINDEXBUFFER9 i_buffer;

@@ -1,8 +1,6 @@
 #ifndef _PENGINE_MATERIAL_H
 #define _PENGINE_MATERIAL_H
 
-#include "Types.h"
-#include "Array.h"
 #include "RGBAColor.h"
 #include "RGBColor.h"
 #include "BinaryData.h"

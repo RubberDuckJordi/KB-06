@@ -78,9 +78,9 @@ namespace pengine
 	{
 		for (uint32 i = 0; i < _nFaces; i++)
 		{
-			_Faces[i].data[0] += _FirstVertex;
-			_Faces[i].data[1] += _FirstVertex;
-			_Faces[i].data[2] += _FirstVertex;
+			_Faces[i][0] += _FirstVertex;
+			_Faces[i][1] += _FirstVertex;
+			_Faces[i][2] += _FirstVertex;
 
 			_FaceMaterials[i] += _FirstMaterial;
 		}
@@ -89,9 +89,9 @@ namespace pengine
 		{
 			for (uint32 i = 0; i < _nFaces; i++)
 			{
-				_FaceNormals[i].data[0] += _FirstNormal;
-				_FaceNormals[i].data[1] += _FirstNormal;
-				_FaceNormals[i].data[2] += _FirstNormal;
+				_FaceNormals[i][0] += _FirstNormal;
+				_FaceNormals[i][1] += _FirstNormal;
+				_FaceNormals[i][2] += _FirstNormal;
 			}
 		}
 	}
