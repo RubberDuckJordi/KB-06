@@ -41,7 +41,7 @@ namespace pengine
 		@return int16: X_COMMENT if it's a whitespace or actual comment. X_OBRACE if it's a {.
 		X_EBRACE if it's a }. X_ERROR if there's a single /. Result of BlockID() otherwise.
 		*/
-		int16 ProcessBlock(void);
+		int16 ProcessBlock();
 
 		/*!
 		Tries to identify the given text as a block
@@ -54,7 +54,7 @@ namespace pengine
 		/*!
 		Capable of ignoring a complete block, including blocks that may be within it.
 		*/
-		void AvoidTemplate(void);
+		void AvoidTemplate();
 
 		/*!
 		Ignores all input until pChar has been found, including pChar.

@@ -2,9 +2,24 @@
 
 namespace pengine
 {
-	Bone::~Bone(void){
-		if (_Vertices != 0) delete[] _Vertices;
-		if (_Weights != 0) delete[] _Weights;
+	Bone::Bone() : _nVertices(0), _Vertices(0), _Weights(0)
+	{
+		_MatrixPos.Identity();
+		_SkinOffset.Identity();
+	}
+
+	Bone::~Bone()
+	{
+		if (_Vertices != 0)
+		{
+			delete[] _Vertices;
+		}
+
+		if (_Weights != 0)
+		{
+			delete[] _Weights;
+		}
+
 		while (!_Bones.empty())
 		{
 			delete _Bones.back(); _Bones.pop_back();
@@ -20,8 +35,8 @@ namespace pengine
 			return 0;
 
 		for (std::list<Bone*>::iterator i = _Bones.begin(); i != _Bones.end(); i++)
-		if ((*i)->IsName(BoneName) != 0)
-			return (*i)->IsName(BoneName);
+			if ((*i)->IsName(BoneName) != 0)
+				return (*i)->IsName(BoneName);
 		return 0;
 	}
 

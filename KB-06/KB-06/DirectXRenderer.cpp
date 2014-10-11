@@ -37,7 +37,7 @@ namespace pengine
 		D3DXCreateTexture(g_pd3dDevice, 500, 500, 1, D3DUSAGE_RENDERTARGET, D3DFMT_A8R8G8B8, D3DPOOL_DEFAULT, &surfaceTexture); //LPDIRECT3DTEXTURE9
 		surfaceTexture->GetSurfaceLevel(0, &surfaceLevel); //IDirect3DSurface9
 		g_pd3dDevice->GetRenderTarget(0, &backbuffer); //IDirect3DSurface9
-		
+
 		GetClientRect(hWnd, &rectangle);
 
 		D2D1_SIZE_U size = D2D1::SizeU(rectangle.right - rectangle.left, rectangle.bottom - rectangle.top);
@@ -47,7 +47,7 @@ namespace pengine
 			D2D1::HwndRenderTargetProperties(hWnd, size),
 			&d2dRenderTarget
 			);
-		
+
 
 	}
 
@@ -122,11 +122,11 @@ namespace pengine
 
 		d3dpp.Windowed = true;
 		d3dpp.SwapEffect = D3DSWAPEFFECT_DISCARD;
-		d3dpp.BackBufferFormat = D3DFMT_UNKNOWN;
-		//d3dpp.BackBufferFormat = D3DFMT_A8R8G8B8;//The higher you can set this, the more accurate the z-buffer is, current seems to be the highest working.
+		//d3dpp.BackBufferFormat = D3DFMT_UNKNOWN;
+		d3dpp.BackBufferFormat = D3DFMT_A8R8G8B8;//The higher you can set this, the more accurate the z-buffer is, current seems to be the highest working.
 		d3dpp.EnableAutoDepthStencil = true;
-		d3dpp.AutoDepthStencilFormat = D3DFMT_D16;
-		//d3dpp.AutoDepthStencilFormat = D3DFMT_D24S8;//The higher you can set this, the more accurate the z-buffer is, current seems to be the highest working.
+		//d3dpp.AutoDepthStencilFormat = D3DFMT_D16;
+		d3dpp.AutoDepthStencilFormat = D3DFMT_D24S8;//The higher you can set this, the more accurate the z-buffer is, current seems to be the highest working.
 
 		if (FAILED(g_pD3D->CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, hWnd,
 			D3DCREATE_SOFTWARE_VERTEXPROCESSING,
@@ -149,7 +149,7 @@ namespace pengine
 
 	void DirectXRenderer::SetCulling(CULLINGTYPE cullingType)
 	{
-		this->g_pd3dDevice->SetRenderState(D3DRS_CULLMODE, static_cast<D3DCULL>(cullingType));	
+		this->g_pd3dDevice->SetRenderState(D3DRS_CULLMODE, static_cast<D3DCULL>(cullingType));
 	}
 
 	void DirectXRenderer::SetZBuffer(bool param)
@@ -258,6 +258,10 @@ namespace pengine
 			}
 			g_pd3dDevice->SetTexture(0, textureCache[material->texture]);
 		}
+		else
+		{
+			g_pd3dDevice->SetTexture(0, NULL);
+		}
 	}
 
 	void DirectXRenderer::SetTexture(TextureWrapper* wrapper)
@@ -269,11 +273,6 @@ namespace pengine
 	{
 		g_pd3dDevice->SetFVF(*fvf);
 	}
-
-	/*void DirectXRenderer::DrawPrimitive(Mesh mesh)
-{
-//g_pd3dDevice->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, mesh.vertices.size, 0, mesh.faceDefinitions.size * 3);
-}*/
 
 	void DirectXRenderer::DrawSubset(MeshWrapper* wrapper, int subset)
 	{
@@ -296,94 +295,6 @@ namespace pengine
 		return &g_pd3dDevice;
 	}
 
-	/*void DirectXRenderer::Draw(Mesh* mesh)
-{
-if (meshCache.find(mesh) == meshCache.end())
-{
-logger->Log(Logger::DEBUG, "Mesh \"" + mesh->fileName + "\" not converted to LPD3DXMESH yet.");
-
-LPD3DXMESH d3dMesh;
-int	amountOfVertices = 0;
-int amountOfIndices = 0;
-for (unsigned int i = 0; i < mesh->subsets.size(); ++i)
-{
-amountOfVertices += mesh->subsets.at(i).vertices.size();
-amountOfIndices += mesh->subsets.at(i).faceDefinitions.size();
-}
-if (FAILED(D3DXCreateMeshFVF(amountOfIndices, amountOfVertices, 0, D3DCustomVertexFVF, g_pd3dDevice, &d3dMesh)))
-{
-logger->Log(Logger::ERR, "Failed to create a D3DXCreateMeshFVF. Generating a cube");
-D3DXCreateBox(g_pd3dDevice, 1.0f, 1.0f, 1.0f, &d3dMesh, NULL);
-}
-else
-{
-D3DCustomVertex* d3dVertices = new D3DCustomVertex[amountOfVertices];
-unsigned short* indices = new unsigned short[amountOfIndices * 3];
-
-int vertexCount = -1;
-int indexCount = -1;
-for (unsigned int i = 0; i < mesh->subsets.size(); ++i)
-{
-for (unsigned int j = 0; j < mesh->subsets.at(i).vertices.size(); ++j)
-{
-D3DCustomVertex newVertex;
-newVertex.x = mesh->subsets.at(i).vertices.at(j).x;
-newVertex.y = mesh->subsets.at(i).vertices.at(j).y;
-newVertex.z = mesh->subsets.at(i).vertices.at(j).z;
-newVertex.tu = mesh->subsets.at(i).textureCoordinates.at(j).u;
-newVertex.tv = mesh->subsets.at(i).textureCoordinates.at(j).v;
-d3dVertices[++vertexCount] = newVertex;
-}
-for (unsigned int j = 0; j < mesh->subsets.at(i).faceDefinitions.size(); ++j)
-{
-indices[++indexCount] = mesh->subsets.at(i).faceDefinitions.at(j).v1;
-indices[++indexCount] = mesh->subsets.at(i).faceDefinitions.at(j).v2;
-indices[++indexCount] = mesh->subsets.at(i).faceDefinitions.at(j).v3;
-int test = 10;
-}
-}
-VOID* pVoid;
-
-LPDIRECT3DVERTEXBUFFER9 v_buffer;
-d3dMesh->GetVertexBuffer(&v_buffer);
-// lock v_buffer and load the vertices into it
-v_buffer->Lock(0, 0, (void**)&pVoid, 0);
-memcpy(pVoid, d3dVertices, amountOfVertices*sizeof(D3DCustomVertex));
-v_buffer->Unlock();
-
-LPDIRECT3DINDEXBUFFER9 i_buffer;
-d3dMesh->GetIndexBuffer(&i_buffer);
-// lock i_buffer and load the indices into it
-i_buffer->Lock(0, 0, (void**)&pVoid, 0);
-memcpy(pVoid, indices, amountOfIndices * 3 * sizeof(unsigned short));
-i_buffer->Unlock();
-
-logger->Log(Logger::DEBUG, "Mesh \"" + mesh->fileName + "\" converted to LPD3DXMESH.");
-
-if (mesh->fileName == "resources/cubeClone.obj.mesh")
-{
-//D3DXCreateBox(g_pd3dDevice, 1.0f, 1.0f, 1.0f, &d3dMesh, NULL);
-D3DXCreateSphere(g_pd3dDevice, 1.0f, 10, 10, &d3dMesh, NULL);
-logger->Log(3, "The meow is great in this one.");
-}
-if (mesh->fileName == "resources/cubeCloneClone.obj.mesh")
-{
-D3DXCreateTeapot(g_pd3dDevice, &d3dMesh, NULL);
-logger->Log(3, "The meow is greater in this one.");
-}
-}
-meshCache[mesh] = d3dMesh;
-//D3DXSaveMeshToX(L"test.x", d3dMesh, NULL, NULL, NULL, 0, 1); //save mesh to xfile to debug
-}
-
-for (unsigned int i = 0; i < mesh->subsets.size(); ++i){ // So we start at 1 instead of 0
-SetMaterial(&mesh->subsets.at(i).defaultMaterial);
-SetTexture(&mesh->subsets.at(i).defaultMaterial.defaultTexture);
-meshCache[mesh]->DrawSubset(i);
-}
-}*/
-
-
 	void DirectXRenderer::SetActiveMatrix(PEngineMatrix* matrix)
 	{
 		SetMatrixCache(matrix);
@@ -392,30 +303,28 @@ meshCache[mesh]->DrawSubset(i);
 
 	void DirectXRenderer::SetLights()
 	{
-		D3DXVECTOR3 vecDir;
-		D3DLIGHT9 light;
-		D3DMATERIAL9 material;    // create the material struct
-		light.Type = D3DLIGHT_DIRECTIONAL;
-		light.Diffuse.r = 1.0f;
-		light.Diffuse.g = 1.0f;
-		light.Diffuse.b = 1.0f;
-		vecDir = D3DXVECTOR3(cosf(timeGetTime() / 350.0f),
-			1.0f,
-			sinf(timeGetTime() / 350.0f));
-		D3DXVec3Normalize((D3DXVECTOR3*)&light.Direction, &vecDir);
+		//D3DXVECTOR3 vecDir;
+		//D3DLIGHT9 light;
+		//D3DMATERIAL9 material;    // create the material struct
+		//light.Type = D3DLIGHT_DIRECTIONAL;
+		//light.Diffuse.r = 1.0f;
+		//light.Diffuse.g = 1.0f;
+		//light.Diffuse.b = 1.0f;
+		//vecDir = D3DXVECTOR3(cosf(timeGetTime() / 350.0f), 1.0f, sinf(timeGetTime() / 350.0f));
+		//D3DXVec3Normalize((D3DXVECTOR3*)&light.Direction, &vecDir);
 
-		light.Range = 1000.0f;
-		light.Direction = vecDir;
+		//light.Range = 1000.0f;
+		//light.Direction = vecDir;
 
-		g_pd3dDevice->SetLight(0, &light);
-		g_pd3dDevice->LightEnable(0, TRUE);
-		g_pd3dDevice->SetRenderState(D3DRS_LIGHTING, FALSE);
+		//g_pd3dDevice->SetLight(0, &light);
+		//g_pd3dDevice->LightEnable(0, true);
+		g_pd3dDevice->SetRenderState(D3DRS_LIGHTING, false);
 		// Finally, turn on some ambient light.
-		g_pd3dDevice->SetRenderState(D3DRS_AMBIENT, 0x00202020);
-		material.Diffuse = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);    // set diffuse color to white
-		material.Ambient = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);    // set ambient color to white
+		g_pd3dDevice->SetRenderState(D3DRS_AMBIENT, 0xFFFFFFFF);
+		//material.Diffuse = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);    // set diffuse color to white
+		//material.Ambient = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);    // set ambient color to white
 
-		g_pd3dDevice->SetMaterial(&material);    // set the globably-used material to &material
+		//g_pd3dDevice->SetMaterial(&material);    // set the globably-used material to &material
 
 		/*//Turn on ambient lighting
 		g_pd3dDevice->SetRenderState(D3DRS_AMBIENT, 0xffffffff);

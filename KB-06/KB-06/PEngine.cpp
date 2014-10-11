@@ -42,7 +42,6 @@ namespace pengine
 		GetRenderer()->InitD3D(GetWindowManager()->GetLastWindow()->GetHWND());
 		GetRenderer()->SetProjectionMatrix(M_PI / 4, 100.0f);
 		GetRenderer()->SetDefaultRenderStates();
-
 	}
 
 	WindowManager* PEngine::GetWindowManager()
@@ -96,16 +95,14 @@ namespace pengine
 		sceneManager->SetCurrentScene(scene);
 	}
 
-
-
 	void PEngine::GameLoop(){
 		RGBAColor color;
 		color.r = 1.0f;
 		color.g = 0.25f;
 		color.b = 1.0f;
 		color.a = 1.0f;
-		double t = 0.0;
 		std::chrono::high_resolution_clock::time_point currentTime = std::chrono::high_resolution_clock::now();
+		GetRenderer()->SetLights();
 		while (GetWindowManager()->HasActiveWindow())
 		{
 			std::chrono::high_resolution_clock::time_point newTime = std::chrono::high_resolution_clock::now();
@@ -124,7 +121,6 @@ namespace pengine
 			// Visuals
 			GetRenderer()->ClearScene(0UL, 0UL, color, 1.0f, 0UL);
 			GetRenderer()->BeginScene();
-			GetRenderer()->SetLights();
 			GetSceneManager()->RenderActiveScene(GetRenderer());
 			GetRenderer()->EndScene();
 			for (auto windowIt = GetWindowManager()->GetAllWindows()->begin(); windowIt != GetWindowManager()->GetAllWindows()->end(); ++windowIt)

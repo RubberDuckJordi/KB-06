@@ -7,8 +7,7 @@
 #include "Ground.h"
 #include "Material.h"
 
-racer::RaceSceneFactory::RaceSceneFactory(pengine::ResourceManager* resourceManager)
-:SceneFactory(resourceManager)
+racer::RaceSceneFactory::RaceSceneFactory(pengine::ResourceManager* resourceManager) : SceneFactory(resourceManager)
 {
 
 }
@@ -26,7 +25,7 @@ pengine::Scene* racer::RaceSceneFactory::CreateScene()
 	racecart->SetHorsePower(30.0f);
 	racecart->AddAll(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f);
 	racecart->SetObject3D(object3d);
-	
+
 	RaceCart* racecart1 = new RaceCart();
 	racecart1->SetMass(100.0f);
 	RaceCart* racecart2 = new RaceCart();
@@ -38,7 +37,7 @@ pengine::Scene* racer::RaceSceneFactory::CreateScene()
 	racecart2->SetObject3D(object3d);
 
 
-	Track* track = new Track(); 
+	Track* track = new Track();
 	track->AddTrackBlock(TrackBlock::TYPE::STRAIGHT, xModel2);
 	track->AddTrackBlock(TrackBlock::TYPE::STRAIGHT, xModel2);
 	track->AddTrackBlock(TrackBlock::TYPE::STRAIGHT, xModel2);

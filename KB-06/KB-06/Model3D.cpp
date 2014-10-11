@@ -63,7 +63,7 @@ namespace pengine
 		concatenatedMesh->_nTextureCoords = LastMesh->_FirstTextureCoord + LastMesh->_nTextureCoords;
 		concatenatedMesh->_nNormals = LastMesh->_FirstNormal + LastMesh->_nNormals;
 
-		//Here we have a control:
+		//Here we have a check:
 		//Texture coordinates must be as numerous as Vertices or there must be none
 		//Normal vectors must be as numerous as Vertices or there must be none
 		if ((concatenatedMesh->_nTextureCoords < concatenatedMesh->_nVertices) && (concatenatedMesh->_nTextureCoords != 0))
@@ -149,7 +149,8 @@ namespace pengine
 		logger->Log(Logger::DEBUG, "Model3D: Bone hierarchy adapted.");
 
 		//We eventually delete all the previous meshes
-		while (!_Meshes.empty()) {
+		while (!_Meshes.empty())
+		{
 			delete _Meshes.back();
 			_Meshes.pop_back();
 		}

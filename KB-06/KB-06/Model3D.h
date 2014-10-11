@@ -20,7 +20,7 @@ namespace pengine
 		std::list<Mesh*> _Meshes;
 		std::list<AnimationSet*> _AnimationSets;
 	private:
-		Logger* logger;// = LoggerPool::GetInstance().GetLogger();
+		Logger* logger;
 		void UpdateBoneIndices(Bone* &pBone);
 	};
 }

@@ -3,14 +3,23 @@
 
 namespace pengine
 {
-	ObjectBone::~ObjectBone(void){
+	ObjectBone::ObjectBone() : _Bone(0), _Animation(0)
+	{
+		_TransformMatrix.Identity();
+		_CombinedMatrix.Identity();
+		_FinalMatrix.Identity();
+	}
+
+	ObjectBone::~ObjectBone()
+	{
 		while (!_Bones.empty())
 		{
 			delete _Bones.back(); _Bones.pop_back();
 		}
 	}
 
-	void ObjectBone::CalcAttitude(ObjectBone* pParentBone){
+	void ObjectBone::CalcAttitude(ObjectBone* pParentBone)
+	{
 		if (pParentBone == 0)
 		{
 			_CombinedMatrix = _TransformMatrix;
@@ -21,12 +30,10 @@ namespace pengine
 		}
 
 		_FinalMatrix = _Bone->_SkinOffset * _CombinedMatrix;
-	}/**/
+	}
 
-	/*************************************************
-	NEW- NEW- NEW- NEW- NEW- NEW- NEW- NEW- NEW- NEW*/
-
-	void ObjectBone::CalcAnimation(uint16 &pKey){
+	void ObjectBone::CalcAnimation(uint16 &pKey)
+	{
 		if (_Animation == 0)
 		{
 			return;
@@ -168,14 +175,17 @@ namespace pengine
 					//interpolate the vector
 					DeltaKey = (float)((_Animation->_Translations[_AnimationIndexT + 1])->Time - (_Animation->_Translations[_AnimationIndexT])->Time);
 					cTime = (float)(pKey - (_Animation->_Translations[_AnimationIndexT])->Time);
-					Translate = (_Animation->_Translations[_AnimationIndexT])->Translation
-						+ (((_Animation->_Translations[_AnimationIndexT + 1])->Translation
-						- (_Animation->_Translations[_AnimationIndexT])->Translation) * (cTime / DeltaKey));
+					Translate = (_Animation->_Translations[_AnimationIndexT])->Translation + (((_Animation->_Translations[_AnimationIndexT + 1])->Translation - (_Animation->_Translations[_AnimationIndexT])->Translation) * (cTime / DeltaKey));
 				}
 				Mat.Identity();
 				Mat.TranslationMatrix(Translate);
 				_TransformMatrix *= Mat;
 			}
 		}
-	}/**/
+	}
+
+	void ObjectBone::CalcBindSpace()
+	{
+		_TransformMatrix = _Bone->_MatrixPos;
+	}
 }

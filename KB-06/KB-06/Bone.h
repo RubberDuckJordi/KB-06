@@ -12,11 +12,8 @@ namespace pengine
 	class Bone
 	{
 	public:
-		Bone(void) : _nVertices(0), _Vertices(0), _Weights(0)
-		{
-			_MatrixPos.Identity(); _SkinOffset.Identity();
-		};
-		~Bone(void);
+		Bone();
+		~Bone();
 		Bone* IsName(std::string &BoneName);
 		void UpdateIndices(uint16 pIndex);
 

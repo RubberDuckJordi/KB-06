@@ -1,9 +1,3 @@
-/////////////////////////////////////////////////////////
-// Frm_Mesh.cpp
-//
-//
-/////////////////////////////////////////////////////////
-
 #include "Mesh.h"
 
 namespace pengine
@@ -33,12 +27,10 @@ namespace pengine
 		_nMaterials = 0;
 		_FirstMaterial = 0;
 		_FaceMaterials = NULL;
-		//list of Materials for that Mesh
-		//_Materials;
 		_Name = "Undefined";
 	}
 
-	Mesh::~Mesh(void)
+	Mesh::~Mesh()
 	{
 		if (_Vertices != NULL)
 		{
@@ -73,7 +65,16 @@ namespace pengine
 		}
 	}
 
-	void Mesh::UpdateIndices(void)
+	Mesh* Mesh::IsName(std::string &MeshName)
+	{
+		if (strcmp(_Name.c_str(), MeshName.c_str()) == 0)
+		{
+			return this;
+		}
+		return 0;
+	}
+
+	void Mesh::UpdateIndices()
 	{
 		for (uint32 i = 0; i < _nFaces; i++)
 		{
@@ -95,7 +96,7 @@ namespace pengine
 		}
 	}
 
-	void Mesh::CreateSubsets(void)
+	void Mesh::CreateSubsets()
 	{
 		uint32 FaceCount;
 		Subset* MeshSubset;

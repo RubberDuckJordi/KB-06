@@ -1,16 +1,96 @@
-////////////////////////////////////////////////////////////////
-// Object3D_GL.cpp
-// OpenGL 3DObject implmentation
-//
-////////////////////////////////////////////////////////////////
-
 #include "Object3D.h"
 
-#include "DirectXRenderer.h"//HACKING
+#include "DirectXRenderer.h"//HACKING NEEDS FIXES
 #include "CustomD3DVertex.h"
 
 namespace pengine
 {
+
+	Object3D::Object3D() :_Skeleton(NULL), _SkinnedVertices(NULL), _Model(NULL), _AnimationStep(1)
+	{
+		Logger* logger = LoggerPool::GetInstance().GetLogger();
+		logger->SetFile("SuperXLoader");
+		logger->SetLogLevel(Logger::DEBUG);
+		showWarning = true;
+	}
+
+	Object3D::~Object3D()
+	{
+		if (_SkinnedVertices != 0)
+		{
+			delete[] _SkinnedVertices;
+		}
+	}
+
+	void Object3D::ClearSkinnedVertices(void)
+	{
+		memset(_SkinnedVertices, 0, _Mesh->_nVertices * sizeof(Vertex));
+	}
+
+	void Object3D::SetAnimationStep(uint16 pStep)
+	{
+		_AnimationStep = pStep;
+	}
+
+	void Object3D::UpdateAnimation()
+	{
+		if (showWarning && _cAnimationSet == NULL)
+		{
+			//this warning should be in the future PEngine manual instead, with just a crash...
+			logger->Log(Logger::WARNING, "There are no animations, don't call UpdateAnimation!");
+		}
+		else if (_cAnimationSet != NULL)
+		{
+			ClearSkinnedVertices();
+			_cKey += _AnimationStep;
+			if (_cKey > _cAnimationSet->_MaxKey)
+			{
+				_cKey = 0;
+			}
+			CalcAnimation(_Skeleton);
+			ComputeBoundingBoxSphere();
+			CalcAttitude(_Skeleton, 0);
+			SkinMesh(_Skeleton);
+		}
+	}
+
+	void Object3D::UpdateBindSpace(void)
+	{
+		CalcBindSpace(_Skeleton);
+		CalcAttitude(_Skeleton, 0);
+		SkinMesh(_Skeleton);
+	}
+
+	void Object3D::CalcAnimation(void)
+	{
+		_cKey += _AnimationStep;
+		if (_cKey > _cAnimationSet->_MaxKey)
+		{
+			_cKey = 0;
+		}
+		CalcAnimation(_Skeleton);
+		ComputeBoundingBoxSphere();
+	}
+
+	void Object3D::CalcBindSpace(void)
+	{
+		CalcBindSpace(_Skeleton);
+	}
+
+	void Object3D::Update(void)
+	{
+		CalcAttitude(_Skeleton, 0);
+		SkinMesh(_Skeleton);
+	}
+
+	void Object3D::SetupModel(Model3D* &pModel)
+	{
+		_Model = pModel;
+		_Mesh = _Model->_Meshes.back();
+		_SkinnedVertices = new Vertex[_Mesh->_nVertices];
+		_Skeleton = ReplicateSkeleton(_Model->_Skeleton);
+	}
+
 	void Object3D::MapAnimationSet(std::string pText)
 	{
 		_cAnimationSet = _Model->FindAnimationSet(pText);
@@ -69,9 +149,9 @@ namespace pengine
 				for (int i = 0; i < amountOfVertices; ++i)//first do all the vertices, then set the indices to the right vertices
 				{
 					D3DCustomVertex newVertex;
-					newVertex.x = _Mesh->_Vertices[i].x;//x
-					newVertex.y = _Mesh->_Vertices[i].y;//y
-					newVertex.z = _Mesh->_Vertices[i].z;//z
+					newVertex.x = _Mesh->_Vertices[i].x;
+					newVertex.y = _Mesh->_Vertices[i].y;
+					newVertex.z = _Mesh->_Vertices[i].z;
 					newVertex.tu = _Mesh->_Vertices[i].tu;
 					newVertex.tv = _Mesh->_Vertices[i].tv;
 					d3dVertices[i] = newVertex;
@@ -82,9 +162,9 @@ namespace pengine
 				for (int i = 0; i < amountOfVertices; ++i)//first do all the vertices, then set the indices to the right vertices
 				{
 					D3DCustomVertex newVertex;
-					newVertex.x = _SkinnedVertices[i].x;//x
-					newVertex.y = _SkinnedVertices[i].y;//y
-					newVertex.z = _SkinnedVertices[i].z;//z
+					newVertex.x = _SkinnedVertices[i].x;
+					newVertex.y = _SkinnedVertices[i].y;
+					newVertex.z = _SkinnedVertices[i].z;
 					newVertex.tu = _SkinnedVertices[i].tu;
 					newVertex.tv = _SkinnedVertices[i].tv;
 					d3dVertices[i] = newVertex;
@@ -103,13 +183,13 @@ namespace pengine
 			g_pd3dDevice->SetFVF(D3DCustomVertexFVF);
 			_Model->_Meshes;
 
-			if (_Mesh->_Subsets.size() == 0)
+			if (_Mesh->_Subsets.size() == 0)//this is still relevant for tiger.x... sadly
 			{
 				//				logger->Log(Logger::DEBUG, "Object3D: We have no subsets to render!");
 				Face tempFace;
 				std::list<Material*>::iterator j = _Mesh->_Materials.begin();
 
-				renderer->SetMaterial(_Mesh->_Materials.front());//We have one mesh, that can only have 1 texture... not true at all, needs fix
+				renderer->SetMaterial(_Mesh->_Materials.front());//We have one mesh, that can only have 1 texture... maybe not true? Needs research...
 
 				unsigned int indicesForSubset = _Mesh->_nFaces * 3;//amount of faces * 3
 				unsigned short* indices = new unsigned short[indicesForSubset];

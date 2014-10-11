@@ -11,7 +11,7 @@ namespace pengine
 	class Quaternion {
 	public:
 		T data[4];
-		Quaternion(void)
+		Quaternion()
 		{
 			memset(data, 0, 4 * sizeof(T));
 		};
@@ -23,7 +23,7 @@ namespace pengine
 		{
 			memcpy(data, pT, 4 * sizeof(T));
 		};
-		void Zero(void)
+		void Zero()
 		{
 			memset(data, 0, 4 * sizeof(T));
 		};

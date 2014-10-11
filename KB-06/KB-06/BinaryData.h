@@ -1,6 +1,8 @@
 #ifndef _PENGINE_BINARYDATA_H_
 #define _PENGINE_BINARYDATA_H_
 
+#include <string>
+
 namespace pengine
 {
 	struct BinaryData{

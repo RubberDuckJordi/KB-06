@@ -2,13 +2,10 @@
 #define _PENGINE_XMESH_H_
 
 #include "Types.h"
-//#include "framework\frm_Quaternion.h"
 #include "Material.h"
 #include "Matrix.h"
 #include "Quaternion.h"
 #include "Vertex.h"
-
-//#include "Toolbox\Mytrace.h"
 
 #include <list>
 #include <vector>
@@ -26,17 +23,10 @@ namespace pengine
 	{
 	public:
 		Mesh();
-		~Mesh(void);
-		Mesh* IsName(std::string &MeshName)
-		{
-			if (strcmp(_Name.c_str(), MeshName.c_str()) == 0)
-			{
-				return this;
-			}
-			return 0;
-		};
-		void UpdateIndices(void);
-		void CreateSubsets(void);
+		~Mesh();
+		Mesh* IsName(std::string &MeshName);
+		void UpdateIndices();
+		void CreateSubsets();
 		//Vertices
 		uint16 _nVertices, _FirstVertex;
 		Vertex* _Vertices;

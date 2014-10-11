@@ -1,7 +1,7 @@
 #include "Animation.h"
 namespace pengine
 {
-	Animation::~Animation(void)
+	Animation::~Animation()
 	{
 		while (!_Scalings.empty())
 		{
@@ -23,5 +23,19 @@ namespace pengine
 			delete _Matrices.back();
 			_Matrices.pop_back();
 		}
+	}
+
+	Animation* Animation::Get()
+	{
+		return this;
+	}
+
+	Animation* Animation::IsName(std::string &pText)
+	{
+		if (strcmp(_BoneName.c_str(), pText.c_str()) == 0)
+		{
+			return this;
+		}
+		return 0;
 	}
 }

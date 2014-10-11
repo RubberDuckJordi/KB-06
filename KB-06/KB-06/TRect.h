@@ -10,9 +10,10 @@ namespace pengine
 	{
 	public:
 		T xs, ys, xe, ye;
-		TRect(void) : xs(0), ys(0), xe(0), ye(0)
+		TRect() : xs(0), ys(0), xe(0), ye(0)
 		{
 		};
+
 		TRect(const TRect<T> &prect)
 		{
 			xs = prect.xs;
@@ -20,6 +21,7 @@ namespace pengine
 			xe = prect.xe;
 			ye = prect.ye;
 		};
+
 		TRect<T>& operator=(const TRect<T> &prect)
 		{
 			xs = prect.xs;
@@ -28,6 +30,7 @@ namespace pengine
 			ye = prect.ye;
 			return *this;
 		};
+
 		TRect<T>& operator+=(const Vector<T> &pV)
 		{
 			xs += pV.x;
@@ -37,16 +40,6 @@ namespace pengine
 			return *this;
 		};
 
-		/*
-		trect<T>& operator+=(Vector<T> &pV)
-		{
-		xs += pV[VX];
-		ys += pV[VY];
-		xe += pV[VX];
-		ye += pV[VY];
-		return *this;
-		};*/
-
 		TRect(const T pxs, const T pys, const T pxe, const T pye)
 		{
 			xs = pxs;
@@ -54,6 +47,7 @@ namespace pengine
 			xe = pxe;
 			ye = pye;
 		};
+
 		inline void Set(const T pxs, const T pys, const T pxe, const T pye)
 		{
 			xs = pxs;
@@ -61,6 +55,7 @@ namespace pengine
 			xe = pxe;
 			ye = pye;
 		};
+
 		bool _fastcall InRect(const T &px, const T &py)
 		{
 			if (px < xs)
@@ -81,6 +76,7 @@ namespace pengine
 			}
 			return true;
 		};
+
 		bool _fastcall InRect(const Vector<T> &pv)
 		{
 			if (pv.x < xs)
@@ -101,28 +97,6 @@ namespace pengine
 			}
 			return true;
 		};
-
-		/*
-		bool _fastcall InRect( Vector<T> &pv)
-		{
-		if (pv[VX] < xs)
-		{
-		return false;
-		}
-		if (pv[VX] > xe)
-		{
-		return false;
-		}
-		if (pv[VY] < ys)
-		{
-		return false;
-		}
-		if (pv[VY] > ye)
-		{
-		return false;
-		}
-		return true;
-		};*/
 
 		bool _fastcall InRect(const TRect<T> &prect)
 		{

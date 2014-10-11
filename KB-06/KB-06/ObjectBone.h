@@ -8,12 +8,17 @@ namespace pengine
 {
 	class ObjectBone{
 	public:
-		ObjectBone(void) : _Bone(0), _Animation(0){ _TransformMatrix.Identity(); _CombinedMatrix.Identity(); _FinalMatrix.Identity(); };
-		~ObjectBone(void);
+		ObjectBone();
+		~ObjectBone();
 
-		void CalcAttitude(ObjectBone* pParentBone); //compute the Final Matrix
-		void CalcAnimation(uint16 &pKey); //retrieves a transformation matrice from an animation
-		void CalcBindSpace(void){ _TransformMatrix = _Bone->_MatrixPos; }; //Sets up the original Matrix position as transformation matrix
+		//compute the Final Matrix
+		void CalcAttitude(ObjectBone* pParentBone);
+
+		//retrieves a transformation matrice from an animation
+		void CalcAnimation(uint16 &pKey);
+
+		//Sets up the original Matrix position as transformation matrix
+		void CalcBindSpace();
 
 		Bone* _Bone;
 		Animation* _Animation;

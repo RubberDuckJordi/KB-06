@@ -8,7 +8,7 @@ namespace pengine
 	{
 	public:
 		T x, y, z;
-		Vector(void) : x(0), y(0), z(0)
+		Vector() : x(0), y(0), z(0)
 		{
 		};
 		Vector(T px, T py, T pz) : x(px), y(py), z(pz)
@@ -81,7 +81,7 @@ namespace pengine
 			return Vector<T>((T)(pT * x), (T)(pT * y), (T)(pT * z));
 		};
 
-		void Normalize(void)
+		void Normalize()
 		{
 			Vector<T> pv((T)(x*x), (T)(y*y), (T)(z*z));
 			T fLength = (T)(1.0f / (float)(pv.x + pv.y + pv.z));

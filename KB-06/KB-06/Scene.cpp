@@ -115,6 +115,13 @@ namespace pengine
 		}
 
 		renderer->SetFillMode(PENGINE_FILL_WIREFRAME);
+		Material mat;
+		mat.ambient = { 1.0f, 0.0f, 0.0f };
+		mat.diffuse = { 1.0f, 0.0f, 0.0f, 1.0f };
+		mat.emissive = { 1.0f, 0.0f, 0.0f };
+		mat.specular = { 1.0f, 0.0f, 0.0f };
+		mat.power = 50.0f;
+		renderer->SetMaterial(&mat);//WHY DOES THIS NOT MAKE THE WIREFRAME RED?!?!? >:( I DON'T UNDERSTAND!
 		for (std::list<Collidable*>::iterator i = collidables.begin(); i != collidables.end(); ++i)
 		{
 			(*i)->DrawCollidable(renderer);

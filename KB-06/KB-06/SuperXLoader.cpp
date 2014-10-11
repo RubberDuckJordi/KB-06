@@ -510,7 +510,7 @@ namespace pengine
 		}
 
 		token = X_COMMENT;
-		while (token != X_EBRACE)//might as well be while(true)...
+		while (token != X_EBRACE)
 		{
 			token = ProcessBlock();
 			switch (token)
@@ -657,7 +657,7 @@ namespace pengine
 			case X_COMMENT:
 				break; //used for spaces and other kind of comments
 			case X_EBRACE:
-				return; //this is the end, my only friend ...
+				return; //this is the end
 				break;
 			case X_MATERIAL:
 				ProcessMaterial(false);
@@ -736,7 +736,7 @@ namespace pengine
 				{
 					_LoadMesh->_Materials.push_back(NewMaterial);
 				}
-				return; //this is the end, my only friend ...
+				return; //this is the end
 				break;
 			case X_TEXTUREFILENAME:
 				Find('{');
@@ -849,7 +849,7 @@ namespace pengine
 				_LoadAnimationSet->_MaxKey = _MaxKey;
 				logger->Log(Logger::DEBUG, "SuperXLoader: MaxKey: " + std::to_string(_MaxKey));
 				_Object->_AnimationSets.push_back(_LoadAnimationSet);
-				return; //this is the end, my only friend ...
+				return; //this is the end
 			case X_ANIMATION:
 				ProcessAnimations(_LoadAnimationSet);
 				break;
@@ -881,7 +881,7 @@ namespace pengine
 				break; //used for spaces and other kind of comments
 			case X_EBRACE:
 				pAS->_Animations.push_back(tempAnimation);
-				return; //this is the end, my only friend ...
+				return; //this is the end
 				break;
 			case X_OBRACE:
 				Find('{');
@@ -1172,7 +1172,7 @@ namespace pengine
 					}
 					_LoadMesh->_Vertices[currentTextureCoordinateSet].tu = *(float*)&component[0];//convert DWORD to float
 					_LoadMesh->_Vertices[currentTextureCoordinateSet].tv = *(float*)&component[1];
-					logger->Log(Logger::DEBUG, "SuperXLoader: DeclData texture coordinates " + std::to_string(currentTextureCoordinateSet) + ": u: " + std::to_string(*(float*)&component[0]) + "; v: " + std::to_string(*(float*)&component[1]));
+					//logger->Log(Logger::DEBUG, "SuperXLoader: DeclData texture coordinates " + std::to_string(currentTextureCoordinateSet) + ": u: " + std::to_string(*(float*)&component[0]) + "; v: " + std::to_string(*(float*)&component[1]));
 					++currentTextureCoordinateSet;
 					break;
 				case D3DDECLUSAGE_BINORMAL:

@@ -7,6 +7,8 @@
 #include "RGBColor.h"
 #include "BinaryData.h"
 
+#include <string>
+
 namespace pengine
 {
 	class Material
@@ -19,8 +21,9 @@ namespace pengine
 			ambient = { 1.0f, 1.0f, 1.0f };
 			specular = { 1.0f, 1.0f, 1.0f };
 			emissive = { 1.0f, 1.0f, 1.0f };
-			power = 0;
+			power = 50;
 		};
+
 		~Material()
 		{
 			//We don't delete the texture because we're not the owner... the resource manager is!

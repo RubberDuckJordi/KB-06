@@ -15,44 +15,34 @@ namespace pengine
 {
 	typedef struct
 	{
-		uint32          Time;
+		uint32 Time;
 		Quaternion<float> Rotation;
 	} RotateKey;
 
 	typedef struct
 	{
-		uint32     	Time;
-		Vertex	Translation;
+		uint32 Time;
+		Vertex Translation;
 	} PositionKey;
 
 	typedef struct
 	{
-		uint32       Time;
-		Vector<float>  Scale;
+		uint32 Time;
+		Vector<float> Scale;
 	} ScaleKey;
 
 	typedef struct
 	{
-		uint32      Time;
+		uint32 Time;
 		Matrix<float> Matrix;
 	} MatrixKey;
 
 	class Animation
 	{
 	public:
-		~Animation(void);
-		Animation* Get(void)
-		{
-			return this;
-		};
-		Animation* IsName(std::string &pText)
-		{
-			if (strcmp(_BoneName.c_str(), pText.c_str()) == 0)
-			{
-				return this;
-			}
-			return 0;
-		};
+		~Animation();
+		Animation* Get();
+		Animation* IsName(std::string &pText);
 
 		std::string _BoneName;
 		std::vector<ScaleKey*> _Scalings;
