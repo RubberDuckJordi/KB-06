@@ -17,7 +17,7 @@ namespace pengine
 		_cKey = 0;
 		if (_cAnimationSet != 0)
 		{
-			GetBoneAnimation(_Skeletton);
+			GetBoneAnimation(_Skeleton);
 		}
 	}
 
@@ -44,7 +44,7 @@ namespace pengine
 		}
 		_cAnimationSet = (*i);
 
-		GetBoneAnimation(_Skeletton);
+		GetBoneAnimation(_Skeleton);
 		_cKey = 0;
 	}
 
@@ -193,7 +193,7 @@ namespace pengine
 		}
 	}
 
-	ObjectBone* Object3D::ReplicateSkeletton(Bone* &pBone)
+	ObjectBone* Object3D::ReplicateSkeleton(Bone* &pBone)
 	{
 		if (pBone != NULL)
 		{
@@ -207,7 +207,7 @@ namespace pengine
 			{
 				for (std::list<Bone*>::iterator i = pBone->_Bones.begin(); i != pBone->_Bones.end(); i++)
 				{
-					NBone->_Bones.push_back(ReplicateSkeletton(*i));
+					NBone->_Bones.push_back(ReplicateSkeleton(*i));
 				}
 			}
 			return NBone;

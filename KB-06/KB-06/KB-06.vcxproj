@@ -100,7 +100,6 @@
     <ClInclude Include="Ground.h" />
     <ClInclude Include="HeightmapLoader.h" />
     <ClInclude Include="IndexBufferWrapper.h" />
-    <ClInclude Include="IO.h" />
     <ClInclude Include="MaterialWrapper.h" />
     <ClInclude Include="Matrix.h" />
     <ClInclude Include="Menu.h" />

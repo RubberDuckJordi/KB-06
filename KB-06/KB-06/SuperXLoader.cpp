@@ -32,7 +32,6 @@ namespace pengine
 
 	SuperXLoader::SuperXLoader()
 	{
-		_Type = IO_3DX;
 		logger = LoggerPool::GetInstance().GetLogger();
 		logger->SetFile("SuperXLoader");
 		logger->SetLogLevel(Logger::INFO);
@@ -116,9 +115,9 @@ namespace pengine
 			}
 		}
 
-		if (_LoadSkeletton != NULL)
+		if (_LoadSkeleton != NULL)
 		{
-			MapMeshToBones(_LoadSkeletton);
+			MapMeshToBones(_LoadSkeleton);
 		}
 
 		logger->Log(Logger::DEBUG, "SuperXLoader: Processed file:" + std::string(pFilename));
@@ -127,12 +126,91 @@ namespace pengine
 		return true;
 	}
 
-	bool SuperXLoader::Save(std::string pFilename, Model3D* &pT)
+	float SuperXLoader::TextToNum(char* pText)
 	{
-		return false;
+		float test = 0, num = 10;
+		bool sign;
+
+		int textsize = strlen(pText);
+		unsigned char i = 0;
+
+		sign = false;
+		while ((sign == false) && (i < textsize))
+		{
+			switch (pText[i])
+			{
+			case '0':
+			case '1':
+			case '2':
+			case '3':
+			case '4':
+			case '5':
+			case '6':
+			case '7':
+			case '8':
+			case '9':
+			case '-':
+			case '.': 
+				sign = true;
+				break;
+			default:
+				++i; 
+				break;
+			}
+		}
+
+		if (i >= textsize)
+		{
+			return 0.0f;
+		}
+
+		if (pText[i] == '-')
+		{
+			sign = true; 
+			++i;
+		}
+		else
+		{
+			sign = false;
+		}
+
+		while ((pText[i] >= '0') && (pText[i] <= '9'))
+		{
+			test *= num;
+			test += (pText[i++] - '0');
+		}
+		num = 0.1f;
+		if ((i < textsize) && (pText[i++] == '.'))
+		{
+			while ((pText[i] >= '0') && (pText[i] <= '9'))
+			{
+				test += (pText[i++] - '0')*num;
+				num *= 0.1f;
+			}
+		}
+		if (sign)
+		{
+			test = -test;
+		}
+		return test;
 	}
 
-	int16 SuperXLoader::ProcessBlock(void)
+	void SuperXLoader::Remove(char pDelimiter, char* pText)
+	{
+		char result[TEXT_BUFFER];
+		uint32 i, j = 0;
+		for (i = 0; i < strlen(pText); i++)
+		{
+			if (pText[i] != pDelimiter)
+			{
+				result[j++] = pText[i];
+			}
+		}
+		result[j++] = '\0';
+		memcpy(pText, result, j);
+	};
+
+	int16 SuperXLoader::ProcessBlock()
 	{
 		std::string text;
 		char token = fin.peek();
@@ -243,7 +321,7 @@ namespace pengine
 		//This is a quick hack to derive a Unique ID for blocks with
 		//no identifier names like in the tiny_4anim.x example.
 
-		_X_UID.Integer = rand();// 4 bytes semi-random, it's the same random number every app launch, but random enough... for now atleast
+		_X_UID.Integer = (rand() / 2) + (GetTickCount() / 2);// 4 bytes semi-random, I will eat a banana if it isn't random enough...
 		_X_UID.Text[4] = pType; //We set the 5th byte with a significant character
 
 		//If any of the first 4 bytes are under 32 we add 32
@@ -310,8 +388,8 @@ namespace pengine
 		if (pBone == 0)
 		{
 			logger->Log(Logger::DEBUG, "SuperXLoader: Skeleton 1st bone: " + cBone->_Name);
-			_LoadSkeletton = cBone;
-			_Object->_Skeletton = _LoadSkeletton;
+			_LoadSkeleton = cBone;
+			_Object->_Skeleton = _LoadSkeleton;
 		}
 		else
 		{
@@ -693,7 +771,7 @@ namespace pengine
 		Find('"');
 		fin.getline(data, TEXT_BUFFER, '"');
 		temp = data;
-		cBone = _LoadSkeletton->IsName(temp);
+		cBone = _LoadSkeleton->IsName(temp);
 		if (cBone == NULL)
 		{
 			logger->Log(Logger::DEBUG, "We found skinweights for bone " + temp + " but we don't have that bone yet!");

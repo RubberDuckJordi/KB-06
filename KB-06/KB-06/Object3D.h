@@ -21,7 +21,7 @@ namespace pengine
 	class Object3D
 	{
 	public:
-		Object3D(void) :_Skeletton(0), _SkinnedVertices(0), _Model(0), _AnimationStep(1)
+		Object3D(void) :_Skeleton(0), _SkinnedVertices(0), _Model(0), _AnimationStep(1)
 		{
 		};
 		~Object3D(void)
@@ -30,14 +30,13 @@ namespace pengine
 			{
 				delete[] _SkinnedVertices;
 			}
-			/*if (_Skeletton!=0) delete _Skeletton;/**/
 		}
 		void SetupModel(Model3D* &pModel)
 		{
 			_Model = pModel;
 			_Mesh = _Model->_Meshes.back();
 			_SkinnedVertices = new Vertex[_Mesh->_nVertices];
-			_Skeletton = ReplicateSkeletton(_Model->_Skeletton);
+			_Skeleton = ReplicateSkeleton(_Model->_Skeleton);
 		};
 
 		//Vertices to render
@@ -68,17 +67,17 @@ namespace pengine
 				{
 					_cKey = 0;
 				}
-				CalcAnimation(_Skeletton);
+				CalcAnimation(_Skeleton);
 				ComputeBoundingBoxSphere();
-				CalcAttitude(_Skeletton, 0);
-				SkinMesh(_Skeletton);
+				CalcAttitude(_Skeleton, 0);
+				SkinMesh(_Skeleton);
 			}
 		};
 		void UpdateBindSpace(void)
 		{
-			CalcBindSpace(_Skeletton);
-			CalcAttitude(_Skeletton, 0);
-			SkinMesh(_Skeletton);
+			CalcBindSpace(_Skeleton);
+			CalcAttitude(_Skeleton, 0);
+			SkinMesh(_Skeleton);
 		};
 		inline void CalcAnimation(void)
 		{
@@ -87,17 +86,17 @@ namespace pengine
 			{
 				_cKey = 0;
 			}
-			CalcAnimation(_Skeletton);
+			CalcAnimation(_Skeleton);
 			ComputeBoundingBoxSphere();
 		};
 		inline void CalcBindSpace(void)
 		{
-			CalcBindSpace(_Skeletton);
+			CalcBindSpace(_Skeleton);
 		};
 		inline void Update(void)
 		{
-			CalcAttitude(_Skeletton, 0);
-			SkinMesh(_Skeletton);
+			CalcAttitude(_Skeleton, 0);
+			SkinMesh(_Skeleton);
 		};
 		void Draw(Renderer* renderer);
 
@@ -110,7 +109,7 @@ namespace pengine
 		bool showWarning = true;
 	private:
 		Logger* logger = LoggerPool::GetInstance().GetLogger();
-		ObjectBone* _Skeletton;
+		ObjectBone* _Skeleton;
 		Mesh* _Mesh; //pointer to Model Mesh
 		Vertex* _SkinnedVertices;
 		Model3D* _Model;
@@ -119,12 +118,12 @@ namespace pengine
 		uint16 _cKey; //current animation Key
 		uint16 _AnimationStep; //Animation Increment
 
-		ObjectBone* ReplicateSkeletton(Bone* &pBone);
+		ObjectBone* ReplicateSkeleton(Bone* &pBone);
 		void GetBoneAnimation(ObjectBone* &pBone);
 		void CalcAttitude(ObjectBone* pBone, ObjectBone* pParentBone);
 		void CalcAnimation(ObjectBone* &pBone);
 		void CalcBindSpace(ObjectBone* &pBone);
-		void SkinMesh(ObjectBone* pParentBone);/**/
+		void SkinMesh(ObjectBone* pParentBone);
 	};
 }
 #endif

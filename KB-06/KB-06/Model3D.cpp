@@ -7,14 +7,14 @@ namespace pengine
 		logger = LoggerPool::GetInstance().GetLogger();
 		logger->SetFile("SuperXLoader");
 		logger->SetLogLevel(Logger::INFO);
-		_Skeletton = skeleton;
+		_Skeleton = skeleton;
 	};
 
 	Model3D::~Model3D(void)
 	{
-		if (_Skeletton != 0)
+		if (_Skeleton != 0)
 		{
-			delete _Skeletton;
+			delete _Skeleton;
 		}
 		while (!_Meshes.empty())
 		{
@@ -141,9 +141,9 @@ namespace pengine
 
 		//OK. We now process the bone hierarchy to update the skinning indices
 		logger->Log(Logger::DEBUG, "Model3D: Adapting the Bone hierarchy...");
-		if (_Skeletton != 0)
+		if (_Skeleton != 0)
 		{
-			UpdateBoneIndices(_Skeletton);
+			UpdateBoneIndices(_Skeleton);
 		}
 
 		logger->Log(Logger::DEBUG, "Model3D: Bone hierarchy adapted.");

@@ -297,9 +297,6 @@
     <ClInclude Include="Bone.h">
       <Filter>Header\Resource\RobertX</Filter>
     </ClInclude>
-    <ClInclude Include="IO.h">
-      <Filter>Header\Resource\RobertX</Filter>
-    </ClInclude>
     <ClInclude Include="Matrix.h">
       <Filter>Header\Resource\RobertX</Filter>
     </ClInclude>
