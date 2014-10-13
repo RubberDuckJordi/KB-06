@@ -139,7 +139,8 @@ namespace pengine
 		currentCamera = camera;
 	}
 
-	void Scene::SetSceneCallback(SceneCallback* callback){
+	void Scene::SetSceneCallback(SceneCallback* callback)
+	{
 		this->callback = callback;
 	}
 
