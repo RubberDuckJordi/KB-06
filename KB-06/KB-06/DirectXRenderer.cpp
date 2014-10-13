@@ -47,8 +47,6 @@ namespace pengine
 			D2D1::HwndRenderTargetProperties(hWnd, size),
 			&d2dRenderTarget
 			);
-
-
 	}
 
 	void DirectXRenderer::CreateWICImagingFactory()
@@ -135,6 +133,7 @@ namespace pengine
 			logger->Log(Logger::ERR, "Failed to instantiate Direct3D9 CreateDevice");
 			return;
 		}
+		g_pd3dDevice->GetRenderTarget(0, &MainSurface);//keeping a copy of the original rendering surface...
 	}
 
 	void DirectXRenderer::SetDefaultRenderStates()
@@ -163,7 +162,7 @@ namespace pengine
 
 	}
 
-	void DirectXRenderer::SetActiveCamera(CameraData camera)
+	void DirectXRenderer::SetActiveCamera(CameraData camera, bool orthographic)
 	{
 		// Set up our view matrix. A view matrix can be defined given an eye point,
 		// a point to lookat, and a direction for which way is up. Here, we set the
@@ -173,7 +172,14 @@ namespace pengine
 		D3DXVECTOR3 vEyePt(camera.x, camera.y, camera.z);
 		D3DXVECTOR3 vLookatPt(camera.lookAtX, camera.lookAtY, camera.lookAtZ);
 		D3DXVECTOR3 vUpVec(camera.upVecX, camera.upVecY, camera.upVecZ);
-		D3DXMatrixLookAtLH(matrixCache, &vEyePt, &vLookatPt, &vUpVec);
+		if (orthographic)
+		{
+			D3DXMatrixOrthoLH(matrixCache, 1.0f, 1.0f, 1.0f, 2.0f);
+		} 
+		else
+		{
+			D3DXMatrixLookAtLH(matrixCache, &vEyePt, &vLookatPt, &vUpVec);
+		}
 		g_pd3dDevice->SetTransform(D3DTS_VIEW, matrixCache);
 	}
 
@@ -363,20 +369,20 @@ namespace pengine
 
 	}
 
-	VertexBufferWrapper* DirectXRenderer::CreateVertexBuffer(D3DCustomVertex* p_vertices, int amountOfIndices, int fvf)
+	VertexBufferWrapper* DirectXRenderer::CreateVertexBuffer(D3DCustomVertex* p_vertices, int amountOfVertices, int fvf)
 	{
 		IDirect3DVertexBuffer9** buffer = new LPDIRECT3DVERTEXBUFFER9();
 		VertexBufferWrapper* vertexBufferWrapper = new VertexBufferWrapper();
 		vertexBufferWrapper->SetVertexBuffer(buffer);
 
-		if (FAILED(g_pd3dDevice->CreateVertexBuffer(amountOfIndices * sizeof(D3DCustomVertex),
+		if (FAILED(g_pd3dDevice->CreateVertexBuffer(amountOfVertices * sizeof(D3DCustomVertex),
 			0, fvf, D3DPOOL_DEFAULT, vertexBufferWrapper->GetVertexBuffer(), NULL)))
 		{
 			logger->Log(Logger::ERR, "DirectXRenderer::CreateVertexBuffer() vertexbuffer create failed");
 		}
 
 		void* verticesBuffer;
-		int size = sizeof(D3DCustomVertex)*amountOfIndices;
+		int size = sizeof(D3DCustomVertex)*amountOfVertices;
 
 		if (FAILED((*vertexBufferWrapper->GetVertexBuffer())->Lock(0, size, (void**)&verticesBuffer, 0)))
 		{
@@ -425,5 +431,46 @@ namespace pengine
 			amountOfVertices,// NumVertices
 			0,// StartIndex
 			12);// PrimitiveCount
+	}
+
+	void DirectXRenderer::ActivateRenderingToTexture(int tWidth, int tHeight)
+	{
+		if (RenderTexture != NULL)
+		{
+			RenderTexture->Release();
+			RenderTexture = NULL;
+		}
+		if (RenderSurface != NULL)
+		{
+			RenderSurface->Release();
+			RenderSurface = NULL;
+		}
+		//Create our render target, making it the same size as the screen. Usually DX would resize it to a 2^x size, but
+		//we're creating it as a "D3DUSAGE_RENDERTARGET" so it can set it the same as the screen's size.
+		g_pd3dDevice->CreateTexture(tWidth, tHeight, 1, D3DUSAGE_RENDERTARGET, D3DFMT_A8R8G8B8, D3DPOOL_DEFAULT, &RenderTexture, NULL);
+		//Here we grab a pointer to the surface so we can pass it to SetRenderTarget
+		RenderTexture->GetSurfaceLevel(0, &RenderSurface);
+
+		//Change our rendering target to our created surface.
+		g_pd3dDevice->SetRenderTarget(0, RenderSurface);
+		//Clear it too, with a different color to make sure we're getting it.
+		g_pd3dDevice->Clear(0, NULL, D3DCLEAR_TARGET, 0xFF000000, 1.0f, 0);//no alpha please (for now)
+		//Start the renderer to render to the texture scene
+		g_pd3dDevice->BeginScene();//not sure if this has an effect or not
+	}
+
+	void DirectXRenderer::DeactivateRenderingToTexture()
+	{
+		//We're done rendering to the texture scene
+		g_pd3dDevice->EndScene();//not sure if this has an effect or not
+		//D3DXSaveTextureToFile(L"test.bmp", D3DXIFF_BMP, RenderTexture, NULL);
+		//And we change back to the actual backbuffer
+		g_pd3dDevice->SetRenderTarget(0, MainSurface);
+	}
+
+	void DirectXRenderer::SetTextureToRenderedTexture()
+	{
+		//Set the texture we're using to the texture we just rendered to. (Neat huh? :D)
+		g_pd3dDevice->SetTexture(0, RenderTexture);
 	}
 }

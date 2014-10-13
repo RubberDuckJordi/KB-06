@@ -23,7 +23,7 @@ namespace pengine
 		virtual void Update(float deltaTime, std::map<Input, long>* actions);
 		void AddEntity(Entity* entity);
 		void AddCollidable(Collidable* collidable);
-		void Render(Renderer* renderer);
+		virtual void Render(Renderer* renderer);
 
 		EntityCamera* GetCurrentCamera();
 		void SetCurrentCamera(EntityCamera* camera);

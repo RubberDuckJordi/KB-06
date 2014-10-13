@@ -82,11 +82,6 @@ pengine::Scene* racer::RaceSceneFactory::CreateScene()
 	return raceScene;
 }
 
-void racer::RaceSceneFactory::SetXModel(pengine::XModel* p_xModel)
-{
-	xModel = p_xModel;
-}
-
 void racer::RaceSceneFactory::SetXModel2(pengine::Object3D* p_xModel)
 {
 	xModel2 = p_xModel;

@@ -231,6 +231,7 @@ namespace pengine
 				while (j != _Mesh->_Materials.end())
 				{
 					renderer->SetMaterial(*j);
+					//renderer->SetTextureToRenderedTexture();
 
 					tempSubset = *i;
 					unsigned int indicesForSubset = tempSubset->Size * 3;//amount of faces * 3
