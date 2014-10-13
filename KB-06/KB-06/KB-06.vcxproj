@@ -107,6 +107,7 @@
     <ClInclude Include="Model3D.h" />
     <ClInclude Include="Object3D.h" />
     <ClInclude Include="ObjectBone.h" />
+    <ClInclude Include="QuadNode.h" />
     <ClInclude Include="Quaternion.h" />
     <ClInclude Include="Rectangle.h" />
     <ClInclude Include="RenderMatrix.h" />
@@ -186,6 +187,7 @@
     <ClCompile Include="Object3D.cpp" />
     <ClCompile Include="ObjectBone.cpp" />
     <ClCompile Include="PEngine.cpp" />
+    <ClCompile Include="QuadNode.cpp" />
     <ClCompile Include="RenderMatrix.cpp" />
     <ClCompile Include="SceneLoader.cpp" />
     <ClCompile Include="Shader.cpp" />

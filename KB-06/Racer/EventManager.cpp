@@ -8,7 +8,7 @@ EventManager::~EventManager()
 {
 }
 
-void EventManager::CreateEvent(std::string name) {
+void EventManager::CreateNewEvent(std::string name) {
 	if (!events.count(name))
 	{
 		events[name] = new Event(name);
@@ -22,7 +22,7 @@ void EventManager::Subscribe(std::string name, EventListener* listener) {
 	}
 	else
 	{
-		CreateEvent(name);
+		CreateNewEvent(name);
 	}
 }
 

@@ -11,6 +11,7 @@
 
 #include "Object3D.h"
 #include "SuperXLoader.h"
+#include "EventManager.h"
 
 pengine::Object3D* kapotlelijk(pengine::ResourceManager* resourceManager)
 {
@@ -97,6 +98,20 @@ int main(int argc, const char* argv[])
 
 	pEngine.AddSceneFactory("raceScene", sceneFactory);
 	pengine::Scene* scene = pEngine.AddScene("raceScene");
+
+	// <EventManager voorbeeld>
+	EventManager* eventManager = new EventManager();
+	eventManager->CreateNewEvent("event");
+	class Iets : public EventListener {
+		void ProcEvent(std::string name){
+			std::cout << "Event prov example" << std::endl;
+		}
+	};
+	Iets* iets = new Iets();
+	eventManager->Subscribe("event", iets);
+	eventManager->Proc("event");
+	// </EventManager voorbeeld>
+
 	pEngine.SetCurrentScene(scene);
 	pEngine.GameLoop();
 
