@@ -1,6 +1,7 @@
 #include "Ground.h"
 #include "DirectXRenderer.h"
 #include <vector>
+#include "PengineDefinitions.h"
 
 namespace pengine
 {
@@ -79,31 +80,39 @@ namespace pengine
 
 	void Ground::Render(Renderer* renderer)
 	{
+		QuadNode* rootNode = CreateQuadTree(2);
+		D3DCustomVertex* verticesX;
+		int amountOfVerticesX;
+		rootNode->GetAllChildrenVertices(verticesX, amountOfVerticesX);
+
 		if (vertexBuffer != NULL)
 		{
 			delete vertexBuffer;
 		}
-		
-		vertexBuffer = renderer->CreateVertexBuffer(vertices, amountOfVertices, D3DCustomVertexFVF);
+
+		vertexBuffer = renderer->CreateVertexBuffer(verticesX, amountOfVerticesX, D3DCustomVertexFVF);
 
 		renderer->SetActiveMatrix(location->theMatrix);
 		renderer->SetMaterial(material);
-		
-		renderer->DrawVertexBuffer(vertexBuffer, amountOfVertices);
+
+		renderer->DrawVertexBuffer(vertexBuffer, amountOfVerticesX);
 	}
 
 	QuadNode* Ground::CreateQuadTree(unsigned short depth)
 	{
-		if (width % depth != 0)
+		if (depth != 0)
 		{
-			logger->Log(Logger::ERR, "Width is not dividable by depth");
-			return NULL;
-		}
+			if (width % depth != 0)
+			{
+				logger->Log(Logger::ERR, "Width is not dividable by depth");
+				return NULL;
+			}
 
-		if (height % depth != 0)
-		{
-			logger->Log(Logger::ERR, "Height is not dividable by depth");
-			return NULL;
+			if (height % depth != 0)
+			{
+				logger->Log(Logger::ERR, "Height is not dividable by depth");
+				return NULL;
+			}
 		}
 
 		// Find dimensions of the ground
@@ -130,7 +139,7 @@ namespace pengine
 		rootNode->maxZ = dimensionDepth;
 		rootNode->isLeaf = false;
 
-		CreateQuadTreeChildren(rootNode, 1);
+		CreateQuadTreeChildren(rootNode, depth);
 
 		return rootNode;
 	}
@@ -142,8 +151,8 @@ namespace pengine
 			// This is a branch, create children and call this function recursively
 			parent->isLeaf = false;
 
-			//0 3
-			//1 2			
+			// 0 3
+			// 1 2
 
 			QuadNode* node0 = new QuadNode();
 			QuadNode* node1 = new QuadNode();
@@ -185,7 +194,7 @@ namespace pengine
 			parent->children[2] = node2;
 			parent->children[3] = node3;
 		}
-		else 
+		else
 		{
 			// Add leaf data
 			parent->isLeaf = true;
@@ -195,8 +204,8 @@ namespace pengine
 			for (int i = 0; i < amountOfVertices; ++i)
 			{
 				D3DCustomVertex* vertex = &vertices[i];
-				if (vertex->x >= parent->minX && vertex->x < parent->maxX
-					&& vertex->z >= parent->minZ && vertex->z < parent->maxZ)
+				if (vertex->x > parent->minX && vertex->x < parent->maxX
+					&& vertex->z > parent->minZ && vertex->z < parent->maxZ)
 				{
 					leafVertices.push_back(vertex);
 				}

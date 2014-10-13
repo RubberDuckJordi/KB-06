@@ -26,7 +26,8 @@ namespace pengine
 		D3DCustomVertex* vertices;
 		unsigned int amountOfVertices;
 
-		void GetAllChildrenVertices(D3DCustomVertex*& vertices, int& amountOfIndices);
+		// Returns terrain vertices of all children
+		void GetAllChildrenVertices(D3DCustomVertex*& vertices, int& amountOfVertices);
 	};
 }
 
