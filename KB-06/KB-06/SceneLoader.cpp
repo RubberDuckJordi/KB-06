@@ -12,9 +12,9 @@ namespace pengine
 
 	}
 
-	std::vector<std::string>* SceneLoader::LoadFile(std::string filePath)
+	std::vector<std::string>* SceneLoader::LoadFile(std::string* filePath)
 	{
-		std::ifstream file(filePath);
+		std::ifstream file(*filePath);
 		std::string line;
 		std::vector<std::string>* scenesFile = new std::vector<std::string>();
 		if (file)
@@ -120,9 +120,6 @@ namespace pengine
 		FOR THE CODE USED TO PROGRESS THE SCENELIST, SEE PREVIOUS COMMENT
 
 
-		Scene::Scene* scene = new Scene::Scene();
-
-		std::vector<std::string>* sceneFile = new std::vector<std::string>();
 
 		std::string beginLine;
 

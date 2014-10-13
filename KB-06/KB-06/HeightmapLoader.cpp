@@ -60,8 +60,8 @@ namespace pengine
 
 	void HeightmapLoader::BuildGround(byte* p_vertices, Ground& ground)
 	{
-		ground.SetAmountOfIndices(((ground.GetWidth() - 1) * (ground.GetHeight() - 1) * 6));
-		D3DCustomVertex* vertex = new D3DCustomVertex[ground.GetAmountOfIndices()];
+		ground.SetAmountOfVertices(((ground.GetWidth() - 1) * (ground.GetHeight() - 1) * 6));
+		D3DCustomVertex* vertex = new D3DCustomVertex[ground.GetAmountOfVertices()];
 		ground.SetVertices(vertex);
 		int vertexIndex = 0;
 
@@ -97,7 +97,7 @@ namespace pengine
 		int x = p_pointIndex % ground.GetWidth();
 
 		//Calculate z from p_pointIndex
-		int z = p_pointIndex / ground.GetWidth();
+		int z = p_pointIndex / ground.GetHeight();
 
 		//Calculate texture coordinates
 		float tu = (1 / static_cast<float>(ground.GetWidth())) * static_cast<float>(x);

@@ -3,9 +3,9 @@
 
 #include "Entity.h"
 #include "Vertex.h"
-#include "XModel.h"
 #include "Plane.h"
 #include "RenderMatrix.h"
+
 namespace pengine
 {
 	class EntityCamera : public Entity

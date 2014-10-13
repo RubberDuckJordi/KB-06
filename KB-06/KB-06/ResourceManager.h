@@ -7,6 +7,8 @@
 #include "Material.h"
 #include "Ground.h"
 #include "HeightmapLoader.h"
+#include "SceneLoader.h"
+#include "SuperXLoader.h"
 
 #include <vector>
 #include <string>
@@ -23,6 +25,8 @@ namespace pengine
 		Material* LoadMaterial(const std::string& fileName, const std::string& extension);
 		BinaryData* LoadBinaryFile(const std::string& fileName);
 		Ground* LoadGround(std::string filename, std::string textureFilename);
+		std::vector<std::string>* LoadSceneFile(std::string* path);
+		Model3D* LoadXFile(std::string* fileName);
 
 		//Mesh* LoadSound(const std::string& fileName, const std::string& extension);
 
@@ -35,6 +39,8 @@ namespace pengine
 		Logger* logger;
 
 		HeightmapLoader heightmapLoader;
+		SceneLoader* sceneLoader;
+		SuperXLoader* superXLoader;
 		//std::map<std::string, Mesh> meshes;
 		std::map<std::string, Material> materials;
 		std::map<std::string, BinaryData> textures;

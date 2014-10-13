@@ -95,7 +95,8 @@ namespace pengine
 		Resource::Vertex* cameraRotation = currentCamera->GetRotation();*/
 
 		//renderer->SetViewMatrix(0, 0, -0.5f, 0, 0, 0.5f);
-		renderer->SetActiveCamera(currentCamera->GetCameraData());
+		renderer->SetActiveCamera(currentCamera->GetCameraData(), false);
+
 		Vertex* cameraPosition = currentCamera->GetPosition();
 		if (skybox != NULL)
 		{
@@ -111,8 +112,8 @@ namespace pengine
 				++entitiesLoaded;
 			}
 		}
-
 		//logger->Log(Logger::DEBUG, "Rendered " + std::to_string(entitiesLoaded) + " of " + std::to_string(entities.size()) + " entities");
+
 		if (ground != NULL)
 		{
 			ground->Render(renderer);
@@ -144,7 +145,8 @@ namespace pengine
 		currentCamera = camera;
 	}
 
-	void Scene::SetSceneCallback(SceneCallback* callback){
+	void Scene::SetSceneCallback(SceneCallback* callback)
+	{
 		this->callback = callback;
 	}
 

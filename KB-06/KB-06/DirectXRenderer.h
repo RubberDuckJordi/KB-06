@@ -31,7 +31,7 @@ namespace pengine
 		void SetZBuffer(bool);
 		void SetFillMode(FILLMODE);
 
-		void SetActiveCamera(CameraData camera);
+		void SetActiveCamera(CameraData camera, bool orthographic);
 
 		void SetProjectionMatrix(PEngineMatrix* ProjectionMatrix);
 		void SetProjectionMatrix(float FOV, float farClippingPlane);
@@ -59,16 +59,28 @@ namespace pengine
 
 		void SetLights();
 
-		VertexBufferWrapper* CreateVertexBuffer(D3DCustomVertex*, int amountOfIndices, int fvf);
+		VertexBufferWrapper* CreateVertexBuffer(D3DCustomVertex*, int amountOfVertices, int fvf);
 		IndexBufferWrapper* CreateIndexBuffer(int* indices, int amountOfIndices);
-		void DrawVertexBuffer(VertexBufferWrapper*, int amountOfIndices);
-		void DrawIndexedVertexBuffer(VertexBufferWrapper*, IndexBufferWrapper*, int amountOfVertices);
+		void DrawVertexBuffer(VertexBufferWrapper*, int amountOfVertices);
+		void DrawIndexedVertexBuffer(VertexBufferWrapper*, IndexBufferWrapper*, int amountOfIndices);
+
+		void ActivateRenderingToTexture(int tWidth, int tHeight);
+		void DeactivateRenderingToTexture();
+		void SetTextureToRenderedTexture();
 
 	private:
 		//void SetTexture(BinaryData* texture);
 		//void SetMaterial(Material* material);
 		void SetMatrixCache(PEngineMatrix* matrix);
-		void DirectXRenderer::BuildViewFrustum(D3DXMATRIX* matrix);
+
+		// Have yet to figure out how to get rid of this.
+		// Basically it's a copied pointer to the device's back buffer
+		LPDIRECT3DSURFACE9 MainSurface = NULL;
+
+		// And here we have the whole point of this file: The render surface and associated texture
+		LPDIRECT3DSURFACE9 RenderSurface = NULL;
+		LPDIRECT3DTEXTURE9 RenderTexture = NULL;
+
 		RECT rectangle;
 
 		IWICBitmapDecoder* iwicBmpDecoder;
@@ -87,7 +99,7 @@ namespace pengine
 
 		LPDIRECT3D9 g_pD3D;
 		LPDIRECT3DDEVICE9 g_pd3dDevice;
-		
+
 		//std::map<Mesh*, LPD3DXMESH> meshCache;
 		std::map<BinaryData*, LPDIRECT3DTEXTURE9> textureCache;
 
