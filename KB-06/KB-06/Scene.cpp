@@ -96,19 +96,23 @@ namespace pengine
 
 		//renderer->SetViewMatrix(0, 0, -0.5f, 0, 0, 0.5f);
 		renderer->SetActiveCamera(currentCamera->GetCameraData());
-
 		Vertex* cameraPosition = currentCamera->GetPosition();
-
 		if (skybox != NULL)
 		{
 			skybox->Draw(renderer, cameraPosition);
 		}
 
+		int entitiesLoaded = 0;
 		for each(Entity* entity in entities)
 		{
-			entity->Draw(renderer);
+			if(currentCamera->SphereInFrustum(entity->GetPosition(), entity->GetRadius()))
+			{
+				entity->Draw(renderer);
+				++entitiesLoaded;
+			}
 		}
-		
+
+		//logger->Log(Logger::DEBUG, "Rendered " + std::to_string(entitiesLoaded) + " of " + std::to_string(entities.size()) + " entities");
 		if (ground != NULL)
 		{
 			ground->Render(renderer);
@@ -127,6 +131,7 @@ namespace pengine
 			(*i)->DrawCollidable(renderer);
 		}
 		renderer->SetFillMode(PENGINE_FILL_SOLID);
+
 	}
 
 	EntityCamera* Scene::GetCurrentCamera()

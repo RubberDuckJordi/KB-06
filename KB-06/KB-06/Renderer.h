@@ -12,6 +12,7 @@
 #include "RenderMatrix.h"
 #include "Material.h"
 #include "CustomD3DVertex.h"
+#include "Vertex.h"
 
 namespace pengine
 {
@@ -69,7 +70,6 @@ namespace pengine
 		virtual IndexBufferWrapper* CreateIndexBuffer(int* indices, int amountOfIndices) = 0;
 		virtual void DrawVertexBuffer(VertexBufferWrapper* vertexBuffer, int amountOfIndices) = 0;
 		virtual void DrawIndexedVertexBuffer(VertexBufferWrapper* vertexBuffer, IndexBufferWrapper* indexBuffer, int amountOfVertices) = 0;
-
 	protected:
 		Logger* logger;
 	};

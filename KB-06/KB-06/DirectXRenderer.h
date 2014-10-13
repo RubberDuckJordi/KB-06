@@ -68,7 +68,7 @@ namespace pengine
 		//void SetTexture(BinaryData* texture);
 		//void SetMaterial(Material* material);
 		void SetMatrixCache(PEngineMatrix* matrix);
-
+		void DirectXRenderer::BuildViewFrustum(D3DXMATRIX* matrix);
 		RECT rectangle;
 
 		IWICBitmapDecoder* iwicBmpDecoder;
@@ -92,6 +92,9 @@ namespace pengine
 		std::map<BinaryData*, LPDIRECT3DTEXTURE9> textureCache;
 
 		D3DXMATRIX* matrixCache;
+		D3DXMATRIXA16 projectionMatix;
+
+		D3DXPLANE   frustrumPlane[6];
 	};
 }
 #endif

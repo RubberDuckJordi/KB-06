@@ -2,7 +2,6 @@
 #include <d3dx9.h>
 #include "PengineDefinitions.h"
 #include "LoggerPool.h"
-
 #include <sstream>
 
 namespace pengine
@@ -79,4 +78,5 @@ namespace pengine
 
 		LoggerPool::GetInstance().GetLogger()->Log(Logger::DEBUG, oss.str());
 	}
+	
 }

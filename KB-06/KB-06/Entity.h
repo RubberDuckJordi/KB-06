@@ -45,7 +45,8 @@ namespace pengine
 
 		virtual void Draw(Renderer* renderer) = 0;
 		virtual void UpdateLogic(float deltaTime, std::map<Input, long>* actions);
-
+		
+		virtual float GetRadius();
 	protected:
 		void ApplyFriction(float friction);
 
@@ -57,8 +58,9 @@ namespace pengine
 		float mass;
 		float friction;
 		Vector3 movementVector;
-
+		float radius;
 		Logger* logger;
+		float defaultRadius = 1.0f;
 	};
 }
 #endif

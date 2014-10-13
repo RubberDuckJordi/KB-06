@@ -64,3 +64,7 @@ void TrackBlock::SetRotationOffset(float yaw, float pitch, float roll)
 pengine::Vertex* TrackBlock::GetRotationOffset(){
 	return &rotationOffset;
 }
+
+float TrackBlock::GetRadius(){
+	return 10.0f;
+}

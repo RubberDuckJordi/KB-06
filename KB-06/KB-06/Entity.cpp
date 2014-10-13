@@ -196,4 +196,8 @@ namespace pengine
 
 		AddForce(&inverted);
 	}
+
+	float Entity::GetRadius(){
+		return defaultRadius;
+	}
 }

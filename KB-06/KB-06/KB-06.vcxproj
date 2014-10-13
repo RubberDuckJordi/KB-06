@@ -107,6 +107,7 @@
     <ClInclude Include="Model3D.h" />
     <ClInclude Include="Object3D.h" />
     <ClInclude Include="ObjectBone.h" />
+    <ClInclude Include="Plane.h" />
     <ClInclude Include="Quaternion.h" />
     <ClInclude Include="Rectangle.h" />
     <ClInclude Include="RenderMatrix.h" />

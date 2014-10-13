@@ -1,6 +1,7 @@
 #include "DirectXRenderer.h"
 #include "CustomD3DVertex.h"
 #include "BinaryData.h"
+#include <math.h>
 
 namespace pengine
 {
@@ -176,7 +177,7 @@ namespace pengine
 		D3DXMatrixLookAtLH(matrixCache, &vEyePt, &vLookatPt, &vUpVec);
 		g_pd3dDevice->SetTransform(D3DTS_VIEW, matrixCache);
 	}
-
+	
 	void DirectXRenderer::SetProjectionMatrix(PEngineMatrix* projectionMatrix)
 	{
 		SetMatrixCache(projectionMatrix);
@@ -191,9 +192,9 @@ namespace pengine
 		// a perpsective transform, we need the field of view (1/4 pi is common),
 		// the aspect ratio, and the near and far clipping planes (which define at
 		// what distances geometry should be no longer be rendered).
-		D3DXMATRIXA16 matProj;
-		D3DXMatrixPerspectiveFovLH(&matProj, FOV, 1.0f, 1.0f, 1000.0f);
-		g_pd3dDevice->SetTransform(D3DTS_PROJECTION, &matProj);
+		
+		D3DXMatrixPerspectiveFovLH(&projectionMatix, FOV, 1.0f, 1.0f, 1000.0f);
+		g_pd3dDevice->SetTransform(D3DTS_PROJECTION, &projectionMatix);
 	}
 
 	void DirectXRenderer::BeginScene()

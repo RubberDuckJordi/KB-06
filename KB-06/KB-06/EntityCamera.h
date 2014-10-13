@@ -4,7 +4,8 @@
 #include "Entity.h"
 #include "Vertex.h"
 #include "XModel.h"
-
+#include "Plane.h"
+#include "RenderMatrix.h"
 namespace pengine
 {
 	class EntityCamera : public Entity
@@ -26,14 +27,19 @@ namespace pengine
 
 		bool useInput = false;
 
+		bool SphereInFrustum(Vertex* position, float radius);
+		void SetProjectionMatrix();
 	protected:
-		Vertex lookAtPosition;
+		Vector3 lookAtPosition;
 
 	private:
+		void BuildViewFrustum();
 		CameraData cameraData;
-		PEngineMatrix* rotationMatrix;
+		PEngineMatrix* viewMatrix;
 		Vector3* upVec;
 		float rollDegrees = 0.0f;
+		Plane frustrumPlane[6];
+		PEngineMatrix projectionMatrix;
 	};
 }
 #endif

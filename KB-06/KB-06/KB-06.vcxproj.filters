@@ -357,6 +357,9 @@
     <ClInclude Include="Vector3.h">
       <Filter>Header</Filter>
     </ClInclude>
+    <ClInclude Include="Plane.h">
+      <Filter>Header\Scene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />

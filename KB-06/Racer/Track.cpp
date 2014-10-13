@@ -102,3 +102,13 @@ void Track::AddTrackBlock(TrackBlock::TYPE trackBlockType, pengine::Object3D* mo
 	}
 	trackBlocks.push_back(new TrackBlock(x, y, z, yaw, trackBlockType, direction, model));
 }
+
+float Track::GetRadius()
+{
+	float radius = 0.0f;
+	for (auto & trackBlock : trackBlocks) 
+	{
+		radius += trackBlock->GetRadius();
+	}
+	return radius;
+}
