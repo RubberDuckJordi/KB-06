@@ -97,7 +97,7 @@ namespace pengine
 		int x = p_pointIndex % ground.GetWidth();
 
 		//Calculate z from p_pointIndex
-		int z = p_pointIndex / ground.GetWidth();
+		int z = p_pointIndex / ground.GetHeight();
 
 		//Calculate texture coordinates
 		float tu = (1 / static_cast<float>(ground.GetWidth())) * static_cast<float>(x);
