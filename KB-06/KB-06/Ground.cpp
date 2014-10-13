@@ -131,7 +131,7 @@ namespace pengine
 		rootNode->maxZ = dimensionDepth;
 		rootNode->isLeaf = false;
 
-		CreateQuadTreeChildren(rootNode, 0);
+		CreateQuadTreeChildren(rootNode, 1);
 
 		return rootNode;
 	}
@@ -140,7 +140,51 @@ namespace pengine
 	{
 		if (remainingDepth > 0)
 		{
+			// This is a branch, create children and call this function recursively
+			parent->isLeaf = false;
 
+			//0 3
+			//1 2			
+
+			QuadNode* node0 = new QuadNode();
+			QuadNode* node1 = new QuadNode();
+			QuadNode* node2 = new QuadNode();
+			QuadNode* node3 = new QuadNode();
+
+			node0->parent = parent;
+			node1->parent = parent;
+			node2->parent = parent;
+			node3->parent = parent;
+
+			node0->minX = (parent->maxX - parent->minX) / 2 + parent->minX;
+			node0->maxX = parent->maxX;
+			node0->minZ = parent->minZ;
+			node0->maxZ = parent->minZ + (parent->maxZ - parent->minZ) / 2;
+
+			node1->minX = parent->minX;
+			node1->maxX = (parent->maxX - parent->minX) / 2 + parent->minX;
+			node1->minZ = parent->minZ;
+			node1->maxZ = parent->minZ + (parent->maxZ - parent->minZ) / 2;
+
+			node2->minX = parent->minX;
+			node2->maxX = (parent->maxX - parent->minX) / 2 + parent->minX;
+			node2->minZ = parent->minZ + (parent->maxZ - parent->minZ) / 2;
+			node2->maxZ = parent->maxZ;
+
+			node3->minX = (parent->maxX - parent->minX) / 2 + parent->minX;
+			node3->maxX = parent->maxX;
+			node3->minZ = parent->minZ + (parent->maxZ - parent->minZ) / 2;
+			node3->maxZ = parent->maxZ;
+
+			CreateQuadTreeChildren(node0, remainingDepth - 1);
+			CreateQuadTreeChildren(node1, remainingDepth - 1);
+			CreateQuadTreeChildren(node2, remainingDepth - 1);
+			CreateQuadTreeChildren(node3, remainingDepth - 1);
+
+			parent->children[0] = node0;
+			parent->children[1] = node1;
+			parent->children[2] = node2;
+			parent->children[3] = node3;
 		}
 		else 
 		{
@@ -152,8 +196,8 @@ namespace pengine
 			for (int i = 0; i < amountOfIndices; ++i)
 			{
 				D3DCustomVertex* vertex = &vertices[i];
-				if (vertex->x >= parent->minX && vertex->x <= parent->maxX
-					&& vertex->z >= parent->minZ && vertex->z <= parent->maxZ)
+				if (vertex->x >= parent->minX && vertex->x < parent->maxX
+					&& vertex->z >= parent->minZ && vertex->z < parent->maxZ)
 				{
 					leafVertices.push_back(vertex);
 				}
