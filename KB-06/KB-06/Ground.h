@@ -4,6 +4,7 @@
 #include "CustomD3DVertex.h"
 #include "Renderer.h"
 #include "LoggerPool.h"
+#include "QuadNode.h"
 
 namespace pengine
 {
@@ -27,10 +28,14 @@ namespace pengine
 
 		Material* GetMaterial();
 		void SetMaterial(Material* material);
+		// Creates a quad tree based on the terrain
+		QuadNode* CreateQuadTree(unsigned short depth);
 
 		void Render(Renderer* renderer);
 
 	private:
+		void CreateQuadTreeChildren(QuadNode* parent, unsigned short remainingDepth);
+
 		Logger* logger;
 		int amountOfIndices;
 		D3DCustomVertex* vertices;
