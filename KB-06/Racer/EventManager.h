@@ -10,7 +10,7 @@ class EventManager
 public:
 	EventManager();
 	~EventManager();
-	void CreateEvent(std::string name);
+	void CreateNewEvent(std::string name);
 	void Subscribe(std::string name, EventListener* listener);
 	void UnSubscribe(std::string name, EventListener* listener);
 	void Proc(std::string name);

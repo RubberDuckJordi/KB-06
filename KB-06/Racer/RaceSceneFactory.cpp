@@ -54,8 +54,7 @@ pengine::Scene* racer::RaceSceneFactory::CreateScene()
 	track->AddTrackBlock(TrackBlock::TYPE::TURN_RIGHT, xModel3);
 	track->AddTrackBlock(TrackBlock::TYPE::STRAIGHT, xModel2);
 	track->AddTrackBlock(TrackBlock::TYPE::TURN_RIGHT, xModel3);
-
-	track->SetAll(0, -1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 3.0f, 3.0f, 3.0f);
+	track->SetAll(-15, -1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 3.0f, 3.0f, 3.0f);
 
 	pengine::Ground* ground = resourceManager->LoadGround(groundResource, groundTexture);
 	pengine::Skybox* skybox = new pengine::Skybox();
