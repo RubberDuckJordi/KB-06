@@ -6,6 +6,8 @@ namespace pengine
 	ResourceManager::ResourceManager()
 	{
 		logger = LoggerPool::GetInstance().GetLogger();
+		sceneLoader = NULL;
+		superXLoader = NULL;
 	}
 
 	ResourceManager::~ResourceManager()
@@ -118,4 +120,29 @@ namespace pengine
 
 		return ground;
 	}
+
+	std::vector<std::string>* ResourceManager::LoadSceneFile(std::string* path)
+	{
+		if (sceneLoader == NULL)
+		{
+			sceneLoader = new SceneLoader();
+		}
+
+		std::vector<std::string>* textVector = sceneLoader->LoadFile(path);
+		return textVector;
+	}
+
+	Model3D* ResourceManager::LoadXFile(std::string* filePath)
+	{
+		if (superXLoader == NULL)
+		{
+			superXLoader = new SuperXLoader();
+		}
+
+		pengine::Model3D* model = new pengine::Model3D();
+		superXLoader->Load(*filePath, model);
+
+		return model;
+	}
+
 }

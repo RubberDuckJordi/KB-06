@@ -121,9 +121,6 @@
     <ClCompile Include="HeightmapLoader.cpp">
       <Filter>Source\Resource\Heightmap</Filter>
     </ClCompile>
-    <ClCompile Include="Ground.cpp">
-      <Filter>Source\Scene</Filter>
-    </ClCompile>
     <ClCompile Include="Collidable.cpp">
       <Filter>Source\Scene\Collision</Filter>
     </ClCompile>
@@ -138,6 +135,12 @@
     </ClCompile>
     <ClCompile Include="Mesh.cpp">
       <Filter>Source\Resource\RobertX</Filter>
+    </ClCompile>
+    <ClCompile Include="Ground.cpp">
+      <Filter>Source\Scene\Ground</Filter>
+    </ClCompile>
+    <ClCompile Include="QuadNode.cpp">
+      <Filter>Source\Scene\Ground</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -327,9 +330,6 @@
     <ClInclude Include="HeightmapLoader.h">
       <Filter>Header\Resource\Heightmap</Filter>
     </ClInclude>
-    <ClInclude Include="Ground.h">
-      <Filter>Header\Scene</Filter>
-    </ClInclude>
     <ClInclude Include="Rectangle.h">
       <Filter>Header\Scene\Collision</Filter>
     </ClInclude>
@@ -344,6 +344,12 @@
     </ClInclude>
     <ClInclude Include="Vector3.h">
       <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Ground.h">
+      <Filter>Header\Scene\Ground</Filter>
+    </ClInclude>
+    <ClInclude Include="QuadNode.h">
+      <Filter>Header\Scene\Ground</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -445,6 +451,12 @@
     </Filter>
     <Filter Include="Source\Resource\Shader">
       <UniqueIdentifier>{39bfa152-6d55-4cde-8622-6a00dee7b05e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header\Scene\Ground">
+      <UniqueIdentifier>{8876394d-84e1-433b-bb5e-5e4849e8b211}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Scene\Ground">
+      <UniqueIdentifier>{8c887dbf-7097-4141-bf07-a9b4aa9d9052}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

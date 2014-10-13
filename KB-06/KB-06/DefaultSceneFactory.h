@@ -11,6 +11,7 @@ namespace pengine
 		DefaultSceneFactory(ResourceManager* resourceManager);
 		~DefaultSceneFactory();
 		Scene* CreateScene();
+		Scene* CreateScene(std::vector<std::string>* sceneFile, pengine::ResourceManager* resourceManager);
 	private:
 	};
 }

@@ -6,6 +6,7 @@
 #include "Input.h"
 #include "Renderer.h"
 #include "SceneCallback.h"
+#include "ResourceManager.h"
 
 #include <list>
 #include <map>
@@ -18,6 +19,7 @@ namespace pengine
 	public:
 		SceneManager();
 		~SceneManager();
+		void CreateScene(std::string* path, ResourceManager* resourceManager);
 		void AddSceneFactory(char* key, SceneFactory* sceneFactory);
 		Scene* SetScene(char* sceneFactory);
 		void RemoveScene(Scene* scene);

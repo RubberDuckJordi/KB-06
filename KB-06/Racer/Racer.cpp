@@ -14,9 +14,8 @@
 
 pengine::Object3D* kapotlelijk(pengine::ResourceManager* resourceManager)
 {
-	pengine::SuperXLoader* loader = new pengine::SuperXLoader();
-	pengine::Model3D* model = new pengine::Model3D();
-	loader->Load("resources/tiger.x", model);
+	std::string file = "resources/tiger.x";
+	pengine::Model3D* model = resourceManager->LoadXFile(&file);
 
 	for (std::list<pengine::Mesh*>::iterator i = model->_Meshes.begin(); i != model->_Meshes.end(); ++i)
 	{
@@ -40,7 +39,6 @@ pengine::Object3D* kapotlelijk(pengine::ResourceManager* resourceManager)
 	MyObject->ClearSkinnedVertices();
 	MyObject->UpdateAnimation();
 
-	delete loader;
 
 
 	return MyObject;
@@ -48,9 +46,7 @@ pengine::Object3D* kapotlelijk(pengine::ResourceManager* resourceManager)
 
 pengine::Object3D* kapotlelijk(pengine::ResourceManager* resourceManager, std::string file)
 {
-	pengine::SuperXLoader* loader = new pengine::SuperXLoader();
-	pengine::Model3D* model = new pengine::Model3D();
-	loader->Load(file, model);
+	pengine::Model3D* model = resourceManager->LoadXFile(&file);
 
 	for (std::list<pengine::Mesh*>::iterator i = model->_Meshes.begin(); i != model->_Meshes.end(); ++i)
 	{
@@ -68,7 +64,8 @@ pengine::Object3D* kapotlelijk(pengine::ResourceManager* resourceManager, std::s
 	MyObject->SetupModel(model);
 	MyObject->showWarning = false;
 	MyObject->ClearSkinnedVertices();
-	delete loader;
+
+
 	return MyObject;
 }
 
@@ -85,12 +82,6 @@ int main(int argc, const char* argv[])
 
 	pengine::Object3D* weg = kapotlelijk(pEngine.GetResourceManager(), "resources/rechtdoor.x");
 	pengine::Object3D* weg2 = kapotlelijk(pEngine.GetResourceManager(), "resources/niet-rechtdoor.x");
-
-	pengine::RGBAColor color;
-	color.r = 1.0f;
-	color.g = 0.25f;
-	color.b = 1.0f;
-	color.a = 1.0f;
 
 	racer::RaceSceneFactory* sceneFactory = new racer::RaceSceneFactory(pEngine.GetResourceManager());
 	sceneFactory->SetXModel2(weg);

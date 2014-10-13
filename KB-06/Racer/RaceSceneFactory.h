@@ -12,7 +12,9 @@ namespace racer
 	public:
 		RaceSceneFactory(pengine::ResourceManager* resourceManager);
 		~RaceSceneFactory();
-		pengine::Scene* CreateScene();
+
+		pengine::Scene* CreateScene(std::vector<std::string>* sceneFile, pengine::ResourceManager* resourceManager);
+
 		void SetXModel2(pengine::Object3D*); //debug
 		void SetXModel3(pengine::Object3D*); //debug
 		void SetObject3D(pengine::Object3D*);

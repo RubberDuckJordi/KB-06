@@ -4,6 +4,7 @@
 #include "CustomD3DVertex.h"
 #include "Renderer.h"
 #include "LoggerPool.h"
+#include "QuadNode.h"
 
 namespace pengine
 {
@@ -20,19 +21,23 @@ namespace pengine
 		float GetCellSize();
 		void SetWidth(long);
 		
-		void SetAmountOfIndices(int);
-		int GetAmountOfIndices();
+		void SetAmountOfVertices(int);
+		int GetAmountOfVertices();
 		void SetVertices(D3DCustomVertex* vertex);
 		D3DCustomVertex* GetVertices();
 
 		Material* GetMaterial();
 		void SetMaterial(Material* material);
+		// Creates a quad tree based on the terrain
+		QuadNode* CreateQuadTree(unsigned short depth);
 
 		void Render(Renderer* renderer);
 
 	private:
+		void CreateQuadTreeChildren(QuadNode* parent, unsigned short remainingDepth);
+
 		Logger* logger;
-		int amountOfIndices;
+		int amountOfVertices;
 		D3DCustomVertex* vertices;
 		VertexBufferWrapper* vertexBuffer;
 		Material* material;
