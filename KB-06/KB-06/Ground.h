@@ -14,6 +14,7 @@ namespace pengine
 	public:
 		Ground();
 		~Ground();
+		void InitQuadTree(unsigned short depth);
 		long GetHeight();
 		long GetWidth();
 		void SetHeight(long);
@@ -36,6 +37,7 @@ namespace pengine
 	private:
 		void CreateQuadTreeChildren(QuadNode* parent, unsigned short remainingDepth);
 
+		QuadNode* quadTreeRootNode;
 		Logger* logger;
 		int amountOfVertices;
 		D3DCustomVertex* vertices;

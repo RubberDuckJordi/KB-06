@@ -16,6 +16,15 @@ namespace pengine
 	Ground::~Ground()
 	{
 		LoggerPool::GetInstance().ReturnLogger(logger);
+		if (quadTreeRootNode != NULL)
+		{
+			delete quadTreeRootNode;
+		}
+	}
+
+	void Ground::InitQuadTree(unsigned short depth)
+	{
+		quadTreeRootNode = CreateQuadTree(depth);
 	}
 
 	long Ground::GetHeight()
@@ -80,11 +89,9 @@ namespace pengine
 
 	void Ground::Render(Renderer* renderer)
 	{
-		renderer->SetFillMode(PENGINE_FILL_WIREFRAME);
-		QuadNode* rootNode = CreateQuadTree(1);
 		D3DCustomVertex* verticesX;
 		int amountOfVerticesX;
-		rootNode->GetAllChildrenVertices(verticesX, amountOfVerticesX);
+		quadTreeRootNode->GetAllChildrenVertices(verticesX, amountOfVerticesX);
 
 		if (vertexBuffer != NULL)
 		{
@@ -99,8 +106,6 @@ namespace pengine
 		renderer->DrawVertexBuffer(vertexBuffer, amountOfVerticesX);
 
 		delete[] verticesX;
-		delete rootNode;
-		renderer->SetFillMode(PENGINE_FILL_SOLID);
 	}
 
 	QuadNode* Ground::CreateQuadTree(unsigned short depth)
@@ -206,14 +211,26 @@ namespace pengine
 			parent->isLeaf = true;
 			std::vector<D3DCustomVertex*> leafVertices;
 
-			// Add all vertices within the bounds
-			for (int i = 0; i < amountOfVertices; ++i)
+			// Add all triangles within the bounds, borders included
+			for (int i = 0; i < amountOfVertices - 2; i += 3)
 			{
-				D3DCustomVertex* vertex = &vertices[i];
-				if (vertex->x >= parent->minX && vertex->x <= parent->maxX
-					&& vertex->z >= parent->minZ && vertex->z <= parent->maxZ)
+				D3DCustomVertex* vertex0 = &vertices[i];
+				D3DCustomVertex* vertex1 = &vertices[i + 1];
+				D3DCustomVertex* vertex2 = &vertices[i + 2];
+
+				// if one of the points is within bounds
+				if ((vertex0->x >= parent->minX && vertex0->x <= parent->maxX
+					&& vertex0->z >= parent->minZ && vertex0->z <= parent->maxZ)
+					||
+					(vertex1->x >= parent->minX && vertex1->x <= parent->maxX
+					&& vertex1->z >= parent->minZ && vertex1->z <= parent->maxZ)
+					||
+					(vertex2->x >= parent->minX && vertex2->x <= parent->maxX
+					&& vertex2->z >= parent->minZ && vertex2->z <= parent->maxZ))
 				{
-					leafVertices.push_back(vertex);
+					leafVertices.push_back(vertex0);
+					leafVertices.push_back(vertex1);
+					leafVertices.push_back(vertex2);
 				}
 			}
 
