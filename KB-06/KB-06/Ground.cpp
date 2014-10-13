@@ -80,7 +80,8 @@ namespace pengine
 
 	void Ground::Render(Renderer* renderer)
 	{
-		QuadNode* rootNode = CreateQuadTree(2);
+		renderer->SetFillMode(PENGINE_FILL_WIREFRAME);
+		QuadNode* rootNode = CreateQuadTree(1);
 		D3DCustomVertex* verticesX;
 		int amountOfVerticesX;
 		rootNode->GetAllChildrenVertices(verticesX, amountOfVerticesX);
@@ -96,6 +97,10 @@ namespace pengine
 		renderer->SetMaterial(material);
 
 		renderer->DrawVertexBuffer(vertexBuffer, amountOfVerticesX);
+
+		delete[] verticesX;
+		delete rootNode;
+		renderer->SetFillMode(PENGINE_FILL_SOLID);
 	}
 
 	QuadNode* Ground::CreateQuadTree(unsigned short depth)
@@ -189,10 +194,11 @@ namespace pengine
 			CreateQuadTreeChildren(node2, remainingDepth - 1);
 			CreateQuadTreeChildren(node3, remainingDepth - 1);
 
-			parent->children[0] = node0;
-			parent->children[1] = node1;
-			parent->children[2] = node2;
-			parent->children[3] = node3;
+			parent->children = new QuadNode[4];
+			parent->children[0] = *node0;
+			parent->children[1] = *node1;
+			parent->children[2] = *node2;
+			parent->children[3] = *node3;
 		}
 		else
 		{
@@ -204,8 +210,8 @@ namespace pengine
 			for (int i = 0; i < amountOfVertices; ++i)
 			{
 				D3DCustomVertex* vertex = &vertices[i];
-				if (vertex->x > parent->minX && vertex->x < parent->maxX
-					&& vertex->z > parent->minZ && vertex->z < parent->maxZ)
+				if (vertex->x >= parent->minX && vertex->x <= parent->maxX
+					&& vertex->z >= parent->minZ && vertex->z <= parent->maxZ)
 				{
 					leafVertices.push_back(vertex);
 				}

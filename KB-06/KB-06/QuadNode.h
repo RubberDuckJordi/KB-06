@@ -10,6 +10,8 @@ namespace pengine
 	{
 
 	public:
+		QuadNode();
+		~QuadNode();
 		QuadNode* parent;
 		bool isLeaf;
 		// Only uses x and z. Y is omitted because we are using a 2d tree.
@@ -19,7 +21,7 @@ namespace pengine
 		int maxZ;
 
 		// Only for branches and root node
-		QuadNode* children[4];
+		QuadNode* children;
 
 		// Only for leaves
 		// Terrain vertices
