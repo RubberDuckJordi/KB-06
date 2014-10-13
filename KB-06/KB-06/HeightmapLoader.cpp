@@ -60,8 +60,8 @@ namespace pengine
 
 	void HeightmapLoader::BuildGround(byte* p_vertices, Ground& ground)
 	{
-		ground.SetAmountOfIndices(((ground.GetWidth() - 1) * (ground.GetHeight() - 1) * 6));
-		D3DCustomVertex* vertex = new D3DCustomVertex[ground.GetAmountOfIndices()];
+		ground.SetAmountOfVertices(((ground.GetWidth() - 1) * (ground.GetHeight() - 1) * 6));
+		D3DCustomVertex* vertex = new D3DCustomVertex[ground.GetAmountOfVertices()];
 		ground.SetVertices(vertex);
 		int vertexIndex = 0;
 

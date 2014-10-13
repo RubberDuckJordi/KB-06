@@ -84,12 +84,12 @@ namespace pengine
 			delete vertexBuffer;
 		}
 		
-		vertexBuffer = renderer->CreateVertexBuffer(vertices, amountOfIndices, D3DCustomVertexFVF);
+		vertexBuffer = renderer->CreateVertexBuffer(vertices, amountOfVertices, D3DCustomVertexFVF);
 
 		renderer->SetActiveMatrix(location->theMatrix);
 		renderer->SetMaterial(material);
 		
-		renderer->DrawVertexBuffer(vertexBuffer, amountOfIndices);
+		renderer->DrawVertexBuffer(vertexBuffer, amountOfVertices);
 	}
 
 	QuadNode* Ground::CreateQuadTree(unsigned short depth)
@@ -110,7 +110,7 @@ namespace pengine
 		int dimensionWidth = 0;
 		int dimensionDepth = 0;
 
-		for (int i = 0; i < amountOfIndices; ++i)
+		for (int i = 0; i < amountOfVertices; ++i)
 		{
 			D3DCustomVertex* vertex = &vertices[i];
 			if (vertex->x > dimensionWidth)

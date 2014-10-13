@@ -21,8 +21,8 @@ namespace pengine
 		float GetCellSize();
 		void SetWidth(long);
 		
-		void SetAmountOfIndices(int);
-		int GetAmountOfIndices();
+		void SetAmountOfVertices(int);
+		int GetAmountOfVertices();
 		void SetVertices(D3DCustomVertex* vertex);
 		D3DCustomVertex* GetVertices();
 
@@ -37,7 +37,7 @@ namespace pengine
 		void CreateQuadTreeChildren(QuadNode* parent, unsigned short remainingDepth);
 
 		Logger* logger;
-		int amountOfIndices;
+		int amountOfVertices;
 		D3DCustomVertex* vertices;
 		VertexBufferWrapper* vertexBuffer;
 		Material* material;
