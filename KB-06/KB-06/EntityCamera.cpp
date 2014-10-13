@@ -9,6 +9,10 @@ namespace pengine
 		viewMatrix = new PEngineMatrix();
 		upVec = new Vector3(0, 1);
 		SetProjectionMatrix();
+		lastKnownRotation = new Vector3();
+		lastKnownRotation->x = 180;//yaw
+		lastKnownRotation->y = 0;//pitch
+		lastKnownRotation->z = 0;//roll
 	}
 
 	EntityCamera::~EntityCamera()
@@ -20,21 +24,37 @@ namespace pengine
 	{
 		for (std::map<Input, long>::iterator iterator = (*actions).begin(); iterator != (*actions).end(); iterator++)
 		{
-			float speed = static_cast<float>(iterator->second);
+			//float speed = static_cast<float>(iterator->second);
 			switch (iterator->first)
 			{
 			case Input::KEY_S:
-				this->AddPosition(0.0f, 0.0f, 0.5f);
+			{
+				float deltaZ = -cos(lastKnownRotation->x) * 0.5;
+				this->AddPosition(0.0f, 0.0f, deltaZ);
+				this->SetLookAtPosition(lookAtPosition.x, lookAtPosition.y, lookAtPosition.z + deltaZ, rollDegrees);
 				break;
+			}
 			case Input::KEY_W:
-				this->AddPosition(0.0f, 0.0f, -0.5f);
+			{
+				float deltaZ = cos(lastKnownRotation->x) * 0.5;
+				this->AddPosition(0.0f, 0.0f, deltaZ);
+				this->SetLookAtPosition(lookAtPosition.x, lookAtPosition.y, lookAtPosition.z + deltaZ, rollDegrees);
 				break;
+			}
 			case Input::KEY_D:
-				this->AddPosition(-0.5f, 0.0f, 0.0f);
+			{
+				float deltaX = sin(lastKnownRotation->x) * 0.5;
+				this->AddPosition(deltaX, 0.0f, 0.0f);
+				this->SetLookAtPosition(lookAtPosition.x + deltaX, lookAtPosition.y, lookAtPosition.z, rollDegrees);
 				break;
+			}
 			case Input::KEY_A:
-				this->AddPosition(0.5f, 0.0f, 0.0f);
+			{
+				float deltaX = -sin(lastKnownRotation->x) * 0.5;
+				this->AddPosition(deltaX, 0.0f, 0.0f);
+				this->SetLookAtPosition(lookAtPosition.x + deltaX, lookAtPosition.y, lookAtPosition.z, rollDegrees);
 				break;
+			}
 			case Input::KEY_SPACE:
 				this->AddPosition(0.0f, 0.5f, 0.0f);
 				break;
@@ -91,6 +111,17 @@ namespace pengine
 				--rollDegrees;
 				this->SetLookAtPosition(lookAtPosition.x, lookAtPosition.y, lookAtPosition.z, rollDegrees);
 				break;
+			case Input::MOUSE_X:
+				if (static_cast<float>(iterator->second) < 9001 && static_cast<float>(iterator->second) > -9001)//silly bugfixing?
+				{
+					lastKnownRotation->x += static_cast<float>(iterator->second) / 10;
+				}
+				else
+				{
+					logger->Log(Logger::WARNING, "Weird buggy value? It is: " + std::to_string(static_cast<float>(iterator->second)));
+				}
+				this->SetRotation(lastKnownRotation->x, 0, 0);
+				break;
 			default:
 				break;
 			}
@@ -142,9 +173,17 @@ namespace pengine
 		SetLookAtEntity(entity);
 	}
 
+	void EntityCamera::SetRotation(float yawDegrees, float pitchDegrees, float rollDegrees)
+	{
+		float lookAtX = sin(RADIANS(yawDegrees)) * 5.0f;
+		float lookAtZ = cos(RADIANS(yawDegrees)) * 5.0f;
+		float lookAtY = 0.0f;//not sure how to do y rotation yet sin(RADIANS(pitchDegrees)) * 5.0f;
+		SetLookAtPosition(position.x + lookAtX, position.y + lookAtY, position.z + lookAtZ, rollDegrees);
+	}
+
 	void EntityCamera::SetLookAtPosition(float x, float y, float z, float rollDegrees)
 	{
-		lookAtPosition =  { x, y, z };
+		lookAtPosition = { x, y, z };
 		Vector3 pos = { position.x, position.y, position.z };
 
 		Vector3 zaxis = Vector3::normalize(lookAtPosition - pos);

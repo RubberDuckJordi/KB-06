@@ -24,6 +24,7 @@ namespace pengine
 		void SetLookAtPosition(float x, float y, float z, float rollDegrees);
 		void SetLookAtEntity(Entity*);
 		void SetThirdPersonEntity(Entity*, float distance, float height);
+		void SetRotation(float yawDegrees, float pitchDegrees, float rollDegrees);
 
 		bool useInput = false;
 
@@ -40,6 +41,7 @@ namespace pengine
 		float rollDegrees = 0.0f;
 		Plane frustrumPlane[6];
 		PEngineMatrix projectionMatrix;
+		Vector3* lastKnownRotation;
 	};
 }
 #endif
