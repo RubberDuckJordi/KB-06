@@ -79,7 +79,6 @@ namespace pengine
 
 	void Ground::Render(Renderer* renderer)
 	{
-		CreateQuadTree(4);
 		if (vertexBuffer != NULL)
 		{
 			delete vertexBuffer;
