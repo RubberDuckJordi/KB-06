@@ -47,14 +47,14 @@ namespace pengine
 		return cellSize;
 	}
 
-	void Ground::SetAmountOfIndices(int p_amountOfIndices)
+	void Ground::SetAmountOfVertices(int p_amountOfVertices)
 	{
-		amountOfIndices = p_amountOfIndices;
+		amountOfVertices = p_amountOfVertices;
 	}
 
-	int Ground::GetAmountOfIndices()
+	int Ground::GetAmountOfVertices()
 	{
-		return amountOfIndices;
+		return amountOfVertices;
 	}
 
 	D3DCustomVertex* Ground::GetVertices()
@@ -102,7 +102,7 @@ namespace pengine
 
 		if (height % depth != 0)
 		{
-			logger->Log(Logger::ERR, "Width is not dividable by depth");
+			logger->Log(Logger::ERR, "Height is not dividable by depth");
 			return NULL;
 		}
 
@@ -192,7 +192,7 @@ namespace pengine
 			std::vector<D3DCustomVertex*> leafVertices;
 
 			// Add all vertices within the bounds
-			for (int i = 0; i < amountOfIndices; ++i)
+			for (int i = 0; i < amountOfVertices; ++i)
 			{
 				D3DCustomVertex* vertex = &vertices[i];
 				if (vertex->x >= parent->minX && vertex->x < parent->maxX
