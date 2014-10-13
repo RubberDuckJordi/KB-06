@@ -71,7 +71,7 @@ namespace pengine
 		virtual void DrawVertexBuffer(VertexBufferWrapper* vertexBuffer, int amountOfIndices) = 0;
 		virtual void DrawIndexedVertexBuffer(VertexBufferWrapper* vertexBuffer, IndexBufferWrapper* indexBuffer, int amountOfVertices) = 0;
 
-		virtual void ActivateRenderingToTexture(int tWidth, int tHeight) = 0;
+		virtual void ActivateRenderingToTexture(int tWidth, int tHeight, DWORD bgColor) = 0;
 		virtual void DeactivateRenderingToTexture() = 0;
 		virtual void SetTextureToRenderedTexture() = 0;
 	protected:

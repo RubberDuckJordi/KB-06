@@ -11,7 +11,7 @@ namespace pengine
 		g_pD3D = NULL;
 		g_pd3dDevice = NULL;
 		matrixCache = new D3DXMATRIX();
-		d2dBmp = NULL;
+		//d2dBmp = NULL;
 	}
 
 	DirectXRenderer::~DirectXRenderer()
@@ -30,12 +30,12 @@ namespace pengine
 
 	void DirectXRenderer::CreateD2DFactory()
 	{
-		D2D1CreateFactory(D2D1_FACTORY_TYPE_SINGLE_THREADED, &d2dFactory);
+		//D2D1CreateFactory(D2D1_FACTORY_TYPE_SINGLE_THREADED, &d2dFactory);
 	}
 
 	void DirectXRenderer::CreateRenderTarget(HWND hWnd)
 	{
-		D3DXCreateTexture(g_pd3dDevice, 500, 500, 1, D3DUSAGE_RENDERTARGET, D3DFMT_A8R8G8B8, D3DPOOL_DEFAULT, &surfaceTexture); //LPDIRECT3DTEXTURE9
+		/*D3DXCreateTexture(g_pd3dDevice, 500, 500, 1, D3DUSAGE_RENDERTARGET, D3DFMT_A8R8G8B8, D3DPOOL_DEFAULT, &surfaceTexture); //LPDIRECT3DTEXTURE9
 		surfaceTexture->GetSurfaceLevel(0, &surfaceLevel); //IDirect3DSurface9
 		g_pd3dDevice->GetRenderTarget(0, &backbuffer); //IDirect3DSurface9
 
@@ -47,17 +47,17 @@ namespace pengine
 			D2D1::RenderTargetProperties(),
 			D2D1::HwndRenderTargetProperties(hWnd, size),
 			&d2dRenderTarget
-			);
+			);*/
 	}
 
 	void DirectXRenderer::CreateWICImagingFactory()
 	{
-		CoCreateInstance(CLSID_WICImagingFactory, NULL, CLSCTX_INPROC_SERVER, __uuidof(IWICImagingFactory), (void**)(&iwicFactory));
+		//CoCreateInstance(CLSID_WICImagingFactory, NULL, CLSCTX_INPROC_SERVER, __uuidof(IWICImagingFactory), (void**)(&iwicFactory));
 	}
 
 	void DirectXRenderer::CreateDecoder(std::string path)
 	{
-		size_t newSize = strlen(path.c_str()) + 1;
+		/*size_t newSize = strlen(path.c_str()) + 1;
 
 		wchar_t* wPath = new wchar_t[newSize];
 
@@ -72,40 +72,40 @@ namespace pengine
 			GENERIC_READ,                    // Desired read access to the file
 			WICDecodeMetadataCacheOnDemand,  // Cache metadata when needed
 			&iwicBmpDecoder                      // Pointer to the decoder
-			);
+			);*/
 	}
 
 	void DirectXRenderer::CreateFormatConverter()
 	{
-		iwicFactory->CreateFormatConverter(&iwicFormatConverter);
+		//iwicFactory->CreateFormatConverter(&iwicFormatConverter);
 	}
 
 	void DirectXRenderer::GetBitmapFrame()
 	{
-		bitmapFrame = NULL;
+		//bitmapFrame = NULL;
 
-		iwicBmpDecoder->GetFrame(0, &bitmapFrame);
+		//iwicBmpDecoder->GetFrame(0, &bitmapFrame);
 	}
 
 	void DirectXRenderer::InitializeBMP()
 	{
-		iwicFormatConverter->Initialize(bitmapFrame, GUID_WICPixelFormat32bppPBGRA, WICBitmapDitherTypeNone, NULL, 0.f, WICBitmapPaletteTypeMedianCut);
+		//iwicFormatConverter->Initialize(bitmapFrame, GUID_WICPixelFormat32bppPBGRA, WICBitmapDitherTypeNone, NULL, 0.f, WICBitmapPaletteTypeMedianCut);
 	}
 
 	void DirectXRenderer::CreateBitmapFromWIC()
 	{
-		d2dRenderTarget->CreateBitmapFromWicBitmap(iwicFormatConverter, NULL, &d2dBmp);
+		//d2dRenderTarget->CreateBitmapFromWicBitmap(iwicFormatConverter, NULL, &d2dBmp);
 	}
 
 	void DirectXRenderer::D2DDraw()
 	{
-		g_pd3dDevice->SetRenderTarget(0, surfaceLevel);
+		/*g_pd3dDevice->SetRenderTarget(0, surfaceLevel);
 		d2dRenderTarget->BeginDraw();
 		D2D1_RECT_F test = D2D1::RectF(0, 0, 200, 200);
 		//d2dRenderTarget->DrawBitmap(d2dBmp, test);
 
 		d2dRenderTarget->EndDraw();
-		g_pd3dDevice->SetRenderTarget(0, backbuffer);
+		g_pd3dDevice->SetRenderTarget(0, backbuffer);*/
 	}
 
 	void DirectXRenderer::InitD3D(HWND hWnd)
@@ -434,7 +434,7 @@ namespace pengine
 			12);// PrimitiveCount
 	}
 
-	void DirectXRenderer::ActivateRenderingToTexture(int tWidth, int tHeight)
+	void DirectXRenderer::ActivateRenderingToTexture(int tWidth, int tHeight, DWORD bgColor)
 	{
 		if (RenderTexture != NULL)
 		{
@@ -455,7 +455,7 @@ namespace pengine
 		//Change our rendering target to our created surface.
 		g_pd3dDevice->SetRenderTarget(0, RenderSurface);
 		//Clear it too, with a different color to make sure we're getting it.
-		g_pd3dDevice->Clear(0, NULL, D3DCLEAR_TARGET, 0xFF000000, 1.0f, 0);//no alpha please (for now)
+		g_pd3dDevice->Clear(0, NULL, D3DCLEAR_TARGET, bgColor, 1.0f, 0);//no alpha please (for now)
 		//Start the renderer to render to the texture scene
 		g_pd3dDevice->BeginScene();//not sure if this has an effect or not
 	}

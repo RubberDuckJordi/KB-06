@@ -1,10 +1,10 @@
 #ifndef _PENGINE_DIRECTXRENDERER_H_
 #define _PENGINE_DIRECTXRENDERER_H_
 
-#include <d2d1.h>
+//#include <d2d1.h>
 #include <d3dx9.h>
 #include "Renderer.h"
-#include <wincodec.h>
+//#include <wincodec.h>
 
 namespace pengine
 {
@@ -64,7 +64,7 @@ namespace pengine
 		void DrawVertexBuffer(VertexBufferWrapper*, int amountOfVertices);
 		void DrawIndexedVertexBuffer(VertexBufferWrapper*, IndexBufferWrapper*, int amountOfIndices);
 
-		void ActivateRenderingToTexture(int tWidth, int tHeight);
+		void ActivateRenderingToTexture(int tWidth, int tHeight, DWORD bgColor);
 		void DeactivateRenderingToTexture();
 		void SetTextureToRenderedTexture();
 
@@ -83,14 +83,14 @@ namespace pengine
 
 		RECT rectangle;
 
-		IWICBitmapDecoder* iwicBmpDecoder;
-		IWICImagingFactory* iwicFactory;
-		IWICBitmapFrameDecode *bitmapFrame;
-		IWICFormatConverter* iwicFormatConverter;
-		ID2D1Bitmap* d2dBmp;
+		//IWICBitmapDecoder* iwicBmpDecoder;
+		//IWICImagingFactory* iwicFactory;
+		//IWICBitmapFrameDecode *bitmapFrame;
+		//IWICFormatConverter* iwicFormatConverter;
+		/*ID2D1Bitmap* d2dBmp;
 
 		ID2D1Factory* d2dFactory;
-		ID2D1HwndRenderTarget* d2dRenderTarget;
+		ID2D1HwndRenderTarget* d2dRenderTarget;*/
 
 		LPDIRECT3DTEXTURE9 surfaceTexture;
 		IDirect3DSurface9* d3dSurface;

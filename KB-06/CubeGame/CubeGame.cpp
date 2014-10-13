@@ -20,7 +20,7 @@ int main(int argc, const char* argv[])
 	pEngine.Init();
 
 	pEngine.GetWindowManager()->AddWindowListener(pEngine.GetInputManager());
-	pEngine.GetWindowManager()->NewWindow(750, 10, 500, 500);
+	pEngine.GetWindowManager()->NewWindow(750, 10, 750, 750);
 	
 	pEngine.GetRenderer()->InitD3D(pEngine.GetWindowManager()->GetLastWindow()->GetHWND());
 	/*pEngine.GetRenderer()->CreateD2DFactory();
