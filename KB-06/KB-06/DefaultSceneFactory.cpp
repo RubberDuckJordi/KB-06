@@ -20,7 +20,7 @@ namespace pengine
 		return CreateScene(0, NULL);
 	}
 
-	Scene* DefaultSceneFactory::CreateScene(std::vector<std::string>* sceneFile, pengine::ResourceManager* resourceManager)
+	Scene* DefaultSceneFactory::CreateScene(std::vector<std::string>* sceneFile, pengine::ResourceManager* aResourceManager)
 	{
 		DefaultEntity* entity = new DefaultEntity();
 		DefaultEntity* entity2 = new DefaultEntity();
@@ -57,7 +57,7 @@ namespace pengine
 
 		Skybox* skybox = new pengine::Skybox();
 		Material* material = new pengine::Material();
-		//material->texture = resourceManager->LoadBinaryFile(skyboxTexture);
+		material->texture = resourceManager->LoadBinaryFile(skyboxTexture);
 		skybox->SetMaterial(material);
 
 		defaultScene->SetSkybox(skybox);

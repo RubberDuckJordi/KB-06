@@ -21,7 +21,6 @@ namespace pengine
 
 	void DefaultScene::Render(Renderer* renderer)
 	{
-		Scene::Render(renderer);
 		renderer->ActivateRenderingToTexture(500, 500);
 		D3DCustomVertex vertices[] = {
 			{ -1.0f, -1.0f, 1.5f, 0.0f, 0.0f },
@@ -37,6 +36,7 @@ namespace pengine
 		renderer->DrawVertexBuffer(wrapper, 3);//draw a triangle to the texture
 
 		renderer->DeactivateRenderingToTexture();
+		renderer->SetMaterial(&mat);
 		renderer->SetTextureToRenderedTexture();
 		renderer->SetActiveCamera(currentCamera->GetCameraData(), false);//set the camera back to what it was
 
@@ -51,5 +51,8 @@ namespace pengine
 		};//holds a square that we will render with the texture, so we can see the contents of the texture
 		VertexBufferWrapper* wrapper2 = renderer->CreateVertexBuffer(vertices2, 6, D3DCustomVertexFVF);
 		renderer->DrawVertexBuffer(wrapper2, 6);//draw the square
+
+
+		Scene::Render(renderer);
 	}
 }
