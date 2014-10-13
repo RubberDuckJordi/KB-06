@@ -3,7 +3,6 @@
 
 #include "Entity.h"
 #include "Vertex.h"
-#include "XModel.h"
 
 namespace pengine
 {

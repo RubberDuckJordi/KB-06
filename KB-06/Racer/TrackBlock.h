@@ -4,7 +4,6 @@
 #include "Renderer.h"
 #include "Entity.h"
 #include "Logger.h"
-#include "XModel.h"
 #include "Object3D.h"
 
 enum Direction {

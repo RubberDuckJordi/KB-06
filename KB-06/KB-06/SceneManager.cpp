@@ -13,6 +13,11 @@ namespace pengine
 		LoggerPool::GetInstance().ReturnLogger(logger);
 	}
 
+	void SceneManager::CreateScene(std::string* path, ResourceManager* resourceManager)
+	{
+		std::vector<std::string>* sceneFile = resourceManager->LoadSceneFile(path);
+	}
+
 	void SceneManager::AddSceneFactory(char* key, SceneFactory* sceneFactory)
 	{
 		sceneFactories[key] = sceneFactory;

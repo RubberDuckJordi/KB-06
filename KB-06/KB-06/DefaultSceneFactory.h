@@ -2,7 +2,6 @@
 #define _PENGINE_DEFAULT_SCENE_FACTORY_H_
 
 #include "SceneFactory.h"
-#include "XModel.h"
 
 namespace pengine
 {
@@ -12,10 +11,8 @@ namespace pengine
 		DefaultSceneFactory(ResourceManager* resourceManager);
 		~DefaultSceneFactory();
 		Scene* CreateScene();
-		void SetXModel(XModel*); //debug
+		Scene* CreateScene(std::vector<std::string>* sceneFile, pengine::ResourceManager* resourceManager);
 	private:
-
-		XModel* xModel; //debug.
 	};
 }
 #endif
