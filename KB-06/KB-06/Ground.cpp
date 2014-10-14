@@ -204,6 +204,15 @@ namespace pengine
 			node3->SetMinZ(parent->GetMinZ() + (parent->GetMaxZ() - parent->GetMinZ()) / 2);
 			node3->SetMaxZ(parent->GetMaxZ());
 
+			node0->SetWidth(parent->GetWidth() / 2);
+			node0->SetDepth(parent->GetDepth() / 2);
+			node1->SetWidth(parent->GetWidth() / 2);
+			node1->SetDepth(parent->GetDepth() / 2);
+			node2->SetWidth(parent->GetWidth() / 2);
+			node2->SetDepth(parent->GetDepth() / 2);
+			node3->SetWidth(parent->GetWidth() / 2);
+			node3->SetDepth(parent->GetDepth() / 2);
+
 			CreateQuadTreeChildren(node0, remainingDepth - 1);
 			CreateQuadTreeChildren(node1, remainingDepth - 1);
 			CreateQuadTreeChildren(node2, remainingDepth - 1);

@@ -53,12 +53,12 @@ namespace pengine
 						int offset = x * newWidth * 6;
 						int skippedTiles = levelOfDetail / 2;
 
-						vertices[offset + z * 6] = this->vertices[(x + skippedTiles) * width * 6 + z * 6];
-						vertices[offset + z * 6 + 1] = this->vertices[x * width * 6 + (z + skippedTiles) * 6 + 1];
-						vertices[offset + z * 6 + 2] = this->vertices[x * width * 6 + z * 6 + 2];
-						vertices[offset + z * 6 + 3] = this->vertices[(x + skippedTiles) * width * 6 + (z + skippedTiles) * 6 + 3];
-						vertices[offset + z * 6 + 4] = this->vertices[x * width * 6 + (z + skippedTiles) * 6 + 4];
-						vertices[offset + z * 6 + 5] = this->vertices[(x + skippedTiles) * width * 6 + z * 6 + 5];
+						vertices[offset + z * 6] = this->vertices[(x * levelOfDetail + skippedTiles) * width * 6 + (z + z * skippedTiles) * 6];
+						vertices[offset + z * 6 + 1] = this->vertices[(x + x * skippedTiles) * width * 6 + (z * levelOfDetail + skippedTiles) * 6 + 1];
+						vertices[offset + z * 6 + 2] = this->vertices[(x + x * skippedTiles) * width * 6 + (z + z * skippedTiles) * 6 + 2];
+						vertices[offset + z * 6 + 3] = this->vertices[(x * levelOfDetail + skippedTiles) * width * 6 + (z * levelOfDetail + skippedTiles) * 6 + 3];
+						vertices[offset + z * 6 + 4] = this->vertices[(x + x * skippedTiles) * width * 6 + (z * levelOfDetail + skippedTiles) * 6 + 4];
+						vertices[offset + z * 6 + 5] = this->vertices[(x * levelOfDetail + skippedTiles) * width * 6 + (z + z * skippedTiles) * 6 + 5];
 					}
 				}
 			}
