@@ -157,7 +157,7 @@ namespace pengine
 	{
 		long delta = dIMouseState.lX - previousXPos;
 		previousXPos = dIMouseState.lX;
-		if (delta > 10000 && delta < -10000)
+		if (delta > 10000 || delta < -10000)
 		{
 			delta = 0;
 		}
@@ -169,7 +169,7 @@ namespace pengine
 	{
 		long delta = dIMouseState.lY - previousYPos;
 		previousYPos = dIMouseState.lY;
-		if (delta > 10000 && delta < -10000)
+		if (delta > 10000 || delta < -10000)
 		{
 			delta = 0;
 		}
@@ -183,7 +183,7 @@ namespace pengine
 	{
 		long delta = dIMouseState.lZ - previousZPos;
 		previousZPos = dIMouseState.lZ;
-		if (delta > 10000 && delta < -10000)
+		if (delta > 10000 || delta < -10000)
 		{
 			delta = 0;
 		}
