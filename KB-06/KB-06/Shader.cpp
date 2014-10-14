@@ -14,49 +14,49 @@ namespace pengine
 
 
 
-	void Shader::DrawShader(Renderer* renderer)
+	void Shader::SetShader(Renderer* renderer)
 	{
 		(*((DirectXRenderer*)renderer)->GetDevice())->SetVertexDeclaration(g_pVertexDeclaration);
 		(*((DirectXRenderer*)renderer)->GetDevice())->SetVertexShader(g_pVertexShader);
 		
 	}
 
-	LPDIRECT3DVERTEXSHADER9 Shader::GetVertexShader()
+	IDirect3DVertexShader9* Shader::GetVertexShader()
 	{
 		return g_pVertexShader;
 	}
 
-	PDIRECT3DPIXELSHADER9 Shader::GetPixelShader()
+	IDirect3DPixelShader9* Shader::GetPixelShader()
 	{
 		return g_pPixelShader;
 	}
 
-	LPDIRECT3DVERTEXDECLARATION9 Shader::GetVertexDeclaration()
+	IDirect3DVertexDeclaration9* Shader::GetVertexDeclaration()
 	{
 		return g_pVertexDeclaration;
 	}
 
-	LPD3DXCONSTANTTABLE Shader::GetConstantTable()
+	ID3DXConstantTable* Shader::GetConstantTable()
 	{
 		return g_pConstantTable;
 	}
 
-	void Shader::SetVertexShader(LPDIRECT3DVERTEXSHADER9 NewVertexShader)
+	void Shader::SetVertexShader(IDirect3DVertexShader9* NewVertexShader)
 	{
 		g_pVertexShader = NewVertexShader;
 	}
 
-	void Shader::SetPixelShader(PDIRECT3DPIXELSHADER9 NewPixelShader)
+	void Shader::SetPixelShader(IDirect3DPixelShader9* NewPixelShader)
 	{
 		g_pPixelShader = NewPixelShader;
 	}
 
-	void Shader::SetVertexDeclaration(LPDIRECT3DVERTEXDECLARATION9 NewVertexDeclaration)
+	void Shader::SetVertexDeclaration(IDirect3DVertexDeclaration9* NewVertexDeclaration)
 	{
 		g_pVertexDeclaration = NewVertexDeclaration;
 	}
 
-	void Shader::SetConstantTable(LPD3DXCONSTANTTABLE NewConstantTable)
+	void Shader::SetConstantTable(ID3DXConstantTable* NewConstantTable)
 	{
 		g_pConstantTable = NewConstantTable;
 	}

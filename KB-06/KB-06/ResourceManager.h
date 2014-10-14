@@ -26,7 +26,7 @@ namespace pengine
 		Material* LoadMaterial(const std::string& fileName, const std::string& extension);
 		BinaryData* LoadBinaryFile(const std::string& fileName);
 		Ground* LoadGround(std::string filename, std::string textureFilename);
-		Shader* LoadShader(std::string filename, Renderer* renderer);
+		Shader* LoadShader(std::string VertexShaderFilename, std::string PixelShaderFilename, std::string filename, Renderer* renderer);
 		std::vector<std::string>* LoadSceneFile(std::string* path);
 		Model3D* LoadXFile(std::string* fileName);
 
@@ -48,6 +48,7 @@ namespace pengine
 		std::map<std::string, BinaryData> textures;
 		std::map<std::string, Sound> sounds;
 		std::map<std::string, Ground> grounds;
+		std::map<std::string, Shader> shaders;
 
 		//std::map<std::string, BaseMeshLoader*> meshLoaders;
 		//std::map<std::string, BaseMaterialLoader*> materialLoaders;

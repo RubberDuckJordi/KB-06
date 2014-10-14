@@ -121,10 +121,10 @@ namespace pengine
 		return ground;
 	}
 
-	Shader* ResourceManager::LoadShader(std::string filename, Renderer* renderer)
+	Shader* ResourceManager::LoadShader(std::string VertexShaderFilename, std::string PixelShaderFilename, std::string filename, Renderer* renderer)
 	{
-		/*
-		Shader* shader;
+		
+		Shader* shader = new Shader();
 
 		HRESULT hr;
 
@@ -136,13 +136,17 @@ namespace pengine
 
 		D3DVERTEXELEMENT9 decl[] =
 		{
-		{ 0, 0, D3DDECLTYPE_FLOAT2, D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_POSITION, 0 },
+		{ 0, 0, D3DDECLTYPE_FLOAT3, D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_POSITION, 0 },
+		{ 0, 12, D3DDECLTYPE_FLOAT2, D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_TEXCOORD, 0 },
 		D3DDECL_END()
 		};
 
-		LPDIRECT3DVERTEXDECLARATION9 declaration = (*shader)->GetVertexDeclaration()
+		LPDIRECT3DVERTEXDECLARATION9 declaration = shader->GetVertexDeclaration();
 
-		((*((DirectXRenderer*)renderer)->GetDevice())->CreateVertexDeclaration(decl, &((*shader)->GetVertexDeclaration())));
+			((*((DirectXRenderer*)renderer)->GetDevice())->CreateVertexDeclaration(decl, &declaration));
+
+
+			shader->SetVertexDeclaration(declaration);
 
 		// Find the vertex shader file
 		//DXUTFindDXSDKMediaFileCch(strPath, 512, L"HLSLwithoutEffects.vsh");
@@ -157,22 +161,33 @@ namespace pengine
 
 		strPath = strPathNew.c_str();
 
+		LPD3DXCONSTANTTABLE constantTable = shader->GetConstantTable();
+
 		// Assemble the vertex shader from the file
 		D3DXCompileShaderFromFile(strPath, NULL, NULL, "Ripple",
 		"vs_2_0", dwShaderFlags, &pCode,
-		NULL, &g_pConstantTable);
+		NULL, &constantTable);
+
+		shader->SetConstantTable(constantTable);
+
+		LPDIRECT3DVERTEXSHADER9 vertexShader = shader->GetVertexShader();
 
 		// Create the vertex shader
 		hr = (*((DirectXRenderer*)renderer)->GetDevice())->CreateVertexShader((DWORD*)pCode->GetBufferPointer(),
-		&g_pVertexShader);
+			&vertexShader);
 		pCode->Release();
 		if (FAILED(hr));
 		//return DXTRACE_ERR(TEXT("CreateVertexShader"), hr);
 
+		shader->SetVertexShader(vertexShader);
 
+		if (vertexShader != NULL)
+		{
+			shaders[filename] = *shader;
+		}
 
-		*/
-		return 0;
+		
+		return shader;
 
 	}
 
