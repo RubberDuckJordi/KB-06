@@ -80,7 +80,7 @@ namespace pengine
 		material = p_material;
 	}
 
-	void Skybox::Draw(Renderer* renderer, Vertex* position)
+	void Skybox::Draw(Renderer* renderer, Vector3* position)
 	{
 		// initialise
 		if (i_buffer == NULL)

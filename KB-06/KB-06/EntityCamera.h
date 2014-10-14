@@ -3,7 +3,8 @@
 
 #include "Entity.h"
 #include "Vertex.h"
-#include "XModel.h"
+#include "Plane.h"
+#include "RenderMatrix.h"
 
 namespace pengine
 {
@@ -14,7 +15,7 @@ namespace pengine
 		~EntityCamera();
 		void UpdateLogic(float deltaTime, std::map<Input, long>* actions);
 		void Draw(Renderer* renderer);
-		Vertex* GetPosition();
+		Vector3* GetPosition();
 		CameraData GetCameraData();
 
 		/*!
@@ -23,17 +24,24 @@ namespace pengine
 		void SetLookAtPosition(float x, float y, float z, float rollDegrees);
 		void SetLookAtEntity(Entity*);
 		void SetThirdPersonEntity(Entity*, float distance, float height);
+		void SetRotation(float yawDegrees, float pitchDegrees, float rollDegrees);
 
 		bool useInput = false;
 
+		bool SphereInFrustum(Vector3* position, float radius);
+		void SetProjectionMatrix(float fovY, float aspectRatio, float nearClippingPlane, float farClippingPlane);
 	protected:
-		Vertex lookAtPosition;
+		Vector3 lookAtPosition;
 
 	private:
+		void BuildViewFrustum();
 		CameraData cameraData;
-		PEngineMatrix* rotationMatrix;
+		PEngineMatrix* viewMatrix;
 		Vector3* upVec;
 		float rollDegrees = 0.0f;
+		Plane frustrumPlane[6];
+		PEngineMatrix projectionMatrix;
+		Vector3* lastKnownRotation;
 	};
 }
 #endif

@@ -17,6 +17,11 @@ namespace pengine
 
 	Scene* DefaultSceneFactory::CreateScene()
 	{
+		return CreateScene(0, NULL);
+	}
+
+	Scene* DefaultSceneFactory::CreateScene(std::vector<std::string>* sceneFile, pengine::ResourceManager* aResourceManager)
+	{
 		DefaultEntity* entity = new DefaultEntity();
 		DefaultEntity* entity2 = new DefaultEntity();
 		DefaultEntity* entity3 = new DefaultEntity();
@@ -30,27 +35,6 @@ namespace pengine
 		entity4->AddAll(0.0f, 7.5f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f);
 		entity5->AddAll(0.0f, 0.0f, -7.5f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f);
 		entity6->AddAll(0.0f, 0.0f, 7.5f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f);
-
-		/*entity->SetMesh(mesh);
-		entity2->SetMesh(mesh);
-		entity3->SetMesh(mesh);
-		entity4->SetMesh(mesh);
-		entity5->SetMesh(mesh);
-		entity6->SetMesh(mesh);*/
-
-		entity->SetXModel(xModel);
-		entity2->SetXModel(xModel);
-		entity3->SetXModel(xModel);
-		entity4->SetXModel(xModel);
-		entity5->SetXModel(xModel);
-		entity6->SetXModel(xModel);
-
-		/*entity->rotationMod = 1;
-		entity2->rotationMod = -1;
-		entity3->rotationMod = 2;
-		entity4->rotationMod = -2;
-		entity5->rotationMod = 3;
-		entity6->rotationMod = -3;*/
 
 		DefaultScene* defaultScene = new DefaultScene();
 		defaultScene->AddEntity(entity);
@@ -82,10 +66,5 @@ namespace pengine
 		defaultScene->AddEntity(camera2);
 
 		return defaultScene;
-	}
-
-	void DefaultSceneFactory::SetXModel(XModel* p_xModel)
-	{
-		xModel = p_xModel;
 	}
 }

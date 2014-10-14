@@ -4,7 +4,6 @@
 #include "Renderer.h"
 #include "Entity.h"
 #include "Logger.h"
-#include "XModel.h"
 #include "Object3D.h"
 
 enum Direction {
@@ -30,8 +29,8 @@ public:
 	void Draw(pengine::Renderer* renderer);
 	void SetXModel(pengine::Object3D*); //debug
 	
-	float lenght;
-	float width;
+	//float lenght;
+	//float width;
 	Direction GetDirection();
 
 	void SetPosition(float x, float y, float z);
@@ -40,7 +39,8 @@ public:
 	void SetRotation(float yaw, float pitch, float roll);
 	void SetRotationOffset(float yaw, float pitch, float roll);
 	pengine::Vertex* GetRotationOffset();
-
+	
+	float GetRadius();
 private:
 	pengine::Vertex positionOffset;
 	pengine::Vertex rotationOffset;

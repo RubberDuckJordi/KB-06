@@ -52,17 +52,17 @@ namespace pengine
 		SetRotation(yaw, pitch, roll);
 	}
 
-	Vertex* Entity::GetPosition()
+	Vector3* Entity::GetPosition()
 	{
 		return &position;
 	}
 
-	Vertex* Entity::GetRotation()
+	Vector3* Entity::GetRotation()
 	{
 		return &rotation;
 	}
 
-	Vertex* Entity::GetScale()
+	Vector3* Entity::GetScale()
 	{
 		return &scale;
 	}
@@ -195,5 +195,9 @@ namespace pengine
 		inverted.z = movementVector.z * (-p_friction);
 
 		AddForce(&inverted);
+	}
+
+	float Entity::GetRadius(){
+		return defaultRadius;
 	}
 }

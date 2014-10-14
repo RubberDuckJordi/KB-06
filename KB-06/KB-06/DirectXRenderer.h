@@ -1,10 +1,10 @@
 #ifndef _PENGINE_DIRECTXRENDERER_H_
 #define _PENGINE_DIRECTXRENDERER_H_
 
-#include <d2d1.h>
+//#include <d2d1.h>
 #include <d3dx9.h>
 #include "Renderer.h"
-#include <wincodec.h>
+//#include <wincodec.h>
 
 namespace pengine
 {
@@ -31,7 +31,7 @@ namespace pengine
 		void SetZBuffer(bool);
 		void SetFillMode(FILLMODE);
 
-		void SetActiveCamera(CameraData camera);
+		void SetActiveCamera(CameraData camera, bool orthographic);
 
 		void SetProjectionMatrix(PEngineMatrix* ProjectionMatrix);
 		void SetProjectionMatrix(float FOV, float farClippingPlane);
@@ -59,26 +59,38 @@ namespace pengine
 
 		void SetLights();
 
-		VertexBufferWrapper* CreateVertexBuffer(D3DCustomVertex*, int amountOfIndices, int fvf);
+		VertexBufferWrapper* CreateVertexBuffer(D3DCustomVertex*, int amountOfVertices, int fvf);
 		IndexBufferWrapper* CreateIndexBuffer(int* indices, int amountOfIndices);
-		void DrawVertexBuffer(VertexBufferWrapper*, int amountOfIndices);
-		void DrawIndexedVertexBuffer(VertexBufferWrapper*, IndexBufferWrapper*, int amountOfVertices);
+		void DrawVertexBuffer(VertexBufferWrapper*, int amountOfVertices);
+		void DrawIndexedVertexBuffer(VertexBufferWrapper*, IndexBufferWrapper*, int amountOfIndices);
+
+		void ActivateRenderingToTexture(int tWidth, int tHeight, DWORD bgColor);
+		void DeactivateRenderingToTexture();
+		void SetTextureToRenderedTexture();
 
 	private:
 		//void SetTexture(BinaryData* texture);
 		//void SetMaterial(Material* material);
 		void SetMatrixCache(PEngineMatrix* matrix);
 
+		// Have yet to figure out how to get rid of this.
+		// Basically it's a copied pointer to the device's back buffer
+		LPDIRECT3DSURFACE9 MainSurface = NULL;
+
+		// And here we have the whole point of this file: The render surface and associated texture
+		LPDIRECT3DSURFACE9 RenderSurface = NULL;
+		LPDIRECT3DTEXTURE9 RenderTexture = NULL;
+
 		RECT rectangle;
 
-		IWICBitmapDecoder* iwicBmpDecoder;
-		IWICImagingFactory* iwicFactory;
-		IWICBitmapFrameDecode *bitmapFrame;
-		IWICFormatConverter* iwicFormatConverter;
-		ID2D1Bitmap* d2dBmp;
+		//IWICBitmapDecoder* iwicBmpDecoder;
+		//IWICImagingFactory* iwicFactory;
+		//IWICBitmapFrameDecode *bitmapFrame;
+		//IWICFormatConverter* iwicFormatConverter;
+		/*ID2D1Bitmap* d2dBmp;
 
 		ID2D1Factory* d2dFactory;
-		ID2D1HwndRenderTarget* d2dRenderTarget;
+		ID2D1HwndRenderTarget* d2dRenderTarget;*/
 
 		LPDIRECT3DTEXTURE9 surfaceTexture;
 		IDirect3DSurface9* d3dSurface;
@@ -87,11 +99,14 @@ namespace pengine
 
 		LPDIRECT3D9 g_pD3D;
 		LPDIRECT3DDEVICE9 g_pd3dDevice;
-		
+
 		//std::map<Mesh*, LPD3DXMESH> meshCache;
 		std::map<BinaryData*, LPDIRECT3DTEXTURE9> textureCache;
 
 		D3DXMATRIX* matrixCache;
+		D3DXMATRIXA16 projectionMatix;
+
+		D3DXPLANE   frustrumPlane[6];
 	};
 }
 #endif

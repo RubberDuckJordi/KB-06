@@ -14,7 +14,7 @@ namespace pengine
 		SceneLoader();
 		~SceneLoader();
 
-		std::vector<std::string>* LoadFile(std::string filePath);
+		std::vector<std::string>* LoadFile(std::string* filePath);
 	};
 }
 #endif

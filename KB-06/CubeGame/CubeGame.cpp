@@ -5,8 +5,6 @@
 #include "RGBAColor.h"
 #include "SceneFactory.h"
 #include "DefaultSceneFactory.h"
-
-#include "XModelLoader.h"
 #include "DirectXRenderer.h"
 
 #include "SuperXLoader.h"
@@ -22,7 +20,7 @@ int main(int argc, const char* argv[])
 	pEngine.Init();
 
 	pEngine.GetWindowManager()->AddWindowListener(pEngine.GetInputManager());
-	pEngine.GetWindowManager()->NewWindow(750, 10, 500, 500);
+	pEngine.GetWindowManager()->NewWindow(750, 10, 750, 750);
 	
 	pEngine.GetRenderer()->InitD3D(pEngine.GetWindowManager()->GetLastWindow()->GetHWND());
 	/*pEngine.GetRenderer()->CreateD2DFactory();
@@ -33,10 +31,6 @@ int main(int argc, const char* argv[])
 	pEngine.GetRenderer()->GetBitmapFrame();
 	pEngine.GetRenderer()->InitializeBMP();
 	pEngine.GetRenderer()->CreateBitmapFromWIC();*/
-
-	pengine::XModel* xmodel = new pengine::XModel();
-	pengine::XModelLoader* xmodelLoader = new pengine::XModelLoader();
-	xmodelLoader->LoadXModel("resources/tiger.x", static_cast<pengine::DirectXRenderer*>(pEngine.GetRenderer()), xmodel);
 
 	pengine::RGBAColor color;
 	color.r = 1.0f;
@@ -72,7 +66,6 @@ int main(int argc, const char* argv[])
 	MyObject.UpdateAnimation();
 
 	pengine::DefaultSceneFactory* sceneFactory = new pengine::DefaultSceneFactory(pEngine.GetResourceManager());
-	sceneFactory->SetXModel(xmodel);
 	sceneFactory->SetSkyboxTexture("resources/dome.jpg");
 
 	pEngine.GetSceneManager()->AddSceneFactory("iets", sceneFactory);

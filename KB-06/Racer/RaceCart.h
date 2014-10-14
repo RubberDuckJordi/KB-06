@@ -34,7 +34,7 @@ namespace racer
 		pengine::Vector3* GetCollisionForceVector();
 		float GetCollisionMass();
 		pengine::RenderMatrix* GetRenderMatrix();
-
+		float GetRadius();
 	private:
 		float horsePower = 10;
 

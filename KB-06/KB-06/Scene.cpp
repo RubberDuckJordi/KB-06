@@ -95,20 +95,25 @@ namespace pengine
 		Resource::Vertex* cameraRotation = currentCamera->GetRotation();*/
 
 		//renderer->SetViewMatrix(0, 0, -0.5f, 0, 0, 0.5f);
-		renderer->SetActiveCamera(currentCamera->GetCameraData());
+		renderer->SetActiveCamera(currentCamera->GetCameraData(), false);
 
-		Vertex* cameraPosition = currentCamera->GetPosition();
-
+		Vector3* cameraPosition = currentCamera->GetPosition();
 		if (skybox != NULL)
 		{
 			skybox->Draw(renderer, cameraPosition);
 		}
 
+		int entitiesLoaded = 0;
 		for each(Entity* entity in entities)
 		{
-			entity->Draw(renderer);
+			if(currentCamera->SphereInFrustum(entity->GetPosition(), entity->GetRadius()))
+			{
+				entity->Draw(renderer);
+				++entitiesLoaded;
+			}
 		}
-		
+		//logger->Log(Logger::DEBUG, "Rendered " + std::to_string(entitiesLoaded) + " of " + std::to_string(entities.size()) + " entities");
+
 		if (ground != NULL)
 		{
 			ground->Render(renderer);
@@ -127,6 +132,7 @@ namespace pengine
 			(*i)->DrawCollidable(renderer);
 		}
 		renderer->SetFillMode(PENGINE_FILL_SOLID);
+
 	}
 
 	EntityCamera* Scene::GetCurrentCamera()
@@ -139,7 +145,8 @@ namespace pengine
 		currentCamera = camera;
 	}
 
-	void Scene::SetSceneCallback(SceneCallback* callback){
+	void Scene::SetSceneCallback(SceneCallback* callback)
+	{
 		this->callback = callback;
 	}
 

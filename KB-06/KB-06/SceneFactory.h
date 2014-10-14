@@ -13,6 +13,7 @@ namespace pengine
 		SceneFactory(ResourceManager* resourceManager);
 		~SceneFactory();
 		virtual Scene* CreateScene() = 0;
+		virtual Scene* CreateScene(std::vector<std::string>* sceneFile, pengine::ResourceManager* resourceManager) = 0;
 		void SetGroundResource(std::string);
 		void SetGroundTexture(std::string p_groundTexture);
 		void SetSkyboxTexture(std::string p_skyboxTexture);

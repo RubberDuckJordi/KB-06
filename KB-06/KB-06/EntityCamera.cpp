@@ -6,10 +6,13 @@ namespace pengine
 {
 	EntityCamera::EntityCamera()
 	{
-		RenderMatrix* temp = new RenderMatrix();
-		temp->CreateMatrix(0, 0, 0, 0, 0, 0, 1, 1, 1, temp->theMatrix);
-		rotationMatrix = temp->theMatrix;
+		viewMatrix = new PEngineMatrix();
 		upVec = new Vector3(0, 1);
+		SetProjectionMatrix(M_PI / 4, 1.0f, 1.0f, 1000.0f);
+		lastKnownRotation = new Vector3();
+		lastKnownRotation->x = 180;//yaw
+		lastKnownRotation->y = 0;//pitch
+		lastKnownRotation->z = 0;//roll
 	}
 
 	EntityCamera::~EntityCamera()
@@ -21,21 +24,41 @@ namespace pengine
 	{
 		for (std::map<Input, long>::iterator iterator = (*actions).begin(); iterator != (*actions).end(); iterator++)
 		{
-			float speed = static_cast<float>(iterator->second);
+			//float speed = static_cast<float>(iterator->second);
 			switch (iterator->first)
 			{
 			case Input::KEY_S:
-				this->AddPosition(0.0f, 0.0f, 0.5f);
+			{
+				float deltaX = -sin(RADIANS(lastKnownRotation->x)) * deltaTime * 1.0f;
+				float deltaZ = -cos(RADIANS(lastKnownRotation->x)) * deltaTime * 1.0f;
+				this->AddPosition(deltaX, 0.0f, deltaZ);
+				this->SetLookAtPosition(lookAtPosition.x + deltaX, lookAtPosition.y, lookAtPosition.z + deltaZ, rollDegrees);
 				break;
+			}
 			case Input::KEY_W:
-				this->AddPosition(0.0f, 0.0f, -0.5f);
+			{
+				float deltaX = sin(RADIANS(lastKnownRotation->x)) * deltaTime * 1.0f;
+				float deltaZ = cos(RADIANS(lastKnownRotation->x)) * deltaTime * 1.0f;
+				this->AddPosition(deltaX, 0.0f, deltaZ);
+				this->SetLookAtPosition(lookAtPosition.x + deltaX, lookAtPosition.y, lookAtPosition.z + deltaZ, rollDegrees);
 				break;
+			}
 			case Input::KEY_D:
-				this->AddPosition(-0.5f, 0.0f, 0.0f);
+			{
+				float deltaX = sin(RADIANS(lastKnownRotation->x + 90)) * deltaTime * 1.0f;
+				float deltaZ = cos(RADIANS(lastKnownRotation->x + 90)) * deltaTime * 1.0f;
+				this->AddPosition(deltaX, 0.0f, deltaZ);
+				this->SetLookAtPosition(lookAtPosition.x + deltaX, lookAtPosition.y, lookAtPosition.z + deltaZ, rollDegrees);
 				break;
+			}
 			case Input::KEY_A:
-				this->AddPosition(0.5f, 0.0f, 0.0f);
+			{
+				float deltaX = sin(RADIANS(lastKnownRotation->x - 90)) * deltaTime * 1.0f;
+				float deltaZ = cos(RADIANS(lastKnownRotation->x - 90)) * deltaTime * 1.0f;
+				this->AddPosition(deltaX, 0.0f, deltaZ);
+				this->SetLookAtPosition(lookAtPosition.x + deltaX, lookAtPosition.y, lookAtPosition.z + deltaZ, rollDegrees);
 				break;
+			}
 			case Input::KEY_SPACE:
 				this->AddPosition(0.0f, 0.5f, 0.0f);
 				break;
@@ -92,6 +115,17 @@ namespace pengine
 				--rollDegrees;
 				this->SetLookAtPosition(lookAtPosition.x, lookAtPosition.y, lookAtPosition.z, rollDegrees);
 				break;
+			case Input::MOUSE_X:
+				if (static_cast<float>(iterator->second) < 9001 && static_cast<float>(iterator->second) > -9001)//silly bugfixing?
+				{
+					lastKnownRotation->x += static_cast<float>(iterator->second) / 10;
+				}
+				else
+				{
+					logger->Log(Logger::WARNING, "Weird buggy value? It is: " + std::to_string(static_cast<float>(iterator->second)));
+				}
+				this->SetRotation(lastKnownRotation->x, 0, 0);
+				break;
 			default:
 				break;
 			}
@@ -108,7 +142,7 @@ namespace pengine
 		}
 	}
 
-	Vertex* EntityCamera::GetPosition()
+	Vector3* EntityCamera::GetPosition()
 	{
 		return &position;
 	}
@@ -121,15 +155,16 @@ namespace pengine
 
 	void EntityCamera::SetLookAtEntity(Entity* entity)
 	{
-		Vertex* position = entity->GetPosition();
+		Vector3* position = entity->GetPosition();
 		SetLookAtPosition(position->x, position->y, position->z, 0.0f);
 	}
 
 	void EntityCamera::SetThirdPersonEntity(Entity* entity, float distance, float height)
 	{
+		//rotationMatrix = new PEngineMatrix();
 		// TODO: rotation & calculate axis
-		Vertex* entityPosition = entity->GetPosition();
-		Vertex* cameraPosition = new Vertex();
+		Vector3* entityPosition = entity->GetPosition();
+		Vector3* cameraPosition = new Vector3();
 
 		SetPosition(entityPosition->x, entityPosition->y, entityPosition->z);
 
@@ -142,47 +177,136 @@ namespace pengine
 		SetLookAtEntity(entity);
 	}
 
+	void EntityCamera::SetRotation(float yawDegrees, float pitchDegrees, float rollDegrees)
+	{
+		float lookAtX = sin(RADIANS(yawDegrees)) * 5.0f;
+		float lookAtZ = cos(RADIANS(yawDegrees)) * 5.0f;
+		float lookAtY = 0.0f;//not sure how to do y rotation yet sin(RADIANS(pitchDegrees)) * 5.0f;
+		SetLookAtPosition(position.x + lookAtX, position.y + lookAtY, position.z + lookAtZ, rollDegrees);
+	}
+
 	void EntityCamera::SetLookAtPosition(float x, float y, float z, float rollDegrees)
 	{
-		Vector3 lookat = { lookAtPosition.x, lookAtPosition.y, lookAtPosition.z };
+		lookAtPosition = { x, y, z };
 		Vector3 pos = { position.x, position.y, position.z };
-		Vector3 objectUpVector = { 0.0f, 1.0f, 0.0f };
 
-		Vector3 zaxis = Vector3::normalize(lookat - pos);
-		Vector3 xaxis = Vector3::normalize(Vector3::cross(objectUpVector, zaxis));
+		Vector3 zaxis = Vector3::normalize(lookAtPosition - pos);
+		Vector3 xaxis = Vector3::normalize(Vector3::cross(*upVec, zaxis));
 		Vector3 yaxis = Vector3::cross(zaxis, xaxis);
 
-		rotationMatrix->_11 = xaxis.x;
-		rotationMatrix->_12 = xaxis.y;
-		rotationMatrix->_13 = xaxis.z;
-		rotationMatrix->_14 = 0.0f;
+		viewMatrix->_11 = xaxis.x;
+		viewMatrix->_21 = xaxis.y;
+		viewMatrix->_31 = xaxis.z;
+		viewMatrix->_41 = -Vector3::dot(xaxis, pos);
 
-		rotationMatrix->_21 = yaxis.x;
-		rotationMatrix->_22 = yaxis.y;
-		rotationMatrix->_23 = yaxis.z;
-		rotationMatrix->_24 = 0.0f;
+		viewMatrix->_12 = yaxis.x;
+		viewMatrix->_22 = yaxis.y;
+		viewMatrix->_32 = yaxis.z;
+		viewMatrix->_42 = -Vector3::dot(yaxis, pos);
 
-		rotationMatrix->_31 = zaxis.x;
-		rotationMatrix->_32 = zaxis.y;
-		rotationMatrix->_33 = zaxis.z;
-		rotationMatrix->_34 = 0.0f;
+		viewMatrix->_13 = zaxis.x;
+		viewMatrix->_23 = zaxis.y;
+		viewMatrix->_33 = zaxis.z;
+		viewMatrix->_43 = -Vector3::dot(zaxis, pos);
 
-		rotationMatrix->_41 = 0.0f;
-		rotationMatrix->_42 = 0.0f;
-		rotationMatrix->_43 = 0.0f;
-		rotationMatrix->_44 = 1.0f;
+		viewMatrix->_14 = 0.0f;
+		viewMatrix->_24 = 0.0f;
+		viewMatrix->_34 = 0.0f;
+		viewMatrix->_44 = 1.0f;
 
-		if (lookAtPosition.z < position.z)
+		BuildViewFrustum();
+	}
+
+	bool EntityCamera::SphereInFrustum(Vector3* position, float radius)
+	{
+		for (int i = 0; i < 6; i++)
 		{
-			upVec->x = cos(RADIANS(rollDegrees + 90));
-			upVec->y = sin(RADIANS(rollDegrees + 90));
+			//manual D3DXPlaneDotCoord()
+			if ((frustrumPlane[i].a * position->x +
+				frustrumPlane[i].b * position->y +
+				frustrumPlane[i].c * position->z +
+				frustrumPlane[i].d * 1
+				) + radius < 0)
+			{
+				return FALSE;
+			}
 		}
-		else
-		{
-			upVec->x = cos(RADIANS(-rollDegrees + 90));
-			upVec->y = sin(RADIANS(-rollDegrees + 90));
-		}
+		return TRUE;
+	}
 
-		lookAtPosition = { x, y, z };
+	void EntityCamera::SetProjectionMatrix(float fovY, float aspectRatio, float nearClippingPlane, float farClippingPlane)
+	{
+		float yScale = (1 / tan(fovY / 2));
+		float xScale = aspectRatio * yScale;
+
+		projectionMatrix._11 = xScale;
+		projectionMatrix._12 = 0;
+		projectionMatrix._13 = 0;
+		projectionMatrix._14 = 0;
+		projectionMatrix._21 = 0;
+		projectionMatrix._22 = yScale;
+		projectionMatrix._23 = 0;
+		projectionMatrix._24 = 0;
+		projectionMatrix._31 = 0;
+		projectionMatrix._32 = 0;
+		projectionMatrix._33 = farClippingPlane / (farClippingPlane-nearClippingPlane);
+		projectionMatrix._34 = 1;
+		projectionMatrix._41 = 0;
+		projectionMatrix._42 = 0;
+		projectionMatrix._43 = -nearClippingPlane * farClippingPlane / (farClippingPlane - nearClippingPlane);
+		projectionMatrix._44 = 0;
+	}
+
+
+	void EntityCamera::BuildViewFrustum()
+	{
+		PEngineMatrix newMatrix;
+		RenderMatrix::MultiplyMatrices(viewMatrix, &projectionMatrix, &newMatrix);
+		
+		// Left plane
+		frustrumPlane[0].a = newMatrix._14 + newMatrix._11;
+		frustrumPlane[0].b = newMatrix._24 + newMatrix._21;
+		frustrumPlane[0].c = newMatrix._34 + newMatrix._31;
+		frustrumPlane[0].d = newMatrix._44 + newMatrix._41;
+		// Right plane
+		frustrumPlane[1].a = newMatrix._14 - newMatrix._11;
+		frustrumPlane[1].b = newMatrix._24 - newMatrix._21;
+		frustrumPlane[1].c = newMatrix._34 - newMatrix._31;
+		frustrumPlane[1].d = newMatrix._44 - newMatrix._41;
+		// Top plane
+		frustrumPlane[2].a = newMatrix._14 - newMatrix._12;
+		frustrumPlane[2].b = newMatrix._24 - newMatrix._22;
+		frustrumPlane[2].c = newMatrix._34 - newMatrix._32;
+		frustrumPlane[2].d = newMatrix._44 - newMatrix._42;
+		// Bottom plane
+		frustrumPlane[3].a = newMatrix._14 + newMatrix._12;
+		frustrumPlane[3].b = newMatrix._24 + newMatrix._22;
+		frustrumPlane[3].c = newMatrix._34 + newMatrix._32;
+		frustrumPlane[3].d = newMatrix._44 + newMatrix._42;
+		// Near plane
+		frustrumPlane[4].a = newMatrix._13;
+		frustrumPlane[4].b = newMatrix._23;
+		frustrumPlane[4].c = newMatrix._33;
+		frustrumPlane[4].d = newMatrix._43;
+		// Far plane
+		frustrumPlane[5].a = newMatrix._14 - newMatrix._13;
+		frustrumPlane[5].b = newMatrix._24 - newMatrix._23;
+		frustrumPlane[5].c = newMatrix._34 - newMatrix._33;
+		frustrumPlane[5].d = newMatrix._44 - newMatrix._43;
+
+		// Normalize planes
+		for (int i = 0; i < 6; i++)
+		{
+			//manual D3DXPlaneNormalize()
+			float LengthSq = frustrumPlane[i].a * frustrumPlane[i].a +
+				frustrumPlane[i].b * frustrumPlane[i].b +
+				frustrumPlane[i].c * frustrumPlane[i].c;
+
+			float ReciprocalLength = 1.0f / sqrt(LengthSq);
+			frustrumPlane[i].a = frustrumPlane[i].a * ReciprocalLength;
+			frustrumPlane[i].b = frustrumPlane[i].b * ReciprocalLength;
+			frustrumPlane[i].c = frustrumPlane[i].c * ReciprocalLength;
+			frustrumPlane[i].d = frustrumPlane[i].d * ReciprocalLength;
+		};
 	}
 }

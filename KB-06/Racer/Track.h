@@ -20,6 +20,7 @@ public:
 	void SetRotation(float yaw, float pitch, float roll);
 	void SetScale(float scaleX, float scaleY, float scaleZ);
 	void SetAll(float x, float y, float z, float yaw, float pitch, float roll, float scaleX, float scaleY, float scaleZ);
+	float GetRadius();
 private:
 	std::list<TrackBlock*> trackBlocks;
 	float offsetX = 0.0f;
