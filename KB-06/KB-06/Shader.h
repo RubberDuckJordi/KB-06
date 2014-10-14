@@ -6,7 +6,7 @@
 #include "DirectXRenderer.h"
 //#include "DXUT.h"
 
-#define VERTS_PER_EDGE 64
+//#define VERTS_PER_EDGE 64
 
 namespace pengine
 {
@@ -15,17 +15,25 @@ namespace pengine
 	public:
 		Shader();
 		~Shader();
-		void InitShader(Renderer* renderer);
+		//void InitShader(Renderer* renderer);
 		void DrawShader(Renderer* renderer);
+
+		LPDIRECT3DVERTEXSHADER9 GetVertexShader();
+		PDIRECT3DPIXELSHADER9 GetPixelShader();
+		LPDIRECT3DVERTEXDECLARATION9 GetVertexDeclaration();
+		LPD3DXCONSTANTTABLE GetConstantTable();
+
+		void SetVertexShader(LPDIRECT3DVERTEXSHADER9 NewVertexShader);
+		void SetPixelShader(PDIRECT3DPIXELSHADER9 NewPixelShader);
+		void SetVertexDeclaration(LPDIRECT3DVERTEXDECLARATION9 NewVertexDeclaration);
+		void SetConstantTable(LPD3DXCONSTANTTABLE NewConstantTable);
 		
 	private:
-		LPDIRECT3DVERTEXBUFFER9         g_pVB = NULL;
-		LPDIRECT3DINDEXBUFFER9          g_pIB = NULL;
-		DWORD                           g_dwNumVertices = VERTS_PER_EDGE * VERTS_PER_EDGE;
-		DWORD                           g_dwNumIndices = 6 * (VERTS_PER_EDGE - 1) * (VERTS_PER_EDGE - 1);
-		LPDIRECT3DVERTEXSHADER9         g_pVertexShader = NULL;
-		LPD3DXCONSTANTTABLE             g_pConstantTable = NULL;
-		LPDIRECT3DVERTEXDECLARATION9    g_pVertexDeclaration = NULL;
+		
+		LPDIRECT3DVERTEXSHADER9         g_pVertexShader;
+		PDIRECT3DPIXELSHADER9			g_pPixelShader;
+		LPDIRECT3DVERTEXDECLARATION9    g_pVertexDeclaration;
+		LPD3DXCONSTANTTABLE				g_pConstantTable;
 		
 	};
 }

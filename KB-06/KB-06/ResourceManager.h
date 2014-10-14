@@ -7,6 +7,7 @@
 #include "Material.h"
 #include "Ground.h"
 #include "HeightmapLoader.h"
+#include "Shader.h"
 
 #include <vector>
 #include <string>
@@ -23,6 +24,7 @@ namespace pengine
 		Material* LoadMaterial(const std::string& fileName, const std::string& extension);
 		BinaryData* LoadBinaryFile(const std::string& fileName);
 		Ground* LoadGround(std::string filename, std::string textureFilename);
+		Shader* LoadShader(std::string filename, Renderer* renderer);
 
 		//Mesh* LoadSound(const std::string& fileName, const std::string& extension);
 
