@@ -15,7 +15,7 @@ namespace pengine
 		~EntityCamera();
 		void UpdateLogic(float deltaTime, std::map<Input, long>* actions);
 		void Draw(Renderer* renderer);
-		Vertex* GetPosition();
+		Vector3* GetPosition();
 		CameraData GetCameraData();
 
 		/*!
@@ -28,7 +28,7 @@ namespace pengine
 
 		bool useInput = false;
 
-		bool SphereInFrustum(Vertex* position, float radius);
+		bool SphereInFrustum(Vector3* position, float radius);
 		void SetProjectionMatrix();
 	protected:
 		Vector3 lookAtPosition;

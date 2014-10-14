@@ -97,7 +97,7 @@ namespace pengine
 		//renderer->SetViewMatrix(0, 0, -0.5f, 0, 0, 0.5f);
 		renderer->SetActiveCamera(currentCamera->GetCameraData(), false);
 
-		Vertex* cameraPosition = currentCamera->GetPosition();
+		Vector3* cameraPosition = currentCamera->GetPosition();
 		if (skybox != NULL)
 		{
 			skybox->Draw(renderer, cameraPosition);

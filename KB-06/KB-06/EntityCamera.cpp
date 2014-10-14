@@ -142,7 +142,7 @@ namespace pengine
 		}
 	}
 
-	Vertex* EntityCamera::GetPosition()
+	Vector3* EntityCamera::GetPosition()
 	{
 		return &position;
 	}
@@ -155,7 +155,7 @@ namespace pengine
 
 	void EntityCamera::SetLookAtEntity(Entity* entity)
 	{
-		Vertex* position = entity->GetPosition();
+		Vector3* position = entity->GetPosition();
 		SetLookAtPosition(position->x, position->y, position->z, 0.0f);
 	}
 
@@ -163,8 +163,8 @@ namespace pengine
 	{
 		//rotationMatrix = new PEngineMatrix();
 		// TODO: rotation & calculate axis
-		Vertex* entityPosition = entity->GetPosition();
-		Vertex* cameraPosition = new Vertex();
+		Vector3* entityPosition = entity->GetPosition();
+		Vector3* cameraPosition = new Vector3();
 
 		SetPosition(entityPosition->x, entityPosition->y, entityPosition->z);
 
@@ -217,7 +217,7 @@ namespace pengine
 		BuildViewFrustum();
 	}
 
-	bool EntityCamera::SphereInFrustum(Vertex* position, float radius)
+	bool EntityCamera::SphereInFrustum(Vector3* position, float radius)
 	{
 		for (int i = 0; i < 6; i++)
 		{

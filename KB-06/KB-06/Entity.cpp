@@ -52,17 +52,17 @@ namespace pengine
 		SetRotation(yaw, pitch, roll);
 	}
 
-	Vertex* Entity::GetPosition()
+	Vector3* Entity::GetPosition()
 	{
 		return &position;
 	}
 
-	Vertex* Entity::GetRotation()
+	Vector3* Entity::GetRotation()
 	{
 		return &rotation;
 	}
 
-	Vertex* Entity::GetScale()
+	Vector3* Entity::GetScale()
 	{
 		return &scale;
 	}

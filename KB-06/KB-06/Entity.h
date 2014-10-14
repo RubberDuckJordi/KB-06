@@ -20,9 +20,9 @@ namespace pengine
 		void SetScale(float scaleX, float scaleY, float scaleZ);
 		void SetAll(float x, float y, float z, float yaw, float pitch, float roll, float scaleX, float scaleY, float scaleZ);
 
-		Vertex* GetPosition();
-		Vertex* GetRotation();
-		Vertex* GetScale();
+		Vector3* GetPosition();
+		Vector3* GetRotation();
+		Vector3* GetScale();
 
 		void SetMovementVector(Vector3* vector);
 		void SetFriction(float friction);
@@ -51,9 +51,9 @@ namespace pengine
 		void ApplyFriction(float friction);
 
 		RenderMatrix* myCachedMatrix;
-		Vertex position;
-		Vertex rotation;
-		Vertex scale;
+		Vector3 position;
+		Vector3 rotation;
+		Vector3 scale;
 
 		float mass;
 		float friction;
