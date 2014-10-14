@@ -6,7 +6,7 @@ namespace pengine
 {
 	EntityCamera::EntityCamera()
 	{
-		viewMatrix = new PEngineMatrix();
+		viewMatrix = new Matrix();
 		SetProjectionMatrix(M_PI / 4, 1.0f, 1.0f, 1000.0f);
 		upVec = new Vector3(0, 1);
 		lastKnownRotation = new Vector3();
@@ -183,7 +183,7 @@ namespace pengine
 		lookAtPosition = { x, y, z };
 		Vector3 pos = { position.x, position.y, position.z };
 
-		RenderMatrix::CreateLookAtMatrix(pos, lookAtPosition, { 0, 1, 0 }, viewMatrix);
+		Matrix::CreateLookAtMatrix(pos, lookAtPosition, { 0, 1, 0 }, viewMatrix);
 
 		BuildViewFrustum();
 	}
@@ -210,59 +210,62 @@ namespace pengine
 		float yScale = (1 / tan(fovY / 2));
 		float xScale = aspectRatio * yScale;
 
-		projectionMatrix._11 = xScale;
-		projectionMatrix._12 = 0;
-		projectionMatrix._13 = 0;
-		projectionMatrix._14 = 0;
-		projectionMatrix._21 = 0;
-		projectionMatrix._22 = yScale;
-		projectionMatrix._23 = 0;
-		projectionMatrix._24 = 0;
-		projectionMatrix._31 = 0;
-		projectionMatrix._32 = 0;
-		projectionMatrix._33 = farClippingPlane / (farClippingPlane - nearClippingPlane);
-		projectionMatrix._34 = 1;
-		projectionMatrix._41 = 0;
-		projectionMatrix._42 = 0;
-		projectionMatrix._43 = -nearClippingPlane * farClippingPlane / (farClippingPlane - nearClippingPlane);
-		projectionMatrix._44 = 0;
+		projectionMatrix[0] = xScale;
+		projectionMatrix[1] = 0;
+		projectionMatrix[2] = 0;
+		projectionMatrix[3] = 0;
+
+		projectionMatrix[4] = 0;
+		projectionMatrix[5] = yScale;
+		projectionMatrix[6] = 0;
+		projectionMatrix[7] = 0;
+
+		projectionMatrix[8] = 0;
+		projectionMatrix[9] = 0;
+		projectionMatrix[10] = farClippingPlane / (farClippingPlane - nearClippingPlane);
+		projectionMatrix[11] = 1;
+
+		projectionMatrix[12] = 0;
+		projectionMatrix[13] = 0;
+		projectionMatrix[14] = -nearClippingPlane * farClippingPlane / (farClippingPlane - nearClippingPlane);
+		projectionMatrix[15] = 0;
 	}
 
 	void EntityCamera::BuildViewFrustum()
 	{
-		PEngineMatrix newMatrix;
-		RenderMatrix::MultiplyMatrices(viewMatrix, &projectionMatrix, &newMatrix);
+		Matrix newMatrix;
+		newMatrix = *viewMatrix * projectionMatrix;
 
 		// Left plane
-		frustrumPlane[0].a = newMatrix._14 + newMatrix._11;
-		frustrumPlane[0].b = newMatrix._24 + newMatrix._21;
-		frustrumPlane[0].c = newMatrix._34 + newMatrix._31;
-		frustrumPlane[0].d = newMatrix._44 + newMatrix._41;
+		frustrumPlane[0].a = newMatrix[3] + newMatrix[0];
+		frustrumPlane[0].b = newMatrix[7] + newMatrix[4];
+		frustrumPlane[0].c = newMatrix[11] + newMatrix[8];
+		frustrumPlane[0].d = newMatrix[15] + newMatrix[12];
 		// Right plane
-		frustrumPlane[1].a = newMatrix._14 - newMatrix._11;
-		frustrumPlane[1].b = newMatrix._24 - newMatrix._21;
-		frustrumPlane[1].c = newMatrix._34 - newMatrix._31;
-		frustrumPlane[1].d = newMatrix._44 - newMatrix._41;
+		frustrumPlane[1].a = newMatrix[3] - newMatrix[0];
+		frustrumPlane[1].b = newMatrix[7] - newMatrix[4];
+		frustrumPlane[1].c = newMatrix[11] - newMatrix[8];
+		frustrumPlane[1].d = newMatrix[15] - newMatrix[12];
 		// Top plane
-		frustrumPlane[2].a = newMatrix._14 - newMatrix._12;
-		frustrumPlane[2].b = newMatrix._24 - newMatrix._22;
-		frustrumPlane[2].c = newMatrix._34 - newMatrix._32;
-		frustrumPlane[2].d = newMatrix._44 - newMatrix._42;
+		frustrumPlane[2].a = newMatrix[3] - newMatrix[1];
+		frustrumPlane[2].b = newMatrix[7] - newMatrix[5];
+		frustrumPlane[2].c = newMatrix[11] - newMatrix[9];
+		frustrumPlane[2].d = newMatrix[15] - newMatrix[13];
 		// Bottom plane
-		frustrumPlane[3].a = newMatrix._14 + newMatrix._12;
-		frustrumPlane[3].b = newMatrix._24 + newMatrix._22;
-		frustrumPlane[3].c = newMatrix._34 + newMatrix._32;
-		frustrumPlane[3].d = newMatrix._44 + newMatrix._42;
+		frustrumPlane[3].a = newMatrix[3] + newMatrix[1];
+		frustrumPlane[3].b = newMatrix[7] + newMatrix[5];
+		frustrumPlane[3].c = newMatrix[11] + newMatrix[9];
+		frustrumPlane[3].d = newMatrix[15] + newMatrix[13];
 		// Near plane
-		frustrumPlane[4].a = newMatrix._13;
-		frustrumPlane[4].b = newMatrix._23;
-		frustrumPlane[4].c = newMatrix._33;
-		frustrumPlane[4].d = newMatrix._43;
+		frustrumPlane[4].a = newMatrix[2];
+		frustrumPlane[4].b = newMatrix[6];
+		frustrumPlane[4].c = newMatrix[10];
+		frustrumPlane[4].d = newMatrix[14];
 		// Far plane
-		frustrumPlane[5].a = newMatrix._14 - newMatrix._13;
-		frustrumPlane[5].b = newMatrix._24 - newMatrix._23;
-		frustrumPlane[5].c = newMatrix._34 - newMatrix._33;
-		frustrumPlane[5].d = newMatrix._44 - newMatrix._43;
+		frustrumPlane[5].a = newMatrix[3] - newMatrix[2];
+		frustrumPlane[5].b = newMatrix[7] - newMatrix[6];
+		frustrumPlane[5].c = newMatrix[11] - newMatrix[10];
+		frustrumPlane[5].d = newMatrix[15] - newMatrix[14];
 
 		// Normalize planes
 		for (int i = 0; i < 6; i++)
@@ -280,10 +283,10 @@ namespace pengine
 		};
 	}
 
-	PEngineMatrix* EntityCamera::GetProjectionMatrix(){
+	Matrix* EntityCamera::GetProjectionMatrix(){
 		return &projectionMatrix;
 	}
-	PEngineMatrix* EntityCamera::GetViewMatrix(){
+	Matrix* EntityCamera::GetViewMatrix(){
 		return viewMatrix;
 	}
 }

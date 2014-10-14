@@ -293,6 +293,10 @@ namespace pengine
 			}
 			return NBone;
 		}
+		else
+		{
+			return NULL;
+		}
 	}
 
 	void Object3D::GetBoneAnimation(ObjectBone* &pBone)
@@ -374,7 +378,7 @@ namespace pengine
 
 	}
 
-	void Object3D::CreateCollisionBox(RECTANGLE& rect)
+	void Object3D::CreateCollisionBox(BEAM& rect)
 	{
 		float minx, miny, minz;
 		float maxx, maxy, maxz;
@@ -419,9 +423,9 @@ namespace pengine
 		}
 
 		// Calculate the rectangle 
-		rect.x = minx;
-		rect.y = miny;
-		rect.z = minz;
+		rect.x = _Skeleton->_Bone->_MatrixPos[12];
+		rect.y = _Skeleton->_Bone->_MatrixPos[13];
+		rect.z = _Skeleton->_Bone->_MatrixPos[14];
 
 		// In our first iteration of collision, we only worked with cubes, no rectangles
 		float largestMeasurement = maxx - minx;
@@ -434,14 +438,24 @@ namespace pengine
 			largestMeasurement = maxz - minz;
 		}
 		
-		//rect.width = maxx - minx;
-		//rect.height = maxy - miny;
-		//rect.depth = maxz - minz;
+		rect.width = maxx - minx;
+		rect.height = maxy - miny;
+		rect.depth = maxz - minz;
 
 		rect.width = largestMeasurement;
 		rect.height = largestMeasurement;
 		rect.depth = largestMeasurement;
 
+
+		rect.frontBottomLeft = { minx, miny, maxz };
+		rect.frontBottomRight = { maxx, miny, maxz };
+		rect.backBottomLeft = { minx, miny, minz };
+		rect.backBottomRight = { maxx, miny, minz };
+
+		rect.frontTopLeft = { minx, maxy, maxz };
+		rect.frontTopRight = { maxx, maxy, maxz };
+		rect.backTopLeft = { minx, maxy, minz };
+		rect.backTopRight = { maxx, maxy, minz };
 	}
 
 	void Object3D::ComputeBoundingBoxSphere(void)

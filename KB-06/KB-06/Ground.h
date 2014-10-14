@@ -43,7 +43,7 @@ namespace pengine
 		D3DCustomVertex* vertices;
 		VertexBufferWrapper* vertexBuffer;
 		Material* material;
-		RenderMatrix* location;
+		Matrix* location;
 
 		long height;
 		long width;

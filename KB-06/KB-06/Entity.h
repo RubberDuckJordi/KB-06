@@ -50,7 +50,7 @@ namespace pengine
 	protected:
 		void ApplyFriction(float friction);
 
-		RenderMatrix* myCachedMatrix;
+		Matrix* myCachedMatrix;
 		Vector3 position;
 		Vector3 rotation;
 		Vector3 scale;

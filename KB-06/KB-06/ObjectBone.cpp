@@ -39,7 +39,7 @@ namespace pengine
 			return;
 		}
 
-		Matrix<float> Mat;
+		Matrix Mat;
 		float DeltaKey; //difference between two time keys
 		float cTime; //pKey minus current key time: cTime / DeltaKey gives the interpolation factor
 
@@ -79,8 +79,8 @@ namespace pengine
 		}
 		else
 		{
-			Quaternion<float> Quat;
-			Vector<float> Scale;
+			Quaternion Quat;
+			Vector Scale;
 			Vertex Translate;
 
 			_TransformMatrix.Identity();

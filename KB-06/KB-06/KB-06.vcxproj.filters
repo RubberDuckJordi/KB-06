@@ -91,9 +91,6 @@
     <ClCompile Include="Menu.cpp">
       <Filter>Source\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="RenderMatrix.cpp">
-      <Filter>Source\Renderer</Filter>
-    </ClCompile>
     <ClCompile Include="SuperXLoader.cpp">
       <Filter>Source\Resource\RobertX</Filter>
     </ClCompile>
@@ -270,9 +267,6 @@
     <ClInclude Include="SceneDefinition.h">
       <Filter>Header\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="RenderMatrix.h">
-      <Filter>Header\Renderer</Filter>
-    </ClInclude>
     <ClInclude Include="SuperXLoader.h">
       <Filter>Header\Resource\RobertX</Filter>
     </ClInclude>
@@ -330,9 +324,6 @@
     <ClInclude Include="HeightmapLoader.h">
       <Filter>Header\Resource\Heightmap</Filter>
     </ClInclude>
-    <ClInclude Include="Rectangle.h">
-      <Filter>Header\Scene\Collision</Filter>
-    </ClInclude>
     <ClInclude Include="Collidable.h">
       <Filter>Header\Scene\Collision</Filter>
     </ClInclude>
@@ -346,13 +337,16 @@
       <Filter>Header</Filter>
     </ClInclude>
     <ClInclude Include="Plane.h">
-      <Filter>Header\Scene</Filter>	  
+      <Filter>Header\Scene</Filter>
     </ClInclude>
     <ClInclude Include="Ground.h">
       <Filter>Header\Scene\Ground</Filter>
     </ClInclude>
     <ClInclude Include="QuadNode.h">
       <Filter>Header\Scene\Ground</Filter>
+    </ClInclude>
+    <ClInclude Include="Beam.h">
+      <Filter>Header\Scene\Collision</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

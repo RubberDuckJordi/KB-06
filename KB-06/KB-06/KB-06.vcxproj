@@ -110,8 +110,7 @@
     <ClInclude Include="Plane.h" />
     <ClInclude Include="QuadNode.h" />
     <ClInclude Include="Quaternion.h" />
-    <ClInclude Include="Rectangle.h" />
-    <ClInclude Include="RenderMatrix.h" />
+    <ClInclude Include="Beam.h" />
     <ClInclude Include="RGBColor.h" />
     <ClInclude Include="PEngine.h" />
     <ClInclude Include="PengineDefinitions.h" />
@@ -187,7 +186,6 @@
     <ClCompile Include="ObjectBone.cpp" />
     <ClCompile Include="PEngine.cpp" />
     <ClCompile Include="QuadNode.cpp" />
-    <ClCompile Include="RenderMatrix.cpp" />
     <ClCompile Include="SceneLoader.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="Skybox.cpp" />

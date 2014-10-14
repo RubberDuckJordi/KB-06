@@ -9,8 +9,8 @@ namespace pengine
 	{
 		logger = LoggerPool::GetInstance().GetLogger();
 
-		location = new RenderMatrix();
-		location->CreateMatrix(0, 0, 0, 0, 0, 0, 1, 1, 1, location->theMatrix);
+		location = new Matrix();
+		location->Identity();
 	}
 
 	Ground::~Ground()
@@ -100,7 +100,7 @@ namespace pengine
 
 		vertexBuffer = renderer->CreateVertexBuffer(verticesX, amountOfVerticesX, D3DCustomVertexFVF);
 
-		renderer->SetActiveMatrix(location->theMatrix);
+		renderer->SetActiveMatrix(location);
 		renderer->SetMaterial(material);
 
 		renderer->DrawVertexBuffer(vertexBuffer, amountOfVerticesX);

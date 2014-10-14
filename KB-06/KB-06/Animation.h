@@ -15,7 +15,7 @@ namespace pengine
 	typedef struct
 	{
 		uint32 Time;
-		Quaternion<float> Rotation;
+		Quaternion Rotation;
 	} RotateKey;
 
 	typedef struct
@@ -27,13 +27,13 @@ namespace pengine
 	typedef struct
 	{
 		uint32 Time;
-		Vector<float> Scale;
+		Vector Scale;
 	} ScaleKey;
 
 	typedef struct
 	{
 		uint32 Time;
-		Matrix<float> Matrix;
+		Matrix Matrix;
 	} MatrixKey;
 
 	class Animation

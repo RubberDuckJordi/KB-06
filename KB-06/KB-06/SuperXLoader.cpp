@@ -119,6 +119,11 @@ namespace pengine
 		{
 			MapMeshToBones(_LoadSkeleton);
 		}
+		else
+		{
+			_Object->_Skeleton = new Bone();
+			_Object->_Skeleton->_MatrixPos.Identity();
+		}
 
 		logger->Log(Logger::DEBUG, "SuperXLoader: Processed file:" + std::string(pFilename));
 
@@ -578,7 +583,7 @@ namespace pengine
 		fin.getline(data, TEXT_BUFFER, ';');
 		_LoadMesh->_nNormals = (uint16)TextToNum(data);
 		logger->Log(Logger::DEBUG, "SuperXLoader: Number of normals: " + std::to_string(_LoadMesh->_nNormals));
-		_LoadMesh->_Normals = new Vector<float>[_LoadMesh->_nNormals];
+		_LoadMesh->_Normals = new Vector[_LoadMesh->_nNormals];
 		for (int i = 0; i < _LoadMesh->_nNormals; ++i)
 		{
 			fin.getline(data, TEXT_BUFFER, ';');
@@ -1071,34 +1076,34 @@ namespace pengine
 			fin.getline(data, TEXT_BUFFER, ';');
 			declUsageIndices[i] = (int)TextToNum(data);//irrelevant for our scope?
 			fin.get();//Eat , or ;
-			if (declMethods[i] != D3DDECLMETHOD_DEFAULT)
+			if (declMethods[i] != DECLMETHOD_DEFAULT)
 			{
 				std::string method;
 				switch (declMethods[i])
 				{
-				case D3DDECLMETHOD_CROSSUV:
+				case DECLMETHOD_CROSSUV:
 					method = "CROSSUV";
 					break;
-				case D3DDECLMETHOD_LOOKUP:
+				case DECLMETHOD_LOOKUP:
 					method = "LOOKUP";
 					break;
-				case D3DDECLMETHOD_LOOKUPPRESAMPLED:
+				case DECLMETHOD_LOOKUPPRESAMPLED:
 					method = "LOOKUPPRESAMPLED";
 					break;
-				case D3DDECLMETHOD_PARTIALU:
+				case DECLMETHOD_PARTIALU:
 					method = "PARTIALU";
 					break;
-				case D3DDECLMETHOD_PARTIALV:
+				case DECLMETHOD_PARTIALV:
 					method = "PARTIALV";
 					break;
-				case D3DDECLMETHOD_UV:
+				case DECLMETHOD_UV:
 					method = "UV";
 					break;
 				default:
 					method = "UNKNOWN";
 					break;
 				}
-				logger->Log(Logger::ERR, "SuperXLoader: DeclData(): D3DDECLMETHOD_" + method + " is not supported! The only one supported is D3DDECLMETHOD_DEFAULT. Expect a load of errors!");
+				logger->Log(Logger::ERR, "SuperXLoader: DeclData(): DECLMETHOD_" + method + " is not supported! The only one supported is DECLMETHOD_DEFAULT. Expect a load of errors!");
 				Find('}');
 				return;
 			}
@@ -1122,35 +1127,35 @@ namespace pengine
 				DWORD component[4];//These blocks can have a maximum of 4 components, also less
 				switch (declTypes[j])
 				{
-				case D3DDECLTYPE_FLOAT1:
+				case DECLTYPE_FLOAT1:
 					component[0] = words[i];
 					++i;
 					break;
-				case D3DDECLTYPE_FLOAT2:
-				case D3DDECLTYPE_SHORT2:
-				case D3DDECLTYPE_SHORT2N:
-				case D3DDECLTYPE_USHORT2N:
-				case D3DDECLTYPE_FLOAT16_2:
+				case DECLTYPE_FLOAT2:
+				case DECLTYPE_SHORT2:
+				case DECLTYPE_SHORT2N:
+				case DECLTYPE_USHORT2N:
+				case DECLTYPE_FLOAT16_2:
 					component[0] = words[i];
 					component[1] = words[i + 1];
 					i += 2;
 					break;
-				case D3DDECLTYPE_FLOAT3:
-				case D3DDECLTYPE_UDEC3:
-				case D3DDECLTYPE_DEC3N:
+				case DECLTYPE_FLOAT3:
+				case DECLTYPE_UDEC3:
+				case DECLTYPE_DEC3N:
 					component[0] = words[i];
 					component[1] = words[i + 1];
 					component[2] = words[i + 2];
 					i += 3;
 					break;
-				case D3DDECLTYPE_FLOAT4:
-				case D3DDECLTYPE_D3DCOLOR:
-				case D3DDECLTYPE_UBYTE4:
-				case D3DDECLTYPE_SHORT4:
-				case D3DDECLTYPE_UBYTE4N:
-				case D3DDECLTYPE_SHORT4N:
-				case D3DDECLTYPE_USHORT4N:
-				case D3DDECLTYPE_FLOAT16_4:
+				case DECLTYPE_FLOAT4:
+				case DECLTYPE_COLOR:
+				case DECLTYPE_UBYTE4:
+				case DECLTYPE_SHORT4:
+				case DECLTYPE_UBYTE4N:
+				case DECLTYPE_SHORT4N:
+				case DECLTYPE_USHORT4N:
+				case DECLTYPE_FLOAT16_4:
 					component[0] = words[i];
 					component[1] = words[i + 1];
 					component[2] = words[i + 2];
@@ -1158,12 +1163,12 @@ namespace pengine
 					i += 4;
 					break;
 				default:
-					logger->Log(Logger::WARNING, "SuperXLoader: DeclData(): unknown D3DDECLTYPE, things might be incorrect or crash!");
+					logger->Log(Logger::WARNING, "SuperXLoader: DeclData(): unknown DECLTYPE, things might be incorrect or crash!");
 					break;
 				}
 				switch (declUsages[j])
 				{
-				case D3DDECLUSAGE_TEXCOORD:
+				case DECLUSAGE_TEXCOORD:
 					if (_LoadMesh->_TextureCoords == NULL)
 					{
 						_LoadMesh->_nTextureCoords = _LoadMesh->_nVertices;//technically not every vertex needs to have a texture coordinate...
@@ -1175,47 +1180,47 @@ namespace pengine
 					//logger->Log(Logger::DEBUG, "SuperXLoader: DeclData texture coordinates " + std::to_string(currentTextureCoordinateSet) + ": u: " + std::to_string(*(float*)&component[0]) + "; v: " + std::to_string(*(float*)&component[1]));
 					++currentTextureCoordinateSet;
 					break;
-				case D3DDECLUSAGE_BINORMAL:
-					logger->Log(Logger::WARNING, "SuperXLoader: DeclData found unsupported D3DDECLUSAGE: D3DDECLUSAGE_BINORMAL!");
+				case DECLUSAGE_BINORMAL:
+					logger->Log(Logger::WARNING, "SuperXLoader: DeclData found unsupported DECLUSAGE: DECLUSAGE_BINORMAL!");
 					break;
-				case D3DDECLUSAGE_BLENDINDICES:
-					logger->Log(Logger::WARNING, "SuperXLoader: DeclData found unsupported D3DDECLUSAGE: D3DDECLUSAGE_BLENDINDICES!");
+				case DECLUSAGE_BLENDINDICES:
+					logger->Log(Logger::WARNING, "SuperXLoader: DeclData found unsupported DECLUSAGE: DECLUSAGE_BLENDINDICES!");
 					break;
-				case D3DDECLUSAGE_BLENDWEIGHT:
-					logger->Log(Logger::WARNING, "SuperXLoader: DeclData found unsupported D3DDECLUSAGE: D3DDECLUSAGE_BLENDWEIGHT!");
+				case DECLUSAGE_BLENDWEIGHT:
+					logger->Log(Logger::WARNING, "SuperXLoader: DeclData found unsupported DECLUSAGE: DECLUSAGE_BLENDWEIGHT!");
 					break;
-				case D3DDECLUSAGE_COLOR:
-					logger->Log(Logger::WARNING, "SuperXLoader: DeclData found unsupported D3DDECLUSAGE: D3DDECLUSAGE_COLOR!");
+				case DECLUSAGE_COLOR:
+					logger->Log(Logger::WARNING, "SuperXLoader: DeclData found unsupported DECLUSAGE: DECLUSAGE_COLOR!");
 					break;
-				case D3DDECLUSAGE_DEPTH:
-					logger->Log(Logger::WARNING, "SuperXLoader: DeclData found unsupported D3DDECLUSAGE: D3DDECLUSAGE_DEPTH!");
+				case DECLUSAGE_DEPTH:
+					logger->Log(Logger::WARNING, "SuperXLoader: DeclData found unsupported DECLUSAGE: DECLUSAGE_DEPTH!");
 					break;
-				case D3DDECLUSAGE_FOG:
-					logger->Log(Logger::WARNING, "SuperXLoader: DeclData found unsupported D3DDECLUSAGE: D3DDECLUSAGE_FOG!");
+				case DECLUSAGE_FOG:
+					logger->Log(Logger::WARNING, "SuperXLoader: DeclData found unsupported DECLUSAGE: DECLUSAGE_FOG!");
 					break;
-				case D3DDECLUSAGE_NORMAL:
-					logger->Log(Logger::WARNING, "SuperXLoader: DeclData found unsupported D3DDECLUSAGE: D3DDECLUSAGE_NORMAL!");
+				case DECLUSAGE_NORMAL:
+					logger->Log(Logger::WARNING, "SuperXLoader: DeclData found unsupported DECLUSAGE: DECLUSAGE_NORMAL!");
 					break;
-				case D3DDECLUSAGE_POSITION:
-					logger->Log(Logger::WARNING, "SuperXLoader: DeclData found unsupported D3DDECLUSAGE: D3DDECLUSAGE_POSITION!");
+				case DECLUSAGE_POSITION:
+					logger->Log(Logger::WARNING, "SuperXLoader: DeclData found unsupported DECLUSAGE: DECLUSAGE_POSITION!");
 					break;
-				case D3DDECLUSAGE_POSITIONT:
-					logger->Log(Logger::WARNING, "SuperXLoader: DeclData found unsupported D3DDECLUSAGE: D3DDECLUSAGE_POSITIONT!");
+				case DECLUSAGE_POSITIONT:
+					logger->Log(Logger::WARNING, "SuperXLoader: DeclData found unsupported DECLUSAGE: DECLUSAGE_POSITIONT!");
 					break;
-				case D3DDECLUSAGE_PSIZE:
-					logger->Log(Logger::WARNING, "SuperXLoader: DeclData found unsupported D3DDECLUSAGE: D3DDECLUSAGE_PSIZE!");
+				case DECLUSAGE_PSIZE:
+					logger->Log(Logger::WARNING, "SuperXLoader: DeclData found unsupported DECLUSAGE: DECLUSAGE_PSIZE!");
 					break;
-				case D3DDECLUSAGE_SAMPLE:
-					logger->Log(Logger::WARNING, "SuperXLoader: DeclData found unsupported D3DDECLUSAGE: D3DDECLUSAGE_SAMPLE!");
+				case DECLUSAGE_SAMPLE:
+					logger->Log(Logger::WARNING, "SuperXLoader: DeclData found unsupported DECLUSAGE: DECLUSAGE_SAMPLE!");
 					break;
-				case D3DDECLUSAGE_TANGENT:
-					logger->Log(Logger::WARNING, "SuperXLoader: DeclData found unsupported D3DDECLUSAGE: D3DDECLUSAGE_TANGENT!");
+				case DECLUSAGE_TANGENT:
+					logger->Log(Logger::WARNING, "SuperXLoader: DeclData found unsupported DECLUSAGE: DECLUSAGE_TANGENT!");
 					break;
-				case D3DDECLUSAGE_TESSFACTOR:
-					logger->Log(Logger::WARNING, "SuperXLoader: DeclData found unsupported D3DDECLUSAGE: D3DDECLUSAGE_TESSFACTOR!");
+				case DECLUSAGE_TESSFACTOR:
+					logger->Log(Logger::WARNING, "SuperXLoader: DeclData found unsupported DECLUSAGE: DECLUSAGE_TESSFACTOR!");
 					break;
 				default:
-					logger->Log(Logger::WARNING, "SuperXLoader: DeclData found unsupported D3DDECLUSAGE: " + std::to_string(declUsages[j]) + " (unknown value)");
+					logger->Log(Logger::WARNING, "SuperXLoader: DeclData found unsupported DECLUSAGE: " + std::to_string(declUsages[j]) + " (unknown value)");
 					break;
 				}
 			}

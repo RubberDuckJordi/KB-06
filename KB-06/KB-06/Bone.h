@@ -17,7 +17,7 @@ namespace pengine
 		Bone* IsName(std::string &BoneName);
 		void UpdateIndices(uint16 pIndex);
 
-		Matrix<float> _MatrixPos, _SkinOffset;
+		Matrix _MatrixPos, _SkinOffset;
 		uint32 _nVertices;
 		uint16* _Vertices;
 		float* _Weights;

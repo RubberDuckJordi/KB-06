@@ -99,9 +99,9 @@ namespace pengine
 		}
 		if (concatenatedMesh->_nNormals != 0)
 		{
-			concatenatedMesh->_Normals = new Vector<float>[concatenatedMesh->_nNormals];
+			concatenatedMesh->_Normals = new Vector[concatenatedMesh->_nNormals];
 			concatenatedMesh->_FaceNormals = new Face[concatenatedMesh->_nFaces];
-			memset(concatenatedMesh->_Normals, 0, concatenatedMesh->_nNormals * sizeof(Vector<float>));
+			memset(concatenatedMesh->_Normals, 0, concatenatedMesh->_nNormals * sizeof(Vector));
 			memset(concatenatedMesh->_FaceNormals, 0, concatenatedMesh->_nFaces * sizeof(Face));
 		}
 
@@ -118,7 +118,7 @@ namespace pengine
 			}
 			if ((*i)->_nNormals != 0)
 			{
-				memcpy(&(concatenatedMesh->_Normals[(*i)->_FirstNormal]), (*i)->_Normals, (*i)->_nNormals * sizeof(Vector<float>));
+				memcpy(&(concatenatedMesh->_Normals[(*i)->_FirstNormal]), (*i)->_Normals, (*i)->_nNormals * sizeof(Vector));
 				memcpy(&(concatenatedMesh->_FaceNormals[(*i)->_FirstFace]), (*i)->_FaceNormals, (*i)->_nFaces * sizeof(Face));
 			}
 

@@ -8,7 +8,7 @@
 #include "Model3D.h"
 #include "Renderer.h"
 #include "ObjectBone.h"
-#include "Rectangle.h"
+#include "Beam.h"
 
 namespace pengine
 {
@@ -33,7 +33,7 @@ namespace pengine
 		void Update();
 		void Draw(Renderer* renderer);
 
-		void CreateCollisionBox(RECTANGLE& rect);
+		void CreateCollisionBox(BEAM& rect);
 		void ComputeBoundingBoxSphere();
 
 		//Elements for the AABB (_Low & _High)
@@ -43,7 +43,7 @@ namespace pengine
 		bool showWarning;
 	private:
 		Logger* logger;
-		ObjectBone* _Skeleton;
+		ObjectBone* _Skeleton;//also known as rootbone
 		Mesh* _Mesh; //pointer to Model Mesh
 		Vertex* _SkinnedVertices;
 		Model3D* _Model;

@@ -4,7 +4,7 @@
 #include "Entity.h"
 #include "Vertex.h"
 #include "Plane.h"
-#include "RenderMatrix.h"
+#include "Matrix.h"
 
 namespace pengine
 {
@@ -30,19 +30,19 @@ namespace pengine
 
 		bool SphereInFrustum(Vector3* position, float radius);
 		void SetProjectionMatrix(float fovY, float aspectRatio, float nearClippingPlane, float farClippingPlane);
-		PEngineMatrix* GetProjectionMatrix();
-		PEngineMatrix* GetViewMatrix();
+		Matrix* GetProjectionMatrix();
+		Matrix* GetViewMatrix();
 	protected:
 		Vector3 lookAtPosition;
 
 	private:
 		void BuildViewFrustum();
 		CameraData cameraData;
-		PEngineMatrix* viewMatrix;
+		Matrix* viewMatrix;
 		Vector3* upVec;
 		float rollDegrees = 0.0f;
 		Plane frustrumPlane[6];
-		PEngineMatrix projectionMatrix;
+		Matrix projectionMatrix;
 		Vector3* lastKnownRotation;
 	};
 }

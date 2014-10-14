@@ -22,9 +22,9 @@ namespace pengine
 	void DefaultScene::Render(Renderer* renderer)
 	{
 		Scene::Render(renderer);
-		RenderMatrix* aMatrix = new pengine::RenderMatrix();
-		aMatrix->CreateMatrix(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, aMatrix->theMatrix);
-		renderer->SetActiveMatrix(aMatrix->theMatrix);
+		Matrix* aMatrix = new pengine::Matrix();
+		aMatrix->CreateMatrix(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, aMatrix);
+		renderer->SetActiveMatrix(aMatrix);
 		renderer->ActivateRenderingToTexture(500, 500, 0xFF0000FF);
 		D3DCustomVertex vertices[] = {
 			{ -1.0f, -1.0f, 1.5f, 0.0f, 0.0f },

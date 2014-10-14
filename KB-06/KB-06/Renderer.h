@@ -9,10 +9,10 @@
 #include "IndexBufferWrapper.h"
 #include "LoggerPool.h"
 #include "RGBAColor.h"
-#include "RenderMatrix.h"
 #include "Material.h"
 #include "CustomD3DVertex.h"
 #include "Vertex.h"
+#include "Matrix.h"
 
 namespace pengine
 {
@@ -40,8 +40,8 @@ namespace pengine
 		virtual void SetFillMode(FILLMODE) = 0;
 
 		virtual void SetActiveCamera(CameraData camera, bool orthographic) = 0;
-		virtual void SetProjectionMatrix(PEngineMatrix* ProjectionMatrix) = 0;
-		virtual void SetViewMatrix(PEngineMatrix*, bool orthographic) = 0;
+		virtual void SetProjectionMatrix(Matrix* ProjectionMatrix) = 0;
+		virtual void SetViewMatrix(Matrix*, bool orthographic) = 0;
 		virtual void SetProjectionMatrix(float FOV, float farClippingPlane) = 0;
 
 		virtual void BeginScene() = 0;
@@ -59,18 +59,15 @@ namespace pengine
 		virtual void DrawSubset(MeshWrapper* wrapper, int subset) = 0;
 		//virtual void Draw(Vertex* vertexBuffer, int amountOfIndices);
 
-		virtual void SetStreamSource() = 0; //??
-		virtual void SetIndices() = 0; //??
-
 		//virtual void Draw(Mesh* mesh) = 0;
-		virtual void SetActiveMatrix(PEngineMatrix* matrix) = 0;
+		virtual void SetActiveMatrix(Matrix* matrix) = 0;
 
 		virtual void SetLights() = 0;
 
 		virtual VertexBufferWrapper* CreateVertexBuffer(D3DCustomVertex*, int amountOfVertices, int fvf) = 0;
 		virtual IndexBufferWrapper* CreateIndexBuffer(int* indices, int amountOfIndices) = 0;
 		virtual void DrawVertexBuffer(VertexBufferWrapper* vertexBuffer, int amountOfIndices) = 0;
-		virtual void DrawIndexedVertexBuffer(VertexBufferWrapper* vertexBuffer, IndexBufferWrapper* indexBuffer, int amountOfVertices) = 0;
+		virtual void DrawIndexedVertexBuffer(VertexBufferWrapper* vertexBuffer, IndexBufferWrapper* indexBuffer, int amountOfVertices, int amountOfFaces) = 0;
 
 		virtual void ActivateRenderingToTexture(int tWidth, int tHeight, DWORD bgColor) = 0;
 		virtual void DeactivateRenderingToTexture() = 0;

@@ -40,7 +40,7 @@ namespace pengine
 		std::list<Subset*> _Subsets;
 		//Normals
 		uint16 _nNormals, _FirstNormal;
-		Vector<float>* _Normals;
+		Vector* _Normals;
 		Face* _FaceNormals;
 		//Material index for each face
 		uint16 _nMaterials, _FirstMaterial;

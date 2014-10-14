@@ -23,7 +23,7 @@ namespace pengine
 		Bone* _Bone;
 		Animation* _Animation;
 		uint16 _AnimationIndexMat, _AnimationIndexS, _AnimationIndexR, _AnimationIndexT;
-		Matrix<float> _TransformMatrix, _CombinedMatrix, _FinalMatrix;
+		Matrix _TransformMatrix, _CombinedMatrix, _FinalMatrix;
 		std::string _BoneName;
 		std::list<ObjectBone*> _Bones;
 	};

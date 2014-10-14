@@ -2,7 +2,7 @@
 #define _COLLIDABLE_H_
 
 #include "Vector3.h"
-#include "Rectangle.h"
+#include "Beam.h"
 #include "CollisionEffect.h"
 #include "Renderer.h"
 
@@ -22,19 +22,14 @@ namespace pengine
 		// Function returns mass. This can be used for a physical reaction to the impact.
 		virtual float GetCollisionMass() = 0;
 		// Must return a collision box relative to the world matrix
-		RECTANGLE* GetCollisionBox();
+		BEAM* GetCollisionBox();
 		// Checks collision with another collidable, can be overridden to provide an own implementation
 		virtual bool CheckCollision(Collidable*);
 		// Draws the collision box for debugging
 		virtual void DrawCollidable(Renderer*);
 
 	protected:
-		RECTANGLE collisionBox;
-
-		// For drawing
-		int amountOfIndices;
-		D3DCustomVertex* vertices;
-		VertexBufferWrapper* vertexBuffer;
+		BEAM collisionBox;
 	};
 }
 

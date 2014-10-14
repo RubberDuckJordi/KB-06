@@ -17,7 +17,7 @@ void TrackBlock::Draw(pengine::Renderer* renderer)
 {
 	if (xModel != NULL)
 	{
-		renderer->SetActiveMatrix(myCachedMatrix->theMatrix); //should be called every frame
+		renderer->SetActiveMatrix(myCachedMatrix); //should be called every frame
 
 		xModel->ClearSkinnedVertices();
 		//xModel->UpdateAnimation();

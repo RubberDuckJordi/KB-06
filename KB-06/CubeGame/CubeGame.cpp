@@ -9,7 +9,7 @@
 
 #include "SuperXLoader.h"
 #include "Object3D.h"
-#include "RenderMatrix.h"
+#include "Matrix.h"
 
 //#include "Shader.h"
 
@@ -124,9 +124,9 @@ int main(int argc, const char* argv[])
 		}
 		MyObject.ClearSkinnedVertices();
 		MyObject.UpdateAnimation();
-		pengine::RenderMatrix* aMatrix = new pengine::RenderMatrix();
-		aMatrix->CreateMatrix(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.1f, 0.1f, 0.1f, aMatrix->theMatrix);
-		pEngine.GetRenderer()->SetActiveMatrix(aMatrix->theMatrix);
+		pengine::Matrix* aMatrix = new pengine::Matrix();
+		aMatrix->CreateMatrix(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.1f, 0.1f, 0.1f, aMatrix);
+		pEngine.GetRenderer()->SetActiveMatrix(aMatrix);
 		MyObject.Draw(pEngine.GetRenderer());
 		
 		//pEngine.GetRenderer()->D2DDraw();

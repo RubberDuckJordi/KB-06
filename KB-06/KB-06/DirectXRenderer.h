@@ -33,8 +33,8 @@ namespace pengine
 
 		void SetActiveCamera(CameraData camera, bool orthographic);
 
-		void SetProjectionMatrix(PEngineMatrix* ProjectionMatrix);
-		void SetViewMatrix(PEngineMatrix*, bool orthographic);
+		void SetProjectionMatrix(Matrix* ProjectionMatrix);
+		void SetViewMatrix(Matrix*, bool orthographic);
 		void SetProjectionMatrix(float FOV, float farClippingPlane);
 
 		void BeginScene();
@@ -48,31 +48,24 @@ namespace pengine
 		void SetTexture(TextureWrapper* wrapper);
 		void SetFvF(PENGINEDWORD* fvf);
 
-		//void DrawPrimitive(Mesh mesh);
 		void DrawSubset(MeshWrapper* wrapper, int subset);
 
-		void SetStreamSource(); //??
-		void SetIndices(); //??
-
 		LPDIRECT3DDEVICE9* GetDevice();
-		//void Draw(Mesh* mesh);
-		void SetActiveMatrix(PEngineMatrix* matrix);
+		void SetActiveMatrix(Matrix* matrix);
 
 		void SetLights();
 
 		VertexBufferWrapper* CreateVertexBuffer(D3DCustomVertex*, int amountOfVertices, int fvf);
 		IndexBufferWrapper* CreateIndexBuffer(int* indices, int amountOfIndices);
 		void DrawVertexBuffer(VertexBufferWrapper*, int amountOfVertices);
-		void DrawIndexedVertexBuffer(VertexBufferWrapper*, IndexBufferWrapper*, int amountOfIndices);
+		void DrawIndexedVertexBuffer(VertexBufferWrapper*, IndexBufferWrapper*, int amountOfIndices, int amountOfFaces);
 
 		void ActivateRenderingToTexture(int tWidth, int tHeight, DWORD bgColor);
 		void DeactivateRenderingToTexture();
 		void SetTextureToRenderedTexture();
 
 	private:
-		//void SetTexture(BinaryData* texture);
-		//void SetMaterial(Material* material);
-		void SetMatrixCache(PEngineMatrix* matrix);
+		void SetMatrixCache(Matrix* matrix);
 
 		// Have yet to figure out how to get rid of this.
 		// Basically it's a copied pointer to the device's back buffer
@@ -101,7 +94,6 @@ namespace pengine
 		LPDIRECT3D9 g_pD3D;
 		LPDIRECT3DDEVICE9 g_pd3dDevice;
 
-		//std::map<Mesh*, LPD3DXMESH> meshCache;
 		std::map<BinaryData*, LPDIRECT3DTEXTURE9> textureCache;
 
 		D3DXMATRIX* matrixCache;

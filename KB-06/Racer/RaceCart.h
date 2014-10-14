@@ -6,7 +6,7 @@
 #include "Renderer.h"
 #include "Object3D.h"
 #include "CollisionEffect.h"
-#include "Rectangle.h"
+#include "Beam.h"
 #include "Vector3.h"
 
 namespace racer
@@ -33,7 +33,7 @@ namespace racer
 		void InitCollisionBox();
 		pengine::Vector3* GetCollisionForceVector();
 		float GetCollisionMass();
-		pengine::RenderMatrix* GetRenderMatrix();
+		pengine::Matrix* GetRenderMatrix();
 		float GetRadius();
 	private:
 		float horsePower = 10;

@@ -89,15 +89,15 @@ namespace pengine
 			v_buffer = renderer->CreateVertexBuffer(aSkyboxVertices, amountOfIndices, D3DCustomVertexFVF);
 		}
 
-		RenderMatrix* aMatrix = new RenderMatrix();
+		Matrix* aMatrix = new Matrix();
 
-		aMatrix->CreateMatrix(position->x, position->y, position->z, 0, 0, 0, 1, 1, 1, aMatrix->theMatrix);
+		aMatrix->CreateMatrix(position->x, position->y, position->z, 0, 0, 0, 1, 1, 1, aMatrix);
 
-		renderer->SetActiveMatrix(aMatrix->theMatrix);
+		renderer->SetActiveMatrix(aMatrix);
 		renderer->SetMaterial(material);
 
 		renderer->SetZBuffer(false);
-		renderer->DrawIndexedVertexBuffer(v_buffer, i_buffer, amountOfVertices);
+		renderer->DrawIndexedVertexBuffer(v_buffer, i_buffer, amountOfVertices, 12);
 		renderer->SetZBuffer(true);
 	}
 }

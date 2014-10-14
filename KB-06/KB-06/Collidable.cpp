@@ -2,14 +2,14 @@
 
 namespace pengine
 {
-	RECTANGLE* Collidable::GetCollisionBox()
+	BEAM* Collidable::GetCollisionBox()
 	{
 		return &collisionBox;
 	}
 
 	bool Collidable::CheckCollision(Collidable* collidable)
 	{
-		RECTANGLE* other = collidable->GetCollisionBox();
+		BEAM* other = collidable->GetCollisionBox();
 
 		if (collisionBox.x + collisionBox.width < other->x) return false;
 		if (collisionBox.x > other->x + other->width) return false;
@@ -23,250 +23,89 @@ namespace pengine
 
 	void Collidable::DrawCollidable(Renderer* renderer)
 	{
-		amountOfIndices = 36;
+		// For drawing
+		int amountOfVertices = 8;
+		int amountOfIndices = 36;
+		D3DCustomVertex* vertices;
+		int* indices = new int[amountOfIndices];
+		VertexBufferWrapper* vertexBuffer;
+		IndexBufferWrapper* indexBuffer;
 
-		if (vertices != NULL)
-		{
-			delete[] vertices;
-		}
-		if (vertexBuffer != NULL)
-		{
-			delete vertexBuffer;
-		}
+		vertices = new D3DCustomVertex[amountOfVertices];
 
-		vertices = new D3DCustomVertex[amountOfIndices];
-
-		vertices[0].x = collisionBox.x;
-		vertices[0].y = collisionBox.y + collisionBox.height;
-		vertices[0].z = collisionBox.z + collisionBox.depth;
+		vertices[0].x = collisionBox.frontBottomLeft.x;
+		vertices[0].y = collisionBox.frontBottomLeft.y;
+		vertices[0].z = collisionBox.frontBottomLeft.z;
 		vertices[0].tu = 0.0f;
 		vertices[0].tv = 0.0f;
 
-		vertices[1].x = collisionBox.x;
-		vertices[1].y = collisionBox.y + collisionBox.height;
-		vertices[1].z = collisionBox.z;
-		vertices[1].tu = 0.2f;
+		vertices[1].x = collisionBox.frontBottomRight.x;
+		vertices[1].y = collisionBox.frontBottomRight.y;
+		vertices[1].z = collisionBox.frontBottomRight.z;
+		vertices[1].tu = 0.0f;
 		vertices[1].tv = 0.0f;
 
-		vertices[2].x = collisionBox.x;
-		vertices[2].y = collisionBox.y;
-		vertices[2].z = collisionBox.z + collisionBox.depth;
+		vertices[2].x = collisionBox.backBottomLeft.x;
+		vertices[2].y = collisionBox.backBottomLeft.y;
+		vertices[2].z = collisionBox.backBottomLeft.z;
 		vertices[2].tu = 0.0f;
-		vertices[2].tv = 1.0f;
+		vertices[2].tv = 0.0f;
 
-		//Left down
-		vertices[3].x = collisionBox.x;
-		vertices[3].y = collisionBox.y + collisionBox.height;
-		vertices[3].z = collisionBox.z;
-		vertices[3].tu = 0.2f;
+		vertices[3].x = collisionBox.backBottomRight.x;
+		vertices[3].y = collisionBox.backBottomRight.y;
+		vertices[3].z = collisionBox.backBottomRight.z;
+		vertices[3].tu = 0.0f;
 		vertices[3].tv = 0.0f;
 
-		vertices[4].x = collisionBox.x;
-		vertices[4].y = collisionBox.y;
-		vertices[4].z = collisionBox.z;
-		vertices[4].tu = 0.2f;
-		vertices[4].tv = 1.0f;
+		vertices[4].x = collisionBox.frontTopLeft.x;
+		vertices[4].y = collisionBox.frontTopLeft.y;
+		vertices[4].z = collisionBox.frontTopLeft.z;
+		vertices[4].tu = 0.0f;
+		vertices[4].tv = 0.0f;
 
-		vertices[5].x = collisionBox.x;
-		vertices[5].y = collisionBox.y;
-		vertices[5].z = collisionBox.z + collisionBox.depth;
+		vertices[5].x = collisionBox.frontTopRight.x;
+		vertices[5].y = collisionBox.frontTopRight.y;
+		vertices[5].z = collisionBox.frontTopRight.z;
 		vertices[5].tu = 0.0f;
-		vertices[5].tv = 1.0f;
+		vertices[5].tv = 0.0f;
 
-		//Front up
-		vertices[6].x = collisionBox.x;
-		vertices[6].y = collisionBox.y + collisionBox.height;
-		vertices[6].z = collisionBox.z;
-		vertices[6].tu = 0.2f;
+		vertices[6].x = collisionBox.backTopLeft.x;
+		vertices[6].y = collisionBox.backTopLeft.y;
+		vertices[6].z = collisionBox.backTopLeft.z;
+		vertices[6].tu = 0.0f;
 		vertices[6].tv = 0.0f;
 
-		vertices[7].x = collisionBox.x + collisionBox.width;
-		vertices[7].y = collisionBox.y + collisionBox.height;
-		vertices[7].z = collisionBox.z;
-		vertices[7].tu = 0.4f;
+		vertices[7].x = collisionBox.backTopRight.x;
+		vertices[7].y = collisionBox.backTopRight.y;
+		vertices[7].z = collisionBox.backTopRight.z;
+		vertices[7].tu = 0.0f;
 		vertices[7].tv = 0.0f;
 
-		vertices[8].x = collisionBox.x;
-		vertices[8].y = collisionBox.y;
-		vertices[8].z = collisionBox.z;
-		vertices[8].tu = 0.2f;
-		vertices[8].tv = 1.0f;
+		vertexBuffer = renderer->CreateVertexBuffer(vertices, amountOfVertices, D3DCustomVertexFVF);
 
-		//Front down
-		vertices[9].x = collisionBox.x + collisionBox.width;
-		vertices[9].y = collisionBox.y + collisionBox.height;
-		vertices[9].z = collisionBox.z;
-		vertices[9].tu = 0.4f;
-		vertices[9].tv = 0.0f;
+		indices[0] = 0; indices[1] = 1; indices[2] = 2;//bottom
+		indices[3] = 2; indices[4] = 1; indices[5] = 3;
+		indices[6] = 0; indices[7] = 4; indices[8] = 6;//left
+		indices[9] = 0; indices[10] = 2; indices[11] = 6;
+		indices[12] = 0; indices[13] = 1; indices[14] = 5;//front
+		indices[15] = 0; indices[16] = 4; indices[17] = 5;
+		indices[18] = 1; indices[19] = 3; indices[20] = 7;//right
+		indices[21] = 5; indices[22] = 7; indices[23] = 1;
+		indices[24] = 2; indices[25] = 3; indices[26] = 7;//back
+		indices[27] = 2; indices[28] = 6; indices[29] = 7;
+		indices[30] = 4; indices[31] = 5; indices[32] = 7;//top
+		indices[33] = 4; indices[34] = 6; indices[35] = 7;
 
-		vertices[10].x = collisionBox.x + collisionBox.width;
-		vertices[10].y = collisionBox.y;
-		vertices[10].z = collisionBox.z;
-		vertices[10].tu = 0.4f;
-		vertices[10].tv = 1.0f;
-
-		vertices[11].x = collisionBox.x;
-		vertices[11].y = collisionBox.y;
-		vertices[11].z = collisionBox.z;
-		vertices[11].tu = 0.2f;
-		vertices[11].tv = 1.0f;
-
-		//Right up
-		vertices[12].x = collisionBox.x + collisionBox.width;
-		vertices[12].y = collisionBox.y + collisionBox.height;
-		vertices[12].z = collisionBox.z;
-		vertices[12].tu = 0.4f;
-		vertices[12].tv = 0.0f;
-
-		vertices[13].x = collisionBox.x + collisionBox.width;
-		vertices[13].y = collisionBox.y + collisionBox.height;
-		vertices[13].z = collisionBox.z + collisionBox.depth;
-		vertices[13].tu = 0.6f;
-		vertices[13].tv = 0.0f;
-
-		vertices[14].x = collisionBox.x + collisionBox.width;
-		vertices[14].y = collisionBox.y;
-		vertices[14].z = collisionBox.z;
-		vertices[14].tu = 0.4f;
-		vertices[14].tv = 1.0f;
-
-		//Right down
-		vertices[15].x = collisionBox.x + collisionBox.width;
-		vertices[15].y = collisionBox.y + collisionBox.height;
-		vertices[15].z = collisionBox.z + collisionBox.depth;
-		vertices[15].tu = 0.6f;
-		vertices[15].tv = 0.0f;
-
-		vertices[16].x = collisionBox.x + collisionBox.width;
-		vertices[16].y = collisionBox.y;
-		vertices[16].z = collisionBox.z + collisionBox.depth;
-		vertices[16].tu = 0.6f;
-		vertices[16].tv = 1.0f;
-
-		vertices[17].x = collisionBox.x + collisionBox.width;
-		vertices[17].y = collisionBox.y;
-		vertices[17].z = collisionBox.z;
-		vertices[17].tu = 0.4f;
-		vertices[17].tv = 1.0f;
-
-		//Back up
-		vertices[18].x = collisionBox.x + collisionBox.width;
-		vertices[18].y = collisionBox.y + collisionBox.height;
-		vertices[18].z = collisionBox.z + collisionBox.depth;
-		vertices[18].tu = 0.6f;
-		vertices[18].tv = 0.0f;
-
-		vertices[19].x = collisionBox.x;
-		vertices[19].y = collisionBox.y + collisionBox.height;
-		vertices[19].z = collisionBox.z + collisionBox.depth;
-		vertices[19].tu = 0.8f;
-		vertices[19].tv = 0.0f;
-
-		vertices[20].x = collisionBox.x + collisionBox.width;
-		vertices[20].y = collisionBox.y;
-		vertices[20].z = collisionBox.z + collisionBox.depth;
-		vertices[20].tu = 0.6f;
-		vertices[20].tv = 1.0f;
-
-		//Back down
-		vertices[21].x = collisionBox.x;
-		vertices[21].y = collisionBox.y + collisionBox.height;
-		vertices[21].z = collisionBox.z + collisionBox.depth;
-		vertices[21].tu = 0.8f;
-		vertices[21].tv = 0.0f;
-
-		vertices[22].x = collisionBox.x;
-		vertices[22].y = collisionBox.y;
-		vertices[22].z = collisionBox.z + collisionBox.depth;
-		vertices[22].tu = 0.8f;
-		vertices[22].tv = 1.0f;
-
-		vertices[23].x = collisionBox.x + collisionBox.width;
-		vertices[23].y = collisionBox.y;
-		vertices[23].z = collisionBox.z + collisionBox.depth;
-		vertices[23].tu = 0.6f;
-		vertices[23].tv = 1.0f;
-
-		//Top up
-		vertices[24].x = collisionBox.x;
-		vertices[24].y = collisionBox.y + collisionBox.height;
-		vertices[24].z = collisionBox.z + collisionBox.depth;
-		vertices[24].tu = 0.8f;
-		vertices[24].tv = 0.0f;
-
-		vertices[25].x = collisionBox.x + collisionBox.width;
-		vertices[25].y = collisionBox.y + collisionBox.height;
-		vertices[25].z = collisionBox.z + collisionBox.depth;
-		vertices[25].tu = 1.0f;
-		vertices[25].tv = 0.0f;
-
-		vertices[26].x = collisionBox.x;
-		vertices[26].y = collisionBox.y + collisionBox.height;
-		vertices[26].z = collisionBox.z;
-		vertices[26].tu = 0.8f;
-		vertices[26].tv = 1.0f;
-
-		//Top down
-		vertices[27].x = collisionBox.x + collisionBox.width;
-		vertices[27].y = collisionBox.y + collisionBox.height;
-		vertices[27].z = collisionBox.z + collisionBox.depth;
-		vertices[27].tu = 1.0f;
-		vertices[27].tv = 0.0f;
-
-		vertices[28].x = collisionBox.x + collisionBox.width;
-		vertices[28].y = collisionBox.y + collisionBox.height;
-		vertices[28].z = collisionBox.z;
-		vertices[28].tu = 1.0f;
-		vertices[28].tv = 1.0f;
-
-		vertices[29].x = collisionBox.x;
-		vertices[29].y = collisionBox.y + collisionBox.height;
-		vertices[29].z = collisionBox.z;
-		vertices[29].tu = 0.8f;
-		vertices[29].tv = 1.0f;
-
-		//Down up
-		vertices[30].x = collisionBox.x;
-		vertices[30].y = collisionBox.y;
-		vertices[30].z = collisionBox.z;
-		vertices[30].tu = 0.3f;
-		vertices[30].tv = 1.0f;
-
-		vertices[31].x = collisionBox.x + collisionBox.width;
-		vertices[31].y = collisionBox.y;
-		vertices[31].z = collisionBox.z;
-		vertices[31].tu = 0.3f;
-		vertices[31].tv = 1.0f;
-
-		vertices[32].x = collisionBox.x;
-		vertices[32].y = collisionBox.y;
-		vertices[32].z = collisionBox.z + collisionBox.depth;
-		vertices[32].tu = 0.3f;
-		vertices[32].tv = 1.0f;
-
-		//Down down
-		vertices[33].x = collisionBox.x + collisionBox.width;
-		vertices[33].y = collisionBox.y;
-		vertices[33].z = collisionBox.z;
-		vertices[33].tu = 0.3f;
-		vertices[33].tv = 1.0f;
-
-		vertices[34].x = collisionBox.x + collisionBox.width;
-		vertices[34].y = collisionBox.y;
-		vertices[34].z = collisionBox.z + collisionBox.depth;
-		vertices[34].tu = 0.3f;
-		vertices[34].tv = 1.0f;
-
-		vertices[35].x = collisionBox.x;
-		vertices[35].y = collisionBox.y;
-		vertices[35].z = collisionBox.z + collisionBox.depth;
-		vertices[35].tu = 0.3f;
-		vertices[35].tv = 1.0f;
-
-		vertexBuffer = renderer->CreateVertexBuffer(vertices, amountOfIndices, D3DCustomVertexFVF);
+		indexBuffer = renderer->CreateIndexBuffer(indices, amountOfIndices);
 		
-		RenderMatrix* renderMatrix = new RenderMatrix();
-		renderer->SetActiveMatrix(renderMatrix->theMatrix);
-		renderer->DrawVertexBuffer(vertexBuffer, amountOfIndices);
+		Matrix* renderMatrix = new Matrix();
+		Matrix::CreateMatrix(collisionBox.x, 0, collisionBox.z, collisionBox.yaw, collisionBox.pitch, collisionBox.roll, 1, 1, 1, renderMatrix);
+		renderer->SetActiveMatrix(renderMatrix);
+		renderer->DrawIndexedVertexBuffer(vertexBuffer, indexBuffer, amountOfVertices, 12);
+
+		delete[] vertices;
+		delete vertexBuffer;
+		delete[] indices;
+		delete indexBuffer;
 	}
 }

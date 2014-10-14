@@ -6,7 +6,7 @@ namespace pengine
 	Entity::Entity()
 	{
 		logger = LoggerPool::GetInstance().GetLogger();
-		myCachedMatrix = new RenderMatrix();
+		myCachedMatrix = new Matrix();
 
 		movementVector.x = 0;
 		movementVector.y = 0;
@@ -26,7 +26,7 @@ namespace pengine
 		position.x = x;
 		position.y = y;
 		position.z = z;
-		myCachedMatrix->CreateMatrix(position.x, position.y, position.z, rotation.x, rotation.y, rotation.z, scale.x, scale.y, scale.z, myCachedMatrix->theMatrix);
+		myCachedMatrix->CreateMatrix(position.x, position.y, position.z, rotation.x, rotation.y, rotation.z, scale.x, scale.y, scale.z, myCachedMatrix);
 	}
 
 	void Entity::SetRotation(float yaw, float pitch, float roll)
@@ -34,7 +34,7 @@ namespace pengine
 		rotation.x = yaw;
 		rotation.y = pitch;
 		rotation.z = roll;
-		myCachedMatrix->CreateMatrix(position.x, position.y, position.z, rotation.x, rotation.y, rotation.z, scale.x, scale.y, scale.z, myCachedMatrix->theMatrix);
+		myCachedMatrix->CreateMatrix(position.x, position.y, position.z, rotation.x, rotation.y, rotation.z, scale.x, scale.y, scale.z, myCachedMatrix);
 	}
 
 	void Entity::SetScale(float scaleX, float scaleY, float scaleZ)
@@ -42,7 +42,7 @@ namespace pengine
 		scale.x = scaleX;
 		scale.y = scaleY;
 		scale.z = scaleZ;
-		myCachedMatrix->CreateMatrix(position.x, position.y, position.z, rotation.x, rotation.y, rotation.z, scale.x, scale.y, scale.z, myCachedMatrix->theMatrix);
+		myCachedMatrix->CreateMatrix(position.x, position.y, position.z, rotation.x, rotation.y, rotation.z, scale.x, scale.y, scale.z, myCachedMatrix);
 	}
 
 	void Entity::SetAll(float x, float y, float z, float yaw, float pitch, float roll, float scaleX, float scaleY, float scaleZ)
@@ -72,7 +72,7 @@ namespace pengine
 		position.x += x;
 		position.y += y;
 		position.z += z;
-		myCachedMatrix->CreateMatrix(position.x, position.y, position.z, rotation.x, rotation.y, rotation.z, scale.x, scale.y, scale.z, myCachedMatrix->theMatrix);
+		myCachedMatrix->CreateMatrix(position.x, position.y, position.z, rotation.x, rotation.y, rotation.z, scale.x, scale.y, scale.z, myCachedMatrix);
 	}
 
 	void Entity::AddRotation(float yaw, float pitch, float roll)
@@ -80,9 +80,8 @@ namespace pengine
 		rotation.x += yaw;
 		rotation.y += pitch;
 		rotation.z += roll;
-		myCachedMatrix->CreateMatrix(position.x, position.y, position.z, rotation.x, rotation.y, rotation.z, scale.x, scale.y, scale.z, myCachedMatrix->theMatrix);
+		myCachedMatrix->CreateMatrix(position.x, position.y, position.z, rotation.x, rotation.y, rotation.z, scale.x, scale.y, scale.z, myCachedMatrix);
 	}
-
 
 	void Entity::AddAll(float x, float y, float z, float yaw, float pitch, float roll, float scaleX, float scaleY, float scaleZ)
 	{
@@ -95,7 +94,7 @@ namespace pengine
 		scale.x += scaleX;
 		scale.y += scaleY;
 		scale.z += scaleZ;
-		myCachedMatrix->CreateMatrix(position.x, position.y, position.z, rotation.x, rotation.y, rotation.z, scale.x, scale.y, scale.z, myCachedMatrix->theMatrix);
+		myCachedMatrix->CreateMatrix(position.x, position.y, position.z, rotation.x, rotation.y, rotation.z, scale.x, scale.y, scale.z, myCachedMatrix);
 	}
 
 	void Entity::SetMass(float p_mass)
@@ -142,7 +141,6 @@ namespace pengine
 		p_direction->z = p_direction->z / mass;
 
 		movementVector = movementVector + *p_direction;
-
 	}
 
 	void Entity::AddForce(Vector3* p_direction, float mass)

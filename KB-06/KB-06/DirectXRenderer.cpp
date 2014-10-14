@@ -160,7 +160,6 @@ namespace pengine
 	void DirectXRenderer::SetFillMode(FILLMODE fillmode)
 	{
 		this->g_pd3dDevice->SetRenderState(D3DRS_FILLMODE, static_cast<D3DFILLMODE>(fillmode));
-
 	}
 
 	void DirectXRenderer::SetActiveCamera(CameraData camera, bool orthographic)
@@ -169,7 +168,6 @@ namespace pengine
 		// a point to lookat, and a direction for which way is up. Here, we set the
 		// eye 0.5 units back along the z-axis and up 0 units, look at the 
 		// origin + 0.5 on the z-axis, and define "up" to be in the y-direction.
-
 		D3DXVECTOR3 vEyePt(camera.x, camera.y, camera.z);
 		D3DXVECTOR3 vLookatPt(camera.lookAtX, camera.lookAtY, camera.lookAtZ);
 		D3DXVECTOR3 vUpVec(camera.upVecX, camera.upVecY, camera.upVecZ);
@@ -184,7 +182,7 @@ namespace pengine
 		g_pd3dDevice->SetTransform(D3DTS_VIEW, matrixCache);
 	}
 
-	void DirectXRenderer::SetViewMatrix(PEngineMatrix* viewMatrix, bool orthographic)
+	void DirectXRenderer::SetViewMatrix(Matrix* viewMatrix, bool orthographic)
 	{
 		// Set up our view matrix. A view matrix can be defined given an eye point,
 		// a point to lookat, and a direction for which way is up. Here, we set the
@@ -201,7 +199,7 @@ namespace pengine
 		g_pd3dDevice->SetTransform(D3DTS_VIEW, matrixCache);
 	}
 
-	void DirectXRenderer::SetProjectionMatrix(PEngineMatrix* projectionMatrix)
+	void DirectXRenderer::SetProjectionMatrix(Matrix* projectionMatrix)
 	{
 		SetMatrixCache(projectionMatrix);
 		this->g_pd3dDevice->SetTransform(D3DTS_PROJECTION, matrixCache);
@@ -215,7 +213,6 @@ namespace pengine
 		// a perpsective transform, we need the field of view (1/4 pi is common),
 		// the aspect ratio, and the near and far clipping planes (which define at
 		// what distances geometry should be no longer be rendered).
-		
 		D3DXMatrixPerspectiveFovLH(&projectionMatix, FOV, 1.0f, 1.0f, 1000.0f);
 		g_pd3dDevice->SetTransform(D3DTS_PROJECTION, &projectionMatix);
 	}
@@ -303,23 +300,12 @@ namespace pengine
 		(*wrapper->GetMesh())->DrawSubset(subset);
 	}
 
-	//??
-	void DirectXRenderer::SetStreamSource() //??
-	{
-
-	}
-
-	void DirectXRenderer::SetIndices() //??
-	{
-
-	}
-
 	LPDIRECT3DDEVICE9* DirectXRenderer::GetDevice()
 	{
 		return &g_pd3dDevice;
 	}
 
-	void DirectXRenderer::SetActiveMatrix(PEngineMatrix* matrix)
+	void DirectXRenderer::SetActiveMatrix(Matrix* matrix)
 	{
 		SetMatrixCache(matrix);
 		g_pd3dDevice->SetTransform(D3DTS_WORLD, matrixCache);
@@ -327,64 +313,31 @@ namespace pengine
 
 	void DirectXRenderer::SetLights()
 	{
-		//D3DXVECTOR3 vecDir;
-		//D3DLIGHT9 light;
-		//D3DMATERIAL9 material;    // create the material struct
-		//light.Type = D3DLIGHT_DIRECTIONAL;
-		//light.Diffuse.r = 1.0f;
-		//light.Diffuse.g = 1.0f;
-		//light.Diffuse.b = 1.0f;
-		//vecDir = D3DXVECTOR3(cosf(timeGetTime() / 350.0f), 1.0f, sinf(timeGetTime() / 350.0f));
-		//D3DXVec3Normalize((D3DXVECTOR3*)&light.Direction, &vecDir);
-
-		//light.Range = 1000.0f;
-		//light.Direction = vecDir;
-
-		//g_pd3dDevice->SetLight(0, &light);
-		//g_pd3dDevice->LightEnable(0, true);
-		g_pd3dDevice->SetRenderState(D3DRS_LIGHTING, false);
-		// Finally, turn on some ambient light.
-		g_pd3dDevice->SetRenderState(D3DRS_AMBIENT, 0xFFFFFFFF);
-		//material.Diffuse = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);    // set diffuse color to white
-		//material.Ambient = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);    // set ambient color to white
-
-		//g_pd3dDevice->SetMaterial(&material);    // set the globably-used material to &material
-
-		/*//Turn on ambient lighting
-		g_pd3dDevice->SetRenderState(D3DRS_AMBIENT, 0xffffffff);
-
-		g_pd3dDevice->SetTextureStageState(0, D3DTSS_COLOROP, D3DTOP_SELECTARG1);
-		g_pd3dDevice->SetTextureStageState(0, D3DTSS_COLORARG1, D3DTA_TEXTURE);
-		g_pd3dDevice->SetTextureStageState(0, D3DTSS_COLORARG2, D3DTA_DIFFUSE);
-
-		/*g_pd3dDevice->SetTextureStageState(0, D3DTSS_ALPHAOP, D3DTOP_SELECTARG1);
-		g_pd3dDevice->SetTextureStageState(0, D3DTSS_ALPHAARG1, D3DTA_TEXTURE);
-		g_pd3dDevice->SetTextureStageState(0, D3DTSS_ALPHAARG2, D3DTA_DIFFUSE);*/
+		g_pd3dDevice->SetRenderState(D3DRS_LIGHTING, false);//we don't do anything with special lights
+		g_pd3dDevice->SetRenderState(D3DRS_AMBIENT, 0xFFFFFFFF);//a nice shining white
 	}
 
-	void DirectXRenderer::SetMatrixCache(PEngineMatrix* matrix)
+	void DirectXRenderer::SetMatrixCache(Matrix* matrix)
 	{
-		//matrixCache = (D3DXMATRIX*)matrix;;
-		matrixCache->_11 = matrix->_11;
-		matrixCache->_12 = matrix->_12;
-		matrixCache->_13 = matrix->_13;
-		matrixCache->_14 = matrix->_14;
+		matrixCache->_11 = (*matrix)[0];
+		matrixCache->_12 = (*matrix)[1];
+		matrixCache->_13 = (*matrix)[2];
+		matrixCache->_14 = (*matrix)[3];
 
-		matrixCache->_21 = matrix->_21;
-		matrixCache->_22 = matrix->_22;
-		matrixCache->_23 = matrix->_23;
-		matrixCache->_24 = matrix->_24;
+		matrixCache->_21 = (*matrix)[4];
+		matrixCache->_22 = (*matrix)[5];
+		matrixCache->_23 = (*matrix)[6];
+		matrixCache->_24 = (*matrix)[7];
 
-		matrixCache->_31 = matrix->_31;
-		matrixCache->_32 = matrix->_32;
-		matrixCache->_33 = matrix->_33;
-		matrixCache->_34 = matrix->_34;
+		matrixCache->_31 = (*matrix)[8];
+		matrixCache->_32 = (*matrix)[9];
+		matrixCache->_33 = (*matrix)[10];
+		matrixCache->_34 = (*matrix)[11];
 
-		matrixCache->_41 = matrix->_41;
-		matrixCache->_42 = matrix->_42;
-		matrixCache->_43 = matrix->_43;
-		matrixCache->_44 = matrix->_44;
-
+		matrixCache->_41 = (*matrix)[12];
+		matrixCache->_42 = (*matrix)[13];
+		matrixCache->_43 = (*matrix)[14];
+		matrixCache->_44 = (*matrix)[15];
 	}
 
 	VertexBufferWrapper* DirectXRenderer::CreateVertexBuffer(D3DCustomVertex* p_vertices, int amountOfVertices, int fvf)
@@ -438,7 +391,7 @@ namespace pengine
 		g_pd3dDevice->DrawPrimitive(D3DPT_TRIANGLELIST, 0, amountOfIndices / 3);
 	}
 
-	void DirectXRenderer::DrawIndexedVertexBuffer(VertexBufferWrapper* v_buffer, IndexBufferWrapper* i_buffer, int amountOfVertices)
+	void DirectXRenderer::DrawIndexedVertexBuffer(VertexBufferWrapper* v_buffer, IndexBufferWrapper* i_buffer, int amountOfVertices, int amountOfFaces)
 	{
 		g_pd3dDevice->SetStreamSource(0, *v_buffer->GetVertexBuffer(), 0, sizeof(D3DCustomVertex));
 		g_pd3dDevice->SetFVF(D3DCustomVertexFVF);

@@ -7,78 +7,77 @@
 
 namespace pengine
 {
-	template <typename T>
 	class Quaternion {
 	public:
-		T data[4];
+		float data[4];
 		Quaternion()
 		{
-			memset(data, 0, 4 * sizeof(T));
+			memset(data, 0, 4 * sizeof(float));
 		};
-		Quaternion(const Quaternion<T> &pq)
+		Quaternion(const Quaternion &pq)
 		{
-			memcpy(data, pq.data, 4 * sizeof(T));
+			memcpy(data, pq.data, 4 * sizeof(float));
 		};
-		Quaternion(const T* pT)
+		Quaternion(const float* pT)
 		{
-			memcpy(data, pT, 4 * sizeof(T));
+			memcpy(data, pT, 4 * sizeof(float));
 		};
 		void Zero()
 		{
-			memset(data, 0, 4 * sizeof(T));
+			memset(data, 0, 4 * sizeof(float));
 		};
-		T operator[](int index)const
+		float operator[](int index)const
 		{
 			return data[index];
 		};
-		T& operator[](int index)
+		float& operator[](int index)
 		{
 			return data[index];
 		};
-		Quaternion<T>& operator=(const Quaternion<T> &pq)
+		Quaternion& operator=(const Quaternion &pq)
 		{
-			memcpy(data, pq.data, 4 * sizeof(T));
+			memcpy(data, pq.data, 4 * sizeof(float));
 			return *this;
 		};
-		Quaternion<T> operator+(Quaternion<T> pq)
+		Quaternion operator+(Quaternion pq)
 		{
-			T rdata[4];
+			float rdata[4];
 			rdata[0] = pq.data[0] + data[0];
 			rdata[1] = pq.data[1] + data[1];
 			rdata[2] = pq.data[2] + data[2];
 			rdata[3] = pq.data[3] + data[3];
-			return Quaternion<T>(rdata);
+			return Quaternion(rdata);
 		};
-		Quaternion<T> operator*(Quaternion<T> pq);//wasn't implemented, unused?
-		Quaternion<T> operator*(T pT)
+		Quaternion operator*(Quaternion pq);//wasn't implemented, unused?
+		Quaternion operator*(float pT)
 		{
-			T rdata[4];
+			float rdata[4];
 			rdata[0] = pT * data[0];
 			rdata[1] = pT * data[1];
 			rdata[2] = pT * data[2];
 			rdata[3] = pT * data[3];
-			return Quaternion<T>(rdata);
+			return Quaternion(rdata);
 		};
-		T Dot(Quaternion<T> &pq)
+		float Dot(Quaternion &pq)
 		{
 			return ((data[0] * pq.data[0]) + (data[1] * pq.data[1]) + (data[2] * pq.data[2]) + (data[3] * pq.data[3]));
 		};
-		Quaternion<T> Slerp(T pT, Quaternion<T> &pq)
+		Quaternion Slerp(float pT, Quaternion &pq)
 		{
 			//We calculate the angle spread between both quaternions
-			T AngleCos = pq.Dot(*this);
-			T Angle = qACos(AngleCos); //see the function ACos above
+			float AngleCos = pq.Dot(*this);
+			float Angle = qACos(AngleCos); //see the function ACos above
 
 			if (Angle < MINFLOAT)
 			{
-				return Quaternion<T>(*this);
+				return Quaternion(*this);
 			}
 			//We calculate the interpolated angle and deduce the resulting quaternion
-			T InvAngleSin = (T)(1.0f / sin(Angle));
+			float InvAngleSin = (1.0f / sin(Angle));
 
-			T Coeff0 = sin((1 - pT) * Angle) * InvAngleSin;
-			T Coeff1 = sin(pT * Angle) * InvAngleSin;
-			return Quaternion<T>((*this * Coeff0) + (pq * Coeff1));
+			float Coeff0 = sin((1 - pT) * Angle) * InvAngleSin;
+			float Coeff1 = sin(pT * Angle) * InvAngleSin;
+			return Quaternion((*this * Coeff0) + (pq * Coeff1));
 		};
 	private:
 		float qACos(float pValue)

@@ -55,7 +55,7 @@ void racer::RaceCart::Draw(pengine::Renderer* renderer)
 {
 	if (xModel != NULL)
 	{
-		renderer->SetActiveMatrix(myCachedMatrix->theMatrix); //should be called every frame
+		renderer->SetActiveMatrix(myCachedMatrix); //should be called every frame
 
 		xModel->ClearSkinnedVertices();
 		xModel->UpdateAnimation();
@@ -127,22 +127,22 @@ void racer::RaceCart::OnCollide(pengine::COLLISIONEFFECT* effect)
 void racer::RaceCart::InitCollisionBox()
 {
 	// Get bounds of model
-	pengine::RECTANGLE* rect = new pengine::RECTANGLE();
+	pengine::BEAM* rect = new pengine::BEAM();
 	xModel->CreateCollisionBox(*rect);
 
 	// Add transformation
-	rect->x += position.x - rect->width / 8;
+	rect->x += position.x;// -rect->width / 8;
 	rect->y += position.y;
-	rect->z += position.z + rect->depth / 4;
+	rect->z += position.z;// +rect->depth / 4;
 
 	rect->width = rect->width / 2;
 	rect->height = rect->height / 2;
 	rect->depth = rect->depth / 2;
 
 	// Add rotation
-	rect->rotationX = rotation.x;
-	rect->rotationY = rotation.y;
-	rect->rotationZ = rotation.z;
+	rect->yaw = rotation.x;
+	rect->pitch = rotation.y;
+	rect->roll = rotation.z;
 
 	collisionBox = *rect;
 }
