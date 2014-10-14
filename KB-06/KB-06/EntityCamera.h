@@ -30,6 +30,8 @@ namespace pengine
 
 		bool SphereInFrustum(Vector3* position, float radius);
 		void SetProjectionMatrix(float fovY, float aspectRatio, float nearClippingPlane, float farClippingPlane);
+		PEngineMatrix* GetProjectionMatrix();
+		PEngineMatrix* GetViewMatrix();
 	protected:
 		Vector3 lookAtPosition;
 

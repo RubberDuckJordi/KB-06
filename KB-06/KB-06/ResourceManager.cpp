@@ -203,17 +203,44 @@ namespace pengine
 		return textVector;
 	}
 
-	Model3D* ResourceManager::LoadXFile(std::string* filePath)
+	Object3D* ResourceManager::LoadXFile(std::string* filePath)
 	{
-		if (superXLoader == NULL)
+		pengine::Model3D* model = new pengine::Model3D();
+
+		if (models.find(*filePath) != models.end())
 		{
-			superXLoader = new SuperXLoader();
+			model = models.at(*filePath);
+		}
+		else 
+		{
+			if (superXLoader == NULL)
+			{
+				superXLoader = new SuperXLoader();
+			}
+
+			superXLoader->Load(*filePath, model);
+
+			for (std::list<pengine::Mesh*>::iterator i = model->_Meshes.begin(); i != model->_Meshes.end(); ++i)
+			{
+				for (std::list<pengine::Material*>::iterator j = (*i)->_Materials.begin(); j != (*i)->_Materials.end(); ++j)
+				{
+					if ((*j)->texturePath != "")
+					{
+						(*j)->texture = LoadBinaryFile("resources/" + (*j)->texturePath);
+					}
+				}
+			}
+			model->ConcatenateMeshes();
+
+			models[*filePath] = model;
 		}
 
-		pengine::Model3D* model = new pengine::Model3D();
-		superXLoader->Load(*filePath, model);
+		pengine::Object3D* object3D = new Object3D();
+		object3D->SetupModel(model);
+		object3D->showWarning = false;
+		object3D->ClearSkinnedVertices();
 
-		return model;
+		return object3D;
 	}
 
 }

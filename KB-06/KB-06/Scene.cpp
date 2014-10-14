@@ -95,7 +95,9 @@ namespace pengine
 		Resource::Vertex* cameraRotation = currentCamera->GetRotation();*/
 
 		//renderer->SetViewMatrix(0, 0, -0.5f, 0, 0, 0.5f);
-		renderer->SetActiveCamera(currentCamera->GetCameraData(), false);
+		renderer->SetViewMatrix(currentCamera->GetViewMatrix(), false);
+		renderer->SetProjectionMatrix(currentCamera->GetProjectionMatrix());
+
 
 		Vector3* cameraPosition = currentCamera->GetPosition();
 		if (skybox != NULL)

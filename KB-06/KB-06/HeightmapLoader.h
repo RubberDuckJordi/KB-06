@@ -24,7 +24,7 @@ namespace pengine
 		long m_offset;
 		Logger* logger;
 
-		void AddPosition(int p_vertexIndex, int p_pointIndex, int p_y, Ground& ground);
+		void AddPosition(int p_vertexIndex, int p_pointIndex, float p_y, Ground& ground);
 		void BuildGround(byte* p_vertices, Ground& ground);
 		bool ReadHeightMapFile(const std::string& p_filename);
 		void LoadDefaultHeightMap(byte* p_heights, int p_cellCount);

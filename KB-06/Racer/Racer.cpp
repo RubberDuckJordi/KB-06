@@ -15,55 +15,14 @@
 pengine::Object3D* kapotlelijk(pengine::ResourceManager* resourceManager)
 {
 	std::string file = "resources/tiger.x";
-	pengine::Model3D* model = resourceManager->LoadXFile(&file);
 
-	for (std::list<pengine::Mesh*>::iterator i = model->_Meshes.begin(); i != model->_Meshes.end(); ++i)
-	{
-		for (std::list<pengine::Material*>::iterator j = (*i)->_Materials.begin(); j != (*i)->_Materials.end(); ++j)
-		{
-			if ((*j)->texturePath != "")
-			{
-				(*j)->texture = resourceManager->LoadBinaryFile("resources/" + (*j)->texturePath);
-			}
-		}
-	}
-	model->ConcatenateMeshes();
-
-	pengine::Object3D* MyObject = new pengine::Object3D();
-	MyObject->SetupModel(model);
+	pengine::Object3D* MyObject = resourceManager->LoadXFile(&file);
 	unsigned short int index = 0;
 	MyObject->MapAnimationSet(index);
 	//We set the interval of animation in steps
-	MyObject->showWarning = false;
 	MyObject->SetAnimationStep(80);
-	MyObject->ClearSkinnedVertices();
 	MyObject->UpdateAnimation();
 
-
-
-	return MyObject;
-}
-
-pengine::Object3D* kapotlelijk(pengine::ResourceManager* resourceManager, std::string file)
-{
-	pengine::Model3D* model = resourceManager->LoadXFile(&file);
-
-	for (std::list<pengine::Mesh*>::iterator i = model->_Meshes.begin(); i != model->_Meshes.end(); ++i)
-	{
-		for (std::list<pengine::Material*>::iterator j = (*i)->_Materials.begin(); j != (*i)->_Materials.end(); ++j)
-		{
-			if ((*j)->texturePath != "")
-			{
-				(*j)->texture = resourceManager->LoadBinaryFile("resources/" + (*j)->texturePath);
-			}
-		}
-	}
-	model->ConcatenateMeshes();
-
-	pengine::Object3D* MyObject = new pengine::Object3D();
-	MyObject->SetupModel(model);
-	MyObject->showWarning = false;
-	MyObject->ClearSkinnedVertices();
 
 
 	return MyObject;
@@ -80,8 +39,11 @@ int main(int argc, const char* argv[])
 
 	pengine::Object3D* object3d = kapotlelijk(pEngine.GetResourceManager());
 
-	pengine::Object3D* weg = kapotlelijk(pEngine.GetResourceManager(), "resources/rechtdoor.x");
-	pengine::Object3D* weg2 = kapotlelijk(pEngine.GetResourceManager(), "resources/niet-rechtdoor.x");
+	std::string rechtdoorPath = "resources/rechtdoor.x";
+	std::string nietRechtdoorPath = "resources/niet-rechtdoor.x";
+
+	pengine::Object3D* weg = pEngine.GetResourceManager()->LoadXFile(&rechtdoorPath);
+	pengine::Object3D* weg2 = pEngine.GetResourceManager()->LoadXFile(&nietRechtdoorPath);
 
 	racer::RaceSceneFactory* sceneFactory = new racer::RaceSceneFactory(pEngine.GetResourceManager());
 	sceneFactory->SetXModel2(weg);

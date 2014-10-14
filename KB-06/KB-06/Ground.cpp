@@ -126,8 +126,8 @@ namespace pengine
 		}
 
 		// Find dimensions of the ground
-		int dimensionWidth = 0;
-		int dimensionDepth = 0;
+		float dimensionWidth = 0.0f;
+		float dimensionDepth = 0.0f;
 
 		for (int i = 0; i < amountOfVertices; ++i)
 		{
@@ -143,11 +143,11 @@ namespace pengine
 		}
 
 		QuadNode* rootNode = new QuadNode();
-		rootNode->minX = 0;
-		rootNode->minZ = 0;
-		rootNode->maxX = dimensionWidth;
-		rootNode->maxZ = dimensionDepth;
-		rootNode->isLeaf = false;
+		rootNode->SetMinX(0.0f);
+		rootNode->SetMinZ(0.0f);
+		rootNode->SetMaxX(dimensionWidth);
+		rootNode->SetMaxZ(dimensionDepth);
+		rootNode->SetIsLeaf(false);
 
 		CreateQuadTreeChildren(rootNode, depth);
 
@@ -158,8 +158,8 @@ namespace pengine
 	{
 		if (remainingDepth > 0)
 		{
-			// This is a branch, create children and call this function recursively
-			parent->isLeaf = false;
+			// This is a branch, create children and call this function 
+			parent->SetIsLeaf(false);
 
 			// 0 3
 			// 1 2
@@ -169,46 +169,48 @@ namespace pengine
 			QuadNode* node2 = new QuadNode();
 			QuadNode* node3 = new QuadNode();
 
-			node0->parent = parent;
-			node1->parent = parent;
-			node2->parent = parent;
-			node3->parent = parent;
+			node0->SetParent(parent);
+			node1->SetParent(parent);
+			node2->SetParent(parent);
+			node3->SetParent(parent);
 
-			node0->minX = (parent->maxX - parent->minX) / 2 + parent->minX;
-			node0->maxX = parent->maxX;
-			node0->minZ = parent->minZ;
-			node0->maxZ = parent->minZ + (parent->maxZ - parent->minZ) / 2;
+			node0->SetMinX((parent->GetMaxX()- parent->GetMinX()) / 2 + parent->GetMinX());
+			node0->SetMaxX(parent->GetMaxX());
+			node0->SetMinZ(parent->GetMinZ());
+			node0->SetMaxZ(parent->GetMinZ() + (parent->GetMaxZ() - parent->GetMinZ()) / 2);
 
-			node1->minX = parent->minX;
-			node1->maxX = (parent->maxX - parent->minX) / 2 + parent->minX;
-			node1->minZ = parent->minZ;
-			node1->maxZ = parent->minZ + (parent->maxZ - parent->minZ) / 2;
+			node1->SetMinX(parent->GetMinX());
+			node1->SetMaxX((parent->GetMaxX() - parent->GetMinX()) / 2 + parent->GetMinX());
+			node1->SetMinZ(parent->GetMinZ());
+			node1->SetMaxZ(parent->GetMinZ() + (parent->GetMaxZ() - parent->GetMinZ()) / 2);
 
-			node2->minX = parent->minX;
-			node2->maxX = (parent->maxX - parent->minX) / 2 + parent->minX;
-			node2->minZ = parent->minZ + (parent->maxZ - parent->minZ) / 2;
-			node2->maxZ = parent->maxZ;
+			node2->SetMinX(parent->GetMinX());
+			node2->SetMaxX((parent->GetMaxX() - parent->GetMinX()) / 2 + parent->GetMinX());
+			node2->SetMinZ(parent->GetMinZ() + (parent->GetMaxZ() - parent->GetMinZ()) / 2);
+			node2->SetMaxZ(parent->GetMaxZ());
 
-			node3->minX = (parent->maxX - parent->minX) / 2 + parent->minX;
-			node3->maxX = parent->maxX;
-			node3->minZ = parent->minZ + (parent->maxZ - parent->minZ) / 2;
-			node3->maxZ = parent->maxZ;
+			node3->SetMinX((parent->GetMaxX() - parent->GetMinX()) / 2 + parent->GetMinX());
+			node3->SetMaxX(parent->GetMaxX());
+			node3->SetMinZ(parent->GetMinZ() + (parent->GetMaxZ() - parent->GetMinZ()) / 2);
+			node3->SetMaxZ(parent->GetMaxZ());
 
 			CreateQuadTreeChildren(node0, remainingDepth - 1);
 			CreateQuadTreeChildren(node1, remainingDepth - 1);
 			CreateQuadTreeChildren(node2, remainingDepth - 1);
 			CreateQuadTreeChildren(node3, remainingDepth - 1);
 
-			parent->children = new QuadNode[4];
-			parent->children[0] = *node0;
-			parent->children[1] = *node1;
-			parent->children[2] = *node2;
-			parent->children[3] = *node3;
+			QuadNode* children = new QuadNode[4];
+			children[0] = *node0;
+			children[1] = *node1;
+			children[2] = *node2;
+			children[3] = *node3;
+
+			parent->SetChildren(children);
 		}
 		else
 		{
 			// Add leaf data
-			parent->isLeaf = true;
+			parent->SetIsLeaf(true);
 			std::vector<D3DCustomVertex*> leafVertices;
 
 			// Add all triangles within the bounds, borders included
@@ -219,14 +221,14 @@ namespace pengine
 				D3DCustomVertex* vertex2 = &vertices[i + 2];
 
 				// if one of the points is within bounds
-				if ((vertex0->x >= parent->minX && vertex0->x <= parent->maxX
-					&& vertex0->z >= parent->minZ && vertex0->z <= parent->maxZ)
+				if ((vertex0->x >= parent->GetMinX() && vertex0->x <= parent->GetMaxX()
+					&& vertex0->z >= parent->GetMinZ() && vertex0->z <= parent->GetMaxZ())
 					||
-					(vertex1->x >= parent->minX && vertex1->x <= parent->maxX
-					&& vertex1->z >= parent->minZ && vertex1->z <= parent->maxZ)
+					(vertex1->x >= parent->GetMinX() && vertex1->x <= parent->GetMaxX()
+					&& vertex1->z >= parent->GetMinZ() && vertex1->z <= parent->GetMaxZ())
 					||
-					(vertex2->x >= parent->minX && vertex2->x <= parent->maxX
-					&& vertex2->z >= parent->minZ && vertex2->z <= parent->maxZ))
+					(vertex2->x >= parent->GetMinX() && vertex2->x <= parent->GetMaxX()
+					&& vertex2->z >= parent->GetMinZ() && vertex2->z <= parent->GetMaxZ()))
 				{
 					leafVertices.push_back(vertex0);
 					leafVertices.push_back(vertex1);
@@ -235,13 +237,14 @@ namespace pengine
 			}
 
 			int amountOfVertices = leafVertices.size();
-			parent->vertices = new D3DCustomVertex[amountOfVertices];
+			D3DCustomVertex* vertices = new D3DCustomVertex[amountOfVertices];
 			for (int i = 0; i < amountOfVertices; ++i)
 			{
-				parent->vertices[i] = *leafVertices[i];
+				vertices[i] = *leafVertices[i];
 
 			}
-			parent->amountOfVertices = amountOfVertices;
+			parent->SetAmountOfVertices(amountOfVertices);
+			parent->SetVertices(vertices);
 		}
 	}
 }

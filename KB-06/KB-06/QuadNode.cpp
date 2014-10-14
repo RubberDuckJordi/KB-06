@@ -5,6 +5,10 @@ namespace pengine
 	QuadNode::QuadNode()
 	{
 		children = NULL;
+		minX = 0.0f;
+		maxX = 0.0f;
+		minZ = 0.0f;
+		maxZ = 0.0f;
 	}
 
 	QuadNode::~QuadNode()
@@ -69,5 +73,95 @@ namespace pengine
 				vertices[offset + i] = node3Vertices[i];
 			}
 		}
+	}
+
+	QuadNode* QuadNode::GetParent()
+	{
+		return parent;
+	}
+
+	void QuadNode::SetParent(QuadNode* parent)
+	{
+		this->parent = parent;
+	}
+
+	bool QuadNode::IsLeaf()
+	{
+		return isLeaf;
+	}
+
+	void QuadNode::SetIsLeaf(bool isLeaf)
+	{
+		this->isLeaf = isLeaf;
+	}
+
+	float QuadNode::GetMinX()
+	{
+		return minX;
+	}
+
+	float QuadNode::GetMaxX()
+	{
+		return maxX;
+	}
+
+	float QuadNode::GetMinZ()
+	{
+		return minZ;
+	}
+
+	float QuadNode::GetMaxZ()
+	{
+		return maxZ;
+	}
+
+	void QuadNode::SetMinX(float p_minX)
+	{
+		this->minX = p_minX;
+	}
+
+	void QuadNode::SetMaxX(float p_maxX)
+	{
+		this->maxX = p_maxX;
+	}
+
+	void QuadNode::SetMinZ(float p_minZ)
+	{
+		this->minZ = p_minZ;
+	}
+
+	void QuadNode::SetMaxZ(float p_maxZ)
+	{
+		this->maxZ = p_maxZ;
+	}
+
+	QuadNode* QuadNode::GetChildren()
+	{
+		return children;
+	}
+
+	void QuadNode::SetChildren(QuadNode* children)
+	{
+		this->children = children;
+	}
+
+	D3DCustomVertex* QuadNode::GetVertices()
+	{
+		return vertices;
+	}
+
+	void QuadNode::SetVertices(D3DCustomVertex* vertices)
+	{
+		this->vertices = vertices;
+	}
+
+	unsigned int QuadNode::GetAmountOfVertices()
+	{
+		return amountOfVertices;
+	}
+
+	void QuadNode::SetAmountOfVertices(unsigned int amountOfVertices)
+	{
+		this->amountOfVertices = amountOfVertices;
 	}
 }
