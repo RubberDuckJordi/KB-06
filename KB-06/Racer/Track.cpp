@@ -66,11 +66,13 @@ void Track::AddTrackBlock(TrackBlock::TYPE trackBlockType, pengine::Object3D* mo
 		
 		switch(direction)
 		{
-		case NORTH:	z -= 10; break;
-		case EAST: x -= 10;  break;
-		case SOUTH: z += 10; break;
-		case WEST: x += 10;	break;
+		case NORTH:	z -= trackBlockSize; break;
+		case EAST: x -= trackBlockSize;  break;
+		case SOUTH: z += trackBlockSize; break;
+		case WEST: x += trackBlockSize;	break;
 		}
+		if (abs(x) > radius - trackBlockSize) radius = abs(x) + trackBlockSize;
+		if (abs(z) > radius - trackBlockSize) radius = abs(z) + trackBlockSize;
 
 		int newDirectionValue = direction;
 		yaw  = direction * 90;
@@ -105,10 +107,9 @@ void Track::AddTrackBlock(TrackBlock::TYPE trackBlockType, pengine::Object3D* mo
 
 float Track::GetRadius()
 {
-	float radius = 0.0f;
-	for (auto & trackBlock : trackBlocks) 
-	{
-		radius += trackBlock->GetRadius();
-	}
-	return radius;
+	float highestScale = 0;
+	if (scale.x > highestScale) highestScale = scale.x;
+	if (scale.y > highestScale) highestScale = scale.y;
+	if (scale.z > highestScale) highestScale = scale.z;
+	return radius*highestScale;
 }
