@@ -2,6 +2,7 @@
 #include "DirectXRenderer.h"
 #include <vector>
 #include "PengineDefinitions.h"
+#include <math.h>
 
 namespace pengine
 {
@@ -89,6 +90,7 @@ namespace pengine
 
 	void Ground::Render(Renderer* renderer)
 	{
+		renderer->SetFillMode(PENGINE_FILL_WIREFRAME);
 		D3DCustomVertex* verticesX;
 		int amountOfVerticesX;
 		quadTreeRootNode->GetAllChildrenVertices(verticesX, amountOfVerticesX);
@@ -105,22 +107,25 @@ namespace pengine
 
 		renderer->DrawVertexBuffer(vertexBuffer, amountOfVerticesX);
 
-		delete[] verticesX;
+		//delete[] verticesX;
+
+		renderer->SetFillMode(PENGINE_FILL_SOLID);
 	}
 
 	QuadNode* Ground::CreateQuadTree(unsigned short depth)
 	{
 		if (depth != 0)
 		{
-			if (width % depth != 0)
+			int powDepth = pow(depth, depth);
+			if ((width - 1) % powDepth != 0)
 			{
-				logger->Log(Logger::ERR, "Width is not dividable by depth");
+				logger->Log(Logger::ERR, "Width is not dividable by depth^depth");
 				return NULL;
 			}
 
-			if (height % depth != 0)
+			if ((height - 1) % powDepth != 0)
 			{
-				logger->Log(Logger::ERR, "Height is not dividable by depth");
+				logger->Log(Logger::ERR, "Height is not dividable by depth^depth");
 				return NULL;
 			}
 		}
@@ -149,7 +154,12 @@ namespace pengine
 		rootNode->SetMaxZ(dimensionDepth);
 		rootNode->SetIsLeaf(false);
 
+		rootNode->SetWidth(this->width - 1);
+		rootNode->SetDepth(this->height - 1);
+
 		CreateQuadTreeChildren(rootNode, depth);
+
+		rootNode->SetLevelOfDetail(2);
 
 		return rootNode;
 	}

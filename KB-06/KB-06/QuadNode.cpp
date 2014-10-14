@@ -4,11 +4,13 @@ namespace pengine
 {
 	QuadNode::QuadNode()
 	{
+		logger = LoggerPool::GetInstance().GetLogger();
 		children = NULL;
 		minX = 0.0f;
 		maxX = 0.0f;
 		minZ = 0.0f;
 		maxZ = 0.0f;
+		levelOfDetail = 1;
 	}
 
 	QuadNode::~QuadNode()
@@ -21,14 +23,45 @@ namespace pengine
 		{
 			delete[] vertices;
 		}
+
+		LoggerPool::GetInstance().ReturnLogger(logger);
 	}
 
 	void QuadNode::GetAllChildrenVertices(D3DCustomVertex*& vertices, int& amountOfVertices)
 	{
 		if (isLeaf)
 		{
-			vertices = this->vertices;
-			amountOfVertices = this->amountOfVertices;
+			if (levelOfDetail == 1)
+			{
+				// No changes
+				vertices = this->vertices;
+				amountOfVertices = this->amountOfVertices;
+			}
+			else
+			{
+				amountOfVertices = this->amountOfVertices / (levelOfDetail * levelOfDetail);
+
+				int newWidth = width / levelOfDetail;
+				int newDepth = depth / levelOfDetail;
+
+				vertices = new D3DCustomVertex[amountOfVertices];
+				// Divide the vertices by level of detail
+				for (int x = 0; x < newWidth; ++x)
+				{
+					for (int z = 0; z < newDepth; ++z)
+					{
+						int offset = x * newWidth * 6;
+						int skippedTiles = levelOfDetail / 2;
+
+						vertices[offset + z * 6] = this->vertices[(x + skippedTiles) * width * 6 + z * 6];
+						vertices[offset + z * 6 + 1] = this->vertices[x * width * 6 + (z + skippedTiles) * 6 + 1];
+						vertices[offset + z * 6 + 2] = this->vertices[x * width * 6 + z * 6 + 2];
+						vertices[offset + z * 6 + 3] = this->vertices[(x + skippedTiles) * width * 6 + (z + skippedTiles) * 6 + 3];
+						vertices[offset + z * 6 + 4] = this->vertices[x * width * 6 + (z + skippedTiles) * 6 + 4];
+						vertices[offset + z * 6 + 5] = this->vertices[(x + skippedTiles) * width * 6 + z * 6 + 5];
+					}
+				}
+			}
 		}
 		else
 		{
@@ -163,5 +196,48 @@ namespace pengine
 	void QuadNode::SetAmountOfVertices(unsigned int amountOfVertices)
 	{
 		this->amountOfVertices = amountOfVertices;
+	}
+
+	void QuadNode::SetLevelOfDetail(unsigned short levelOfDetail)
+	{
+		if (levelOfDetail == 0)
+		{
+
+			levelOfDetail = 1;
+		}
+		this->levelOfDetail = levelOfDetail;
+
+		if (!isLeaf)
+		{
+			children[0].SetLevelOfDetail(levelOfDetail);
+			children[1].SetLevelOfDetail(levelOfDetail);
+			children[2].SetLevelOfDetail(levelOfDetail);
+			children[3].SetLevelOfDetail(levelOfDetail);
+		}
+	}
+
+	unsigned short QuadNode::GetLevelOfDetail()
+	{
+		return levelOfDetail;
+	}
+
+	int QuadNode::GetWidth()
+	{
+		return width;
+	}
+
+	int QuadNode::GetDepth()
+	{
+		return depth;
+	}
+
+	void QuadNode::SetWidth(int width)
+	{
+		this->width = width;
+	}
+
+	void QuadNode::SetDepth(int depth)
+	{
+		this->depth = depth;
 	}
 }
