@@ -126,8 +126,8 @@ namespace pengine
 		}
 
 		// Find dimensions of the ground
-		int dimensionWidth = 0;
-		int dimensionDepth = 0;
+		float dimensionWidth = 0;
+		float dimensionDepth = 0;
 
 		for (int i = 0; i < amountOfVertices; ++i)
 		{
