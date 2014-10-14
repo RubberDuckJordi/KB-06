@@ -10,6 +10,7 @@
 #include "SceneLoader.h"
 #include "SuperXLoader.h"
 #include "Shader.h"
+#include "Object3D.h"
 
 #include <vector>
 #include <string>
@@ -28,7 +29,7 @@ namespace pengine
 		Ground* LoadGround(std::string filename, std::string textureFilename);
 		Shader* LoadShader(std::string filename, Renderer* renderer);
 		std::vector<std::string>* LoadSceneFile(std::string* path);
-		Model3D* LoadXFile(std::string* fileName);
+		Object3D* LoadXFile(std::string* fileName);
 
 		//Mesh* LoadSound(const std::string& fileName, const std::string& extension);
 
@@ -48,6 +49,7 @@ namespace pengine
 		std::map<std::string, BinaryData> textures;
 		std::map<std::string, Sound> sounds;
 		std::map<std::string, Ground> grounds;
+		std::map<std::string, Model3D*> models;
 
 		//std::map<std::string, BaseMeshLoader*> meshLoaders;
 		//std::map<std::string, BaseMaterialLoader*> materialLoaders;
