@@ -7,8 +7,8 @@ namespace pengine
 	EntityCamera::EntityCamera()
 	{
 		viewMatrix = new PEngineMatrix();
-		upVec = new Vector3(0, 1);
 		SetProjectionMatrix(M_PI / 4, 1.0f, 1.0f, 1000.0f);
+		upVec = new Vector3(0, 1);
 		lastKnownRotation = new Vector3();
 		lastKnownRotation->x = 180;//yaw
 		lastKnownRotation->y = 0;//pitch
@@ -257,7 +257,6 @@ namespace pengine
 		projectionMatrix._44 = 0;
 	}
 
-
 	void EntityCamera::BuildViewFrustum()
 	{
 		PEngineMatrix newMatrix;
@@ -308,5 +307,12 @@ namespace pengine
 			frustrumPlane[i].c = frustrumPlane[i].c * ReciprocalLength;
 			frustrumPlane[i].d = frustrumPlane[i].d * ReciprocalLength;
 		};
+	}
+
+	PEngineMatrix* EntityCamera::GetProjectionMatrix(){
+		return &projectionMatrix;
+	}
+	PEngineMatrix* EntityCamera::GetViewMatrix(){
+		return viewMatrix;
 	}
 }
