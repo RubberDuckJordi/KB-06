@@ -91,7 +91,7 @@ namespace pengine
 		}
 	}
 
-	void HeightmapLoader::AddPosition(int p_vertexIndex, int p_pointIndex, int p_y, Ground& ground)
+	void HeightmapLoader::AddPosition(int p_vertexIndex, int p_pointIndex, float p_y, Ground& ground)
 	{
 		//Calculate x from p_pointIndex 
 		int x = p_pointIndex % ground.GetWidth();
