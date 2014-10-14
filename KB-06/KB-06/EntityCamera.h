@@ -29,7 +29,7 @@ namespace pengine
 		bool useInput = false;
 
 		bool SphereInFrustum(Vector3* position, float radius);
-		void SetProjectionMatrix();
+		void SetProjectionMatrix(float fovY, float aspectRatio, float nearClippingPlane, float farClippingPlane);
 	protected:
 		Vector3 lookAtPosition;
 

@@ -8,7 +8,7 @@ namespace pengine
 	{
 		viewMatrix = new PEngineMatrix();
 		upVec = new Vector3(0, 1);
-		SetProjectionMatrix();
+		SetProjectionMatrix(M_PI / 4, 1.0f, 1.0f, 1000.0f);
 		lastKnownRotation = new Vector3();
 		lastKnownRotation->x = 180;//yaw
 		lastKnownRotation->y = 0;//pitch
@@ -234,30 +234,36 @@ namespace pengine
 		return TRUE;
 	}
 
-	void EntityCamera::SetProjectionMatrix(){
-		projectionMatrix._11 = 2.41421342;
+	void EntityCamera::SetProjectionMatrix(float fovY, float aspectRatio, float nearClippingPlane, float farClippingPlane)
+	{
+		float yScale = (1 / tan(fovY / 2));
+		float xScale = aspectRatio * yScale;
+
+		projectionMatrix._11 = xScale;
 		projectionMatrix._12 = 0;
 		projectionMatrix._13 = 0;
 		projectionMatrix._14 = 0;
 		projectionMatrix._21 = 0;
-		projectionMatrix._22 = 2.41421342;
+		projectionMatrix._22 = yScale;
 		projectionMatrix._23 = 0;
 		projectionMatrix._24 = 0;
 		projectionMatrix._31 = 0;
 		projectionMatrix._32 = 0;
-		projectionMatrix._33 = 1.00100100;
+		projectionMatrix._33 = farClippingPlane / (farClippingPlane-nearClippingPlane);
 		projectionMatrix._34 = 1;
 		projectionMatrix._41 = 0;
 		projectionMatrix._42 = 0;
-		projectionMatrix._43 = -1.00100100;
+		projectionMatrix._43 = -nearClippingPlane * farClippingPlane / (farClippingPlane - nearClippingPlane);
 		projectionMatrix._44 = 0;
 	}
 
+
 	void EntityCamera::BuildViewFrustum()
 	{
-		// Left plane
 		PEngineMatrix newMatrix;
 		RenderMatrix::MultiplyMatrices(viewMatrix, &projectionMatrix, &newMatrix);
+		
+		// Left plane
 		frustrumPlane[0].a = newMatrix._14 + newMatrix._11;
 		frustrumPlane[0].b = newMatrix._24 + newMatrix._21;
 		frustrumPlane[0].c = newMatrix._34 + newMatrix._31;
