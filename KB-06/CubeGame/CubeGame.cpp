@@ -73,7 +73,7 @@ int main(int argc, const char* argv[])
 	pEngine.GetSceneManager()->SetCurrentScene(scene);
 
 	pEngine.NewShader();
-	pEngine.GetShader()->InitShader(pEngine.GetRenderer());
+//	pEngine.GetShader()->InitShader(pEngine.GetRenderer());
 	
 
 	pEngine.GetRenderer()->SetProjectionMatrix(M_PI / 4, 100.0f);

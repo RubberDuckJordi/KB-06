@@ -9,6 +9,7 @@
 #include "HeightmapLoader.h"
 #include "SceneLoader.h"
 #include "SuperXLoader.h"
+#include "Shader.h"
 
 #include <vector>
 #include <string>
@@ -25,6 +26,7 @@ namespace pengine
 		Material* LoadMaterial(const std::string& fileName, const std::string& extension);
 		BinaryData* LoadBinaryFile(const std::string& fileName);
 		Ground* LoadGround(std::string filename, std::string textureFilename);
+		Shader* LoadShader(std::string filename, Renderer* renderer);
 		std::vector<std::string>* LoadSceneFile(std::string* path);
 		Model3D* LoadXFile(std::string* fileName);
 
