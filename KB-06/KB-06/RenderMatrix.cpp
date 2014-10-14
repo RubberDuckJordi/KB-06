@@ -59,6 +59,33 @@ namespace pengine
 		matrix->_44 = result._44;
 	}
 
+	void RenderMatrix::CreateLookAtMatrix(Vector3 pos, Vector3 lookAtPos, Vector3 upVector, PEngineMatrix* receiver)
+	{
+		Vector3 zaxis = Vector3::normalize(lookAtPos - pos);
+		Vector3 xaxis = Vector3::normalize(Vector3::cross(upVector, zaxis));
+		Vector3 yaxis = Vector3::cross(zaxis, xaxis);
+
+		receiver->_11 = xaxis.x;
+		receiver->_21 = xaxis.y;
+		receiver->_31 = xaxis.z;
+		receiver->_41 = -Vector3::dot(xaxis, pos);
+
+		receiver->_12 = yaxis.x;
+		receiver->_22 = yaxis.y;
+		receiver->_32 = yaxis.z;
+		receiver->_42 = -Vector3::dot(yaxis, pos);
+
+		receiver->_13 = zaxis.x;
+		receiver->_23 = zaxis.y;
+		receiver->_33 = zaxis.z;
+		receiver->_43 = -Vector3::dot(zaxis, pos);
+
+		receiver->_14 = 0.0f;
+		receiver->_24 = 0.0f;
+		receiver->_34 = 0.0f;
+		receiver->_44 = 1.0f;
+	}
+
 	void RenderMatrix::MultiplyMatrices(PEngineMatrix* m1, PEngineMatrix* m2, PEngineMatrix* receiver)
 	{
 		D3DXMatrixMultiply((D3DXMATRIX *)receiver, (D3DXMATRIX *)m1, (D3DXMATRIX *)m2);
@@ -78,5 +105,5 @@ namespace pengine
 
 		LoggerPool::GetInstance().GetLogger()->Log(Logger::DEBUG, oss.str());
 	}
-	
+
 }

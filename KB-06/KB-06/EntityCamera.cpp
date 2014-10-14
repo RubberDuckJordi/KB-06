@@ -116,14 +116,7 @@ namespace pengine
 				this->SetLookAtPosition(lookAtPosition.x, lookAtPosition.y, lookAtPosition.z, rollDegrees);
 				break;
 			case Input::MOUSE_X:
-				if (static_cast<float>(iterator->second) < 9001 && static_cast<float>(iterator->second) > -9001)//silly bugfixing?
-				{
-					lastKnownRotation->x += static_cast<float>(iterator->second) / 10;
-				}
-				else
-				{
-					logger->Log(Logger::WARNING, "Weird buggy value? It is: " + std::to_string(static_cast<float>(iterator->second)));
-				}
+				lastKnownRotation->x += iterator->second / 10.0f;
 				this->SetRotation(lastKnownRotation->x, 0, 0);
 				break;
 			default:
@@ -190,29 +183,7 @@ namespace pengine
 		lookAtPosition = { x, y, z };
 		Vector3 pos = { position.x, position.y, position.z };
 
-		Vector3 zaxis = Vector3::normalize(lookAtPosition - pos);
-		Vector3 xaxis = Vector3::normalize(Vector3::cross(*upVec, zaxis));
-		Vector3 yaxis = Vector3::cross(zaxis, xaxis);
-
-		viewMatrix->_11 = xaxis.x;
-		viewMatrix->_21 = xaxis.y;
-		viewMatrix->_31 = xaxis.z;
-		viewMatrix->_41 = -Vector3::dot(xaxis, pos);
-
-		viewMatrix->_12 = yaxis.x;
-		viewMatrix->_22 = yaxis.y;
-		viewMatrix->_32 = yaxis.z;
-		viewMatrix->_42 = -Vector3::dot(yaxis, pos);
-
-		viewMatrix->_13 = zaxis.x;
-		viewMatrix->_23 = zaxis.y;
-		viewMatrix->_33 = zaxis.z;
-		viewMatrix->_43 = -Vector3::dot(zaxis, pos);
-
-		viewMatrix->_14 = 0.0f;
-		viewMatrix->_24 = 0.0f;
-		viewMatrix->_34 = 0.0f;
-		viewMatrix->_44 = 1.0f;
+		RenderMatrix::CreateLookAtMatrix(pos, lookAtPosition, { 0, 1, 0 }, viewMatrix);
 
 		BuildViewFrustum();
 	}
@@ -249,7 +220,7 @@ namespace pengine
 		projectionMatrix._24 = 0;
 		projectionMatrix._31 = 0;
 		projectionMatrix._32 = 0;
-		projectionMatrix._33 = farClippingPlane / (farClippingPlane-nearClippingPlane);
+		projectionMatrix._33 = farClippingPlane / (farClippingPlane - nearClippingPlane);
 		projectionMatrix._34 = 1;
 		projectionMatrix._41 = 0;
 		projectionMatrix._42 = 0;
@@ -261,7 +232,7 @@ namespace pengine
 	{
 		PEngineMatrix newMatrix;
 		RenderMatrix::MultiplyMatrices(viewMatrix, &projectionMatrix, &newMatrix);
-		
+
 		// Left plane
 		frustrumPlane[0].a = newMatrix._14 + newMatrix._11;
 		frustrumPlane[0].b = newMatrix._24 + newMatrix._21;

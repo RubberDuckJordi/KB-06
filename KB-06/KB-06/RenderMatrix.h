@@ -1,6 +1,8 @@
 #ifndef _PENGINE_RENDERERMATRIX_H_
 #define _PENGINE_RENDERERMATRIX_H_
 
+#include "Vector3.h"
+
 namespace pengine
 {
 	struct PEngineMatrix
@@ -17,6 +19,7 @@ namespace pengine
 		RenderMatrix();
 		~RenderMatrix();
 		static void CreateMatrix(float x, float y, float z, float yaw, float pitch, float roll, float scaleX, float scaleY, float scaleZ, PEngineMatrix* matrix);
+		static void CreateLookAtMatrix(Vector3 pos, Vector3 lookAtPos, Vector3 upVector, PEngineMatrix* receiver);
 		static void MultiplyMatrices(PEngineMatrix* m1, PEngineMatrix* m2, PEngineMatrix* receiver);
 		static void PrintMatrix(PEngineMatrix* matrix);
 		PEngineMatrix* theMatrix;
