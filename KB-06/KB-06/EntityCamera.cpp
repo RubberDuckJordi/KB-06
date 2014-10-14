@@ -29,30 +29,34 @@ namespace pengine
 			{
 			case Input::KEY_S:
 			{
-				float deltaZ = -cos(lastKnownRotation->x) * 0.5;
-				this->AddPosition(0.0f, 0.0f, deltaZ);
-				this->SetLookAtPosition(lookAtPosition.x, lookAtPosition.y, lookAtPosition.z + deltaZ, rollDegrees);
+				float deltaX = -sin(RADIANS(lastKnownRotation->x)) * deltaTime * 1.0f;
+				float deltaZ = -cos(RADIANS(lastKnownRotation->x)) * deltaTime * 1.0f;
+				this->AddPosition(deltaX, 0.0f, deltaZ);
+				this->SetLookAtPosition(lookAtPosition.x + deltaX, lookAtPosition.y, lookAtPosition.z + deltaZ, rollDegrees);
 				break;
 			}
 			case Input::KEY_W:
 			{
-				float deltaZ = cos(lastKnownRotation->x) * 0.5;
-				this->AddPosition(0.0f, 0.0f, deltaZ);
-				this->SetLookAtPosition(lookAtPosition.x, lookAtPosition.y, lookAtPosition.z + deltaZ, rollDegrees);
+				float deltaX = sin(RADIANS(lastKnownRotation->x)) * deltaTime * 1.0f;
+				float deltaZ = cos(RADIANS(lastKnownRotation->x)) * deltaTime * 1.0f;
+				this->AddPosition(deltaX, 0.0f, deltaZ);
+				this->SetLookAtPosition(lookAtPosition.x + deltaX, lookAtPosition.y, lookAtPosition.z + deltaZ, rollDegrees);
 				break;
 			}
 			case Input::KEY_D:
 			{
-				float deltaX = sin(lastKnownRotation->x) * 0.5;
-				this->AddPosition(deltaX, 0.0f, 0.0f);
-				this->SetLookAtPosition(lookAtPosition.x + deltaX, lookAtPosition.y, lookAtPosition.z, rollDegrees);
+				float deltaX = sin(RADIANS(lastKnownRotation->x + 90)) * deltaTime * 1.0f;
+				float deltaZ = cos(RADIANS(lastKnownRotation->x + 90)) * deltaTime * 1.0f;
+				this->AddPosition(deltaX, 0.0f, deltaZ);
+				this->SetLookAtPosition(lookAtPosition.x + deltaX, lookAtPosition.y, lookAtPosition.z + deltaZ, rollDegrees);
 				break;
 			}
 			case Input::KEY_A:
 			{
-				float deltaX = -sin(lastKnownRotation->x) * 0.5;
-				this->AddPosition(deltaX, 0.0f, 0.0f);
-				this->SetLookAtPosition(lookAtPosition.x + deltaX, lookAtPosition.y, lookAtPosition.z, rollDegrees);
+				float deltaX = sin(RADIANS(lastKnownRotation->x - 90)) * deltaTime * 1.0f;
+				float deltaZ = cos(RADIANS(lastKnownRotation->x - 90)) * deltaTime * 1.0f;
+				this->AddPosition(deltaX, 0.0f, deltaZ);
+				this->SetLookAtPosition(lookAtPosition.x + deltaX, lookAtPosition.y, lookAtPosition.z + deltaZ, rollDegrees);
 				break;
 			}
 			case Input::KEY_SPACE:
