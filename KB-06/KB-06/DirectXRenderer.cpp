@@ -25,7 +25,6 @@ namespace pengine
 		{
 			g_pD3D->Release();
 		}
-		LoggerPool::GetInstance().ReturnLogger(logger);
 	}
 
 	void DirectXRenderer::CreateD2DFactory()

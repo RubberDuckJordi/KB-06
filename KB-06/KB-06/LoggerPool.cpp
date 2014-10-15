@@ -14,22 +14,19 @@ namespace pengine
 	}
 
 	Logger* LoggerPool::GetLogger(){
-		
-		if (pool.empty())
-		{
-			return new Logger();
-		}
-		else
-		{
-			Logger* logger = pool.front();
-			pool.pop_front();
-			return logger;
-		}
+		return GetLogger(defaultLogFile);
 	}
 
-	void LoggerPool::ReturnLogger(Logger* logger)
-	{
-		logger->Reset();
-		pool.push_back(logger);
+	Logger* LoggerPool::GetLogger(std::string fileName){
+		for (auto poolItem : pool)
+		{
+			if (poolItem.first == fileName)
+			{
+				return poolItem.second;
+			}
+		}
+		Logger* newLogger = new Logger(fileName);
+		pool[fileName] = newLogger;
+		return newLogger;
 	}
 }

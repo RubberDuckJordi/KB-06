@@ -17,7 +17,6 @@ namespace pengine
 
 	Entity::~Entity()
 	{
-		LoggerPool::GetInstance().ReturnLogger(logger);
 		delete myCachedMatrix;
 	}
 

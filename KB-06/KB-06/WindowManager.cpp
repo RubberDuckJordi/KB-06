@@ -24,7 +24,6 @@ namespace pengine
 		}
 		delete sceneManager;
 		logger->Log(Logger::INFO, "WindowManager destructed");
-		LoggerPool::GetInstance().ReturnLogger(logger);
 	}
 
 	HWND WindowManager::NewWindow(int x, int y, int width, int height)
@@ -40,7 +39,6 @@ namespace pengine
 		}
 
 		windows.push_back(window);
-		LoggerPool::GetInstance().ReturnLogger(logger);
 
 		std::list<WindowListener*>::iterator listenersIt;
 		for (listenersIt = windowListeners.begin(); listenersIt != windowListeners.end(); ++listenersIt)

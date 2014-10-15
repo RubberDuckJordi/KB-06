@@ -9,6 +9,5 @@ namespace pengine
 
 	InputDeviceFactory::~InputDeviceFactory()
 	{
-		LoggerPool::GetInstance().ReturnLogger(logger);
 	}
 }

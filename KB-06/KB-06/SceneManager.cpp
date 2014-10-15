@@ -10,7 +10,6 @@ namespace pengine
 
 	SceneManager::~SceneManager()
 	{
-		LoggerPool::GetInstance().ReturnLogger(logger);
 	}
 
 	void SceneManager::CreateScene(std::string* path, ResourceManager* resourceManager)

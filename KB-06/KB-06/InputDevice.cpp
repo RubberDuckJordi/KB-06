@@ -9,6 +9,5 @@ namespace pengine
 
 	InputDevice::~InputDevice()
 	{
-		LoggerPool::GetInstance().ReturnLogger(logger);
 	}
 }

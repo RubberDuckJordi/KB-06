@@ -11,7 +11,6 @@ namespace pengine
 	HeightmapLoader::~HeightmapLoader()
 	{
 		delete[] m_bitmapData;
-		LoggerPool::GetInstance().ReturnLogger(logger);
 	}
 
 	Ground* HeightmapLoader::LoadHeightmap(std::string filename)

@@ -8,8 +8,7 @@ namespace pengine
 
 	Object3D::Object3D() :_Skeleton(NULL), _SkinnedVertices(NULL), _Model(NULL), _AnimationStep(1)
 	{
-		Logger* logger = LoggerPool::GetInstance().GetLogger();
-		logger->SetFile("SuperXLoader");
+		Logger* logger = LoggerPool::GetInstance().GetLogger("SuperXLoader");
 		logger->SetLogLevel(Logger::DEBUG);
 		showWarning = true;
 	}

@@ -32,14 +32,11 @@ namespace pengine
 
 	SuperXLoader::SuperXLoader()
 	{
-		logger = LoggerPool::GetInstance().GetLogger();
-		logger->SetFile("SuperXLoader");
-		logger->SetLogLevel(Logger::INFO);
+		logger = LoggerPool::GetInstance().GetLogger("SuperXLoader");
 	}
 
 	SuperXLoader::~SuperXLoader()
 	{
-		LoggerPool::GetInstance().ReturnLogger(logger);
 	}
 
 	bool SuperXLoader::Load(std::string pFilename, Model3D* &pT)

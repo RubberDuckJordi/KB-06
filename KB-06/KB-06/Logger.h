@@ -15,6 +15,7 @@ namespace pengine {
 	public:
 		~Logger();
 		Logger();
+		Logger(std::string fileName);
 		static enum LogLevel{
 			NONE = 0,
 			ERR = 1,
@@ -26,12 +27,9 @@ namespace pengine {
 		void Log(int logType, std::string text);
 		void LogMemoryDump(int logType, void* const p_address, const int p_size, char* const p_name);
 		void SetLogLevel(int logLevel);
-		void Reset();
-		void SetFile(std::string fileName);
 		void RemoveLogs();
 
 	private:
-		void SetDefaultValues();
 		std::ofstream outfile;
 		void PrintConsole(int logType, std::string entry);
 		std::string BuildLogEntry(int logType, std::string messasge);
@@ -43,8 +41,6 @@ namespace pengine {
 		int consoleColorCodeError = red;
 		HANDLE consoleHandle;
 
-		std::string logFile;
-		std::string defaultLogFile = "log";
 		const std::string logExtension = ".log";
 
 		enum Consolecolor

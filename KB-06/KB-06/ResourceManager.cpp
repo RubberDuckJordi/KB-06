@@ -12,7 +12,6 @@ namespace pengine
 
 	ResourceManager::~ResourceManager()
 	{
-		LoggerPool::GetInstance().ReturnLogger(logger);
 	}
 
 	/*Mesh* ResourceManager::LoadMesh(const std::string& fileName, const std::string& extension)

@@ -23,8 +23,6 @@ namespace pengine
 		{
 			delete[] vertices;
 		}
-
-		LoggerPool::GetInstance().ReturnLogger(logger);
 	}
 
 	void QuadNode::GetAllChildrenVertices(D3DCustomVertex*& vertices, int& amountOfVertices)

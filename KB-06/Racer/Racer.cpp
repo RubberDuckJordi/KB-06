@@ -71,9 +71,6 @@ int main(int argc, const char* argv[])
 
 	pEngine.SetCurrentScene(scene);
 	pEngine.GameLoop();
-
-	pengine::LoggerPool::GetInstance().ReturnLogger(logger);
-
 	return 0;
 }
 

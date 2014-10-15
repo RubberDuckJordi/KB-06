@@ -13,22 +13,14 @@ The logger defaults to the highest loglevel
 
 namespace pengine
 {
-	Logger::Logger()
+	Logger::Logger(std::string fileName)
 	{
 		consoleHandle = GetStdHandle(STD_OUTPUT_HANDLE);
-		SetDefaultValues();
-	}
-
-	void Logger::Reset()
-	{
-		outfile.close();
-		SetDefaultValues();
-	}
-
-	void Logger::SetDefaultValues()
-	{
 		logLevel = INFO;
-		logFile = defaultLogFile;
+		outfile.open(fileName + logExtension, std::ios_base::app);
+	}
+
+	Logger::Logger(){
 	}
 
 	void Logger::RemoveLogs()
@@ -37,20 +29,12 @@ namespace pengine
 		std::string path = "*" + logExtension;
 		system(command.append(path).c_str()); // Dangerous code.. Should be changed
 	}
-
-	void Logger::SetFile(std::string fileName)
-	{
-		logFile = fileName;
-	}
-
+	
 	void Logger::Log(int logType, std::string messageString)
 	{
 		if (logLevel >= logType && logType > 0){
 			std::string entry = BuildLogEntry(logType, messageString);
 			PrintConsole(logType, entry);
-
-			std::ofstream outfile; // needs to be reopened every time so multiple objects can use it
-			outfile.open(logFile + logExtension, std::ios_base::app);
 			outfile << entry << "\n";
 			outfile.close();
 		}

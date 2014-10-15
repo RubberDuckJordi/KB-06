@@ -14,8 +14,6 @@ namespace pengine
 		{
 			delete entities.front(), entities.pop_front();
 		}
-		LoggerPool::GetInstance().ReturnLogger(logger);
-
 		delete ground;
 	}
 

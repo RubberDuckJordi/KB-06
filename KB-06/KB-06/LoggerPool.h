@@ -11,12 +11,13 @@ namespace pengine
 	public:
 		static LoggerPool& GetInstance();
 		Logger* GetLogger();
-		void ReturnLogger(Logger* logger);
+		Logger* GetLogger(std::string fileName);
 	private:
 		LoggerPool();
 		LoggerPool(LoggerPool const&);
 		void operator=(LoggerPool const&);
-		std::list<Logger*> pool;
+		std::map<std::string, Logger*> pool;
+		std::string defaultLogFile = "PEngine";
 	};
 }
 #endif

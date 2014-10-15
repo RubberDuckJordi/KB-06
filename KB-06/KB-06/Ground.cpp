@@ -16,7 +16,6 @@ namespace pengine
 
 	Ground::~Ground()
 	{
-		LoggerPool::GetInstance().ReturnLogger(logger);
 		if (quadTreeRootNode != NULL)
 		{
 			delete quadTreeRootNode;

@@ -4,9 +4,7 @@ namespace pengine
 {
 	Model3D::Model3D(Bone* skeleton)
 	{
-		logger = LoggerPool::GetInstance().GetLogger();
-		logger->SetFile("SuperXLoader");
-		logger->SetLogLevel(Logger::INFO);
+		logger = LoggerPool::GetInstance().GetLogger("SuperXLoader");
 		_Skeleton = skeleton;
 	};
 

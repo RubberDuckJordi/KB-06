@@ -303,7 +303,6 @@ namespace pengine
 
 			Logger* l = LoggerPool::GetInstance().GetLogger();
 			l->Log(Logger::DEBUG, oss.str());
-			LoggerPool::GetInstance().ReturnLogger(l);
 			l = NULL;
 		};
 

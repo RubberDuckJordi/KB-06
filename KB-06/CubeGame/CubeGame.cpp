@@ -135,10 +135,7 @@ int main(int argc, const char* argv[])
 		pEngine.GetRenderer()->EndScene();
 		pEngine.GetRenderer()->PresentScene(pEngine.GetWindowManager()->GetLastWindow()->GetHWND());
 
-		
-
 		delete aMatrix;
 		pEngine.GetWindowManager()->PurgeClosedWindows();
 	}
-	pengine::LoggerPool::GetInstance().ReturnLogger(logger);
 }
