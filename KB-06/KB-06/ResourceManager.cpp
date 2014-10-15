@@ -128,62 +128,90 @@ namespace pengine
 		HRESULT hr;
 
 
-
-		// Create vertex shader
-
-		LPD3DXBUFFER pCode;
-
-		D3DVERTEXELEMENT9 decl[] =
+		if (!VertexShaderFilename.empty())
 		{
-		{ 0, 0, D3DDECLTYPE_FLOAT3, D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_POSITION, 0 },
-		{ 0, 12, D3DDECLTYPE_FLOAT2, D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_TEXCOORD, 0 },
-		D3DDECL_END()
-		};
+			// Create vertex shader
 
-		LPDIRECT3DVERTEXDECLARATION9 declaration = shader->GetVertexDeclaration();
+			LPD3DXBUFFER pCode;
+
+			D3DVERTEXELEMENT9 decl[] =
+			{
+				{ 0, 0, D3DDECLTYPE_FLOAT3, D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_POSITION, 0 },
+				{ 0, 12, D3DDECLTYPE_FLOAT2, D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_TEXCOORD, 0 },
+				D3DDECL_END()
+			};
+
+			LPDIRECT3DVERTEXDECLARATION9 declaration = shader->GetVertexDeclaration();
 
 			((*((DirectXRenderer*)renderer)->GetDevice())->CreateVertexDeclaration(decl, &declaration));
 
 
 			shader->SetVertexDeclaration(declaration);
 
-		// Find the vertex shader file
-		//DXUTFindDXSDKMediaFileCch(strPath, 512, L"HLSLwithoutEffects.vsh");
+			// Find the vertex shader file
+			//DXUTFindDXSDKMediaFileCch(strPath, 512, L"HLSLwithoutEffects.vsh");
 
 
 
-		DWORD dwShaderFlags = 0;
+			DWORD dwShaderFlags = 0;
 
-		LPCWSTR strPath;
+			LPCWSTR strPath;
 
-		std::wstring strPathNew = L"resources/HLSLwithoutEffects.vsh";
+			std::wstring strPathNew = L"resources/HLSLwithoutEffects.vsh";
 
-		strPath = strPathNew.c_str();
+			strPath = strPathNew.c_str();
 
-		LPD3DXCONSTANTTABLE constantTable = shader->GetConstantTable();
+			LPD3DXCONSTANTTABLE constantTable = shader->GetConstantTable();
 
-		// Assemble the vertex shader from the file
-		D3DXCompileShaderFromFile(strPath, NULL, NULL, "Ripple",
-		"vs_2_0", dwShaderFlags, &pCode,
-		NULL, &constantTable);
+			// Assemble the vertex shader from the file
+			D3DXCompileShaderFromFile(strPath, NULL, NULL, "Ripple",
+				"vs_2_0", dwShaderFlags, &pCode,
+				NULL, &constantTable);
 
-		shader->SetConstantTable(constantTable);
+			shader->SetConstantTable(constantTable);
 
-		LPDIRECT3DVERTEXSHADER9 vertexShader = shader->GetVertexShader();
+			LPDIRECT3DVERTEXSHADER9 vertexShader = shader->GetVertexShader();
 
-		// Create the vertex shader
-		hr = (*((DirectXRenderer*)renderer)->GetDevice())->CreateVertexShader((DWORD*)pCode->GetBufferPointer(),
-			&vertexShader);
-		pCode->Release();
-		if (FAILED(hr));
-		//return DXTRACE_ERR(TEXT("CreateVertexShader"), hr);
+			// Create the vertex shader
+			hr = (*((DirectXRenderer*)renderer)->GetDevice())->CreateVertexShader((DWORD*)pCode->GetBufferPointer(),
+				&vertexShader);
+			pCode->Release();
+			if (FAILED(hr));
+			//return DXTRACE_ERR(TEXT("CreateVertexShader"), hr);
 
-		shader->SetVertexShader(vertexShader);
+			shader->SetVertexShader(vertexShader);
 
-		if (vertexShader != NULL)
-		{
-			shaders[filename] = *shader;
 		}
+
+		if (!PixelShaderFilename.empty())
+		{
+			LPD3DXBUFFER pCode;
+
+			DWORD dwShaderFlags = 0;
+
+			LPCWSTR strPath;
+
+			std::wstring strPathNew = L"resources/HLSLwithoutEffects.vsh";
+
+			strPath = strPathNew.c_str();
+
+			LPD3DXCONSTANTTABLE constantTable = shader->GetConstantTable();
+
+			// Assemble the vertex shader from the file
+			D3DXCompileShaderFromFile(strPath, NULL, NULL, "Ripple",
+				"vs_2_0", dwShaderFlags, &pCode,
+				NULL, &constantTable);
+
+			shader->SetConstantTable(constantTable);
+
+			LPDIRECT3DPIXELSHADER9 pixelShader = shader->GetPixelShader();
+
+			(*((DirectXRenderer*)renderer)->GetDevice())->CreatePixelShader((DWORD*)pCode->GetBufferPointer(), &pixelShader);
+		}
+
+		
+		shaders[filename] = *shader;
+		
 
 		
 		return shader;

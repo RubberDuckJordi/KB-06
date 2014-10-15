@@ -67,9 +67,9 @@ namespace pengine
 		return renderer;
 	}
 
-	void PEngine::NewShader()
+	void PEngine::SetShader(Shader* shader)
 	{
-		TestShader = new Shader();
+		TestShader = shader;
 	}
 
 	Shader* PEngine::GetShader()

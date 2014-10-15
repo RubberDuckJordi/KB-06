@@ -16,9 +16,16 @@ namespace pengine
 
 	void Shader::SetShader(Renderer* renderer)
 	{
-		(*((DirectXRenderer*)renderer)->GetDevice())->SetVertexDeclaration(g_pVertexDeclaration);
-		(*((DirectXRenderer*)renderer)->GetDevice())->SetVertexShader(g_pVertexShader);
-		
+		if (g_pVertexDeclaration != NULL && g_pVertexShader != NULL)
+		{
+			(*((DirectXRenderer*)renderer)->GetDevice())->SetVertexDeclaration(g_pVertexDeclaration);
+			(*((DirectXRenderer*)renderer)->GetDevice())->SetVertexShader(g_pVertexShader);
+		}
+
+		if (g_pPixelShader != NULL)
+		{
+			(*((DirectXRenderer*)renderer)->GetDevice())->SetPixelShader(g_pPixelShader);
+		}
 	}
 
 	IDirect3DVertexShader9* Shader::GetVertexShader()
