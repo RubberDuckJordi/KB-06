@@ -33,51 +33,51 @@ namespace pengine
 
 		vertices = new D3DCustomVertex[amountOfVertices];
 
-		vertices[0].x = collisionBox.frontBottomLeft.x;
-		vertices[0].y = collisionBox.frontBottomLeft.y;
-		vertices[0].z = collisionBox.frontBottomLeft.z;
+		vertices[0].x = collisionBox.rotFrontBottomLeft.x;
+		vertices[0].y = collisionBox.rotFrontBottomLeft.y;
+		vertices[0].z = collisionBox.rotFrontBottomLeft.z;
 		vertices[0].tu = 0.0f;
 		vertices[0].tv = 0.0f;
 
-		vertices[1].x = collisionBox.frontBottomRight.x;
-		vertices[1].y = collisionBox.frontBottomRight.y;
-		vertices[1].z = collisionBox.frontBottomRight.z;
+		vertices[1].x = collisionBox.rotFrontBottomRight.x;
+		vertices[1].y = collisionBox.rotFrontBottomRight.y;
+		vertices[1].z = collisionBox.rotFrontBottomRight.z;
 		vertices[1].tu = 0.0f;
 		vertices[1].tv = 0.0f;
 
-		vertices[2].x = collisionBox.backBottomLeft.x;
-		vertices[2].y = collisionBox.backBottomLeft.y;
-		vertices[2].z = collisionBox.backBottomLeft.z;
+		vertices[2].x = collisionBox.rotBackBottomLeft.x;
+		vertices[2].y = collisionBox.rotBackBottomLeft.y;
+		vertices[2].z = collisionBox.rotBackBottomLeft.z;
 		vertices[2].tu = 0.0f;
 		vertices[2].tv = 0.0f;
 
-		vertices[3].x = collisionBox.backBottomRight.x;
-		vertices[3].y = collisionBox.backBottomRight.y;
-		vertices[3].z = collisionBox.backBottomRight.z;
+		vertices[3].x = collisionBox.rotBackBottomRight.x;
+		vertices[3].y = collisionBox.rotBackBottomRight.y;
+		vertices[3].z = collisionBox.rotBackBottomRight.z;
 		vertices[3].tu = 0.0f;
 		vertices[3].tv = 0.0f;
 
-		vertices[4].x = collisionBox.frontTopLeft.x;
-		vertices[4].y = collisionBox.frontTopLeft.y;
-		vertices[4].z = collisionBox.frontTopLeft.z;
+		vertices[4].x = collisionBox.rotFrontTopLeft.x;
+		vertices[4].y = collisionBox.rotFrontTopLeft.y;
+		vertices[4].z = collisionBox.rotFrontTopLeft.z;
 		vertices[4].tu = 0.0f;
 		vertices[4].tv = 0.0f;
 
-		vertices[5].x = collisionBox.frontTopRight.x;
-		vertices[5].y = collisionBox.frontTopRight.y;
-		vertices[5].z = collisionBox.frontTopRight.z;
+		vertices[5].x = collisionBox.rotFrontTopRight.x;
+		vertices[5].y = collisionBox.rotFrontTopRight.y;
+		vertices[5].z = collisionBox.rotFrontTopRight.z;
 		vertices[5].tu = 0.0f;
 		vertices[5].tv = 0.0f;
 
-		vertices[6].x = collisionBox.backTopLeft.x;
-		vertices[6].y = collisionBox.backTopLeft.y;
-		vertices[6].z = collisionBox.backTopLeft.z;
+		vertices[6].x = collisionBox.rotBackTopLeft.x;
+		vertices[6].y = collisionBox.rotBackTopLeft.y;
+		vertices[6].z = collisionBox.rotBackTopLeft.z;
 		vertices[6].tu = 0.0f;
 		vertices[6].tv = 0.0f;
 
-		vertices[7].x = collisionBox.backTopRight.x;
-		vertices[7].y = collisionBox.backTopRight.y;
-		vertices[7].z = collisionBox.backTopRight.z;
+		vertices[7].x = collisionBox.rotBackTopRight.x;
+		vertices[7].y = collisionBox.rotBackTopRight.y;
+		vertices[7].z = collisionBox.rotBackTopRight.z;
 		vertices[7].tu = 0.0f;
 		vertices[7].tv = 0.0f;
 
@@ -99,7 +99,7 @@ namespace pengine
 		indexBuffer = renderer->CreateIndexBuffer(indices, amountOfIndices);
 		
 		Matrix* renderMatrix = new Matrix();
-		Matrix::CreateMatrix(collisionBox.x, 0, collisionBox.z, collisionBox.yaw, collisionBox.pitch, collisionBox.roll, 1, 1, 1, renderMatrix);
+		Matrix::CreateMatrix(collisionBox.x, 0, collisionBox.z, 0, 0, 0, 1, 1, 1, renderMatrix);
 		renderer->SetActiveMatrix(renderMatrix);
 		renderer->DrawIndexedVertexBuffer(vertexBuffer, indexBuffer, amountOfVertices, 12);
 
