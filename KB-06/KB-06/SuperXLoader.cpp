@@ -118,8 +118,10 @@ namespace pengine
 		}
 		else
 		{
+			//seems to be tiger only...
 			_Object->_Skeleton = new Bone();
 			_Object->_Skeleton->_MatrixPos.Identity();
+			logger->Log(Logger::DEBUG, "There's no rootbone!");
 		}
 
 		logger->Log(Logger::DEBUG, "SuperXLoader: Processed file:" + std::string(pFilename));
