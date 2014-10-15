@@ -158,7 +158,8 @@ namespace pengine
 
 		CreateQuadTreeChildren(rootNode, depth);
 
-		rootNode->SetLevelOfDetail(2);
+		rootNode->SetLevelOfDetail(1);
+		rootNode->GetChildren()[0].SetLevelOfDetail(2);
 
 		return rootNode;
 	}
@@ -232,7 +233,7 @@ namespace pengine
 			std::vector<D3DCustomVertex*> leafVertices;
 
 			// Add all triangles within the bounds, borders included
-			for (int i = 0; i < amountOfVertices - 2; i += 3)
+			for (int i = 0; i <= amountOfVertices - 3; i += 3)
 			{
 				D3DCustomVertex* vertex0 = &vertices[i];
 				D3DCustomVertex* vertex1 = &vertices[i + 1];
@@ -241,10 +242,10 @@ namespace pengine
 				// if one of the points is within bounds
 				if ((vertex0->x >= parent->GetMinX() && vertex0->x <= parent->GetMaxX()
 					&& vertex0->z >= parent->GetMinZ() && vertex0->z <= parent->GetMaxZ())
-					||
+					&&
 					(vertex1->x >= parent->GetMinX() && vertex1->x <= parent->GetMaxX()
 					&& vertex1->z >= parent->GetMinZ() && vertex1->z <= parent->GetMaxZ())
-					||
+					&&
 					(vertex2->x >= parent->GetMinX() && vertex2->x <= parent->GetMaxX()
 					&& vertex2->z >= parent->GetMinZ() && vertex2->z <= parent->GetMaxZ()))
 				{

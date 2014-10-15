@@ -49,7 +49,7 @@ namespace pengine
 					for (int z = 0; z < newDepth; ++z)
 					{
 						int offset = x * newWidth * 6;
-						int skippedTiles = levelOfDetail / 2;
+						int skippedTiles = levelOfDetail - 1;
 
 						vertices[offset + z * 6] = this->vertices[(x * levelOfDetail + skippedTiles) * width * 6 + (z + z * skippedTiles) * 6];
 						vertices[offset + z * 6 + 1] = this->vertices[(x + x * skippedTiles) * width * 6 + (z * levelOfDetail + skippedTiles) * 6 + 1];
