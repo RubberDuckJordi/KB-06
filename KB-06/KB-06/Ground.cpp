@@ -89,7 +89,7 @@ namespace pengine
 
 	void Ground::Render(Renderer* renderer)
 	{
-		//renderer->SetFillMode(PENGINE_FILL_WIREFRAME);
+		renderer->SetFillMode(PENGINE_FILL_WIREFRAME);
 		D3DCustomVertex* verticesX;
 		int amountOfVerticesX;
 		quadTreeRootNode->GetAllChildrenVertices(verticesX, amountOfVerticesX);
@@ -108,7 +108,7 @@ namespace pengine
 
 		//delete[] verticesX;
 
-		//renderer->SetFillMode(PENGINE_FILL_SOLID);
+		renderer->SetFillMode(PENGINE_FILL_SOLID);
 	}
 
 	QuadNode* Ground::CreateQuadTree(unsigned short depth)
@@ -159,7 +159,16 @@ namespace pengine
 		CreateQuadTreeChildren(rootNode, depth);
 
 		rootNode->SetLevelOfDetail(1);
-		rootNode->GetChildren()[0].SetLevelOfDetail(8);
+		rootNode->GetChildren()[0].SetLevelOfDetail(2);
+
+		// Calculate neighbors
+		if (!rootNode->IsLeaf())
+		{
+			CalculateNeighbors(&rootNode->GetChildren()[0]);
+			CalculateNeighbors(&rootNode->GetChildren()[1]);
+			CalculateNeighbors(&rootNode->GetChildren()[2]);
+			CalculateNeighbors(&rootNode->GetChildren()[3]);
+		}
 
 		return rootNode;
 	}
@@ -188,21 +197,25 @@ namespace pengine
 			node0->SetMaxX(parent->GetMaxX());
 			node0->SetMinZ(parent->GetMinZ());
 			node0->SetMaxZ(parent->GetMinZ() + (parent->GetMaxZ() - parent->GetMinZ()) / 2);
+			node0->SetLocation(0);
 
 			node1->SetMinX(parent->GetMinX());
 			node1->SetMaxX((parent->GetMaxX() - parent->GetMinX()) / 2 + parent->GetMinX());
 			node1->SetMinZ(parent->GetMinZ());
 			node1->SetMaxZ(parent->GetMinZ() + (parent->GetMaxZ() - parent->GetMinZ()) / 2);
+			node1->SetLocation(1);
 
 			node2->SetMinX(parent->GetMinX());
 			node2->SetMaxX((parent->GetMaxX() - parent->GetMinX()) / 2 + parent->GetMinX());
 			node2->SetMinZ(parent->GetMinZ() + (parent->GetMaxZ() - parent->GetMinZ()) / 2);
 			node2->SetMaxZ(parent->GetMaxZ());
+			node2->SetLocation(2);
 
 			node3->SetMinX((parent->GetMaxX() - parent->GetMinX()) / 2 + parent->GetMinX());
 			node3->SetMaxX(parent->GetMaxX());
 			node3->SetMinZ(parent->GetMinZ() + (parent->GetMaxZ() - parent->GetMinZ()) / 2);
 			node3->SetMaxZ(parent->GetMaxZ());
+			node3->SetLocation(3);
 
 			node0->SetWidth(parent->GetWidth() / 2);
 			node0->SetDepth(parent->GetDepth() / 2);
@@ -265,5 +278,36 @@ namespace pengine
 			parent->SetAmountOfVertices(amountOfVertices);
 			parent->SetVertices(vertices);
 		}
+	}
+
+	void Ground::CalculateNeighbors(QuadNode* quadNode)
+	{
+		QuadNode* neighbors = new QuadNode[4];
+
+		switch (quadNode->GetLocation())
+		{
+		case 0:
+			// top left
+			neighbors[1] = quadNode->GetParent()->GetChildren()[3];
+			neighbors[2] = quadNode->GetParent()->GetChildren()[1];
+			break;
+		case 1:
+			// bottom left
+			neighbors[0] = quadNode->GetParent()->GetChildren()[0];
+			neighbors[1] = quadNode->GetParent()->GetChildren()[3];
+			break;
+		case 2:
+			// bottom right
+			neighbors[3] = quadNode->GetParent()->GetChildren()[1];
+			neighbors[0] = quadNode->GetParent()->GetChildren()[3];
+			break;
+		case 3:
+			// top right
+			neighbors[2] = quadNode->GetParent()->GetChildren()[2];
+			neighbors[3] = quadNode->GetParent()->GetChildren()[0];
+			break;
+		}
+
+		quadNode->SetNeighbors(neighbors);
 	}
 }

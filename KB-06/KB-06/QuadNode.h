@@ -36,6 +36,11 @@ namespace pengine
 		QuadNode* GetChildren();
 		void SetChildren(QuadNode* children);
 
+		// 4 neighbors
+		// 0: north, 1: east, 2: south, 3: west
+		QuadNode* GetNeighbors();
+		void SetNeighbors(QuadNode* neighbors);
+
 		D3DCustomVertex* GetVertices();
 		void SetVertices(D3DCustomVertex* vertices);
 
@@ -46,6 +51,10 @@ namespace pengine
 		int GetDepth();
 		void SetWidth(int width);
 		void SetDepth(int depth);
+
+		// 0: north, 1: east, 2: south, 3: west
+		char GetLocation();
+		void SetLocation(char location);
 
 		// Returns terrain vertices of all children
 		void GetAllChildrenVertices(D3DCustomVertex*& vertices, int& amountOfVertices);
@@ -60,11 +69,15 @@ namespace pengine
 		float minZ;
 		float maxZ;
 
+		unsigned char location;
+
 		int width;
 		int depth;
 
 		// Only for branches and root node
 		QuadNode* children;
+
+		QuadNode* neighbors;
 
 		// Only for leaves
 		// Terrain vertices

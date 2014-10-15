@@ -36,6 +36,7 @@ namespace pengine
 
 	private:
 		void CreateQuadTreeChildren(QuadNode* parent, unsigned short remainingDepth);
+		void CalculateNeighbors(QuadNode* quadNode);
 
 		QuadNode* quadTreeRootNode;
 		Logger* logger;

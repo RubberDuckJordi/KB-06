@@ -6,6 +6,7 @@ namespace pengine
 	{
 		logger = LoggerPool::GetInstance().GetLogger();
 		children = NULL;
+		neighbors = NULL;
 		minX = 0.0f;
 		maxX = 0.0f;
 		minZ = 0.0f;
@@ -200,7 +201,6 @@ namespace pengine
 	{
 		if (levelOfDetail == 0)
 		{
-
 			levelOfDetail = 1;
 		}
 		this->levelOfDetail = levelOfDetail;
@@ -238,4 +238,25 @@ namespace pengine
 	{
 		this->depth = depth;
 	}
+
+	char QuadNode::GetLocation()
+	{
+		return location;
+	}
+
+	void QuadNode::SetLocation(char location)
+	{
+		this->location = location;
+	}
+
+	QuadNode* QuadNode::GetNeighbors()
+	{
+		return neighbors;
+	}
+
+	void QuadNode::SetNeighbors(QuadNode* neighbors)
+	{
+		this->neighbors = neighbors;
+	}
+
 }
