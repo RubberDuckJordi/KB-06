@@ -27,13 +27,13 @@ namespace pengine
 		renderer->SetActiveMatrix(aMatrix);
 		renderer->ActivateRenderingToTexture(500, 500, 0xFF0000FF);
 		D3DCustomVertex vertices[] = {
-			{ -1.0f, -1.0f, 1.5f, 0.0f, 0.0f },
-			{ 1.0f, -1.0f, 1.5f, 0.5f, 1.0f },
-			{ 0.0f, 1.0f, 2.0f, 1.0f, 0.0f }
+			{ -1.0f, -1.0f, 6.0f, 0.0f, 0.0f },
+			{1.0f, -1.0f, 6.0f, 0.5f, 1.0f },
+			{ 0.0f, 1.0f, 6.0f, 1.0f, 0.0f }
 		};//holds a triangle that we will render to the texture
 		EntityCamera* cam = new EntityCamera();
-		cam->SetPosition(0, 0, 0);
-		cam->SetLookAtPosition(0, 0, -1, 0);
+		//cam->SetPosition(0, 0, 0);
+		//cam->SetLookAtPosition(0, 0, -1, 0);
 		renderer->SetActiveCamera(cam->GetCameraData(), true);//set the camera to a position so the stuff rendered on the texture isn't translated
 		VertexBufferWrapper* wrapper = renderer->CreateVertexBuffer(vertices, 3, D3DCustomVertexFVF);
 		Material mat;

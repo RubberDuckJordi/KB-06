@@ -44,10 +44,10 @@ namespace pengine
 		D2D1_SIZE_U size = D2D1::SizeU(rectangle.right - rectangle.left, rectangle.bottom - rectangle.top);
 
 		d2dFactory->CreateHwndRenderTarget(
-			D2D1::RenderTargetProperties(),
-			D2D1::HwndRenderTargetProperties(hWnd, size),
-			&d2dRenderTarget
-			);*/
+		D2D1::RenderTargetProperties(),
+		D2D1::HwndRenderTargetProperties(hWnd, size),
+		&d2dRenderTarget
+		);*/
 	}
 
 	void DirectXRenderer::CreateWICImagingFactory()
@@ -67,12 +67,12 @@ namespace pengine
 
 		iwicBmpDecoder = NULL;
 		iwicFactory->CreateDecoderFromFilename(
-			wPath,                      // Image to be decoded
-			NULL,                            // Do not prefer a particular vendor
-			GENERIC_READ,                    // Desired read access to the file
-			WICDecodeMetadataCacheOnDemand,  // Cache metadata when needed
-			&iwicBmpDecoder                      // Pointer to the decoder
-			);*/
+		wPath,                      // Image to be decoded
+		NULL,                            // Do not prefer a particular vendor
+		GENERIC_READ,                    // Desired read access to the file
+		WICDecodeMetadataCacheOnDemand,  // Cache metadata when needed
+		&iwicBmpDecoder                      // Pointer to the decoder
+		);*/
 	}
 
 	void DirectXRenderer::CreateFormatConverter()
@@ -164,22 +164,24 @@ namespace pengine
 
 	void DirectXRenderer::SetActiveCamera(CameraData camera, bool orthographic)
 	{
-		// Set up our view matrix. A view matrix can be defined given an eye point,
-		// a point to lookat, and a direction for which way is up. Here, we set the
-		// eye 0.5 units back along the z-axis and up 0 units, look at the 
-		// origin + 0.5 on the z-axis, and define "up" to be in the y-direction.
-		D3DXVECTOR3 vEyePt(camera.x, camera.y, camera.z);
-		D3DXVECTOR3 vLookatPt(camera.lookAtX, camera.lookAtY, camera.lookAtZ);
-		D3DXVECTOR3 vUpVec(camera.upVecX, camera.upVecY, camera.upVecZ);
 		if (orthographic)
 		{
-			D3DXMatrixOrthoLH(matrixCache, 1.0f, 1.0f, 1.0f, 2.0f);
+			D3DXMatrixOrthoLH(matrixCache, 1.0f, 1.0f, 1.0f, 200.0f);
+			//g_pd3dDevice->SetTransform(D3DTS_WORLD, matrixCache);//isn't needed...
+			g_pd3dDevice->SetTransform(D3DTS_PROJECTION, matrixCache);
 		}
 		else
 		{
+			// Set up our view matrix. A view matrix can be defined given an eye point,
+			// a point to lookat, and a direction for which way is up. Here, we set the
+			// eye 0.5 units back along the z-axis and up 0 units, look at the 
+			// origin + 0.5 on the z-axis, and define "up" to be in the y-direction.
+			D3DXVECTOR3 vEyePt(camera.x, camera.y, camera.z);
+			D3DXVECTOR3 vLookatPt(camera.lookAtX, camera.lookAtY, camera.lookAtZ);
+			D3DXVECTOR3 vUpVec(camera.upVecX, camera.upVecY, camera.upVecZ);
 			D3DXMatrixLookAtLH(matrixCache, &vEyePt, &vLookatPt, &vUpVec);
+			g_pd3dDevice->SetTransform(D3DTS_VIEW, matrixCache);
 		}
-		g_pd3dDevice->SetTransform(D3DTS_VIEW, matrixCache);
 	}
 
 	void DirectXRenderer::SetViewMatrix(Matrix* viewMatrix, bool orthographic)
@@ -213,7 +215,7 @@ namespace pengine
 		// a perpsective transform, we need the field of view (1/4 pi is common),
 		// the aspect ratio, and the near and far clipping planes (which define at
 		// what distances geometry should be no longer be rendered).
-		D3DXMatrixPerspectiveFovLH(&projectionMatix, FOV, 1.0f, 1.0f, 1000.0f);
+		D3DXMatrixPerspectiveFovLH(&projectionMatix, FOV, 1.0f, 1.0f, farClippingPlane);
 		g_pd3dDevice->SetTransform(D3DTS_PROJECTION, &projectionMatix);
 	}
 
@@ -406,6 +408,7 @@ namespace pengine
 
 	void DirectXRenderer::ActivateRenderingToTexture(int tWidth, int tHeight, DWORD bgColor)
 	{
+		g_pd3dDevice->EndScene();
 		if (RenderTexture != NULL)
 		{
 			RenderTexture->Release();
@@ -437,6 +440,8 @@ namespace pengine
 		//D3DXSaveTextureToFile(L"test.bmp", D3DXIFF_BMP, RenderTexture, NULL);
 		//And we change back to the actual backbuffer
 		g_pd3dDevice->SetRenderTarget(0, MainSurface);
+		g_pd3dDevice->BeginScene();
+		SetProjectionMatrix(M_PI / 4, 100.0f);
 	}
 
 	void DirectXRenderer::SetTextureToRenderedTexture()
