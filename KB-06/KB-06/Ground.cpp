@@ -156,7 +156,8 @@ namespace pengine
 		rootNode->SetWidth(this->width - 1);
 		rootNode->SetDepth(this->height - 1);
 
-		CreateQuadTreeChildren(rootNode, depth);
+		rootNode->name = "root";
+		CreateQuadTreeChildren(*rootNode, depth);
 
 		rootNode->SetLevelOfDetail(1);
 		rootNode->GetChildren()[0].SetLevelOfDetail(2);
@@ -164,21 +165,24 @@ namespace pengine
 		// Calculate neighbors
 		if (!rootNode->IsLeaf())
 		{
-			CalculateNeighbors(&rootNode->GetChildren()[0]);
-			CalculateNeighbors(&rootNode->GetChildren()[1]);
-			CalculateNeighbors(&rootNode->GetChildren()[2]);
-			CalculateNeighbors(&rootNode->GetChildren()[3]);
+			for (int i = 0; i < depth; ++i)
+			{
+				CalculateNeighbors(rootNode->GetChildren()[0], i);
+				CalculateNeighbors(rootNode->GetChildren()[1], i);
+				CalculateNeighbors(rootNode->GetChildren()[2], i);
+				CalculateNeighbors(rootNode->GetChildren()[3], i);
+			}
 		}
 
 		return rootNode;
 	}
 
-	void Ground::CreateQuadTreeChildren(QuadNode* parent, unsigned short remainingDepth)
+	void Ground::CreateQuadTreeChildren(QuadNode& parent, unsigned short remainingDepth)
 	{
 		if (remainingDepth > 0)
 		{
 			// This is a branch, create children and call this function 
-			parent->SetIsLeaf(false);
+			parent.SetIsLeaf(false);
 
 			// 0 3
 			// 1 2
@@ -188,48 +192,53 @@ namespace pengine
 			QuadNode* node2 = new QuadNode();
 			QuadNode* node3 = new QuadNode();
 
-			node0->SetParent(parent);
-			node1->SetParent(parent);
-			node2->SetParent(parent);
-			node3->SetParent(parent);
+			node0->name = parent.name + "->0";
+			node1->name = parent.name + "->1";
+			node2->name = parent.name + "->2";
+			node3->name = parent.name + "->3";
 
-			node0->SetMinX((parent->GetMaxX()- parent->GetMinX()) / 2 + parent->GetMinX());
-			node0->SetMaxX(parent->GetMaxX());
-			node0->SetMinZ(parent->GetMinZ());
-			node0->SetMaxZ(parent->GetMinZ() + (parent->GetMaxZ() - parent->GetMinZ()) / 2);
+			node0->SetParent(&parent);
+			node1->SetParent(&parent);
+			node2->SetParent(&parent);
+			node3->SetParent(&parent);
+
+			node0->SetMinX((parent.GetMaxX() - parent.GetMinX()) / 2 + parent.GetMinX());
+			node0->SetMaxX(parent.GetMaxX());
+			node0->SetMinZ(parent.GetMinZ());
+			node0->SetMaxZ(parent.GetMinZ() + (parent.GetMaxZ() - parent.GetMinZ()) / 2);
 			node0->SetLocation(0);
 
-			node1->SetMinX(parent->GetMinX());
-			node1->SetMaxX((parent->GetMaxX() - parent->GetMinX()) / 2 + parent->GetMinX());
-			node1->SetMinZ(parent->GetMinZ());
-			node1->SetMaxZ(parent->GetMinZ() + (parent->GetMaxZ() - parent->GetMinZ()) / 2);
+			node1->SetMinX(parent.GetMinX());
+			node1->SetMaxX((parent.GetMaxX() - parent.GetMinX()) / 2 + parent.GetMinX());
+			node1->SetMinZ(parent.GetMinZ());
+			node1->SetMaxZ(parent.GetMinZ() + (parent.GetMaxZ() - parent.GetMinZ()) / 2);
 			node1->SetLocation(1);
 
-			node2->SetMinX(parent->GetMinX());
-			node2->SetMaxX((parent->GetMaxX() - parent->GetMinX()) / 2 + parent->GetMinX());
-			node2->SetMinZ(parent->GetMinZ() + (parent->GetMaxZ() - parent->GetMinZ()) / 2);
-			node2->SetMaxZ(parent->GetMaxZ());
+			node2->SetMinX(parent.GetMinX());
+			node2->SetMaxX((parent.GetMaxX() - parent.GetMinX()) / 2 + parent.GetMinX());
+			node2->SetMinZ(parent.GetMinZ() + (parent.GetMaxZ() - parent.GetMinZ()) / 2);
+			node2->SetMaxZ(parent.GetMaxZ());
 			node2->SetLocation(2);
 
-			node3->SetMinX((parent->GetMaxX() - parent->GetMinX()) / 2 + parent->GetMinX());
-			node3->SetMaxX(parent->GetMaxX());
-			node3->SetMinZ(parent->GetMinZ() + (parent->GetMaxZ() - parent->GetMinZ()) / 2);
-			node3->SetMaxZ(parent->GetMaxZ());
+			node3->SetMinX((parent.GetMaxX() - parent.GetMinX()) / 2 + parent.GetMinX());
+			node3->SetMaxX(parent.GetMaxX());
+			node3->SetMinZ(parent.GetMinZ() + (parent.GetMaxZ() - parent.GetMinZ()) / 2);
+			node3->SetMaxZ(parent.GetMaxZ());
 			node3->SetLocation(3);
 
-			node0->SetWidth(parent->GetWidth() / 2);
-			node0->SetDepth(parent->GetDepth() / 2);
-			node1->SetWidth(parent->GetWidth() / 2);
-			node1->SetDepth(parent->GetDepth() / 2);
-			node2->SetWidth(parent->GetWidth() / 2);
-			node2->SetDepth(parent->GetDepth() / 2);
-			node3->SetWidth(parent->GetWidth() / 2);
-			node3->SetDepth(parent->GetDepth() / 2);
+			node0->SetWidth(parent.GetWidth() / 2);
+			node0->SetDepth(parent.GetDepth() / 2);
+			node1->SetWidth(parent.GetWidth() / 2);
+			node1->SetDepth(parent.GetDepth() / 2);
+			node2->SetWidth(parent.GetWidth() / 2);
+			node2->SetDepth(parent.GetDepth() / 2);
+			node3->SetWidth(parent.GetWidth() / 2);
+			node3->SetDepth(parent.GetDepth() / 2);
 
-			CreateQuadTreeChildren(node0, remainingDepth - 1);
-			CreateQuadTreeChildren(node1, remainingDepth - 1);
-			CreateQuadTreeChildren(node2, remainingDepth - 1);
-			CreateQuadTreeChildren(node3, remainingDepth - 1);
+			CreateQuadTreeChildren(*node0, remainingDepth - 1);
+			CreateQuadTreeChildren(*node1, remainingDepth - 1);
+			CreateQuadTreeChildren(*node2, remainingDepth - 1);
+			CreateQuadTreeChildren(*node3, remainingDepth - 1);
 
 			QuadNode* children = new QuadNode[4];
 			children[0] = *node0;
@@ -237,12 +246,12 @@ namespace pengine
 			children[2] = *node2;
 			children[3] = *node3;
 
-			parent->SetChildren(children);
+			parent.SetChildren(children);
 		}
 		else
 		{
 			// Add leaf data
-			parent->SetIsLeaf(true);
+			parent.SetIsLeaf(true);
 			std::vector<D3DCustomVertex*> leafVertices;
 
 			// Add all triangles within the bounds, borders included
@@ -253,14 +262,14 @@ namespace pengine
 				D3DCustomVertex* vertex2 = &vertices[i + 2];
 
 				// if one of the points is within bounds
-				if ((vertex0->x >= parent->GetMinX() && vertex0->x <= parent->GetMaxX()
-					&& vertex0->z >= parent->GetMinZ() && vertex0->z <= parent->GetMaxZ())
+				if ((vertex0->x >= parent.GetMinX() && vertex0->x <= parent.GetMaxX()
+					&& vertex0->z >= parent.GetMinZ() && vertex0->z <= parent.GetMaxZ())
 					&&
-					(vertex1->x >= parent->GetMinX() && vertex1->x <= parent->GetMaxX()
-					&& vertex1->z >= parent->GetMinZ() && vertex1->z <= parent->GetMaxZ())
+					(vertex1->x >= parent.GetMinX() && vertex1->x <= parent.GetMaxX()
+					&& vertex1->z >= parent.GetMinZ() && vertex1->z <= parent.GetMaxZ())
 					&&
-					(vertex2->x >= parent->GetMinX() && vertex2->x <= parent->GetMaxX()
-					&& vertex2->z >= parent->GetMinZ() && vertex2->z <= parent->GetMaxZ()))
+					(vertex2->x >= parent.GetMinX() && vertex2->x <= parent.GetMaxX()
+					&& vertex2->z >= parent.GetMinZ() && vertex2->z <= parent.GetMaxZ()))
 				{
 					leafVertices.push_back(vertex0);
 					leafVertices.push_back(vertex1);
@@ -275,39 +284,103 @@ namespace pengine
 				vertices[i] = *leafVertices[i];
 
 			}
-			parent->SetAmountOfVertices(amountOfVertices);
-			parent->SetVertices(vertices);
+			parent.SetAmountOfVertices(amountOfVertices);
+			parent.SetVertices(vertices);
 		}
 	}
 
-	void Ground::CalculateNeighbors(QuadNode* quadNode)
+	void Ground::CalculateNeighbors(QuadNode& quadNode, unsigned short recursionLevel)
 	{
-		QuadNode* neighbors = new QuadNode[4];
-
-		switch (quadNode->GetLocation())
+		if (recursionLevel == 0)
 		{
-		case 0:
-			// top left
-			neighbors[1] = quadNode->GetParent()->GetChildren()[3];
-			neighbors[2] = quadNode->GetParent()->GetChildren()[1];
-			break;
-		case 1:
-			// bottom left
-			neighbors[0] = quadNode->GetParent()->GetChildren()[0];
-			neighbors[1] = quadNode->GetParent()->GetChildren()[3];
-			break;
-		case 2:
-			// bottom right
-			neighbors[3] = quadNode->GetParent()->GetChildren()[1];
-			neighbors[0] = quadNode->GetParent()->GetChildren()[3];
-			break;
-		case 3:
-			// top right
-			neighbors[2] = quadNode->GetParent()->GetChildren()[2];
-			neighbors[3] = quadNode->GetParent()->GetChildren()[0];
-			break;
+			logger->Log(Logger::DEBUG, "processing " + quadNode.name);
+			std::map<char, QuadNode*>* neighbors = quadNode.GetNeighbors();
+			
+			switch (quadNode.GetLocation())
+			{
+			case 0:
+				// top left
+				(*neighbors)[1] = &quadNode.GetParent()->GetChildren()[3];
+				(*neighbors)[2] = &quadNode.GetParent()->GetChildren()[1];
+				if (quadNode.GetParent()->GetNeighbors()->size() > 0)
+				{
+					QuadNode* parentNorth = quadNode.GetParent()->GetNeighbors()->at(0);
+					if (parentNorth != NULL)
+					{
+						(*neighbors)[0] = &parentNorth->GetChildren()[1];
+					}
+					QuadNode* parentWest = quadNode.GetParent()->GetNeighbors()->at(3);
+					if (parentWest != NULL)
+					{
+						(*neighbors)[3] = &parentWest->GetChildren()[3];
+					}
+				}
+				break;
+			case 1:
+				// bottom left
+				(*neighbors)[0] = &quadNode.GetParent()->GetChildren()[0];
+				(*neighbors)[1] = &quadNode.GetParent()->GetChildren()[3];
+				if (quadNode.GetParent()->GetNeighbors()->size() > 0)
+				{
+					QuadNode* parentSouth = quadNode.GetParent()->GetNeighbors()->at(2);
+					if (parentSouth != NULL)
+					{
+						(*neighbors)[2] = &parentSouth->GetChildren()[0];
+					}
+					QuadNode* parentWest = quadNode.GetParent()->GetNeighbors()->at(3);
+					if (parentWest != NULL)
+					{
+						(*neighbors)[3] = &parentWest->GetChildren()[3];
+					}
+				}
+				break;
+			case 2:
+				// bottom right
+				(*neighbors)[3] = &quadNode.GetParent()->GetChildren()[1];
+				(*neighbors)[0] = &quadNode.GetParent()->GetChildren()[3];
+				if (quadNode.GetParent()->GetNeighbors()->size() > 0)
+				{
+					QuadNode* parentSouth = quadNode.GetParent()->GetNeighbors()->at(2);
+					if (parentSouth != NULL)
+					{
+						(*neighbors)[2] = &parentSouth->GetChildren()[3];
+					}
+					QuadNode* parentNorth = quadNode.GetParent()->GetNeighbors()->at(0);
+					if (parentNorth != NULL)
+					{
+						(*neighbors)[0] = &parentNorth->GetChildren()[2];
+					}
+				}
+				break;
+			case 3:
+				// top right
+				(*neighbors)[2] = &quadNode.GetParent()->GetChildren()[2];
+				(*neighbors)[3] = &quadNode.GetParent()->GetChildren()[0];
+				if (quadNode.GetParent()->GetNeighbors()->size() > 0)
+				{
+					QuadNode* parentEast = quadNode.GetParent()->GetNeighbors()->at(1);
+					if (parentEast != NULL)
+					{
+						(*neighbors)[1] = &parentEast->GetChildren()[0];
+					}
+					QuadNode* parentNorth = quadNode.GetParent()->GetNeighbors()->at(0);
+					if (parentNorth != NULL)
+					{
+						(*neighbors)[0] = &parentNorth->GetChildren()[2];
+					}
+				}
+				break;
+			}
 		}
-
-		quadNode->SetNeighbors(neighbors);
+		else
+		{
+			if (!quadNode.IsLeaf())
+			{
+				CalculateNeighbors(quadNode.GetChildren()[0], recursionLevel - 1);
+				CalculateNeighbors(quadNode.GetChildren()[1], recursionLevel - 1);
+				CalculateNeighbors(quadNode.GetChildren()[2], recursionLevel - 1);
+				CalculateNeighbors(quadNode.GetChildren()[3], recursionLevel - 1);
+			}
+		}
 	}
 }

@@ -6,7 +6,7 @@ namespace pengine
 	{
 		logger = LoggerPool::GetInstance().GetLogger();
 		children = NULL;
-		neighbors = NULL;
+
 		minX = 0.0f;
 		maxX = 0.0f;
 		minZ = 0.0f;
@@ -249,14 +249,9 @@ namespace pengine
 		this->location = location;
 	}
 
-	QuadNode* QuadNode::GetNeighbors()
+	std::map<char, QuadNode*>* QuadNode::GetNeighbors()
 	{
-		return neighbors;
-	}
-
-	void QuadNode::SetNeighbors(QuadNode* neighbors)
-	{
-		this->neighbors = neighbors;
+		return &neighbors;
 	}
 
 }
