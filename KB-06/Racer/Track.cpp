@@ -80,14 +80,14 @@ void Track::AddTrackBlock(TrackBlock::TYPE trackBlockType, pengine::Object3D* mo
 		switch (trackBlockType)
 		{
 		case TrackBlock::TYPE::TURN_RIGHT:	newDirectionValue += 1;
-			yaw += 90;
+			yaw -= 135;
 			if (newDirectionValue > 3)
 			{
 				newDirectionValue -= 4;
 			}
 			break;
 		case TrackBlock::TYPE::TURN_LEFT:	
-			yaw += 180;
+			yaw -= 45;
 			newDirectionValue -= 1;
 			if (newDirectionValue < 0)
 			{
