@@ -17,26 +17,19 @@ namespace pengine
 	{
 		consoleHandle = GetStdHandle(STD_OUTPUT_HANDLE);
 		logLevel = INFO;
-		outfile.open(fileName + logExtension, std::ios_base::app);
+		outfile.open(fileName, std::ios_base::app);
 	}
 
 	Logger::Logger(){
 	}
 
-	void Logger::RemoveLogs()
-	{
-		std::string command = "del /Q ";
-		std::string path = "*" + logExtension;
-		system(command.append(path).c_str()); // Dangerous code.. Should be changed
-	}
-	
 	void Logger::Log(int logType, std::string messageString)
 	{
 		if (logLevel >= logType && logType > 0){
 			std::string entry = BuildLogEntry(logType, messageString);
 			PrintConsole(logType, entry);
 			outfile << entry << "\n";
-			outfile.close();
+			outfile.flush();
 		}
 	}
 

@@ -41,8 +41,6 @@ namespace pengine {
 		int consoleColorCodeError = red;
 		HANDLE consoleHandle;
 
-		const std::string logExtension = ".log";
-
 		enum Consolecolor
 		{
 			black = 0,

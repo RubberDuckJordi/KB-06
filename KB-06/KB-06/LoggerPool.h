@@ -18,6 +18,8 @@ namespace pengine
 		void operator=(LoggerPool const&);
 		std::map<std::string, Logger*> pool;
 		std::string defaultLogFile = "PEngine";
+		void LoggerPool::RemoveLogs();
+		const std::string logExtension = ".log";
 	};
 }
 #endif

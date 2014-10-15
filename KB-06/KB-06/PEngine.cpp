@@ -11,7 +11,6 @@ namespace pengine
 	PEngine::PEngine()
 	{
 		logger = LoggerPool::GetInstance().GetLogger();
-		logger->RemoveLogs();
 	}
 
 	PEngine::~PEngine()
