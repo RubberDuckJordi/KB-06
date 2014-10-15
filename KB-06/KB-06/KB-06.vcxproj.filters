@@ -64,9 +64,6 @@
     <ClCompile Include="ResourceManager.cpp">
       <Filter>Source\Resource</Filter>
     </ClCompile>
-    <ClCompile Include="StringHelper.cpp">
-      <Filter>Source\Logger</Filter>
-    </ClCompile>
     <ClCompile Include="DirectXRenderer.cpp">
       <Filter>Source\Renderer</Filter>
     </ClCompile>
@@ -206,9 +203,6 @@
     </ClInclude>
     <ClInclude Include="ResourceManager.h">
       <Filter>Header\Resource</Filter>
-    </ClInclude>
-    <ClInclude Include="StringHelper.h">
-      <Filter>Header\Logger</Filter>
     </ClInclude>
     <ClInclude Include="DirectXRenderer.h">
       <Filter>Header\Renderer</Filter>

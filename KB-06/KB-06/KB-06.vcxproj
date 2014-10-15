@@ -121,7 +121,6 @@
     <ClInclude Include="Shader.h" />
     <ClInclude Include="Skybox.h" />
     <ClInclude Include="Sound.h" />
-    <ClInclude Include="StringHelper.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="DefaultScene.h" />
     <ClInclude Include="DefaultSceneFactory.h" />
@@ -190,7 +189,6 @@
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="Skybox.cpp" />
     <ClCompile Include="Vector3.cpp" />
-    <ClCompile Include="StringHelper.cpp" />
     <ClCompile Include="Logger.cpp" />
     <ClCompile Include="LoggerPool.cpp" />
     <ClCompile Include="DirectMouse.cpp" />

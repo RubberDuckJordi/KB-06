@@ -19,7 +19,7 @@ namespace pengine
 
 	Logger* LoggerPool::GetLogger(std::string fileName){
 		if (pool.size() == 0){
-			RemoveLogs(); // Remove the old logs whenever the first one is called
+			RemoveLogs(); // Remove the old logs
 		}
 		for (auto poolItem : pool)
 		{

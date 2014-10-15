@@ -1,5 +1,4 @@
 #include "ResourceManager.h"
-#include "StringHelper.h"
 
 namespace pengine
 {
