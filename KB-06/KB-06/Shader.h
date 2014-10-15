@@ -21,19 +21,22 @@ namespace pengine
 		IDirect3DVertexShader9* GetVertexShader();
 		IDirect3DPixelShader9* GetPixelShader();
 		IDirect3DVertexDeclaration9* GetVertexDeclaration();
-		ID3DXConstantTable* GetConstantTable();
+		ID3DXConstantTable* GetVertexShaderConstantTable();
+		ID3DXConstantTable* GetPixelShaderConstantTable();
 
 		void SetVertexShader(IDirect3DVertexShader9* NewVertexShader);
 		void SetPixelShader(IDirect3DPixelShader9* NewPixelShader);
 		void SetVertexDeclaration(IDirect3DVertexDeclaration9* NewVertexDeclaration);
-		void SetConstantTable(ID3DXConstantTable* NewConstantTable);
+		void SetVertexShaderConstantTable(ID3DXConstantTable* NewConstantTable);
+		void SetPixelShaderConstantTable(ID3DXConstantTable* NewConstantTable);
 		
 	private:
 		
 		IDirect3DVertexShader9*         g_pVertexShader;
 		IDirect3DPixelShader9*			g_pPixelShader;
 		IDirect3DVertexDeclaration9*    g_pVertexDeclaration;
-		ID3DXConstantTable*				g_pConstantTable;
+		ID3DXConstantTable*				g_pVertexShaderConstantTable;
+		ID3DXConstantTable*				g_pPixelShaderConstantTable;
 		
 	};
 }

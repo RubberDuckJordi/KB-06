@@ -43,9 +43,14 @@ namespace pengine
 		return g_pVertexDeclaration;
 	}
 
-	ID3DXConstantTable* Shader::GetConstantTable()
+	ID3DXConstantTable* Shader::GetVertexShaderConstantTable()
 	{
-		return g_pConstantTable;
+		return g_pVertexShaderConstantTable;
+	}
+
+	ID3DXConstantTable* Shader::GetPixelShaderConstantTable()
+	{
+		return g_pPixelShaderConstantTable;
 	}
 
 	void Shader::SetVertexShader(IDirect3DVertexShader9* NewVertexShader)
@@ -63,9 +68,14 @@ namespace pengine
 		g_pVertexDeclaration = NewVertexDeclaration;
 	}
 
-	void Shader::SetConstantTable(ID3DXConstantTable* NewConstantTable)
+	void Shader::SetVertexShaderConstantTable(ID3DXConstantTable* NewConstantTable)
 	{
-		g_pConstantTable = NewConstantTable;
+		g_pVertexShaderConstantTable = NewConstantTable;
+	}
+
+	void Shader::SetPixelShaderConstantTable(ID3DXConstantTable* NewConstantTable)
+	{
+		g_pPixelShaderConstantTable = NewConstantTable;
 	}
 
 }

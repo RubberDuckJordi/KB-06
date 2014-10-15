@@ -161,14 +161,14 @@ namespace pengine
 
 			strPath = strPathNew.c_str();
 
-			LPD3DXCONSTANTTABLE constantTable = shader->GetConstantTable();
+			LPD3DXCONSTANTTABLE constantTable = shader->GetVertexShaderConstantTable();
 
 			// Assemble the vertex shader from the file
 			D3DXCompileShaderFromFile(strPath, NULL, NULL, "Ripple",
 				"vs_2_0", dwShaderFlags, &pCode,
 				NULL, &constantTable);
 
-			shader->SetConstantTable(constantTable);
+			shader->SetVertexShaderConstantTable(constantTable);
 
 			LPDIRECT3DVERTEXSHADER9 vertexShader = shader->GetVertexShader();
 
@@ -191,18 +191,18 @@ namespace pengine
 
 			LPCWSTR strPath;
 
-			std::wstring strPathNew = L"resources/HLSLwithoutEffects.vsh";
+			std::wstring strPathNew = L"resources/ColorPixelShader.vsh";
 
 			strPath = strPathNew.c_str();
 
-			LPD3DXCONSTANTTABLE constantTable = shader->GetConstantTable();
+			LPD3DXCONSTANTTABLE constantTable = shader->GetPixelShaderConstantTable();
 
 			// Assemble the vertex shader from the file
-			D3DXCompileShaderFromFile(strPath, NULL, NULL, "Ripple",
-				"vs_2_0", dwShaderFlags, &pCode,
+			D3DXCompileShaderFromFile(strPath, NULL, NULL, "main",
+				"ps_2_0", dwShaderFlags, &pCode,
 				NULL, &constantTable);
 
-			shader->SetConstantTable(constantTable);
+			shader->SetPixelShaderConstantTable(constantTable);
 
 			LPDIRECT3DPIXELSHADER9 pixelShader = shader->GetPixelShader();
 
