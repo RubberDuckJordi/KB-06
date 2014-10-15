@@ -89,7 +89,7 @@ namespace pengine
 
 	void Ground::Render(Renderer* renderer)
 	{
-		renderer->SetFillMode(PENGINE_FILL_WIREFRAME);
+		//renderer->SetFillMode(PENGINE_FILL_WIREFRAME);
 		D3DCustomVertex* verticesX;
 		int amountOfVerticesX;
 		quadTreeRootNode->GetAllChildrenVertices(verticesX, amountOfVerticesX);
@@ -108,7 +108,7 @@ namespace pengine
 
 		//delete[] verticesX;
 
-		renderer->SetFillMode(PENGINE_FILL_SOLID);
+		//renderer->SetFillMode(PENGINE_FILL_SOLID);
 	}
 
 	QuadNode* Ground::CreateQuadTree(unsigned short depth)
@@ -159,7 +159,7 @@ namespace pengine
 		CreateQuadTreeChildren(rootNode, depth);
 
 		rootNode->SetLevelOfDetail(1);
-		rootNode->GetChildren()[0].SetLevelOfDetail(2);
+		rootNode->GetChildren()[0].SetLevelOfDetail(8);
 
 		return rootNode;
 	}
