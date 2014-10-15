@@ -214,7 +214,7 @@ pengine::Scene* racer::RaceSceneFactory::CreateScene()
 	racecart2->SetMass(100.0f);
 
 	racecart1->AddAll(7.5f, 0.0f, 5.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f);
-	racecart2->AddAll(7.5f, 0.0f, -5.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f);
+	racecart2->AddAll(20.5f, 0.0f, -10.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f);
 	racecart1->SetObject3D(object3d2);
 	racecart2->SetObject3D(object3d2);
 
@@ -249,10 +249,10 @@ pengine::Scene* racer::RaceSceneFactory::CreateScene()
 	RaceScene* raceScene = new RaceScene();
 	raceScene->AddEntity(racecart);
 	raceScene->AddEntity(racecart1);
-	raceScene->AddEntity(racecart2);
+	//raceScene->AddEntity(racecart2);
 	raceScene->AddCollidable(racecart);
 	raceScene->AddCollidable(racecart1);
-	raceScene->AddCollidable(racecart2);
+	//raceScene->AddCollidable(racecart2);
 	raceScene->AddEntity(track);
 	raceScene->SetGround(ground);
 	raceScene->SetSkybox(skybox);

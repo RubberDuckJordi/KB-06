@@ -44,20 +44,19 @@ namespace pengine
 		float topZ = collisionBox.frontBottomLeft.z;
 		float bottomZ = collisionBox.backBottomLeft.z;
 
-		/*logger->Log(Logger::DEBUG, "leftX: " + std::to_string(leftX));
-		logger->Log(Logger::DEBUG, "rightX: " + std::to_string(rightX));
-		logger->Log(Logger::DEBUG, "topZ: " + std::to_string(topZ));
-		logger->Log(Logger::DEBUG, "bottomZ: " + std::to_string(bottomZ));
-		logger->Log(Logger::DEBUG, "rotatedX: " + std::to_string(rotatedX));
-		logger->Log(Logger::DEBUG, "rotatedZ: " + std::to_string(rotatedZ));
-		logger->Log(Logger::DEBUG, "");*/
-
 		if (rotatedX > leftX && rotatedX < rightX)
 		{
 			//logger->Log(Logger::DEBUG, "Life is interesting");
-			if (rotatedZ > bottomZ && rotatedX < topZ)
+			if (rotatedZ > bottomZ && rotatedZ < topZ)
 			{
 				logger->Log(Logger::DEBUG, "Life is amazing!!!");
+				/*logger->Log(Logger::DEBUG, "leftX: " + std::to_string(leftX));
+				logger->Log(Logger::DEBUG, "rightX: " + std::to_string(rightX));
+				logger->Log(Logger::DEBUG, "topZ: " + std::to_string(topZ));
+				logger->Log(Logger::DEBUG, "bottomZ: " + std::to_string(bottomZ));
+				logger->Log(Logger::DEBUG, "rotatedX: " + std::to_string(rotatedX));
+				logger->Log(Logger::DEBUG, "rotatedZ: " + std::to_string(rotatedZ));
+				logger->Log(Logger::DEBUG, "");*/
 				return true;
 			}
 		}
