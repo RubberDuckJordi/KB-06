@@ -2,6 +2,11 @@
 
 namespace pengine
 {
+	struct Point
+	{
+		float x, z;
+	};
+
 	BEAM* Collidable::GetCollisionBox()
 	{
 		return &collisionBox;
@@ -11,14 +16,55 @@ namespace pengine
 	{
 		BEAM* other = collidable->GetCollisionBox();
 
-		if (collisionBox.x + collisionBox.width < other->x) return false;
-		if (collisionBox.x > other->x + other->width) return false;
-		if (collisionBox.y + collisionBox.height <  other->y) return false;
-		if (collisionBox.y > other->y + other->height) return false;
-		if (collisionBox.z + collisionBox.depth <  other->z) return false;
-		if (collisionBox.z > other->z + other->depth) return false;
+		Logger* logger = LoggerPool::GetInstance().GetLogger("CollisionSpam");
 
-		return true;
+		float x1 = collisionBox.x;
+		float z1 = collisionBox.z;
+
+		float x2 = collidable->collisionBox.x;
+		float z2 = collidable->collisionBox.z;
+
+		float differenceX = x1 - x2;
+		float differenceZ = z1 - z2;
+
+		/*logger->Log(Logger::DEBUG, "X1: " + std::to_string(x1) + ", Z1: " + std::to_string(z1));
+		logger->Log(Logger::DEBUG, "X2: " + std::to_string(x2) + ", Z2: " + std::to_string(z2));
+		logger->Log(Logger::DEBUG, "Difference between the 2 center points is: x" + std::to_string(differenceX) + ", z: " + std::to_string(differenceZ));*/
+
+		Point one = { collidable->collisionBox.frontBottomLeft.x + differenceX, collidable->collisionBox.frontBottomLeft.z + differenceZ };
+
+		//now rotate the point relative with the axis-aligned collisionBox of this Collidable
+		float c = cos(-RADIANS(collisionBox.yaw));
+		float s = sin(-RADIANS(collisionBox.yaw));
+		float rotatedX = (c * one.x) - (s * one.z);
+		float rotatedZ = (s * one.x) + (c * one.z);
+
+		float leftX = collisionBox.frontBottomLeft.x;
+		float rightX = collisionBox.frontBottomRight.x;
+		float topZ = collisionBox.frontBottomLeft.z;
+		float bottomZ = collisionBox.backBottomLeft.z;
+
+		/*logger->Log(Logger::DEBUG, "leftX: " + std::to_string(leftX));
+		logger->Log(Logger::DEBUG, "rightX: " + std::to_string(rightX));
+		logger->Log(Logger::DEBUG, "topZ: " + std::to_string(topZ));
+		logger->Log(Logger::DEBUG, "bottomZ: " + std::to_string(bottomZ));
+		logger->Log(Logger::DEBUG, "rotatedX: " + std::to_string(rotatedX));
+		logger->Log(Logger::DEBUG, "rotatedZ: " + std::to_string(rotatedZ));
+		logger->Log(Logger::DEBUG, "");*/
+
+		if (rotatedX > leftX && rotatedX < rightX)
+		{
+			//logger->Log(Logger::DEBUG, "Life is interesting");
+			if (rotatedZ > bottomZ && rotatedX < topZ)
+			{
+				logger->Log(Logger::DEBUG, "Life is amazing!!!");
+				return true;
+			}
+		}
+
+		//delete logger;
+
+		return (leftX <= rotatedX && rotatedX <= rightX && topZ <= rotatedZ && rotatedZ <= bottomZ);
 	}
 
 	void Collidable::DrawCollidable(Renderer* renderer)
@@ -97,7 +143,7 @@ namespace pengine
 		indices[33] = 4; indices[34] = 6; indices[35] = 7;
 
 		indexBuffer = renderer->CreateIndexBuffer(indices, amountOfIndices);
-		
+
 		Matrix* renderMatrix = new Matrix();
 		Matrix::CreateMatrix(collisionBox.x, 0, collisionBox.z, 0, 0, 0, 1, 1, 1, renderMatrix);
 		renderer->SetActiveMatrix(renderMatrix);

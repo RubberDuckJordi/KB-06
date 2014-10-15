@@ -213,10 +213,10 @@ pengine::Scene* racer::RaceSceneFactory::CreateScene()
 	RaceCart* racecart2 = new RaceCart();
 	racecart2->SetMass(100.0f);
 
-	racecart1->AddAll(7.5f, 0.0f, 5.0f, 0.0f, 0.0f, 0.0f, 3.0f, 3.0f, 3.0f);
-	racecart2->AddAll(7.5f, 0.0f, -5.0f, 0.0f, 0.0f, 0.0f, 3.0f, 3.0f, 3.0f);
-	racecart1->SetObject3D(object3d);
-	racecart2->SetObject3D(object3d);
+	racecart1->AddAll(7.5f, 0.0f, 5.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f);
+	racecart2->AddAll(7.5f, 0.0f, -5.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f);
+	racecart1->SetObject3D(object3d2);
+	racecart2->SetObject3D(object3d2);
 
 
 	Track* track = new Track();
@@ -278,4 +278,9 @@ void racer::RaceSceneFactory::SetXModel3(pengine::Object3D* p_xModel)
 void racer::RaceSceneFactory::SetObject3D(pengine::Object3D* obj)
 {
 	object3d = obj;
+}
+
+void racer::RaceSceneFactory::SetObject3D2(pengine::Object3D* obj)
+{
+	object3d2 = obj;
 }

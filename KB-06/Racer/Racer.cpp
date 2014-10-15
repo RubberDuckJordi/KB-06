@@ -23,7 +23,19 @@ pengine::Object3D* kapotlelijk(pengine::ResourceManager* resourceManager)
 	MyObject->SetAnimationStep(80);
 	MyObject->UpdateAnimation();
 
+	return MyObject;
+}
 
+pengine::Object3D* kapotlelijk2(pengine::ResourceManager* resourceManager)
+{
+	std::string file = "resources/debugSphere.x";
+
+	pengine::Object3D* MyObject = resourceManager->LoadXFile(&file);
+	unsigned short int index = 0;
+	MyObject->MapAnimationSet(index);
+	//We set the interval of animation in steps
+	MyObject->SetAnimationStep(80);
+	MyObject->UpdateAnimation();
 
 	return MyObject;
 }
@@ -38,6 +50,7 @@ int main(int argc, const char* argv[])
 	pEngine.InitRenderer();
 
 	pengine::Object3D* object3d = kapotlelijk(pEngine.GetResourceManager());
+	pengine::Object3D* object3d2 = kapotlelijk2(pEngine.GetResourceManager());
 
 	std::string rechtdoorPath = "resources/rechtdoor.x";
 	std::string nietRechtdoorPath = "resources/niet-rechtdoor.x";
@@ -49,6 +62,7 @@ int main(int argc, const char* argv[])
 	sceneFactory->SetXModel2(weg);
 	sceneFactory->SetXModel3(weg2);
 	sceneFactory->SetObject3D(object3d);
+	sceneFactory->SetObject3D2(object3d2);
 	sceneFactory->SetGroundResource("resources/heightmap.bmp");
 	sceneFactory->SetGroundTexture("resources/heightmaptexture.bmp");
 	sceneFactory->SetSkyboxTexture("resources/dome2.jpg");
