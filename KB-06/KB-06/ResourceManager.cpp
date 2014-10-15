@@ -11,6 +11,7 @@ namespace pengine
 
 	ResourceManager::~ResourceManager()
 	{
+		logger->Log(Logger::INFO, "ResourceManager destructed");
 	}
 
 	/*Mesh* ResourceManager::LoadMesh(const std::string& fileName, const std::string& extension)

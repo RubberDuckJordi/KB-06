@@ -11,6 +11,7 @@ namespace pengine
 	PEngine::PEngine()
 	{
 		logger = LoggerPool::GetInstance().GetLogger();
+		logger->Log(Logger::INFO, "Constructed PEngine");
 	}
 
 	PEngine::~PEngine()
@@ -20,7 +21,6 @@ namespace pengine
 		delete sceneManager;
 		delete renderer;
 		delete resourceManager;
-
 		logger->Log(Logger::INFO, "Destructed PEngine");
 	}
 

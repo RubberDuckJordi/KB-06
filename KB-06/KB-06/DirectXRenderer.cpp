@@ -25,6 +25,7 @@ namespace pengine
 		{
 			g_pD3D->Release();
 		}
+		logger->Log(Logger::INFO, "DirectXRenderer destructed");
 	}
 
 	void DirectXRenderer::CreateD2DFactory()

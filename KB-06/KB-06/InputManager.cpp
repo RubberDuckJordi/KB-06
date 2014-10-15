@@ -12,6 +12,7 @@ namespace pengine
 	InputManager::~InputManager()
 	{
 		delete inputDeviceFactory;
+		logger->Log(Logger::INFO, "InputManager destructed");
 	}
 
 	void InputManager::Initialise(HWND hwnd)

@@ -10,6 +10,7 @@ namespace pengine
 
 	SceneManager::~SceneManager()
 	{
+		logger->Log(Logger::INFO, "SceneManager destructed");
 	}
 
 	void SceneManager::CreateScene(std::string* path, ResourceManager* resourceManager)
