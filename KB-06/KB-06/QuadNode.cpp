@@ -36,11 +36,13 @@ namespace pengine
 			}
 			else
 			{
-				amountOfVertices = this->amountOfVertices / (levelOfDetail * levelOfDetail);
+				int nodeAmountOfVertices = this->amountOfVertices / (levelOfDetail * levelOfDetail);
+				int northRestitchingAmountOfVertices = 0;
 
+				D3DCustomVertex* northRestitchingVertices = NULL;
+				D3DCustomVertex* nodeVertices = new D3DCustomVertex[nodeAmountOfVertices];
+				
 				int skippedTiles = levelOfDetail - 1;
-
-				vertices = new D3DCustomVertex[amountOfVertices + 3]; //REFACTOR +3
 				// Divide the vertices by level of detail
 				for (int x = 0; x < newWidth; ++x)
 				{
@@ -48,12 +50,12 @@ namespace pengine
 
 					for (int z = 0; z < newDepth; ++z)
 					{
-						vertices[offset + z * 6] = this->vertices[(x * levelOfDetail + skippedTiles) * width * 6 + (z + z * skippedTiles) * 6];
-						vertices[offset + z * 6 + 1] = this->vertices[(x + x * skippedTiles) * width * 6 + (z * levelOfDetail + skippedTiles) * 6 + 1];
-						vertices[offset + z * 6 + 2] = this->vertices[(x + x * skippedTiles) * width * 6 + (z + z * skippedTiles) * 6 + 2];
-						vertices[offset + z * 6 + 3] = this->vertices[(x * levelOfDetail + skippedTiles) * width * 6 + (z * levelOfDetail + skippedTiles) * 6 + 3];
-						vertices[offset + z * 6 + 4] = this->vertices[(x + x * skippedTiles) * width * 6 + (z * levelOfDetail + skippedTiles) * 6 + 4];
-						vertices[offset + z * 6 + 5] = this->vertices[(x * levelOfDetail + skippedTiles) * width * 6 + (z + z * skippedTiles) * 6 + 5];
+						nodeVertices[offset + z * 6] = this->vertices[(x * levelOfDetail + skippedTiles) * width * 6 + (z + z * skippedTiles) * 6];
+						nodeVertices[offset + z * 6 + 1] = this->vertices[(x + x * skippedTiles) * width * 6 + (z * levelOfDetail + skippedTiles) * 6 + 1];
+						nodeVertices[offset + z * 6 + 2] = this->vertices[(x + x * skippedTiles) * width * 6 + (z + z * skippedTiles) * 6 + 2];
+						nodeVertices[offset + z * 6 + 3] = this->vertices[(x * levelOfDetail + skippedTiles) * width * 6 + (z * levelOfDetail + skippedTiles) * 6 + 3];
+						nodeVertices[offset + z * 6 + 4] = this->vertices[(x + x * skippedTiles) * width * 6 + (z * levelOfDetail + skippedTiles) * 6 + 4];
+						nodeVertices[offset + z * 6 + 5] = this->vertices[(x * levelOfDetail + skippedTiles) * width * 6 + (z + z * skippedTiles) * 6 + 5];
 					}
 				}
 
@@ -64,16 +66,41 @@ namespace pengine
 
 					if (neighborLevelOfDetail < levelOfDetail)
 					{
-						int neighborSkippedTiles = neighborLevelOfDetail - 1;
-						amountOfVertices += 3 * newDepth;
-						int x = 0;
-						int z = 0;
+						northRestitchingAmountOfVertices = 3 * newDepth;
+						northRestitchingVertices = new D3DCustomVertex[northRestitchingAmountOfVertices];
 
-						vertices[amountOfVertices - 3] = this->vertices[(x * levelOfDetail + skippedTiles) * width * 6 + (z * levelOfDetail + skippedTiles) * 6 + 3];
-						vertices[amountOfVertices - 2] = this->vertices[(x + x * skippedTiles) * width * 6 + (z * levelOfDetail + skippedTiles) * 6 + 4];
-						vertices[amountOfVertices - 1] = this->vertices[((x + 1) * neighborLevelOfDetail + neighborSkippedTiles) * width * 6 + ((z + 1) + (z + 1) * neighborSkippedTiles) * 6 + 5];
+						int neighborSkippedTiles = neighborLevelOfDetail - 1;
+						int x = newWidth; // only process north border
+						
+						for (int z = 0; z < newDepth; ++z)
+						{
+							int offset = z * 3;
+							northRestitchingVertices[offset] = this->vertices[((x - 1) * levelOfDetail + skippedTiles) * width * 6 + (z * levelOfDetail + skippedTiles) * 6 + 3];
+							northRestitchingVertices[offset + 1] = this->vertices[((x - 1) + (x - 1) * skippedTiles) * width * 6 + (z * levelOfDetail + skippedTiles) * 6 + 4];
+							northRestitchingVertices[offset + 2] = this->vertices[(x * neighborLevelOfDetail + neighborSkippedTiles) * width * 6 + ((z + 1) + (z + 1) * neighborSkippedTiles) * 6 + 5];
+						}						
 					}
 				}
+
+				amountOfVertices = nodeAmountOfVertices + northRestitchingAmountOfVertices;
+				vertices = new D3DCustomVertex[amountOfVertices];
+				
+				int offset = 0;
+
+				for (int i = 0; i < nodeAmountOfVertices; ++i)
+				{
+					vertices[offset + i] = nodeVertices[i];
+				}
+				offset += nodeAmountOfVertices;
+
+				for (int i = 0; i < northRestitchingAmountOfVertices; ++i)
+				{
+					vertices[offset + i] = northRestitchingVertices[i];
+				}
+				offset += northRestitchingAmountOfVertices;
+
+				delete[] nodeVertices;
+				delete[] northRestitchingVertices;
 			}
 		}
 		else
