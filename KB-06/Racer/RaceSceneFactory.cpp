@@ -234,7 +234,7 @@ pengine::Scene* racer::RaceSceneFactory::CreateScene()
 	track->SetAll(-15, -1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 3.0f, 3.0f, 3.0f);
 
 	pengine::Ground* ground = resourceManager->LoadGround(groundResource, groundTexture);
-	ground->InitQuadTree(2);
+	ground->InitQuadTree(1);
 	pengine::Skybox* skybox = new pengine::Skybox();
 	pengine::Material* material = new pengine::Material();
 	material->texture = resourceManager->LoadBinaryFile(skyboxTexture);

@@ -161,7 +161,7 @@ namespace pengine
 		CreateQuadTreeChildren(rootNode, depth);
 
 		rootNode->SetLevelOfDetail(1);
-		std::get<0>(*rootNode->GetChildren())->SetLevelOfDetail(2);
+		(*rootNode->GetChildren())[2]->SetLevelOfDetail(2);
 
 		// Calculate neighbors
 		if (!rootNode->IsLeaf())

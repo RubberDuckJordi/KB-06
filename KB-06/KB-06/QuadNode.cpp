@@ -25,28 +25,48 @@ namespace pengine
 	{
 		if (isLeaf)
 		{
+			int newWidth = width / levelOfDetail;
+			int newDepth = depth / levelOfDetail;
+
 			if (levelOfDetail == 1)
 			{
 				// No changes
 				vertices = this->vertices;
 				amountOfVertices = this->amountOfVertices;
+
+				// Restitching
+				if (neighbors[1] != NULL)
+				{
+					unsigned short neighborLevelOfDetail = neighbors[1]->GetLevelOfDetail();
+					int skippedTiles = neighborLevelOfDetail - 1;
+
+					if (neighborLevelOfDetail > levelOfDetail)
+					{
+						int z = depth;
+						for (int x = 0; x < newWidth; ++x)
+						{
+							int offset = x * newWidth * 6;
+							vertices[offset + z * 6 + 1] = this->vertices[(x + x * skippedTiles) * width * 6 + (z * neighborLevelOfDetail + skippedTiles) * 6 + 1];
+							vertices[offset + z * 6 + 3] = this->vertices[(x * neighborLevelOfDetail + skippedTiles) * width * 6 + (z * neighborLevelOfDetail + skippedTiles) * 6 + 3];
+							vertices[offset + z * 6 + 4] = this->vertices[(x + x * skippedTiles) * width * 6 + (z * neighborLevelOfDetail + skippedTiles) * 6 + 4];
+						}
+					}
+				}
 			}
 			else
 			{
 				amountOfVertices = this->amountOfVertices / (levelOfDetail * levelOfDetail);
-
-				int newWidth = width / levelOfDetail;
-				int newDepth = depth / levelOfDetail;
+				
+				int skippedTiles = levelOfDetail - 1;
 
 				vertices = new D3DCustomVertex[amountOfVertices];
 				// Divide the vertices by level of detail
 				for (int x = 0; x < newWidth; ++x)
 				{
+					int offset = x * newWidth * 6;
+
 					for (int z = 0; z < newDepth; ++z)
 					{
-						int offset = x * newWidth * 6;
-						int skippedTiles = levelOfDetail - 1;
-
 						vertices[offset + z * 6] = this->vertices[(x * levelOfDetail + skippedTiles) * width * 6 + (z + z * skippedTiles) * 6];
 						vertices[offset + z * 6 + 1] = this->vertices[(x + x * skippedTiles) * width * 6 + (z * levelOfDetail + skippedTiles) * 6 + 1];
 						vertices[offset + z * 6 + 2] = this->vertices[(x + x * skippedTiles) * width * 6 + (z + z * skippedTiles) * 6 + 2];
@@ -255,7 +275,7 @@ namespace pengine
 		{
 			std::map<char, QuadNode*>* neighbors = this->GetNeighbors();
 
-			switch (this->GetLocation())
+			switch (location)
 			{
 			case 0:
 				// top left
@@ -270,11 +290,11 @@ namespace pengine
 			case 1:
 				// bottom left
 				(*neighbors)[0] = (*this->GetParent()->GetChildren())[0];
-				(*neighbors)[1] = (*this->GetParent()->GetChildren())[3];
+				(*neighbors)[1] = (*this->GetParent()->GetChildren())[2];
 				if (this->GetParent()->GetNeighbors()->size() > 0)
 				{
 					SetNeighbor(neighbors, 2, 0);
-					SetNeighbor(neighbors, 3, 3);
+					SetNeighbor(neighbors, 3, 2);
 				}
 				break;
 			case 2:
@@ -284,7 +304,7 @@ namespace pengine
 				if (this->GetParent()->GetNeighbors()->size() > 0)
 				{
 					SetNeighbor(neighbors, 2, 3);
-					SetNeighbor(neighbors, 0, 2);
+					SetNeighbor(neighbors, 1, 1);
 				}
 				break;
 			case 3:
