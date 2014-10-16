@@ -77,7 +77,15 @@ namespace pengine
 							int offset = z * 3;
 							northRestitchingVertices[offset] = this->vertices[((x - 1) * levelOfDetail + skippedTiles) * width * 6 + (z * levelOfDetail + skippedTiles) * 6 + 3];
 							northRestitchingVertices[offset + 1] = this->vertices[((x - 1) + (x - 1) * skippedTiles) * width * 6 + (z * levelOfDetail + skippedTiles) * 6 + 4];
-							northRestitchingVertices[offset + 2] = this->vertices[(x * neighborLevelOfDetail + neighborSkippedTiles) * width * 6 + ((z + 1) + (z + 1) * neighborSkippedTiles) * 6 + 5];
+							northRestitchingVertices[offset + 2] = this->vertices[((x - 1) * levelOfDetail + skippedTiles) * width * 6 + (z * levelOfDetail + skippedTiles) * 6 + 0]; // relative to the first vertex
+
+							// Debugging to show the restitched triangle, should be removed ASAP
+							northRestitchingVertices[offset].tu = 0.0f;
+							northRestitchingVertices[offset + 1].tu = 0.0f;
+							northRestitchingVertices[offset + 2].tu = 0.0f;
+							northRestitchingVertices[offset].tv = 0.0f;
+							northRestitchingVertices[offset + 1].tv = 0.0f;
+							northRestitchingVertices[offset + 2].tv = 0.0f;
 						}						
 					}
 				}
