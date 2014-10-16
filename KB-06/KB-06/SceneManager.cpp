@@ -24,6 +24,7 @@ namespace pengine
 	{
 		SceneFactory* factory = sceneFactories.at(factoryKey);
 		Scene* scene = factory->CreateScene(sceneFile, resourceManager);
+		SetCurrentScene(scene);
 		currentScene->SetSceneCallback(this);
 		return scene;
 	}

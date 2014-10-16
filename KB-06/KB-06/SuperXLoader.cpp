@@ -115,6 +115,7 @@ namespace pengine
 		if (_LoadSkeleton != NULL)
 		{
 			MapMeshToBones(_LoadSkeleton);
+			_LoadSkeleton = NULL;
 		}
 		else
 		{

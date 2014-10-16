@@ -55,7 +55,7 @@ void racer::RaceCart::Draw(pengine::Renderer* renderer)
 {
 	if (xModel != NULL)
 	{
-		renderer->SetActiveMatrix(myCachedMatrix->theMatrix); //should be called every frame
+		renderer->SetActiveMatrix(myCachedMatrix); //should be called every frame
 
 		xModel->ClearSkinnedVertices();
 		xModel->UpdateAnimation();
@@ -127,22 +127,65 @@ void racer::RaceCart::OnCollide(pengine::COLLISIONEFFECT* effect)
 void racer::RaceCart::InitCollisionBox()
 {
 	// Get bounds of model
-	pengine::RECTANGLE* rect = new pengine::RECTANGLE();
+	pengine::BEAM* rect = new pengine::BEAM();
 	xModel->CreateCollisionBox(*rect);
 
 	// Add transformation
-	rect->x += position.x - rect->width / 8;
+	rect->x += position.x;// -rect->width / 8;
 	rect->y += position.y;
-	rect->z += position.z + rect->depth / 4;
+	rect->z += position.z;// +rect->depth / 4;
 
 	rect->width = rect->width / 2;
 	rect->height = rect->height / 2;
 	rect->depth = rect->depth / 2;
 
 	// Add rotation
-	rect->rotationX = rotation.x;
-	rect->rotationY = rotation.y;
-	rect->rotationZ = rotation.z;
+	rect->yaw = rotation.x;
+	rect->pitch = rotation.y;
+	rect->roll = rotation.z;
+
+	float radius = sqrt(pow(rect->frontBottomLeft.x, 2) + pow(rect->frontBottomLeft.z, 2));//abc
+	float angle = 0;
+
+	angle = atan2f(rect->frontBottomLeft.z, rect->frontBottomLeft.x);
+	rect->rotFrontBottomLeft.x = cos(angle - RADIANS(rect->yaw)) * radius;
+	rect->rotFrontBottomLeft.y = rect->frontBottomLeft.y;//we aren't doing pitch rotation (yet...)
+	rect->rotFrontBottomLeft.z = sin(angle - RADIANS(rect->yaw)) * radius;
+
+	angle = atan2f(rect->frontBottomRight.z, rect->frontBottomRight.x);
+	rect->rotFrontBottomRight.x = cos(angle - RADIANS(rect->yaw)) * radius;
+	rect->rotFrontBottomRight.y = rect->frontBottomRight.y;//we aren't doing pitch rotation (yet...)
+	rect->rotFrontBottomRight.z = sin(angle - RADIANS(rect->yaw)) * radius;
+
+	angle = atan2f(rect->backBottomLeft.z, rect->backBottomLeft.x);
+	rect->rotBackBottomLeft.x = cos(angle - RADIANS(rect->yaw)) * radius;
+	rect->rotBackBottomLeft.y = rect->backBottomLeft.y;//we aren't doing pitch rotation (yet...)
+	rect->rotBackBottomLeft.z = sin(angle - RADIANS(rect->yaw)) * radius;
+
+	angle = atan2f(rect->backBottomRight.z, rect->backBottomRight.x);
+	rect->rotBackBottomRight.x = cos(angle - RADIANS(rect->yaw)) * radius;
+	rect->rotBackBottomRight.y = rect->backBottomRight.y;//we aren't doing pitch rotation (yet...)
+	rect->rotBackBottomRight.z = sin(angle - RADIANS(rect->yaw)) * radius;
+
+	angle = atan2f(rect->frontTopLeft.z, rect->frontTopLeft.x);
+	rect->rotFrontTopLeft.x = cos(angle - RADIANS(rect->yaw)) * radius;
+	rect->rotFrontTopLeft.y = rect->frontTopLeft.y;//we aren't doing pitch rotation (yet...)
+	rect->rotFrontTopLeft.z = sin(angle - RADIANS(rect->yaw)) * radius;
+
+	angle = atan2f(rect->frontTopRight.z, rect->frontTopRight.x);
+	rect->rotFrontTopRight.x = cos(angle - RADIANS(rect->yaw)) * radius;
+	rect->rotFrontTopRight.y = rect->frontTopRight.y;//we aren't doing pitch rotation (yet...)
+	rect->rotFrontTopRight.z = sin(angle - RADIANS(rect->yaw)) * radius;
+
+	angle = atan2f(rect->backTopLeft.z, rect->backTopLeft.x);
+	rect->rotBackTopLeft.x = cos(angle - RADIANS(rect->yaw)) * radius;
+	rect->rotBackTopLeft.y = rect->backTopLeft.y;//we aren't doing pitch rotation (yet...)
+	rect->rotBackTopLeft.z = sin(angle - RADIANS(rect->yaw)) * radius;
+
+	angle = atan2f(rect->backTopRight.z, rect->backTopRight.x);
+	rect->rotBackTopRight.x = cos(angle - RADIANS(rect->yaw)) * radius;
+	rect->rotBackTopRight.y = rect->backTopRight.y;//we aren't doing pitch rotation (yet...)
+	rect->rotBackTopRight.z = sin(angle - RADIANS(rect->yaw)) * radius;
 
 	collisionBox = *rect;
 }

@@ -31,7 +31,3 @@
 <ScalingY>1.0f</ScalingY>
 <ScalingZ>1.0f</ScalingZ>
 </Entity>
-
-<Skybox>
-<Material></Material>
-</Skybox>
