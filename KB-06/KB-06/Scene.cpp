@@ -6,6 +6,7 @@ namespace pengine
 	Scene::Scene()
 	{
 		logger = LoggerPool::GetInstance().GetLogger();
+		gravity = Vector3(0.0f, -9.81f, 0.0f);
 	}
 
 	Scene::~Scene()
@@ -34,11 +35,18 @@ namespace pengine
 
 	void Scene::Update(float deltaTime, std::map<Input, long>* actions)
 	{
-		for (std::list<Entity*>::iterator i = entities.begin(); i != entities.end(); ++i)
-		{
-			(*i)->UpdateLogic(deltaTime, actions);
-		}
+		int numOfIterations = (int)(deltaTime / 0.1f) + 1;	// Calculate Number Of Iterations To Be Made At 
+															// This Update Depending On maxPossible_dt And dt
+		if (numOfIterations != 0)							// Avoid Division By Zero
+			deltaTime = deltaTime / numOfIterations;		// dt Should Be Updated According To numOfIterations
 
+		for (int a = 0; a < numOfIterations; ++a)			// We Need To Iterate Simulations "numOfIterations" Times
+		{
+			for (std::list<Entity*>::iterator i = entities.begin(); i != entities.end(); ++i)
+			{
+				(*i)->UpdateLogic(deltaTime, actions);
+			}
+		}
 		//The following code is highly inefficient ;)
 
 		// Init the collision boxes

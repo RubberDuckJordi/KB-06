@@ -21,6 +21,32 @@ namespace pengine
 		//
 		Vector3 operator*(const Vector3 &vec) const;
 
+		Vector3& operator+= (const Vector3 v)			// operator+= is used to add another Vector3D to this Vector3D.
+		{
+			x += v.x;
+			y += v.y;
+			z += v.z;
+			return *this;
+		}
+		Vector3& operator-= (const Vector3 v)			// operator+= is used to add another Vector3D to this Vector3D.
+		{
+			x -= v.x;
+			y -= v.y;
+			z -= v.z;
+			return *this;
+		}
+
+		Vector3 operator* (float value)			// operator* is used to scale a Vector3D by a value. This value multiplies the Vector3D's x, y and z.
+		{
+			return Vector3(x * value, y * value, z * value);
+		}
+
+		Vector3 operator/ (float value)			// operator/ is used to scale a Vector3D by a value. This value divides the Vector3D's x, y and z.
+		{
+			return Vector3(x / value, y / value, z / value);
+		}
+
+
 		float GetMagnitude();
 
 		float GetXAngle();
@@ -39,6 +65,7 @@ namespace pengine
 
 		//calculate and return cross product
 		static Vector3 cross(Vector3 &vec1, Vector3 &vec2);
+
 	};
 }
 #endif

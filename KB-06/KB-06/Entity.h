@@ -45,7 +45,15 @@ namespace pengine
 
 		virtual void Draw(Renderer* renderer) = 0;
 		virtual void UpdateLogic(float deltaTime, std::map<Input, long>* actions);
-		
+
+		// new physics 
+		virtual void ApplyForce(Vector3 force);
+		void ResetForce();
+		void SimulatePhysics(float deltaTime);
+		Vector3 force;
+		Vector3 velocity;
+		bool isStatic = false;
+		// end
 		virtual float GetRadius();
 	protected:
 		void ApplyFriction(float friction);
@@ -61,6 +69,7 @@ namespace pengine
 		float radius;
 		Logger* logger;
 		float defaultRadius = 1.0f;
+		Vector3 gravity;
 	};
 }
 #endif

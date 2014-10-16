@@ -150,21 +150,41 @@ namespace pengine
 		modifiedVector.y = p_direction->y * mass;
 		modifiedVector.z = p_direction->z * mass;
 
-		AddForce(&modifiedVector);
+		//AddForce(&modifiedVector);
+	}
+
+	void Entity::ApplyForce(Vector3 force){
+		this->force += force;
+	}
+
+	void Entity::ResetForce(){
+		force.x = 0;
+		force.y = 0;
+		force.z = 0;
+	}
+
+	void Entity::SimulatePhysics(float deltaTime){
+		velocity += (force / mass) * deltaTime;	// Change in velocity is added to the velocity.
+												// The change is proportinal with the acceleration (force / m) and change in time
+
+		position += velocity * deltaTime;	// Change in position is added to the position.
+											// Change in position is velocity times the change in time
+		Vector3 drag = (velocity * velocity)* 0.5f * 1.2041f * 1.0f * (4.0f * 4.0f);
+		velocity -= velocity * drag * deltaTime;
+		ResetForce();						// Clear all previous forces
+		myCachedMatrix->CreateMatrix(position.x, position.y, position.z, rotation.x, rotation.y, rotation.z, scale.x, scale.y, scale.z, myCachedMatrix);
+		logger->Log(pengine::Logger::ERR, std::to_string(drag.x) + " " + std::to_string(drag.y) + " " + std::to_string(drag.z));
 	}
 
 	void Entity::UpdateLogic(float deltaTime, std::map<pengine::Input, long>* actions)
 	{
-		// Ground friction
-		ApplyFriction(friction);
-		ApplyFriction(friction * 0.05f * movementVector.GetMagnitude());
-
-		float xDelta = (deltaTime * movementVector.x);
-		float zDelta = (deltaTime * movementVector.z);
-		float yDelta = (deltaTime * movementVector.y);
-
-		AddPosition(xDelta, yDelta, zDelta);
+		if (!isStatic){
+			//gravity = Vector3(0.0f, -9.81f, 0.0f); Disabled gravity for now
+		}
+		ApplyForce(gravity * mass);
+		SimulatePhysics(deltaTime);
 	}
+
 
 	void Entity::AddRelativeForce(Vector3* p_vector)
 	{
@@ -181,6 +201,7 @@ namespace pengine
 		//TODO: Y AXIS, PITCH, ROLL
 
 		AddForce(&relativeVector);
+		ApplyForce(relativeVector);
 	}
 
 	void Entity::ApplyFriction(float p_friction)

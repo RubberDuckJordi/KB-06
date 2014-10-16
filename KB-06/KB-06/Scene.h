@@ -39,6 +39,7 @@ namespace pengine
 		Logger* logger;
 		Skybox* skybox;
 		Ground* ground;
+		Vector3 gravity;
 	};
 }
 #endif
