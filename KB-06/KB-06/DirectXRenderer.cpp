@@ -406,47 +406,57 @@ namespace pengine
 			12);// PrimitiveCount
 	}
 
-	void DirectXRenderer::ActivateRenderingToTexture(int tWidth, int tHeight, DWORD bgColor)
+	void DirectXRenderer::ActivateRenderingToTexture(int textureIndex, int tWidth, int tHeight, RGBAColor bgColor)
 	{
-		g_pd3dDevice->EndScene();
-		if (RenderTexture != NULL)
+		//actually both while loops should probably move away from here...
+		while (RenderTextures.size() != 0)
 		{
-			RenderTexture->Release();
-			RenderTexture = NULL;
+			//this is probably not needed because of clearscene?
+			//actually, we really only need to make the textures once...
+			RenderTextures.back()->Release();
+			RenderTextures.pop_back();
+
+			RenderSurfaces.back()->Release();
+			RenderSurfaces.pop_back();
 		}
-		if (RenderSurface != NULL)
+
+		while (textureIndex + 1 > RenderTextures.size())
 		{
-			RenderSurface->Release();
-			RenderSurface = NULL;
+			//Create our render target, making it the same size as the screen. Usually DX would resize it to a 2^x size, but
+			//we're creating it as a "D3DUSAGE_RENDERTARGET" so it can set it the same as the screen's size.
+			LPDIRECT3DTEXTURE9 toAdd;
+			g_pd3dDevice->CreateTexture(tWidth, tHeight, 1, D3DUSAGE_RENDERTARGET, D3DFMT_A8R8G8B8, D3DPOOL_DEFAULT, &toAdd, NULL);
+			//g_pd3dDevice->CreateTexture(tWidth, tHeight, 1, D3DUSAGE_RENDERTARGET, D3DFMT_A8R8G8B8, D3DPOOL_DEFAULT, &RenderTextures[textureIndex], NULL);
+			RenderTextures.push_back(toAdd);
+
+			LPDIRECT3DSURFACE9 addToo;
+			//Here we grab a pointer to the surface so we can pass it to SetRenderTarget
+			toAdd->GetSurfaceLevel(0, &addToo);
+			RenderSurfaces.push_back(addToo);
 		}
-		//Create our render target, making it the same size as the screen. Usually DX would resize it to a 2^x size, but
-		//we're creating it as a "D3DUSAGE_RENDERTARGET" so it can set it the same as the screen's size.
-		g_pd3dDevice->CreateTexture(tWidth, tHeight, 1, D3DUSAGE_RENDERTARGET, D3DFMT_A8R8G8B8, D3DPOOL_DEFAULT, &RenderTexture, NULL);
-		//Here we grab a pointer to the surface so we can pass it to SetRenderTarget
-		RenderTexture->GetSurfaceLevel(0, &RenderSurface);
 
 		//Change our rendering target to our created surface.
-		g_pd3dDevice->SetRenderTarget(0, RenderSurface);
+		g_pd3dDevice->SetRenderTarget(0, RenderSurfaces[textureIndex]);
 		//Clear it too, with a different color to make sure we're getting it.
-		g_pd3dDevice->Clear(0, NULL, D3DCLEAR_TARGET, bgColor, 1.0f, 0);//no alpha please (for now)
+		ClearScene(0, 0, bgColor, 1.0f, 0);
 		//Start the renderer to render to the texture scene
-		g_pd3dDevice->BeginScene();//not sure if this has an effect or not
+		BeginScene();
 	}
 
-	void DirectXRenderer::DeactivateRenderingToTexture()
+	void DirectXRenderer::DeactivateRenderingToTexture(int textureIndex)
 	{
 		//We're done rendering to the texture scene
-		g_pd3dDevice->EndScene();//not sure if this has an effect or not
+		EndScene();
+		//PresentScene(NULL);//maybe needed if stuff doesn't work?
 		//D3DXSaveTextureToFile(L"test.bmp", D3DXIFF_BMP, RenderTexture, NULL);
 		//And we change back to the actual backbuffer
 		g_pd3dDevice->SetRenderTarget(0, MainSurface);
-		g_pd3dDevice->BeginScene();
-		SetProjectionMatrix(M_PI / 4, 100.0f);
+		//SetProjectionMatrix(M_PI / 4, 100.0f);
 	}
 
-	void DirectXRenderer::SetTextureToRenderedTexture()
+	void DirectXRenderer::SetTextureToRenderedTexture(int textureIndex)
 	{
 		//Set the texture we're using to the texture we just rendered to. (Neat huh? :D)
-		g_pd3dDevice->SetTexture(0, RenderTexture);
+		g_pd3dDevice->SetTexture(0, RenderTextures[textureIndex]);
 	}
 }

@@ -79,7 +79,23 @@ namespace pengine
 				return;
 			}
 		}
+		RGBAColor color;
+		color.r = 1.0f;
+		color.g = 0.25f;
+		color.b = 1.0f;
+		color.a = 1.0f;
+
+		for (unsigned int i = 0; i < currentScene->GetAmountOfRenderTextures(); ++i)
+		{
+			renderer->ActivateRenderingToTexture(i, 500, 500, color);
+			currentScene->RenderToTexture(i, renderer);
+			renderer->DeactivateRenderingToTexture(i);
+		}
+
+		renderer->ClearScene(0, 0, color, 1.0f, 0);
+		renderer->BeginScene();
 		currentScene->Render(renderer);
+		renderer->EndScene();
 	}
 
 	void SceneManager::SetCurrentScene(Scene* scene)

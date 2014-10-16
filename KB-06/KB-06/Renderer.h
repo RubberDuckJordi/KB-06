@@ -55,11 +55,8 @@ namespace pengine
 		virtual void SetTexture(TextureWrapper* wrapper) = 0;
 		virtual void SetFvF(DWORD* fvf) = 0;
 
-		//virtual void DrawPrimitive(Mesh mesh) = 0;
 		virtual void DrawSubset(MeshWrapper* wrapper, int subset) = 0;
-		//virtual void Draw(Vertex* vertexBuffer, int amountOfIndices);
 
-		//virtual void Draw(Mesh* mesh) = 0;
 		virtual void SetActiveMatrix(Matrix* matrix) = 0;
 
 		virtual void SetLights() = 0;
@@ -69,9 +66,9 @@ namespace pengine
 		virtual void DrawVertexBuffer(VertexBufferWrapper* vertexBuffer, int amountOfIndices) = 0;
 		virtual void DrawIndexedVertexBuffer(VertexBufferWrapper* vertexBuffer, IndexBufferWrapper* indexBuffer, int amountOfVertices, int amountOfFaces) = 0;
 
-		virtual void ActivateRenderingToTexture(int tWidth, int tHeight, DWORD bgColor) = 0;
-		virtual void DeactivateRenderingToTexture() = 0;
-		virtual void SetTextureToRenderedTexture() = 0;
+		virtual void ActivateRenderingToTexture(int textureIndex, int tWidth, int tHeight, RGBAColor bgColor) = 0;
+		virtual void DeactivateRenderingToTexture(int textureIndex) = 0;
+		virtual void SetTextureToRenderedTexture(int textureIndex) = 0;
 	protected:
 		Logger* logger;
 	};

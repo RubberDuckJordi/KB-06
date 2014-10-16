@@ -12,6 +12,7 @@
 #include "SceneCallback.h"
 #include "Collidable.h"
 #include <functional>
+#include <vector>
 
 namespace pengine
 {
@@ -23,6 +24,11 @@ namespace pengine
 		virtual void Update(float deltaTime, std::map<Input, long>* actions);
 		void AddEntity(Entity* entity);
 		void AddCollidable(Collidable* collidable);
+		/*!
+		You will have to set the camera yourself, then render whatever you please.
+		This function will not be called if SetAmountOfRenderTextures is not called or 0.
+		*/
+		virtual void RenderToTexture(int texture, Renderer* renderer);
 		virtual void Render(Renderer* renderer);
 
 		EntityCamera* GetCurrentCamera();
@@ -30,15 +36,18 @@ namespace pengine
 		void SetSceneCallback(SceneCallback* callback);
 		void SetSkybox(Skybox* skybox);
 		void SetGround(Ground* ground);
-		SceneCallback* callback;
+		void SetAmountOfRenderTextures(int amount);
+		int GetAmountOfRenderTextures();
 
 	protected:
 		std::list<Entity*> entities;
 		std::list<Collidable*> collidables;
 		EntityCamera* currentCamera;
 		Logger* logger;
+		SceneCallback* callback;
 		Skybox* skybox;
 		Ground* ground;
+		int amountOfRenderTextures;
 	};
 }
 #endif

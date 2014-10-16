@@ -3,6 +3,7 @@
 
 //#include <d2d1.h>
 #include <d3dx9.h>
+#include <vector>
 #include "Renderer.h"
 //#include <wincodec.h>
 
@@ -60,20 +61,20 @@ namespace pengine
 		void DrawVertexBuffer(VertexBufferWrapper*, int amountOfVertices);
 		void DrawIndexedVertexBuffer(VertexBufferWrapper*, IndexBufferWrapper*, int amountOfIndices, int amountOfFaces);
 
-		void ActivateRenderingToTexture(int tWidth, int tHeight, DWORD bgColor);
-		void DeactivateRenderingToTexture();
-		void SetTextureToRenderedTexture();
+		void ActivateRenderingToTexture(int textureIndex, int tWidth, int tHeight, RGBAColor bgColor);
+		void DeactivateRenderingToTexture(int textureIndex);
+		void SetTextureToRenderedTexture(int textureIndex);
 
 	private:
 		void SetMatrixCache(Matrix* matrix);
 
 		// Have yet to figure out how to get rid of this.
 		// Basically it's a copied pointer to the device's back buffer
-		LPDIRECT3DSURFACE9 MainSurface = NULL;
+		LPDIRECT3DSURFACE9 MainSurface;
 
 		// And here we have the whole point of this file: The render surface and associated texture
-		LPDIRECT3DSURFACE9 RenderSurface = NULL;
-		LPDIRECT3DTEXTURE9 RenderTexture = NULL;
+		std::vector<LPDIRECT3DSURFACE9> RenderSurfaces;
+		std::vector<LPDIRECT3DTEXTURE9> RenderTextures;
 
 		RECT rectangle;
 

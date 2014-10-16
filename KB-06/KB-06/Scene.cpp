@@ -6,6 +6,7 @@ namespace pengine
 	Scene::Scene()
 	{
 		logger = LoggerPool::GetInstance().GetLogger();
+		amountOfRenderTextures = 0;
 	}
 
 	Scene::~Scene()
@@ -15,21 +16,6 @@ namespace pengine
 			delete entities.front(), entities.pop_front();
 		}
 		delete ground;
-	}
-
-	void Scene::AddEntity(Entity* entity)
-	{
-		entities.push_back(entity);
-	}
-
-	void Scene::AddCollidable(Collidable* collidable)
-	{
-		collidables.push_back(collidable);
-	}
-
-	void Scene::SetSkybox(Skybox* p_skybox)
-	{
-		skybox = p_skybox;
 	}
 
 	void Scene::Update(float deltaTime, std::map<Input, long>* actions)
@@ -86,6 +72,20 @@ namespace pengine
 		currentCamera->UpdateLogic(deltaTime, actions);
 	}
 
+	void Scene::AddEntity(Entity* entity)
+	{
+		entities.push_back(entity);
+	}
+
+	void Scene::AddCollidable(Collidable* collidable)
+	{
+		collidables.push_back(collidable);
+	}
+
+	void Scene::RenderToTexture(int texture, Renderer* renderer)
+	{
+		//keep it empty so we're not forcing the client to implement this function.
+	}
 
 	void Scene::Render(Renderer* renderer)
 	{
@@ -106,11 +106,11 @@ namespace pengine
 		int entitiesLoaded = 0;
 		for each(Entity* entity in entities)
 		{
-			/*if(currentCamera->SphereInFrustum(entity->GetPosition(), entity->GetRadius()))
-			{*/
+			if (currentCamera->SphereInFrustum(entity->GetPosition(), entity->GetRadius()))
+			{
 				entity->Draw(renderer);
 				++entitiesLoaded;
-			//}
+			}
 		}
 		//logger->Log(Logger::DEBUG, "Rendered " + std::to_string(entitiesLoaded) + " of " + std::to_string(entities.size()) + " entities");
 
@@ -127,7 +127,7 @@ namespace pengine
 		mat.specular = { 1.0f, 0.0f, 0.0f };
 		mat.power = 50.0f;
 		renderer->SetMaterial(&mat);//WHY DOES THIS NOT MAKE THE WIREFRAME RED?!?!? >:( I DON'T UNDERSTAND!
-		for (std::list<Collidable*>::iterator i = collidables.begin(); i != collidables.end(); ++i)
+		for (auto i = collidables.begin(); i != collidables.end(); ++i)
 		{
 			(*i)->DrawCollidable(renderer);
 		}
@@ -150,8 +150,23 @@ namespace pengine
 		this->callback = callback;
 	}
 
+	void Scene::SetSkybox(Skybox* p_skybox)
+	{
+		skybox = p_skybox;
+	}
+
 	void Scene::SetGround(Ground* p_ground)
 	{
 		ground = p_ground;
+	}
+
+	void Scene::SetAmountOfRenderTextures(int amount)
+	{
+		amountOfRenderTextures = amount;
+	}
+
+	int Scene::GetAmountOfRenderTextures()
+	{
+		return amountOfRenderTextures;
 	}
 }

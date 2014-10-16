@@ -19,22 +19,21 @@ namespace pengine
 		Scene::Update(deltaTime, actions);
 	}
 
-	void DefaultScene::Render(Renderer* renderer)
+	void DefaultScene::RenderToTexture(int textureIndex, Renderer* renderer)
 	{
-		Scene::Render(renderer);
-		Matrix* aMatrix = new pengine::Matrix();
-		aMatrix->CreateMatrix(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, aMatrix);
-		renderer->SetActiveMatrix(aMatrix);
-		renderer->ActivateRenderingToTexture(500, 500, 0xFF0000FF);
-		D3DCustomVertex vertices[] = {
-			{ -1.0f, -1.0f, 6.0f, 0.0f, 0.0f },
-			{1.0f, -1.0f, 6.0f, 0.5f, 1.0f },
-			{ 0.0f, 1.0f, 6.0f, 1.0f, 0.0f }
-		};//holds a triangle that we will render to the texture
 		EntityCamera* cam = new EntityCamera();
 		//cam->SetPosition(0, 0, 0);
 		//cam->SetLookAtPosition(0, 0, -1, 0);
 		renderer->SetActiveCamera(cam->GetCameraData(), true);//set the camera to a position so the stuff rendered on the texture isn't translated
+
+		Matrix* aMatrix = new pengine::Matrix();
+		aMatrix->CreateMatrix(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, aMatrix);
+		renderer->SetActiveMatrix(aMatrix);
+		D3DCustomVertex vertices[] = {
+		{ -1.0f, -1.0f, 6.0f, 0.0f, 0.0f },
+		{1.0f, -1.0f, 6.0f, 0.5f, 1.0f },
+		{ 0.0f, 1.0f, 6.0f, 1.0f, 0.0f }
+		};//holds a triangle that we will render to the texture
 		VertexBufferWrapper* wrapper = renderer->CreateVertexBuffer(vertices, 3, D3DCustomVertexFVF);
 		Material mat;
 		mat.texture = NULL;
@@ -45,11 +44,32 @@ namespace pengine
 		mat.power = 10.0f;
 		renderer->SetMaterial(&mat);
 		renderer->DrawVertexBuffer(wrapper, 3);//draw a triangle to the texture
+	}
 
-		renderer->DeactivateRenderingToTexture();
+	void DefaultScene::Render(Renderer* renderer)
+	{
+		Scene::Render(renderer);
+		Matrix* aMatrix = new pengine::Matrix();
+		aMatrix->CreateMatrix(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, aMatrix);
+		renderer->SetActiveMatrix(aMatrix);
+		/*D3DCustomVertex vertices[] = {
+			{ -1.0f, -1.0f, 6.0f, 0.0f, 0.0f },
+			{1.0f, -1.0f, 6.0f, 0.5f, 1.0f },
+			{ 0.0f, 1.0f, 6.0f, 1.0f, 0.0f }
+		};//holds a triangle that we will render to the texture
+		VertexBufferWrapper* wrapper = renderer->CreateVertexBuffer(vertices, 3, D3DCustomVertexFVF);*/
+		Material mat;
+		mat.texture = NULL;
+		mat.ambient = { 0.0f, 0.0f, 0.0f };
+		mat.diffuse = { 0.0f, 0.0f, 0.0f, 1.0f };
+		mat.emissive = { 0.0f, 0.0f, 0.0f };
+		mat.specular = { 0.0f, 0.0f, 0.0f };
+		mat.power = 10.0f;
+		//renderer->SetMaterial(&mat);
+		//renderer->DrawVertexBuffer(wrapper, 3);//draw a triangle to the texture
+
 		renderer->SetMaterial(&mat);
-		renderer->SetTextureToRenderedTexture();
-		renderer->SetActiveCamera(currentCamera->GetCameraData(), false);//set the camera back to what it was
+		renderer->SetTextureToRenderedTexture(0);
 
 		D3DCustomVertex vertices2[] = {
 			{ 10.0f, -10.0f, 0.0f, 0.0f, 1.0f },//bl

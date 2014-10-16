@@ -101,12 +101,8 @@ namespace pengine
 		return scene;
 	}
 
-	void PEngine::GameLoop(){
-		RGBAColor color;
-		color.r = 1.0f;
-		color.g = 0.25f;
-		color.b = 1.0f;
-		color.a = 1.0f;
+	void PEngine::GameLoop()
+	{
 		std::chrono::high_resolution_clock::time_point currentTime = std::chrono::high_resolution_clock::now();
 		GetRenderer()->SetLights();
 		while (GetWindowManager()->HasActiveWindow())
@@ -125,14 +121,14 @@ namespace pengine
 			GetSceneManager()->UpdateActiveScene(deltaTime, actions);
 
 			// Visuals
-			GetRenderer()->ClearScene(0UL, 0UL, color, 1.0f, 0UL);
-			GetRenderer()->BeginScene();
-			GetSceneManager()->RenderActiveScene(GetRenderer());
-			GetRenderer()->EndScene();
+			GetSceneManager()->RenderActiveScene(GetRenderer()); 
+			/*
+			GetAllWindows() is a thing not allowed in any kind of manager...
 			for (auto windowIt = GetWindowManager()->GetAllWindows()->begin(); windowIt != GetWindowManager()->GetAllWindows()->end(); ++windowIt)
 			{
 				GetRenderer()->PresentScene((*windowIt)->GetHWND());
-			}
+			}*/
+			GetRenderer()->PresentScene(GetWindowManager()->GetLastWindow()->GetHWND());
 			GetWindowManager()->PurgeClosedWindows();
 		}
 	}
