@@ -23,14 +23,17 @@ pengine::Scene* racer::RaceSceneFactory::CreateScene(std::vector<std::string>* s
 
 	std::string beginLine;
 
-	for (int i = 0; i < sceneFile->size(); ++i)
+	int i;
+	int j;
+	int k;
+
+	for (i = 0; i < sceneFile->size(); ++i)
 	{
 		beginLine = sceneFile->at(i);
 
 		if (!beginLine.compare("<Entity>"))
 		{
 			std::string endLine;
-			int j;
 			for (j = i; j < sceneFile->size(); ++j)
 			{
 				endLine = sceneFile->at(j);
@@ -55,7 +58,7 @@ pengine::Scene* racer::RaceSceneFactory::CreateScene(std::vector<std::string>* s
 					float scalingY;
 					float scalingZ;
 
-					for (int k = i + 1; k < j; ++k)
+					for (k = i + 1; k < j; ++k)
 					{
 
 
@@ -185,12 +188,12 @@ pengine::Scene* racer::RaceSceneFactory::CreateScene(std::vector<std::string>* s
 					}
 				}
 			}
-			i = j;
+			i = k+1;
 		}
 		else if (!beginLine.compare("<Skybox>"))
 		{
 			std::string endLine;
-			int j;
+
 			for (j = i; j < sceneFile->size(); ++j)
 			{
 				endLine = sceneFile->at(j);
@@ -199,29 +202,86 @@ pengine::Scene* racer::RaceSceneFactory::CreateScene(std::vector<std::string>* s
 				{
 					std::string skyboxPath;
 
-					for (int k = i + 1; k < j - 1; ++k)
+					for (k = i; k < j; ++k)
 					{
 						std::size_t startPosition;
 						std::size_t endPosition;
 
-						startPosition = sceneFile->at(k).find("<Texture>");
-						endPosition = sceneFile->at(k).find("</Texture>");
+						startPosition = sceneFile->at(k).find("<Material>");
+						endPosition = sceneFile->at(k).find("</Material>");
+
+						std::size_t npos = std::string::npos;
 
 						if (startPosition != std::string::npos || endPosition != std::string::npos)
 						{
-							startPosition = startPosition + 9;
+							startPosition = startPosition + 10;
 							skyboxPath = sceneFile->at(k).substr(startPosition, endPosition - startPosition);
 						}
+
+					}
+
+					if (skyboxPath.compare(""))
+					{
+						pengine::Skybox* skybox = new pengine::Skybox();
+						pengine::Material* material = new pengine::Material();
+						material->texture = resourceManager->LoadBinaryFile(skyboxPath);
+
+						skybox->SetMaterial(material);
+						scene->SetSkybox(skybox);
 					}
 				}
 
 
 			}
-			i = j;
+			i = k+1;
 		}
-		else if (!beginLine.compare("<Terrain>"))
+		else if (!beginLine.compare("<Ground>"))
 		{
+			std::string endLine;
 
+			for (j = i; j < sceneFile->size(); ++j)
+			{
+				endLine = sceneFile->at(j);
+
+				if (!endLine.compare("</Ground>"))
+				{
+					std::string groundHeightmapPath;
+					std::string groundMaterialPath;
+
+					for (k = i + 1; k < j; ++k)
+					{
+						std::size_t startPosition;
+						std::size_t endPosition;
+
+						startPosition = sceneFile->at(k).find("<Heightmap>");
+						endPosition = sceneFile->at(k).find("</Heightmap>");
+
+						if (startPosition != std::string::npos || endPosition != std::string::npos)
+						{
+							startPosition = startPosition + 11;
+							groundHeightmapPath = sceneFile->at(k).substr(startPosition, endPosition - startPosition);
+						}
+
+						startPosition = sceneFile->at(k).find("<Material>");
+						endPosition = sceneFile->at(k).find("</Material>");
+						if (startPosition != std::string::npos || endPosition != std::string::npos)
+						{
+							startPosition = startPosition + 10;
+							groundMaterialPath = sceneFile->at(k).substr(startPosition, endPosition - startPosition);
+						}
+					}
+
+					if (groundHeightmapPath.compare("") && groundMaterialPath.compare(""))
+					{
+						pengine::Ground* ground = resourceManager->LoadGround(groundHeightmapPath, groundMaterialPath);
+						ground->InitQuadTree(2);
+						scene->SetGround(ground);
+					}
+				}
+
+
+			}
+			i = k + 1;
 		}
 		else if (!beginLine.compare("<Track>"))
 		{
