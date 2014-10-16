@@ -33,25 +33,6 @@ namespace pengine
 				// No changes
 				vertices = this->vertices;
 				amountOfVertices = this->amountOfVertices;
-
-				// Restitching
-				if (neighbors[1] != NULL)
-				{
-					unsigned short neighborLevelOfDetail = neighbors[1]->GetLevelOfDetail();
-					int skippedTiles = neighborLevelOfDetail - 1;
-
-					if (neighborLevelOfDetail > levelOfDetail)
-					{
-						int z = depth;
-						for (int x = 0; x < newWidth; ++x)
-						{
-							int offset = x * newWidth * 6;
-							vertices[offset + z * 6 + 1] = this->vertices[(x + x * skippedTiles) * width * 6 + (z * neighborLevelOfDetail + skippedTiles) * 6 + 1];
-							vertices[offset + z * 6 + 3] = this->vertices[(x * neighborLevelOfDetail + skippedTiles) * width * 6 + (z * neighborLevelOfDetail + skippedTiles) * 6 + 3];
-							vertices[offset + z * 6 + 4] = this->vertices[(x + x * skippedTiles) * width * 6 + (z * neighborLevelOfDetail + skippedTiles) * 6 + 4];
-						}
-					}
-				}
 			}
 			else
 			{
@@ -59,7 +40,7 @@ namespace pengine
 				
 				int skippedTiles = levelOfDetail - 1;
 
-				vertices = new D3DCustomVertex[amountOfVertices];
+				vertices = new D3DCustomVertex[amountOfVertices + 3]; //REFACTOR +3
 				// Divide the vertices by level of detail
 				for (int x = 0; x < newWidth; ++x)
 				{
@@ -73,6 +54,27 @@ namespace pengine
 						vertices[offset + z * 6 + 3] = this->vertices[(x * levelOfDetail + skippedTiles) * width * 6 + (z * levelOfDetail + skippedTiles) * 6 + 3];
 						vertices[offset + z * 6 + 4] = this->vertices[(x + x * skippedTiles) * width * 6 + (z * levelOfDetail + skippedTiles) * 6 + 4];
 						vertices[offset + z * 6 + 5] = this->vertices[(x * levelOfDetail + skippedTiles) * width * 6 + (z + z * skippedTiles) * 6 + 5];
+					}
+				}
+
+				// Restitching
+				if (neighbors[0] != NULL)
+				{
+					unsigned short neighborLevelOfDetail = neighbors[0]->GetLevelOfDetail();
+
+					if (neighborLevelOfDetail < levelOfDetail)
+					{
+						int neighborSkippedTiles = neighborLevelOfDetail - 1;
+						amountOfVertices += 3 * newDepth;
+						int x = width - 1;
+
+						for (int z = 0; z < newDepth; ++z)
+						{
+							int offset = z * newDepth * 3;
+							vertices[amountOfVertices - offset - 3] = this->vertices[(x + x * skippedTiles) * width * 6 + (z * levelOfDetail + skippedTiles) * 6 + 1];
+							vertices[amountOfVertices - offset - 2] = this->vertices[(x + x * skippedTiles) * width * 6 + (z + z * skippedTiles) * 6 + 2];
+							vertices[amountOfVertices - offset - 1] = this->vertices[(x * levelOfDetail + skippedTiles) * width * 6 + (z * levelOfDetail + skippedTiles) * 6 + 3];
+						}
 					}
 				}
 			}
@@ -182,12 +184,12 @@ namespace pengine
 		this->maxZ = p_maxZ;
 	}
 
-	std::array<QuadNode*, 4>* QuadNode::GetChildren()
+	std::map<char, QuadNode*>* QuadNode::GetChildren()
 	{
 		return &children;
 	}
 
-	void QuadNode::SetChildren(std::array<QuadNode*, 4>* children)
+	void QuadNode::SetChildren(std::map<char ,QuadNode*>* children)
 	{
 		this->children = *children;
 	}

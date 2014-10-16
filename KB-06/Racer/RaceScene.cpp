@@ -13,7 +13,7 @@ racer::RaceScene::~RaceScene()
 void racer::RaceScene::Update(float deltaTime, std::map<pengine::Input, long>* actions)
 {
 	Scene::Update(deltaTime, actions);
-	GetCurrentCamera()->SetThirdPersonEntity(raceCart, 0.1f, 20.0f);
+	GetCurrentCamera()->SetThirdPersonEntity(raceCart, 10.0f, 3.0f);
 }
 
 void racer::RaceScene::SetRaceCart(pengine::Entity* entity)

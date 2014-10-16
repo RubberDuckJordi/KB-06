@@ -114,6 +114,7 @@ namespace pengine
 
 	QuadNode* Ground::CreateQuadTree(unsigned short depth)
 	{
+		// TODO update errors
 		if (depth != 0)
 		{
 			int powDepth = pow(depth, depth);
@@ -161,17 +162,17 @@ namespace pengine
 		CreateQuadTreeChildren(rootNode, depth);
 
 		rootNode->SetLevelOfDetail(1);
-		(*rootNode->GetChildren())[2]->SetLevelOfDetail(2);
+		(*rootNode->GetChildren())[1]->SetLevelOfDetail(2);
 
 		// Calculate neighbors
 		if (!rootNode->IsLeaf())
 		{
 			for (int i = 0; i < depth; ++i)
 			{
-				std::get<0>(*rootNode->GetChildren())->CalculateNeighbors(i);
-				std::get<1>(*rootNode->GetChildren())->CalculateNeighbors(i);
-				std::get<2>(*rootNode->GetChildren())->CalculateNeighbors(i);
-				std::get<3>(*rootNode->GetChildren())->CalculateNeighbors(i);
+				(*rootNode->GetChildren())[0]->CalculateNeighbors(i);
+				(*rootNode->GetChildren())[1]->CalculateNeighbors(i);
+				(*rootNode->GetChildren())[2]->CalculateNeighbors(i);
+				(*rootNode->GetChildren())[3]->CalculateNeighbors(i);
 			}
 		}
 
@@ -241,7 +242,7 @@ namespace pengine
 			CreateQuadTreeChildren(node2, remainingDepth - 1);
 			CreateQuadTreeChildren(node3, remainingDepth - 1);
 
-			std::array<QuadNode*, 4>* children = new std::array<QuadNode*, 4>();
+			std::map<char, QuadNode*>* children = new std::map<char, QuadNode*>();
 			(*children)[0] = node0;
 			(*children)[1] = node1;
 			(*children)[2] = node2;
@@ -263,7 +264,7 @@ namespace pengine
 				D3DCustomVertex* vertex2 = &vertices[i + 2];
 
 				// if one of the points is within bounds
-				if ((vertex0->x >= parent->GetMinX() && vertex0->x <= parent->GetMaxX()
+				/*if ((vertex0->x >= parent->GetMinX() && vertex0->x <= parent->GetMaxX()
 					&& vertex0->z >= parent->GetMinZ() && vertex0->z <= parent->GetMaxZ())
 					&&
 					(vertex1->x >= parent->GetMinX() && vertex1->x <= parent->GetMaxX()
@@ -271,6 +272,19 @@ namespace pengine
 					&&
 					(vertex2->x >= parent->GetMinX() && vertex2->x <= parent->GetMaxX()
 					&& vertex2->z >= parent->GetMinZ() && vertex2->z <= parent->GetMaxZ()))
+				{
+					leafVertices.push_back(vertex0);
+					leafVertices.push_back(vertex1);
+					leafVertices.push_back(vertex2);
+				}*/
+				if ((vertex0->z >= parent->GetMinX() && vertex0->z <= parent->GetMaxX()
+					&& vertex0->x >= parent->GetMinZ() && vertex0->x <= parent->GetMaxZ())
+					&&
+					(vertex1->z >= parent->GetMinX() && vertex1->z <= parent->GetMaxX()
+					&& vertex1->x >= parent->GetMinZ() && vertex1->x <= parent->GetMaxZ())
+					&&
+					(vertex2->z >= parent->GetMinX() && vertex2->z <= parent->GetMaxX()
+					&& vertex2->x >= parent->GetMinZ() && vertex2->x <= parent->GetMaxZ()))
 				{
 					leafVertices.push_back(vertex0);
 					leafVertices.push_back(vertex1);

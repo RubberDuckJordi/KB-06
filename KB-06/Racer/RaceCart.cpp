@@ -42,6 +42,9 @@ void racer::RaceCart::UpdateLogic(float deltaTime, std::map<pengine::Input, long
 				vector.z = -5.0f;
 				AddRelativeForce(&vector);
 				break;
+			case pengine::Input::KEY_1:
+				// print location
+				logger->Log(pengine::Logger::DEBUG, std::to_string(position.x) + ", " + std::to_string(position.z));
 			default:
 				break;
 			}
