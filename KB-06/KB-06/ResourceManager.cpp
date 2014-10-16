@@ -207,6 +207,8 @@ namespace pengine
 			LPDIRECT3DPIXELSHADER9 pixelShader = shader->GetPixelShader();
 
 			(*((DirectXRenderer*)renderer)->GetDevice())->CreatePixelShader((DWORD*)pCode->GetBufferPointer(), &pixelShader);
+
+			shader->SetPixelShader(pixelShader);
 		}
 
 		
