@@ -5,7 +5,6 @@ namespace pengine
 	QuadNode::QuadNode()
 	{
 		logger = LoggerPool::GetInstance().GetLogger();
-		children = NULL;
 
 		minX = 0.0f;
 		maxX = 0.0f;
@@ -16,10 +15,6 @@ namespace pengine
 
 	QuadNode::~QuadNode()
 	{
-		if (children != NULL)
-		{
-			delete[] children;
-		}
 		if (vertices != NULL)
 		{
 			delete[] vertices;
@@ -66,16 +61,16 @@ namespace pengine
 		{
 			D3DCustomVertex* node0Vertices;
 			int node0AmountOfVertices;
-			children[0].GetAllChildrenVertices(node0Vertices, node0AmountOfVertices);
+			children[0]->GetAllChildrenVertices(node0Vertices, node0AmountOfVertices);
 			D3DCustomVertex* node1Vertices;
 			int node1AmountOfVertices;
-			children[1].GetAllChildrenVertices(node1Vertices, node1AmountOfVertices);
+			children[1]->GetAllChildrenVertices(node1Vertices, node1AmountOfVertices);
 			D3DCustomVertex* node2Vertices;
 			int node2AmountOfVertices;
-			children[2].GetAllChildrenVertices(node2Vertices, node2AmountOfVertices);
+			children[2]->GetAllChildrenVertices(node2Vertices, node2AmountOfVertices);
 			D3DCustomVertex* node3Vertices;
 			int node3AmountOfVertices;
-			children[3].GetAllChildrenVertices(node3Vertices, node3AmountOfVertices);
+			children[3]->GetAllChildrenVertices(node3Vertices, node3AmountOfVertices);
 
 			// Add arrays together
 			amountOfVertices = node0AmountOfVertices + node1AmountOfVertices + node2AmountOfVertices + node3AmountOfVertices;
@@ -167,14 +162,14 @@ namespace pengine
 		this->maxZ = p_maxZ;
 	}
 
-	QuadNode* QuadNode::GetChildren()
+	std::array<QuadNode*, 4>* QuadNode::GetChildren()
 	{
-		return children;
+		return &children;
 	}
 
-	void QuadNode::SetChildren(QuadNode* children)
+	void QuadNode::SetChildren(std::array<QuadNode*, 4>* children)
 	{
-		this->children = children;
+		this->children = *children;
 	}
 
 	D3DCustomVertex* QuadNode::GetVertices()
@@ -207,10 +202,10 @@ namespace pengine
 
 		if (!isLeaf)
 		{
-			children[0].SetLevelOfDetail(levelOfDetail);
-			children[1].SetLevelOfDetail(levelOfDetail);
-			children[2].SetLevelOfDetail(levelOfDetail);
-			children[3].SetLevelOfDetail(levelOfDetail);
+			children[0]->SetLevelOfDetail(levelOfDetail);
+			children[1]->SetLevelOfDetail(levelOfDetail);
+			children[2]->SetLevelOfDetail(levelOfDetail);
+			children[3]->SetLevelOfDetail(levelOfDetail);
 		}
 	}
 
@@ -252,6 +247,77 @@ namespace pengine
 	std::map<char, QuadNode*>* QuadNode::GetNeighbors()
 	{
 		return &neighbors;
+	}
+
+	void QuadNode::CalculateNeighbors(unsigned short recursionLevel)
+	{
+		if (recursionLevel == 0)
+		{
+			std::map<char, QuadNode*>* neighbors = this->GetNeighbors();
+
+			switch (this->GetLocation())
+			{
+			case 0:
+				// top left
+				(*neighbors)[1] = (*this->GetParent()->GetChildren())[3];
+				(*neighbors)[2] = (*this->GetParent()->GetChildren())[1];
+				if (this->GetParent()->GetNeighbors()->size() > 0)
+				{
+					SetNeighbor(neighbors, 0, 1);
+					SetNeighbor(neighbors, 3, 3);
+				}
+				break;
+			case 1:
+				// bottom left
+				(*neighbors)[0] = (*this->GetParent()->GetChildren())[0];
+				(*neighbors)[1] = (*this->GetParent()->GetChildren())[3];
+				if (this->GetParent()->GetNeighbors()->size() > 0)
+				{
+					SetNeighbor(neighbors, 2, 0);
+					SetNeighbor(neighbors, 3, 3);
+				}
+				break;
+			case 2:
+				// bottom right
+				(*neighbors)[3] = (*this->GetParent()->GetChildren())[1];
+				(*neighbors)[0] = (*this->GetParent()->GetChildren())[3];
+				if (this->GetParent()->GetNeighbors()->size() > 0)
+				{
+					SetNeighbor(neighbors, 2, 3);
+					SetNeighbor(neighbors, 0, 2);
+				}
+				break;
+			case 3:
+				// top right
+				(*neighbors)[2] = (*this->GetParent()->GetChildren())[2];
+				(*neighbors)[3] = (*this->GetParent()->GetChildren())[0];
+				if (this->GetParent()->GetNeighbors()->size() > 0)
+				{
+					SetNeighbor(neighbors, 1, 0);
+					SetNeighbor(neighbors, 0, 2);
+				}
+				break;
+			}
+		}
+		else
+		{
+			if (!this->IsLeaf())
+			{
+				(*this->GetChildren())[0]->CalculateNeighbors(recursionLevel - 1);
+				(*this->GetChildren())[1]->CalculateNeighbors(recursionLevel - 1);
+				(*this->GetChildren())[2]->CalculateNeighbors(recursionLevel - 1);
+				(*this->GetChildren())[3]->CalculateNeighbors(recursionLevel - 1);
+			}
+		}
+	}
+
+	void QuadNode::SetNeighbor(std::map<char, QuadNode*>* neighbors, char direction, char nephewLocation)
+	{
+		auto i = this->GetParent()->GetNeighbors()->find(direction);
+		if (i != this->GetParent()->GetNeighbors()->end())
+		{
+			(*neighbors)[direction] = (*i->second->GetChildren())[nephewLocation];
+		}
 	}
 
 }
