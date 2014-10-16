@@ -35,7 +35,8 @@ namespace pengine
 		void Render(Renderer* renderer);
 
 	private:
-		void CreateQuadTreeChildren(QuadNode* parent, unsigned short remainingDepth);
+		void CreateQuadTreeChildren(QuadNode& parent, unsigned short remainingDepth);
+		void CalculateNeighbors(QuadNode& quadNode, unsigned short recursionLevel);
 
 		QuadNode* quadTreeRootNode;
 		Logger* logger;

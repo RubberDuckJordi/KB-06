@@ -72,7 +72,8 @@ int main(int argc, const char* argv[])
 	pengine::Scene* scene = pEngine.GetSceneManager()->SetScene("iets");
 	pEngine.GetSceneManager()->SetCurrentScene(scene);
 
-	pEngine.NewShader();
+	pEngine.SetShader(pEngine.GetResourceManager()->LoadShader("", "ok", "TestShader", pEngine.GetRenderer()));
+	
 //	pEngine.GetShader()->InitShader(pEngine.GetRenderer());
 	
 
@@ -127,6 +128,7 @@ int main(int argc, const char* argv[])
 		pengine::Matrix* aMatrix = new pengine::Matrix();
 		aMatrix->CreateMatrix(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.1f, 0.1f, 0.1f, aMatrix);
 		pEngine.GetRenderer()->SetActiveMatrix(aMatrix);
+		pEngine.GetShader()->SetShader(pEngine.GetRenderer());
 		MyObject.Draw(pEngine.GetRenderer());
 		
 		//pEngine.GetRenderer()->D2DDraw();

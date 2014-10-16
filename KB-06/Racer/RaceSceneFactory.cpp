@@ -210,13 +210,8 @@ pengine::Scene* racer::RaceSceneFactory::CreateScene()
 
 	RaceCart* racecart1 = new RaceCart();
 	racecart1->SetMass(100.0f);
-	RaceCart* racecart2 = new RaceCart();
-	racecart2->SetMass(100.0f);
-
-	racecart1->AddAll(7.5f, 0.0f, 5.0f, 0.0f, 0.0f, 0.0f, 3.0f, 3.0f, 3.0f);
-	racecart2->AddAll(7.5f, 0.0f, -5.0f, 0.0f, 0.0f, 0.0f, 3.0f, 3.0f, 3.0f);
-	racecart1->SetObject3D(object3d);
-	racecart2->SetObject3D(object3d);
+	racecart1->AddAll(7.5f, 0.0f, 5.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f);
+	racecart1->SetObject3D(object3d2);
 
 
 	Track* track = new Track();
@@ -239,7 +234,7 @@ pengine::Scene* racer::RaceSceneFactory::CreateScene()
 	track->SetAll(-15, -1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 3.0f, 3.0f, 3.0f);
 
 	pengine::Ground* ground = resourceManager->LoadGround(groundResource, groundTexture);
-	ground->InitQuadTree(0);
+	ground->InitQuadTree(2);
 	pengine::Skybox* skybox = new pengine::Skybox();
 	pengine::Material* material = new pengine::Material();
 	material->texture = resourceManager->LoadBinaryFile(skyboxTexture);
@@ -249,10 +244,8 @@ pengine::Scene* racer::RaceSceneFactory::CreateScene()
 	RaceScene* raceScene = new RaceScene();
 	raceScene->AddEntity(racecart);
 	raceScene->AddEntity(racecart1);
-	raceScene->AddEntity(racecart2);
 	raceScene->AddCollidable(racecart);
 	raceScene->AddCollidable(racecart1);
-	raceScene->AddCollidable(racecart2);
 	raceScene->AddEntity(track);
 	raceScene->SetGround(ground);
 	raceScene->SetSkybox(skybox);
@@ -278,4 +271,9 @@ void racer::RaceSceneFactory::SetXModel3(pengine::Object3D* p_xModel)
 void racer::RaceSceneFactory::SetObject3D(pengine::Object3D* obj)
 {
 	object3d = obj;
+}
+
+void racer::RaceSceneFactory::SetObject3D2(pengine::Object3D* obj)
+{
+	object3d2 = obj;
 }

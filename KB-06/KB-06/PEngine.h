@@ -37,7 +37,7 @@ namespace pengine
 
 		// ugly testing
 		Shader* GetShader();
-		void NewShader();
+		void SetShader(Shader* shader);
 
 	private:
 

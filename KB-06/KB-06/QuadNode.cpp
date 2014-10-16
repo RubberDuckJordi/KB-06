@@ -6,6 +6,7 @@ namespace pengine
 	{
 		logger = LoggerPool::GetInstance().GetLogger();
 		children = NULL;
+
 		minX = 0.0f;
 		maxX = 0.0f;
 		minZ = 0.0f;
@@ -49,7 +50,7 @@ namespace pengine
 					for (int z = 0; z < newDepth; ++z)
 					{
 						int offset = x * newWidth * 6;
-						int skippedTiles = levelOfDetail / 2;
+						int skippedTiles = levelOfDetail - 1;
 
 						vertices[offset + z * 6] = this->vertices[(x * levelOfDetail + skippedTiles) * width * 6 + (z + z * skippedTiles) * 6];
 						vertices[offset + z * 6 + 1] = this->vertices[(x + x * skippedTiles) * width * 6 + (z * levelOfDetail + skippedTiles) * 6 + 1];
@@ -200,7 +201,6 @@ namespace pengine
 	{
 		if (levelOfDetail == 0)
 		{
-
 			levelOfDetail = 1;
 		}
 		this->levelOfDetail = levelOfDetail;
@@ -238,4 +238,20 @@ namespace pengine
 	{
 		this->depth = depth;
 	}
+
+	char QuadNode::GetLocation()
+	{
+		return location;
+	}
+
+	void QuadNode::SetLocation(char location)
+	{
+		this->location = location;
+	}
+
+	std::map<char, QuadNode*>* QuadNode::GetNeighbors()
+	{
+		return &neighbors;
+	}
+
 }
