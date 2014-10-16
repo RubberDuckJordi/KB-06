@@ -26,7 +26,7 @@ void racer::RaceCart::UpdateLogic(float deltaTime, std::map<pengine::Input, long
 				AddRotation(0.0f, 5.0f, 0.0f);
 				break;
 			case pengine::Input::KEY_S:
-				Brake(1.0f);
+				Throttle(-0.5f);
 				break;
 			case pengine::Input::KEY_W:
 				Throttle(1.0f);

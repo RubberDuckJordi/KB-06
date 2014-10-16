@@ -5,6 +5,7 @@
 #include "CustomD3DVertex.h"
 #include "LoggerPool.h"
 #include <map>
+#include <array>
 
 namespace pengine
 {
@@ -36,8 +37,8 @@ namespace pengine
 		void SetLevelOfDetail(unsigned short levelOfDetail);
 		unsigned short GetLevelOfDetail();
 
-		QuadNode* GetChildren();
-		void SetChildren(QuadNode* children);
+		std::array<QuadNode*, 4>* GetChildren();
+		void SetChildren(std::array<QuadNode*, 4>* children);
 
 		// 4 neighbors
 		// 0: north, 1: east, 2: south, 3: west
@@ -60,8 +61,10 @@ namespace pengine
 
 		// Returns terrain vertices of all children
 		void GetAllChildrenVertices(D3DCustomVertex*& vertices, int& amountOfVertices);
+		void CalculateNeighbors(unsigned short recursionLevel);
 
 	private:
+		void SetNeighbor(std::map<char, QuadNode*>* neighbors, char direction, char parentDirection);
 		QuadNode* parent;
 		bool isLeaf;
 		unsigned short levelOfDetail;
@@ -77,7 +80,7 @@ namespace pengine
 		int depth;
 
 		// Only for branches and root node
-		QuadNode* children;
+		std::array<QuadNode*, 4> children;
 
 		std::map<char, QuadNode*> neighbors;
 
