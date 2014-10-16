@@ -16,7 +16,7 @@ namespace pengine
 	{
 		BEAM* other = collidable->GetCollisionBox();
 
-		//Logger* logger = LoggerPool::GetInstance().GetLogger("CollisionSpam");
+		Logger* logger = LoggerPool::GetInstance().GetLogger("CollisionSpam");
 
 		float x1 = collisionBox.x;
 		float z1 = collisionBox.z;
@@ -29,69 +29,89 @@ namespace pengine
 
 		bool collision = false;
 
-		Point one = { collidable->collisionBox.frontBottomLeft.x + differenceX, collidable->collisionBox.frontBottomLeft.z + differenceZ };
+		Point one = { collidable->collisionBox.rotFrontBottomLeft.x + differenceX, collidable->collisionBox.rotFrontBottomLeft.z + differenceZ };
 
 		//now rotate the point relative with the axis-aligned collisionBox of this Collidable
 		float c = cos(-RADIANS(collisionBox.yaw));
 		float s = sin(-RADIANS(collisionBox.yaw));
-		float rotatedX = (c * one.x) - (s * one.z);
-		float rotatedZ = (s * one.x) + (c * one.z);
+		float rotatedX;
+		float rotatedZ;
 
 		float leftX = collisionBox.frontBottomLeft.x;
 		float rightX = collisionBox.frontBottomRight.x;
 		float topZ = collisionBox.frontBottomLeft.z;
 		float bottomZ = collisionBox.backBottomLeft.z;
 
-		if (rotatedX > leftX&&rotatedX < rightX&&rotatedZ > bottomZ&&rotatedZ < topZ)
+		rotatedX = (c * one.x) - (s * one.z);
+		rotatedZ = (s * one.x) + (c * one.z);
+
+		if (rotatedX > leftX && rotatedX < rightX && rotatedZ > bottomZ && rotatedZ < topZ)
 		{
+			/*logger->Log(Logger::DEBUG, "leftX: " + std::to_string(leftX));
+			logger->Log(Logger::DEBUG, "rightX: " + std::to_string(rightX));
+			logger->Log(Logger::DEBUG, "topZ: " + std::to_string(topZ));
+			logger->Log(Logger::DEBUG, "bottomZ: " + std::to_string(bottomZ));
+			logger->Log(Logger::DEBUG, "rotatedX: " + std::to_string(rotatedX));
+			logger->Log(Logger::DEBUG, "rotatedZ: " + std::to_string(rotatedZ));
+			logger->Log(Logger::DEBUG, "");*/
+			logger->Log(Logger::DEBUG, "one");
 			collision = true;
 		}
 
-		Point two = { collidable->collisionBox.frontBottomRight.x + differenceX, collidable->collisionBox.frontBottomRight.z + differenceZ };
+		Point two = { collidable->collisionBox.rotFrontBottomRight.x + differenceX, collidable->collisionBox.rotFrontBottomRight.z + differenceZ };
 
 		//now rotate the point relative with the axis-aligned collisionBox of this Collidable
 		rotatedX = (c * two.x) - (s * two.z);
 		rotatedZ = (s * two.x) + (c * two.z);
 
-		leftX = collisionBox.frontBottomLeft.x;
-		rightX = collisionBox.frontBottomRight.x;
-		topZ = collisionBox.frontBottomLeft.z;
-		bottomZ = collisionBox.backBottomLeft.z;
-
-		if (rotatedX > leftX&&rotatedX < rightX&&rotatedZ > bottomZ&&rotatedZ < topZ)
+		if (rotatedX > leftX && rotatedX < rightX && rotatedZ > bottomZ && rotatedZ < topZ)
 		{
+			/*logger->Log(Logger::DEBUG, "leftX: " + std::to_string(leftX));
+			logger->Log(Logger::DEBUG, "rightX: " + std::to_string(rightX));
+			logger->Log(Logger::DEBUG, "topZ: " + std::to_string(topZ));
+			logger->Log(Logger::DEBUG, "bottomZ: " + std::to_string(bottomZ));
+			logger->Log(Logger::DEBUG, "rotatedX: " + std::to_string(rotatedX));
+			logger->Log(Logger::DEBUG, "rotatedZ: " + std::to_string(rotatedZ));
+			logger->Log(Logger::DEBUG, "");*/
+			logger->Log(Logger::DEBUG, "two");
 			collision = true;
 		}
 
-		Point three = { collidable->collisionBox.backBottomLeft.x + differenceX, collidable->collisionBox.backBottomLeft.z + differenceZ };
+		Point three = { collidable->collisionBox.rotBackBottomLeft.x + differenceX, collidable->collisionBox.rotBackBottomLeft.z + differenceZ };
 
 		//now rotate the point relative with the axis-aligned collisionBox of this Collidable
 		rotatedX = (c * three.x) - (s * three.z);
 		rotatedZ = (s * three.x) + (c * three.z);
 
-		leftX = collisionBox.frontBottomLeft.x;
-		rightX = collisionBox.frontBottomRight.x;
-		topZ = collisionBox.frontBottomLeft.z;
-		bottomZ = collisionBox.backBottomLeft.z;
-
-		if (rotatedX > leftX&&rotatedX < rightX&&rotatedZ > bottomZ&&rotatedZ < topZ)
+		if (rotatedX > leftX && rotatedX < rightX && rotatedZ > bottomZ && rotatedZ < topZ)
 		{
 			collision = true;
+			/*logger->Log(Logger::DEBUG, "leftX: " + std::to_string(leftX));
+			logger->Log(Logger::DEBUG, "rightX: " + std::to_string(rightX));
+			logger->Log(Logger::DEBUG, "topZ: " + std::to_string(topZ));
+			logger->Log(Logger::DEBUG, "bottomZ: " + std::to_string(bottomZ));
+			logger->Log(Logger::DEBUG, "rotatedX: " + std::to_string(rotatedX));
+			logger->Log(Logger::DEBUG, "rotatedZ: " + std::to_string(rotatedZ));
+			logger->Log(Logger::DEBUG, "");*/
+			logger->Log(Logger::DEBUG, "three");
 		}
 
-		Point four = { collidable->collisionBox.backBottomRight.x + differenceX, collidable->collisionBox.backBottomRight.z + differenceZ };
+		Point four = { collidable->collisionBox.rotBackBottomRight.x + differenceX, collidable->collisionBox.rotBackBottomRight.z + differenceZ };
 
 		//now rotate the point relative with the axis-aligned collisionBox of this Collidable
-		rotatedX = (c * three.x) - (s * three.z);
-		rotatedZ = (s * three.x) + (c * three.z);
+		rotatedX = (c * four.x) - (s * four.z);
+		rotatedZ = (s * four.x) + (c * four.z);
 
-		leftX = collisionBox.frontBottomLeft.x;
-		rightX = collisionBox.frontBottomRight.x;
-		topZ = collisionBox.frontBottomLeft.z;
-		bottomZ = collisionBox.backBottomLeft.z;
-
-		if (rotatedX > leftX&&rotatedX < rightX&&rotatedZ > bottomZ&&rotatedZ < topZ)
+		if (rotatedX > leftX && rotatedX < rightX && rotatedZ > bottomZ && rotatedZ < topZ)
 		{
+			/*logger->Log(Logger::DEBUG, "leftX: " + std::to_string(leftX));
+			logger->Log(Logger::DEBUG, "rightX: " + std::to_string(rightX));
+			logger->Log(Logger::DEBUG, "topZ: " + std::to_string(topZ));
+			logger->Log(Logger::DEBUG, "bottomZ: " + std::to_string(bottomZ));
+			logger->Log(Logger::DEBUG, "rotatedX: " + std::to_string(rotatedX));
+			logger->Log(Logger::DEBUG, "rotatedZ: " + std::to_string(rotatedZ));
+			logger->Log(Logger::DEBUG, "");*/
+			logger->Log(Logger::DEBUG, "four");
 			collision = true;
 		}
 
