@@ -13,9 +13,19 @@ namespace pengine
 		logger->Log(Logger::INFO, "SceneManager destructed");
 	}
 
-	void SceneManager::CreateScene(std::string* path, ResourceManager* resourceManager)
+	std::vector<std::string>* SceneManager::ReadScene(std::string* path, ResourceManager* resourceManager)
 	{
 		std::vector<std::string>* sceneFile = resourceManager->LoadSceneFile(path);
+
+		return sceneFile;
+	}
+
+	Scene* SceneManager::CreateScene(std::vector<std::string>* sceneFile, char* factoryKey, ResourceManager* resourceManager)
+	{
+		SceneFactory* factory = sceneFactories.at(factoryKey);
+		Scene* scene = factory->CreateScene(sceneFile, resourceManager);
+		currentScene->SetSceneCallback(this);
+		return scene;
 	}
 
 	void SceneManager::AddSceneFactory(char* key, SceneFactory* sceneFactory)

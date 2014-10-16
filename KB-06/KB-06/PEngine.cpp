@@ -93,6 +93,14 @@ namespace pengine
 		sceneManager->SetCurrentScene(scene);
 	}
 
+	Scene* PEngine::CreateScene(char* sceneFactory, std::string* filePath)
+	{
+		std::vector<std::string>* sceneFile = resourceManager->LoadSceneFile(filePath);
+		Scene* scene = sceneManager->CreateScene(sceneFile, sceneFactory, resourceManager);
+		sceneManager->SetCurrentScene(scene);
+		return scene;
+	}
+
 	void PEngine::GameLoop(){
 		RGBAColor color;
 		color.r = 1.0f;

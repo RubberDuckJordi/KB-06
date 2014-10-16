@@ -14,6 +14,7 @@ namespace racer
 		RaceSceneFactory(pengine::ResourceManager* resourceManager);
 		~RaceSceneFactory();
 
+		pengine::Scene* CreateScene();
 		pengine::Scene* CreateScene(RaceScene* raceScene);
 		pengine::Scene* CreateScene(std::vector<std::string>* sceneFile, pengine::ResourceManager* resourceManager);
 

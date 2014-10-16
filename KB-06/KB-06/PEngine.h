@@ -30,6 +30,7 @@ namespace pengine
 
 		void AddScene();
 		void InitRenderer();
+		Scene* CreateScene(char* sceneFactory, std::string* filePath);
 		Scene* AddScene(char* sceneFactory);
 		void SetCurrentScene(Scene* scene);
 		void GameLoop();

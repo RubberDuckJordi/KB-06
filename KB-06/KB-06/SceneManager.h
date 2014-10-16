@@ -19,7 +19,8 @@ namespace pengine
 	public:
 		SceneManager();
 		~SceneManager();
-		void CreateScene(std::string* path, ResourceManager* resourceManager);
+		std::vector<std::string>* ReadScene(std::string* path, ResourceManager* resourceManager);
+		Scene* CreateScene(std::vector<std::string>* sceneFile, char* factoryKey, ResourceManager* resourceManager);
 		void AddSceneFactory(char* key, SceneFactory* sceneFactory);
 		Scene* SetScene(char* sceneFactory);
 		void RemoveScene(Scene* scene);

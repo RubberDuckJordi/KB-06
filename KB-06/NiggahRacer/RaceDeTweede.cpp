@@ -56,7 +56,7 @@ int main(int argc, const char* argv[])
 	pEngine.AddSceneFactory("raceScene", sceneFactory);
 
 	std::string filePath = "resources/LevelOne.txt";
-	pengine::Scene* scene = pEngine.CreateScene("raceScene", filePath);
+	pengine::Scene* scene = pEngine.CreateScene("raceScene", &filePath);
 
 	// <EventManager voorbeeld>
 	EventManager* eventManager = new EventManager();
@@ -73,8 +73,6 @@ int main(int argc, const char* argv[])
 
 	pEngine.SetCurrentScene(scene);
 	pEngine.GameLoop();
-
-	pengine::LoggerPool::GetInstance().ReturnLogger(logger);
 
 	return 0;
 }
