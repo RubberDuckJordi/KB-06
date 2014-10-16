@@ -37,7 +37,7 @@ namespace pengine
 			else
 			{
 				amountOfVertices = this->amountOfVertices / (levelOfDetail * levelOfDetail);
-				
+
 				int skippedTiles = levelOfDetail - 1;
 
 				vertices = new D3DCustomVertex[amountOfVertices + 3]; //REFACTOR +3
@@ -66,15 +66,12 @@ namespace pengine
 					{
 						int neighborSkippedTiles = neighborLevelOfDetail - 1;
 						amountOfVertices += 3 * newDepth;
-						int x = width - 1;
+						int x = 0;
+						int z = 0;
 
-						for (int z = 0; z < newDepth; ++z)
-						{
-							int offset = z * newDepth * 3;
-							vertices[amountOfVertices - offset - 3] = this->vertices[(x + x * skippedTiles) * width * 6 + (z * levelOfDetail + skippedTiles) * 6 + 1];
-							vertices[amountOfVertices - offset - 2] = this->vertices[(x + x * skippedTiles) * width * 6 + (z + z * skippedTiles) * 6 + 2];
-							vertices[amountOfVertices - offset - 1] = this->vertices[(x * levelOfDetail + skippedTiles) * width * 6 + (z * levelOfDetail + skippedTiles) * 6 + 3];
-						}
+						vertices[amountOfVertices - 3] = this->vertices[(x * levelOfDetail + skippedTiles) * width * 6 + (z * levelOfDetail + skippedTiles) * 6 + 3];
+						vertices[amountOfVertices - 2] = this->vertices[(x + x * skippedTiles) * width * 6 + (z * levelOfDetail + skippedTiles) * 6 + 4];
+						vertices[amountOfVertices - 1] = this->vertices[((x + 1) * neighborLevelOfDetail + neighborSkippedTiles) * width * 6 + ((z + 1) + (z + 1) * neighborSkippedTiles) * 6 + 5];
 					}
 				}
 			}
@@ -189,7 +186,7 @@ namespace pengine
 		return &children;
 	}
 
-	void QuadNode::SetChildren(std::map<char ,QuadNode*>* children)
+	void QuadNode::SetChildren(std::map<char, QuadNode*>* children)
 	{
 		this->children = *children;
 	}
