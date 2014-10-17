@@ -79,7 +79,7 @@ namespace pengine
 						{
 							int offset = z * 3;
 							northRestitchingVertices[offset] = this->vertices[(x * levelOfDetail + skippedTiles) * width * 6 + (z * levelOfDetail + skippedTiles) * 6 + 3];
-							northRestitchingVertices[offset + 1] = this->vertices[(x + x * skippedTiles) * width * 6 + (z * levelOfDetail + skippedTiles) * 6 + 4];
+							northRestitchingVertices[offset + 1] = this->vertices[(x * levelOfDetail + skippedTiles) * width * 6 + (z * levelOfDetail - neighborSkippedTiles) * 6];
 							northRestitchingVertices[offset + 2] = this->vertices[(x * levelOfDetail + skippedTiles) * width * 6 + (z * levelOfDetail + skippedTiles - neighborSkippedTiles) * 6]; // relative to the first vertex
 						}						
 					}
