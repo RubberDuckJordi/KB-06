@@ -46,15 +46,12 @@ namespace pengine
 		defaultScene->AddEntity(entity6);
 
 		EntityCamera* camera = new EntityCamera();
-		camera->AddPosition(0.0f, 0.0f, 100.0f);
+		camera->AddPosition(0.0f, 0.0f, -100.0f);
 		/*camera->myMesh = mesh2;
 		camera->myMesh2 = mesh3;*/
 		camera->useInput = false;
 		defaultScene->SetCurrentCamera(camera);
 
-		EntityCamera* camera2 = new EntityCamera();//this is a testing camera
-		camera2->AddPosition(0.0f, 0.0f, 0.0f);
-		camera2->useInput = true;
 
 		Skybox* skybox = new pengine::Skybox();
 		Material* material = new pengine::Material();
@@ -62,9 +59,6 @@ namespace pengine
 		skybox->SetMaterial(material);
 
 		defaultScene->SetSkybox(skybox);
-
-		//defaultScene->AddEntity(camera);
-		defaultScene->AddEntity(camera2);
 
 		defaultScene->SetAmountOfRenderTextures(1);
 

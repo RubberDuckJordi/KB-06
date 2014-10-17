@@ -169,6 +169,7 @@ namespace pengine
 			D3DXMatrixOrthoLH(matrixCache, 1.0f, 1.0f, 1.0f, 200.0f);
 			//g_pd3dDevice->SetTransform(D3DTS_WORLD, matrixCache);//isn't needed...
 			g_pd3dDevice->SetTransform(D3DTS_PROJECTION, matrixCache);
+			//g_pd3dDevice->SetTransform(D3DTS_VIEW, matrixCache);
 		}
 		else
 		{
@@ -184,20 +185,14 @@ namespace pengine
 		}
 	}
 
-	void DirectXRenderer::SetViewMatrix(Matrix* viewMatrix, bool orthographic)
+	void DirectXRenderer::SetViewMatrix(Matrix* viewMatrix)
 	{
 		// Set up our view matrix. A view matrix can be defined given an eye point,
 		// a point to lookat, and a direction for which way is up. Here, we set the
 		// eye 0.5 units back along the z-axis and up 0 units, look at the 
 		// origin + 0.5 on the z-axis, and define "up" to be in the y-direction.
-		if (orthographic)
-		{
-			D3DXMatrixOrthoLH(matrixCache, 1.0f, 1.0f, 1.0f, 2.0f);
-		}
-		else
-		{
-			SetMatrixCache(viewMatrix);
-		}
+		
+		SetMatrixCache(viewMatrix);
 		g_pd3dDevice->SetTransform(D3DTS_VIEW, matrixCache);
 	}
 

@@ -10,7 +10,7 @@ namespace pengine
 		SetProjectionMatrix(M_PI / 4, 1.0f, 1.0f, 1000.0f);
 		upVec = new Vector3(0, 1);
 		lastKnownRotation = new Vector3();
-		lastKnownRotation->x = 180;//yaw
+		lastKnownRotation->x = 0;//yaw
 		lastKnownRotation->y = 0;//pitch
 		lastKnownRotation->z = 0;//roll
 	}
@@ -138,6 +138,11 @@ namespace pengine
 	Vector3* EntityCamera::GetPosition()
 	{
 		return &position;
+	}
+
+	Vector3* EntityCamera::GetLookAtPosition()
+	{
+		return &lookAtPosition;
 	}
 
 	CameraData EntityCamera::GetCameraData()

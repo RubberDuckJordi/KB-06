@@ -35,7 +35,7 @@ namespace pengine
 		void SetActiveCamera(CameraData camera, bool orthographic);
 
 		void SetProjectionMatrix(Matrix* ProjectionMatrix);
-		void SetViewMatrix(Matrix*, bool orthographic);
+		void SetViewMatrix(Matrix*);
 		void SetProjectionMatrix(float FOV, float farClippingPlane);
 
 		void BeginScene();

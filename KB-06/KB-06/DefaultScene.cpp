@@ -21,18 +21,28 @@ namespace pengine
 
 	void DefaultScene::RenderToTexture(int textureIndex, Renderer* renderer)
 	{
-		EntityCamera* cam = new EntityCamera();
-		//cam->SetPosition(0, 0, 0);
-		//cam->SetLookAtPosition(0, 0, -1, 0);
-		renderer->SetActiveCamera(cam->GetCameraData(), true);//set the camera to a position so the stuff rendered on the texture isn't translated
+		EntityCamera* aCamera = new EntityCamera();
+		aCamera->SetPosition(0.0f, 0.0f, -100.0f);
+		aCamera->SetLookAtPosition(0.0f, 0.0f, 0.0f, 0);
+		logger->Log(Logger::DEBUG, "CurrentCamera x: " + std::to_string(currentCamera->GetPosition()->x) + ", y: " + std::to_string(currentCamera->GetPosition()->y) + ", z: " + std::to_string(currentCamera->GetPosition()->z));
+		logger->Log(Logger::DEBUG, "CurrentCamera lookat x: " + std::to_string(currentCamera->GetLookAtPosition()->x) + ", y: " + std::to_string(currentCamera->GetLookAtPosition()->y) + ", z: " + std::to_string(currentCamera->GetLookAtPosition()->z));
+
+		renderer->SetViewMatrix(aCamera->GetViewMatrix());
+		renderer->SetProjectionMatrix(currentCamera->GetProjectionMatrix());
+
+		/*EntityCamera* cam = new EntityCamera();
+		cam->SetPosition(0.0f, 0.0f, 1.0f);
+		cam->SetLookAtPosition(0.0f, 0.0f, -1.0f, 0.0f);
+		renderer->SetViewMatrix(cam->GetViewMatrix(), true);*/
+		//renderer->SetProjectionMatrix(currentCamera->GetProjectionMatrix());
 
 		Matrix* aMatrix = new pengine::Matrix();
 		aMatrix->CreateMatrix(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, aMatrix);
 		renderer->SetActiveMatrix(aMatrix);
 		D3DCustomVertex vertices[] = {
-		{ -1.0f, -1.0f, 6.0f, 0.0f, 0.0f },
-		{1.0f, -1.0f, 6.0f, 0.5f, 1.0f },
-		{ 0.0f, 1.0f, 6.0f, 1.0f, 0.0f }
+		{ -10.0f, -10.0f, 1.5f, 0.0f, 0.0f },
+		{ 10.0f, -10.0f, 1.5f, 0.5f, 1.0f },
+		{ 0.0f, 10.0f, 1.5f, 1.0f, 0.0f }
 		};//holds a triangle that we will render to the texture
 		VertexBufferWrapper* wrapper = renderer->CreateVertexBuffer(vertices, 3, D3DCustomVertexFVF);
 		Material mat;

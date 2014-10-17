@@ -108,7 +108,7 @@ namespace pengine
 		Resource::Vertex* cameraRotation = currentCamera->GetRotation();*/
 
 		//renderer->SetViewMatrix(0, 0, -0.5f, 0, 0, 0.5f);
-		renderer->SetViewMatrix(currentCamera->GetViewMatrix(), false);
+		renderer->SetViewMatrix(currentCamera->GetViewMatrix());
 		renderer->SetProjectionMatrix(currentCamera->GetProjectionMatrix());
 
 

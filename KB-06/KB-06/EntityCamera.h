@@ -16,6 +16,7 @@ namespace pengine
 		void UpdateLogic(float deltaTime, std::map<Input, long>* actions);
 		void Draw(Renderer* renderer);
 		Vector3* GetPosition();
+		Vector3* GetLookAtPosition();
 		CameraData GetCameraData();
 
 		/*!
