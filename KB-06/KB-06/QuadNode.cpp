@@ -80,7 +80,7 @@ namespace pengine
 							int offset = z * 3;
 							northRestitchingVertices[offset] = this->vertices[(x * levelOfDetail + skippedTiles) * width * 6 + (z * levelOfDetail + skippedTiles) * 6 + 3];
 							northRestitchingVertices[offset + 1] = this->vertices[(x + x * skippedTiles) * width * 6 + (z * levelOfDetail + skippedTiles) * 6 + 4];
-							northRestitchingVertices[offset + 2] = this->vertices[(x * levelOfDetail + skippedTiles) * width * 6 + (z * levelOfDetail + skippedTiles) * 6 - (neighborSkippedTiles * 6)]; // relative to the first vertex
+							northRestitchingVertices[offset + 2] = this->vertices[(x * levelOfDetail + skippedTiles) * width * 6 + (z * levelOfDetail + skippedTiles - neighborSkippedTiles) * 6]; // relative to the first vertex
 						}						
 					}
 				}
@@ -102,16 +102,8 @@ namespace pengine
 						{
 							int offset = x * 3;
 							eastRestitchingVertices[offset] = this->vertices[(x * levelOfDetail + skippedTiles) * width * 6 + (z * levelOfDetail + skippedTiles) * 6 + 3];
-							eastRestitchingVertices[offset + 1] = this->vertices[(x + x * skippedTiles) * width * 6 + (z * levelOfDetail + skippedTiles) * 6 + 4];
+							eastRestitchingVertices[offset + 1] = this->vertices[(x + x * skippedTiles + neighborLevelOfDetail) * width * 6 + (z * levelOfDetail + skippedTiles) * 6 + 4];
 							eastRestitchingVertices[offset + 2] = this->vertices[(x * levelOfDetail + skippedTiles) * width * 6 + (z + z * skippedTiles) * 6 + 5];
-						
-
-							eastRestitchingVertices[offset].tu = 0.0f;
-							eastRestitchingVertices[offset].tv = 0.0f;
-							eastRestitchingVertices[offset + 1].tu = 0.0f;
-							eastRestitchingVertices[offset + 1].tv = 0.0f;
-							eastRestitchingVertices[offset + 2].tu = 0.0f;
-							eastRestitchingVertices[offset + 2].tv = 0.0f;
 						}
 					}
 				}
