@@ -159,8 +159,8 @@ namespace pengine
 		rootNode->name = "root";
 		CreateQuadTreeChildren(rootNode, depth);
 
-		rootNode->SetLevelOfDetail(2);
-		(*rootNode->GetChildren())[3]->SetLevelOfDetail(4);
+		rootNode->SetLevelOfDetail(1);
+		(*rootNode->GetChildren())[3]->SetLevelOfDetail(2);
 
 		// Calculate neighbors
 		if (!rootNode->IsLeaf())
