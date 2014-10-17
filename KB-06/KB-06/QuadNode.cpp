@@ -103,7 +103,7 @@ namespace pengine
 							int offset = x * 3;
 							eastRestitchingVertices[offset] = this->vertices[(x * levelOfDetail + skippedTiles) * width * 6 + (z * levelOfDetail + skippedTiles) * 6 + 3];
 							eastRestitchingVertices[offset + 1] = this->vertices[(x + x * skippedTiles + neighborLevelOfDetail) * width * 6 + (z * levelOfDetail + skippedTiles) * 6 + 4];
-							eastRestitchingVertices[offset + 2] = this->vertices[(x * levelOfDetail + skippedTiles) * width * 6 + (z + z * skippedTiles) * 6 + 5];
+							eastRestitchingVertices[offset + 2] = this->vertices[(x + x * skippedTiles) * width * 6 + (z * levelOfDetail + skippedTiles) * 6 + 4];
 						}
 					}
 				}
