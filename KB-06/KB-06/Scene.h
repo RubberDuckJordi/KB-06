@@ -40,6 +40,7 @@ namespace pengine
 		int GetAmountOfRenderTextures();
 
 	protected:
+		bool wireFrameActivated;
 		std::list<Entity*> entities;
 		std::list<Collidable*> collidables;
 		EntityCamera* currentCamera;

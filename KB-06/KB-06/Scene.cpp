@@ -7,6 +7,7 @@ namespace pengine
 	{
 		logger = LoggerPool::GetInstance().GetLogger();
 		amountOfRenderTextures = 0;
+		wireFrameActivated = false;
 	}
 
 	Scene::~Scene()
@@ -20,6 +21,20 @@ namespace pengine
 
 	void Scene::Update(float deltaTime, std::map<Input, long>* actions)
 	{
+		// Toggle wireframe
+		typedef std::map<pengine::Input, long>::iterator it_type;
+		for (it_type iterator = (*actions).begin(); iterator != (*actions).end(); ++iterator)
+		{
+			float speed = static_cast<float>(iterator->second);
+
+			switch (iterator->first)
+			{
+			case pengine::Input::KEY_TAB:
+				wireFrameActivated = !wireFrameActivated;
+				break;
+			}
+		}
+
 		for (std::list<Entity*>::iterator i = entities.begin(); i != entities.end(); ++i)
 		{
 			(*i)->UpdateLogic(deltaTime, actions);
@@ -132,6 +147,16 @@ namespace pengine
 			(*i)->DrawCollidable(renderer);
 		}
 		renderer->SetFillMode(PENGINE_FILL_SOLID);
+
+		//restore wireframe status
+		if (wireFrameActivated)
+		{
+			renderer->SetFillMode(PENGINE_FILL_WIREFRAME);
+		}
+		else
+		{
+			renderer->SetFillMode(PENGINE_FILL_SOLID);
+		}
 
 	}
 

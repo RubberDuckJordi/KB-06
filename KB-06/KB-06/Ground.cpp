@@ -90,7 +90,6 @@ namespace pengine
 
 	void Ground::Render(Renderer* renderer)
 	{
-		renderer->SetFillMode(PENGINE_FILL_WIREFRAME);
 		D3DCustomVertex* verticesX;
 		int amountOfVerticesX;
 		quadTreeRootNode->GetAllChildrenVertices(verticesX, amountOfVerticesX);
@@ -108,8 +107,6 @@ namespace pengine
 		renderer->DrawVertexBuffer(vertexBuffer, amountOfVerticesX);
 
 		//delete[] verticesX;
-
-		renderer->SetFillMode(PENGINE_FILL_SOLID);
 	}
 
 	QuadNode* Ground::CreateQuadTree(unsigned short depth)
@@ -161,8 +158,8 @@ namespace pengine
 		rootNode->name = "root";
 		CreateQuadTreeChildren(rootNode, depth);
 
-		rootNode->SetLevelOfDetail(2);
-		(*rootNode->GetChildren())[1]->SetLevelOfDetail(4);
+		rootNode->SetLevelOfDetail(1);
+		(*rootNode->GetChildren())[1]->SetLevelOfDetail(2);
 
 		// Calculate neighbors
 		if (!rootNode->IsLeaf())
@@ -263,20 +260,7 @@ namespace pengine
 				D3DCustomVertex* vertex1 = &vertices[i + 1];
 				D3DCustomVertex* vertex2 = &vertices[i + 2];
 
-				// if one of the points is within bounds
-				/*if ((vertex0->x >= parent->GetMinX() && vertex0->x <= parent->GetMaxX()
-					&& vertex0->z >= parent->GetMinZ() && vertex0->z <= parent->GetMaxZ())
-					&&
-					(vertex1->x >= parent->GetMinX() && vertex1->x <= parent->GetMaxX()
-					&& vertex1->z >= parent->GetMinZ() && vertex1->z <= parent->GetMaxZ())
-					&&
-					(vertex2->x >= parent->GetMinX() && vertex2->x <= parent->GetMaxX()
-					&& vertex2->z >= parent->GetMinZ() && vertex2->z <= parent->GetMaxZ()))
-				{
-					leafVertices.push_back(vertex0);
-					leafVertices.push_back(vertex1);
-					leafVertices.push_back(vertex2);
-				}*/
+				// axis are inverted, the problem is probably somewhere else but I can't find it :)
 				if ((vertex0->z >= parent->GetMinX() && vertex0->z <= parent->GetMaxX()
 					&& vertex0->x >= parent->GetMinZ() && vertex0->x <= parent->GetMaxZ())
 					&&

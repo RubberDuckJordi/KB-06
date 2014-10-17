@@ -37,10 +37,12 @@ namespace pengine
 			else
 			{
 				int nodeAmountOfVertices = this->amountOfVertices / (levelOfDetail * levelOfDetail);
-				int northRestitchingAmountOfVertices = 0;
-
-				D3DCustomVertex* northRestitchingVertices = NULL;
 				D3DCustomVertex* nodeVertices = new D3DCustomVertex[nodeAmountOfVertices];
+
+				int northRestitchingAmountOfVertices = 0;
+				D3DCustomVertex* northRestitchingVertices = NULL;
+				int eastRestitchingAmountOfVertices = 0;
+				D3DCustomVertex* eastRestitchingVertices = NULL;
 				
 				int skippedTiles = levelOfDetail - 1;
 				// Divide the vertices by level of detail
@@ -60,6 +62,7 @@ namespace pengine
 				}
 
 				// Restitching
+				// North
 				if (neighbors[0] != NULL)
 				{
 					unsigned short neighborLevelOfDetail = neighbors[0]->GetLevelOfDetail();
@@ -70,27 +73,50 @@ namespace pengine
 						northRestitchingVertices = new D3DCustomVertex[northRestitchingAmountOfVertices];
 
 						int neighborSkippedTiles = neighborLevelOfDetail - 1;
-						int x = newWidth; // only process north border
+						int x = newWidth - 1; // only process north border
 						
 						for (int z = 0; z < newDepth; ++z)
 						{
 							int offset = z * 3;
-							northRestitchingVertices[offset] = this->vertices[((x - 1) * levelOfDetail + skippedTiles) * width * 6 + (z * levelOfDetail + skippedTiles) * 6 + 3];
-							northRestitchingVertices[offset + 1] = this->vertices[((x - 1) + (x - 1) * skippedTiles) * width * 6 + (z * levelOfDetail + skippedTiles) * 6 + 4];
-							northRestitchingVertices[offset + 2] = this->vertices[((x - 1) * levelOfDetail + skippedTiles) * width * 6 + (z * levelOfDetail + skippedTiles) * 6 - (neighborSkippedTiles * 6)]; // relative to the first vertex
-
-							// Debugging to show the restitched triangle, should be removed ASAP
-							northRestitchingVertices[offset].tu = 0.0f;
-							northRestitchingVertices[offset + 1].tu = 0.0f;
-							northRestitchingVertices[offset + 2].tu = 0.0f;
-							northRestitchingVertices[offset].tv = 0.0f;
-							northRestitchingVertices[offset + 1].tv = 0.0f;
-							northRestitchingVertices[offset + 2].tv = 0.0f;
+							northRestitchingVertices[offset] = this->vertices[(x * levelOfDetail + skippedTiles) * width * 6 + (z * levelOfDetail + skippedTiles) * 6 + 3];
+							northRestitchingVertices[offset + 1] = this->vertices[(x + x * skippedTiles) * width * 6 + (z * levelOfDetail + skippedTiles) * 6 + 4];
+							northRestitchingVertices[offset + 2] = this->vertices[(x * levelOfDetail + skippedTiles) * width * 6 + (z * levelOfDetail + skippedTiles) * 6 - (neighborSkippedTiles * 6)]; // relative to the first vertex
 						}						
 					}
 				}
 
-				amountOfVertices = nodeAmountOfVertices + northRestitchingAmountOfVertices;
+				// East
+				if (neighbors[1] != NULL)
+				{
+					unsigned short neighborLevelOfDetail = neighbors[1]->GetLevelOfDetail();
+
+					if (neighborLevelOfDetail < levelOfDetail)
+					{
+						eastRestitchingAmountOfVertices = 3 * newWidth;
+						eastRestitchingVertices = new D3DCustomVertex[eastRestitchingAmountOfVertices];
+
+						int neighborSkippedTiles = neighborLevelOfDetail - 1;
+						int z = newDepth - 1; // only process east border
+
+						for (int x = 0; x < newWidth; ++x)
+						{
+							int offset = x * 3;
+							eastRestitchingVertices[offset] = this->vertices[(x * levelOfDetail + skippedTiles) * width * 6 + (z * levelOfDetail + skippedTiles) * 6 + 3];
+							eastRestitchingVertices[offset + 1] = this->vertices[(x + x * skippedTiles) * width * 6 + (z * levelOfDetail + skippedTiles) * 6 + 4];
+							eastRestitchingVertices[offset + 2] = this->vertices[(x * levelOfDetail + skippedTiles) * width * 6 + (z + z * skippedTiles) * 6 + 5];
+						
+
+							eastRestitchingVertices[offset].tu = 0.0f;
+							eastRestitchingVertices[offset].tv = 0.0f;
+							eastRestitchingVertices[offset + 1].tu = 0.0f;
+							eastRestitchingVertices[offset + 1].tv = 0.0f;
+							eastRestitchingVertices[offset + 2].tu = 0.0f;
+							eastRestitchingVertices[offset + 2].tv = 0.0f;
+						}
+					}
+				}
+
+				amountOfVertices = nodeAmountOfVertices + northRestitchingAmountOfVertices + eastRestitchingAmountOfVertices;
 				vertices = new D3DCustomVertex[amountOfVertices];
 				
 				int offset = 0;
@@ -107,8 +133,15 @@ namespace pengine
 				}
 				offset += northRestitchingAmountOfVertices;
 
+				for (int i = 0; i < eastRestitchingAmountOfVertices; ++i)
+				{
+					vertices[offset + i] = eastRestitchingVertices[i];
+				}
+				offset += eastRestitchingAmountOfVertices;
+
 				delete[] nodeVertices;
 				delete[] northRestitchingVertices;
+				delete[] eastRestitchingVertices;
 			}
 		}
 		else
