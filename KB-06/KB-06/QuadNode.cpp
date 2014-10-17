@@ -43,6 +43,8 @@ namespace pengine
 				D3DCustomVertex* northRestitchingVertices = NULL;
 				int eastRestitchingAmountOfVertices = 0;
 				D3DCustomVertex* eastRestitchingVertices = NULL;
+				int southRestitchingAmountOfVertices = 0;
+				D3DCustomVertex* southRestitchingVertices = NULL;
 				
 				int skippedTiles = levelOfDetail - 1;
 				// Divide the vertices by level of detail
@@ -108,7 +110,43 @@ namespace pengine
 					}
 				}
 
-				amountOfVertices = nodeAmountOfVertices + northRestitchingAmountOfVertices + eastRestitchingAmountOfVertices;
+				// South
+				if (neighbors[2] != NULL)
+				{
+					unsigned short neighborLevelOfDetail = neighbors[2]->GetLevelOfDetail();
+
+					if (neighborLevelOfDetail < levelOfDetail)
+					{
+						southRestitchingAmountOfVertices = 3 * newDepth;
+						southRestitchingVertices = new D3DCustomVertex[southRestitchingAmountOfVertices];
+
+						int neighborSkippedTiles = neighborLevelOfDetail - 1;
+						int x = 0; // only process south border
+
+						for (int z = 0; z < newDepth; ++z)
+						{
+							int offset = z * 3;
+							/*southRestitchingVertices[offset] = this->vertices[(x * levelOfDetail + skippedTiles) * width * 6 + (z + z * skippedTiles) * 6];
+							southRestitchingVertices[offset + 1] = this->vertices[(x + x * skippedTiles) * width * 6 + (z * levelOfDetail + skippedTiles) * 6 + 1];
+							southRestitchingVertices[offset + 2] = this->vertices[(x + x * skippedTiles) * width * 6 + (z + z * skippedTiles) * 6 + 2];*/
+
+							southRestitchingVertices[offset] = this->vertices[(x + x * skippedTiles) * width * 6 + (z + z * skippedTiles + 1) * 6 + 2];
+							southRestitchingVertices[offset + 1] = this->vertices[(x + x * skippedTiles) * width * 6 + (z * levelOfDetail + skippedTiles) * 6 + 1];
+							southRestitchingVertices[offset + 2] = this->vertices[(x + x * skippedTiles) * width * 6 + (z + z * skippedTiles) * 6 + 2];
+
+							southRestitchingVertices[offset].tu = 0.0f;
+							southRestitchingVertices[offset + 1].tu = 0.0f;
+							southRestitchingVertices[offset + 2].tu = 0.0f;
+
+							southRestitchingVertices[offset].tv = 0.0f;
+							southRestitchingVertices[offset + 1].tv = 0.0f;
+							southRestitchingVertices[offset + 2].tv = 0.0f;
+						}
+					}
+				}
+
+				// Add vertices together in one array -- probably requires refactoring with memcpy :)
+				amountOfVertices = nodeAmountOfVertices + northRestitchingAmountOfVertices + eastRestitchingAmountOfVertices + southRestitchingAmountOfVertices;
 				vertices = new D3DCustomVertex[amountOfVertices];
 				
 				int offset = 0;
@@ -131,9 +169,16 @@ namespace pengine
 				}
 				offset += eastRestitchingAmountOfVertices;
 
+				for (int i = 0; i < southRestitchingAmountOfVertices; ++i)
+				{
+					vertices[offset + i] = southRestitchingVertices[i];
+				}
+				offset += southRestitchingAmountOfVertices;
+
 				delete[] nodeVertices;
 				delete[] northRestitchingVertices;
 				delete[] eastRestitchingVertices;
+				delete[] southRestitchingVertices;
 			}
 		}
 		else

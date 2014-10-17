@@ -90,6 +90,7 @@ namespace pengine
 
 	void Ground::Render(Renderer* renderer)
 	{
+		renderer->SetCulling(PENGINE_CULL_NONE);
 		D3DCustomVertex* verticesX;
 		int amountOfVerticesX;
 		quadTreeRootNode->GetAllChildrenVertices(verticesX, amountOfVerticesX);
@@ -159,7 +160,7 @@ namespace pengine
 		CreateQuadTreeChildren(rootNode, depth);
 
 		rootNode->SetLevelOfDetail(2);
-		(*rootNode->GetChildren())[1]->SetLevelOfDetail(4);
+		(*rootNode->GetChildren())[3]->SetLevelOfDetail(4);
 
 		// Calculate neighbors
 		if (!rootNode->IsLeaf())

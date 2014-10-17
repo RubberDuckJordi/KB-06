@@ -243,9 +243,9 @@ pengine::Scene* racer::RaceSceneFactory::CreateScene()
 
 	RaceScene* raceScene = new RaceScene();
 	raceScene->AddEntity(racecart);
-	raceScene->AddEntity(racecart1);
+	//raceScene->AddEntity(racecart1);
 	raceScene->AddCollidable(racecart);
-	raceScene->AddCollidable(racecart1);
+	//raceScene->AddCollidable(racecart1);
 	raceScene->AddEntity(track);
 	raceScene->SetGround(ground);
 	raceScene->SetSkybox(skybox);
