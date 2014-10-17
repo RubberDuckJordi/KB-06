@@ -289,6 +289,30 @@ namespace pengine
 			(*receiver)[11] = 0.0f;
 			(*receiver)[15] = 1.0f;
 		};
+
+		static void CreateOrthographicMatrix(float width, float height, float nearPlane, float farPlane, Matrix* receiver)
+		{
+			D3DXMATRIX result;
+			D3DXMatrixOrthoLH(&result, width, height, nearPlane, farPlane);
+
+			(*receiver)[0] = result._11;
+			(*receiver)[1] = result._12;
+			(*receiver)[2] = result._13;
+			(*receiver)[3] = result._14;
+			(*receiver)[4] = result._21;
+			(*receiver)[5] = result._22;
+			(*receiver)[6] = result._23;
+			(*receiver)[7] = result._24;
+			(*receiver)[8] = result._31;
+			(*receiver)[9] = result._32;
+			(*receiver)[10] = result._33;
+			(*receiver)[11] = result._34;
+			(*receiver)[12] = result._41;
+			(*receiver)[13] = result._42;
+			(*receiver)[14] = result._43;
+			(*receiver)[15] = result._44;
+		}
+
 		static void PrintMatrix(Matrix* matrix)
 		{
 			std::ostringstream oss;

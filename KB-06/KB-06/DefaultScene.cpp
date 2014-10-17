@@ -22,27 +22,21 @@ namespace pengine
 	void DefaultScene::RenderToTexture(int textureIndex, Renderer* renderer)
 	{
 		EntityCamera* aCamera = new EntityCamera();
-		aCamera->SetPosition(0.0f, 0.0f, -100.0f);
+		aCamera->SetPosition(0.0f, 0.0f, 10.0f);
 		aCamera->SetLookAtPosition(0.0f, 0.0f, 0.0f, 0);
-		logger->Log(Logger::DEBUG, "CurrentCamera x: " + std::to_string(currentCamera->GetPosition()->x) + ", y: " + std::to_string(currentCamera->GetPosition()->y) + ", z: " + std::to_string(currentCamera->GetPosition()->z));
-		logger->Log(Logger::DEBUG, "CurrentCamera lookat x: " + std::to_string(currentCamera->GetLookAtPosition()->x) + ", y: " + std::to_string(currentCamera->GetLookAtPosition()->y) + ", z: " + std::to_string(currentCamera->GetLookAtPosition()->z));
-
+		
 		renderer->SetViewMatrix(aCamera->GetViewMatrix());
-		renderer->SetProjectionMatrix(currentCamera->GetProjectionMatrix());
-
-		/*EntityCamera* cam = new EntityCamera();
-		cam->SetPosition(0.0f, 0.0f, 1.0f);
-		cam->SetLookAtPosition(0.0f, 0.0f, -1.0f, 0.0f);
-		renderer->SetViewMatrix(cam->GetViewMatrix(), true);*/
-		//renderer->SetProjectionMatrix(currentCamera->GetProjectionMatrix());
+		Matrix* ortho = new Matrix();
+		Matrix::CreateOrthographicMatrix(1.0f, 1.0f, 1.0f, 10.0f, ortho);
+		renderer->SetProjectionMatrix(ortho);
 
 		Matrix* aMatrix = new pengine::Matrix();
 		aMatrix->CreateMatrix(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, aMatrix);
 		renderer->SetActiveMatrix(aMatrix);
 		D3DCustomVertex vertices[] = {
-		{ -10.0f, -10.0f, 1.5f, 0.0f, 0.0f },
-		{ 10.0f, -10.0f, 1.5f, 0.5f, 1.0f },
-		{ 0.0f, 10.0f, 1.5f, 1.0f, 0.0f }
+				{ -0.5f, -0.5f, 1.0f, 0.0f, 0.0f },
+				{ 0.5f, -0.5f, 1.0f, 0.5f, 1.0f },
+				{ 0.0f, 0.5f, 1.0f, 1.0f, 0.0f }
 		};//holds a triangle that we will render to the texture
 		VertexBufferWrapper* wrapper = renderer->CreateVertexBuffer(vertices, 3, D3DCustomVertexFVF);
 		Material mat;
