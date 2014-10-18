@@ -86,7 +86,7 @@ namespace pengine
 		if (i_buffer == NULL)
 		{
 			i_buffer = renderer->CreateIndexBuffer(aSkyboxIndices, amountOfIndices);
-			v_buffer = renderer->CreateVertexBuffer(aSkyboxVertices, amountOfIndices, D3DCustomVertexFVF);
+			v_buffer = renderer->CreateVertexBuffer(aSkyboxVertices, amountOfIndices);
 		}
 
 		Matrix* aMatrix = new Matrix();

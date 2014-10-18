@@ -13,8 +13,12 @@ namespace pengine
 		void SetVertexBuffer(IDirect3DVertexBuffer9** _VertexBuffer);
 		IDirect3DVertexBuffer9** GetVertexBuffer();
 
+		void SetFVF(int fvf);
+		int GetFVF();
+
 	private:
 		IDirect3DVertexBuffer9** VertexBuffer;
+		int fvf;
 	};
 }
 #endif

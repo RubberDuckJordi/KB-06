@@ -178,7 +178,7 @@ namespace pengine
 		vertices[7].tu = 0.0f;
 		vertices[7].tv = 0.0f;
 
-		vertexBuffer = renderer->CreateVertexBuffer(vertices, amountOfVertices, D3DCustomVertexFVF);
+		vertexBuffer = renderer->CreateVertexBuffer(vertices, amountOfVertices);
 
 		indices[0] = 0; indices[1] = 1; indices[2] = 2;//bottom
 		indices[3] = 2; indices[4] = 1; indices[5] = 3;

@@ -61,7 +61,8 @@ namespace pengine
 
 		virtual void SetLights() = 0;
 
-		virtual VertexBufferWrapper* CreateVertexBuffer(D3DCustomVertex*, int amountOfVertices, int fvf) = 0;
+		virtual VertexBufferWrapper* CreateVertexBuffer(D3DCustomVertex*, int amountOfVertices) = 0;
+		virtual VertexBufferWrapper* CreateColoredVertexBuffer(D3DCustomColoredVertex*, int amountOfVertices) = 0;
 		virtual IndexBufferWrapper* CreateIndexBuffer(int* indices, int amountOfIndices) = 0;
 		virtual void DrawVertexBuffer(VertexBufferWrapper* vertexBuffer, int amountOfIndices) = 0;
 		virtual void DrawIndexedVertexBuffer(VertexBufferWrapper* vertexBuffer, IndexBufferWrapper* indexBuffer, int amountOfVertices, int amountOfFaces) = 0;
@@ -70,9 +71,20 @@ namespace pengine
 		virtual void DeactivateRenderingToTexture(int textureIndex) = 0;
 		virtual void SetTextureToRenderedTexture(int textureIndex) = 0;
 
+		virtual void SetFontTexture(BinaryData* texture) = 0;
+		/*!
+		Draws the given text in the world using the currently active matrix as center.
+		It uses the currently set fontTexure as texture.
+		Note: every character is 1x1 in object space.
+		Unknown characters are replaced with ?
+		Undefined behaviour if the font texture isn't set/loaded.
+		*/
+		virtual void DrawString(std::string text) = 0;
+
 		virtual void DrawTextString(int x, int y, DWORD color, std::string str) = 0;
 	protected:
 		Logger* logger;
+		BinaryData* fontTexture;
 	};
 }
 #endif

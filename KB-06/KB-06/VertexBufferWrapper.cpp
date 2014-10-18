@@ -22,4 +22,14 @@ namespace pengine
 	{
 		return VertexBuffer;
 	}
+
+	void VertexBufferWrapper::SetFVF(int _fvf)
+	{
+		fvf = _fvf;
+	}
+
+	int VertexBufferWrapper::GetFVF()
+	{
+		return fvf;
+	}
 }

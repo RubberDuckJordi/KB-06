@@ -337,20 +337,47 @@ namespace pengine
 		matrixCache->_44 = (*matrix)[15];
 	}
 
-	VertexBufferWrapper* DirectXRenderer::CreateVertexBuffer(D3DCustomVertex* p_vertices, int amountOfVertices, int fvf)
+	VertexBufferWrapper* DirectXRenderer::CreateVertexBuffer(D3DCustomVertex* p_vertices, int amountOfVertices)
 	{
 		IDirect3DVertexBuffer9** buffer = new LPDIRECT3DVERTEXBUFFER9();
 		VertexBufferWrapper* vertexBufferWrapper = new VertexBufferWrapper();
 		vertexBufferWrapper->SetVertexBuffer(buffer);
+		vertexBufferWrapper->SetFVF(D3DCustomVertexFVF);
 
 		if (FAILED(g_pd3dDevice->CreateVertexBuffer(amountOfVertices * sizeof(D3DCustomVertex),
-			0, fvf, D3DPOOL_DEFAULT, vertexBufferWrapper->GetVertexBuffer(), NULL)))
+			0, D3DCustomVertexFVF, D3DPOOL_DEFAULT, vertexBufferWrapper->GetVertexBuffer(), NULL)))
 		{
 			logger->Log(Logger::ERR, "DirectXRenderer::CreateVertexBuffer() vertexbuffer create failed");
 		}
 
 		void* verticesBuffer;
 		int size = sizeof(D3DCustomVertex)*amountOfVertices;
+
+		if (FAILED((*vertexBufferWrapper->GetVertexBuffer())->Lock(0, size, (void**)&verticesBuffer, 0)))
+		{
+			logger->Log(Logger::ERR, "DirectXRenderer::CreateVertexBuffer() vertexbuffer lock failed");
+		}
+		memcpy(verticesBuffer, p_vertices, size);
+		(*vertexBufferWrapper->GetVertexBuffer())->Unlock();
+
+		return vertexBufferWrapper;
+	}
+
+	VertexBufferWrapper* DirectXRenderer::CreateColoredVertexBuffer(D3DCustomColoredVertex* p_vertices, int amountOfVertices)
+	{
+		IDirect3DVertexBuffer9** buffer = new LPDIRECT3DVERTEXBUFFER9();
+		VertexBufferWrapper* vertexBufferWrapper = new VertexBufferWrapper();
+		vertexBufferWrapper->SetVertexBuffer(buffer);
+		vertexBufferWrapper->SetFVF(D3DCustomColoredVertexFVF);
+
+		if (FAILED(g_pd3dDevice->CreateVertexBuffer(amountOfVertices * sizeof(D3DCustomColoredVertex),
+			0, D3DCustomColoredVertexFVF, D3DPOOL_DEFAULT, vertexBufferWrapper->GetVertexBuffer(), NULL)))
+		{
+			logger->Log(Logger::ERR, "DirectXRenderer::CreateVertexBuffer() vertexbuffer create failed");
+		}
+
+		void* verticesBuffer;
+		int size = sizeof(D3DCustomColoredVertex)*amountOfVertices;
 
 		if (FAILED((*vertexBufferWrapper->GetVertexBuffer())->Lock(0, size, (void**)&verticesBuffer, 0)))
 		{
@@ -383,22 +410,38 @@ namespace pengine
 
 	void DirectXRenderer::DrawVertexBuffer(VertexBufferWrapper* vertexBuffer, int amountOfIndices)
 	{
-		g_pd3dDevice->SetStreamSource(0, *vertexBuffer->GetVertexBuffer(), 0, sizeof(D3DCustomVertex));
-		g_pd3dDevice->SetFVF(D3DCustomVertexFVF);
+		g_pd3dDevice->SetFVF(vertexBuffer->GetFVF());
+		if (vertexBuffer->GetFVF() == D3DCustomVertexFVF)
+		{
+			g_pd3dDevice->SetStreamSource(0, *vertexBuffer->GetVertexBuffer(), 0, sizeof(D3DCustomVertex));
+		}
+		else 
+		{
+			g_pd3dDevice->SetStreamSource(0, *vertexBuffer->GetVertexBuffer(), 0, sizeof(D3DCustomColoredVertex));
+		}
+		
 		g_pd3dDevice->DrawPrimitive(D3DPT_TRIANGLELIST, 0, amountOfIndices / 3);
 	}
 
 	void DirectXRenderer::DrawIndexedVertexBuffer(VertexBufferWrapper* v_buffer, IndexBufferWrapper* i_buffer, int amountOfVertices, int amountOfFaces)
 	{
-		g_pd3dDevice->SetStreamSource(0, *v_buffer->GetVertexBuffer(), 0, sizeof(D3DCustomVertex));
-		g_pd3dDevice->SetFVF(D3DCustomVertexFVF);
+		if (v_buffer->GetFVF() == D3DCustomVertexFVF)
+		{
+			g_pd3dDevice->SetStreamSource(0, *v_buffer->GetVertexBuffer(), 0, sizeof(D3DCustomVertex));
+			g_pd3dDevice->SetFVF(D3DCustomVertexFVF);
+		}
+		else
+		{
+			g_pd3dDevice->SetStreamSource(0, *v_buffer->GetVertexBuffer(), 0, sizeof(D3DCustomColoredVertex));
+			g_pd3dDevice->SetFVF(D3DCustomColoredVertexFVF);
+		}
 		g_pd3dDevice->SetIndices(*i_buffer->GetIndexBuffer());
 		g_pd3dDevice->DrawIndexedPrimitive(D3DPT_TRIANGLELIST,// PrimitiveType
 			0,// BaseVertexIndex
 			0,// MinIndex
 			amountOfVertices,// NumVertices
 			0,// StartIndex
-			12);// PrimitiveCount
+			amountOfFaces);// PrimitiveCount
 	}
 
 	void DirectXRenderer::ActivateRenderingToTexture(int textureIndex, int tWidth, int tHeight, RGBAColor bgColor)
@@ -453,5 +496,29 @@ namespace pengine
 	{
 		//Set the texture we're using to the texture we just rendered to. (Neat huh? :D)
 		g_pd3dDevice->SetTexture(0, RenderTextures[textureIndex]);
+	}
+
+	void DirectXRenderer::SetFontTexture(BinaryData* texture)
+	{
+		fontTexture = texture;
+	}
+
+	void DirectXRenderer::DrawString(std::string text)
+	{
+		unsigned int width = 0;
+		unsigned int height = 0;
+		for (int i = 0; i < text.size(); ++i)
+		{
+			switch (text[i])
+			{
+			case '\n':
+			case '\r':
+				++height;
+				break;
+			default:
+				++width;
+				break;
+			}
+		}
 	}
 }

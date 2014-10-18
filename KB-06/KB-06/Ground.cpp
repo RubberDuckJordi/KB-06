@@ -100,7 +100,7 @@ namespace pengine
 			delete vertexBuffer;
 		}
 
-		vertexBuffer = renderer->CreateVertexBuffer(verticesX, amountOfVerticesX, D3DCustomVertexFVF);
+		vertexBuffer = renderer->CreateVertexBuffer(verticesX, amountOfVerticesX);
 
 		renderer->SetActiveMatrix(location);
 		renderer->SetMaterial(material);
