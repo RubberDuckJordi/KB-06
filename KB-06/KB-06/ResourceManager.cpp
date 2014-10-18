@@ -14,67 +14,9 @@ namespace pengine
 		logger->Log(Logger::INFO, "ResourceManager destructed");
 	}
 
-	/*Mesh* ResourceManager::LoadMesh(const std::string& fileName, const std::string& extension)
-	{
-	if (meshes.find(fileName) == meshes.end())
-	{
-	if (meshLoaders.find(extension) != meshLoaders.end())
-	{
-	Mesh loadedMesh = meshLoaders[extension]->Load(fileName);
-	std::vector<std::string> elements;
-	for (unsigned int i = 0; i < loadedMesh.defaultMaterialFiles.size(); ++i)
-	{
-	// load the material file by assuming everything afther the last '.' is the extension
-	elements = StringHelper::split(loadedMesh.defaultMaterialFiles.at(i), '.');
-	LoadMaterial(loadedMesh.defaultMaterialFiles.at(i), elements.back());
-	}
-	for (unsigned int i = 0; i < loadedMesh.subsets.size(); ++i)
-	{
-	Material material = materials.at(loadedMesh.subsets.at(i).defaultMaterial.name);
-	loadedMesh.subsets.at(i).defaultMaterial = material;
-	}
-	meshes[fileName] = loadedMesh;
-	}
-	else
-	{
-	logger->Log(Logger::ERR, "MeshLoader not found for extension:" + extension);
-	return NULL;
-	}
-	}
-	return &meshes[fileName];
-	}*/
-
-	/*void ResourceManager::AddMeshLoader(BaseMeshLoader* newMeshLoader)
-	{
-	meshLoaders[newMeshLoader->GetExtension()] = newMeshLoader;
-	}*/
-
-	/*void ResourceManager::AddMaterialLoader(BaseMaterialLoader* newMaterialLoader)
-	{
-	materialLoaders[newMaterialLoader->GetExtension()] = newMaterialLoader;
-	}*/
-
-	/*Material* ResourceManager::LoadMaterial(const std::string& fileName, const std::string& extension)
-	{
-	std::map<std::string, Material> newMaterials;
-	if (extension == "mtl")
-	{
-	newMaterials = materialLoaders[extension]->Load(fileName);
-	for (auto iterator = newMaterials.begin(); iterator != newMaterials.end(); iterator++)
-	{
-	if (iterator->second.defaultTexture.fileName != "")
-	{
-	iterator->second.defaultTexture = LoadBinaryFile(iterator->second.defaultTexture.fileName);
-	}
-	}
-	materials.insert(newMaterials.begin(), newMaterials.end());
-	}
-	return NULL;
-	}*/
-
 	BinaryData* ResourceManager::LoadBinaryFile(const std::string& fileName)
 	{
-		//logger->LogAll(Logger::DEBUG, "Going to load texture file: " + fileName);
+		logger->Log(Logger::DEBUG, "Going to load texture file: " + fileName);
 
 		std::ifstream file(fileName, std::ios::binary);
 		file.seekg(0, std::ios::end);
@@ -249,13 +191,14 @@ namespace pengine
 
 			superXLoader->Load(*filePath, model);
 
+			size_t found = filePath->find_last_of("/");
 			for (std::list<pengine::Mesh*>::iterator i = model->_Meshes.begin(); i != model->_Meshes.end(); ++i)
 			{
 				for (std::list<pengine::Material*>::iterator j = (*i)->_Materials.begin(); j != (*i)->_Materials.end(); ++j)
 				{
 					if ((*j)->texturePath != "")
 					{
-						(*j)->texture = LoadBinaryFile("resources/" + (*j)->texturePath);
+						(*j)->texture = LoadBinaryFile(filePath->substr(0, found) + "/" + (*j)->texturePath);
 					}
 				}
 			}
