@@ -12,45 +12,17 @@
 #include "SuperXLoader.h"
 #include "EventManager.h"
 
-pengine::Object3D* kapotlelijk(pengine::ResourceManager* resourceManager)
-{
-	std::string file = "resources/tiger.x";
-
-	pengine::Object3D* MyObject = resourceManager->LoadXFile(&file);
-	unsigned short int index = 0;
-	MyObject->MapAnimationSet(index);
-	//We set the interval of animation in steps
-	MyObject->SetAnimationStep(80);
-	MyObject->UpdateAnimation();
-
-	return MyObject;
-}
-
-pengine::Object3D* kapotlelijk2(pengine::ResourceManager* resourceManager)
-{
-	std::string file = "resources/debugSphere.x";
-
-	pengine::Object3D* MyObject = resourceManager->LoadXFile(&file);
-	unsigned short int index = 0;
-	MyObject->MapAnimationSet(index);
-	//We set the interval of animation in steps
-	MyObject->SetAnimationStep(80);
-	MyObject->UpdateAnimation();
-
-	return MyObject;
-}
-
 int main(int argc, const char* argv[])
 {
 	pengine::PEngine pEngine;
-	pengine::Logger* logger = pengine::LoggerPool::GetInstance().GetInstance().GetLogger();
+	pengine::Logger* logger = pengine::LoggerPool::GetInstance().GetLogger();
 	pEngine.Init();
 
 	pEngine.NewWindow(10, 10, 500, 500);
 	pEngine.InitRenderer();
 
-	pengine::Object3D* object3d = kapotlelijk(pEngine.GetResourceManager());
-	pengine::Object3D* object3d2 = kapotlelijk2(pEngine.GetResourceManager());
+	pengine::Object3D* object3d = pEngine.GetResourceManager()->LoadXFile(&std::string("resources/tiger.x"));
+	pengine::Object3D* object3d2 = pEngine.GetResourceManager()->LoadXFile(&std::string("resources/debugSphere.x"));
 
 	std::string rechtdoorPath = "resources/rechtdoor.x";
 	std::string nietRechtdoorPath = "resources/niet-rechtdoor.x";

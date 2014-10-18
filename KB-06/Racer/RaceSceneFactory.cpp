@@ -20,7 +20,6 @@ racer::RaceSceneFactory::~RaceSceneFactory()
 pengine::Scene* racer::RaceSceneFactory::CreateScene(std::vector<std::string>* sceneFile, pengine::ResourceManager* resourceManager)
 {
 	pengine::Scene* scene = new pengine::Scene();
-
 	std::string beginLine;
 
 	for (int i = 0; i < sceneFile->size(); ++i)
@@ -55,8 +54,6 @@ pengine::Scene* racer::RaceSceneFactory::CreateScene(std::vector<std::string>* s
 
 					for (int k = i + 1; k < j - 1; ++k)
 					{
-
-
 						startPosition = sceneFile->at(k).find("<Type>");
 						endPosition = sceneFile->at(k).find("</Type>");
 						if (startPosition != std::string::npos || endPosition != std::string::npos)
@@ -145,12 +142,8 @@ pengine::Scene* racer::RaceSceneFactory::CreateScene(std::vector<std::string>* s
 					}
 					if (!type.empty())
 					{
-
 					}
-
-
 				}
-
 			}
 			i = j;
 		}
@@ -180,22 +173,16 @@ pengine::Scene* racer::RaceSceneFactory::CreateScene(std::vector<std::string>* s
 						}
 					}
 				}
-
-
 			}
 			i = j;
 		}
 		else if (!beginLine.compare("<Terrain>"))
 		{
-
 		}
 		else if (!beginLine.compare("<Track>"))
 		{
-
 		}
-
 	}
-
 	return NULL;
 }
 
@@ -210,9 +197,8 @@ pengine::Scene* racer::RaceSceneFactory::CreateScene()
 
 	RaceCart* racecart1 = new RaceCart();
 	racecart1->SetMass(100.0f);
-	racecart1->AddAll(7.5f, 0.0f, 5.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f);
+	racecart1->AddAll(-15.0f, 0.0f, 5.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f);
 	racecart1->SetObject3D(object3d2);
-
 
 	Track* track = new Track();
 	track->AddTrackBlock(TrackBlock::TYPE::STRAIGHT, xModel2);
@@ -231,7 +217,7 @@ pengine::Scene* racer::RaceSceneFactory::CreateScene()
 	track->AddTrackBlock(TrackBlock::TYPE::TURN_RIGHT, xModel3);
 	track->AddTrackBlock(TrackBlock::TYPE::STRAIGHT, xModel2);
 	track->AddTrackBlock(TrackBlock::TYPE::TURN_RIGHT, xModel3);
-	track->SetAll(-15, -1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 3.0f, 3.0f, 3.0f);
+	track->SetAll(-15.0f, -1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 3.0f, 3.0f, 3.0f);
 
 	pengine::Ground* ground = resourceManager->LoadGround(groundResource, groundTexture);
 	ground->InitQuadTree(1);
@@ -243,9 +229,9 @@ pengine::Scene* racer::RaceSceneFactory::CreateScene()
 
 	RaceScene* raceScene = new RaceScene();
 	raceScene->AddEntity(racecart);
-	//raceScene->AddEntity(racecart1);
+	raceScene->AddEntity(racecart1);
 	raceScene->AddCollidable(racecart);
-	//raceScene->AddCollidable(racecart1);
+	raceScene->AddCollidable(racecart1);
 	raceScene->AddEntity(track);
 	raceScene->SetGround(ground);
 	raceScene->SetSkybox(skybox);
