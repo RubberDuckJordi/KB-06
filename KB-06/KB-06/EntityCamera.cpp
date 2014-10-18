@@ -61,10 +61,12 @@ namespace pengine
 				break;
 			}
 			case Input::KEY_SPACE:
-				this->AddPosition(0.0f, 0.5f, 0.0f);
+				this->AddPosition(0.0f, 1.0f * cameraSpeed * deltaTime, 0.0f);
+				this->SetLookAtPosition(lookAtPosition.x, lookAtPosition.y + (1.0f * cameraSpeed * deltaTime), lookAtPosition.z, rollDegrees);
 				break;
 			case Input::KEY_LSHIFT:
-				this->AddPosition(0.0f, -0.5f, 0.0f);
+				this->AddPosition(0.0f, -(1.0f * cameraSpeed * deltaTime), 0.0f);
+				this->SetLookAtPosition(lookAtPosition.x, lookAtPosition.y - (1.0f * cameraSpeed * deltaTime), lookAtPosition.z, rollDegrees);
 				break;
 			case Input::KEY_DOWN:
 				SetLookAtPosition(lookAtPosition.x, lookAtPosition.y, lookAtPosition.z + 0.1f, rollDegrees);
@@ -84,36 +86,12 @@ namespace pengine
 			case Input::KEY_RETURN:
 				SetLookAtPosition(lookAtPosition.x, lookAtPosition.y - 0.1f, lookAtPosition.z, rollDegrees);
 				break;
-			case Input::KEY_G:
-				this->AddPosition(0.0f, 0.0f, 0.5f);
-				this->SetLookAtPosition(lookAtPosition.x, lookAtPosition.y, lookAtPosition.z + 0.5f, rollDegrees);
-				break;
-			case Input::KEY_T:
-				this->AddPosition(0.0f, 0.0f, -0.5f);
-				this->SetLookAtPosition(lookAtPosition.x, lookAtPosition.y, lookAtPosition.z - 0.5f, rollDegrees);
-				break;
-			case Input::KEY_H:
-				this->AddPosition(-0.5f, 0.0f, 0.0f);
-				this->SetLookAtPosition(lookAtPosition.x - 0.5f, lookAtPosition.y, lookAtPosition.z, rollDegrees);
-				break;
-			case Input::KEY_F:
-				this->AddPosition(0.5f, 0.0f, 0.0f);
-				this->SetLookAtPosition(lookAtPosition.x + 0.5f, lookAtPosition.y, lookAtPosition.z, rollDegrees);
-				break;
-			case Input::KEY_Y:
-				this->AddPosition(0.0f, 0.5f, 0.0f);
-				this->SetLookAtPosition(lookAtPosition.x, lookAtPosition.y + 0.5f, lookAtPosition.z, rollDegrees);
-				break;
-			case Input::KEY_R:
-				this->AddPosition(0.0f, -0.5f, 0.0f);
-				this->SetLookAtPosition(lookAtPosition.x, lookAtPosition.y - 0.5f, lookAtPosition.z, rollDegrees);
-				break;
-			case Input::KEY_U:
-				++rollDegrees;
+			case Input::KEY_Q:
+				--rollDegrees;
 				this->SetLookAtPosition(lookAtPosition.x, lookAtPosition.y, lookAtPosition.z, rollDegrees);
 				break;
 			case Input::KEY_E:
-				--rollDegrees;
+				++rollDegrees;
 				this->SetLookAtPosition(lookAtPosition.x, lookAtPosition.y, lookAtPosition.z, rollDegrees);
 				break;
 			case Input::MOUSE_X:

@@ -48,6 +48,11 @@ namespace pengine
 		mat.power = 10.0f;
 		renderer->SetMaterial(&mat);
 		renderer->DrawVertexBuffer(wrapper, 3);//draw a triangle to the texture
+
+
+		Matrix::CreateMatrix(0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.06f, 0.06f, 1.0f, aMatrix);
+		renderer->SetActiveMatrix(aMatrix);
+		renderer->DrawString("Hello world!\nLife is great!\nOr is it?\nWell I'm pretty\nsure it is...\nActually I'm\nnot so sure\nanymore...", D3DCOLOR_ARGB(255, 255, 255, 255));
 	}
 
 	void DefaultScene::Render(Renderer* renderer)
@@ -87,8 +92,8 @@ namespace pengine
 		VertexBufferWrapper* wrapper2 = renderer->CreateVertexBuffer(vertices2, 6);
 		renderer->DrawVertexBuffer(wrapper2, 6);//draw the square
 
-		Matrix::CreateMatrix(0.0f, 0.0f, -1.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, aMatrix);
+		Matrix::CreateMatrix(0.0f, 15.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, aMatrix);
 		renderer->SetActiveMatrix(aMatrix);
-		renderer->DrawString("Hello world!\nLife is great!\nOr is it?\nWell I'm pretty\nsure it is...\nActually I'm\nnot so sure\nanymore...", D3DCOLOR_ARGB(255, 255, 255, 0));
+		renderer->DrawString("Hello world!\nLife is great!\nOr is it?\nWell I'm pretty\nsure it is...\nActually I'm\nnot so sure\nanymore...", D3DCOLOR_ARGB(255, 0, 127, 0));
 	}
 }

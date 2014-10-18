@@ -46,6 +46,7 @@ namespace pengine
 
 		EntityCamera* camera = new EntityCamera();
 		camera->AddPosition(0.0f, 0.0f, -100.0f);
+		camera->SetLookAtPosition(0.0f, 0.0f, 0.0f, 0.0f);
 		/*camera->myMesh = mesh2;
 		camera->myMesh2 = mesh3;*/
 		camera->useInput = false;
