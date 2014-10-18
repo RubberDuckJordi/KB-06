@@ -513,10 +513,11 @@ namespace pengine
 		g_pd3dDevice->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_NONE);
 		g_pd3dDevice->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_NONE);
 		g_pd3dDevice->SetSamplerState(0, D3DSAMP_MIPFILTER, D3DTEXF_NONE);
-		unsigned int amountOfCharacters = 45;
+		unsigned int amountOfCharacters = 47;
 		float textureWidthPerCharacter = 1.0f / amountOfCharacters;
+		int maxWidth = 0;
 		unsigned int width = 0;
-		unsigned int height = 0;
+		unsigned int height = 1;
 		unsigned int characters = 0;
 		for (int i = 0; i < text.size(); ++i)
 		{
@@ -525,6 +526,11 @@ namespace pengine
 			case '\n':
 			case '\r':
 				++height;
+				if (width > maxWidth)
+				{
+					maxWidth = width;
+				}
+				width = 0;
 				break;
 			default:
 				++width;
@@ -532,32 +538,26 @@ namespace pengine
 				break;
 			}
 		}
+		if (width > maxWidth)
+		{
+			maxWidth = width;
+		}
 
 		std::transform(text.begin(), text.end(), text.begin(), ::tolower);
 
 		D3DCustomColoredVertex* vertices = new D3DCustomColoredVertex[characters * 4];//4 vertices per character
 		int* indices = new int[characters * 6];//6 indices per character, to make 2 faces to make a square
 
-		float minWidth = -(width * 1.1f / 2.0f);
-		float minHeight = -(height * 1.1f / 2.0f);
+		float minWidth = -((maxWidth * 1.1f - 0.1f) / 2.0f);
+		float maxHeight = (height * 1.1f - 0.1f) / 2.0f - 1.0f;
 		int currentX = 0;
 		int currentY = 0;
+		int iOffset = 0;
 
 		for (int i = 0; i < text.size(); ++i)
 		{
 			int charIndex = 0;
-			vertices[i * 4 + 0] = { minWidth + (currentX * 1.1f), minHeight + currentY, 0.0f, color, textureWidthPerCharacter, 1.0f };//BL
-			vertices[i * 4 + 1] = { minWidth + (currentX * 1.1f) + 1, minHeight + currentY, 0.0f, color, textureWidthPerCharacter, 1.0f };//BR
-			vertices[i * 4 + 2] = { minWidth + (currentX * 1.1f), minHeight + currentY + 1.0f, 0.0f, color, textureWidthPerCharacter, 0.0f };//TL
-			vertices[i * 4 + 3] = { minWidth + (currentX * 1.1f) + 1, minHeight + currentY + 1.0f, 0.0f, color, textureWidthPerCharacter, 0.0f };//TR
-
-			indices[i * 6 + 0] = i * 4 + 0;
-			indices[i * 6 + 1] = i * 4 + 1;
-			indices[i * 6 + 2] = i * 4 + 2;//BL->BR->TL
-
-			indices[i * 6 + 3] = i * 4 + 2;
-			indices[i * 6 + 4] = i * 4 + 1;
-			indices[i * 6 + 5] = i * 4 + 3;//TL->BR->TR
+			bool makeChar = true;
 			switch (text[i])
 			{
 			case 'a':
@@ -695,23 +695,47 @@ namespace pengine
 			case ')':
 				charIndex = 44;
 				break;
+			case '.':
+				charIndex = 45;
+				break;
+			case '\'':
+				charIndex = 46;
+				break;
 			case '\n':
 			case '\r':
-				currentX = -1;
+				currentX = 0;
 				++currentY;
+				makeChar = false;
+				iOffset++;
 				break;
 			default:
 				charIndex = 37;//replace unknown characters with ?
 				break;
 			}
-			vertices[i * 4 + 0].tu *= charIndex;
-			vertices[i * 4 + 1].tu *= charIndex;
-			vertices[i * 4 + 2].tu *= charIndex;
-			vertices[i * 4 + 3].tu *= charIndex;
 
-			vertices[i * 4 + 1].tu += textureWidthPerCharacter;
-			vertices[i * 4 + 3].tu += textureWidthPerCharacter;
-			++currentX;
+			if (makeChar)
+			{
+				vertices[(i - iOffset) * 4 + 0] = { minWidth + (currentX * 1.1f), maxHeight - (currentY * 1.1f), 0.0f, color, textureWidthPerCharacter, 1.0f };//BL
+				vertices[(i - iOffset) * 4 + 1] = { minWidth + (currentX * 1.1f) + 1, maxHeight - (currentY * 1.1f), 0.0f, color, textureWidthPerCharacter, 1.0f };//BR
+				vertices[(i - iOffset) * 4 + 2] = { minWidth + (currentX * 1.1f), maxHeight - (currentY * 1.1f) + 1.0f, 0.0f, color, textureWidthPerCharacter, 0.0f };//TL
+				vertices[(i - iOffset) * 4 + 3] = { minWidth + (currentX * 1.1f) + 1, maxHeight - (currentY * 1.1f) + 1.0f, 0.0f, color, textureWidthPerCharacter, 0.0f };//TR
+
+				indices[(i - iOffset) * 6 + 0] = (i - iOffset) * 4 + 0;
+				indices[(i - iOffset) * 6 + 1] = (i - iOffset) * 4 + 1;
+				indices[(i - iOffset) * 6 + 2] = (i - iOffset) * 4 + 2;//BL->BR->TL
+				indices[(i - iOffset) * 6 + 3] = (i - iOffset) * 4 + 2;
+				indices[(i - iOffset) * 6 + 4] = (i - iOffset) * 4 + 1;
+				indices[(i - iOffset) * 6 + 5] = (i - iOffset) * 4 + 3;//TL->BR->TR
+
+				vertices[(i - iOffset) * 4 + 0].tu *= charIndex;
+				vertices[(i - iOffset) * 4 + 1].tu *= charIndex;
+				vertices[(i - iOffset) * 4 + 2].tu *= charIndex;
+				vertices[(i - iOffset) * 4 + 3].tu *= charIndex;
+
+				vertices[(i - iOffset) * 4 + 1].tu += textureWidthPerCharacter;
+				vertices[(i - iOffset) * 4 + 3].tu += textureWidthPerCharacter;
+				++currentX;
+			}
 		}
 
 		VertexBufferWrapper* v_buffer = CreateColoredVertexBuffer(vertices, characters * 4);
