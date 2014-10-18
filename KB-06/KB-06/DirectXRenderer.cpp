@@ -751,6 +751,8 @@ namespace pengine
 		SetMaterial(&mat);
 		DrawIndexedVertexBuffer(v_buffer, i_buffer, characters * 4, characters * 2);
 
+		delete[] vertices;
+		delete[] indices;
 		delete v_buffer;
 		delete i_buffer;
 	}
