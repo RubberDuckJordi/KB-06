@@ -69,6 +69,8 @@ namespace pengine
 		virtual void ActivateRenderingToTexture(int textureIndex, int tWidth, int tHeight, RGBAColor bgColor) = 0;
 		virtual void DeactivateRenderingToTexture(int textureIndex) = 0;
 		virtual void SetTextureToRenderedTexture(int textureIndex) = 0;
+
+		virtual void DrawTextString(int x, int y, DWORD color, std::string str) = 0;
 	protected:
 		Logger* logger;
 	};

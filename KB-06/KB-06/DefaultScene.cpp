@@ -34,7 +34,7 @@ namespace pengine
 		aMatrix->CreateMatrix(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, aMatrix);
 		renderer->SetActiveMatrix(aMatrix);
 		D3DCustomVertex vertices[] = {
-				{ -0.5f, -0.5f, 1.0f, 0.0f, 0.0f },
+				{ -0.0f, -0.5f, 1.0f, 0.0f, 0.0f },
 				{ 0.5f, -0.5f, 1.0f, 0.5f, 1.0f },
 				{ 0.0f, 0.5f, 1.0f, 1.0f, 0.0f }
 		};//holds a triangle that we will render to the texture
@@ -48,6 +48,7 @@ namespace pengine
 		mat.power = 10.0f;
 		renderer->SetMaterial(&mat);
 		renderer->DrawVertexBuffer(wrapper, 3);//draw a triangle to the texture
+		renderer->DrawTextString(10, 10, D3DCOLOR_ARGB(255, 0, 255, 0), "Hello world!");
 	}
 
 	void DefaultScene::Render(Renderer* renderer)

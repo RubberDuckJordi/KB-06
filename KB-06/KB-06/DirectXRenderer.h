@@ -65,6 +65,31 @@ namespace pengine
 		void DeactivateRenderingToTexture(int textureIndex);
 		void SetTextureToRenderedTexture(int textureIndex);
 
+		inline void DrawTextString(int x, int y, DWORD color, std::string str)
+		{
+			HRESULT r = 0;
+			LPD3DXFONT pFont = NULL;
+
+			// Create the D3DX Font
+			r = D3DXCreateFont(g_pd3dDevice, 15, 0, FW_BOLD, 1, 0, DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, DEFAULT_QUALITY, DEFAULT_PITCH | FF_DONTCARE, L"Arial", &pFont);
+
+			if (FAILED(r))
+			{
+				//Do Debugging
+			}
+
+			RECT FontPos = { x, y, x + 120, y + 16 };
+			pFont->DrawText(NULL, ConvertCharArrayToLPCWSTR(str.c_str()), -1, &FontPos, DT_NOCLIP, color);
+			pFont->Release();
+		}
+
+		LPCWSTR ConvertCharArrayToLPCWSTR(const char* charArray)
+		{
+			wchar_t filename[4096] = { 0 };
+			MultiByteToWideChar(0, 0, charArray, strlen(charArray), filename, strlen(charArray));
+			return filename;
+		}
+
 	private:
 		void SetMatrixCache(Matrix* matrix);
 
