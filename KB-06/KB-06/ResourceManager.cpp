@@ -118,8 +118,10 @@ namespace pengine
 			hr = (*((DirectXRenderer*)renderer)->GetDevice())->CreateVertexShader((DWORD*)pCode->GetBufferPointer(),
 				&vertexShader);
 			pCode->Release();
-			if (FAILED(hr));
-			//return DXTRACE_ERR(TEXT("CreateVertexShader"), hr);
+			if (FAILED(hr))
+			{
+				//return DXTRACE_ERR(TEXT("CreateVertexShader"), hr);
+			}
 
 			shader->SetVertexShader(vertexShader);
 

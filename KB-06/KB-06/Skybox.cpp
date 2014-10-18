@@ -91,7 +91,7 @@ namespace pengine
 
 		Matrix* aMatrix = new Matrix();
 
-		aMatrix->CreateMatrix(position->x, position->y, position->z, 0, 0, 0, 1, 1, 1, aMatrix);
+		aMatrix->CreateMatrix(position->x, position->y, position->z, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, aMatrix);
 
 		renderer->SetActiveMatrix(aMatrix);
 		renderer->SetMaterial(material);

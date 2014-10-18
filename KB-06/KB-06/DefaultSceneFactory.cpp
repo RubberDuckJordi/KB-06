@@ -4,8 +4,7 @@
 
 namespace pengine
 {
-	DefaultSceneFactory::DefaultSceneFactory(ResourceManager* resourceManager)
-		:SceneFactory(resourceManager)
+	DefaultSceneFactory::DefaultSceneFactory(ResourceManager* resourceManager) : SceneFactory(resourceManager)
 	{
 
 	}
@@ -37,7 +36,7 @@ namespace pengine
 		entity6->AddAll(0.0f, 0.0f, 7.5f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f);
 
 		DefaultScene* defaultScene = new DefaultScene();
-		defaultScene->SetAmountOfRenderTextures(5);
+		defaultScene->SetAmountOfRenderTextures(1);
 		defaultScene->AddEntity(entity);
 		defaultScene->AddEntity(entity2);
 		defaultScene->AddEntity(entity3);

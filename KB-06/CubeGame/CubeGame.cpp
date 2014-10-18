@@ -44,6 +44,9 @@ int main(int argc, const char* argv[])
 	
 //	pEngine.GetShader()->InitShader(pEngine.GetRenderer());
 
+	pengine::BinaryData* font = pEngine.GetResourceManager()->LoadBinaryFile("resources/font.png");
+	pEngine.GetRenderer()->SetFontTexture(font);
+
 	pEngine.SetCurrentScene(scene);
 	pEngine.GameLoop();
 	

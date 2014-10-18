@@ -48,7 +48,6 @@ namespace pengine
 		mat.power = 10.0f;
 		renderer->SetMaterial(&mat);
 		renderer->DrawVertexBuffer(wrapper, 3);//draw a triangle to the texture
-		renderer->DrawTextString(10, 10, D3DCOLOR_ARGB(255, 0, 255, 0), "Hello world!");
 	}
 
 	void DefaultScene::Render(Renderer* renderer)
@@ -87,5 +86,9 @@ namespace pengine
 		};//holds a square that we will render with the texture, so we can see the contents of the texture
 		VertexBufferWrapper* wrapper2 = renderer->CreateVertexBuffer(vertices2, 6);
 		renderer->DrawVertexBuffer(wrapper2, 6);//draw the square
+
+		Matrix::CreateMatrix(0.0f, 10.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, aMatrix);
+		renderer->SetActiveMatrix(aMatrix);
+		renderer->DrawString("Hello world!", D3DCOLOR_ARGB(255, 0, 0, 255));
 	}
 }

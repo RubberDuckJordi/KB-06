@@ -3,6 +3,8 @@
 #include "BinaryData.h"
 #include <math.h>
 
+#include <algorithm>
+
 namespace pengine
 {
 	DirectXRenderer::DirectXRenderer()
@@ -191,7 +193,7 @@ namespace pengine
 		// a point to lookat, and a direction for which way is up. Here, we set the
 		// eye 0.5 units back along the z-axis and up 0 units, look at the 
 		// origin + 0.5 on the z-axis, and define "up" to be in the y-direction.
-		
+
 		SetMatrixCache(viewMatrix);
 		g_pd3dDevice->SetTransform(D3DTS_VIEW, matrixCache);
 	}
@@ -415,11 +417,11 @@ namespace pengine
 		{
 			g_pd3dDevice->SetStreamSource(0, *vertexBuffer->GetVertexBuffer(), 0, sizeof(D3DCustomVertex));
 		}
-		else 
+		else
 		{
 			g_pd3dDevice->SetStreamSource(0, *vertexBuffer->GetVertexBuffer(), 0, sizeof(D3DCustomColoredVertex));
 		}
-		
+
 		g_pd3dDevice->DrawPrimitive(D3DPT_TRIANGLELIST, 0, amountOfIndices / 3);
 	}
 
@@ -503,10 +505,19 @@ namespace pengine
 		fontTexture = texture;
 	}
 
-	void DirectXRenderer::DrawString(std::string text)
+	void DirectXRenderer::DrawString(std::string text, DWORD color)
 	{
+		g_pd3dDevice->SetSamplerState(0, D3DSAMP_ADDRESSU, D3DTADDRESS_CLAMP);
+		g_pd3dDevice->SetSamplerState(0, D3DSAMP_ADDRESSV, D3DTADDRESS_CLAMP);
+		g_pd3dDevice->SetSamplerState(0, D3DSAMP_ADDRESSW, D3DTADDRESS_CLAMP);
+		g_pd3dDevice->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_NONE);
+		g_pd3dDevice->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_NONE);
+		g_pd3dDevice->SetSamplerState(0, D3DSAMP_MIPFILTER, D3DTEXF_NONE);
+		unsigned int amountOfCharacters = 45;
+		float textureWidthPerCharacter = 1.0f / amountOfCharacters;
 		unsigned int width = 0;
 		unsigned int height = 0;
+		unsigned int characters = 0;
 		for (int i = 0; i < text.size(); ++i)
 		{
 			switch (text[i])
@@ -517,8 +528,206 @@ namespace pengine
 				break;
 			default:
 				++width;
+				++characters;
 				break;
 			}
 		}
+
+		std::transform(text.begin(), text.end(), text.begin(), ::tolower);
+
+		D3DCustomColoredVertex* vertices = new D3DCustomColoredVertex[characters * 4];//4 vertices per character
+		int* indices = new int[characters * 6];//6 indices per character, to make 2 faces to make a square
+
+		float minWidth = -(width * 1.1f / 2.0f);
+		float minHeight = -(height * 1.1f / 2.0f);
+		int currentX = 0;
+		int currentY = 0;
+
+		for (int i = 0; i < text.size(); ++i)
+		{
+			int charIndex = 0;
+			vertices[i * 4 + 0] = { minWidth + (currentX * 1.1f), minHeight + currentY, 0.0f, color, textureWidthPerCharacter, 1.0f };//BL
+			vertices[i * 4 + 1] = { minWidth + (currentX * 1.1f) + 1, minHeight + currentY, 0.0f, color, textureWidthPerCharacter, 1.0f };//BR
+			vertices[i * 4 + 2] = { minWidth + (currentX * 1.1f), minHeight + currentY + 1.0f, 0.0f, color, textureWidthPerCharacter, 0.0f };//TL
+			vertices[i * 4 + 3] = { minWidth + (currentX * 1.1f) + 1, minHeight + currentY + 1.0f, 0.0f, color, textureWidthPerCharacter, 0.0f };//TR
+
+			indices[i * 6 + 0] = i * 4 + 0;
+			indices[i * 6 + 1] = i * 4 + 1;
+			indices[i * 6 + 2] = i * 4 + 2;//BL->BR->TL
+
+			indices[i * 6 + 3] = i * 4 + 2;
+			indices[i * 6 + 4] = i * 4 + 1;
+			indices[i * 6 + 5] = i * 4 + 3;//TL->BR->TR
+			switch (text[i])
+			{
+			case 'a':
+				charIndex = 0;
+				break;
+			case 'b':
+				charIndex = 1;
+				break;
+			case 'c':
+				charIndex = 2;
+				break;
+			case 'd':
+				charIndex = 3;
+				break;
+			case 'e':
+				charIndex = 4;
+				break;
+			case 'f':
+				charIndex = 5;
+				break;
+			case 'g':
+				charIndex = 6;
+				break;
+			case 'h':
+				charIndex = 7;
+				break;
+			case 'i':
+				charIndex = 8;
+				break;
+			case 'j':
+				charIndex = 9;
+				break;
+			case 'k':
+				charIndex = 10;
+				break;
+			case 'l':
+				charIndex = 11;
+				break;
+			case 'm':
+				charIndex = 12;
+				break;
+			case 'n':
+				charIndex = 13;
+				break;
+			case 'o':
+				charIndex = 14;
+				break;
+			case 'p':
+				charIndex = 15;
+				break;
+			case 'q':
+				charIndex = 16;
+				break;
+			case 'r':
+				charIndex = 17;
+				break;
+			case 's':
+				charIndex = 18;
+				break;
+			case 't':
+				charIndex = 19;
+				break;
+			case 'u':
+				charIndex = 20;
+				break;
+			case 'v':
+				charIndex = 21;
+				break;
+			case 'w':
+				charIndex = 22;
+				break;
+			case 'x':
+				charIndex = 23;
+				break;
+			case 'y':
+				charIndex = 24;
+				break;
+			case 'z':
+				charIndex = 25;
+				break;
+			case '0':
+				charIndex = 26;
+				break;
+			case '1':
+				charIndex = 27;
+				break;
+			case '2':
+				charIndex = 28;
+				break;
+			case '3':
+				charIndex = 29;
+				break;
+			case '4':
+				charIndex = 30;
+				break;
+			case '5':
+				charIndex = 31;
+				break;
+			case '6':
+				charIndex = 32;
+				break;
+			case '7':
+				charIndex = 33;
+				break;
+			case '8':
+				charIndex = 34;
+				break;
+			case '9':
+				charIndex = 35;
+				break;
+			case '!':
+				charIndex = 36;
+				break;
+			case '?':
+				charIndex = 37;
+				break;
+			case '#':
+				charIndex = 38;
+				break;
+			case '+':
+				charIndex = 39;
+				break;
+			case '-':
+				charIndex = 40;
+				break;
+			case '$':
+				charIndex = 41;
+				break;
+			case ' ':
+				charIndex = 42;
+				break;
+			case '(':
+				charIndex = 43;
+				break;
+			case ')':
+				charIndex = 44;
+				break;
+			case '\n':
+			case '\r':
+				currentX = -1;
+				++currentY;
+				break;
+			default:
+				charIndex = 37;//replace unknown characters with ?
+				break;
+			}
+			vertices[i * 4 + 0].tu *= charIndex;
+			vertices[i * 4 + 1].tu *= charIndex;
+			vertices[i * 4 + 2].tu *= charIndex;
+			vertices[i * 4 + 3].tu *= charIndex;
+
+			vertices[i * 4 + 1].tu += textureWidthPerCharacter;
+			vertices[i * 4 + 3].tu += textureWidthPerCharacter;
+			++currentX;
+		}
+
+		VertexBufferWrapper* v_buffer = CreateColoredVertexBuffer(vertices, characters * 4);
+		IndexBufferWrapper* i_buffer = CreateIndexBuffer(indices, characters * 6);
+
+		Material mat;
+		mat.texture = fontTexture;
+		mat.ambient = { 1.0f, 1.0f, 1.0f };
+		mat.diffuse = { 1.0f, 1.0f, 1.0f, 1.0f };
+		mat.emissive = { 1.0f, 1.0f, 1.0f };
+		mat.specular = { 1.0f, 1.0f, 1.0f };
+		mat.power = 10.0f;
+		SetMaterial(&mat);
+		DrawIndexedVertexBuffer(v_buffer, i_buffer, characters * 4, characters * 2);
+
+		delete v_buffer;
+		delete i_buffer;
 	}
 }

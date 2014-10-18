@@ -79,9 +79,8 @@ namespace pengine
 		Unknown characters are replaced with ?
 		Undefined behaviour if the font texture isn't set/loaded.
 		*/
-		virtual void DrawString(std::string text) = 0;
+		virtual void DrawString(std::string text, DWORD color) = 0;
 
-		virtual void DrawTextString(int x, int y, DWORD color, std::string str) = 0;
 	protected:
 		Logger* logger;
 		BinaryData* fontTexture;
