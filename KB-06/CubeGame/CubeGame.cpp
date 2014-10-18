@@ -22,7 +22,7 @@ int main(int argc, const char* argv[])
 	pEngine.GetWindowManager()->AddWindowListener(pEngine.GetInputManager());
 	pEngine.GetWindowManager()->NewWindow(750, 10, 750, 750);
 	
-	pEngine.GetRenderer()->InitD3D(pEngine.GetWindowManager()->GetLastWindow()->GetHWND());
+	pEngine.InitRenderer();
 	/*pEngine.GetRenderer()->CreateD2DFactory();
 	pEngine.GetRenderer()->CreateRenderTarget(pEngine.GetWindowManager()->GetLastWindow()->GetHWND());
 	pEngine.GetRenderer()->CreateWICImagingFactory();
@@ -32,38 +32,6 @@ int main(int argc, const char* argv[])
 	pEngine.GetRenderer()->InitializeBMP();
 	pEngine.GetRenderer()->CreateBitmapFromWIC();*/
 
-	pengine::RGBAColor color;
-	color.r = 1.0f;
-	color.g = 0.25f;
-	color.b = 1.0f;
-	color.a = 1.0f;
-
-	pengine::SuperXLoader* loader = new pengine::SuperXLoader();
-	pengine::Model3D* model = new pengine::Model3D();
-	loader->Load("resources/boxes/x1.x", model);
-
-	for (std::list<pengine::Mesh*>::iterator i = model->_Meshes.begin(); i != model->_Meshes.end(); ++i)
-	{
-		for (std::list<pengine::Material*>::iterator j = (*i)->_Materials.begin(); j != (*i)->_Materials.end(); ++j)
-		{
-			logger->Log(pengine::Logger::ERR, "Texture name CubeGame: "+ std::string((*j)->texturePath));
-			if ((*j)->texturePath != "")
-			{
-				(*j)->texture = pEngine.GetResourceManager()->LoadBinaryFile("resources/boxes/" + (*j)->texturePath);
-			}
-		}
-	}
-	model->ConcatenateMeshes();
-
-	pengine::Object3D MyObject;
-	MyObject.SetupModel(model);
-	unsigned short int index = 0;
-	MyObject.MapAnimationSet(index);
-	//We set the interval of animation in steps
-	MyObject.showWarning = false;
-	MyObject.SetAnimationStep(1);
-	MyObject.ClearSkinnedVertices();
-	MyObject.UpdateAnimation();
 
 	pengine::DefaultSceneFactory* sceneFactory = new pengine::DefaultSceneFactory(pEngine.GetResourceManager());
 	sceneFactory->SetSkyboxTexture("resources/dome.jpg");
@@ -75,69 +43,8 @@ int main(int argc, const char* argv[])
 	pEngine.SetShader(pEngine.GetResourceManager()->LoadShader("", "", "TestShader", pEngine.GetRenderer()));
 	
 //	pEngine.GetShader()->InitShader(pEngine.GetRenderer());
+
+	pEngine.SetCurrentScene(scene);
+	pEngine.GameLoop();
 	
-
-	pEngine.GetRenderer()->SetProjectionMatrix(M_PI / 4, 100.0f);
-	pEngine.GetRenderer()->SetDefaultRenderStates();
-	bool pressPlus = false;
-
-	while (pEngine.GetWindowManager()->HasActiveWindow())
-	{
-		pEngine.GetWindowManager()->UpdateWindows();
-
-		// Logics
-		std::map<pengine::Input, long>* actions = pEngine.GetInputManager()->GetCurrentActions();
-
-		pEngine.GetSceneManager()->UpdateActiveScene(1.0f, actions);
-
-		// Visuals
-		pEngine.GetRenderer()->ClearScene(0UL, 0UL, color, 1.0f, 0UL);
-		pEngine.GetRenderer()->BeginScene();
-
-		pEngine.GetRenderer()->SetLights();//every time?
-		pEngine.GetSceneManager()->RenderActiveScene(pEngine.GetRenderer());
-		
-
-		bool holdPlus = false;
-
-		typedef std::map<pengine::Input, long>::iterator it_type;
-		
-		for (it_type iterator = (*actions).begin(); iterator != (*actions).end(); iterator++)
-		{
-			switch (iterator->first)
-			{
-			case pengine::Input::KEY_ADD:
-				if (!pressPlus)
-				{
-				++index;
-				MyObject.MapAnimationSet(index);
-					pressPlus = true;
-				}
-				holdPlus = true;
-				break;
-			default:
-				break;
-			}
-		}
-		if (!holdPlus && pressPlus)
-		{
-			pressPlus = false;
-		}
-		MyObject.ClearSkinnedVertices();
-		MyObject.UpdateAnimation();
-		pengine::Matrix* aMatrix = new pengine::Matrix();
-		aMatrix->CreateMatrix(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.1f, 0.1f, 0.1f, aMatrix);
-		pEngine.GetRenderer()->SetActiveMatrix(aMatrix);
-		pEngine.GetShader()->SetShader(pEngine.GetRenderer());
-		MyObject.Draw(pEngine.GetRenderer());
-		
-		//pEngine.GetRenderer()->D2DDraw();
-		//pEngine.GetShader()->DrawShader(pEngine.GetRenderer());
-
-		pEngine.GetRenderer()->EndScene();
-		pEngine.GetRenderer()->PresentScene(pEngine.GetWindowManager()->GetLastWindow()->GetHWND());
-
-		delete aMatrix;
-		pEngine.GetWindowManager()->PurgeClosedWindows();
-	}
 }
