@@ -22,6 +22,7 @@ namespace pengine
 
 	void EntityCamera::UpdateLogic(float deltaTime, std::map<Input, long>* actions)
 	{
+		float cameraSpeed = 50.0f;
 		for (std::map<Input, long>::iterator iterator = (*actions).begin(); iterator != (*actions).end(); iterator++)
 		{
 			//float speed = static_cast<float>(iterator->second);
@@ -29,32 +30,32 @@ namespace pengine
 			{
 			case Input::KEY_S:
 			{
-				float deltaX = -sin(RADIANS(lastKnownRotation->x)) * deltaTime * 1.0f;
-				float deltaZ = -cos(RADIANS(lastKnownRotation->x)) * deltaTime * 1.0f;
+				float deltaX = -sin(RADIANS(lastKnownRotation->x)) * deltaTime * cameraSpeed;
+				float deltaZ = -cos(RADIANS(lastKnownRotation->x)) * deltaTime * cameraSpeed;
 				this->AddPosition(deltaX, 0.0f, deltaZ);
 				this->SetLookAtPosition(lookAtPosition.x + deltaX, lookAtPosition.y, lookAtPosition.z + deltaZ, rollDegrees);
 				break;
 			}
 			case Input::KEY_W:
 			{
-				float deltaX = sin(RADIANS(lastKnownRotation->x)) * deltaTime * 1.0f;
-				float deltaZ = cos(RADIANS(lastKnownRotation->x)) * deltaTime * 1.0f;
+				float deltaX = sin(RADIANS(lastKnownRotation->x)) * deltaTime * cameraSpeed;
+				float deltaZ = cos(RADIANS(lastKnownRotation->x)) * deltaTime * cameraSpeed;
 				this->AddPosition(deltaX, 0.0f, deltaZ);
 				this->SetLookAtPosition(lookAtPosition.x + deltaX, lookAtPosition.y, lookAtPosition.z + deltaZ, rollDegrees);
 				break;
 			}
 			case Input::KEY_D:
 			{
-				float deltaX = sin(RADIANS(lastKnownRotation->x + 90)) * deltaTime * 1.0f;
-				float deltaZ = cos(RADIANS(lastKnownRotation->x + 90)) * deltaTime * 1.0f;
+				float deltaX = sin(RADIANS(lastKnownRotation->x + 90)) * deltaTime * cameraSpeed;
+				float deltaZ = cos(RADIANS(lastKnownRotation->x + 90)) * deltaTime * cameraSpeed;
 				this->AddPosition(deltaX, 0.0f, deltaZ);
 				this->SetLookAtPosition(lookAtPosition.x + deltaX, lookAtPosition.y, lookAtPosition.z + deltaZ, rollDegrees);
 				break;
 			}
 			case Input::KEY_A:
 			{
-				float deltaX = sin(RADIANS(lastKnownRotation->x - 90)) * deltaTime * 1.0f;
-				float deltaZ = cos(RADIANS(lastKnownRotation->x - 90)) * deltaTime * 1.0f;
+				float deltaX = sin(RADIANS(lastKnownRotation->x - 90)) * deltaTime * cameraSpeed;
+				float deltaZ = cos(RADIANS(lastKnownRotation->x - 90)) * deltaTime * cameraSpeed;
 				this->AddPosition(deltaX, 0.0f, deltaZ);
 				this->SetLookAtPosition(lookAtPosition.x + deltaX, lookAtPosition.y, lookAtPosition.z + deltaZ, rollDegrees);
 				break;
