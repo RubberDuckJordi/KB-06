@@ -73,16 +73,16 @@ namespace pengine
 		renderer->SetMaterial(&mat);
 		renderer->SetTextureToRenderedTexture(0);
 
-		D3DCustomVertex vertices[] = {
-				{ 10.0f, -10.0f, 0.0f, 0.0f, 1.0f },//bl
-				{ -10.0f, 10.0f, 0.0f, 1.0f, 0.0f },//tr
-				{ 10.0f, 10.0f, 0.0f, 0.0f, 0.0f },//tl
+		D3DCustomColoredVertex vertices[] = {
+				{ 10.0f, -10.0f, 0.0f, D3DCOLOR_ARGB(255, 255, 0, 0), 0.0f, 1.0f },//bl
+				{ -10.0f, 10.0f, 0.0f, D3DCOLOR_ARGB(255, 0, 255, 0), 1.0f, 0.0f },//tr
+				{ 10.0f, 10.0f, 0.0f, D3DCOLOR_ARGB(255, 0, 0, 255), 0.0f, 0.0f },//tl
 
-				{ 10.0f, -10.0f, 0.0f, 0.0f, 1.0f },//bl
-				{ -10.0f, -10.0f, 0.0f, 1.0f, 1.0f },//br
-				{ -10.0f, 10.0f, 0.0f, 1.0f, 0.0f }//tr
+				{ 10.0f, -10.0f, 0.0f, D3DCOLOR_ARGB(255, 255, 0, 0), 0.0f, 1.0f },//bl
+				{ -10.0f, -10.0f, 0.0f, D3DCOLOR_ARGB(255, 0, 0, 0), 1.0f, 1.0f },//br
+				{ -10.0f, 10.0f, 0.0f, D3DCOLOR_ARGB(255, 0, 255, 0), 1.0f, 0.0f }//tr
 		};//holds a square that we will render with the texture, so we can see the contents of the texture
-		VertexBufferWrapper* wrapper = renderer->CreateVertexBuffer(vertices, 6);
+		VertexBufferWrapper* wrapper = renderer->CreateColoredVertexBuffer(vertices, 6);
 		renderer->DrawVertexBuffer(wrapper, 6);//draw the square
 
 		Matrix::CreateMatrix(0.0f, 15.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, aMatrix);

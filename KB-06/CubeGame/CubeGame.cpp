@@ -40,9 +40,9 @@ int main(int argc, const char* argv[])
 	pengine::Scene* scene = pEngine.GetSceneManager()->SetScene("iets");
 	pEngine.GetSceneManager()->SetCurrentScene(scene);
 
-	pEngine.SetShader(pEngine.GetResourceManager()->LoadShader("", "", "TestShader", pEngine.GetRenderer()));
+	pEngine.SetShader(pEngine.GetResourceManager()->LoadShader("", "ok", "TestShader", pEngine.GetRenderer()));
 	
-//	pEngine.GetShader()->InitShader(pEngine.GetRenderer());
+	pEngine.GetShader()->SetShader(pEngine.GetRenderer());
 
 	pengine::BinaryData* font = pEngine.GetResourceManager()->LoadBinaryFile("resources/font.png");
 	pEngine.GetRenderer()->SetFontTexture(font);
