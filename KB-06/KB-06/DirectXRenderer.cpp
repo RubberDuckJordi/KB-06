@@ -513,7 +513,7 @@ namespace pengine
 		g_pd3dDevice->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_NONE);
 		g_pd3dDevice->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_NONE);
 		g_pd3dDevice->SetSamplerState(0, D3DSAMP_MIPFILTER, D3DTEXF_NONE);*/
-		unsigned int amountOfCharacters = 47;
+		unsigned int amountOfCharacters = 58;
 		float textureWidthPerCharacter = 1.0f / amountOfCharacters;
 		int maxWidth = 0;
 		unsigned int width = 0;
@@ -700,6 +700,39 @@ namespace pengine
 				break;
 			case '\'':
 				charIndex = 46;
+				break;
+			case '/':
+				charIndex = 47;
+				break;
+			case '\\':
+				charIndex = 48;
+				break;
+			case '<':
+				charIndex = 49;
+				break;
+			case '>':
+				charIndex = 50;
+				break;
+			case '[':
+				charIndex = 51;
+				break;
+			case ']':
+				charIndex = 52;
+				break;
+			case '{':
+				charIndex = 53;
+				break;
+			case '}':
+				charIndex = 54;
+				break;
+			case ',':
+				charIndex = 55;
+				break;
+			case '*':
+				charIndex = 56;
+				break;
+			case ':':
+				charIndex = 57;
 				break;
 			case '\n':
 			case '\r':

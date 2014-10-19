@@ -52,7 +52,7 @@ namespace pengine
 
 		Matrix::CreateMatrix(0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.06f, 0.06f, 1.0f, aMatrix);
 		renderer->SetActiveMatrix(aMatrix);
-		renderer->DrawString("Hello world!\nLife is great!\nOr is it?\nWell I'm pretty\nsure it is...\nActually I'm\nnot so sure\nanymore...", D3DCOLOR_ARGB(255, 255, 255, 255));
+		renderer->DrawString("abcdefghi\njklmnopqr\nstuvwxyz0\n123456789\n!?#+-$ ()\n.'/\\<>[]{\n},*:", D3DCOLOR_ARGB(255, 255, 255, 255));
 		delete wrapper;
 	}
 
@@ -74,13 +74,13 @@ namespace pengine
 		renderer->SetTextureToRenderedTexture(0);
 
 		D3DCustomVertex vertices[] = {
-				{ 10.0f, -10.0f, 0.0f, 1.0f, 0.0f },//bl
-				{ -10.0f, 10.0f, 0.0f,0.0f, 1.0f },//tr
-				{ 10.0f, 10.0f, 0.0f, 1.0f, 1.0f },//tl
+				{ 10.0f, -10.0f, 0.0f, 0.0f, 1.0f },//bl
+				{ -10.0f, 10.0f, 0.0f, 1.0f, 0.0f },//tr
+				{ 10.0f, 10.0f, 0.0f, 0.0f, 0.0f },//tl
 
-				{ 10.0f, -10.0f, 0.0f, 1.0f, 0.0f },//bl
-				{ -10.0f, -10.0f, 0.0f, 0.0f, 0.0f },//br
-				{ -10.0f, 10.0f, 0.0f, 0.0f, 1.0f }//tr
+				{ 10.0f, -10.0f, 0.0f, 0.0f, 1.0f },//bl
+				{ -10.0f, -10.0f, 0.0f, 1.0f, 1.0f },//br
+				{ -10.0f, 10.0f, 0.0f, 1.0f, 0.0f }//tr
 		};//holds a square that we will render with the texture, so we can see the contents of the texture
 		VertexBufferWrapper* wrapper = renderer->CreateVertexBuffer(vertices, 6);
 		renderer->DrawVertexBuffer(wrapper, 6);//draw the square

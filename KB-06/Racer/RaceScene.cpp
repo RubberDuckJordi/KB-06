@@ -55,7 +55,7 @@ void racer::RaceScene::RenderToTexture(int texture, pengine::Renderer* renderer)
 
 	pengine::Matrix::CreateMatrix(0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 3.0f, 3.0f, 1.0f, &aMatrix);
 	renderer->SetActiveMatrix(&aMatrix);
-	renderer->DrawString("Hello world!\nLife is great!\nOr is it?\nWell I'm pretty\nsure it is...\nActually I'm\nnot so sure\nanymore...", D3DCOLOR_ARGB(255, 255, 255, 0));
+	renderer->DrawString("This can be\nany text you'd\nlike :)", D3DCOLOR_ARGB(255, 255, 255, 0));
 
 	delete aCamera;
 	delete wrapper;
@@ -101,6 +101,11 @@ void racer::RaceScene::Render(pengine::Renderer* renderer)
 	Scene::Render(renderer);
 
 	pengine::Matrix aMatrix;
+
+	pengine::Matrix::CreateMatrix(0.0f, 0.0f, 0.1f, 90.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, &aMatrix);
+	renderer->SetActiveMatrix(&aMatrix);
+	renderer->DrawString("Hello world!\nLife is great!\nOr is it?\nWell I'm pretty\nsure it is...\nActually I'm\nnot so sure\nanymore...", D3DCOLOR_ARGB(255, 0, 127, 0));
+
 	pengine::Matrix aMatrix2;
 	pengine::Matrix aMatrix3;
 	pengine::Matrix::CreateMatrix(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, &aMatrix2);
@@ -132,8 +137,5 @@ void racer::RaceScene::Render(pengine::Renderer* renderer)
 	pengine::VertexBufferWrapper* wrapper = renderer->CreateVertexBuffer(vertices, 6);
 	renderer->DrawVertexBuffer(wrapper, 6);//draw the square
 
-	pengine::Matrix::CreateMatrix(0.0f, 0.0f, 0.1f, 90.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, &aMatrix);
-	renderer->SetActiveMatrix(&aMatrix);
-	renderer->DrawString("Hello world!\nLife is great!\nOr is it?\nWell I'm pretty\nsure it is...\nActually I'm\nnot so sure\nanymore...", D3DCOLOR_ARGB(255, 0, 127, 0));
 	delete wrapper;
 }
