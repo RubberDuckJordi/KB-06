@@ -198,7 +198,7 @@ pengine::Scene* racer::RaceSceneFactory::CreateScene()
 	RaceCart* racecart1 = new RaceCart();
 	racecart1->SetMass(100.0f);
 	racecart1->AddAll(-15.0f, 0.0f, 5.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f);
-	racecart1->SetObject3D(object3d2);
+	racecart1->SetObject3D(object3d);
 
 	Track* track = new Track();
 	track->AddTrackBlock(TrackBlock::TYPE::STRAIGHT, xModel2);
@@ -240,6 +240,8 @@ pengine::Scene* racer::RaceSceneFactory::CreateScene()
 	camera->useInput = false;
 	raceScene->SetCurrentCamera(camera);
 	raceScene->SetRaceCart(racecart);
+
+	raceScene->SetAmountOfRenderTextures(1);
 
 	return raceScene;
 }

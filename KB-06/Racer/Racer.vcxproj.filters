@@ -89,17 +89,17 @@
     <ClInclude Include="BasePowerup.h">
       <Filter>Header Files\Scene\Powerup</Filter>
     </ClInclude>
-    <ClInclude Include="RaceSceneFactory.h">
-      <Filter>Header Files\Scene\Powerup</Filter>
-    </ClInclude>
-    <ClInclude Include="RaceScene.h">
-      <Filter>Header Files\Scene\Powerup</Filter>
-    </ClInclude>
     <ClInclude Include="Event.h">
       <Filter>Header Files\Event</Filter>
     </ClInclude>
     <ClInclude Include="EventManager.h">
       <Filter>Header Files\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="RaceScene.h">
+      <Filter>Header Files\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="RaceSceneFactory.h">
+      <Filter>Header Files\Scene</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

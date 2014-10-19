@@ -28,6 +28,9 @@ namespace pengine
 		// Draws the collision box for debugging
 		virtual void DrawCollidable(Renderer*);
 
+		//BEAM collisionBox;//unsafe, but for testing purposes...
+
+		//BEAM collisionBox2;//unsafe, but for testing purposes...
 	protected:
 		BEAM collisionBox;
 	};

@@ -33,7 +33,7 @@ namespace pengine
 
 		//now rotate the point relative with the axis-aligned collisionBox of this Collidable
 		float c = cos(-RADIANS(collisionBox.yaw));
-		float s = sin(-RADIANS(collisionBox.yaw));
+		float s = sin(RADIANS(collisionBox.yaw));
 		float rotatedX;
 		float rotatedZ;
 
@@ -44,6 +44,7 @@ namespace pengine
 
 		rotatedX = (c * one.x) - (s * one.z);
 		rotatedZ = (s * one.x) + (c * one.z);
+		//collisionBox2.frontBottomLeft = { rotatedX, 0.0f, rotatedZ };
 
 		if (rotatedX > leftX && rotatedX < rightX && rotatedZ > bottomZ && rotatedZ < topZ)
 		{
@@ -54,7 +55,7 @@ namespace pengine
 			logger->Log(Logger::DEBUG, "rotatedX: " + std::to_string(rotatedX));
 			logger->Log(Logger::DEBUG, "rotatedZ: " + std::to_string(rotatedZ));
 			logger->Log(Logger::DEBUG, "");*/
-			logger->Log(Logger::DEBUG, "one");
+			//logger->Log(Logger::DEBUG, "one");
 			collision = true;
 		}
 
@@ -63,6 +64,7 @@ namespace pengine
 		//now rotate the point relative with the axis-aligned collisionBox of this Collidable
 		rotatedX = (c * two.x) - (s * two.z);
 		rotatedZ = (s * two.x) + (c * two.z);
+		//collisionBox2.frontBottomRight = { rotatedX, 0.0f, rotatedZ };
 
 		if (rotatedX > leftX && rotatedX < rightX && rotatedZ > bottomZ && rotatedZ < topZ)
 		{
@@ -73,7 +75,7 @@ namespace pengine
 			logger->Log(Logger::DEBUG, "rotatedX: " + std::to_string(rotatedX));
 			logger->Log(Logger::DEBUG, "rotatedZ: " + std::to_string(rotatedZ));
 			logger->Log(Logger::DEBUG, "");*/
-			logger->Log(Logger::DEBUG, "two");
+			//logger->Log(Logger::DEBUG, "two");
 			collision = true;
 		}
 
@@ -82,6 +84,7 @@ namespace pengine
 		//now rotate the point relative with the axis-aligned collisionBox of this Collidable
 		rotatedX = (c * three.x) - (s * three.z);
 		rotatedZ = (s * three.x) + (c * three.z);
+		//collisionBox2.backBottomLeft = { rotatedX, 0.0f, rotatedZ };
 
 		if (rotatedX > leftX && rotatedX < rightX && rotatedZ > bottomZ && rotatedZ < topZ)
 		{
@@ -93,7 +96,7 @@ namespace pengine
 			logger->Log(Logger::DEBUG, "rotatedX: " + std::to_string(rotatedX));
 			logger->Log(Logger::DEBUG, "rotatedZ: " + std::to_string(rotatedZ));
 			logger->Log(Logger::DEBUG, "");*/
-			logger->Log(Logger::DEBUG, "three");
+			//logger->Log(Logger::DEBUG, "three");
 		}
 
 		Point four = { collidable->collisionBox.rotBackBottomRight.x + differenceX, collidable->collisionBox.rotBackBottomRight.z + differenceZ };
@@ -101,6 +104,7 @@ namespace pengine
 		//now rotate the point relative with the axis-aligned collisionBox of this Collidable
 		rotatedX = (c * four.x) - (s * four.z);
 		rotatedZ = (s * four.x) + (c * four.z);
+		//collisionBox2.backBottomRight = { rotatedX, 0.0f, rotatedZ };
 
 		if (rotatedX > leftX && rotatedX < rightX && rotatedZ > bottomZ && rotatedZ < topZ)
 		{
@@ -111,7 +115,7 @@ namespace pengine
 			logger->Log(Logger::DEBUG, "rotatedX: " + std::to_string(rotatedX));
 			logger->Log(Logger::DEBUG, "rotatedZ: " + std::to_string(rotatedZ));
 			logger->Log(Logger::DEBUG, "");*/
-			logger->Log(Logger::DEBUG, "four");
+			//logger->Log(Logger::DEBUG, "four");
 			collision = true;
 		}
 

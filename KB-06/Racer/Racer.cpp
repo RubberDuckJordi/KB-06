@@ -18,7 +18,7 @@ int main(int argc, const char* argv[])
 	pengine::Logger* logger = pengine::LoggerPool::GetInstance().GetLogger();
 	pEngine.Init();
 
-	pEngine.NewWindow(10, 10, 500, 500);
+	pEngine.NewWindow(10, 10, 750, 750);
 	pEngine.InitRenderer();
 
 	pengine::Object3D* object3d = pEngine.GetResourceManager()->LoadXFile(&std::string("resources/tiger.x"));
@@ -54,6 +54,9 @@ int main(int argc, const char* argv[])
 	eventManager->Subscribe("event", iets);
 	eventManager->Proc("event");
 	// </EventManager voorbeeld>
+
+	pengine::BinaryData* font = pEngine.GetResourceManager()->LoadBinaryFile("resources/font.png");
+	pEngine.GetRenderer()->SetFontTexture(font);
 
 	pEngine.SetCurrentScene(scene);
 	pEngine.GameLoop();

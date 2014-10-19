@@ -263,6 +263,7 @@ namespace pengine
 			(*receiver)[14] = result._43;
 			(*receiver)[15] = result._44;
 		};
+
 		static void CreateLookAtMatrix(Vector3 pos, Vector3 lookAtPos, Vector3 upVector, Matrix* receiver)
 		{
 			Vector3 zaxis = Vector3::normalize(lookAtPos - pos);
@@ -311,7 +312,42 @@ namespace pengine
 			(*receiver)[13] = result._42;
 			(*receiver)[14] = result._43;
 			(*receiver)[15] = result._44;
-		}
+		};
+
+		/*!
+		Makes a matrix with just the rotation, not the translation.
+		This matrix can probably not be used as a view matrix.
+		*/
+		static void CreateObjectSpaceLookAtMatrix(Vector3* position, Vector3* lookAt, Matrix* receiver)
+		{
+			Vector3 lookat = { lookAt->x, lookAt->y, lookAt->z };
+			Vector3 pos = { position->x, position->y, position->z };
+			Vector3 objectUpVector = { 0.0f, 1.0f, 0.0f };
+
+			Vector3 zaxis = Vector3::normalize(lookat - pos);
+			Vector3 xaxis = Vector3::normalize(Vector3::cross(objectUpVector, zaxis));
+			Vector3 yaxis = Vector3::cross(zaxis, xaxis);
+
+			(*receiver)[0] = xaxis.x;
+			(*receiver)[1] = xaxis.y;
+			(*receiver)[2] = xaxis.z;
+			(*receiver)[3] = 0.0f;
+
+			(*receiver)[4] = yaxis.x;
+			(*receiver)[5] = yaxis.y;
+			(*receiver)[6] = yaxis.z;
+			(*receiver)[7] = 0.0f;
+
+			(*receiver)[8] = zaxis.x;
+			(*receiver)[9] = zaxis.y;
+			(*receiver)[10] = zaxis.z;
+			(*receiver)[11] = 0.0f;
+
+			(*receiver)[12] = 0.0f;
+			(*receiver)[13] = 0.0f;
+			(*receiver)[14] = 0.0f;
+			(*receiver)[15] = 1.0f;
+		};
 
 		static void PrintMatrix(Matrix* matrix)
 		{

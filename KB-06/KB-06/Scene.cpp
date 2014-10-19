@@ -25,8 +25,6 @@ namespace pengine
 		typedef std::map<pengine::Input, long>::iterator it_type;
 		for (it_type iterator = (*actions).begin(); iterator != (*actions).end(); ++iterator)
 		{
-			float speed = static_cast<float>(iterator->second);
-
 			switch (iterator->first)
 			{
 			case pengine::Input::KEY_TAB:

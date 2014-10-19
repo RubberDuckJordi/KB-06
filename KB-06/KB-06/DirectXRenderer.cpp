@@ -488,7 +488,7 @@ namespace pengine
 		//We're done rendering to the texture scene
 		EndScene();
 		//PresentScene(NULL);//maybe needed if stuff doesn't work?
-		//D3DXSaveTextureToFile(L"test.bmp", D3DXIFF_BMP, RenderTexture, NULL);
+		//D3DXSaveTextureToFile(L"test.bmp", D3DXIFF_BMP, RenderTextures[textureIndex], NULL);
 		//And we change back to the actual backbuffer
 		g_pd3dDevice->SetRenderTarget(0, MainSurface);
 		//SetProjectionMatrix(M_PI / 4, 100.0f);
@@ -507,12 +507,12 @@ namespace pengine
 
 	void DirectXRenderer::DrawString(std::string text, DWORD color)
 	{
-		g_pd3dDevice->SetSamplerState(0, D3DSAMP_ADDRESSU, D3DTADDRESS_CLAMP);
+		/*g_pd3dDevice->SetSamplerState(0, D3DSAMP_ADDRESSU, D3DTADDRESS_CLAMP);
 		g_pd3dDevice->SetSamplerState(0, D3DSAMP_ADDRESSV, D3DTADDRESS_CLAMP);
 		g_pd3dDevice->SetSamplerState(0, D3DSAMP_ADDRESSW, D3DTADDRESS_CLAMP);
 		g_pd3dDevice->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_NONE);
 		g_pd3dDevice->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_NONE);
-		g_pd3dDevice->SetSamplerState(0, D3DSAMP_MIPFILTER, D3DTEXF_NONE);
+		g_pd3dDevice->SetSamplerState(0, D3DSAMP_MIPFILTER, D3DTEXF_NONE);*/
 		unsigned int amountOfCharacters = 47;
 		float textureWidthPerCharacter = 1.0f / amountOfCharacters;
 		int maxWidth = 0;
@@ -709,7 +709,7 @@ namespace pengine
 				iOffset++;
 				break;
 			default:
-				charIndex = 37;//replace unknown characters with ?
+				charIndex = 37;//replace unknown characters with a ?
 				break;
 			}
 

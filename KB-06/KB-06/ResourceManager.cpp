@@ -64,16 +64,12 @@ namespace pengine
 
 	Shader* ResourceManager::LoadShader(std::string VertexShaderFilename, std::string PixelShaderFilename, std::string filename, Renderer* renderer)
 	{
-		
 		Shader* shader = new Shader();
-
 		HRESULT hr;
-
 
 		if (!VertexShaderFilename.empty())
 		{
 			// Create vertex shader
-
 			LPD3DXBUFFER pCode;
 
 			D3DVERTEXELEMENT9 decl[] =
@@ -96,11 +92,8 @@ namespace pengine
 
 
 			DWORD dwShaderFlags = 0;
-
 			LPCWSTR strPath;
-
 			std::wstring strPathNew = L"resources/HLSLwithoutEffects.vsh";
-
 			strPath = strPathNew.c_str();
 
 			LPD3DXCONSTANTTABLE constantTable = shader->GetVertexShaderConstantTable();
@@ -122,9 +115,7 @@ namespace pengine
 			{
 				//return DXTRACE_ERR(TEXT("CreateVertexShader"), hr);
 			}
-
 			shader->SetVertexShader(vertexShader);
-
 		}
 
 		if (!PixelShaderFilename.empty())
@@ -155,13 +146,8 @@ namespace pengine
 			shader->SetPixelShader(pixelShader);
 		}
 
-		
 		shaders[filename] = *shader;
-		
-
-		
 		return shader;
-
 	}
 
 

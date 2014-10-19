@@ -83,7 +83,7 @@ namespace pengine
 		color.r = 1.0f;
 		color.g = 0.25f;
 		color.b = 1.0f;
-		color.a = 1.0f;
+		color.a = 0.5f;
 
 		for (unsigned int i = 0; i < currentScene->GetAmountOfRenderTextures(); ++i)
 		{
