@@ -87,7 +87,7 @@ namespace pengine
 
 		Matrix::CreateMatrix(0.0f, 15.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, aMatrix);
 		renderer->SetActiveMatrix(aMatrix);
-		renderer->DrawString("Hello world!\nLife is great!\nOr is it?\nWell I'm pretty\nsure it is...\nActually I'm\nnot so sure\nanymore...", D3DCOLOR_ARGB(255, 0, 127, 0));
+		renderer->DrawString("Hello world!\nLife is great!\nOr is it?\nWell I'm pretty\nsure it is...\nActually I'm\nnot so sure\nanymore...", D3DCOLOR_ARGB(127, 0, 127, 0));
 		delete wrapper;
 	}
 }

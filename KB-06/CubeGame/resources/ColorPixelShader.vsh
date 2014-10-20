@@ -1,6 +1,6 @@
 struct PixelShaderInput
 {
-    float3 color : COLOR;
+    float4 color : COLOR;
 };
 
 struct PixelShaderOutput
@@ -11,6 +11,6 @@ struct PixelShaderOutput
 PixelShaderOutput main(PixelShaderInput input)
 {
     PixelShaderOutput output; 
-    output.color.rgba = float4(input.color.r, input.color.g, input.color.b, 1.0f);
+    output.color.rgba = float4(input.color.r, input.color.g, input.color.b, input.color.a);
     return output;
 }
