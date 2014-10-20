@@ -93,7 +93,7 @@ namespace pengine
 
 			DWORD dwShaderFlags = 0;
 			LPCWSTR strPath;
-			std::wstring strPathNew = L"resources/HLSLwithoutEffects.vsh";
+			std::wstring strPathNew = L"resources/HLSLwithoutEffects.fx";
 			strPath = strPathNew.c_str();
 
 			LPD3DXCONSTANTTABLE constantTable = shader->GetVertexShaderConstantTable();
@@ -126,7 +126,7 @@ namespace pengine
 
 			LPCWSTR strPath;
 
-			std::wstring strPathNew = L"resources/ColorPixelShader.vsh";
+			std::wstring strPathNew = L"resources/ColorPixelShader.fx";
 
 			strPath = strPathNew.c_str();
 

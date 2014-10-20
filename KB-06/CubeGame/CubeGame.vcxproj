@@ -98,8 +98,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="resources\ColorPixelShader.vsh" />
-    <None Include="resources\HLSLwithoutEffects.vsh" />
+    <None Include="resources\ColorPixelShader.fx" />
+    <None Include="resources\HLSLwithoutEffects.fx" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
