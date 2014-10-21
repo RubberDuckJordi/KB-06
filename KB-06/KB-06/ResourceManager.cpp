@@ -133,13 +133,22 @@ namespace pengine
 			LPD3DXCONSTANTTABLE constantTable = shader->GetPixelShaderConstantTable();
 
 			// Assemble the vertex shader from the file
-			D3DXCompileShaderFromFile(strPath, NULL, NULL, "main",
-				"ps_2_0", dwShaderFlags, &pCode,
-				NULL, &constantTable);
+			D3DXCompileShaderFromFile(strPath, //filename
+				NULL, //An optional NULL terminated array of D3DXMACRO structures. This value may be NULL.
+				NULL, //Optional interface pointer, ID3DXInclude, to use for handling #include directives. If this value is NULL, #includes will either be honored when compiling from a file or will cause an error when compiled from a resource or memory.
+				"main", //Pointer to the shader entry point function where execution begins.
+				"ps_2_0",//Pointer to a shader profile which determines the shader instruction set. See D3DXGetVertexShaderProfile or D3DXGetPixelShaderProfile for a list of the profiles available.
+				dwShaderFlags,//Compile options identified by various flags. The Direct3D 10 HLSL compiler is now the default. See D3DXSHADER Flags for details.
+				&pCode,//Returns a buffer containing the created shader. This buffer contains the compiled shader code, as well as any embedded debug and symbol table information.
+				NULL,//Returns a buffer containing a listing of errors and warnings that were encountered during the compile. These are the same messages the debugger displays when running in debug mode. This value may be NULL.
+				&constantTable);//Returns an ID3DXConstantTable interface, which can be used to access shader constants.
 
-			shader->SetPixelShaderConstantTable(constantTable);
+			shader->SetPixelShaderConstantTable(constantTable);//unnecessary because GetPixelShaderConstantTable() already returned a pointer, which is then set...
 
 			LPDIRECT3DPIXELSHADER9 pixelShader = shader->GetPixelShader();
+
+			D3DXHANDLE handle = constantTable->GetConstantByName(NULL, "magic");
+			constantTable->SetFloat(*((DirectXRenderer*)renderer)->GetDevice(), "magic", 0.5f);
 
 			(*((DirectXRenderer*)renderer)->GetDevice())->CreatePixelShader((DWORD*)pCode->GetBufferPointer(), &pixelShader);
 
