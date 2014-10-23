@@ -155,14 +155,6 @@ namespace pengine
 							westRestitchingVertices[offset] = this->vertices[(x * levelOfDetail + skippedTiles) * width * 6 + (z + z * skippedTiles) * 6];
 							westRestitchingVertices[offset + 1] = this->vertices[(x + x * skippedTiles + neighborLevelOfDetail) * width * 6 + (z + z * skippedTiles) * 6 + 2];
 							westRestitchingVertices[offset + 2] = this->vertices[(x + x * skippedTiles) * width * 6 + (z + z * skippedTiles) * 6 + 2];
-
-							westRestitchingVertices[offset].tu = 0.0f;
-							westRestitchingVertices[offset + 1].tu = 0.0f;
-							westRestitchingVertices[offset + 2].tu = 0.0f;
-
-							westRestitchingVertices[offset].tv = 0.0f;
-							westRestitchingVertices[offset + 1].tv = 0.0f;
-							westRestitchingVertices[offset + 2].tv = 0.0f;
 						}
 					}
 				}
