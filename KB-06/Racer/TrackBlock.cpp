@@ -44,7 +44,7 @@ void TrackBlock::SetPositionOffset(float x, float y, float z){
 	positionOffset.z = z;
 }
 
-pengine::Vertex* TrackBlock::GetPositionOffset()
+pengine::Vector3* TrackBlock::GetPositionOffset()
 {
 	return &positionOffset;
 }
@@ -61,7 +61,7 @@ void TrackBlock::SetRotationOffset(float yaw, float pitch, float roll)
 	rotationOffset.z = roll;
 }
 
-pengine::Vertex* TrackBlock::GetRotationOffset(){
+pengine::Vector3* TrackBlock::GetRotationOffset(){
 	return &rotationOffset;
 }
 

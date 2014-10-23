@@ -68,12 +68,12 @@ namespace pengine
 		return amountOfVertices;
 	}
 
-	D3DCustomVertex* Ground::GetVertices()
+	Vertex* Ground::GetVertices()
 	{
 		return vertices;
 	}
 
-	void Ground::SetVertices(D3DCustomVertex* vertex)
+	void Ground::SetVertices(Vertex* vertex)
 	{
 		vertices = vertex;
 	}
@@ -91,7 +91,7 @@ namespace pengine
 	void Ground::Render(Renderer* renderer)
 	{
 		renderer->SetCulling(PENGINE_CULL_NONE);
-		D3DCustomVertex* verticesX;
+		Vertex* verticesX;
 		int amountOfVerticesX;
 		quadTreeRootNode->GetAllChildrenVertices(verticesX, amountOfVerticesX);
 
@@ -135,7 +135,7 @@ namespace pengine
 
 		for (int i = 0; i < amountOfVertices; ++i)
 		{
-			D3DCustomVertex* vertex = &vertices[i];
+			Vertex* vertex = &vertices[i];
 			if (vertex->x > dimensionWidth)
 			{
 				dimensionWidth = vertex->x;
@@ -252,14 +252,14 @@ namespace pengine
 		{
 			// Add leaf data
 			parent->SetIsLeaf(true);
-			std::vector<D3DCustomVertex*> leafVertices;
+			std::vector<Vertex*> leafVertices;
 
 			// Add all triangles within the bounds, borders included
 			for (int i = 0; i <= amountOfVertices - 3; i += 3)
 			{
-				D3DCustomVertex* vertex0 = &vertices[i];
-				D3DCustomVertex* vertex1 = &vertices[i + 1];
-				D3DCustomVertex* vertex2 = &vertices[i + 2];
+				Vertex* vertex0 = &vertices[i];
+				Vertex* vertex1 = &vertices[i + 1];
+				Vertex* vertex2 = &vertices[i + 2];
 
 				// axis are inverted, the problem is probably somewhere else but I can't find it :)
 				if ((vertex0->z >= parent->GetMinX() && vertex0->z <= parent->GetMaxX()
@@ -278,7 +278,7 @@ namespace pengine
 			}
 
 			int amountOfVertices = leafVertices.size();
-			D3DCustomVertex* vertices = new D3DCustomVertex[amountOfVertices];
+			Vertex* vertices = new Vertex[amountOfVertices];
 			for (int i = 0; i < amountOfVertices; ++i)
 			{
 				vertices[i] = *leafVertices[i];

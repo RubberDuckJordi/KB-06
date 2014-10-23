@@ -94,7 +94,7 @@
     <ClInclude Include="Bone.h" />
     <ClInclude Include="Collidable.h" />
     <ClInclude Include="CollisionEffect.h" />
-    <ClInclude Include="CustomD3DVertex.h" />
+    <ClInclude Include="Vertex.h" />
     <ClInclude Include="EntityCamera.h" />
     <ClInclude Include="Ground.h" />
     <ClInclude Include="HeightmapLoader.h" />
@@ -149,7 +149,6 @@
     <ClInclude Include="Types.h" />
     <ClInclude Include="Vector.h" />
     <ClInclude Include="Vector3.h" />
-    <ClInclude Include="Vertex.h" />
     <ClInclude Include="VertexBufferWrapper.h" />
     <ClInclude Include="Window.h" />
     <ClInclude Include="WindowListener.h" />

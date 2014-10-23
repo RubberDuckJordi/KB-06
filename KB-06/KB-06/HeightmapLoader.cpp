@@ -60,7 +60,7 @@ namespace pengine
 	void HeightmapLoader::BuildGround(byte* p_vertices, Ground& ground)
 	{
 		ground.SetAmountOfVertices(((ground.GetWidth() - 1) * (ground.GetHeight() - 1) * 6));
-		D3DCustomVertex* vertex = new D3DCustomVertex[ground.GetAmountOfVertices()];
+		Vertex* vertex = new Vertex[ground.GetAmountOfVertices()]();
 		ground.SetVertices(vertex);
 		int vertexIndex = 0;
 
@@ -102,7 +102,7 @@ namespace pengine
 		float tu = (1 / static_cast<float>(ground.GetWidth())) * static_cast<float>(x);
 		float tv = (1 / static_cast<float>(ground.GetHeight())) * static_cast<float>(z);
 
-		D3DCustomVertex* vertex = ground.GetVertices();
+		Vertex* vertex = ground.GetVertices();
 
 		vertex[p_vertexIndex].x = x * ground.GetCellSize();
 		vertex[p_vertexIndex].y = p_y;

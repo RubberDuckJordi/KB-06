@@ -4,7 +4,6 @@
 #include "Ground.h"
 #include "Renderer.h"
 #include "LoggerPool.h"
-#include "CustomD3DVertex.h"
 
 namespace pengine
 {

@@ -39,7 +39,7 @@ namespace pengine
 		void SetProjectionMatrix(float FOV, float farClippingPlane);
 
 		void BeginScene();
-		void ClearScene(PENGINEDWORD* count, PENGINEDWORD* flags, PENGINECOLOR* color, float z, PENGINEDWORD* stencil);
+		void ClearScene(DWORD* count, DWORD* flags, PENGINECOLOR* color, float z, DWORD* stencil);
 		void ClearScene(unsigned long count, unsigned long flags, RGBAColor color, float z, unsigned long stencil);
 		void PresentScene(HWND hWnd);
 		void EndScene();
@@ -47,7 +47,7 @@ namespace pengine
 		void SetMaterialWrapper(MaterialWrapper* wrapper);
 		void SetMaterial(Material* material);
 		void SetTexture(TextureWrapper* wrapper);
-		void SetFvF(PENGINEDWORD* fvf);
+		void SetFvF(DWORD* fvf);
 
 		void DrawSubset(MeshWrapper* wrapper, int subset);
 
@@ -56,11 +56,11 @@ namespace pengine
 
 		void SetLights();
 
-		VertexBufferWrapper* CreateVertexBuffer(D3DCustomVertex*, int amountOfVertices);
-		VertexBufferWrapper* CreateColoredVertexBuffer(D3DCustomColoredVertex*, int amountOfVertices);
+		VertexBufferWrapper* CreateVertexBuffer(Vertex* vertices, int amountOfVertices);
+		VertexBufferWrapper* CreateColoredVertexBuffer(ColoredVertex* coloredVertices, int amountOfVertices);
 		IndexBufferWrapper* CreateIndexBuffer(int* indices, int amountOfIndices);
-		void DrawVertexBuffer(VertexBufferWrapper*, int amountOfVertices);
-		void DrawIndexedVertexBuffer(VertexBufferWrapper*, IndexBufferWrapper*, int amountOfIndices, int amountOfFaces);
+		void DrawVertexBuffer(VertexBufferWrapper* vertexBufferWrapper, int amountOfVertices);
+		void DrawIndexedVertexBuffer(VertexBufferWrapper* vertexBufferWrapper, IndexBufferWrapper* indexBufferWrapper, int amountOfIndices, int amountOfFaces);
 
 		void ActivateRenderingToTexture(int textureIndex, int tWidth, int tHeight, RGBAColor bgColor);
 		void DeactivateRenderingToTexture(int textureIndex);

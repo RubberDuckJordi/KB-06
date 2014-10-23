@@ -1,5 +1,5 @@
 #include "DirectXRenderer.h"
-#include "CustomD3DVertex.h"
+#include "Vertex.h"
 #include "BinaryData.h"
 #include <math.h>
 
@@ -339,21 +339,21 @@ namespace pengine
 		matrixCache->_44 = (*matrix)[15];
 	}
 
-	VertexBufferWrapper* DirectXRenderer::CreateVertexBuffer(D3DCustomVertex* p_vertices, int amountOfVertices)
+	VertexBufferWrapper* DirectXRenderer::CreateVertexBuffer(Vertex* p_vertices, int amountOfVertices)
 	{
 		IDirect3DVertexBuffer9** buffer = new LPDIRECT3DVERTEXBUFFER9();
 		VertexBufferWrapper* vertexBufferWrapper = new VertexBufferWrapper();
 		vertexBufferWrapper->SetVertexBuffer(buffer);
 		vertexBufferWrapper->SetFVF(D3DCustomVertexFVF);
 
-		if (FAILED(g_pd3dDevice->CreateVertexBuffer(amountOfVertices * sizeof(D3DCustomVertex),
+		if (FAILED(g_pd3dDevice->CreateVertexBuffer(amountOfVertices * sizeof(Vertex),
 			0, D3DCustomVertexFVF, D3DPOOL_DEFAULT, vertexBufferWrapper->GetVertexBuffer(), NULL)))
 		{
 			logger->Log(Logger::ERR, "DirectXRenderer::CreateVertexBuffer() vertexbuffer create failed");
 		}
 
 		void* verticesBuffer;
-		int size = sizeof(D3DCustomVertex)*amountOfVertices;
+		int size = sizeof(Vertex)*amountOfVertices;
 
 		if (FAILED((*vertexBufferWrapper->GetVertexBuffer())->Lock(0, size, (void**)&verticesBuffer, 0)))
 		{
@@ -365,21 +365,21 @@ namespace pengine
 		return vertexBufferWrapper;
 	}
 
-	VertexBufferWrapper* DirectXRenderer::CreateColoredVertexBuffer(D3DCustomColoredVertex* p_vertices, int amountOfVertices)
+	VertexBufferWrapper* DirectXRenderer::CreateColoredVertexBuffer(ColoredVertex* p_vertices, int amountOfVertices)
 	{
 		IDirect3DVertexBuffer9** buffer = new LPDIRECT3DVERTEXBUFFER9();
 		VertexBufferWrapper* vertexBufferWrapper = new VertexBufferWrapper();
 		vertexBufferWrapper->SetVertexBuffer(buffer);
 		vertexBufferWrapper->SetFVF(D3DCustomColoredVertexFVF);
 
-		if (FAILED(g_pd3dDevice->CreateVertexBuffer(amountOfVertices * sizeof(D3DCustomColoredVertex),
+		if (FAILED(g_pd3dDevice->CreateVertexBuffer(amountOfVertices * sizeof(ColoredVertex),
 			0, D3DCustomColoredVertexFVF, D3DPOOL_DEFAULT, vertexBufferWrapper->GetVertexBuffer(), NULL)))
 		{
 			logger->Log(Logger::ERR, "DirectXRenderer::CreateVertexBuffer() vertexbuffer create failed");
 		}
 
 		void* verticesBuffer;
-		int size = sizeof(D3DCustomColoredVertex)*amountOfVertices;
+		int size = sizeof(ColoredVertex)*amountOfVertices;
 
 		if (FAILED((*vertexBufferWrapper->GetVertexBuffer())->Lock(0, size, (void**)&verticesBuffer, 0)))
 		{
@@ -415,11 +415,11 @@ namespace pengine
 		g_pd3dDevice->SetFVF(vertexBuffer->GetFVF());
 		if (vertexBuffer->GetFVF() == D3DCustomVertexFVF)
 		{
-			g_pd3dDevice->SetStreamSource(0, *vertexBuffer->GetVertexBuffer(), 0, sizeof(D3DCustomVertex));
+			g_pd3dDevice->SetStreamSource(0, *vertexBuffer->GetVertexBuffer(), 0, sizeof(Vertex));
 		}
 		else
 		{
-			g_pd3dDevice->SetStreamSource(0, *vertexBuffer->GetVertexBuffer(), 0, sizeof(D3DCustomColoredVertex));
+			g_pd3dDevice->SetStreamSource(0, *vertexBuffer->GetVertexBuffer(), 0, sizeof(ColoredVertex));
 		}
 
 		g_pd3dDevice->DrawPrimitive(D3DPT_TRIANGLELIST, 0, amountOfIndices / 3);
@@ -429,12 +429,12 @@ namespace pengine
 	{
 		if (v_buffer->GetFVF() == D3DCustomVertexFVF)
 		{
-			g_pd3dDevice->SetStreamSource(0, *v_buffer->GetVertexBuffer(), 0, sizeof(D3DCustomVertex));
+			g_pd3dDevice->SetStreamSource(0, *v_buffer->GetVertexBuffer(), 0, sizeof(Vertex));
 			g_pd3dDevice->SetFVF(D3DCustomVertexFVF);
 		}
 		else
 		{
-			g_pd3dDevice->SetStreamSource(0, *v_buffer->GetVertexBuffer(), 0, sizeof(D3DCustomColoredVertex));
+			g_pd3dDevice->SetStreamSource(0, *v_buffer->GetVertexBuffer(), 0, sizeof(ColoredVertex));
 			g_pd3dDevice->SetFVF(D3DCustomColoredVertexFVF);
 		}
 		g_pd3dDevice->SetIndices(*i_buffer->GetIndexBuffer());
@@ -545,7 +545,7 @@ namespace pengine
 
 		std::transform(text.begin(), text.end(), text.begin(), ::tolower);
 
-		D3DCustomColoredVertex* vertices = new D3DCustomColoredVertex[characters * 4];//4 vertices per character
+		ColoredVertex* vertices = new ColoredVertex[characters * 4]();//4 vertices per character
 		int* indices = new int[characters * 6];//6 indices per character, to make 2 faces to make a square
 
 		float minWidth = -((maxWidth * 1.1f - 0.1f) / 2.0f);
@@ -748,10 +748,10 @@ namespace pengine
 
 			if (makeChar)
 			{
-				vertices[(i - iOffset) * 4 + 0] = { minWidth + (currentX * 1.1f), maxHeight - (currentY * 1.1f), 0.0f, color, textureWidthPerCharacter, 1.0f };//BL
-				vertices[(i - iOffset) * 4 + 1] = { minWidth + (currentX * 1.1f) + 1, maxHeight - (currentY * 1.1f), 0.0f, color, textureWidthPerCharacter, 1.0f };//BR
-				vertices[(i - iOffset) * 4 + 2] = { minWidth + (currentX * 1.1f), maxHeight - (currentY * 1.1f) + 1.0f, 0.0f, color, textureWidthPerCharacter, 0.0f };//TL
-				vertices[(i - iOffset) * 4 + 3] = { minWidth + (currentX * 1.1f) + 1, maxHeight - (currentY * 1.1f) + 1.0f, 0.0f, color, textureWidthPerCharacter, 0.0f };//TR
+				vertices[(i - iOffset) * 4 + 0] = ColoredVertex(minWidth + (currentX * 1.1f), maxHeight - (currentY * 1.1f), 0.0f, 0.0f, 0.0f, 1.0f, color, textureWidthPerCharacter, 1.0f);//BL
+				vertices[(i - iOffset) * 4 + 1] = ColoredVertex(minWidth + (currentX * 1.1f) + 1, maxHeight - (currentY * 1.1f), 0.0f, 0.0f, 0.0f, 1.0f, color, textureWidthPerCharacter, 1.0f);//BR
+				vertices[(i - iOffset) * 4 + 2] = ColoredVertex(minWidth + (currentX * 1.1f), maxHeight - (currentY * 1.1f) + 1.0f, 0.0f, 0.0f, 0.0f, 1.0f, color, textureWidthPerCharacter, 0.0f);//TL
+				vertices[(i - iOffset) * 4 + 3] = ColoredVertex(minWidth + (currentX * 1.1f) + 1, maxHeight - (currentY * 1.1f) + 1.0f, 0.0f, 0.0f, 0.0f, 1.0f, color, textureWidthPerCharacter, 0.0f);//TR
 
 				indices[(i - iOffset) * 6 + 0] = (i - iOffset) * 4 + 0;
 				indices[(i - iOffset) * 6 + 1] = (i - iOffset) * 4 + 1;

@@ -1,7 +1,7 @@
 #ifndef _GROUND_H_
 #define _GROUND_H_
 
-#include "CustomD3DVertex.h"
+#include "Vertex.h"
 #include "Renderer.h"
 #include "LoggerPool.h"
 #include "QuadNode.h"
@@ -24,8 +24,8 @@ namespace pengine
 		
 		void SetAmountOfVertices(int);
 		int GetAmountOfVertices();
-		void SetVertices(D3DCustomVertex* vertex);
-		D3DCustomVertex* GetVertices();
+		void SetVertices(Vertex* vertex);
+		Vertex* GetVertices();
 
 		Material* GetMaterial();
 		void SetMaterial(Material* material);
@@ -40,7 +40,7 @@ namespace pengine
 		QuadNode* quadTreeRootNode;
 		Logger* logger;
 		int amountOfVertices;
-		D3DCustomVertex* vertices;
+		Vertex* vertices;
 		VertexBufferWrapper* vertexBuffer;
 		Material* material;
 		Matrix* location;

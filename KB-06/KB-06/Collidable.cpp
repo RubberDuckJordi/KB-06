@@ -127,12 +127,12 @@ namespace pengine
 		// For drawing
 		int amountOfVertices = 8;
 		int amountOfIndices = 36;
-		D3DCustomVertex* vertices;
+		Vertex* vertices;
 		int* indices = new int[amountOfIndices];
 		VertexBufferWrapper* vertexBuffer;
 		IndexBufferWrapper* indexBuffer;
 
-		vertices = new D3DCustomVertex[amountOfVertices];
+		vertices = new Vertex[amountOfVertices];
 
 		vertices[0].x = collisionBox.rotFrontBottomLeft.x;
 		vertices[0].y = collisionBox.rotFrontBottomLeft.y;

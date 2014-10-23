@@ -193,31 +193,35 @@ pengine::Scene* racer::RaceSceneFactory::CreateScene()
 	racecart->SetMass(100.0f);
 	racecart->SetHorsePower(30.0f);
 	racecart->AddAll(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f);
-	racecart->SetObject3D(object3d);
+
+	pengine::Object3D* tiger = resourceManager->LoadXFile(&std::string("resources/tiger.x"));
+	racecart->SetObject3D(tiger);
 
 	RaceCart* racecart1 = new RaceCart();
 	racecart1->SetMass(100.0f);
 	racecart1->AddAll(-15.0f, 0.0f, 5.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f);
-	racecart1->SetObject3D(object3d);
+	racecart1->SetObject3D(tiger);
 
+	pengine::Object3D* trackStraight = resourceManager->LoadXFile(&std::string("resources/track/trackstraight.X"));
+	pengine::Object3D* trackCurved = resourceManager->LoadXFile(&std::string("resources/track/trackcurved.X"));
 	Track* track = new Track();
-	track->AddTrackBlock(TrackBlock::TYPE::STRAIGHT, xModel2);
-	track->AddTrackBlock(TrackBlock::TYPE::STRAIGHT, xModel2);
-	track->AddTrackBlock(TrackBlock::TYPE::STRAIGHT, xModel2);
-	track->AddTrackBlock(TrackBlock::TYPE::TURN_LEFT, xModel3);
-	track->AddTrackBlock(TrackBlock::TYPE::TURN_RIGHT, xModel3);
-	track->AddTrackBlock(TrackBlock::TYPE::TURN_RIGHT, xModel3);
-	track->AddTrackBlock(TrackBlock::TYPE::STRAIGHT, xModel2);
-	track->AddTrackBlock(TrackBlock::TYPE::STRAIGHT, xModel2);
-	track->AddTrackBlock(TrackBlock::TYPE::TURN_RIGHT, xModel3);
-	track->AddTrackBlock(TrackBlock::TYPE::STRAIGHT, xModel2);
-	track->AddTrackBlock(TrackBlock::TYPE::STRAIGHT, xModel2);
-	track->AddTrackBlock(TrackBlock::TYPE::STRAIGHT, xModel2);
-	track->AddTrackBlock(TrackBlock::TYPE::STRAIGHT, xModel2);
-	track->AddTrackBlock(TrackBlock::TYPE::TURN_RIGHT, xModel3);
-	track->AddTrackBlock(TrackBlock::TYPE::STRAIGHT, xModel2);
-	track->AddTrackBlock(TrackBlock::TYPE::TURN_RIGHT, xModel3);
-	track->SetAll(-15.0f, -1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 3.0f, 3.0f, 3.0f);
+	track->AddTrackBlock(TrackBlock::TYPE::STRAIGHT, trackStraight);
+	track->AddTrackBlock(TrackBlock::TYPE::STRAIGHT, trackStraight);
+	track->AddTrackBlock(TrackBlock::TYPE::STRAIGHT, trackStraight);
+	track->AddTrackBlock(TrackBlock::TYPE::TURN_LEFT, trackCurved);
+	track->AddTrackBlock(TrackBlock::TYPE::TURN_RIGHT, trackCurved);
+	track->AddTrackBlock(TrackBlock::TYPE::TURN_RIGHT, trackCurved);
+	track->AddTrackBlock(TrackBlock::TYPE::STRAIGHT, trackStraight);
+	track->AddTrackBlock(TrackBlock::TYPE::STRAIGHT, trackStraight);
+	track->AddTrackBlock(TrackBlock::TYPE::TURN_RIGHT, trackCurved);
+	track->AddTrackBlock(TrackBlock::TYPE::STRAIGHT, trackStraight);
+	track->AddTrackBlock(TrackBlock::TYPE::STRAIGHT, trackStraight);
+	track->AddTrackBlock(TrackBlock::TYPE::STRAIGHT, trackStraight);
+	track->AddTrackBlock(TrackBlock::TYPE::STRAIGHT, trackStraight);
+	track->AddTrackBlock(TrackBlock::TYPE::TURN_RIGHT, trackCurved);
+	track->AddTrackBlock(TrackBlock::TYPE::STRAIGHT, trackStraight);
+	track->AddTrackBlock(TrackBlock::TYPE::TURN_RIGHT, trackCurved);
+	track->SetAll(-15.0f, -1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.05f, 0.05f, 0.05f);
 
 	pengine::Ground* ground = resourceManager->LoadGround(groundResource, groundTexture);
 	ground->InitQuadTree(1);
@@ -244,24 +248,4 @@ pengine::Scene* racer::RaceSceneFactory::CreateScene()
 	raceScene->SetAmountOfRenderTextures(1);
 
 	return raceScene;
-}
-
-void racer::RaceSceneFactory::SetXModel2(pengine::Object3D* p_xModel)
-{
-	xModel2 = p_xModel;
-}
-
-void racer::RaceSceneFactory::SetXModel3(pengine::Object3D* p_xModel)
-{
-	xModel3 = p_xModel;
-}
-
-void racer::RaceSceneFactory::SetObject3D(pengine::Object3D* obj)
-{
-	object3d = obj;
-}
-
-void racer::RaceSceneFactory::SetObject3D2(pengine::Object3D* obj)
-{
-	object3d2 = obj;
 }

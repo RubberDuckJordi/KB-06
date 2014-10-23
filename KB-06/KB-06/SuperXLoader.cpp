@@ -483,7 +483,7 @@ namespace pengine
 		fin.getline(data, TEXT_BUFFER, ';');
 		_LoadMesh->_nVertices = (uint16)TextToNum(data);
 		logger->Log(Logger::DEBUG, "SuperXLoader: Number of vertices: " + std::to_string(_LoadMesh->_nVertices));
-		_LoadMesh->_Vertices = new Vertex[_LoadMesh->_nVertices];
+		_LoadMesh->_Vertices = new Vertex[_LoadMesh->_nVertices]();
 		//   _LoadMesh->_SkinnedVertices = new Frm::Vertex[_LoadMesh->_nVertices];
 		for (int i = 0; i < _LoadMesh->_nVertices; ++i)
 		{
@@ -1056,6 +1056,7 @@ namespace pengine
 		Find('{');
 
 		int currentTextureCoordinateSet = 0;//needed if we find texture coordinates in our decldata block...
+		int currentNormalSet = 0;//needed if we find normals in our decldata block...
 
 		char data[TEXT_BUFFER];
 
@@ -1169,12 +1170,12 @@ namespace pengine
 				switch (declUsages[j])
 				{
 				case DECLUSAGE_TEXCOORD:
-					if (_LoadMesh->_TextureCoords == NULL)
+					/*if (_LoadMesh->_TextureCoords == NULL)
 					{
 						_LoadMesh->_nTextureCoords = _LoadMesh->_nVertices;//technically not every vertex needs to have a texture coordinate...
 						logger->Log(Logger::DEBUG, "SuperXLoader: Number of Texture Coords: " + std::to_string(_LoadMesh->_nTextureCoords));
 						_LoadMesh->_TextureCoords = new TCoord[_LoadMesh->_nTextureCoords];
-					}
+					}*/
 					_LoadMesh->_Vertices[currentTextureCoordinateSet].tu = *(float*)&component[0];//convert DWORD to float
 					_LoadMesh->_Vertices[currentTextureCoordinateSet].tv = *(float*)&component[1];
 					//logger->Log(Logger::DEBUG, "SuperXLoader: DeclData texture coordinates " + std::to_string(currentTextureCoordinateSet) + ": u: " + std::to_string(*(float*)&component[0]) + "; v: " + std::to_string(*(float*)&component[1]));
@@ -1199,7 +1200,11 @@ namespace pengine
 					logger->Log(Logger::WARNING, "SuperXLoader: DeclData found unsupported DECLUSAGE: DECLUSAGE_FOG!");
 					break;
 				case DECLUSAGE_NORMAL:
-					logger->Log(Logger::WARNING, "SuperXLoader: DeclData found unsupported DECLUSAGE: DECLUSAGE_NORMAL!");
+					//logger->Log(Logger::WARNING, "SuperXLoader: DeclData found unsupported DECLUSAGE: DECLUSAGE_NORMAL!");
+					_LoadMesh->_Vertices[currentNormalSet].nX = *(float*)&component[0];//convert DWORD to float
+					_LoadMesh->_Vertices[currentNormalSet].nY = *(float*)&component[1];//convert DWORD to float
+					_LoadMesh->_Vertices[currentNormalSet].nZ = *(float*)&component[2];//convert DWORD to float
+					++currentNormalSet;
 					break;
 				case DECLUSAGE_POSITION:
 					logger->Log(Logger::WARNING, "SuperXLoader: DeclData found unsupported DECLUSAGE: DECLUSAGE_POSITION!");

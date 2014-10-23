@@ -2,12 +2,12 @@
 #define _PENGINE_MATRIX_H_
 
 #include "Vector.h"
-#include "Vertex.h"
 #include "Types.h"
 #include "Vector3.h"//same functionality as Vector.h, different implementation
 #include <d3dx9.h>//ugly, might as well go fix this...
 #include "PengineDefinitions.h"
 #include "LoggerPool.h"
+#include "Vertex.h"
 #include <sstream>
 
 namespace pengine
@@ -146,7 +146,7 @@ namespace pengine
 				}
 			}
 
-			return{ vdata[0], vdata[1], vdata[2], pV.tu, pV.tv };
+			return Vertex(vdata[0], vdata[1], vdata[2], pV.nX, pV.nY, pV.nZ, pV.tu, pV.tv);//{ vdata[0], vdata[1], vdata[2], pV.tu, pV.tv };
 		};
 
 		float operator[](int index)const

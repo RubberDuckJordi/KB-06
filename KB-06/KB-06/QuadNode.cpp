@@ -21,7 +21,7 @@ namespace pengine
 		}
 	}
 
-	void QuadNode::GetAllChildrenVertices(D3DCustomVertex*& vertices, int& amountOfVertices)
+	void QuadNode::GetAllChildrenVertices(Vertex*& vertices, int& amountOfVertices)
 	{
 		if (isLeaf)
 		{
@@ -37,16 +37,16 @@ namespace pengine
 			else
 			{
 				int nodeAmountOfVertices = this->amountOfVertices / (levelOfDetail * levelOfDetail);
-				D3DCustomVertex* nodeVertices = new D3DCustomVertex[nodeAmountOfVertices];
+				Vertex* nodeVertices = new Vertex[nodeAmountOfVertices]();
 
 				int northRestitchingAmountOfVertices = 0;
-				D3DCustomVertex* northRestitchingVertices = NULL;
+				Vertex* northRestitchingVertices = NULL;
 				int eastRestitchingAmountOfVertices = 0;
-				D3DCustomVertex* eastRestitchingVertices = NULL;
+				Vertex* eastRestitchingVertices = NULL;
 				int southRestitchingAmountOfVertices = 0;
-				D3DCustomVertex* southRestitchingVertices = NULL;
+				Vertex* southRestitchingVertices = NULL;
 				int westRestitchingAmountOfVertices = 0;
-				D3DCustomVertex* westRestitchingVertices = NULL;
+				Vertex* westRestitchingVertices = NULL;
 				
 				int skippedTiles = levelOfDetail - 1;
 				// Divide the vertices by level of detail
@@ -74,7 +74,7 @@ namespace pengine
 					if (neighborLevelOfDetail < levelOfDetail)
 					{
 						northRestitchingAmountOfVertices = 3 * newDepth;
-						northRestitchingVertices = new D3DCustomVertex[northRestitchingAmountOfVertices];
+						northRestitchingVertices = new Vertex[northRestitchingAmountOfVertices];
 
 						int neighborSkippedTiles = neighborLevelOfDetail - 1;
 						int x = newWidth - 1; // only process north border
@@ -97,7 +97,7 @@ namespace pengine
 					if (neighborLevelOfDetail < levelOfDetail)
 					{
 						eastRestitchingAmountOfVertices = 3 * newWidth;
-						eastRestitchingVertices = new D3DCustomVertex[eastRestitchingAmountOfVertices];
+						eastRestitchingVertices = new Vertex[eastRestitchingAmountOfVertices];
 
 						int neighborSkippedTiles = neighborLevelOfDetail - 1;
 						int z = newDepth - 1; // only process east border
@@ -120,7 +120,7 @@ namespace pengine
 					if (neighborLevelOfDetail < levelOfDetail)
 					{
 						southRestitchingAmountOfVertices = 3 * newDepth;
-						southRestitchingVertices = new D3DCustomVertex[southRestitchingAmountOfVertices];
+						southRestitchingVertices = new Vertex[southRestitchingAmountOfVertices];
 
 						int neighborSkippedTiles = neighborLevelOfDetail - 1;
 						int x = 0; // only process south border
@@ -144,7 +144,7 @@ namespace pengine
 					if (neighborLevelOfDetail < levelOfDetail)
 					{
 						westRestitchingAmountOfVertices = 3 * newWidth;
-						westRestitchingVertices = new D3DCustomVertex[westRestitchingAmountOfVertices];
+						westRestitchingVertices = new Vertex[westRestitchingAmountOfVertices];
 
 						int neighborSkippedTiles = neighborLevelOfDetail - 1;
 						int z = 0; // only process west border
@@ -169,7 +169,7 @@ namespace pengine
 
 				// Add vertices together in one array -- probably requires refactoring with memcpy :)
 				amountOfVertices = nodeAmountOfVertices + northRestitchingAmountOfVertices + eastRestitchingAmountOfVertices + southRestitchingAmountOfVertices + westRestitchingAmountOfVertices;
-				vertices = new D3DCustomVertex[amountOfVertices];
+				vertices = new Vertex[amountOfVertices];
 				
 				int offset = 0;
 
@@ -211,22 +211,22 @@ namespace pengine
 		}
 		else
 		{
-			D3DCustomVertex* node0Vertices;
+			Vertex* node0Vertices;
 			int node0AmountOfVertices;
 			children[0]->GetAllChildrenVertices(node0Vertices, node0AmountOfVertices);
-			D3DCustomVertex* node1Vertices;
+			Vertex* node1Vertices;
 			int node1AmountOfVertices;
 			children[1]->GetAllChildrenVertices(node1Vertices, node1AmountOfVertices);
-			D3DCustomVertex* node2Vertices;
+			Vertex* node2Vertices;
 			int node2AmountOfVertices;
 			children[2]->GetAllChildrenVertices(node2Vertices, node2AmountOfVertices);
-			D3DCustomVertex* node3Vertices;
+			Vertex* node3Vertices;
 			int node3AmountOfVertices;
 			children[3]->GetAllChildrenVertices(node3Vertices, node3AmountOfVertices);
 
 			// Add arrays together
 			amountOfVertices = node0AmountOfVertices + node1AmountOfVertices + node2AmountOfVertices + node3AmountOfVertices;
-			vertices = new D3DCustomVertex[amountOfVertices];
+			vertices = new Vertex[amountOfVertices];
 
 			int offset = 0;
 			for (int i = 0; i < node0AmountOfVertices; ++i)
@@ -324,12 +324,12 @@ namespace pengine
 		this->children = *children;
 	}
 
-	D3DCustomVertex* QuadNode::GetVertices()
+	Vertex* QuadNode::GetVertices()
 	{
 		return vertices;
 	}
 
-	void QuadNode::SetVertices(D3DCustomVertex* vertices)
+	void QuadNode::SetVertices(Vertex* vertices)
 	{
 		this->vertices = vertices;
 	}

@@ -21,20 +21,7 @@ int main(int argc, const char* argv[])
 	pEngine.NewWindow(10, 10, 750, 750);
 	pEngine.InitRenderer();
 
-	pengine::Object3D* object3d = pEngine.GetResourceManager()->LoadXFile(&std::string("resources/tiger.x"));
-	pengine::Object3D* object3d2 = pEngine.GetResourceManager()->LoadXFile(&std::string("resources/debugSphere.x"));
-
-	std::string rechtdoorPath = "resources/rechtdoor.x";
-	std::string nietRechtdoorPath = "resources/niet-rechtdoor.x";
-
-	pengine::Object3D* weg = pEngine.GetResourceManager()->LoadXFile(&rechtdoorPath);
-	pengine::Object3D* weg2 = pEngine.GetResourceManager()->LoadXFile(&nietRechtdoorPath);
-
 	racer::RaceSceneFactory* sceneFactory = new racer::RaceSceneFactory(pEngine.GetResourceManager());
-	sceneFactory->SetXModel2(weg);
-	sceneFactory->SetXModel3(weg2);
-	sceneFactory->SetObject3D(object3d);
-	sceneFactory->SetObject3D2(object3d2);
 	sceneFactory->SetGroundResource("resources/heightmap.bmp");
 	sceneFactory->SetGroundTexture("resources/heightmaptexture.bmp");
 	sceneFactory->SetSkyboxTexture("resources/dome2.jpg");

@@ -33,10 +33,10 @@ namespace pengine
 		Matrix* aMatrix = new pengine::Matrix();
 		aMatrix->CreateMatrix(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, aMatrix);
 		renderer->SetActiveMatrix(aMatrix);
-		D3DCustomColoredVertex vertices[] = {
-				{ -0.5f, -0.5f, 1.0f, D3DCOLOR_ARGB(255, 255, 0, 0), 0.0f, 0.0f },
-				{ 0.5f, -0.5f, 1.0f, D3DCOLOR_ARGB(255, 0, 255, 0), 1.0f, 0.0f },
-				{ 0.0f, 0.5f, 1.0f, D3DCOLOR_ARGB(255, 0, 0, 255), 0.5f, 1.0f }
+		ColoredVertex vertices[] = {
+			ColoredVertex(-0.5f, -0.5f, 1.0f, 0.0f, 0.0f, 0.0f, D3DCOLOR_ARGB(255, 255, 0, 0), 0.0f, 0.0f),
+			ColoredVertex(0.5f, -0.5f, 1.0f, 0.0f, 0.0f, 0.0f, D3DCOLOR_ARGB(255, 0, 255, 0), 1.0f, 0.0f),
+			ColoredVertex(0.0f, 0.5f, 1.0f, 0.0f, 0.0f, 0.0f, D3DCOLOR_ARGB(255, 0, 0, 255), 0.5f, 1.0f)
 		};//holds a triangle that we will render to the texture
 		VertexBufferWrapper* wrapper = renderer->CreateColoredVertexBuffer(vertices, 3);
 		Material mat;
@@ -73,14 +73,14 @@ namespace pengine
 		renderer->SetMaterial(&mat);
 		renderer->SetTextureToRenderedTexture(0);
 
-		D3DCustomColoredVertex vertices[] = {
-				{ 10.0f, -10.0f, 0.0f, D3DCOLOR_ARGB(255, 255, 0, 0), 0.0f, 1.0f },//bl
-				{ -10.0f, 10.0f, 0.0f, D3DCOLOR_ARGB(255, 0, 255, 0), 1.0f, 0.0f },//tr
-				{ 10.0f, 10.0f, 0.0f, D3DCOLOR_ARGB(255, 0, 0, 255), 0.0f, 0.0f },//tl
+		ColoredVertex vertices[] = {
+			ColoredVertex(10.0f, -10.0f, 0.0f, 0.0f, 0.0f, 0.0f, D3DCOLOR_ARGB(255, 255, 0, 0), 0.0f, 1.0f),//bl
+			ColoredVertex(-10.0f, 10.0f, 0.0f, 0.0f, 0.0f, 0.0f, D3DCOLOR_ARGB(255, 0, 255, 0), 1.0f, 0.0f),//tr
+			ColoredVertex(10.0f, 10.0f, 0.0f, 0.0f, 0.0f, 0.0f, D3DCOLOR_ARGB(255, 0, 0, 255), 0.0f, 0.0f),//tl
 
-				{ 10.0f, -10.0f, 0.0f, D3DCOLOR_ARGB(255, 255, 0, 0), 0.0f, 1.0f },//bl
-				{ -10.0f, -10.0f, 0.0f, D3DCOLOR_ARGB(255, 0, 0, 0), 1.0f, 1.0f },//br
-				{ -10.0f, 10.0f, 0.0f, D3DCOLOR_ARGB(255, 0, 255, 0), 1.0f, 0.0f }//tr
+			ColoredVertex(10.0f, -10.0f, 0.0f, 0.0f, 0.0f, 0.0f, D3DCOLOR_ARGB(255, 255, 0, 0), 0.0f, 1.0f),//bl
+			ColoredVertex(-10.0f, -10.0f, 0.0f, 0.0f, 0.0f, 0.0f, D3DCOLOR_ARGB(255, 0, 0, 0), 1.0f, 1.0f),//br
+			ColoredVertex(-10.0f, 10.0f, 0.0f, 0.0f, 0.0f, 0.0f, D3DCOLOR_ARGB(255, 0, 255, 0), 1.0f, 0.0f)//tr
 		};//holds a square that we will render with the texture, so we can see the contents of the texture
 		VertexBufferWrapper* wrapper = renderer->CreateColoredVertexBuffer(vertices, 6);
 		renderer->DrawVertexBuffer(wrapper, 6);//draw the square

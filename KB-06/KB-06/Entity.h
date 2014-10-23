@@ -2,7 +2,6 @@
 #define _PENGINE_ENTITY_H_
 
 #include "Renderer.h"
-#include "Vertex.h"
 #include "logger.h"
 #include "Input.h"
 #include "Vector3.h"

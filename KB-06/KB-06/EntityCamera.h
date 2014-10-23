@@ -2,7 +2,6 @@
 #define _PENGINE_ENTITYCAMERA_H_
 
 #include "Entity.h"
-#include "Vertex.h"
 #include "Plane.h"
 #include "Matrix.h"
 

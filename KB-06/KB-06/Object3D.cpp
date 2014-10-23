@@ -1,7 +1,7 @@
 #include "Object3D.h"
 
 #include "DirectXRenderer.h"//HACKING NEEDS FIXES
-#include "CustomD3DVertex.h"
+#include "Vertex.h"
 
 namespace pengine
 {
@@ -86,7 +86,7 @@ namespace pengine
 	{
 		_Model = pModel;
 		_Mesh = _Model->_Meshes.back();
-		_SkinnedVertices = new Vertex[_Mesh->_nVertices];
+		_SkinnedVertices = new Vertex[_Mesh->_nVertices]();
 		_Skeleton = ReplicateSkeleton(_Model->_Skeleton);
 	}
 
@@ -141,13 +141,13 @@ namespace pengine
 		}
 		else
 		{
-			D3DCustomVertex* d3dVertices = new D3DCustomVertex[amountOfVertices];
+			Vertex* d3dVertices = new Vertex[amountOfVertices];
 
 			if (_cAnimationSet == NULL)
 			{
 				for (int i = 0; i < amountOfVertices; ++i)//first do all the vertices, then set the indices to the right vertices
 				{
-					D3DCustomVertex newVertex;
+					Vertex newVertex;
 					newVertex.x = _Mesh->_Vertices[i].x;
 					newVertex.y = _Mesh->_Vertices[i].y;
 					newVertex.z = _Mesh->_Vertices[i].z;
@@ -160,7 +160,7 @@ namespace pengine
 			{
 				for (int i = 0; i < amountOfVertices; ++i)//first do all the vertices, then set the indices to the right vertices
 				{
-					D3DCustomVertex newVertex;
+					Vertex newVertex;
 					newVertex.x = _SkinnedVertices[i].x;
 					newVertex.y = _SkinnedVertices[i].y;
 					newVertex.z = _SkinnedVertices[i].z;
@@ -175,10 +175,10 @@ namespace pengine
 			d3dMesh->GetVertexBuffer(&v_buffer);
 			// lock v_buffer and load the vertices into it
 			v_buffer->Lock(0, 0, (void**)&pVoid, 0);
-			memcpy(pVoid, d3dVertices, amountOfVertices*sizeof(D3DCustomVertex));
+			memcpy(pVoid, d3dVertices, amountOfVertices*sizeof(Vertex));
 			v_buffer->Unlock();
 
-			g_pd3dDevice->SetStreamSource(0, v_buffer, 0, sizeof(D3DCustomVertex));
+			g_pd3dDevice->SetStreamSource(0, v_buffer, 0, sizeof(Vertex));
 			g_pd3dDevice->SetFVF(D3DCustomVertexFVF);
 			_Model->_Meshes;
 

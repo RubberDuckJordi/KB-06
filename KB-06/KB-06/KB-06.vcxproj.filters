@@ -225,9 +225,6 @@
     <ClInclude Include="EntityCamera.h">
       <Filter>Header\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="Vertex.h">
-      <Filter>Header\Resource</Filter>
-    </ClInclude>
     <ClInclude Include="Sound.h">
       <Filter>Header\Resource\Sound</Filter>
     </ClInclude>
@@ -300,9 +297,6 @@
     <ClInclude Include="ObjectBone.h">
       <Filter>Header\Resource\RobertX</Filter>
     </ClInclude>
-    <ClInclude Include="CustomD3DVertex.h">
-      <Filter>Header\Renderer</Filter>
-    </ClInclude>
     <ClInclude Include="Skybox.h">
       <Filter>Header\Resource\SkyBox</Filter>
     </ClInclude>
@@ -341,6 +335,9 @@
     </ClInclude>
     <ClInclude Include="Beam.h">
       <Filter>Header\Scene\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="Vertex.h">
+      <Filter>Header\Renderer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

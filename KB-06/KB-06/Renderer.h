@@ -10,7 +10,6 @@
 #include "LoggerPool.h"
 #include "RGBAColor.h"
 #include "Material.h"
-#include "CustomD3DVertex.h"
 #include "Vertex.h"
 #include "Matrix.h"
 
@@ -61,8 +60,8 @@ namespace pengine
 
 		virtual void SetLights() = 0;
 
-		virtual VertexBufferWrapper* CreateVertexBuffer(D3DCustomVertex*, int amountOfVertices) = 0;
-		virtual VertexBufferWrapper* CreateColoredVertexBuffer(D3DCustomColoredVertex*, int amountOfVertices) = 0;
+		virtual VertexBufferWrapper* CreateVertexBuffer(Vertex*, int amountOfVertices) = 0;
+		virtual VertexBufferWrapper* CreateColoredVertexBuffer(ColoredVertex*, int amountOfVertices) = 0;
 		virtual IndexBufferWrapper* CreateIndexBuffer(int* indices, int amountOfIndices) = 0;
 		virtual void DrawVertexBuffer(VertexBufferWrapper* vertexBuffer, int amountOfIndices) = 0;
 		virtual void DrawIndexedVertexBuffer(VertexBufferWrapper* vertexBuffer, IndexBufferWrapper* indexBuffer, int amountOfVertices, int amountOfFaces) = 0;

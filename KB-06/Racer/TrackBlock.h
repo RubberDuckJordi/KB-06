@@ -35,15 +35,15 @@ public:
 
 	void SetPosition(float x, float y, float z);
 	void SetPositionOffset(float x, float y, float z);
-	pengine::Vertex* GetPositionOffset();
+	pengine::Vector3* GetPositionOffset();
 	void SetRotation(float yaw, float pitch, float roll);
 	void SetRotationOffset(float yaw, float pitch, float roll);
-	pengine::Vertex* GetRotationOffset();
+	pengine::Vector3* GetRotationOffset();
 	
 	float GetRadius();
 private:
-	pengine::Vertex positionOffset;
-	pengine::Vertex rotationOffset;
+	pengine::Vector3 positionOffset;
+	pengine::Vector3 rotationOffset;
 	TYPE type;
 	Direction direction;
 	pengine::Object3D* xModel; //debug

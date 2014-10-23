@@ -10,31 +10,33 @@ namespace pengine
 		amountOfVertices = 24;
 		amountOfIndices = 36;
 
-		aSkyboxVertices = new D3DCustomVertex[amountOfVertices];
-		aSkyboxVertices[0] = { -50.0f, -50.0f, 50.0f, 0.25f, 0.6666f };//front
-		aSkyboxVertices[1] = { 50.0f, -50.0f, 50.0f, 0.50f, 0.6666f };
-		aSkyboxVertices[2] = { 50.0f, 50.0f, 50.0f, 0.50f, 0.3333f };
-		aSkyboxVertices[3] = { -50.0f, 50.0f, 50.0f, 0.25f, 0.3333f };
-		aSkyboxVertices[4] = { 50.0f, -50.0f, 50.0f, 0.50f, 0.6666f };//right
-		aSkyboxVertices[5] = { 50.0f, -50.0f, -50.0f, 0.75f, 0.6666f };
-		aSkyboxVertices[6] = { 50.0f, 50.0f, -50.0f, 0.75f, 0.3333f };
-		aSkyboxVertices[7] = { 50.0f, 50.0f, 50.0f, 0.50f, 0.3333f };
-		aSkyboxVertices[8] = { 50.0f, -50.0f, -50.0f, 0.75f, 0.6666f };//back
-		aSkyboxVertices[9] = { -50.0f, -50.0f, -50.0f, 1.0f, 0.6666f };
-		aSkyboxVertices[10] = { -50.0f, 50.0f, -50.0f, 1.0f, 0.3333f };
-		aSkyboxVertices[11] = { 50.0f, 50.0f, -50.0f, 0.75f, 0.3333f };
-		aSkyboxVertices[12] = { -50.0f, -50.0f, -50.0f, 0.0f, 0.6666f };//left
-		aSkyboxVertices[13] = { -50.0f, -50.0f, 50.0f, 0.25f, 0.6666f };
-		aSkyboxVertices[14] = { -50.0f, 50.0f, 50.0f, 0.25f, 0.3333f };
-		aSkyboxVertices[15] = { -50.0f, 50.0f, -50.0f, 0.0f, 0.3333f };
-		aSkyboxVertices[16] = { -50.0f, 50.0f, 50.0f, 0.25f, 0.3333f };//top
-		aSkyboxVertices[17] = { 50.0f, 50.0f, 50.0f, 0.50f, 0.3333f };
-		aSkyboxVertices[18] = { 50.0f, 50.0f, -50.0f, 0.50f, 0.0f };
-		aSkyboxVertices[19] = { -50.0f, 50.0f, -50.0f, 0.25f, 0.0f };
-		aSkyboxVertices[20] = { -50.0f, -50.0f, 50.0f, 0.25f, 0.6666f };//bottom
-		aSkyboxVertices[21] = { 50.0f, -50.0f, 50.0f, 0.50f, 0.6666f };
-		aSkyboxVertices[22] = { 50.0f, -50.0f, -50.0f, 0.50f, 1.0f };
-		aSkyboxVertices[23] = { -50.0f, -50.0f, -50.0f, 0.25f, 1.0f };
+		aSkyboxVertices = new Vertex[amountOfVertices]();
+		//!!!VERTEX NORMALS ARE NOT RIGHT YET!!!
+		//(could also set a different shaderp for the skybox, I guess)
+		aSkyboxVertices[0] = Vertex(-50.0f, -50.0f, 50.0f, 0.0f, 0.0f, 0.0f, 0.25f, 0.6666f);//front
+		aSkyboxVertices[1] = Vertex(50.0f, -50.0f, 50.0f, 0.0f, 0.0f, 0.0f, 0.50f, 0.6666f);
+		aSkyboxVertices[2] = Vertex(50.0f, 50.0f, 50.0f, 0.0f, 0.0f, 0.0f, 0.50f, 0.3333f);
+		aSkyboxVertices[3] = Vertex(-50.0f, 50.0f, 50.0f, 0.0f, 0.0f, 0.0f, 0.25f, 0.3333f);
+		aSkyboxVertices[4] = Vertex(50.0f, -50.0f, 50.0f, 0.0f, 0.0f, 0.0f, 0.50f, 0.6666f);//right
+		aSkyboxVertices[5] = Vertex(50.0f, -50.0f, -50.0f, 0.0f, 0.0f, 0.0f, 0.75f, 0.6666f);
+		aSkyboxVertices[6] = Vertex(50.0f, 50.0f, -50.0f, 0.0f, 0.0f, 0.0f, 0.75f, 0.3333f);
+		aSkyboxVertices[7] = Vertex(50.0f, 50.0f, 50.0f, 0.0f, 0.0f, 0.0f, 0.50f, 0.3333f);
+		aSkyboxVertices[8] = Vertex(50.0f, -50.0f, -50.0f, 0.0f, 0.0f, 0.0f, 0.75f, 0.6666f);//back
+		aSkyboxVertices[9] = Vertex(-50.0f, -50.0f, -50.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.6666f);
+		aSkyboxVertices[10] = Vertex(-50.0f, 50.0f, -50.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.3333f);
+		aSkyboxVertices[11] = Vertex(50.0f, 50.0f, -50.0f, 0.0f, 0.0f, 0.0f, 0.75f, 0.3333f);
+		aSkyboxVertices[12] = Vertex(-50.0f, -50.0f, -50.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.6666f);//left
+		aSkyboxVertices[13] = Vertex(-50.0f, -50.0f, 50.0f, 0.0f, 0.0f, 0.0f, 0.25f, 0.6666f);
+		aSkyboxVertices[14] = Vertex(-50.0f, 50.0f, 50.0f, 0.0f, 0.0f, 0.0f, 0.25f, 0.3333f);
+		aSkyboxVertices[15] = Vertex(-50.0f, 50.0f, -50.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.3333f);
+		aSkyboxVertices[16] = Vertex(-50.0f, 50.0f, 50.0f, 0.0f, 0.0f, 0.0f, 0.25f, 0.3333f);//top
+		aSkyboxVertices[17] = Vertex(50.0f, 50.0f, 50.0f, 0.0f, 0.0f, 0.0f, 0.50f, 0.3333f);
+		aSkyboxVertices[18] = Vertex(50.0f, 50.0f, -50.0f, 0.0f, 0.0f, 0.0f, 0.50f, 0.0f);
+		aSkyboxVertices[19] = Vertex(-50.0f, 50.0f, -50.0f, 0.0f, 0.0f, 0.0f, 0.25f, 0.0f);
+		aSkyboxVertices[20] = Vertex(-50.0f, -50.0f, 50.0f, 0.0f, 0.0f, 0.0f, 0.25f, 0.6666f);//bottom
+		aSkyboxVertices[21] = Vertex(50.0f, -50.0f, 50.0f, 0.0f, 0.0f, 0.0f, 0.50f, 0.6666f);
+		aSkyboxVertices[22] = Vertex(50.0f, -50.0f, -50.0f, 0.0f, 0.0f, 0.0f, 0.50f, 1.0f);
+		aSkyboxVertices[23] = Vertex(-50.0f, -50.0f, -50.0f, 0.0f, 0.0f, 0.0f, 0.25f, 1.0f);
 
 		aSkyboxIndices = new int[amountOfIndices];
 
@@ -60,7 +62,7 @@ namespace pengine
 		delete[] aSkyboxIndices;
 	}
 
-	D3DCustomVertex* Skybox::GetSkyboxVertices()
+	Vertex* Skybox::GetSkyboxVertices()
 	{
 		return aSkyboxVertices;
 	}
@@ -89,11 +91,11 @@ namespace pengine
 			v_buffer = renderer->CreateVertexBuffer(aSkyboxVertices, amountOfIndices);
 		}
 
-		Matrix* aMatrix = new Matrix();
+		Matrix aMatrix;
 
-		aMatrix->CreateMatrix(position->x, position->y, position->z, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, aMatrix);
+		Matrix::CreateMatrix(position->x, position->y, position->z, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, &aMatrix);
 
-		renderer->SetActiveMatrix(aMatrix);
+		renderer->SetActiveMatrix(&aMatrix);
 		renderer->SetMaterial(material);
 
 		renderer->SetZBuffer(false);

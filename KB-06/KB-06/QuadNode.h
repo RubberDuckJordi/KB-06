@@ -2,7 +2,6 @@
 #define _PENGINE_QUADNODE_H_
 
 #include "Vertex.h"
-#include "CustomD3DVertex.h"
 #include "LoggerPool.h"
 #include <map>
 
@@ -43,8 +42,8 @@ namespace pengine
 		// 0: north, 1: east, 2: south, 3: west
 		std::map<char, QuadNode*>* GetNeighbors();
 
-		D3DCustomVertex* GetVertices();
-		void SetVertices(D3DCustomVertex* vertices);
+		Vertex* GetVertices();
+		void SetVertices(Vertex* vertices);
 
 		unsigned int GetAmountOfVertices();
 		void SetAmountOfVertices(unsigned int amountOfVertices);
@@ -59,7 +58,7 @@ namespace pengine
 		void SetLocation(char location);
 
 		// Returns terrain vertices of all children
-		void GetAllChildrenVertices(D3DCustomVertex*& vertices, int& amountOfVertices);
+		void GetAllChildrenVertices(Vertex*& vertices, int& amountOfVertices);
 		void CalculateNeighbors(unsigned short recursionLevel);
 
 	private:
@@ -84,7 +83,7 @@ namespace pengine
 
 		// Only for leaves
 		// Terrain vertices
-		D3DCustomVertex* vertices;
+		Vertex* vertices;
 		unsigned int amountOfVertices;
 
 		Logger* logger;

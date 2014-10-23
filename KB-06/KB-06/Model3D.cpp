@@ -84,7 +84,7 @@ namespace pengine
 		// - Material indices per face
 		// - Texture Coords
 		// - Normal vectors and Face Allocation of Normal vectors
-		concatenatedMesh->_Vertices = new Vertex[concatenatedMesh->_nVertices];
+		concatenatedMesh->_Vertices = new Vertex[concatenatedMesh->_nVertices]();
 		memset(concatenatedMesh->_Vertices, 0, concatenatedMesh->_nVertices * sizeof(Vertex));
 		concatenatedMesh->_Faces = new Face[concatenatedMesh->_nFaces];
 		memset(concatenatedMesh->_Faces, 0, concatenatedMesh->_nFaces * sizeof(Face));
