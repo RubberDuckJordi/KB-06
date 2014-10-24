@@ -122,7 +122,7 @@ namespace pengine
 
 			if (i != _Meshes.begin())//if we don't check for this our crazy --i hack wouldn't work ;)
 			{
-				for (int j = 0; j < (*i)->_nFaces; j++)//(*i)->_nFaces is the amount of facematerials too, as every face has a material.
+				for (uint32 j = 0; j < (*i)->_nFaces; j++)//(*i)->_nFaces is the amount of facematerials too, as every face has a material.
 				{
 					(*i)->_FaceMaterials[j] += (*--i)->_Materials.size();//crazy hacks, but always works! :D
 					++i;

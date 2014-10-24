@@ -194,7 +194,7 @@ namespace pengine
 				unsigned short* indices = new unsigned short[indicesForSubset];
 				unsigned int currentIndex = -1;
 
-				for (int k = 0; k < _Mesh->_nFaces; k++)
+				for (uint32 k = 0; k < _Mesh->_nFaces; k++)
 				{
 					tempFace = _Mesh->_Faces[k];
 					indices[++currentIndex] = tempFace[0];

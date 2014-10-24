@@ -624,9 +624,9 @@ namespace pengine
 		logger->Log(Logger::DEBUG, "SuperXLoader: Number of Materials: " + std::to_string(_LoadMesh->_nMaterials));
 
 		fin.getline(data, TEXT_BUFFER, ';');
-		int nFaces = (uint16)TextToNum(data);
+		uint16 nFaces = (uint16)TextToNum(data);
 		_LoadMesh->_FaceMaterials = new uint16[nFaces];
-		for (uint32 i = 0; i < nFaces - 1; i++)
+		for (uint16 i = 0; i < nFaces - 1; i++)
 		{
 			fin.getline(data, TEXT_BUFFER, ',');
 			_LoadMesh->_FaceMaterials[i] = (uint16)TextToNum(data);

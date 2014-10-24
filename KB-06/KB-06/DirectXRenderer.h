@@ -39,7 +39,7 @@ namespace pengine
 		void SetProjectionMatrix(float FOV, float farClippingPlane);
 
 		void BeginScene();
-		void ClearScene(DWORD* count, DWORD* flags, PENGINECOLOR* color, float z, DWORD* stencil);
+		//void ClearScene(DWORD* count, DWORD* flags, PENGINECOLOR* color, float z, DWORD* stencil);
 		void ClearScene(unsigned long count, unsigned long flags, RGBAColor color, float z, unsigned long stencil);
 		void PresentScene(HWND hWnd);
 		void EndScene();
@@ -62,8 +62,8 @@ namespace pengine
 		void DrawVertexBuffer(VertexBufferWrapper* vertexBufferWrapper, int amountOfVertices);
 		void DrawIndexedVertexBuffer(VertexBufferWrapper* vertexBufferWrapper, IndexBufferWrapper* indexBufferWrapper, int amountOfIndices, int amountOfFaces);
 
-		void ActivateRenderingToTexture(int textureIndex, int tWidth, int tHeight, RGBAColor bgColor);
-		void DeactivateRenderingToTexture(int textureIndex);
+		void ActivateRenderingToTexture(unsigned int textureIndex, int tWidth, int tHeight, RGBAColor bgColor);
+		void DeactivateRenderingToTexture(unsigned int textureIndex);
 		void SetTextureToRenderedTexture(int textureIndex);
 
 		/*!

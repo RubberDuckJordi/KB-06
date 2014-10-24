@@ -16,9 +16,6 @@ public:
 	void AddTrackBlock(TrackBlock* trackBlock);
 	void AddTrackBlock(TrackBlock::TYPE trackBlockType, pengine::Object3D* model);
 
-	void SetPosition(float x, float y, float z);
-	void SetRotation(float yaw, float pitch, float roll);
-	void SetScale(float scaleX, float scaleY, float scaleZ);
 	void SetAll(float x, float y, float z, float yaw, float pitch, float roll, float scaleX, float scaleY, float scaleZ);
 	float GetRadius();
 private:
@@ -26,6 +23,6 @@ private:
 	float offsetX = 0.0f;
 	float offsetY = 0.0f;
 	float offsetZ = 0.0f;
-	float trackBlockSize = 10;
+	float trackBlockSize = 125.731034f;
 };
 #endif

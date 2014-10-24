@@ -14,7 +14,7 @@ racer::RaceScene::~RaceScene()
 void racer::RaceScene::Update(float deltaTime, std::map<pengine::Input, long>* actions)
 {
 	Scene::Update(deltaTime, actions);
-	GetCurrentCamera()->SetThirdPersonEntity(raceCart, 10.0f, 3.0f);
+	GetCurrentCamera()->SetThirdPersonEntity(raceCart, 75.0f, 30.0f);
 }
 
 void racer::RaceScene::SetRaceCart(pengine::Entity* entity)
@@ -37,9 +37,9 @@ void racer::RaceScene::RenderToTexture(int texture, pengine::Renderer* renderer)
 	pengine::Matrix::CreateMatrix(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 10.0f, 10.0f, 1.0f, &aMatrix);
 	renderer->SetActiveMatrix(&aMatrix);
 	ColoredVertex vertices[] = {
-		ColoredVertex(-0.5f, -0.5f, 1.0f, D3DCOLOR_ARGB(255, 255, 0, 0), 0.0f, 0.0f, 0.0f, 0.0f, 0.0f),
-		ColoredVertex(0.5f, -0.5f, 1.0f, D3DCOLOR_ARGB(255, 0, 255, 0), 1.0f, 0.0f, 0.0f, 0.0f, 0.0f),
-		ColoredVertex(0.0f, 0.5f, 1.0f, D3DCOLOR_ARGB(255, 0, 0, 255), 0.5f, 1.0f, 0.0f, 0.0f, 0.0f)
+		ColoredVertex(-0.5f, -0.5f, 1.0f, 0.0f, 0.0f, 0.0f, D3DCOLOR_ARGB(255, 255, 0, 0), 0.0f, 0.0f),
+		ColoredVertex(0.5f, -0.5f, 1.0f, 0.0f, 0.0f, 0.0f, D3DCOLOR_ARGB(255, 0, 255, 0), 1.0f, 0.0f),
+		ColoredVertex(0.0f, 0.5f, 1.0f, 0.0f, 0.0f, 0.0f, D3DCOLOR_ARGB(255, 0, 0, 255), 0.5f, 1.0f)
 	};//holds a triangle that we will render to the texture
 	pengine::VertexBufferWrapper* wrapper = renderer->CreateColoredVertexBuffer(vertices, 3);
 	pengine::Material mat;
@@ -108,9 +108,8 @@ void racer::RaceScene::Render(pengine::Renderer* renderer)
 
 	pengine::Matrix aMatrix2;
 	pengine::Matrix aMatrix3;
-	pengine::Matrix::CreateMatrix(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, &aMatrix2);
 	pengine::Matrix::CreateMatrix(-2.25f, 2.25f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, &aMatrix2);
-	pengine::Matrix::CreateMatrix(currentCamera->GetLookAtPosition()->x, currentCamera->GetLookAtPosition()->y, currentCamera->GetLookAtPosition()->z, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, &aMatrix3);
+	pengine::Matrix::CreateMatrix(currentCamera->GetLookAtPosition()->x, currentCamera->GetLookAtPosition()->y, currentCamera->GetLookAtPosition()->z, 0.0f, 0.0f, 0.0f, 7.5f, 7.5f, 7.5f, &aMatrix3);
 	pengine::Matrix::CreateObjectSpaceLookAtMatrix(currentCamera->GetPosition(), currentCamera->GetLookAtPosition(), &aMatrix);
 	aMatrix = aMatrix2 * aMatrix * aMatrix3;
 	renderer->SetActiveMatrix(&aMatrix);

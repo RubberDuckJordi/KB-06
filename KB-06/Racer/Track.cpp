@@ -10,32 +10,6 @@ Track::~Track()
 {
 }
 
-void Track::SetPosition(float x, float y, float z)
-{
-	pengine::Entity::SetPosition(x, y, z);
-	for (auto iterator = trackBlocks.begin(); iterator != trackBlocks.end(); ++iterator) 
-	{
-		// todo relative position
-	}
-}
-
-void Track::SetRotation(float yaw, float pitch, float roll)
-{
-	pengine::Entity::SetRotation(yaw, pitch, roll);
-	for (auto iterator = trackBlocks.begin(); iterator != trackBlocks.end(); ++iterator) 
-	{
-		// todo
-	}
-}
-
-void Track::SetScale(float scaleX, float scaleY, float scaleZ)
-{
-	pengine::Entity::SetScale(scaleX, scaleY, scaleZ);
-	for (auto iterator = trackBlocks.begin(); iterator != trackBlocks.end(); ++iterator) 
-	{
-		// todo
-	}
-}
 
 void Track::SetAll(float x, float y, float z, float yaw, float pitch, float roll, float scaleX, float scaleY, float scaleZ)
 {
@@ -73,8 +47,8 @@ void Track::AddTrackBlock(TrackBlock::TYPE trackBlockType, pengine::Object3D* mo
 		x = prevTrackBLock->GetPositionOffset()->x;
 		y = prevTrackBLock->GetPositionOffset()->y;
 		z = prevTrackBLock->GetPositionOffset()->z;
-		
-		switch(direction)
+
+		switch (direction)
 		{
 		case NORTH:	z -= trackBlockSize; break;
 		case EAST: x -= trackBlockSize;  break;
@@ -85,7 +59,7 @@ void Track::AddTrackBlock(TrackBlock::TYPE trackBlockType, pengine::Object3D* mo
 		if (abs(z) > radius - trackBlockSize) radius = abs(z) + trackBlockSize;
 
 		int newDirectionValue = direction;
-		yaw  = direction * 90;
+		yaw = direction * 90;
 
 		switch (trackBlockType)
 		{
@@ -96,7 +70,7 @@ void Track::AddTrackBlock(TrackBlock::TYPE trackBlockType, pengine::Object3D* mo
 				newDirectionValue -= 4;
 			}
 			break;
-		case TrackBlock::TYPE::TURN_LEFT:	
+		case TrackBlock::TYPE::TURN_LEFT:
 			yaw += 180;
 			newDirectionValue -= 1;
 			if (newDirectionValue < 0)
@@ -105,7 +79,8 @@ void Track::AddTrackBlock(TrackBlock::TYPE trackBlockType, pengine::Object3D* mo
 			}
 			break;
 		}
-		switch (newDirectionValue){
+		switch (newDirectionValue)
+		{
 		case 0: direction = NORTH; break;
 		case 1: direction = EAST; break;
 		case 2: direction = SOUTH; break;

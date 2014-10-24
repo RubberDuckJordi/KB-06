@@ -221,15 +221,15 @@ namespace pengine
 		this->g_pd3dDevice->BeginScene();
 	}
 
-	void DirectXRenderer::ClearScene(PENGINEDWORD* count, PENGINEDWORD* flags, PENGINECOLOR* color, float z, PENGINEDWORD* stencil)
+	/*void DirectXRenderer::ClearScene(DWORD* count, DWORD* flags, PENGINECOLOR* color, float z, DWORD* stencil)
 	{
 		this->g_pd3dDevice->Clear(*count, NULL, *flags, *color, z, *stencil);
-	}
+	}*/
 
 	void DirectXRenderer::ClearScene(unsigned long count, unsigned long flags, RGBAColor color, float z, unsigned long stencil){
 		flags = D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER;
-		g_pd3dDevice->Clear(PENGINEDWORD(count), NULL, PENGINEDWORD(flags),
-			D3DCOLOR_COLORVALUE(color.r, color.g, color.b, color.a), z, PENGINEDWORD(stencil));
+		g_pd3dDevice->Clear(DWORD(count), NULL, DWORD(flags),
+			D3DCOLOR_COLORVALUE(color.r, color.g, color.b, color.a), z, DWORD(stencil));
 	}
 
 	void DirectXRenderer::PresentScene(HWND hWnd)
@@ -289,7 +289,7 @@ namespace pengine
 		g_pd3dDevice->SetTexture(0, *wrapper->GetTexture());
 	}
 
-	void DirectXRenderer::SetFvF(PENGINEDWORD* fvf)
+	void DirectXRenderer::SetFvF(DWORD* fvf)
 	{
 		g_pd3dDevice->SetFVF(*fvf);
 	}
@@ -446,7 +446,7 @@ namespace pengine
 			amountOfFaces);// PrimitiveCount
 	}
 
-	void DirectXRenderer::ActivateRenderingToTexture(int textureIndex, int tWidth, int tHeight, RGBAColor bgColor)
+	void DirectXRenderer::ActivateRenderingToTexture(unsigned int textureIndex, int tWidth, int tHeight, RGBAColor bgColor)
 	{
 		//actually both while loops should probably move away from here...
 		while (RenderTextures.size() != 0)
@@ -483,7 +483,7 @@ namespace pengine
 		BeginScene();
 	}
 
-	void DirectXRenderer::DeactivateRenderingToTexture(int textureIndex)
+	void DirectXRenderer::DeactivateRenderingToTexture(unsigned int textureIndex)
 	{
 		//We're done rendering to the texture scene
 		EndScene();
@@ -515,11 +515,11 @@ namespace pengine
 		g_pd3dDevice->SetSamplerState(0, D3DSAMP_MIPFILTER, D3DTEXF_NONE);*/
 		unsigned int amountOfCharacters = 58;
 		float textureWidthPerCharacter = 1.0f / amountOfCharacters;
-		int maxWidth = 0;
+		unsigned int maxWidth = 0;
 		unsigned int width = 0;
 		unsigned int height = 1;
 		unsigned int characters = 0;
-		for (int i = 0; i < text.size(); ++i)
+		for (unsigned int i = 0; i < text.size(); ++i)
 		{
 			switch (text[i])
 			{
@@ -554,7 +554,7 @@ namespace pengine
 		int currentY = 0;
 		int iOffset = 0;
 
-		for (int i = 0; i < text.size(); ++i)
+		for (unsigned int i = 0; i < text.size(); ++i)
 		{
 			int charIndex = 0;
 			bool makeChar = true;

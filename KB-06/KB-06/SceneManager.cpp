@@ -85,7 +85,7 @@ namespace pengine
 		color.b = 1.0f;
 		color.a = 0.5f;
 
-		for (unsigned int i = 0; i < currentScene->GetAmountOfRenderTextures(); ++i)
+		for (int i = 0; i < currentScene->GetAmountOfRenderTextures(); ++i)
 		{
 			renderer->ActivateRenderingToTexture(i, 500, 500, color);
 			currentScene->RenderToTexture(i, renderer);

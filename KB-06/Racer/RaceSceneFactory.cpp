@@ -22,14 +22,14 @@ pengine::Scene* racer::RaceSceneFactory::CreateScene(std::vector<std::string>* s
 	pengine::Scene* scene = new pengine::Scene();
 	std::string beginLine;
 
-	for (int i = 0; i < sceneFile->size(); ++i)
+	for (unsigned int i = 0; i < sceneFile->size(); ++i)
 	{
 		beginLine = sceneFile->at(i);
 
 		if (!beginLine.compare("<Entity>"))
 		{
 			std::string endLine;
-			int j;
+			unsigned int j;
 			for (j = i; j < sceneFile->size(); ++j)
 			{
 				endLine = sceneFile->at(j);
@@ -150,7 +150,7 @@ pengine::Scene* racer::RaceSceneFactory::CreateScene(std::vector<std::string>* s
 		else if (!beginLine.compare("<Skybox>"))
 		{
 			std::string endLine;
-			int j;
+			unsigned int j;
 			for (j = i; j < sceneFile->size(); ++j)
 			{
 				endLine = sceneFile->at(j);
@@ -191,15 +191,15 @@ pengine::Scene* racer::RaceSceneFactory::CreateScene()
 	RaceCart* racecart = new RaceCart();
 	racecart->SetControllable(true);
 	racecart->SetMass(100.0f);
-	racecart->SetHorsePower(30.0f);
+	racecart->SetHorsePower(300.0f);
 	racecart->AddAll(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f);
 
-	pengine::Object3D* tiger = resourceManager->LoadXFile(&std::string("resources/tiger.x"));
+	pengine::Object3D* tiger = resourceManager->LoadXFile(&std::string("resources/cart/cart.x"));
 	racecart->SetObject3D(tiger);
 
 	RaceCart* racecart1 = new RaceCart();
 	racecart1->SetMass(100.0f);
-	racecart1->AddAll(-15.0f, 0.0f, 5.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f);
+	racecart1->AddAll(-150.0f, 0.0f, 5.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f);
 	racecart1->SetObject3D(tiger);
 
 	pengine::Object3D* trackStraight = resourceManager->LoadXFile(&std::string("resources/track/trackstraight.X"));
@@ -221,7 +221,7 @@ pengine::Scene* racer::RaceSceneFactory::CreateScene()
 	track->AddTrackBlock(TrackBlock::TYPE::TURN_RIGHT, trackCurved);
 	track->AddTrackBlock(TrackBlock::TYPE::STRAIGHT, trackStraight);
 	track->AddTrackBlock(TrackBlock::TYPE::TURN_RIGHT, trackCurved);
-	track->SetAll(-15.0f, -1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.05f, 0.05f, 0.05f);
+	track->SetAll(-15.0f, -122.047322f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f);
 
 	pengine::Ground* ground = resourceManager->LoadGround(groundResource, groundTexture);
 	ground->InitQuadTree(1);
