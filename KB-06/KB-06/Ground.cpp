@@ -112,22 +112,7 @@ namespace pengine
 
 	QuadNode* Ground::CreateQuadTree(unsigned short depth)
 	{
-		// TODO update errors
-		if (depth != 0)
-		{
-			int powDepth = pow(depth, depth);
-			if ((width - 1) % powDepth != 0)
-			{
-				logger->Log(Logger::ERR, "Width is not dividable by depth^depth");
-				return NULL;
-			}
-
-			if ((height - 1) % powDepth != 0)
-			{
-				logger->Log(Logger::ERR, "Height is not dividable by depth^depth");
-				return NULL;
-			}
-		}
+		// TODO implement errors in case of impossible depth
 
 		quadTreeDepth = depth;
 
