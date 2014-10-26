@@ -83,6 +83,61 @@ namespace pengine
 		}
 
 		currentCamera->UpdateLogic(deltaTime, actions);
+
+		// Update ground level of detail
+
+		// If the quadtree doesn't support the depth, set it to the quadtree's depth
+		// quadtree's depth can be set by the user when creating the scene
+		int levelOfDetailDepth = ground->GetQuadTreeDepth();
+
+
+		int widthChunk = (ground->GetWidth() - 1) / (levelOfDetailDepth + 1);
+		int depthChunk = (ground->GetHeight() - 1) / (levelOfDetailDepth + 1);
+
+		QuadNode* rootNode = ground->GetQuadTree();
+
+		for (int i = 0; i <= levelOfDetailDepth; ++i)
+		{
+			for (int j = 0; j <= levelOfDetailDepth; ++j)
+			{
+				int chunkStartX = i * widthChunk;
+				int chunkStartZ = j * depthChunk;
+				int chunkEndX = widthChunk + i * widthChunk;
+				int chunkEndZ = depthChunk + j * depthChunk;
+
+				GoDeeper(rootNode, chunkStartX, chunkStartZ, chunkEndX, chunkEndZ, levelOfDetailDepth);
+			}
+		}
+	}
+
+	void Scene::GoDeeper(QuadNode* node, int chunkStartX, int chunkStartZ, int chunkEndX, int chunkEndZ, int depth)
+	{
+		// There is no need to go deeper or set the level of distance if the chunk is not within the node's boundaries
+		if ((node->GetMinX() >= chunkEndX || node->GetMaxX() <= chunkStartX) ||
+			(node->GetMinZ() >= chunkEndZ || node->GetMaxZ() <= chunkStartZ))
+		{
+			return;
+		}
+
+		if (depth == 0 || node->IsLeaf())
+		{
+			// Calculate the middle point of the chunk and the node to be able to calculate the distance
+			int chunkPointX = chunkStartX + ((chunkEndX - chunkStartX) / 2);
+			int chunkPointZ = chunkStartZ + ((chunkEndZ - chunkStartZ) / 2);
+
+			int nodePointX = node->GetMinX() + ((node->GetMaxX() - node->GetMinX()) / 2);
+			int nodePointZ = node->GetMinZ() + ((node->GetMaxZ() - node->GetMinZ()) / 2);
+
+			int distance = sqrt(pow(currentCamera->GetPosition()->z - nodePointX, 2) + pow(currentCamera->GetPosition()->x - nodePointZ, 2));
+
+			int nodesDistance = distance / (min(chunkEndX - chunkStartX, chunkEndZ - chunkStartZ));
+			node->SetLevelOfDetail(1 << nodesDistance);
+			return;
+		}
+		
+		for (std::map<char, QuadNode*> ::iterator i = node->GetChildren()->begin(); i != node->GetChildren()->end(); ++i) {
+			GoDeeper(i->second, chunkStartX, chunkStartZ, chunkEndX, chunkEndZ, depth - 1);
+		}
 	}
 
 	void Scene::AddEntity(Entity* entity)

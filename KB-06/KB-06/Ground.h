@@ -31,6 +31,8 @@ namespace pengine
 		void SetMaterial(Material* material);
 		// Creates a quad tree based on the terrain
 		QuadNode* CreateQuadTree(unsigned short depth);
+		QuadNode* GetQuadTree();
+		unsigned short GetQuadTreeDepth();
 
 		void Render(Renderer* renderer);
 
@@ -38,6 +40,8 @@ namespace pengine
 		void CreateQuadTreeChildren(QuadNode* parent, unsigned short remainingDepth);
 		
 		QuadNode* quadTreeRootNode;
+		unsigned short quadTreeDepth;
+
 		Logger* logger;
 		int amountOfVertices;
 		Vertex* vertices;

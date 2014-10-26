@@ -40,6 +40,8 @@ namespace pengine
 		int GetAmountOfRenderTextures();
 
 	protected:
+		void GoDeeper(QuadNode* node, int chunkStartX, int chunkStartZ, int chunkEndX, int chunkEndZ, int depth);
+
 		bool wireFrameActivated;
 		std::list<Entity*> entities;
 		std::list<Collidable*> collidables;

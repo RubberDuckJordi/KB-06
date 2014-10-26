@@ -129,6 +129,8 @@ namespace pengine
 			}
 		}
 
+		quadTreeDepth = depth;
+
 		// Find dimensions of the ground
 		float dimensionWidth = 0.0f;
 		float dimensionDepth = 0.0f;
@@ -287,5 +289,15 @@ namespace pengine
 			parent->SetAmountOfVertices(amountOfVertices);
 			parent->SetVertices(vertices);
 		}
+	}
+
+	QuadNode* Ground::GetQuadTree()
+	{
+		return quadTreeRootNode;
+	}
+
+	unsigned short Ground::GetQuadTreeDepth()
+	{
+		return quadTreeDepth;
 	}
 }
