@@ -38,7 +38,7 @@ namespace pengine
 		aSkyboxVertices[22] = Vertex(50.0f, -50.0f, -50.0f, 0.0f, 0.0f, 0.0f, 0.50f, 1.0f);
 		aSkyboxVertices[23] = Vertex(-50.0f, -50.0f, -50.0f, 0.0f, 0.0f, 0.0f, 0.25f, 1.0f);
 
-		aSkyboxIndices = new int[amountOfIndices];
+		aSkyboxIndices = new unsigned int[amountOfIndices];
 
 		aSkyboxIndices[0] = 0; aSkyboxIndices[2] = 1; aSkyboxIndices[1] = 2;//front
 		aSkyboxIndices[3] = 0; aSkyboxIndices[5] = 2; aSkyboxIndices[4] = 3;
@@ -67,7 +67,7 @@ namespace pengine
 		return aSkyboxVertices;
 	}
 
-	int* Skybox::GetSkyboxIndices()
+	unsigned int* Skybox::GetSkyboxIndices()
 	{
 		return aSkyboxIndices;
 	}
@@ -88,7 +88,7 @@ namespace pengine
 		if (i_buffer == NULL)
 		{
 			i_buffer = renderer->CreateIndexBuffer(aSkyboxIndices, amountOfIndices);
-			v_buffer = renderer->CreateVertexBuffer(aSkyboxVertices, amountOfIndices);
+			v_buffer = renderer->CreateVertexBuffer(aSkyboxVertices, amountOfVertices);
 		}
 
 		Matrix aMatrix;
@@ -99,7 +99,7 @@ namespace pengine
 		renderer->SetMaterial(material);
 
 		renderer->SetZBuffer(false);
-		renderer->DrawIndexedVertexBuffer(v_buffer, i_buffer, amountOfVertices, 12);
+		renderer->DrawIndexedVertexBuffer(v_buffer, i_buffer);
 		renderer->SetZBuffer(true);
 	}
 }

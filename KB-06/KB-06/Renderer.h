@@ -60,11 +60,11 @@ namespace pengine
 
 		virtual void SetLights() = 0;
 
-		virtual VertexBufferWrapper* CreateVertexBuffer(Vertex*, int amountOfVertices) = 0;
-		virtual VertexBufferWrapper* CreateColoredVertexBuffer(ColoredVertex*, int amountOfVertices) = 0;
-		virtual IndexBufferWrapper* CreateIndexBuffer(int* indices, int amountOfIndices) = 0;
-		virtual void DrawVertexBuffer(VertexBufferWrapper* vertexBuffer, int amountOfIndices) = 0;
-		virtual void DrawIndexedVertexBuffer(VertexBufferWrapper* vertexBuffer, IndexBufferWrapper* indexBuffer, int amountOfVertices, int amountOfFaces) = 0;
+		virtual VertexBufferWrapper* CreateVertexBuffer(Vertex*, unsigned int amountOfVertices) = 0;
+		virtual VertexBufferWrapper* CreateColoredVertexBuffer(ColoredVertex*, unsigned int amountOfVertices) = 0;
+		virtual IndexBufferWrapper* CreateIndexBuffer(unsigned int* indices, unsigned int amountOfIndices) = 0;
+		virtual void DrawVertexBuffer(VertexBufferWrapper* vertexBuffer) = 0;
+		virtual void DrawIndexedVertexBuffer(VertexBufferWrapper* vertexBuffer, IndexBufferWrapper* indexBuffer) = 0;
 
 		virtual void ActivateRenderingToTexture(unsigned int textureIndex, int tWidth, int tHeight, RGBAColor bgColor) = 0;
 		virtual void DeactivateRenderingToTexture(unsigned int textureIndex) = 0;

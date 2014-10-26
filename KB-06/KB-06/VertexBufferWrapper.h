@@ -10,15 +10,17 @@ namespace pengine
 	public:
 		VertexBufferWrapper();
 		~VertexBufferWrapper();
-		void SetVertexBuffer(IDirect3DVertexBuffer9** _VertexBuffer);
-		IDirect3DVertexBuffer9** GetVertexBuffer();
+		void SetVertexBuffer(IDirect3DVertexBuffer9* _VertexBuffer, unsigned int numVertices);
+		IDirect3DVertexBuffer9* GetVertexBuffer();
+		unsigned int GetNumVertices();
 
 		void SetFVF(int fvf);
 		int GetFVF();
 
 	private:
-		IDirect3DVertexBuffer9** VertexBuffer;
+		IDirect3DVertexBuffer9* vertexBuffer;
 		int fvf;
+		unsigned int numVertices;
 	};
 }
 #endif

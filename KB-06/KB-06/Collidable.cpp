@@ -125,10 +125,10 @@ namespace pengine
 	void Collidable::DrawCollidable(Renderer* renderer)
 	{
 		// For drawing
-		int amountOfVertices = 8;
-		int amountOfIndices = 36;
+		unsigned int amountOfVertices = 8;
+		unsigned int amountOfIndices = 36;
 		Vertex* vertices;
-		int* indices = new int[amountOfIndices];
+		unsigned int* indices = new unsigned int[amountOfIndices];
 		VertexBufferWrapper* vertexBuffer;
 		IndexBufferWrapper* indexBuffer;
 
@@ -202,7 +202,7 @@ namespace pengine
 		Matrix* renderMatrix = new Matrix();
 		Matrix::CreateMatrix(collisionBox.x, 0, collisionBox.z, 0, 0, 0, 1, 1, 1, renderMatrix);
 		renderer->SetActiveMatrix(renderMatrix);
-		renderer->DrawIndexedVertexBuffer(vertexBuffer, indexBuffer, amountOfVertices, 12);
+		renderer->DrawIndexedVertexBuffer(vertexBuffer, indexBuffer);
 
 		delete[] vertices;
 		delete vertexBuffer;

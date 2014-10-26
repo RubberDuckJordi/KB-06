@@ -50,7 +50,7 @@ void racer::RaceScene::RenderToTexture(int texture, pengine::Renderer* renderer)
 	mat.specular = { 1.0f, 1.0f, 1.0f };
 	mat.power = 10.0f;
 	renderer->SetMaterial(&mat);
-	renderer->DrawVertexBuffer(wrapper, 3);//draw a triangle to the texture
+	renderer->DrawVertexBuffer(wrapper);//draw a triangle to the texture
 
 
 	pengine::Matrix::CreateMatrix(0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 3.0f, 3.0f, 1.0f, &aMatrix);
@@ -134,7 +134,7 @@ void racer::RaceScene::Render(pengine::Renderer* renderer)
 		Vertex(-2.0f, 2.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f)//tr
 	};//holds a square that we will render with the texture, so we can see the contents of the texture
 	pengine::VertexBufferWrapper* wrapper = renderer->CreateVertexBuffer(vertices, 6);
-	renderer->DrawVertexBuffer(wrapper, 6);//draw the square
+	renderer->DrawVertexBuffer(wrapper);//draw the square
 
 	delete wrapper;
 }

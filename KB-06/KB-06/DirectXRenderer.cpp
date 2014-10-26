@@ -223,7 +223,7 @@ namespace pengine
 
 	/*void DirectXRenderer::ClearScene(DWORD* count, DWORD* flags, PENGINECOLOR* color, float z, DWORD* stencil)
 	{
-		this->g_pd3dDevice->Clear(*count, NULL, *flags, *color, z, *stencil);
+	this->g_pd3dDevice->Clear(*count, NULL, *flags, *color, z, *stencil);
 	}*/
 
 	void DirectXRenderer::ClearScene(unsigned long count, unsigned long flags, RGBAColor color, float z, unsigned long stencil){
@@ -339,41 +339,36 @@ namespace pengine
 		matrixCache->_44 = (*matrix)[15];
 	}
 
-	VertexBufferWrapper* DirectXRenderer::CreateVertexBuffer(Vertex* p_vertices, int amountOfVertices)
+	VertexBufferWrapper* DirectXRenderer::CreateVertexBuffer(Vertex* p_vertices, unsigned int amountOfVertices)
 	{
-		IDirect3DVertexBuffer9** buffer = new LPDIRECT3DVERTEXBUFFER9();
-		VertexBufferWrapper* vertexBufferWrapper = new VertexBufferWrapper();
-		vertexBufferWrapper->SetVertexBuffer(buffer);
-		vertexBufferWrapper->SetFVF(D3DCustomVertexFVF);
+		IDirect3DVertexBuffer9* buffer = LPDIRECT3DVERTEXBUFFER9();
 
-		if (FAILED(g_pd3dDevice->CreateVertexBuffer(amountOfVertices * sizeof(Vertex),
-			0, D3DCustomVertexFVF, D3DPOOL_DEFAULT, vertexBufferWrapper->GetVertexBuffer(), NULL)))
+		if (FAILED(g_pd3dDevice->CreateVertexBuffer(amountOfVertices * sizeof(Vertex), 0, D3DCustomVertexFVF, D3DPOOL_DEFAULT, &buffer, NULL)))
 		{
 			logger->Log(Logger::ERR, "DirectXRenderer::CreateVertexBuffer() vertexbuffer create failed");
 		}
 
 		void* verticesBuffer;
 		int size = sizeof(Vertex)*amountOfVertices;
-
-		if (FAILED((*vertexBufferWrapper->GetVertexBuffer())->Lock(0, size, (void**)&verticesBuffer, 0)))
+		if (FAILED(buffer->Lock(0, size, (void**)&verticesBuffer, 0)))
 		{
 			logger->Log(Logger::ERR, "DirectXRenderer::CreateVertexBuffer() vertexbuffer lock failed");
 		}
 		memcpy(verticesBuffer, p_vertices, size);
-		(*vertexBufferWrapper->GetVertexBuffer())->Unlock();
+		buffer->Unlock();
 
+		VertexBufferWrapper* vertexBufferWrapper = new VertexBufferWrapper();
+		vertexBufferWrapper->SetVertexBuffer(buffer, amountOfVertices);
+		vertexBufferWrapper->SetFVF(D3DCustomVertexFVF);
 		return vertexBufferWrapper;
 	}
 
-	VertexBufferWrapper* DirectXRenderer::CreateColoredVertexBuffer(ColoredVertex* p_vertices, int amountOfVertices)
+	VertexBufferWrapper* DirectXRenderer::CreateColoredVertexBuffer(ColoredVertex* p_vertices, unsigned int amountOfVertices)
 	{
-		IDirect3DVertexBuffer9** buffer = new LPDIRECT3DVERTEXBUFFER9();
-		VertexBufferWrapper* vertexBufferWrapper = new VertexBufferWrapper();
-		vertexBufferWrapper->SetVertexBuffer(buffer);
-		vertexBufferWrapper->SetFVF(D3DCustomColoredVertexFVF);
+		IDirect3DVertexBuffer9* buffer = LPDIRECT3DVERTEXBUFFER9();
 
 		if (FAILED(g_pd3dDevice->CreateVertexBuffer(amountOfVertices * sizeof(ColoredVertex),
-			0, D3DCustomColoredVertexFVF, D3DPOOL_DEFAULT, vertexBufferWrapper->GetVertexBuffer(), NULL)))
+			0, D3DCustomColoredVertexFVF, D3DPOOL_DEFAULT, &buffer, NULL)))
 		{
 			logger->Log(Logger::ERR, "DirectXRenderer::CreateVertexBuffer() vertexbuffer create failed");
 		}
@@ -381,69 +376,72 @@ namespace pengine
 		void* verticesBuffer;
 		int size = sizeof(ColoredVertex)*amountOfVertices;
 
-		if (FAILED((*vertexBufferWrapper->GetVertexBuffer())->Lock(0, size, (void**)&verticesBuffer, 0)))
+		if (FAILED(buffer->Lock(0, size, (void**)&verticesBuffer, 0)))
 		{
 			logger->Log(Logger::ERR, "DirectXRenderer::CreateVertexBuffer() vertexbuffer lock failed");
 		}
 		memcpy(verticesBuffer, p_vertices, size);
-		(*vertexBufferWrapper->GetVertexBuffer())->Unlock();
+		buffer->Unlock();
 
+		VertexBufferWrapper* vertexBufferWrapper = new VertexBufferWrapper();
+		vertexBufferWrapper->SetVertexBuffer(buffer, amountOfVertices);
+		vertexBufferWrapper->SetFVF(D3DCustomColoredVertexFVF);
 		return vertexBufferWrapper;
 	}
 
-	IndexBufferWrapper* DirectXRenderer::CreateIndexBuffer(int* indices, int amountOfIndices)
+	IndexBufferWrapper* DirectXRenderer::CreateIndexBuffer(unsigned int* indices, unsigned int amountOfIndices)
 	{
-		IndexBufferWrapper* wrapper = new IndexBufferWrapper();
-		LPDIRECT3DINDEXBUFFER9* indexBuffer = new LPDIRECT3DINDEXBUFFER9();
-		wrapper->SetIndexBuffer(indexBuffer);
+		IDirect3DIndexBuffer9* indexBuffer = LPDIRECT3DINDEXBUFFER9();
 
-		g_pd3dDevice->CreateIndexBuffer(amountOfIndices * sizeof(int), 0, D3DFMT_INDEX32, D3DPOOL_DEFAULT, indexBuffer, NULL);
+		g_pd3dDevice->CreateIndexBuffer(amountOfIndices * sizeof(int), 0, D3DFMT_INDEX32, D3DPOOL_DEFAULT, &indexBuffer, NULL);
 
 		void* pVoid;
 
 		//d3dMesh->GetIndexBuffer(&i_buffer);
 		// lock i_buffer and load the indices into it
-		(*indexBuffer)->Lock(0, 0, (void**)&pVoid, 0);
+		indexBuffer->Lock(0, 0, (void**)&pVoid, 0);
 		memcpy(pVoid, indices, amountOfIndices * sizeof(int));
-		(*indexBuffer)->Unlock();
+		indexBuffer->Unlock();
 
+		IndexBufferWrapper* wrapper = new IndexBufferWrapper();
+		wrapper->SetIndexBuffer(indexBuffer, amountOfIndices);
 		return wrapper;
 	}
 
-	void DirectXRenderer::DrawVertexBuffer(VertexBufferWrapper* vertexBuffer, int amountOfIndices)
+	void DirectXRenderer::DrawVertexBuffer(VertexBufferWrapper* vertexBuffer)
 	{
 		g_pd3dDevice->SetFVF(vertexBuffer->GetFVF());
 		if (vertexBuffer->GetFVF() == D3DCustomVertexFVF)
 		{
-			g_pd3dDevice->SetStreamSource(0, *vertexBuffer->GetVertexBuffer(), 0, sizeof(Vertex));
+			g_pd3dDevice->SetStreamSource(0, vertexBuffer->GetVertexBuffer(), 0, sizeof(Vertex));
 		}
 		else
 		{
-			g_pd3dDevice->SetStreamSource(0, *vertexBuffer->GetVertexBuffer(), 0, sizeof(ColoredVertex));
+			g_pd3dDevice->SetStreamSource(0, vertexBuffer->GetVertexBuffer(), 0, sizeof(ColoredVertex));
 		}
 
-		g_pd3dDevice->DrawPrimitive(D3DPT_TRIANGLELIST, 0, amountOfIndices / 3);
+		g_pd3dDevice->DrawPrimitive(D3DPT_TRIANGLELIST, 0, vertexBuffer->GetNumVertices() / 3);
 	}
 
-	void DirectXRenderer::DrawIndexedVertexBuffer(VertexBufferWrapper* v_buffer, IndexBufferWrapper* i_buffer, int amountOfVertices, int amountOfFaces)
+	void DirectXRenderer::DrawIndexedVertexBuffer(VertexBufferWrapper* v_buffer, IndexBufferWrapper* i_buffer)
 	{
 		if (v_buffer->GetFVF() == D3DCustomVertexFVF)
 		{
-			g_pd3dDevice->SetStreamSource(0, *v_buffer->GetVertexBuffer(), 0, sizeof(Vertex));
+			g_pd3dDevice->SetStreamSource(0, v_buffer->GetVertexBuffer(), 0, sizeof(Vertex));
 			g_pd3dDevice->SetFVF(D3DCustomVertexFVF);
 		}
 		else
 		{
-			g_pd3dDevice->SetStreamSource(0, *v_buffer->GetVertexBuffer(), 0, sizeof(ColoredVertex));
+			g_pd3dDevice->SetStreamSource(0, v_buffer->GetVertexBuffer(), 0, sizeof(ColoredVertex));
 			g_pd3dDevice->SetFVF(D3DCustomColoredVertexFVF);
 		}
-		g_pd3dDevice->SetIndices(*i_buffer->GetIndexBuffer());
+		g_pd3dDevice->SetIndices(i_buffer->GetIndexBuffer());
 		g_pd3dDevice->DrawIndexedPrimitive(D3DPT_TRIANGLELIST,// PrimitiveType
 			0,// BaseVertexIndex
 			0,// MinIndex
-			amountOfVertices,// NumVertices
+			v_buffer->GetNumVertices(),// NumVertices
 			0,// StartIndex
-			amountOfFaces);// PrimitiveCount
+			i_buffer->GetNumIndices() / 3);// PrimitiveCount
 	}
 
 	void DirectXRenderer::ActivateRenderingToTexture(unsigned int textureIndex, int tWidth, int tHeight, RGBAColor bgColor)
@@ -546,7 +544,7 @@ namespace pengine
 		std::transform(text.begin(), text.end(), text.begin(), ::tolower);
 
 		ColoredVertex* vertices = new ColoredVertex[characters * 4]();//4 vertices per character
-		int* indices = new int[characters * 6];//6 indices per character, to make 2 faces to make a square
+		unsigned int* indices = new unsigned int[characters * 6];//6 indices per character, to make 2 faces to make a square
 
 		float minWidth = -((maxWidth * 1.1f - 0.1f) / 2.0f);
 		float maxHeight = (height * 1.1f - 0.1f) / 2.0f - 1.0f;
@@ -782,7 +780,7 @@ namespace pengine
 		mat.specular = { 1.0f, 1.0f, 1.0f };
 		mat.power = 10.0f;
 		SetMaterial(&mat);
-		DrawIndexedVertexBuffer(v_buffer, i_buffer, characters * 4, characters * 2);
+		DrawIndexedVertexBuffer(v_buffer, i_buffer);
 
 		delete[] vertices;
 		delete[] indices;

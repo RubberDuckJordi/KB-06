@@ -56,11 +56,11 @@ namespace pengine
 
 		void SetLights();
 
-		VertexBufferWrapper* CreateVertexBuffer(Vertex* vertices, int amountOfVertices);
-		VertexBufferWrapper* CreateColoredVertexBuffer(ColoredVertex* coloredVertices, int amountOfVertices);
-		IndexBufferWrapper* CreateIndexBuffer(int* indices, int amountOfIndices);
-		void DrawVertexBuffer(VertexBufferWrapper* vertexBufferWrapper, int amountOfVertices);
-		void DrawIndexedVertexBuffer(VertexBufferWrapper* vertexBufferWrapper, IndexBufferWrapper* indexBufferWrapper, int amountOfIndices, int amountOfFaces);
+		VertexBufferWrapper* CreateVertexBuffer(Vertex* vertices, unsigned int amountOfVertices);
+		VertexBufferWrapper* CreateColoredVertexBuffer(ColoredVertex* coloredVertices, unsigned int amountOfVertices);
+		IndexBufferWrapper* CreateIndexBuffer(unsigned int* indices, unsigned int amountOfIndices);
+		void DrawVertexBuffer(VertexBufferWrapper* vertexBufferWrapper);
+		void DrawIndexedVertexBuffer(VertexBufferWrapper* vertexBufferWrapper, IndexBufferWrapper* indexBufferWrapper);
 
 		void ActivateRenderingToTexture(unsigned int textureIndex, int tWidth, int tHeight, RGBAColor bgColor);
 		void DeactivateRenderingToTexture(unsigned int textureIndex);

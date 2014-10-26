@@ -10,11 +10,13 @@ namespace pengine
 	public:
 		IndexBufferWrapper();
 		~IndexBufferWrapper();
-		void SetIndexBuffer(IDirect3DIndexBuffer9** _IndexBuffer);
-		IDirect3DIndexBuffer9** GetIndexBuffer();
+		void SetIndexBuffer(IDirect3DIndexBuffer9* _IndexBuffer, unsigned int numIndices);
+		unsigned int GetNumIndices();
+		IDirect3DIndexBuffer9* GetIndexBuffer();
 
 	private:
-		IDirect3DIndexBuffer9** IndexBuffer;
+		IDirect3DIndexBuffer9* indexBuffer;
+		unsigned int numIndices;
 	};
 }
 #endif

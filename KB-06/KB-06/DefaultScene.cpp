@@ -47,7 +47,7 @@ namespace pengine
 		mat.specular = { 1.0f, 1.0f, 1.0f };
 		mat.power = 10.0f;
 		renderer->SetMaterial(&mat);
-		renderer->DrawVertexBuffer(wrapper, 3);//draw a triangle to the texture
+		renderer->DrawVertexBuffer(wrapper);//draw a triangle to the texture
 
 
 		Matrix::CreateMatrix(0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.06f, 0.06f, 1.0f, aMatrix);
@@ -83,7 +83,7 @@ namespace pengine
 			ColoredVertex(-10.0f, 10.0f, 0.0f, 0.0f, 0.0f, 0.0f, D3DCOLOR_ARGB(255, 0, 255, 0), 1.0f, 0.0f)//tr
 		};//holds a square that we will render with the texture, so we can see the contents of the texture
 		VertexBufferWrapper* wrapper = renderer->CreateColoredVertexBuffer(vertices, 6);
-		renderer->DrawVertexBuffer(wrapper, 6);//draw the square
+		renderer->DrawVertexBuffer(wrapper);//draw the square
 
 		Matrix::CreateMatrix(0.0f, 15.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, aMatrix);
 		renderer->SetActiveMatrix(aMatrix);

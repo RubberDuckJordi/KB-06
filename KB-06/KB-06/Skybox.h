@@ -17,17 +17,17 @@ namespace pengine
 		Skybox();
 		~Skybox();
 		Vertex* GetSkyboxVertices();
-		int* GetSkyboxIndices();
+		unsigned int* GetSkyboxIndices();
 		Material* GetMaterial();
 		void SetMaterial(Material*);
 		void Draw(Renderer* renderer, Vector3* position);
 
 	private:
 		Vertex* aSkyboxVertices;
-		int* aSkyboxIndices;
+		unsigned int* aSkyboxIndices;
 		Material* material;
-		int amountOfVertices;
-		int amountOfIndices;
+		unsigned int amountOfVertices;
+		unsigned int amountOfIndices;
 		VertexBufferWrapper* v_buffer;
 		IndexBufferWrapper* i_buffer;
 	};

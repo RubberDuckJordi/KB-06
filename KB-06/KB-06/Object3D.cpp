@@ -1,6 +1,5 @@
 #include "Object3D.h"
 
-#include "DirectXRenderer.h"//HACKING NEEDS FIXES
 #include "Vertex.h"
 
 namespace pengine
@@ -129,18 +128,8 @@ namespace pengine
 
 	void Object3D::Draw(Renderer* renderer)
 	{
-		LPDIRECT3DDEVICE9 g_pd3dDevice = *((DirectXRenderer*)renderer)->GetDevice();
-
-		LPD3DXMESH d3dMesh;
 		int	amountOfVertices = _Mesh->_nVertices;
 
-		if (FAILED(D3DXCreateMeshFVF(_Mesh->_nFaces * 3, amountOfVertices, 0, D3DCustomVertexFVF, g_pd3dDevice, &d3dMesh)))
-		{
-			logger->Log(Logger::ERR, "Failed to create a D3DXCreateMeshFVF. Generating a cube");
-			D3DXCreateBox(g_pd3dDevice, 1.0f, 1.0f, 1.0f, &d3dMesh, NULL);
-		}
-		else
-		{
 			Vertex* d3dVertices = new Vertex[amountOfVertices];
 
 			if (_cAnimationSet == NULL)
@@ -170,28 +159,18 @@ namespace pengine
 				}
 			}
 
-			void* pVoid;
-			LPDIRECT3DVERTEXBUFFER9 v_buffer;
-			d3dMesh->GetVertexBuffer(&v_buffer);
-			// lock v_buffer and load the vertices into it
-			v_buffer->Lock(0, 0, (void**)&pVoid, 0);
-			memcpy(pVoid, d3dVertices, amountOfVertices*sizeof(Vertex));
-			v_buffer->Unlock();
+			VertexBufferWrapper* vbWrapper = renderer->CreateVertexBuffer(d3dVertices, amountOfVertices);
 
-			g_pd3dDevice->SetStreamSource(0, v_buffer, 0, sizeof(Vertex));
-			g_pd3dDevice->SetFVF(D3DCustomVertexFVF);
-			_Model->_Meshes;
-
-			if (_Mesh->_Subsets.size() == 0)//this is still relevant for tiger.x... sadly
+			if (_Mesh->_Subsets.size() == 0)
 			{
 				//				logger->Log(Logger::DEBUG, "Object3D: We have no subsets to render!");
 				Face tempFace;
 				std::list<Material*>::iterator j = _Mesh->_Materials.begin();
 
-				renderer->SetMaterial(_Mesh->_Materials.front());//We have one mesh, that can only have 1 texture... maybe not true? Needs research...
+				renderer->SetMaterial(_Mesh->_Materials.front());//We have one mesh, that can only have 1 texture... maybe not true? Needs research... Definately not true...
 
 				unsigned int indicesForSubset = _Mesh->_nFaces * 3;//amount of faces * 3
-				unsigned short* indices = new unsigned short[indicesForSubset];
+				unsigned int* indices = new unsigned int[indicesForSubset];
 				unsigned int currentIndex = -1;
 
 				for (uint32 k = 0; k < _Mesh->_nFaces; k++)
@@ -202,21 +181,11 @@ namespace pengine
 					indices[++currentIndex] = tempFace[2];
 				}
 
-				LPDIRECT3DINDEXBUFFER9 i_buffer;
-				d3dMesh->GetIndexBuffer(&i_buffer);
-				// lock i_buffer and load the indices into it
-				i_buffer->Lock(0, 0, (void**)&pVoid, 0);
-				memcpy(pVoid, indices, indicesForSubset * sizeof(unsigned short));
-				i_buffer->Unlock();
+				IndexBufferWrapper* ibWrapper = renderer->CreateIndexBuffer(indices, indicesForSubset);
 
-				g_pd3dDevice->SetIndices(i_buffer);
-				g_pd3dDevice->DrawIndexedPrimitive(D3DPT_TRIANGLELIST,// PrimitiveType
-					0,// BaseVertexIndex, adds +arg to every vertex number in the index buffer
-					0,// MinIndex
-					amountOfVertices,// NumVertices
-					0,// StartIndex
-					_Mesh->_nFaces);// PrimitiveCount
-				i_buffer->Release();
+				renderer->DrawIndexedVertexBuffer(vbWrapper, ibWrapper);
+
+				delete ibWrapper;
 				delete[] indices;
 				j++;
 			}
@@ -234,7 +203,7 @@ namespace pengine
 
 					tempSubset = *i;
 					unsigned int indicesForSubset = tempSubset->Size * 3;//amount of faces * 3
-					unsigned short* indices = new unsigned short[indicesForSubset];
+					unsigned int* indices = new unsigned int[indicesForSubset];
 					unsigned int currentIndex = -1;
 
 					for (int k = 0; k < tempSubset->Size; k++)
@@ -245,32 +214,20 @@ namespace pengine
 						indices[++currentIndex] = tempFace[2];
 					}
 
-					LPDIRECT3DINDEXBUFFER9 i_buffer;
-					d3dMesh->GetIndexBuffer(&i_buffer);
-					// lock i_buffer and load the indices into it
-					i_buffer->Lock(0, 0, (void**)&pVoid, 0);
-					memcpy(pVoid, indices, indicesForSubset * sizeof(unsigned short));
-					i_buffer->Unlock();
+					IndexBufferWrapper* ibWrapper = renderer->CreateIndexBuffer(indices, indicesForSubset);
 
-					g_pd3dDevice->SetIndices(i_buffer);
-					g_pd3dDevice->DrawIndexedPrimitive(D3DPT_TRIANGLELIST,// PrimitiveType
-						0,// BaseVertexIndex, adds +arg to every vertex number in the index buffer
-						0,// MinIndex
-						amountOfVertices,// NumVertices
-						0,// StartIndex
-						tempSubset->Size);// PrimitiveCount
-					i_buffer->Release();
+					renderer->DrawIndexedVertexBuffer(vbWrapper, ibWrapper);
+
+					delete ibWrapper;
 					delete[] indices;
 
-					i++;
-					j++;
+					++i;
+					++j;
 				}
 			}
 
-			v_buffer->Release();
-			d3dMesh->Release();
+			delete vbWrapper;
 			delete[] d3dVertices;
-		}
 	}
 
 	ObjectBone* Object3D::ReplicateSkeleton(Bone* &pBone)

@@ -105,7 +105,7 @@ namespace pengine
 		renderer->SetActiveMatrix(location);
 		renderer->SetMaterial(material);
 
-		renderer->DrawVertexBuffer(vertexBuffer, amountOfVerticesX);
+		renderer->DrawVertexBuffer(vertexBuffer);
 
 		//delete[] verticesX;
 	}

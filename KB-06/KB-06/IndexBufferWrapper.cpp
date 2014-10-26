@@ -4,22 +4,27 @@ namespace pengine
 {
 	IndexBufferWrapper::IndexBufferWrapper()
 	{
-
+		numIndices = 0;
 	}
 
 	IndexBufferWrapper::~IndexBufferWrapper()
 	{
-		(*IndexBuffer)->Release();
-		delete IndexBuffer;
+		indexBuffer->Release();
 	}
 
-	void IndexBufferWrapper::SetIndexBuffer(IDirect3DIndexBuffer9** _IndexBuffer)
+	void IndexBufferWrapper::SetIndexBuffer(IDirect3DIndexBuffer9* _IndexBuffer, unsigned int _numIndices)
 	{
-		IndexBuffer = _IndexBuffer;
+		indexBuffer = _IndexBuffer;
+		numIndices = _numIndices;
 	}
 
-	IDirect3DIndexBuffer9** IndexBufferWrapper::GetIndexBuffer()
+	unsigned int IndexBufferWrapper::GetNumIndices()
 	{
-		return IndexBuffer;
+		return numIndices;
+	}
+
+	IDirect3DIndexBuffer9* IndexBufferWrapper::GetIndexBuffer()
+	{
+		return indexBuffer;
 	}
 }

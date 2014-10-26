@@ -4,23 +4,28 @@ namespace pengine
 {
 	VertexBufferWrapper::VertexBufferWrapper()
 	{
-
+		numVertices = 0;
 	}
 
 	VertexBufferWrapper::~VertexBufferWrapper()
 	{
-		(*VertexBuffer)->Release();
-		delete VertexBuffer;
+		vertexBuffer->Release();
 	}
 
-	void VertexBufferWrapper::SetVertexBuffer(IDirect3DVertexBuffer9** _VertexBuffer)
+	void VertexBufferWrapper::SetVertexBuffer(IDirect3DVertexBuffer9* _VertexBuffer, unsigned int _numVertices)
 	{
-		VertexBuffer = _VertexBuffer;
+		vertexBuffer = _VertexBuffer;
+		numVertices = _numVertices;
 	}
 
-	IDirect3DVertexBuffer9** VertexBufferWrapper::GetVertexBuffer()
+	IDirect3DVertexBuffer9* VertexBufferWrapper::GetVertexBuffer()
 	{
-		return VertexBuffer;
+		return vertexBuffer;
+	}
+
+	unsigned int VertexBufferWrapper::GetNumVertices()
+	{
+		return numVertices;
 	}
 
 	void VertexBufferWrapper::SetFVF(int _fvf)
