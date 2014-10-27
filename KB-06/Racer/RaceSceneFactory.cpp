@@ -191,7 +191,7 @@ pengine::Scene* racer::RaceSceneFactory::CreateScene()
 	RaceCart* racecart = new RaceCart();
 	racecart->SetControllable(true);
 	racecart->SetMass(100.0f);
-	racecart->SetHorsePower(300.0f);
+	racecart->SetHorsePower(10000.0f);
 	racecart->AddAll(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f);
 
 	pengine::Object3D* tiger = resourceManager->LoadXFile(&std::string("resources/cart/cart.x"));

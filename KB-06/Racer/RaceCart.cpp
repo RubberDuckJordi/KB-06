@@ -23,10 +23,10 @@ void racer::RaceCart::UpdateLogic(float deltaTime, std::map<pengine::Input, long
 			switch (iterator->first)
 			{
 			case pengine::Input::KEY_S:
-				Throttle(-20.0f * deltaTime);
+				Throttle(-0.5f * deltaTime);
 				break;
 			case pengine::Input::KEY_W:
-				Throttle(40.0f * deltaTime);
+				Throttle(1.0f * deltaTime);
 				break;
 			case pengine::Input::KEY_D:
 				Steer(3.0f * deltaTime);
@@ -99,11 +99,29 @@ void racer::RaceCart::Throttle(float percentage)
 void racer::RaceCart::Steer(float percentage)
 {
 	pengine::Vector3 vector;
+	// Remember if we're driving forward or backwards, we need it to set the speed back later
+	bool drivingForward = false;
+	pengine::Vector3* relativeForce = GetRelativeForce();
+
+	if (relativeForce->z > 0.0f)
+	{
+		drivingForward = true;
+	}
+
+	delete relativeForce;
 
 	// Get current movement magnitude
 	float magnitude = movementVector.GetMagnitude();
+
 	// Rotate the object according to the speed
-	this->AddRotation(percentage * sqrt(magnitude) * 2.0f, 0.0f, 0.0f);
+	if (drivingForward)
+	{
+		this->AddRotation(percentage * sqrt(magnitude) * 2.0f, 0.0f, 0.0f);
+	}
+	else
+	{
+		this->AddRotation(percentage * sqrt(magnitude) * - 2.0f, 0.0f, 0.0f);
+	}
 
 	// Reset the speed
 	movementVector.x = 0.0f;
@@ -111,7 +129,15 @@ void racer::RaceCart::Steer(float percentage)
 	movementVector.z = 0.0f;
 
 	// Move the object forward relative to itself
-	vector.z = magnitude * mass;
+	if (drivingForward)
+	{
+		vector.z = magnitude * mass;
+	}
+	else
+	{
+		vector.z = - magnitude * mass;
+	}
+	
 	AddRelativeForce(&vector);
 
 	// Add friction

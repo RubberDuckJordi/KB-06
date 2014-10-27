@@ -183,6 +183,25 @@ namespace pengine
 		AddForce(&relativeVector);
 	}
 
+	// This function could contain bugs and might require fixes.
+	// It's currently being used to determine if the entity is moving forward or backwards
+	Vector3* Entity::GetRelativeForce()
+	{
+		Vector3* relativeVector = new Vector3();
+
+		// Z Axis
+		relativeVector->x += -movementVector.z * sin((M_PI / 180)*-rotation.x);
+		relativeVector->z += -movementVector.z * cos((M_PI / 180)*rotation.x);
+
+		// X Axis
+		relativeVector->z += -movementVector.x * sin((M_PI / 180)*+rotation.x);
+		relativeVector->x += -movementVector.x * cos((M_PI / 180)*rotation.x);
+
+		//TODO: Y AXIS, PITCH, ROLL
+
+		return relativeVector;
+	}
+
 	void Entity::ApplyFriction(float p_friction)
 	{
 		Vector3 inverted;

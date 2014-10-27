@@ -32,6 +32,7 @@ namespace pengine
 		void SetMass(float mass);
 
 		void AddRelativeForce(Vector3*);
+		Vector3* GetRelativeForce();
 
 		float GetFriction();
 		float GetMass();
