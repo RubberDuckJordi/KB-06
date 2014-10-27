@@ -43,7 +43,8 @@ namespace pengine
 		void AddScale(float scaleX, float scaleY, float scaleZ);
 		void AddAll(float x, float y, float z, float yaw, float pitch, float roll, float scaleX, float scaleY, float scaleZ);
 
-		virtual void Draw(Renderer* renderer) = 0;
+		virtual void CacheToRenderer(Renderer* renderer) = 0;
+		virtual void Render(Renderer* renderer) = 0;
 		virtual void UpdateLogic(float deltaTime, std::map<Input, long>* actions);
 		
 		virtual float GetRadius();

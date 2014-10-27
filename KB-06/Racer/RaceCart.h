@@ -17,8 +17,8 @@ namespace racer
 		RaceCart();
 		~RaceCart();
 		void UpdateLogic(float deltaTime, std::map<pengine::Input, long>* actions);
-		void Draw(pengine::Renderer* renderer);
-		void SetObject3D(pengine::Object3D*); //debug
+		void Render(pengine::Renderer* renderer);
+		void SetObject3D(pengine::Object3D*);
 		void SetControllable(bool);
 		
 		void SetHorsePower(float);
@@ -35,10 +35,12 @@ namespace racer
 		float GetCollisionMass();
 		pengine::Matrix* GetRenderMatrix();
 		float GetRadius();
+
+		void CacheToRenderer(pengine::Renderer* renderer);
 	private:
 		float horsePower = 10;
 
-		pengine::Object3D* xModel; //debug
+		pengine::Object3D* model;
 		bool controllable;
 	};
 }

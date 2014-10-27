@@ -39,10 +39,10 @@ void Track::SetAll(float x, float y, float z, float yaw, float pitch, float roll
 	}
 }
 
-void Track::Draw(pengine::Renderer* renderer)
+void Track::Render(pengine::Renderer* renderer)
 {
 	for (auto iterator = trackBlocks.begin(); iterator != trackBlocks.end(); ++iterator) {
-		(*iterator)->Draw(renderer);
+		(*iterator)->Render(renderer);
 	}
 }
 
@@ -111,4 +111,12 @@ float Track::GetRadius()
 		radius += trackBlock->GetRadius();
 	}
 	return radius;
+}
+
+void Track::CacheToRenderer(pengine::Renderer* renderer)
+{
+	for (auto it = trackBlocks.begin(); it != trackBlocks.end(); ++it)
+	{
+		(*it)->CacheToRenderer(renderer);
+	}
 }

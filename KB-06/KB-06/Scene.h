@@ -25,6 +25,15 @@ namespace pengine
 		void AddEntity(Entity* entity);
 		void AddCollidable(Collidable* collidable);
 		/*!
+		This function is called right after loading all the resources, 
+		allowing the skybox/ground/entities to cache their resources to
+		the renderer, if they have any.
+		Should be overwritten if you have specific resources in your
+		program that need to be cached to the renderer, make sure to
+		call pengine::Scene::CacheToRenderer(renderer) too.
+		*/
+		virtual void CacheToRenderer(Renderer* renderer);
+		/*!
 		You will have to set the camera yourself, then render whatever you please.
 		This function will not be called if SetAmountOfRenderTextures is not called or 0.
 		*/

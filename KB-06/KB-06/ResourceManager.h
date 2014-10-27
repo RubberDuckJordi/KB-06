@@ -31,6 +31,7 @@ namespace pengine
 		Shader* LoadShader(std::string VertexShaderFilename, std::string PixelShaderFilename, std::string filename, Renderer* renderer);
 		std::vector<std::string>* LoadSceneFile(std::string* path);
 		Object3D* LoadXFile(std::string* fileName);
+		void CacheToRenderer(Renderer* renderer);
 
 		//Mesh* LoadSound(const std::string& fileName, const std::string& extension);
 
@@ -47,7 +48,7 @@ namespace pengine
 		SuperXLoader* superXLoader;
 		//std::map<std::string, Mesh> meshes;
 		std::map<std::string, Material> materials;
-		std::map<std::string, BinaryData> textures;
+		std::map<std::string, BinaryData*> textures;
 		std::map<std::string, Sound> sounds;
 		std::map<std::string, Ground> grounds;
 		std::map<std::string, Shader> shaders;

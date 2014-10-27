@@ -51,21 +51,21 @@ void racer::RaceCart::UpdateLogic(float deltaTime, std::map<pengine::Input, long
 	pengine::Entity::UpdateLogic(deltaTime, actions);
 }
 
-void racer::RaceCart::Draw(pengine::Renderer* renderer)
+void racer::RaceCart::Render(pengine::Renderer* renderer)
 {
-	if (xModel != NULL)
+	if (model != NULL)
 	{
 		renderer->SetActiveMatrix(myCachedMatrix); //should be called every frame
 
-		xModel->ClearSkinnedVertices();
-		xModel->UpdateAnimation();
-		xModel->Draw(renderer);
+		model->ClearSkinnedVertices();
+		model->UpdateAnimation();
+		model->Render(renderer);
 	}
 }
 
 void racer::RaceCart::SetObject3D(pengine::Object3D* p_xModel)
 {
-	xModel = p_xModel;
+	model = p_xModel;
 }
 
 void racer::RaceCart::SetControllable(bool p_controllable)
@@ -169,7 +169,7 @@ void racer::RaceCart::InitCollisionBox()
 {
 	// Get bounds of model
 	pengine::BEAM* rect = new pengine::BEAM();
-	xModel->CreateCollisionBox(*rect);
+	model->CreateCollisionBox(*rect);
 
 	// Add transformation
 	rect->x += position.x;// -rect->width / 8;
@@ -244,4 +244,9 @@ float racer::RaceCart::GetCollisionMass()
 float racer::RaceCart::GetRadius(){
 	float radius = collisionBox.depth * scale.z;
 	return radius;
+}
+
+void racer::RaceCart::CacheToRenderer(pengine::Renderer* renderer)
+{
+	model->CacheToRenderer(renderer);
 }

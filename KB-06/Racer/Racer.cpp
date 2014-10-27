@@ -21,6 +21,7 @@ int main(int argc, const char* argv[])
 	pEngine.NewWindow(10, 10, 750, 750);
 	pEngine.InitRenderer();
 
+	//!!!WE ARE MANAGING A SCENE OUTSIDE THE SCENE MANAGER!!!
 	racer::RaceSceneFactory* sceneFactory = new racer::RaceSceneFactory(pEngine.GetResourceManager());
 	sceneFactory->SetGroundResource("resources/heightmap.bmp");
 	sceneFactory->SetGroundTexture("resources/heightmaptexture.bmp");
@@ -28,6 +29,14 @@ int main(int argc, const char* argv[])
 
 	pEngine.AddSceneFactory("raceScene", sceneFactory);
 	pengine::Scene* scene = pEngine.AddScene("raceScene");
+
+	pengine::BinaryData* font = pEngine.GetResourceManager()->LoadBinaryFile("resources/font.png");//we should probably do this in the scene
+	pEngine.GetRenderer()->SetFontTexture(font);
+
+	scene->CacheToRenderer(pEngine.GetRenderer());
+	pEngine.GetResourceManager()->CacheToRenderer(pEngine.GetRenderer());
+	//!!!WE ARE MANAGING A SCENE OUTSIDE THE SCENE MANAGER!!!
+
 
 	// <EventManager voorbeeld>
 	EventManager* eventManager = new EventManager();
@@ -42,8 +51,6 @@ int main(int argc, const char* argv[])
 	eventManager->Proc("event");
 	// </EventManager voorbeeld>
 
-	pengine::BinaryData* font = pEngine.GetResourceManager()->LoadBinaryFile("resources/font.png");
-	pEngine.GetRenderer()->SetFontTexture(font);
 
 	pEngine.SetCurrentScene(scene);
 	pEngine.GameLoop();

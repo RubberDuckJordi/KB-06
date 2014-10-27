@@ -26,7 +26,7 @@ public:
 	TrackBlock(float x, float y, float z, float yaw, TYPE type, Direction direction, pengine::Object3D* model);
 	~TrackBlock();
 
-	void Draw(pengine::Renderer* renderer);
+	void Render(pengine::Renderer* renderer);
 	void SetXModel(pengine::Object3D*); //debug
 	
 	//float lenght;
@@ -35,15 +35,17 @@ public:
 
 	void SetPosition(float x, float y, float z);
 	void SetPositionOffset(float x, float y, float z);
-	pengine::Vertex* GetPositionOffset();
+	pengine::Vector3* GetPositionOffset();
 	void SetRotation(float yaw, float pitch, float roll);
 	void SetRotationOffset(float yaw, float pitch, float roll);
-	pengine::Vertex* GetRotationOffset();
+	pengine::Vector3* GetRotationOffset();
 	
 	float GetRadius();
+
+	void CacheToRenderer(pengine::Renderer* renderer);
 private:
-	pengine::Vertex positionOffset;
-	pengine::Vertex rotationOffset;
+	pengine::Vector3 positionOffset;
+	pengine::Vector3 rotationOffset;
 	TYPE type;
 	Direction direction;
 	pengine::Object3D* xModel; //debug

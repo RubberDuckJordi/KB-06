@@ -88,6 +88,13 @@ namespace pengine
 		material = p_material;
 	}
 
+	void Ground::CacheToRenderer(Renderer* renderer)
+	{
+		//Well, uh, nothing...
+		//But there should be!
+		//...Maybe...
+	}
+
 	void Ground::Render(Renderer* renderer)
 	{
 		renderer->SetCulling(PENGINE_CULL_NONE);
@@ -107,7 +114,7 @@ namespace pengine
 
 		renderer->DrawVertexBuffer(vertexBuffer);
 
-		//delete[] verticesX;
+		delete[] verticesX;
 	}
 
 	QuadNode* Ground::CreateQuadTree(unsigned short depth)

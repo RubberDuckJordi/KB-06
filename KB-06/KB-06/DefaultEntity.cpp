@@ -19,7 +19,7 @@ namespace pengine
 		Entity::UpdateLogic(deltaTime, actions);
 	}
 
-	void DefaultEntity::Draw(Renderer* renderer)
+	void DefaultEntity::Render(Renderer* renderer)
 	{
 		
 	}

@@ -31,7 +31,8 @@ namespace pengine
 		void CalcAnimation();
 		void CalcBindSpace();
 		void Update();
-		void Draw(Renderer* renderer);
+		void CacheToRenderer(Renderer* renderer);
+		void Render(Renderer* renderer);
 
 		void CreateCollisionBox(BEAM& rect);
 		void ComputeBoundingBoxSphere();
@@ -43,6 +44,7 @@ namespace pengine
 		bool showWarning;
 	private:
 		Logger* logger;
+		std::list<IndexBufferWrapper*> indexBuffers;
 		ObjectBone* _Skeleton;//also known as rootbone
 		Mesh* _Mesh; //pointer to Model Mesh
 		Vertex* _SkinnedVertices;

@@ -133,7 +133,7 @@ namespace pengine
 			while (!(*i)->_Materials.empty())
 			{
 				concatenatedMesh->_Materials.push_back((*i)->_Materials.front());
-				(*i)->_Materials.pop_front();
+				(*i)->_Materials.erase((*i)->_Materials.begin());
 			}
 		}
 

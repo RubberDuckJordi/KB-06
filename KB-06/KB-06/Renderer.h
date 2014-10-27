@@ -80,6 +80,14 @@ namespace pengine
 		*/
 		virtual void DrawString(std::string text, DWORD color) = 0;
 
+		/*!
+		Allows you to put a texture in the renderer's cache, failing to do
+		this for a texture will result in a crash!
+		Fortunately, the PEngine will do this for every texture loaded
+		by the resource manager.
+		*/
+		virtual void CacheTexture(BinaryData* textureInRam) = 0;
+
 	protected:
 		Logger* logger;
 		BinaryData* fontTexture;

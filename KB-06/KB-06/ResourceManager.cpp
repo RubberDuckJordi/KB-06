@@ -16,24 +16,26 @@ namespace pengine
 
 	BinaryData* ResourceManager::LoadBinaryFile(const std::string& fileName)
 	{
-		logger->Log(Logger::DEBUG, "Going to load texture file: " + fileName);
-
-		std::ifstream file(fileName, std::ios::binary);
-		file.seekg(0, std::ios::end);
-		std::streamsize size = file.tellg();
-		file.clear();
-		file.seekg(0, std::ios::beg);
-
-		BinaryData* texture = new BinaryData();
-		texture->rawData = new char[(unsigned int)size];
-		texture->size = (unsigned int)size;
-		texture->fileName = fileName;
-		if (file.read(texture->rawData, size))
+		if (textures[fileName] == NULL)
 		{
-			textures[fileName] = *texture;
-			return texture;
+			logger->Log(Logger::DEBUG, "Going to load texture file: " + fileName);
+
+			std::ifstream file(fileName, std::ios::binary);
+			file.seekg(0, std::ios::end);
+			std::streamsize size = file.tellg();
+			file.clear();
+			file.seekg(0, std::ios::beg);
+
+			BinaryData* texture = new BinaryData();
+			texture->rawData = new char[(unsigned int)size];
+			texture->size = (unsigned int)size;
+			texture->fileName = fileName;
+			if (file.read(texture->rawData, size))
+			{
+				textures[fileName] = texture;
+			}
 		}
-		return texture;
+		return textures[fileName];
 	}
 
 	Ground* ResourceManager::LoadGround(std::string filename, std::string textureFilename)
@@ -189,9 +191,9 @@ namespace pengine
 			superXLoader->Load(*filePath, model);
 
 			size_t found = filePath->find_last_of("/");
-			for (std::list<pengine::Mesh*>::iterator i = model->_Meshes.begin(); i != model->_Meshes.end(); ++i)
+			for (auto i = model->_Meshes.begin(); i != model->_Meshes.end(); ++i)
 			{
-				for (std::list<pengine::Material*>::iterator j = (*i)->_Materials.begin(); j != (*i)->_Materials.end(); ++j)
+				for (auto j = (*i)->_Materials.begin(); j != (*i)->_Materials.end(); ++j)
 				{
 					if ((*j)->texturePath != "")
 					{
@@ -212,4 +214,12 @@ namespace pengine
 		return object3D;
 	}
 
+
+	void ResourceManager::CacheToRenderer(Renderer* renderer)
+	{
+		for (auto it = textures.begin(); it != textures.end(); ++it)
+		{
+			renderer->CacheTexture((*it).second);
+		}
+	}
 }

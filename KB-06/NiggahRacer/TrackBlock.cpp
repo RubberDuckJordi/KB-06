@@ -13,7 +13,7 @@ TrackBlock::~TrackBlock()
 {
 }
 
-void TrackBlock::Draw(pengine::Renderer* renderer)
+void TrackBlock::Render(pengine::Renderer* renderer)
 {
 	if (xModel != NULL)
 	{
@@ -21,7 +21,7 @@ void TrackBlock::Draw(pengine::Renderer* renderer)
 
 		xModel->ClearSkinnedVertices();
 		xModel->UpdateAnimation();
-		xModel->Draw(renderer);
+		xModel->Render(renderer);
 	}
 }
 
@@ -44,7 +44,7 @@ void TrackBlock::SetPositionOffset(float x, float y, float z){
 	positionOffset.z = z;
 }
 
-pengine::Vertex* TrackBlock::GetPositionOffset()
+pengine::Vector3* TrackBlock::GetPositionOffset()
 {
 	return &positionOffset;
 }
@@ -61,10 +61,15 @@ void TrackBlock::SetRotationOffset(float yaw, float pitch, float roll)
 	rotationOffset.z = roll;
 }
 
-pengine::Vertex* TrackBlock::GetRotationOffset(){
+pengine::Vector3* TrackBlock::GetRotationOffset(){
 	return &rotationOffset;
 }
 
 float TrackBlock::GetRadius(){
 	return 10.0f;
+}
+
+void TrackBlock::CacheToRenderer(pengine::Renderer* renderer)
+{
+	xModel->CacheToRenderer(renderer);
 }

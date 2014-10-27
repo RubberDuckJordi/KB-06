@@ -20,8 +20,8 @@ namespace pengine
 		unsigned int* GetSkyboxIndices();
 		Material* GetMaterial();
 		void SetMaterial(Material*);
-		void Draw(Renderer* renderer, Vector3* position);
-
+		void CacheToRenderer(Renderer* renderer);
+		void Render(Renderer* renderer, Vector3* position);
 	private:
 		Vertex* aSkyboxVertices;
 		unsigned int* aSkyboxIndices;

@@ -46,7 +46,7 @@ namespace pengine
 		uint16 _nMaterials, _FirstMaterial;
 		uint16* _FaceMaterials;
 		//list of Materials for that Mesh
-		std::list<Material*> _Materials;
+		std::vector<Material*> _Materials;
 		std::string _Name;
 	};
 }

@@ -97,7 +97,11 @@ namespace pengine
 	{
 		std::vector<std::string>* sceneFile = resourceManager->LoadSceneFile(filePath);
 		Scene* scene = sceneManager->CreateScene(sceneFile, sceneFactory, resourceManager);
+		resourceManager->CacheToRenderer(renderer);//maybe not the nicest place, but works! :)
+		scene->CacheToRenderer(renderer);
 		sceneManager->SetCurrentScene(scene);
+
+
 		return scene;
 	}
 

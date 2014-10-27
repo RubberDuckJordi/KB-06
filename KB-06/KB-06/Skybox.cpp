@@ -82,7 +82,7 @@ namespace pengine
 		material = p_material;
 	}
 
-	void Skybox::Draw(Renderer* renderer, Vector3* position)
+	void Skybox::CacheToRenderer(Renderer* renderer)
 	{
 		// initialise
 		if (i_buffer == NULL)
@@ -91,6 +91,10 @@ namespace pengine
 			v_buffer = renderer->CreateVertexBuffer(aSkyboxVertices, amountOfVertices);
 		}
 
+	}
+
+	void Skybox::Render(Renderer* renderer, Vector3* position)
+	{
 		Matrix aMatrix;
 
 		Matrix::CreateMatrix(position->x, position->y, position->z, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, &aMatrix);

@@ -18,6 +18,11 @@ namespace pengine
 		{
 			delete[] _SkinnedVertices;
 		}
+		while (indexBuffers.size() != 0)
+		{
+			delete indexBuffers.back();
+			indexBuffers.pop_back();
+		}
 	}
 
 	void Object3D::ClearSkinnedVertices(void)
@@ -126,81 +131,50 @@ namespace pengine
 		_cKey = 0;
 	}
 
-	void Object3D::Draw(Renderer* renderer)
+	void Object3D::CacheToRenderer(Renderer* renderer)
 	{
-		int	amountOfVertices = _Mesh->_nVertices;
-
-			Vertex* d3dVertices = new Vertex[amountOfVertices];
-
-			if (_cAnimationSet == NULL)
-			{
-				for (int i = 0; i < amountOfVertices; ++i)//first do all the vertices, then set the indices to the right vertices
-				{
-					Vertex newVertex;
-					newVertex.x = _Mesh->_Vertices[i].x;
-					newVertex.y = _Mesh->_Vertices[i].y;
-					newVertex.z = _Mesh->_Vertices[i].z;
-					newVertex.tu = _Mesh->_Vertices[i].tu;
-					newVertex.tv = _Mesh->_Vertices[i].tv;
-					d3dVertices[i] = newVertex;
-				}
-			}
-			else
-			{
-				for (int i = 0; i < amountOfVertices; ++i)//first do all the vertices, then set the indices to the right vertices
-				{
-					Vertex newVertex;
-					newVertex.x = _SkinnedVertices[i].x;
-					newVertex.y = _SkinnedVertices[i].y;
-					newVertex.z = _SkinnedVertices[i].z;
-					newVertex.tu = _SkinnedVertices[i].tu;
-					newVertex.tv = _SkinnedVertices[i].tv;
-					d3dVertices[i] = newVertex;
-				}
-			}
-
-			VertexBufferWrapper* vbWrapper = renderer->CreateVertexBuffer(d3dVertices, amountOfVertices);
-
+		if (indexBuffers.size() == 0)
+		{
 			if (_Mesh->_Subsets.size() == 0)
 			{
-				//				logger->Log(Logger::DEBUG, "Object3D: We have no subsets to render!");
-				Face tempFace;
-				std::list<Material*>::iterator j = _Mesh->_Materials.begin();
-
-				renderer->SetMaterial(_Mesh->_Materials.front());//We have one mesh, that can only have 1 texture... maybe not true? Needs research... Definately not true...
-
-				unsigned int indicesForSubset = _Mesh->_nFaces * 3;//amount of faces * 3
-				unsigned int* indices = new unsigned int[indicesForSubset];
-				unsigned int currentIndex = -1;
-
-				for (uint32 k = 0; k < _Mesh->_nFaces; k++)
+				unsigned int counter = 0;
+				for (auto i = _Mesh->_Materials.begin(); i != _Mesh->_Materials.end(); ++i)
 				{
-					tempFace = _Mesh->_Faces[k];
-					indices[++currentIndex] = tempFace[0];
-					indices[++currentIndex] = tempFace[1];
-					indices[++currentIndex] = tempFace[2];
+					std::list<Face> facesToDraw;
+					for (unsigned int j = 0; j < _Mesh->_nFaces; ++j)
+					{
+						int ffs = _Mesh->_FaceMaterials[j];
+						if (_Mesh->_FaceMaterials[j] == counter)
+						{
+							facesToDraw.push_back(_Mesh->_Faces[j]);
+						}
+					}
+					unsigned int* indices = new unsigned int[facesToDraw.size() * 3];
+					unsigned int counter2 = 0;
+					for (auto it = facesToDraw.begin(); it != facesToDraw.end(); ++it)
+					{
+						Face tempFace = (*it);
+						indices[counter2 + 0] = tempFace[0];
+						indices[counter2 + 1] = tempFace[1];
+						indices[counter2 + 2] = tempFace[2];
+						counter2 += 3;
+					}
+					IndexBufferWrapper* ibW = renderer->CreateIndexBuffer(indices, facesToDraw.size() * 3);
+					indexBuffers.push_back(ibW);
+					delete[] indices;
+
+					counter++;
 				}
-
-				IndexBufferWrapper* ibWrapper = renderer->CreateIndexBuffer(indices, indicesForSubset);
-
-				renderer->DrawIndexedVertexBuffer(vbWrapper, ibWrapper);
-
-				delete ibWrapper;
-				delete[] indices;
-				j++;
 			}
 			else
 			{
 				Subset* tempSubset;
 				Face tempFace;
-				std::list<Subset*>::iterator i = _Mesh->_Subsets.begin();
-				std::list<Material*>::iterator j = _Mesh->_Materials.begin();
+				auto i = _Mesh->_Subsets.begin();
+				auto j = _Mesh->_Materials.begin();
 
 				while (j != _Mesh->_Materials.end())
 				{
-					renderer->SetMaterial(*j);
-					//renderer->SetTextureToRenderedTexture();
-
 					tempSubset = *i;
 					unsigned int indicesForSubset = tempSubset->Size * 3;//amount of faces * 3
 					unsigned int* indices = new unsigned int[indicesForSubset];
@@ -214,20 +188,63 @@ namespace pengine
 						indices[++currentIndex] = tempFace[2];
 					}
 
-					IndexBufferWrapper* ibWrapper = renderer->CreateIndexBuffer(indices, indicesForSubset);
+					IndexBufferWrapper* ibW = renderer->CreateIndexBuffer(indices, indicesForSubset);
+					indexBuffers.push_back(ibW);
 
-					renderer->DrawIndexedVertexBuffer(vbWrapper, ibWrapper);
-
-					delete ibWrapper;
 					delete[] indices;
 
 					++i;
 					++j;
 				}
 			}
+		}
+	}
 
-			delete vbWrapper;
-			delete[] d3dVertices;
+	void Object3D::Render(Renderer* renderer)
+	{
+		int	amountOfVertices = _Mesh->_nVertices;
+
+		Vertex* d3dVertices = new Vertex[amountOfVertices];
+
+		if (_cAnimationSet == NULL)
+		{
+			for (int i = 0; i < amountOfVertices; ++i)//first do all the vertices, then set the indices to the right vertices
+			{
+				Vertex newVertex;
+				newVertex.x = _Mesh->_Vertices[i].x;
+				newVertex.y = _Mesh->_Vertices[i].y;
+				newVertex.z = _Mesh->_Vertices[i].z;
+				newVertex.tu = _Mesh->_Vertices[i].tu;
+				newVertex.tv = _Mesh->_Vertices[i].tv;
+				d3dVertices[i] = newVertex;
+			}
+		}
+		else
+		{
+			for (int i = 0; i < amountOfVertices; ++i)//first do all the vertices, then set the indices to the right vertices
+			{
+				Vertex newVertex;
+				newVertex.x = _SkinnedVertices[i].x;
+				newVertex.y = _SkinnedVertices[i].y;
+				newVertex.z = _SkinnedVertices[i].z;
+				newVertex.tu = _SkinnedVertices[i].tu;
+				newVertex.tv = _SkinnedVertices[i].tv;
+				d3dVertices[i] = newVertex;
+			}
+		}
+
+		VertexBufferWrapper* vbWrapper = renderer->CreateVertexBuffer(d3dVertices, amountOfVertices);
+
+		unsigned int counter = 0;
+		for (auto it = indexBuffers.begin(); it != indexBuffers.end(); ++it)
+		{
+			renderer->SetMaterial(_Mesh->_Materials[counter]);
+			counter++;
+			renderer->DrawIndexedVertexBuffer(vbWrapper, (*it));
+		}
+
+		delete vbWrapper;
+		delete[] d3dVertices;
 	}
 
 	ObjectBone* Object3D::ReplicateSkeleton(Bone* &pBone)
@@ -393,7 +410,7 @@ namespace pengine
 		{
 			largestMeasurement = maxz - minz;
 		}
-		
+
 		rect.width = maxx - minx;
 		rect.height = maxy - miny;
 		rect.depth = maxz - minz;

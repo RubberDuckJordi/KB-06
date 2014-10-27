@@ -104,8 +104,13 @@ namespace pengine
 		}
 	}
 
+	void EntityCamera::CacheToRenderer(Renderer* renderer)
+	{
+
+	}
+
 	// Camera's worden niet getekend
-	void EntityCamera::Draw(Renderer* renderer)
+	void EntityCamera::Render(Renderer* renderer)
 	{
 		bool debug = false;
 		if (debug)

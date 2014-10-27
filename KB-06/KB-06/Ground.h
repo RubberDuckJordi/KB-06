@@ -34,6 +34,7 @@ namespace pengine
 		QuadNode* GetQuadTree();
 		unsigned short GetQuadTreeDepth();
 
+		void CacheToRenderer(Renderer* renderer);
 		void Render(Renderer* renderer);
 
 	private:

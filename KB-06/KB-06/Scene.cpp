@@ -146,7 +146,7 @@ namespace pengine
 			node->SetLevelOfDetail(1 << nodesDistance);
 			return;
 		}
-		
+
 		for (std::map<char, QuadNode*> ::iterator i = node->GetChildren()->begin(); i != node->GetChildren()->end(); ++i) {
 			GoDeeper(i->second, chunkStartX, chunkStartZ, chunkEndX, chunkEndZ, depth - 1);
 		}
@@ -160,6 +160,19 @@ namespace pengine
 	void Scene::AddCollidable(Collidable* collidable)
 	{
 		collidables.push_back(collidable);
+	}
+
+	void Scene::CacheToRenderer(Renderer* renderer)
+	{
+		skybox->CacheToRenderer(renderer);
+		ground->CacheToRenderer(renderer);
+		if (entities.size() != 0)
+		{
+			for (auto i = entities.begin(); i != entities.end(); ++i)
+			{
+				(*i)->CacheToRenderer(renderer);
+			}
+		}
 	}
 
 	void Scene::RenderToTexture(int texture, Renderer* renderer)
@@ -180,7 +193,7 @@ namespace pengine
 		Vector3* cameraPosition = currentCamera->GetPosition();
 		if (skybox != NULL)
 		{
-			skybox->Draw(renderer, cameraPosition);
+			skybox->Render(renderer, cameraPosition);
 		}
 
 		int entitiesLoaded = 0;
@@ -188,7 +201,7 @@ namespace pengine
 		{
 			if (currentCamera->SphereInFrustum(entity->GetPosition(), entity->GetRadius()))
 			{
-				entity->Draw(renderer);
+				entity->Render(renderer);
 				++entitiesLoaded;
 			}
 		}

@@ -13,7 +13,8 @@ namespace pengine
 		EntityCamera();
 		~EntityCamera();
 		void UpdateLogic(float deltaTime, std::map<Input, long>* actions);
-		void Draw(Renderer* renderer);
+		void CacheToRenderer(Renderer* renderer);
+		void Render(Renderer* renderer);
 		Vector3* GetPosition();
 		Vector3* GetLookAtPosition();
 		CameraData GetCameraData();

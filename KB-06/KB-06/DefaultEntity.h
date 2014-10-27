@@ -12,7 +12,8 @@ namespace pengine
 		DefaultEntity();
 		~DefaultEntity();
 		void UpdateLogic(float deltaTime, std::map<Input, long>* actions);
-		void Draw(Renderer* renderer);
+		void CacheToRenderer(Renderer* renderer);
+		void Render(Renderer* renderer);
 		float rotationMod = 0.0f;
 
 	private:
