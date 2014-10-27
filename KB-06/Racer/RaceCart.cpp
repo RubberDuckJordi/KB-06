@@ -2,7 +2,7 @@
 
 racer::RaceCart::RaceCart()
 {
-
+	collides = false;
 }
 
 racer::RaceCart::~RaceCart()
@@ -91,62 +91,76 @@ void racer::RaceCart::Brake(float percentage)
 
 void racer::RaceCart::Throttle(float percentage)
 {
-	pengine::Vector3 vector;
-	vector.z = horsePower * percentage;
-	AddRelativeForce(&vector);
+	if (collides)
+	{
+		collides = false;
+	}
+	else
+	{
+		pengine::Vector3 vector;
+		vector.z = horsePower * percentage;
+		AddRelativeForce(&vector);
+	}
 }
 
 void racer::RaceCart::Steer(float percentage)
 {
-	pengine::Vector3 vector;
-	// Remember if we're driving forward or backwards, we need it to set the speed back later
-	bool drivingForward = false;
-	pengine::Vector3* relativeForce = GetRelativeForce();
-
-	if (relativeForce->z > 0.0f)
+	if (collides)
 	{
-		drivingForward = true;
-	}
-
-	delete relativeForce;
-
-	// Get current movement magnitude
-	float magnitude = movementVector.GetMagnitude();
-
-	// Rotate the object according to the speed
-	if (drivingForward)
-	{
-		this->AddRotation(percentage * sqrt(magnitude) * 2.0f, 0.0f, 0.0f);
+		collides = false;
 	}
 	else
 	{
-		this->AddRotation(percentage * sqrt(magnitude) * - 2.0f, 0.0f, 0.0f);
-	}
+		pengine::Vector3 vector;
+		// Remember if we're driving forward or backwards, we need it to set the speed back later
+		bool drivingForward = false;
+		pengine::Vector3* relativeForce = GetRelativeForce();
 
-	// Reset the speed
-	movementVector.x = 0.0f;
-	movementVector.y = 0.0f;
-	movementVector.z = 0.0f;
+		if (relativeForce->z > 0.0f)
+		{
+			drivingForward = true;
+		}
 
-	// Move the object forward relative to itself
-	if (drivingForward)
-	{
-		vector.z = magnitude * mass;
-	}
-	else
-	{
-		vector.z = - magnitude * mass;
-	}
-	
-	AddRelativeForce(&vector);
+		delete relativeForce;
 
-	// Add friction
-	ApplyFriction(abs(percentage) * 5.0f);
+		// Get current movement magnitude
+		float magnitude = movementVector.GetMagnitude();
+
+		// Rotate the object according to the speed
+		if (drivingForward)
+		{
+			this->AddRotation(percentage * sqrt(magnitude) * 2.0f, 0.0f, 0.0f);
+		}
+		else
+		{
+			this->AddRotation(percentage * sqrt(magnitude) * -2.0f, 0.0f, 0.0f);
+		}
+
+		// Reset the speed
+		movementVector.x = 0.0f;
+		movementVector.y = 0.0f;
+		movementVector.z = 0.0f;
+
+		// Move the object forward relative to itself
+		if (drivingForward)
+		{
+			vector.z = magnitude * mass;
+		}
+		else
+		{
+			vector.z = -magnitude * mass;
+		}
+
+		AddRelativeForce(&vector);
+
+		// Add friction
+		ApplyFriction(abs(percentage) * 5.0f);
+	}
 }
 
 void racer::RaceCart::OnCollide(pengine::COLLISIONEFFECT* effect)
 {
-	std::cout << "collide" << std::endl;
+	collides = true;
 	pengine::Vector3* vector = new pengine::Vector3(effect->forceVectorX, effect->forceVectorY, effect->forceVectorZ);
 	AddForce(vector, effect->mass);
 }

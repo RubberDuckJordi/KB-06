@@ -49,6 +49,8 @@ namespace pengine
 		virtual float GetRadius();
 	protected:
 		void ApplyFriction(float friction);
+		// used to prevent collidables from moving into eachother, movement must be disabled for one tick
+		boolean collides; 
 
 		Matrix* myCachedMatrix;
 		Vector3 position;
