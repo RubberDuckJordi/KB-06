@@ -120,6 +120,7 @@ void racer::RaceCart::Steer(float percentage)
 
 void racer::RaceCart::OnCollide(pengine::COLLISIONEFFECT* effect)
 {
+	std::cout << "collide" << std::endl;
 	pengine::Vector3* vector = new pengine::Vector3(effect->forceVectorX, effect->forceVectorY, effect->forceVectorZ);
 	AddForce(vector, effect->mass);
 }

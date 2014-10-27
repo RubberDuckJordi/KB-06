@@ -71,6 +71,19 @@ namespace pengine
 						effect->mass = (*i)->GetCollisionMass();
 
 						collisionEffects.push_back(effect);
+
+						// effect of second object
+						COLLISIONEFFECT* effect2 = new COLLISIONEFFECT();
+						effect2->collidable1 = (*j);
+						effect2->collidable2 = (*i);
+						
+						effect2->forceVectorX = vectorj->x - vector->x;
+						effect2->forceVectorY = vectorj->y - vector->y;
+						effect2->forceVectorZ = vectorj->z - vector->z;
+
+						effect2->mass = (*j)->GetCollisionMass();
+
+						collisionEffects.push_back(effect2);
 					}
 				}
 			}
