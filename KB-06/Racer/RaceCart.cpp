@@ -22,20 +22,17 @@ void racer::RaceCart::UpdateLogic(float deltaTime, std::map<pengine::Input, long
 
 			switch (iterator->first)
 			{
-			case pengine::Input::KEY_E:
-				AddRotation(0.0f, 5.0f, 0.0f);
-				break;
 			case pengine::Input::KEY_S:
-				Throttle(-0.5f);
+				Throttle(-20.0f * deltaTime);
 				break;
 			case pengine::Input::KEY_W:
-				Throttle(1.0f);
+				Throttle(40.0f * deltaTime);
 				break;
 			case pengine::Input::KEY_D:
-				Steer(0.5f);
+				Steer(3.0f * deltaTime);
 				break;
 			case pengine::Input::KEY_A:
-				Steer(-0.5f);
+				Steer(-3.0f * deltaTime);
 				break;
 			case pengine::Input::KEY_0:
 				// Imaginary collision
