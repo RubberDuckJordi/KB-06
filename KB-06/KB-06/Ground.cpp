@@ -97,24 +97,26 @@ namespace pengine
 
 	void Ground::Render(Renderer* renderer)
 	{
-		renderer->SetCulling(PENGINE_CULL_NONE);
-		Vertex* verticesX;
-		int amountOfVerticesX;
-		quadTreeRootNode->GetAllChildrenVertices(verticesX, amountOfVerticesX);
+		Vertex* vertices;
+		int amountOfVertices;
+		quadTreeRootNode->GetAllChildrenVertices(vertices, amountOfVertices);
 
-		if (vertexBuffer != NULL)
+		// If the camera is too far away, the vertices array will be empty
+		if (amountOfVertices != 0)
 		{
-			delete vertexBuffer;
-		}
+			if (vertexBuffer != NULL)
+			{
+				delete vertexBuffer;
+			}
 
-		vertexBuffer = renderer->CreateVertexBuffer(verticesX, amountOfVerticesX);
+			vertexBuffer = renderer->CreateVertexBuffer(vertices, amountOfVertices);
+			renderer->SetActiveMatrix(location);
+			renderer->SetMaterial(material);
 
-		renderer->SetActiveMatrix(location);
-		renderer->SetMaterial(material);
+			renderer->DrawVertexBuffer(vertexBuffer);
+		}		
 
-		renderer->DrawVertexBuffer(vertexBuffer);
-
-		delete[] verticesX;
+		delete[] vertices;
 	}
 
 	QuadNode* Ground::CreateQuadTree(unsigned short depth)
