@@ -233,12 +233,30 @@ pengine::Scene* racer::RaceSceneFactory::CreateScene()
 
 	RaceScene* raceScene = new RaceScene();
 	raceScene->AddEntity(racecart);
-	raceScene->AddEntity(racecart1);
+	//raceScene->AddEntity(racecart1);
 	raceScene->AddCollidable(racecart);
-	raceScene->AddCollidable(racecart1);
+	//raceScene->AddCollidable(racecart1);
 	raceScene->AddEntity(track);
 	raceScene->SetGround(ground);
 	raceScene->SetSkybox(skybox);
+
+	racecart->AddCheckPoint(block0);
+	racecart->AddCheckPoint(block1);
+	racecart->AddCheckPoint(block2);
+	racecart->AddCheckPoint(block3);
+	racecart->AddCheckPoint(block4);
+	racecart->AddCheckPoint(block5);
+	racecart->AddCheckPoint(block6);
+	racecart->AddCheckPoint(block7);
+	racecart->AddCheckPoint(block8);
+	racecart->AddCheckPoint(block9);
+	racecart->AddCheckPoint(block10);
+	racecart->AddCheckPoint(block11);
+	racecart->AddCheckPoint(block12);
+	racecart->AddCheckPoint(block13);
+	racecart->AddCheckPoint(block14);
+	racecart->AddCheckPoint(block15);
+	racecart->AddCheckPoint(block0); // Finish block
 
 	raceScene->AddStaticCollidable(block0);
 	raceScene->AddStaticCollidable(block1);

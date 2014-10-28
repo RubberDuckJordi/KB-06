@@ -8,6 +8,7 @@
 #include "CollisionEffect.h"
 #include "Beam.h"
 #include "Vector3.h"
+#include "TrackBlock.h"
 
 namespace racer
 {
@@ -28,12 +29,16 @@ namespace racer
 		void Throttle(float percentage);
 		void Steer(float percentage);
 
+		void AddCheckPoint(TrackBlock* checkPoint);
+
 		// Collidable functions
 		void OnCollide(pengine::COLLISIONEFFECT* effect);
 		void InitCollisionBox();
 		pengine::Vector3* GetCollisionForceVector();
 		float GetCollisionMass();
 		std::string GetType();
+
+		std::list<TrackBlock*>* GetCheckPoints();
 
 		pengine::Matrix* GetRenderMatrix();
 		float GetRadius();
@@ -42,6 +47,7 @@ namespace racer
 	private:
 		float horsePower = 10;
 
+		std::list<TrackBlock*> checkPoints;
 		pengine::Object3D* model;
 		bool controllable;
 	};

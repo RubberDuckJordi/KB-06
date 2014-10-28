@@ -166,7 +166,18 @@ void racer::RaceCart::OnCollide(pengine::COLLISIONEFFECT* effect)
 	{
 		if (effect->type == "racer::TrackBlock")
 		{
-
+			if (checkPoints.size() > 0)
+			{
+				if (effect->collidable1 == checkPoints.front())
+				{
+					logger->Log(pengine::Logger::INFO, "Checkpoint reached");
+					checkPoints.pop_front();
+					if (checkPoints.size() == 0)
+					{
+						logger->Log(pengine::Logger::INFO, "Yay!");
+					}
+				}
+			}
 		}
 		else
 		{
@@ -269,4 +280,14 @@ float racer::RaceCart::GetRadius(){
 void racer::RaceCart::CacheToRenderer(pengine::Renderer* renderer)
 {
 	model->CacheToRenderer(renderer);
+}
+
+void racer::RaceCart::AddCheckPoint(TrackBlock* checkPoint)
+{
+	checkPoints.push_back(checkPoint);
+}
+
+std::list<racer::TrackBlock*>* racer::RaceCart::GetCheckPoints()
+{
+	return &checkPoints;
 }

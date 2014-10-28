@@ -152,6 +152,8 @@ namespace racer
 		rect->rotBackTopRight.z = sin(angle - RADIANS(rect->yaw)) * radius;
 
 		collisionBox = *rect;
+
+
 	}
 
 	std::string TrackBlock::GetType()

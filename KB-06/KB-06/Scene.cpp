@@ -47,6 +47,10 @@ namespace pengine
 		{
 			(*i)->InitCollisionBox();
 		}
+		for (std::list<Collidable*>::iterator i = staticCollidables.begin(); i != staticCollidables.end(); ++i)
+		{
+			(*i)->InitCollisionBox();
+		}
 
 		currentCamera->UpdateLogic(deltaTime, actions);
 
@@ -110,7 +114,7 @@ namespace pengine
 		{
 			for (std::list<Collidable*>::iterator j = staticCollidables.begin(); j != staticCollidables.end(); ++j)
 			{
-				if ((*i)->CheckCollision(*j))
+				if ((*j)->CheckCollision(*i))
 				{
 					// Only the movable object needs to receive an effect
 					// It only needs to know that there is a collision with a static object.
@@ -275,6 +279,10 @@ namespace pengine
 		mat.power = 50.0f;
 		renderer->SetMaterial(&mat);//WHY DOES THIS NOT MAKE THE WIREFRAME RED?!?!? >:( I DON'T UNDERSTAND!
 		for (auto i = collidables.begin(); i != collidables.end(); ++i)
+		{
+			(*i)->DrawCollidable(renderer);
+		}
+		for (auto i = staticCollidables.begin(); i != staticCollidables.end(); ++i)
 		{
 			(*i)->DrawCollidable(renderer);
 		}
