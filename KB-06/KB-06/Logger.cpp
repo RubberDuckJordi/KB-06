@@ -20,12 +20,15 @@ namespace pengine
 		outfile.open(fileName, std::ios_base::app);
 	}
 
-	Logger::Logger(){
+	Logger::~Logger()
+	{
+		outfile.close();
 	}
 
 	void Logger::Log(int logType, std::string messageString)
 	{
-		if (logLevel >= logType && logType > 0){
+		if (logLevel >= logType && logType > 0)
+		{
 			std::string entry = BuildLogEntry(logType, messageString);
 			PrintConsole(logType, entry);
 			outfile << entry << "\n";
@@ -38,16 +41,16 @@ namespace pengine
 		int color;
 		switch (logType) {
 		case INFO:
-			color = consoleColorCodeInfo;
+			color = gray;
 			break;
 		case DEBUG:
-			color = consoleColorCodeDebug;
+			color = white;
 			break;
 		case WARNING:
-			color = consoleColorCodeWarning;
+			color = yellow;
 			break;
 		case ERR:
-			color = consoleColorCodeError;
+			color = red;
 			break;
 		}
 		SetConsoleTextAttribute(consoleHandle, color);
@@ -77,10 +80,18 @@ namespace pengine
 
 		logEntry << std::left << std::setfill(' ') << std::setw(8);
 		switch (logType) {
-		case INFO: logEntry << "INFO";	break;
-		case DEBUG:logEntry << "DEBUG"; break;
-		case WARNING: logEntry << "WARNING"; break;
-		case ERR: logEntry << "ERROR"; break;
+		case INFO:
+			logEntry << "INFO";
+			break;
+		case DEBUG:
+			logEntry << "DEBUG";
+			break;
+		case WARNING:
+			logEntry << "WARNING";
+			break;
+		case ERR:
+			logEntry << "ERROR";
+			break;
 		}
 		logEntry << message;
 		return logEntry.str();

@@ -49,7 +49,8 @@ namespace pengine
 
 	bool DirectKeyboard::Update()
 	{
-		if (!deviceAcquired){
+		if (!deviceAcquired)
+		{
 			return false;
 		}
 
@@ -92,9 +93,11 @@ namespace pengine
 		{
 			int directInputKey = iterator->second;
 			// Only process range of keyboard values
-			if (directInputKey >= 0x01 && directInputKey <= 0xED){
+			if (directInputKey >= 0x01 && directInputKey <= 0xED)
+			{
 				long state = GetStateOf(directInputKey);
-				if (state != 0){
+				if (state != 0)
+				{
 					returnMap->insert(std::make_pair(iterator->first, state));
 				}
 			}

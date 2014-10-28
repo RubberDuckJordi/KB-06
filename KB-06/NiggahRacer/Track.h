@@ -28,5 +28,6 @@ private:
 	float offsetX = 0.0f;
 	float offsetY = 0.0f;
 	float offsetZ = 0.0f;
+	float trackBlockSize = 10;
 };
 #endif

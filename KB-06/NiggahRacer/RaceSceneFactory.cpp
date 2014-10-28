@@ -20,6 +20,7 @@ racer::RaceSceneFactory::~RaceSceneFactory()
 pengine::Scene* racer::RaceSceneFactory::CreateScene(std::vector<std::string>* sceneFile, pengine::ResourceManager* resourceManager)
 {
 	RaceScene* scene = new RaceScene();
+	Track* track = NULL;
 
 	std::string beginLine;
 
@@ -179,7 +180,7 @@ pengine::Scene* racer::RaceSceneFactory::CreateScene(std::vector<std::string>* s
 						racecart->AddAll(positionX, positionY, positionZ, translationX, translationY, translationZ, scalingX, scalingY, scalingZ);
 						racecart->SetObject3D(resourceManager->LoadXFile(&objectPath));
 
- 						scene->AddEntity(racecart);
+						scene->AddEntity(racecart);
 						scene->AddCollidable(racecart);
 						if (controllable == true)
 						{
@@ -188,7 +189,7 @@ pengine::Scene* racer::RaceSceneFactory::CreateScene(std::vector<std::string>* s
 					}
 				}
 			}
-			i = k+1;
+			i = k + 1;
 		}
 		else if (!beginLine.compare("<Skybox>"))
 		{
@@ -233,7 +234,7 @@ pengine::Scene* racer::RaceSceneFactory::CreateScene(std::vector<std::string>* s
 
 
 			}
-			i = k+1;
+			i = k + 1;
 		}
 		else if (!beginLine.compare("<Ground>"))
 		{
@@ -283,9 +284,62 @@ pengine::Scene* racer::RaceSceneFactory::CreateScene(std::vector<std::string>* s
 			}
 			i = k + 1;
 		}
-		else if (!beginLine.compare("<Track>"))
+		else if (!beginLine.compare("<TrackBlock>"))
 		{
-
+			std::string endLine;
+			for (j = i; j < sceneFile->size(); ++j)
+			{
+				endLine = sceneFile->at(j);
+				if (!endLine.compare("</TrackBlock>"))
+				{
+					std::string trackBlockType;
+					std::string trackBlockModel;
+					for (k = i + 1; k < j; ++k)
+					{
+						std::size_t startPosition;
+						std::size_t endPosition;
+						startPosition = sceneFile->at(k).find("<Type>");
+						endPosition = sceneFile->at(k).find("</Type>");
+						if (startPosition != std::string::npos || endPosition != std::string::npos)
+						{
+							startPosition = startPosition + 6;
+							trackBlockType = sceneFile->at(k).substr(startPosition, endPosition - startPosition);
+						}
+						startPosition = sceneFile->at(k).find("<Model>");
+						endPosition = sceneFile->at(k).find("</Model>");
+						if (startPosition != std::string::npos || endPosition != std::string::npos)
+						{
+							startPosition = startPosition + 7;
+							trackBlockModel = sceneFile->at(k).substr(startPosition, endPosition - startPosition);
+						}
+					}
+					if (trackBlockType.compare("") && trackBlockModel.compare(""))
+					{
+						if (track == NULL)
+						{
+							track = new Track();
+						}
+						if (!trackBlockType.compare("STRAIGHT"))
+						{
+							track->AddTrackBlock(TrackBlock::TYPE::STRAIGHT, resourceManager->LoadXFile(&trackBlockModel));
+						}
+						else if (!trackBlockType.compare("TURN_LEFT"))
+						{
+							track->AddTrackBlock(TrackBlock::TYPE::TURN_LEFT, resourceManager->LoadXFile(&trackBlockModel));
+						}
+						else if (!trackBlockType.compare("TURN_RIGHT"))
+						{
+							track->AddTrackBlock(TrackBlock::TYPE::TURN_RIGHT, resourceManager->LoadXFile(&trackBlockModel));
+						}
+					}
+				}
+			}
+			i = k + 1;
+		}
+		if (!track == NULL)
+		{
+			track->SetAll(-15, -1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 3.0f, 3.0f, 3.0f);
+			scene->AddEntity(track);
 		}
 
 	}

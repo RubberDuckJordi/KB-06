@@ -415,12 +415,13 @@ namespace pengine
 		rect.backTopRight = { maxx, maxy, minz };
 	}
 
-	void Object3D::ComputeBoundingBoxSphere(void)
+	void Object3D::ComputeBoundingBoxSphere()
 	{
 		_Low = _SkinnedVertices[0];
 		_High = _Low;
 		_Center = _Low;
-		_Radius = 0.0f;
+		_RadiusHorizontal = 0.0f;
+		_RadiusVertical = 0.0f;
 		for (int i = 0; i < _Mesh->_nVertices; i++)
 		{
 			if (_Low.x> _SkinnedVertices[i].x)
@@ -448,10 +449,12 @@ namespace pengine
 				_High.z = _SkinnedVertices[i].z;
 			}
 		}
-		_Center.x = _Low.x + (_High.x - _Low.x)*0.5f;
-		_Center.y = _Low.y + (_High.y - _Low.y)*0.5f;
-		_Center.z = _Low.z + (_High.z - _Low.z)*0.5f;
+		_Center.x = _Low.x + (_High.x - _Low.x) * 0.5f;
+		_Center.y = _Low.y + (_High.y - _Low.y) * 0.5f;
+		_Center.z = _Low.z + (_High.z - _Low.z) * 0.5f;
 
+
+		
 		/*logger->LogAll(Logger::DEBUG, "Object3D: ", "AABB Low: ", _Low[0], "x", _Low[1], "x", _Low[2]);
 		logger->LogAll(Logger::DEBUG, "Object3D: ", "AABB High: ", _High[0], "x", _High[1], "x", _High[2]);
 		logger->LogAll(Logger::DEBUG, "Object3D: ", "AABB Center: ", _Center[0], "x", _Center[1], "x", _Center[2]);*/

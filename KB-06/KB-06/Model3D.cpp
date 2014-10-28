@@ -172,7 +172,7 @@ namespace pengine
 		pBone->_MeshName = "ConcatMesh";
 		if (!pBone->_Bones.empty())
 		{
-			for (std::list<Bone*>::iterator i = pBone->_Bones.begin(); i != pBone->_Bones.end(); i++)
+			for (auto i = pBone->_Bones.begin(); i != pBone->_Bones.end(); i++)
 			{
 				UpdateBoneIndices(*i);
 			}
@@ -181,7 +181,7 @@ namespace pengine
 
 	AnimationSet* Model3D::FindAnimationSet(std::string &pText)
 	{
-		for (std::list<AnimationSet*>::iterator i = _AnimationSets.begin(); i != _AnimationSets.end(); i++)
+		for (auto i = _AnimationSets.begin(); i != _AnimationSets.end(); i++)
 		{
 			if ((*i)->IsName(pText) != 0)
 			{

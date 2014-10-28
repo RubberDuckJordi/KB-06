@@ -40,7 +40,10 @@ namespace pengine
 		//Elements for the AABB (_Low & _High)
 		//and bounding sphere (_Center & _Radius)
 		Vertex _Low, _High, _Center;
-		float _Radius;
+		/*!
+		The radius in object space, including any animations
+		*/
+		float _RadiusHorizontal, _RadiusVertical;
 		bool showWarning;
 	private:
 		Logger* logger;

@@ -7,6 +7,8 @@ namespace pengine
 
 	Skybox::Skybox()
 	{
+		i_buffer = NULL;
+		v_buffer = NULL;
 		amountOfVertices = 24;
 		amountOfIndices = 36;
 

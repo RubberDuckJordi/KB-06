@@ -76,7 +76,7 @@ namespace pengine
 						COLLISIONEFFECT* effect2 = new COLLISIONEFFECT();
 						effect2->collidable1 = (*j);
 						effect2->collidable2 = (*i);
-						
+
 						effect2->forceVectorX = vectorj->x - vector->x;
 						effect2->forceVectorY = vectorj->y - vector->y;
 						effect2->forceVectorZ = vectorj->z - vector->z;
@@ -96,6 +96,11 @@ namespace pengine
 		}
 
 		currentCamera->UpdateLogic(deltaTime, actions);
+
+		for (std::list<COLLISIONEFFECT*>::iterator i = collisionEffects.begin(); i != collisionEffects.end(); ++i)
+		{
+			delete (*i);
+		}
 
 		// Update ground level of detail
 

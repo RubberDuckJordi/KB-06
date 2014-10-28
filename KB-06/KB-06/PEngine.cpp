@@ -16,12 +16,23 @@ namespace pengine
 
 	PEngine::~PEngine()
 	{
+		inputManager->~InputManager();
 		delete inputManager;
+
+		windowManager->~WindowManager();
 		delete windowManager;
+
+		sceneManager->~SceneManager();
 		delete sceneManager;
+
+		renderer->~Renderer();
 		delete renderer;
+
+		resourceManager->~ResourceManager();
 		delete resourceManager;
+
 		logger->Log(Logger::INFO, "Destructed PEngine");
+		LoggerPool::GetInstance().~LoggerPool();
 	}
 
 	void PEngine::Init()
@@ -125,15 +136,16 @@ namespace pengine
 			GetSceneManager()->UpdateActiveScene(deltaTime, actions);
 
 			// Visuals
-			GetSceneManager()->RenderActiveScene(GetRenderer()); 
+			GetSceneManager()->RenderActiveScene(GetRenderer());
 			/*
 			GetAllWindows() is a thing not allowed in any kind of manager...
 			for (auto windowIt = GetWindowManager()->GetAllWindows()->begin(); windowIt != GetWindowManager()->GetAllWindows()->end(); ++windowIt)
 			{
-				GetRenderer()->PresentScene((*windowIt)->GetHWND());
+			GetRenderer()->PresentScene((*windowIt)->GetHWND());
 			}*/
 			GetRenderer()->PresentScene(GetWindowManager()->GetLastWindow()->GetHWND());
 			GetWindowManager()->PurgeClosedWindows();
+			delete actions;
 		}
 	}
 }

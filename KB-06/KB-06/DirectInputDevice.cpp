@@ -17,6 +17,8 @@ namespace pengine
 			delete dInputDevice;
 		}
 		InputDevice::~InputDevice();
+
+		delete actionMapping;
 	}
 
 	void DirectInputDevice::ReleaseDevice()
