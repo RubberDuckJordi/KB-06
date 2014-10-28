@@ -52,7 +52,7 @@ pengine::Scene* racer::RaceSceneFactory::CreateScene(std::vector<std::string>* s
 					int scalingY;
 					int scalingZ;
 
-					for (int k = i + 1; k < j - 1; ++k)
+					for (unsigned int k = i + 1; k < j - 1; ++k)
 					{
 						startPosition = sceneFile->at(k).find("<Type>");
 						endPosition = sceneFile->at(k).find("</Type>");
@@ -159,7 +159,7 @@ pengine::Scene* racer::RaceSceneFactory::CreateScene(std::vector<std::string>* s
 				{
 					std::string skyboxPath;
 
-					for (int k = i + 1; k < j - 1; ++k)
+					for (unsigned int k = i + 1; k < j - 1; ++k)
 					{
 						std::size_t startPosition;
 						std::size_t endPosition;
