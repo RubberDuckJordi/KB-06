@@ -240,22 +240,22 @@ pengine::Scene* racer::RaceSceneFactory::CreateScene()
 	raceScene->SetGround(ground);
 	raceScene->SetSkybox(skybox);
 
-	raceScene->AddCollidable(block0);/*
-	raceScene->AddCollidable(block1);
-	raceScene->AddCollidable(block2);
-	raceScene->AddCollidable(block3);
-	raceScene->AddCollidable(block4);
-	raceScene->AddCollidable(block5);
-	raceScene->AddCollidable(block6);
-	raceScene->AddCollidable(block7);
-	raceScene->AddCollidable(block8);
-	raceScene->AddCollidable(block9);
-	raceScene->AddCollidable(block10);
-	raceScene->AddCollidable(block11);
-	raceScene->AddCollidable(block12);
-	raceScene->AddCollidable(block13);
-	raceScene->AddCollidable(block14);
-	raceScene->AddCollidable(block15);*/
+	raceScene->AddStaticCollidable(block0);
+	raceScene->AddStaticCollidable(block1);
+	raceScene->AddStaticCollidable(block2);
+	raceScene->AddStaticCollidable(block3);
+	raceScene->AddStaticCollidable(block4);
+	raceScene->AddStaticCollidable(block5);
+	raceScene->AddStaticCollidable(block6);
+	raceScene->AddStaticCollidable(block7);
+	raceScene->AddStaticCollidable(block8);
+	raceScene->AddStaticCollidable(block9);
+	raceScene->AddStaticCollidable(block10);
+	raceScene->AddStaticCollidable(block11);
+	raceScene->AddStaticCollidable(block12);
+	raceScene->AddStaticCollidable(block13);
+	raceScene->AddStaticCollidable(block14);
+	raceScene->AddStaticCollidable(block15);
 
 	pengine::EntityCamera* camera = new pengine::EntityCamera();
 	camera->useInput = false;

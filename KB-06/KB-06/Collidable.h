@@ -35,6 +35,7 @@ namespace pengine
 		//BEAM collisionBox2;//unsafe, but for testing purposes...
 	protected:
 		BEAM collisionBox;
+
 	};
 }
 

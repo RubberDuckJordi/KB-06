@@ -164,6 +164,20 @@ namespace pengine
 		float yDelta = (deltaTime * movementVector.y);
 
 		AddPosition(xDelta, yDelta, zDelta);
+
+		previousRotation.x = rotation.x;
+		previousRotation.y = rotation.y;
+		previousRotation.z = rotation.z;
+
+		previousPosition.x = position.x;
+		previousPosition.y = position.y;
+		previousPosition.z = position.z;
+	}
+
+	void Entity::RevertPreviousMovementStep()
+	{
+		rotation = previousRotation;
+		position = previousPosition;
 	}
 
 	void Entity::AddRelativeForce(Vector3* p_vector)

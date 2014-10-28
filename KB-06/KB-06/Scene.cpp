@@ -33,6 +33,8 @@ namespace pengine
 			}
 		}
 
+		ProcessCollision();
+
 		for (std::list<Entity*>::iterator i = entities.begin(); i != entities.end(); ++i)
 		{
 			(*i)->UpdateLogic(deltaTime, actions);
@@ -46,10 +48,18 @@ namespace pengine
 			(*i)->InitCollisionBox();
 		}
 
+		currentCamera->UpdateLogic(deltaTime, actions);
+
+		// Update ground level of detail
+		UpdateLevelOfDetail();
+	}
+
+	void Scene::ProcessCollision()
+	{
 		// Keep track of effects, will be executed after this loop
 		std::list<COLLISIONEFFECT*> collisionEffects;
 
-		// Collision detection
+		// Collision detection for movable objects
 		for (std::list<Collidable*>::iterator i = collidables.begin(); i != collidables.end(); ++i)
 		{
 			for (std::list<Collidable*>::iterator j = collidables.begin(); j != collidables.end(); ++j)
@@ -67,6 +77,9 @@ namespace pengine
 						effect->forceVectorX = vector->x - vectorj->x;
 						effect->forceVectorY = vector->y - vectorj->y;
 						effect->forceVectorZ = vector->z - vectorj->z;
+						effect->isStatic = false;
+
+						effect->type = (*i)->GetType();
 
 						effect->mass = (*i)->GetCollisionMass();
 
@@ -82,9 +95,41 @@ namespace pengine
 						effect2->forceVectorZ = vectorj->z - vector->z;
 
 						effect2->mass = (*j)->GetCollisionMass();
+						effect2->isStatic = false;
+
+						effect2->type = (*j)->GetType();
 
 						collisionEffects.push_back(effect2);
 					}
+				}
+			}
+		}
+
+		// Collision detection for static objects
+		for (std::list<Collidable*>::iterator i = collidables.begin(); i != collidables.end(); ++i)
+		{
+			for (std::list<Collidable*>::iterator j = staticCollidables.begin(); j != staticCollidables.end(); ++j)
+			{
+				if ((*i)->CheckCollision(*j))
+				{
+					// Only the movable object needs to receive an effect
+					// It only needs to know that there is a collision with a static object.
+					COLLISIONEFFECT* effect = new COLLISIONEFFECT();
+					effect->collidable1 = (*j);
+					effect->collidable2 = (*i);
+					effect->type = (*j)->GetType();
+					effect->isStatic = true;
+
+					collisionEffects.push_back(effect);
+
+					// The static object might still want to know what collided
+					COLLISIONEFFECT* effect2 = new COLLISIONEFFECT();
+					effect2->collidable1 = (*i);
+					effect2->collidable2 = (*j);
+					effect2->type = (*i)->GetType();
+					effect2->isStatic = false;
+
+					collisionEffects.push_back(effect2);
 				}
 			}
 		}
@@ -95,15 +140,14 @@ namespace pengine
 			(*i)->collidable2->OnCollide(*i);
 		}
 
-		currentCamera->UpdateLogic(deltaTime, actions);
-
 		for (std::list<COLLISIONEFFECT*>::iterator i = collisionEffects.begin(); i != collisionEffects.end(); ++i)
 		{
 			delete (*i);
 		}
+	}
 
-		// Update ground level of detail
-
+	void Scene::UpdateLevelOfDetail()
+	{
 		// If the quadtree doesn't support the depth, set it to the quadtree's depth
 		// quadtree's depth can be set by the user when creating the scene
 		int levelOfDetailDepth = ground->GetQuadTreeDepth();
@@ -165,6 +209,11 @@ namespace pengine
 	void Scene::AddCollidable(Collidable* collidable)
 	{
 		collidables.push_back(collidable);
+	}
+
+	void Scene::AddStaticCollidable(Collidable* collidable)
+	{
+		staticCollidables.push_back(collidable);
 	}
 
 	void Scene::CacheToRenderer(Renderer* renderer)

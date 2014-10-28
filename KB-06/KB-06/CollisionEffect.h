@@ -24,6 +24,9 @@ namespace pengine
 
 		float mass;
 
+		// true if it does not move
+		bool isStatic;
+
 		std::string type;
 	};
 }

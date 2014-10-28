@@ -12,6 +12,8 @@ racer::RaceCart::~RaceCart()
 
 void racer::RaceCart::UpdateLogic(float deltaTime, std::map<pengine::Input, long>* actions)
 {
+	pengine::Entity::UpdateLogic(deltaTime, actions);
+
 	if (controllable)
 	{
 		typedef std::map<pengine::Input, long>::iterator it_type;
@@ -48,7 +50,8 @@ void racer::RaceCart::UpdateLogic(float deltaTime, std::map<pengine::Input, long
 		}
 	}
 
-	pengine::Entity::UpdateLogic(deltaTime, actions);
+	// Reset the flag so we can move again next tick
+	collides = false;
 }
 
 void racer::RaceCart::Render(pengine::Renderer* renderer)
@@ -91,11 +94,7 @@ void racer::RaceCart::Brake(float percentage)
 
 void racer::RaceCart::Throttle(float percentage)
 {
-	if (collides)
-	{
-		collides = false;
-	}
-	else
+	if (!collides)
 	{
 		pengine::Vector3 vector;
 		vector.z = horsePower * percentage;
@@ -105,11 +104,7 @@ void racer::RaceCart::Throttle(float percentage)
 
 void racer::RaceCart::Steer(float percentage)
 {
-	if (collides)
-	{
-		collides = false;
-	}
-	else
+	if (!collides)
 	{
 		pengine::Vector3 vector;
 		// Remember if we're driving forward or backwards, we need it to set the speed back later
@@ -160,11 +155,28 @@ void racer::RaceCart::Steer(float percentage)
 
 void racer::RaceCart::OnCollide(pengine::COLLISIONEFFECT* effect)
 {
-	if (effect->collidable1->GetType() == "racer::RaceCart")
+	if (!effect->isStatic)
 	{
 		collides = true;
+		RevertPreviousMovementStep();
 		pengine::Vector3* vector = new pengine::Vector3(effect->forceVectorX, effect->forceVectorY, effect->forceVectorZ);
 		AddForce(vector, effect->mass);
+	}
+	else
+	{
+		if (effect->type == "racer::TrackBlock")
+		{
+
+		}
+		else
+		{
+			// if there is collision with a static object, stand still immediately
+			collides = true;
+			movementVector.x = 0.0f;
+			movementVector.y = 0.0f;
+			movementVector.z = 0.0f;
+			RevertPreviousMovementStep();
+		}
 	}
 }
 

@@ -113,42 +113,42 @@ namespace racer
 
 		angle = atan2f(rect->frontBottomLeft.z, rect->frontBottomLeft.x);
 		rect->rotFrontBottomLeft.x = cos(angle - RADIANS(rect->yaw)) * radius;
-		rect->rotFrontBottomLeft.y = rect->frontBottomLeft.y - rect->height;//we aren't doing pitch rotation (yet...)
+		rect->rotFrontBottomLeft.y = rect->frontBottomLeft.y;//we aren't doing pitch rotation (yet...)
 		rect->rotFrontBottomLeft.z = sin(angle - RADIANS(rect->yaw)) * radius;
 
 		angle = atan2f(rect->frontBottomRight.z, rect->frontBottomRight.x);
 		rect->rotFrontBottomRight.x = cos(angle - RADIANS(rect->yaw)) * radius;
-		rect->rotFrontBottomRight.y = rect->frontBottomRight.y - rect->height;//we aren't doing pitch rotation (yet...)
+		rect->rotFrontBottomRight.y = rect->frontBottomRight.y;//we aren't doing pitch rotation (yet...)
 		rect->rotFrontBottomRight.z = sin(angle - RADIANS(rect->yaw)) * radius;
 
 		angle = atan2f(rect->backBottomLeft.z, rect->backBottomLeft.x);
 		rect->rotBackBottomLeft.x = cos(angle - RADIANS(rect->yaw)) * radius;
-		rect->rotBackBottomLeft.y = rect->backBottomLeft.y - rect->height;//we aren't doing pitch rotation (yet...)
+		rect->rotBackBottomLeft.y = rect->backBottomLeft.y;//we aren't doing pitch rotation (yet...)
 		rect->rotBackBottomLeft.z = sin(angle - RADIANS(rect->yaw)) * radius;
 
 		angle = atan2f(rect->backBottomRight.z, rect->backBottomRight.x);
 		rect->rotBackBottomRight.x = cos(angle - RADIANS(rect->yaw)) * radius;
-		rect->rotBackBottomRight.y = rect->backBottomRight.y - rect->height;//we aren't doing pitch rotation (yet...)
+		rect->rotBackBottomRight.y = rect->backBottomRight.y;//we aren't doing pitch rotation (yet...)
 		rect->rotBackBottomRight.z = sin(angle - RADIANS(rect->yaw)) * radius;
 
 		angle = atan2f(rect->frontTopLeft.z, rect->frontTopLeft.x);
 		rect->rotFrontTopLeft.x = cos(angle - RADIANS(rect->yaw)) * radius;
-		rect->rotFrontTopLeft.y = rect->frontTopLeft.y - rect->height;//we aren't doing pitch rotation (yet...)
+		rect->rotFrontTopLeft.y = rect->frontTopLeft.y - rect->height + 1.0f;//we aren't doing pitch rotation (yet...)
 		rect->rotFrontTopLeft.z = sin(angle - RADIANS(rect->yaw)) * radius;
 
 		angle = atan2f(rect->frontTopRight.z, rect->frontTopRight.x);
 		rect->rotFrontTopRight.x = cos(angle - RADIANS(rect->yaw)) * radius;
-		rect->rotFrontTopRight.y = rect->frontTopRight.y - rect->height;//we aren't doing pitch rotation (yet...)
+		rect->rotFrontTopRight.y = rect->frontTopRight.y - rect->height + 1.0f;//we aren't doing pitch rotation (yet...)
 		rect->rotFrontTopRight.z = sin(angle - RADIANS(rect->yaw)) * radius;
 
 		angle = atan2f(rect->backTopLeft.z, rect->backTopLeft.x);
 		rect->rotBackTopLeft.x = cos(angle - RADIANS(rect->yaw)) * radius;
-		rect->rotBackTopLeft.y = rect->backTopLeft.y - rect->height;//we aren't doing pitch rotation (yet...)
+		rect->rotBackTopLeft.y = rect->backTopLeft.y - rect->height + 1.0f;//we aren't doing pitch rotation (yet...)
 		rect->rotBackTopLeft.z = sin(angle - RADIANS(rect->yaw)) * radius;
 
 		angle = atan2f(rect->backTopRight.z, rect->backTopRight.x);
 		rect->rotBackTopRight.x = cos(angle - RADIANS(rect->yaw)) * radius;
-		rect->rotBackTopRight.y = rect->backTopRight.y - rect->height;//we aren't doing pitch rotation (yet...)
+		rect->rotBackTopRight.y = rect->backTopRight.y - rect->height + 1.0f;//we aren't doing pitch rotation (yet...)
 		rect->rotBackTopRight.z = sin(angle - RADIANS(rect->yaw)) * radius;
 
 		collisionBox = *rect;
