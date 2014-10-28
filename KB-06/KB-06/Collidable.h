@@ -27,6 +27,8 @@ namespace pengine
 		virtual bool CheckCollision(Collidable*);
 		// Draws the collision box for debugging
 		virtual void DrawCollidable(Renderer*);
+		// Type to know what kind of object has collided
+		virtual std::string GetType() = 0;
 
 		//BEAM collisionBox;//unsafe, but for testing purposes...
 

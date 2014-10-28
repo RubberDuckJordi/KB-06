@@ -400,25 +400,9 @@ namespace pengine
 		rect.y = _Skeleton->_Bone->_MatrixPos[13];
 		rect.z = _Skeleton->_Bone->_MatrixPos[14];
 
-		// In our first iteration of collision, we only worked with cubes, no rectangles
-		float largestMeasurement = maxx - minx;
-		if (maxy - miny > largestMeasurement)
-		{
-			largestMeasurement = maxy - miny;
-		}
-		if (maxz - minz > largestMeasurement)
-		{
-			largestMeasurement = maxz - minz;
-		}
-
 		rect.width = maxx - minx;
 		rect.height = maxy - miny;
 		rect.depth = maxz - minz;
-
-		rect.width = largestMeasurement;
-		rect.height = largestMeasurement;
-		rect.depth = largestMeasurement;
-
 
 		rect.frontBottomLeft = { minx, miny, maxz };
 		rect.frontBottomRight = { maxx, miny, maxz };

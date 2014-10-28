@@ -13,11 +13,12 @@ namespace racer
 		~RaceScene();
 		void Update(float deltaTime, std::map<pengine::Input, long>* actions);
 		void SetRaceCart(pengine::Entity*);
-		 void RenderToTexture(int texture, pengine::Renderer* renderer);
+		void RenderToTexture(int texture, pengine::Renderer* renderer);
 		void Render(pengine::Renderer* renderer);
 
 	private:
 		pengine::Entity* raceCart;
+		float elapsedTime;
 	};
 }
 

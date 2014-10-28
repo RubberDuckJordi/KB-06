@@ -3,6 +3,7 @@
 
 #include "Collidable.h"
 #include "Vector3.h"
+#include <string>
 
 namespace pengine
 {
@@ -22,6 +23,8 @@ namespace pengine
 		float forceVectorZ;
 
 		float mass;
+
+		std::string type;
 	};
 }
 

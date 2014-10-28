@@ -160,9 +160,12 @@ void racer::RaceCart::Steer(float percentage)
 
 void racer::RaceCart::OnCollide(pengine::COLLISIONEFFECT* effect)
 {
-	collides = true;
-	pengine::Vector3* vector = new pengine::Vector3(effect->forceVectorX, effect->forceVectorY, effect->forceVectorZ);
-	AddForce(vector, effect->mass);
+	if (effect->collidable1->GetType() == "racer::RaceCart")
+	{
+		collides = true;
+		pengine::Vector3* vector = new pengine::Vector3(effect->forceVectorX, effect->forceVectorY, effect->forceVectorZ);
+		AddForce(vector, effect->mass);
+	}
 }
 
 void racer::RaceCart::InitCollisionBox()
@@ -249,4 +252,9 @@ float racer::RaceCart::GetRadius(){
 void racer::RaceCart::CacheToRenderer(pengine::Renderer* renderer)
 {
 	model->CacheToRenderer(renderer);
+}
+
+std::string racer::RaceCart::GetType()
+{
+	return "racer::RaceCart";
 }

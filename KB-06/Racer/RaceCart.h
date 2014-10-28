@@ -29,10 +29,12 @@ namespace racer
 		void Steer(float percentage);
 
 		// Collidable functions
-		void OnCollide(pengine::COLLISIONEFFECT*);
+		void OnCollide(pengine::COLLISIONEFFECT* effect);
 		void InitCollisionBox();
 		pengine::Vector3* GetCollisionForceVector();
 		float GetCollisionMass();
+		std::string GetType();
+
 		pengine::Matrix* GetRenderMatrix();
 		float GetRadius();
 
