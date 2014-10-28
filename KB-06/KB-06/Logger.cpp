@@ -52,6 +52,9 @@ namespace pengine
 		case ERR:
 			color = red;
 			break;
+		default:
+			color = 15;
+			break;
 		}
 		SetConsoleTextAttribute(consoleHandle, color);
 
