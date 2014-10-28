@@ -107,13 +107,13 @@ namespace pengine
 
 	void PEngine::GameLoop()
 	{
-		std::chrono::high_resolution_clock::time_point currentTime = std::chrono::high_resolution_clock::now();
+		double currentTime = clock();
 		GetRenderer()->SetLights();
 		while (GetWindowManager()->HasActiveWindow())
 		{
-			std::chrono::high_resolution_clock::time_point newTime = std::chrono::high_resolution_clock::now();
-			float deltaTime = std::chrono::duration_cast<std::chrono::duration<float>>(newTime - currentTime).count();
-			currentTime = std::chrono::high_resolution_clock::now();
+			double newTime = clock();
+			float deltaTime = (newTime - currentTime) / CLOCKS_PER_SEC;
+			currentTime = clock();
 
 			const int fps = int(1 / deltaTime);
 
