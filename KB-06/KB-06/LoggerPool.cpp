@@ -5,6 +5,17 @@ namespace pengine
 {
 	LoggerPool::LoggerPool()
 	{
+		defaultLogFile = "PEngine";
+		logExtension = ".log";
+	}
+
+	LoggerPool::~LoggerPool()
+	{
+		for (auto it = pool.begin(); it != pool.end(); ++it)
+		{
+			(*it).second->~Logger();
+			delete (*it).second;
+		}
 	}
 
 	LoggerPool& LoggerPool::GetInstance()
@@ -13,14 +24,18 @@ namespace pengine
 		return instance;
 	}
 
-	Logger* LoggerPool::GetLogger(){
+	Logger* LoggerPool::GetLogger()
+	{
 		return GetLogger(defaultLogFile);
 	}
 
-	Logger* LoggerPool::GetLogger(std::string fileName){
-		if (pool.size() == 0){
+	Logger* LoggerPool::GetLogger(std::string fileName)
+	{
+		if (pool.size() == 0)
+		{
 			RemoveLogs(); // Remove the old logs
 		}
+
 		for (auto poolItem : pool)
 		{
 			if (poolItem.first == fileName)
@@ -28,7 +43,7 @@ namespace pengine
 				return poolItem.second;
 			}
 		}
-		Logger* newLogger = new Logger(fileName+logExtension);
+		Logger* newLogger = new Logger(fileName + logExtension);
 		pool[fileName] = newLogger;
 		return newLogger;
 	}

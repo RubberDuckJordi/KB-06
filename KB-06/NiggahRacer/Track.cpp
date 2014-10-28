@@ -66,14 +66,17 @@ void Track::AddTrackBlock(TrackBlock::TYPE trackBlockType, pengine::Object3D* mo
 		
 		switch(direction)
 		{
-		case NORTH:	z -= 10; break;
-		case EAST: x -= 10;  break;
-		case SOUTH: z += 10; break;
-		case WEST: x += 10;	break;
+		case NORTH:	z -= trackBlockSize; break;
+		case EAST: x -= trackBlockSize;  break;
+		case SOUTH: z += trackBlockSize; break;
+		case WEST: x += trackBlockSize;	break;
 		}
 
+		if (abs(x) > radius - trackBlockSize) radius = abs(x) + trackBlockSize;
+		if (abs(z) > radius - trackBlockSize) radius = abs(z) + trackBlockSize;
+
 		int newDirectionValue = direction;
-		yaw  = direction * 90;
+		yaw = direction * 90;
 
 		switch (trackBlockType)
 		{

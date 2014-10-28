@@ -81,6 +81,7 @@ namespace pengine
 			logger->Log(Logger::INFO, "InputManager: Mouse polling failed");
 			return false;
 		}
+
 		if (FAILED(dInputDevice->GetDeviceState(sizeof(DIMOUSESTATE2), (LPVOID)&dIMouseState)))
 		{
 			result = false;

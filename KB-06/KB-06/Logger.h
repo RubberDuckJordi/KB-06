@@ -13,9 +13,6 @@ namespace pengine {
 	class Logger
 	{
 	public:
-		~Logger();
-		Logger();
-		Logger(std::string fileName);
 		static enum LogLevel{
 			NONE = 0,
 			ERR = 1,
@@ -24,21 +21,20 @@ namespace pengine {
 			INFO = 4
 		};
 
+		Logger(std::string fileName);
+		~Logger();
+
 		void Log(int logType, std::string text);
 		void LogMemoryDump(int logType, void* const p_address, const int p_size, char* const p_name);
 		void SetLogLevel(int logLevel);
 		void RemoveLogs();
 
 	private:
-		std::ofstream outfile;
 		void PrintConsole(int logType, std::string entry);
 		std::string BuildLogEntry(int logType, std::string messasge);
 
-		int logLevel = INFO;
-		int consoleColorCodeInfo = gray;
-		int consoleColorCodeDebug = white;
-		int consoleColorCodeWarning = yellow;
-		int consoleColorCodeError = red;
+		std::ofstream outfile;
+		int logLevel;
 		HANDLE consoleHandle;
 
 		enum Consolecolor
