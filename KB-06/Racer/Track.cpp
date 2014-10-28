@@ -48,30 +48,48 @@ void Track::AddTrackBlock(TrackBlock::TYPE trackBlockType, pengine::Object3D* mo
 		y = prevTrackBLock->GetPositionOffset()->y;
 		z = prevTrackBLock->GetPositionOffset()->z;
 
+		float trackBlockSize = prevTrackBLock->GetMaxSquareSize();
+
+
 		switch (direction)
 		{
-		case NORTH:	z -= trackBlockSize; break;
-		case EAST: x -= trackBlockSize;  break;
-		case SOUTH: z += trackBlockSize; break;
-		case WEST: x += trackBlockSize;	break;
+		case NORTH:
+			z -= trackBlockSize;
+			break;
+		case EAST:
+			x -= trackBlockSize;
+			break;
+		case SOUTH:
+			z += trackBlockSize;
+			break;
+		case WEST:
+			x += trackBlockSize;
+			break;
 		}
-		if (abs(x) > radius - trackBlockSize) radius = abs(x) + trackBlockSize;
-		if (abs(z) > radius - trackBlockSize) radius = abs(z) + trackBlockSize;
+		if (abs(x) > radius - trackBlockSize)
+		{
+			radius = abs(x) + trackBlockSize;
+		}
+		if (abs(z) > radius - trackBlockSize)
+		{
+			radius = abs(z) + trackBlockSize;
+		}
 
 		int newDirectionValue = direction;
 		yaw = direction * 90;
 
 		switch (trackBlockType)
 		{
-		case TrackBlock::TYPE::TURN_RIGHT:	newDirectionValue += 1;
-			yaw += 90;
+		case TrackBlock::TYPE::TURN_RIGHT:
+			newDirectionValue += 1;
+			yaw -= 90;
 			if (newDirectionValue > 3)
 			{
 				newDirectionValue -= 4;
 			}
 			break;
 		case TrackBlock::TYPE::TURN_LEFT:
-			yaw += 180;
+			//yaw += 0;
 			newDirectionValue -= 1;
 			if (newDirectionValue < 0)
 			{
@@ -81,10 +99,18 @@ void Track::AddTrackBlock(TrackBlock::TYPE trackBlockType, pengine::Object3D* mo
 		}
 		switch (newDirectionValue)
 		{
-		case 0: direction = NORTH; break;
-		case 1: direction = EAST; break;
-		case 2: direction = SOUTH; break;
-		case 3: direction = WEST; break;
+		case 0:
+			direction = NORTH;
+			break;
+		case 1:
+			direction = EAST;
+			break;
+		case 2:
+			direction = SOUTH;
+			break;
+		case 3:
+			direction = WEST;
+			break;
 		}
 	}
 	trackBlocks.push_back(new TrackBlock(x, y, z, yaw, trackBlockType, direction, model));

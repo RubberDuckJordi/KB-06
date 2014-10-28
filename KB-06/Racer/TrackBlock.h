@@ -37,10 +37,10 @@ public:
 	void SetRotation(float yaw, float pitch, float roll);
 	void SetRotationOffset(float yaw, float pitch, float roll);
 	pengine::Vector3* GetRotationOffset();
-	
-	float GetRadius();
 
 	void CacheToRenderer(pengine::Renderer* renderer);
+
+	float GetMaxSquareSize();
 private:
 	pengine::Vector3 positionOffset;
 	pengine::Vector3 rotationOffset;

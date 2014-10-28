@@ -38,7 +38,8 @@ void TrackBlock::SetPosition(float x, float y, float z)
 	Entity::SetPosition(x + positionOffset.x * scale.x, y + positionOffset.y * scale.y, z + positionOffset.z * scale.z);
 }
 
-void TrackBlock::SetPositionOffset(float x, float y, float z){
+void TrackBlock::SetPositionOffset(float x, float y, float z)
+{
 	positionOffset.x = x;
 	positionOffset.y = y;
 	positionOffset.z = z;
@@ -61,15 +62,24 @@ void TrackBlock::SetRotationOffset(float yaw, float pitch, float roll)
 	rotationOffset.z = roll;
 }
 
-pengine::Vector3* TrackBlock::GetRotationOffset(){
+pengine::Vector3* TrackBlock::GetRotationOffset()
+{
 	return &rotationOffset;
-}
-
-float TrackBlock::GetRadius(){
-	return 10.0f;
 }
 
 void TrackBlock::CacheToRenderer(pengine::Renderer* renderer)
 {
 	model->CacheToRenderer(renderer);
+}
+
+float TrackBlock::GetMaxSquareSize()
+{
+	pengine::BEAM box;
+	model->CreateCollisionBox(box);
+	float max = box.width;
+	if (max < box.height)
+	{
+		max = box.height;
+	}
+	return max;
 }
