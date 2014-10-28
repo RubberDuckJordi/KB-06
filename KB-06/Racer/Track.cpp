@@ -1,118 +1,125 @@
 #include "Track.h"
-Track::Track()
+
+namespace racer
 {
-}
-Track::~Track()
-{
-}
-void Track::SetAll(float x, float y, float z, float yaw, float pitch, float roll, float scaleX, float scaleY, float scaleZ)
-{
-	Entity::SetAll(x, y, z, yaw, pitch, roll, scaleX, scaleY, scaleZ);
-	for (auto iterator = trackBlocks.begin(); iterator != trackBlocks.end(); ++iterator)
+	Track::Track()
 	{
-		(*iterator)->SetAll(x, y, z, yaw, pitch, roll, scaleX, scaleY, scaleZ);
 	}
-}
-void Track::Render(pengine::Renderer* renderer)
-{
-	for (auto iterator = trackBlocks.begin(); iterator != trackBlocks.end(); ++iterator)
+	Track::~Track()
 	{
-		(*iterator)->Render(renderer);
 	}
-}
-void Track::AddTrackBlock(TrackBlock* trackBlock)
-{
-	trackBlocks.push_back(trackBlock);
-}
-void Track::AddTrackBlock(TrackBlock::TYPE trackBlockType, pengine::Object3D* model)
-{
-	Direction direction = Direction::NORTH;
-	float x = 0;
-	float y = 0;
-	float z = 0;
-	float yaw = 0;
-	if (trackBlocks.size() > 0)
+	void Track::SetAll(float x, float y, float z, float yaw, float pitch, float roll, float scaleX, float scaleY, float scaleZ)
 	{
-		TrackBlock* prevTrackBLock = trackBlocks.back();
-		direction = prevTrackBLock->GetDirection();
-		x = prevTrackBLock->GetPositionOffset()->x;
-		y = prevTrackBLock->GetPositionOffset()->y;
-		z = prevTrackBLock->GetPositionOffset()->z;
-		float trackBlockSize = prevTrackBLock->GetMaxSquareSize();
-		switch (direction)
+		Entity::SetAll(x, y, z, yaw, pitch, roll, scaleX, scaleY, scaleZ);
+		for (auto iterator = trackBlocks.begin(); iterator != trackBlocks.end(); ++iterator)
 		{
-		case NORTH:
-			z -= trackBlockSize;
-			break;
-		case EAST:
-			x -= trackBlockSize;
-			break;
-		case SOUTH:
-			z += trackBlockSize;
-			break;
-		case WEST:
-			x += trackBlockSize;
-			break;
+			(*iterator)->SetAll(x, y, z, yaw, pitch, roll, scaleX, scaleY, scaleZ);
 		}
-		if (abs(x) > radius - trackBlockSize)
+	}
+	void Track::Render(pengine::Renderer* renderer)
+	{
+		for (auto iterator = trackBlocks.begin(); iterator != trackBlocks.end(); ++iterator)
 		{
-			radius = abs(x) + trackBlockSize;
+			(*iterator)->Render(renderer);
 		}
-		if (abs(z) > radius - trackBlockSize)
+	}
+	void Track::AddTrackBlock(TrackBlock* trackBlock)
+	{
+		trackBlocks.push_back(trackBlock);
+	}
+	TrackBlock* Track::AddTrackBlock(TrackBlock::TYPE trackBlockType, pengine::Object3D* model)
+	{
+		Direction direction = Direction::NORTH;
+		float x = 0;
+		float y = 0;
+		float z = 0;
+		float yaw = 0;
+		if (trackBlocks.size() > 0)
 		{
-			radius = abs(z) + trackBlockSize;
-		}
-		int newDirectionValue = direction;
-		yaw = direction * 90;
-		switch (trackBlockType)
-		{
-		case TrackBlock::TYPE::TURN_RIGHT:
-			newDirectionValue += 1;
-			yaw -= 90;
-			if (newDirectionValue > 3)
+			TrackBlock* prevTrackBLock = trackBlocks.back();
+			direction = prevTrackBLock->GetDirection();
+			x = prevTrackBLock->GetPositionOffset()->x;
+			y = prevTrackBLock->GetPositionOffset()->y;
+			z = prevTrackBLock->GetPositionOffset()->z;
+			float trackBlockSize = prevTrackBLock->GetMaxSquareSize();
+			switch (direction)
 			{
-				newDirectionValue -= 4;
+			case NORTH:
+				z -= trackBlockSize;
+				break;
+			case EAST:
+				x -= trackBlockSize;
+				break;
+			case SOUTH:
+				z += trackBlockSize;
+				break;
+			case WEST:
+				x += trackBlockSize;
+				break;
 			}
-			break;
-		case TrackBlock::TYPE::TURN_LEFT:
-			//yaw += 0;
-			newDirectionValue -= 1;
-			if (newDirectionValue < 0)
+			if (abs(x) > radius - trackBlockSize)
 			{
-				newDirectionValue += 4;
+				radius = abs(x) + trackBlockSize;
 			}
-			break;
+			if (abs(z) > radius - trackBlockSize)
+			{
+				radius = abs(z) + trackBlockSize;
+			}
+			int newDirectionValue = direction;
+			yaw = direction * 90;
+			switch (trackBlockType)
+			{
+			case TrackBlock::TYPE::TURN_RIGHT:
+				newDirectionValue += 1;
+				yaw -= 90;
+				if (newDirectionValue > 3)
+				{
+					newDirectionValue -= 4;
+				}
+				break;
+			case TrackBlock::TYPE::TURN_LEFT:
+				//yaw += 0;
+				newDirectionValue -= 1;
+				if (newDirectionValue < 0)
+				{
+					newDirectionValue += 4;
+				}
+				break;
+			}
+			switch (newDirectionValue)
+			{
+			case 0:
+				direction = NORTH;
+				break;
+			case 1:
+				direction = EAST;
+				break;
+			case 2:
+				direction = SOUTH;
+				break;
+			case 3:
+				direction = WEST;
+				break;
+			}
 		}
-		switch (newDirectionValue)
-		{
-		case 0:
-			direction = NORTH;
-			break;
-		case 1:
-			direction = EAST;
-			break;
-		case 2:
-			direction = SOUTH;
-			break;
-		case 3:
-			direction = WEST;
-			break;
-		}
+		TrackBlock* block = new TrackBlock(x, y, z, yaw, trackBlockType, direction, model);
+		trackBlocks.push_back(block);
+
+		return block;
 	}
-	trackBlocks.push_back(new TrackBlock(x, y, z, yaw, trackBlockType, direction, model));
-}
-float Track::GetRadius()
-{
-	float highestScale = 0;
-	if (scale.x > highestScale) highestScale = scale.x;
-	if (scale.y > highestScale) highestScale = scale.y;
-	if (scale.z > highestScale) highestScale = scale.z;
-	return radius*highestScale;
-}
-void Track::CacheToRenderer(pengine::Renderer* renderer)
-{
-	for (auto it = trackBlocks.begin(); it != trackBlocks.end(); ++it)
+	float Track::GetRadius()
 	{
-		(*it)->CacheToRenderer(renderer);
+		float highestScale = 0;
+		if (scale.x > highestScale) highestScale = scale.x;
+		if (scale.y > highestScale) highestScale = scale.y;
+		if (scale.z > highestScale) highestScale = scale.z;
+		return radius*highestScale;
+	}
+	void Track::CacheToRenderer(pengine::Renderer* renderer)
+	{
+		for (auto it = trackBlocks.begin(); it != trackBlocks.end(); ++it)
+		{
+			(*it)->CacheToRenderer(renderer);
+		}
 	}
 }

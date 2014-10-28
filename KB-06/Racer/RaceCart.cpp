@@ -234,6 +234,11 @@ void racer::RaceCart::InitCollisionBox()
 	collisionBox = *rect;
 }
 
+std::string racer::RaceCart::GetType()
+{
+	return "racer::RaceCart";
+}
+
 pengine::Vector3* racer::RaceCart::GetCollisionForceVector()
 {
 	return &movementVector;
@@ -252,9 +257,4 @@ float racer::RaceCart::GetRadius(){
 void racer::RaceCart::CacheToRenderer(pengine::Renderer* renderer)
 {
 	model->CacheToRenderer(renderer);
-}
-
-std::string racer::RaceCart::GetType()
-{
-	return "racer::RaceCart";
 }
