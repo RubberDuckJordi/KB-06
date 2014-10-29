@@ -3,6 +3,7 @@
 racer::RaceCart::RaceCart()
 {
 	collides = false;
+	isOnTrack = false;
 }
 
 racer::RaceCart::~RaceCart()
@@ -12,43 +13,54 @@ racer::RaceCart::~RaceCart()
 
 void racer::RaceCart::UpdateLogic(float deltaTime, std::map<pengine::Input, long>* actions)
 {
-	if (controllable)
-	{
-		typedef std::map<pengine::Input, long>::iterator it_type;
-		for (it_type iterator = (*actions).begin(); iterator != (*actions).end(); ++iterator)
-		{
-			float speed = static_cast<float>(iterator->second);
-			pengine::Vector3 vector = *new pengine::Vector3(0.0f, 0.0f, 0.0f); // Must be declared before the switch
+	pengine::Entity::UpdateLogic(deltaTime, actions);
 
-			switch (iterator->first)
+	if (!isOnTrack)
+	{
+		AddForce(new pengine::Vector3(0.0f, -50.0f * deltaTime * mass, 0.0f));
+	}
+	else
+	{
+		if (controllable)
+		{
+			typedef std::map<pengine::Input, long>::iterator it_type;
+			for (it_type iterator = (*actions).begin(); iterator != (*actions).end(); ++iterator)
 			{
-			case pengine::Input::KEY_S:
-				Throttle(-0.5f * deltaTime);
-				break;
-			case pengine::Input::KEY_W:
-				Throttle(1.0f * deltaTime);
-				break;
-			case pengine::Input::KEY_D:
-				Steer(3.0f * deltaTime);
-				break;
-			case pengine::Input::KEY_A:
-				Steer(-3.0f * deltaTime);
-				break;
-			case pengine::Input::KEY_0:
-				// Imaginary collision
-				vector.z = -5.0f;
-				AddRelativeForce(&vector);
-				break;
-			case pengine::Input::KEY_1:
-				// print location
-				logger->Log(pengine::Logger::DEBUG, std::to_string(position.x) + ", " + std::to_string(position.z));
-			default:
-				break;
+				float speed = static_cast<float>(iterator->second);
+				pengine::Vector3 vector = *new pengine::Vector3(0.0f, 0.0f, 0.0f); // Must be declared before the switch
+
+				switch (iterator->first)
+				{
+				case pengine::Input::KEY_S:
+					Throttle(-0.5f * deltaTime);
+					break;
+				case pengine::Input::KEY_W:
+					Throttle(1.0f * deltaTime);
+					break;
+				case pengine::Input::KEY_D:
+					Steer(3.0f * deltaTime);
+					break;
+				case pengine::Input::KEY_A:
+					Steer(-3.0f * deltaTime);
+					break;
+				case pengine::Input::KEY_0:
+					// Imaginary collision
+					vector.z = -5.0f;
+					AddRelativeForce(&vector);
+					break;
+				case pengine::Input::KEY_1:
+					// print location
+					logger->Log(pengine::Logger::DEBUG, std::to_string(position.x) + ", " + std::to_string(position.z));
+				default:
+					break;
+				}
 			}
 		}
 	}
 
-	pengine::Entity::UpdateLogic(deltaTime, actions);
+	// Reset the flags so we can determine them again next tick
+	collides = false;
+	isOnTrack = false;
 }
 
 void racer::RaceCart::Render(pengine::Renderer* renderer)
@@ -91,11 +103,7 @@ void racer::RaceCart::Brake(float percentage)
 
 void racer::RaceCart::Throttle(float percentage)
 {
-	if (collides)
-	{
-		collides = false;
-	}
-	else
+	if (!collides)
 	{
 		pengine::Vector3 vector;
 		vector.z = horsePower * percentage;
@@ -105,11 +113,7 @@ void racer::RaceCart::Throttle(float percentage)
 
 void racer::RaceCart::Steer(float percentage)
 {
-	if (collides)
-	{
-		collides = false;
-	}
-	else
+	if (!collides)
 	{
 		pengine::Vector3 vector;
 		// Remember if we're driving forward or backwards, we need it to set the speed back later
@@ -160,9 +164,42 @@ void racer::RaceCart::Steer(float percentage)
 
 void racer::RaceCart::OnCollide(pengine::COLLISIONEFFECT* effect)
 {
-	collides = true;
-	pengine::Vector3* vector = new pengine::Vector3(effect->forceVectorX, effect->forceVectorY, effect->forceVectorZ);
-	AddForce(vector, effect->mass);
+	if (!effect->isStatic)
+	{
+		collides = true;
+		RevertPreviousMovementStep();
+		pengine::Vector3* vector = new pengine::Vector3(effect->forceVectorX, effect->forceVectorY, effect->forceVectorZ);
+		AddForce(vector, effect->mass);
+	}
+	else
+	{
+		if (effect->type == "racer::TrackBlock")
+		{
+			isOnTrack = true;
+
+			if (checkPoints.size() > 0)
+			{
+				if (effect->collidable1 == checkPoints.front())
+				{
+					logger->Log(pengine::Logger::INFO, "Checkpoint reached");
+					checkPoints.pop_front();
+					if (checkPoints.size() == 0)
+					{
+						logger->Log(pengine::Logger::INFO, "Yay!");
+					}
+				}
+			}
+		}
+		else
+		{
+			// if there is collision with a static object, stand still immediately
+			collides = true;
+			movementVector.x = 0.0f;
+			movementVector.y = 0.0f;
+			movementVector.z = 0.0f;
+			RevertPreviousMovementStep();
+		}
+	}
 }
 
 void racer::RaceCart::InitCollisionBox()
@@ -231,6 +268,11 @@ void racer::RaceCart::InitCollisionBox()
 	collisionBox = *rect;
 }
 
+std::string racer::RaceCart::GetType()
+{
+	return "racer::RaceCart";
+}
+
 pengine::Vector3* racer::RaceCart::GetCollisionForceVector()
 {
 	return &movementVector;
@@ -249,4 +291,19 @@ float racer::RaceCart::GetRadius(){
 void racer::RaceCart::CacheToRenderer(pengine::Renderer* renderer)
 {
 	model->CacheToRenderer(renderer);
+}
+
+void racer::RaceCart::AddCheckPoint(TrackBlock* checkPoint)
+{
+	checkPoints.push_back(checkPoint);
+}
+
+std::list<racer::TrackBlock*>* racer::RaceCart::GetCheckPoints()
+{
+	return &checkPoints;
+}
+
+bool racer::RaceCart::IsOnTrack()
+{
+	return isOnTrack;
 }

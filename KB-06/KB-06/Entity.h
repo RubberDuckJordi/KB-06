@@ -48,8 +48,17 @@ namespace pengine
 		virtual void UpdateLogic(float deltaTime, std::map<Input, long>* actions);
 		
 		virtual float GetRadius();
+
+		// Used for reverting movement when two collision boxes hit eachother. They will get stuck otherwise.
+		void RevertPreviousMovementStep();
+
 	protected:
 		void ApplyFriction(float friction);
+
+		// Used in Entity::RevertPreviousMovementStep()
+		Vector3 previousPosition;
+		Vector3 previousRotation;
+
 		// used to prevent collidables from moving into eachother, movement must be disabled for one tick
 		boolean collides; 
 

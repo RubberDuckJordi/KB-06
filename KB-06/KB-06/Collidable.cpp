@@ -16,8 +16,6 @@ namespace pengine
 	{
 		BEAM* other = collidable->GetCollisionBox();
 
-		Logger* logger = LoggerPool::GetInstance().GetLogger("CollisionSpam");
-
 		float x1 = collisionBox.x;
 		float z1 = collisionBox.z;
 

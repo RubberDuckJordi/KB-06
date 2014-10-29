@@ -9,7 +9,7 @@ namespace pengine
 
 	TextureWrapper::~TextureWrapper()
 	{
-
+		delete texture;
 	}
 
 	void TextureWrapper::SetTexture(LPDIRECT3DTEXTURE9* _texture)

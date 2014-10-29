@@ -24,6 +24,7 @@ namespace pengine
 		virtual void Update(float deltaTime, std::map<Input, long>* actions);
 		void AddEntity(Entity* entity);
 		void AddCollidable(Collidable* collidable);
+		void AddStaticCollidable(Collidable* collidable);
 		/*!
 		This function is called right after loading all the resources, 
 		allowing the skybox/ground/entities to cache their resources to
@@ -50,10 +51,16 @@ namespace pengine
 
 	protected:
 		void GoDeeper(QuadNode* node, int chunkStartX, int chunkStartZ, int chunkEndX, int chunkEndZ, int depth);
+		void ProcessCollision();
+		void UpdateLevelOfDetail();
 
 		bool wireFrameActivated;
 		std::list<Entity*> entities;
+		
+		// Lists are separated for performance, static collidables don't need to be checked agaist eachother.
 		std::list<Collidable*> collidables;
+		std::list<Collidable*> staticCollidables;
+
 		EntityCamera* currentCamera;
 		Logger* logger;
 		SceneCallback* callback;

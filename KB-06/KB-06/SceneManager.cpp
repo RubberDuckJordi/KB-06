@@ -79,6 +79,8 @@ namespace pengine
 				return;
 			}
 		}
+
+		// Should be moved to the factories
 		RGBAColor color;
 		color.r = 1.0f;
 		color.g = 0.25f;

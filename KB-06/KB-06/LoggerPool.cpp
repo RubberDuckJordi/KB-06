@@ -13,7 +13,6 @@ namespace pengine
 	{
 		for (auto it = pool.begin(); it != pool.end(); ++it)
 		{
-			(*it).second->~Logger();
 			delete (*it).second;
 		}
 	}

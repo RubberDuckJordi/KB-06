@@ -206,30 +206,31 @@ pengine::Scene* racer::RaceSceneFactory::CreateScene()
 	pengine::Object3D* trackStraight = resourceManager->LoadXFile(&std::string("resources/track/trackstraight.X"));
 	pengine::Object3D* trackCurved = resourceManager->LoadXFile(&std::string("resources/track/trackcurved.X"));
 	Track* track = new Track();
-	
-	track->AddTrackBlock(TrackBlock::TYPE::STRAIGHT, trackStraight);
-	track->AddTrackBlock(TrackBlock::TYPE::STRAIGHT, trackStraight);
-	track->AddTrackBlock(TrackBlock::TYPE::STRAIGHT, trackStraight);
-	track->AddTrackBlock(TrackBlock::TYPE::LEFT, trackCurved);
-	track->AddTrackBlock(TrackBlock::TYPE::RIGHT, trackCurved);
-	track->AddTrackBlock(TrackBlock::TYPE::RIGHT, trackCurved);
-	track->AddTrackBlock(TrackBlock::TYPE::STRAIGHT, trackStraight);
-	track->AddTrackBlock(TrackBlock::TYPE::STRAIGHT, trackStraight);
-	track->AddTrackBlock(TrackBlock::TYPE::LEFT, trackCurved);
-	track->AddTrackBlock(TrackBlock::TYPE::RIGHT, trackCurved);
-	track->AddTrackBlock(TrackBlock::TYPE::RIGHT, trackCurved);
 
-	track->AddTrackBlock(TrackBlock::TYPE::STRAIGHT, trackStraight);
-	track->AddTrackBlock(TrackBlock::TYPE::STRAIGHT, trackStraight);
-	track->AddTrackBlock(TrackBlock::TYPE::STRAIGHT, trackStraight);
-	track->AddTrackBlock(TrackBlock::TYPE::LEFT, trackCurved);
-	track->AddTrackBlock(TrackBlock::TYPE::RIGHT, trackCurved);
-	track->AddTrackBlock(TrackBlock::TYPE::RIGHT, trackCurved);
-	track->AddTrackBlock(TrackBlock::TYPE::STRAIGHT, trackStraight);
-	track->AddTrackBlock(TrackBlock::TYPE::STRAIGHT, trackStraight);
-	track->AddTrackBlock(TrackBlock::TYPE::LEFT, trackCurved);
-	track->AddTrackBlock(TrackBlock::TYPE::RIGHT, trackCurved);
-	track->AddTrackBlock(TrackBlock::TYPE::RIGHT, trackCurved);
+
+	TrackBlock* block00 = track->AddTrackBlock(TrackBlock::TYPE::STRAIGHT, trackStraight);
+	TrackBlock* block01 = track->AddTrackBlock(TrackBlock::TYPE::STRAIGHT, trackStraight);
+	TrackBlock* block02 = track->AddTrackBlock(TrackBlock::TYPE::STRAIGHT, trackStraight);
+	TrackBlock* block03 = track->AddTrackBlock(TrackBlock::TYPE::LEFT, trackCurved);
+	TrackBlock* block04 = track->AddTrackBlock(TrackBlock::TYPE::RIGHT, trackCurved);
+	TrackBlock* block05 = track->AddTrackBlock(TrackBlock::TYPE::RIGHT, trackCurved);
+	TrackBlock* block06 = track->AddTrackBlock(TrackBlock::TYPE::STRAIGHT, trackStraight);
+	TrackBlock* block07 = track->AddTrackBlock(TrackBlock::TYPE::STRAIGHT, trackStraight);
+	TrackBlock* block08 = track->AddTrackBlock(TrackBlock::TYPE::LEFT, trackCurved);
+	TrackBlock* block09 = track->AddTrackBlock(TrackBlock::TYPE::RIGHT, trackCurved);
+	TrackBlock* block10 = track->AddTrackBlock(TrackBlock::TYPE::RIGHT, trackCurved);
+
+	TrackBlock* block11 = track->AddTrackBlock(TrackBlock::TYPE::STRAIGHT, trackStraight);
+	TrackBlock* block12 = track->AddTrackBlock(TrackBlock::TYPE::STRAIGHT, trackStraight);
+	TrackBlock* block13 = track->AddTrackBlock(TrackBlock::TYPE::STRAIGHT, trackStraight);
+	TrackBlock* block14 = track->AddTrackBlock(TrackBlock::TYPE::LEFT, trackCurved);
+	TrackBlock* block15 = track->AddTrackBlock(TrackBlock::TYPE::RIGHT, trackCurved);
+	TrackBlock* block16 = track->AddTrackBlock(TrackBlock::TYPE::RIGHT, trackCurved);
+	TrackBlock* block17 = track->AddTrackBlock(TrackBlock::TYPE::STRAIGHT, trackStraight);
+	TrackBlock* block18 = track->AddTrackBlock(TrackBlock::TYPE::STRAIGHT, trackStraight);
+	TrackBlock* block19 = track->AddTrackBlock(TrackBlock::TYPE::LEFT, trackCurved);
+	TrackBlock* block20 = track->AddTrackBlock(TrackBlock::TYPE::RIGHT, trackCurved);
+	TrackBlock* block21 = track->AddTrackBlock(TrackBlock::TYPE::RIGHT, trackCurved);
 
 	pengine::Ground* ground = resourceManager->LoadGround(groundResource, groundTexture);
 	ground->InitQuadTree(1);
@@ -247,6 +248,53 @@ pengine::Scene* racer::RaceSceneFactory::CreateScene()
 	raceScene->AddEntity(track);
 	raceScene->SetGround(ground);
 	raceScene->SetSkybox(skybox);
+
+	racecart->AddCheckPoint(block00);
+	racecart->AddCheckPoint(block01);
+	racecart->AddCheckPoint(block02);
+	racecart->AddCheckPoint(block03);
+	racecart->AddCheckPoint(block04);
+	racecart->AddCheckPoint(block05);
+	racecart->AddCheckPoint(block06);
+	racecart->AddCheckPoint(block07);
+	racecart->AddCheckPoint(block08);
+	racecart->AddCheckPoint(block09);
+	racecart->AddCheckPoint(block10);
+	racecart->AddCheckPoint(block11);
+	racecart->AddCheckPoint(block12);
+	racecart->AddCheckPoint(block13);
+	racecart->AddCheckPoint(block14);
+	racecart->AddCheckPoint(block15);
+	racecart->AddCheckPoint(block16);
+	racecart->AddCheckPoint(block17);
+	racecart->AddCheckPoint(block18);
+	racecart->AddCheckPoint(block19);
+	racecart->AddCheckPoint(block20);
+	racecart->AddCheckPoint(block21);
+	racecart->AddCheckPoint(block00); // Finish block
+
+	raceScene->AddStaticCollidable(block00);
+	raceScene->AddStaticCollidable(block01);
+	raceScene->AddStaticCollidable(block02);
+	raceScene->AddStaticCollidable(block03);
+	raceScene->AddStaticCollidable(block04);
+	raceScene->AddStaticCollidable(block05);
+	raceScene->AddStaticCollidable(block06);
+	raceScene->AddStaticCollidable(block07);
+	raceScene->AddStaticCollidable(block08);
+	raceScene->AddStaticCollidable(block09);
+	raceScene->AddStaticCollidable(block10);
+	raceScene->AddStaticCollidable(block11);
+	raceScene->AddStaticCollidable(block12);
+	raceScene->AddStaticCollidable(block13);
+	raceScene->AddStaticCollidable(block14);
+	raceScene->AddStaticCollidable(block15);
+	raceScene->AddStaticCollidable(block16);
+	raceScene->AddStaticCollidable(block17);
+	raceScene->AddStaticCollidable(block18);
+	raceScene->AddStaticCollidable(block19);
+	raceScene->AddStaticCollidable(block20);
+	raceScene->AddStaticCollidable(block21);
 
 	pengine::EntityCamera* camera = new pengine::EntityCamera();
 	camera->useInput = false;

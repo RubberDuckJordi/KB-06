@@ -9,7 +9,7 @@ namespace pengine
 
 	MeshWrapper::~MeshWrapper()
 	{
-
+		delete mesh;
 	}
 
 	void MeshWrapper::SetMesh(LPD3DXMESH* _mesh)

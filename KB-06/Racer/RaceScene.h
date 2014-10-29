@@ -3,6 +3,7 @@
 
 #include "Scene.h"
 #include "Input.h"
+#include "RaceCart.h"
 
 namespace racer
 {
@@ -12,12 +13,15 @@ namespace racer
 		RaceScene();
 		~RaceScene();
 		void Update(float deltaTime, std::map<pengine::Input, long>* actions);
-		void SetRaceCart(pengine::Entity*);
-		 void RenderToTexture(int texture, pengine::Renderer* renderer);
+		void SetRaceCart(RaceCart*);
+		void RenderToTexture(int texture, pengine::Renderer* renderer);
 		void Render(pengine::Renderer* renderer);
 
 	private:
-		pengine::Entity* raceCart;
+		bool loss;
+		bool win;
+		RaceCart* raceCart;
+		float elapsedTime;
 	};
 }
 
