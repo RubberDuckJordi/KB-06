@@ -18,21 +18,25 @@ void racer::RaceCart::UpdateLogic(float deltaTime, std::map<pengine::Input, long
 
 	if (!isOnTrack)
 	{
-		AddForce(new pengine::Vector3(0.0f, -50.0f * deltaTime * mass, 0.0f));
+		// To prevent glitching by flying from one trackblock to the next
+		movementVector.x = 0.0f;
+		movementVector.z = 0.0f;
+
+		AddForce(new pengine::Vector3(0.0f, -100.0f * deltaTime * mass, 0.0f));
 		fallingTime += deltaTime;
 
 		if (fallingTime >= 3.0f)
 		{
 			if (lastCheckPoint == NULL)
 			{
-				logger->Log(pengine::Logger::ERR, "lastCheckPoint is NULL, please set a default lastCheckPoint for every cart");
+				logger->Log(pengine::Logger::ERR, "lastCheckPoint is NULL, set a default lastCheckPoint for every cart");
 			}
 			movementVector.x = 0.0f;
 			movementVector.y = 0.0f;
 			movementVector.z = 0.0f;
 
 			position = *lastCheckPoint->GetPosition();
-			position.y += 122.047325f; // 122 must be replaced by track height
+			position.y += trackHeight; // 122 must be replaced by track height
 			rotation = *lastCheckPoint->GetRotation();
 
 			rotation.x += 180;
@@ -254,42 +258,42 @@ void racer::RaceCart::InitCollisionBox()
 
 	angle = atan2f(rect->frontBottomLeft.z, rect->frontBottomLeft.x);
 	rect->rotFrontBottomLeft.x = cos(angle - RADIANS(rect->yaw)) * radius;
-	rect->rotFrontBottomLeft.y = rect->frontBottomLeft.y;//we aren't doing pitch rotation (yet...)
+	rect->rotFrontBottomLeft.y = position.y + rect->frontBottomLeft.y;//we aren't doing pitch rotation (yet...)
 	rect->rotFrontBottomLeft.z = sin(angle - RADIANS(rect->yaw)) * radius;
 
 	angle = atan2f(rect->frontBottomRight.z, rect->frontBottomRight.x);
 	rect->rotFrontBottomRight.x = cos(angle - RADIANS(rect->yaw)) * radius;
-	rect->rotFrontBottomRight.y = rect->frontBottomRight.y;//we aren't doing pitch rotation (yet...)
+	rect->rotFrontBottomRight.y = position.y + rect->frontBottomRight.y;//we aren't doing pitch rotation (yet...)
 	rect->rotFrontBottomRight.z = sin(angle - RADIANS(rect->yaw)) * radius;
 
 	angle = atan2f(rect->backBottomLeft.z, rect->backBottomLeft.x);
 	rect->rotBackBottomLeft.x = cos(angle - RADIANS(rect->yaw)) * radius;
-	rect->rotBackBottomLeft.y = rect->backBottomLeft.y;//we aren't doing pitch rotation (yet...)
+	rect->rotBackBottomLeft.y = position.y + rect->backBottomLeft.y;//we aren't doing pitch rotation (yet...)
 	rect->rotBackBottomLeft.z = sin(angle - RADIANS(rect->yaw)) * radius;
 
 	angle = atan2f(rect->backBottomRight.z, rect->backBottomRight.x);
 	rect->rotBackBottomRight.x = cos(angle - RADIANS(rect->yaw)) * radius;
-	rect->rotBackBottomRight.y = rect->backBottomRight.y;//we aren't doing pitch rotation (yet...)
+	rect->rotBackBottomRight.y = position.y + rect->backBottomRight.y;//we aren't doing pitch rotation (yet...)
 	rect->rotBackBottomRight.z = sin(angle - RADIANS(rect->yaw)) * radius;
 
 	angle = atan2f(rect->frontTopLeft.z, rect->frontTopLeft.x);
 	rect->rotFrontTopLeft.x = cos(angle - RADIANS(rect->yaw)) * radius;
-	rect->rotFrontTopLeft.y = rect->frontTopLeft.y;//we aren't doing pitch rotation (yet...)
+	rect->rotFrontTopLeft.y = position.y + rect->frontTopLeft.y;//we aren't doing pitch rotation (yet...)
 	rect->rotFrontTopLeft.z = sin(angle - RADIANS(rect->yaw)) * radius;
 
 	angle = atan2f(rect->frontTopRight.z, rect->frontTopRight.x);
 	rect->rotFrontTopRight.x = cos(angle - RADIANS(rect->yaw)) * radius;
-	rect->rotFrontTopRight.y = rect->frontTopRight.y;//we aren't doing pitch rotation (yet...)
+	rect->rotFrontTopRight.y = position.y + rect->frontTopRight.y;//we aren't doing pitch rotation (yet...)
 	rect->rotFrontTopRight.z = sin(angle - RADIANS(rect->yaw)) * radius;
 
 	angle = atan2f(rect->backTopLeft.z, rect->backTopLeft.x);
 	rect->rotBackTopLeft.x = cos(angle - RADIANS(rect->yaw)) * radius;
-	rect->rotBackTopLeft.y = rect->backTopLeft.y;//we aren't doing pitch rotation (yet...)
+	rect->rotBackTopLeft.y = position.y + rect->backTopLeft.y;//we aren't doing pitch rotation (yet...)
 	rect->rotBackTopLeft.z = sin(angle - RADIANS(rect->yaw)) * radius;
 
 	angle = atan2f(rect->backTopRight.z, rect->backTopRight.x);
 	rect->rotBackTopRight.x = cos(angle - RADIANS(rect->yaw)) * radius;
-	rect->rotBackTopRight.y = rect->backTopRight.y;//we aren't doing pitch rotation (yet...)
+	rect->rotBackTopRight.y = position.y + rect->backTopRight.y;//we aren't doing pitch rotation (yet...)
 	rect->rotBackTopRight.z = sin(angle - RADIANS(rect->yaw)) * radius;
 
 	collisionBox = *rect;
@@ -338,4 +342,9 @@ bool racer::RaceCart::IsOnTrack()
 void racer::RaceCart::SetLastCheckPoint(TrackBlock* checkPoint)
 {
 	lastCheckPoint = checkPoint;
+}
+
+void racer::RaceCart::SetTrackHeight(float height)
+{
+	trackHeight = height;
 }
