@@ -12,29 +12,29 @@
 
 namespace pengine
 {
-	typedef struct
+	struct RotateKey
 	{
 		uint32 Time;
 		Quaternion Rotation;
-	} RotateKey;
+	};
 
-	typedef struct
+	struct PositionKey
 	{
 		uint32 Time;
 		Vertex Translation;
-	} PositionKey;
+	};
 
-	typedef struct
+	struct ScaleKey
 	{
 		uint32 Time;
 		Vector Scale;
-	} ScaleKey;
+	};
 
-	typedef struct
+	struct MatrixKey
 	{
 		uint32 Time;
 		Matrix Matrix;
-	} MatrixKey;
+	};
 
 	class Animation
 	{

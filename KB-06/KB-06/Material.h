@@ -13,28 +13,11 @@ namespace pengine
 	{
 	public:
 
-		Material()
-		{
-			diffuse = { 1.0f, 1.0f, 1.0f, 1.0f };
-			ambient = { 1.0f, 1.0f, 1.0f };
-			specular = { 1.0f, 1.0f, 1.0f };
-			emissive = { 1.0f, 1.0f, 1.0f };
-			power = 50;
-		};
+		Material();
 
-		~Material()
-		{
-			//We don't delete the texture because we're not the owner... the resource manager is!
-		};
+		~Material();
 
-		bool IsName(std::string &pText)
-		{
-			if (strcmp(pText.c_str(), name.c_str()) == 0)
-			{
-				return true;
-			}
-			return false;
-		}
+		bool IsName(std::string &pText);
 
 		//The name of the material
 		std::string name;
