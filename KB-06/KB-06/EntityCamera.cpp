@@ -13,6 +13,8 @@ namespace pengine
 		lastKnownRotation->x = 0;//yaw
 		lastKnownRotation->y = 0;//pitch
 		lastKnownRotation->z = 0;//roll
+		rollDegrees = 0.0f;
+		cameraSpeed = 50.0f;
 	}
 
 	EntityCamera::~EntityCamera()
@@ -22,7 +24,6 @@ namespace pengine
 
 	void EntityCamera::UpdateLogic(float deltaTime, std::map<Input, long>* actions)
 	{
-		float cameraSpeed = 50.0f;
 		for (std::map<Input, long>::iterator iterator = (*actions).begin(); iterator != (*actions).end(); iterator++)
 		{
 			//float speed = static_cast<float>(iterator->second);
@@ -112,11 +113,6 @@ namespace pengine
 	// Camera's worden niet getekend
 	void EntityCamera::Render(Renderer* renderer)
 	{
-		bool debug = false;
-		if (debug)
-		{
-			//could draw a hardcoded wireframe... (old code was old xloader based and stuff...)
-		}
 	}
 
 	Vector3* EntityCamera::GetPosition()
@@ -131,8 +127,8 @@ namespace pengine
 
 	CameraData EntityCamera::GetCameraData()
 	{
-		CameraData d = { position.x, position.y, position.z, lookAtPosition.x, lookAtPosition.y, lookAtPosition.z, upVec->x, upVec->y, upVec->z };
-		return d;
+		CameraData cameraData = { position.x, position.y, position.z, lookAtPosition.x, lookAtPosition.y, lookAtPosition.z, upVec->x, upVec->y, upVec->z };
+		return cameraData;
 	}
 
 	void EntityCamera::SetLookAtEntity(Entity* entity)
@@ -146,7 +142,6 @@ namespace pengine
 		//rotationMatrix = new PEngineMatrix();
 		// TODO: rotation & calculate axis
 		Vector3* entityPosition = entity->GetPosition();
-		Vector3* cameraPosition = new Vector3();
 
 		SetPosition(entityPosition->x, entityPosition->y, entityPosition->z);
 

@@ -13,6 +13,7 @@ namespace pengine
 		movementVector.z = 0;
 		mass = 1.0f;
 		friction = 0.5f;
+		defaultRadius = 1.0f;
 	}
 
 	Entity::~Entity()

@@ -41,10 +41,11 @@ namespace pengine
 		CameraData cameraData;
 		Matrix* viewMatrix;
 		Vector3* upVec;
-		float rollDegrees = 0.0f;
+		float rollDegrees;
 		Plane frustrumPlane[6];
 		Matrix projectionMatrix;
 		Vector3* lastKnownRotation;
+		float cameraSpeed;
 	};
 }
 #endif

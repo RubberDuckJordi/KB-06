@@ -20,7 +20,6 @@ namespace pengine
 
 		@param sceneManager: SceneManager which is used to render a scene.
 		*/
-		WindowManager(SceneManager *sceneManager); // Manager shouln't use another manager
 		WindowManager();
 		~WindowManager();
 

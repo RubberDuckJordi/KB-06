@@ -72,7 +72,7 @@ namespace pengine
 		Vector3 movementVector;
 		float radius;
 		Logger* logger;
-		float defaultRadius = 1.0f;
+		float defaultRadius;
 	};
 }
 #endif

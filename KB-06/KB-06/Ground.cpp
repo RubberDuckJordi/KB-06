@@ -21,6 +21,26 @@ namespace pengine
 		{
 			delete quadTreeRootNode;
 		}
+
+		if (vertices != NULL)
+		{
+			delete vertices;
+		}
+
+		if (vertexBuffer != NULL)
+		{
+			delete vertexBuffer;
+		}
+
+		if (material != NULL)
+		{
+			delete material;
+		}
+
+		if (location != NULL)
+		{
+			delete location;
+		}
 	}
 
 	void Ground::InitQuadTree(unsigned short depth)
@@ -114,7 +134,7 @@ namespace pengine
 			renderer->SetMaterial(material);
 
 			renderer->DrawVertexBuffer(vertexBuffer);
-		}		
+		}
 
 		delete[] vertices;
 	}

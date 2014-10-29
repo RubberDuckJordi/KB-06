@@ -11,11 +11,6 @@ namespace pengine
 		logger = LoggerPool::GetInstance().GetLogger();
 	}
 
-	WindowManager::WindowManager(SceneManager *sManager)
-	{
-		sceneManager = sManager;
-	}
-
 	WindowManager::~WindowManager()
 	{
 		while (!windows.empty())

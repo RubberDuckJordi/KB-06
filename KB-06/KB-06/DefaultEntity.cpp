@@ -7,6 +7,7 @@ namespace pengine
 {
 	DefaultEntity::DefaultEntity()
 	{
+		rotationMod = 0.0f;
 	}
 
 	DefaultEntity::~DefaultEntity()

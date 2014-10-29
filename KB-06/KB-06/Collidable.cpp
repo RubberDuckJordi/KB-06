@@ -202,6 +202,8 @@ namespace pengine
 		renderer->SetActiveMatrix(renderMatrix);
 		renderer->DrawIndexedVertexBuffer(vertexBuffer, indexBuffer);
 
+		delete renderMatrix;
+
 		delete[] vertices;
 		delete vertexBuffer;
 		delete[] indices;

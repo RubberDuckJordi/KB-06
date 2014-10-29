@@ -10,6 +10,15 @@ namespace pengine
 
 	SceneManager::~SceneManager()
 	{
+		while (!scenes.empty())
+		{
+			delete scenes.front(), scenes.pop_front();
+		}
+		for (auto it = sceneFactories.begin(); it != sceneFactories.end(); ++it)
+		{
+			delete (*it).second;
+		}
+
 		logger->Log(Logger::INFO, "SceneManager destructed");
 	}
 

@@ -16,6 +16,17 @@ namespace pengine
 		{
 			delete entities.front(), entities.pop_front();
 		}
+		while (!collidables.empty())
+		{
+			delete collidables.front(), collidables.pop_front();
+		}
+		while (!staticCollidables.empty())
+		{
+			delete staticCollidables.front(), staticCollidables.pop_front();
+		}
+		delete callback;
+		delete currentCamera;
+		delete skybox;
 		delete ground;
 	}
 
@@ -259,8 +270,8 @@ namespace pengine
 		{
 			/*if (currentCamera->SphereInFrustum(entity->GetPosition(), entity->GetRadius()))
 			{*/
-				entity->Render(renderer);
-				++entitiesLoaded;
+			entity->Render(renderer);
+			++entitiesLoaded;
 			//}
 		}
 		//logger->Log(Logger::DEBUG, "Rendered " + std::to_string(entitiesLoaded) + " of " + std::to_string(entities.size()) + " entities");

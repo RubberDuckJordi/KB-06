@@ -85,9 +85,6 @@
     <ClCompile Include="SceneLoader.cpp">
       <Filter>Source\Resource</Filter>
     </ClCompile>
-    <ClCompile Include="Menu.cpp">
-      <Filter>Source\Scene</Filter>
-    </ClCompile>
     <ClCompile Include="SuperXLoader.cpp">
       <Filter>Source\Resource\RobertX</Filter>
     </ClCompile>
@@ -245,12 +242,6 @@
     </ClInclude>
     <ClInclude Include="SceneLoader.h">
       <Filter>Header\Resource</Filter>
-    </ClInclude>
-    <ClInclude Include="Menu.h">
-      <Filter>Header\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="MenuButton.h">
-      <Filter>Header\Scene</Filter>
     </ClInclude>
     <ClInclude Include="SceneDefinition.h">
       <Filter>Header\Scene</Filter>

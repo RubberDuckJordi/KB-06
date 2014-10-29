@@ -101,8 +101,6 @@
     <ClInclude Include="IndexBufferWrapper.h" />
     <ClInclude Include="MaterialWrapper.h" />
     <ClInclude Include="Matrix.h" />
-    <ClInclude Include="Menu.h" />
-    <ClInclude Include="MenuButton.h" />
     <ClInclude Include="MeshWrapper.h" />
     <ClInclude Include="Model3D.h" />
     <ClInclude Include="Object3D.h" />
@@ -177,7 +175,6 @@
     <ClCompile Include="DefaultEntity.cpp" />
     <ClCompile Include="DirectKeyboard.cpp" />
     <ClCompile Include="MaterialWrapper.cpp" />
-    <ClCompile Include="Menu.cpp" />
     <ClCompile Include="Model3D.cpp" />
     <ClCompile Include="Object3D.cpp" />
     <ClCompile Include="ObjectBone.cpp" />

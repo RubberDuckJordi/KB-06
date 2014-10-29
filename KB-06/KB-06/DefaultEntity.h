@@ -14,9 +14,9 @@ namespace pengine
 		void UpdateLogic(float deltaTime, std::map<Input, long>* actions);
 		void CacheToRenderer(Renderer* renderer);
 		void Render(Renderer* renderer);
-		float rotationMod = 0.0f;
-
+		
 	private:
+		float rotationMod;
 	};
 }
 #endif
