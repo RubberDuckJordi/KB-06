@@ -188,10 +188,11 @@ pengine::Scene* racer::RaceSceneFactory::CreateScene(std::vector<std::string>* s
 
 pengine::Scene* racer::RaceSceneFactory::CreateScene()
 {
+	pengine::Logger* logger = pengine::LoggerPool::GetInstance().GetLogger();
 	RaceCart* racecart = new RaceCart();
 	racecart->SetControllable(true);
 	racecart->SetMass(100.0f);
-	racecart->SetHorsePower(10000.0f);
+	racecart->SetHorsePower(100000.0f);
 	racecart->AddAll(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f);
 
 	pengine::Object3D* tiger = resourceManager->LoadXFile(&std::string("resources/cart/cart.x"));
@@ -205,23 +206,30 @@ pengine::Scene* racer::RaceSceneFactory::CreateScene()
 	pengine::Object3D* trackStraight = resourceManager->LoadXFile(&std::string("resources/track/trackstraight.X"));
 	pengine::Object3D* trackCurved = resourceManager->LoadXFile(&std::string("resources/track/trackcurved.X"));
 	Track* track = new Track();
+	
 	track->AddTrackBlock(TrackBlock::TYPE::STRAIGHT, trackStraight);
 	track->AddTrackBlock(TrackBlock::TYPE::STRAIGHT, trackStraight);
 	track->AddTrackBlock(TrackBlock::TYPE::STRAIGHT, trackStraight);
-	track->AddTrackBlock(TrackBlock::TYPE::TURN_LEFT, trackCurved);
-	track->AddTrackBlock(TrackBlock::TYPE::TURN_RIGHT, trackCurved);
-	track->AddTrackBlock(TrackBlock::TYPE::TURN_RIGHT, trackCurved);
+	track->AddTrackBlock(TrackBlock::TYPE::LEFT, trackCurved);
+	track->AddTrackBlock(TrackBlock::TYPE::RIGHT, trackCurved);
+	track->AddTrackBlock(TrackBlock::TYPE::RIGHT, trackCurved);
 	track->AddTrackBlock(TrackBlock::TYPE::STRAIGHT, trackStraight);
 	track->AddTrackBlock(TrackBlock::TYPE::STRAIGHT, trackStraight);
-	track->AddTrackBlock(TrackBlock::TYPE::TURN_RIGHT, trackCurved);
+	track->AddTrackBlock(TrackBlock::TYPE::LEFT, trackCurved);
+	track->AddTrackBlock(TrackBlock::TYPE::RIGHT, trackCurved);
+	track->AddTrackBlock(TrackBlock::TYPE::RIGHT, trackCurved);
+
 	track->AddTrackBlock(TrackBlock::TYPE::STRAIGHT, trackStraight);
 	track->AddTrackBlock(TrackBlock::TYPE::STRAIGHT, trackStraight);
 	track->AddTrackBlock(TrackBlock::TYPE::STRAIGHT, trackStraight);
+	track->AddTrackBlock(TrackBlock::TYPE::LEFT, trackCurved);
+	track->AddTrackBlock(TrackBlock::TYPE::RIGHT, trackCurved);
+	track->AddTrackBlock(TrackBlock::TYPE::RIGHT, trackCurved);
 	track->AddTrackBlock(TrackBlock::TYPE::STRAIGHT, trackStraight);
-	track->AddTrackBlock(TrackBlock::TYPE::TURN_RIGHT, trackCurved);
 	track->AddTrackBlock(TrackBlock::TYPE::STRAIGHT, trackStraight);
-	track->AddTrackBlock(TrackBlock::TYPE::TURN_RIGHT, trackCurved);
-	track->SetAll(-15.0f, -122.047322f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f);
+	track->AddTrackBlock(TrackBlock::TYPE::LEFT, trackCurved);
+	track->AddTrackBlock(TrackBlock::TYPE::RIGHT, trackCurved);
+	track->AddTrackBlock(TrackBlock::TYPE::RIGHT, trackCurved);
 
 	pengine::Ground* ground = resourceManager->LoadGround(groundResource, groundTexture);
 	ground->InitQuadTree(1);

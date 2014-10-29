@@ -35,6 +35,12 @@ namespace pengine
 		void Render(Renderer* renderer);
 
 		void CreateCollisionBox(BEAM& rect);
+		float GetMinZ();
+		float GetMaxZ();
+		float GetMinX();
+		float GetMaxX();
+		float GetMinY();
+		float GetMaxY();
 		void ComputeBoundingBoxSphere();
 
 		//Elements for the AABB (_Low & _High)

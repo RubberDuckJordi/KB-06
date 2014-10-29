@@ -431,6 +431,90 @@ namespace pengine
 		rect.backTopRight = { maxx, maxy, minz };
 	}
 
+	float Object3D::GetMinZ()
+	{
+		float  minz;
+		minz = this->_Mesh->_Vertices[0].z;
+		for (int i = 0; i < this->_Mesh->_nVertices; ++i)
+		{
+			if (this->_Mesh->_Vertices[i].z < minz)
+			{
+				minz = this->_Mesh->_Vertices[i].z;
+			}
+		}
+		return minz;
+	}
+
+	float Object3D::GetMaxZ()
+	{
+		float  maxz;
+		maxz = this->_Mesh->_Vertices[0].z;
+		for (int i = 0; i < this->_Mesh->_nVertices; ++i)
+		{
+			if (this->_Mesh->_Vertices[i].z > maxz)
+			{
+				maxz = this->_Mesh->_Vertices[i].z;
+			}
+		}
+		return maxz ;
+	}
+
+	float Object3D::GetMinX()
+	{
+		float  minx;
+		minx = this->_Mesh->_Vertices[0].x;
+		for (int i = 0; i < this->_Mesh->_nVertices; ++i)
+		{
+			if (this->_Mesh->_Vertices[i].x < minx)
+			{
+				minx = this->_Mesh->_Vertices[i].x;
+			}
+		}
+		return minx;
+	}
+
+	float Object3D::GetMaxX()
+	{
+		float  maxx;
+		maxx = this->_Mesh->_Vertices[0].x;
+		for (int i = 0; i < this->_Mesh->_nVertices; ++i)
+		{
+			if (this->_Mesh->_Vertices[i].x > maxx)
+			{
+				maxx = this->_Mesh->_Vertices[i].x;
+			}
+		}
+		return maxx;
+	}
+
+	float Object3D::GetMinY()
+	{
+		float  miny;
+		miny = this->_Mesh->_Vertices[0].y;
+		for (int i = 0; i < this->_Mesh->_nVertices; ++i)
+		{
+			if (this->_Mesh->_Vertices[i].y < miny)
+			{
+				miny = this->_Mesh->_Vertices[i].y;
+			}
+		}
+		return miny;
+	}
+
+	float Object3D::GetMaxY()
+	{
+		float  maxy;
+		maxy = this->_Mesh->_Vertices[0].y;
+		for (int i = 0; i < this->_Mesh->_nVertices; ++i)
+		{
+			if (this->_Mesh->_Vertices[i].y > maxy)
+			{
+				maxy = this->_Mesh->_Vertices[i].y;
+			}
+		}
+		return maxy;
+	}
+
 	void Object3D::ComputeBoundingBoxSphere()
 	{
 		_Low = _SkinnedVertices[0];

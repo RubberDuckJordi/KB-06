@@ -19,33 +19,32 @@ class TrackBlock : public pengine::Entity
 public:
 	static enum TYPE {
 		STRAIGHT,
-		TURN_LEFT,
-		TURN_RIGHT
+		LEFT,
+		RIGHT
 	};
 
-	TrackBlock(float x, float y, float z, float yaw, TYPE type, Direction direction, pengine::Object3D* model);
+	TrackBlock();
 	~TrackBlock();
 
 	void Render(pengine::Renderer* renderer);
+	void SetDirection(Direction direction);
 	void SetModel(pengine::Object3D* model);
-	
-	Direction GetDirection();
+	void SetType(TYPE type);
 
-	void SetPosition(float x, float y, float z);
-	void SetPositionOffset(float x, float y, float z);
-	pengine::Vector3* GetPositionOffset();
-	void SetRotation(float yaw, float pitch, float roll);
-	void SetRotationOffset(float yaw, float pitch, float roll);
-	pengine::Vector3* GetRotationOffset();
+	Direction GetDirection();
+	TYPE GetType();
 
 	void CacheToRenderer(pengine::Renderer* renderer);
 
 	float GetMaxSquareSize();
+	float GetModelMinZ();
+	float GetModelMaxZ();
+	float GetModelMinX();
+	float GetModelMaxX();
+
 private:
-	pengine::Vector3 positionOffset;
-	pengine::Vector3 rotationOffset;
-	TYPE type;
 	Direction direction;
+	TYPE type;
 	pengine::Object3D* model;
 };
 #endif

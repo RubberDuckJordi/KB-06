@@ -1,12 +1,9 @@
 #include "TrackBlock.h"
 
-TrackBlock::TrackBlock(float x, float y, float z, float yaw, TYPE trackType, Direction trackdirection, pengine::Object3D* _model)
+TrackBlock::TrackBlock()
 {
-	SetPositionOffset(x, y, z);
-	SetRotationOffset(yaw, 0, 0);
-	type = trackType;
-	direction = trackdirection;
-	model = _model;
+	direction = NORTH;
+	type = TYPE::STRAIGHT;
 }
 
 TrackBlock::~TrackBlock()
@@ -25,46 +22,29 @@ void TrackBlock::Render(pengine::Renderer* renderer)
 	}
 }
 
+void TrackBlock::SetDirection(Direction d)
+{
+	direction = d;
+}
+
 void TrackBlock::SetModel(pengine::Object3D* p_xModel)
 {
 	model = p_xModel;
 }
-Direction TrackBlock::GetDirection(){
+
+void TrackBlock::SetType(TrackBlock::TYPE _type)
+{
+	type = _type;
+}
+
+Direction TrackBlock::GetDirection()
+{
 	return direction;
 }
 
-void TrackBlock::SetPosition(float x, float y, float z)
+TrackBlock::TYPE TrackBlock::GetType()
 {
-	Entity::SetPosition(x + positionOffset.x * scale.x, y + positionOffset.y * scale.y, z + positionOffset.z * scale.z);
-}
-
-void TrackBlock::SetPositionOffset(float x, float y, float z)
-{
-	positionOffset.x = x;
-	positionOffset.y = y;
-	positionOffset.z = z;
-}
-
-pengine::Vector3* TrackBlock::GetPositionOffset()
-{
-	return &positionOffset;
-}
-
-void TrackBlock::SetRotation(float yaw, float pitch, float roll)
-{
-	Entity::SetRotation(yaw + rotationOffset.x, pitch + rotationOffset.y, roll + rotationOffset.z);
-}
-
-void TrackBlock::SetRotationOffset(float yaw, float pitch, float roll)
-{
-	rotationOffset.x = yaw;
-	rotationOffset.y = pitch;
-	rotationOffset.z = roll;
-}
-
-pengine::Vector3* TrackBlock::GetRotationOffset()
-{
-	return &rotationOffset;
+	return type;
 }
 
 void TrackBlock::CacheToRenderer(pengine::Renderer* renderer)
@@ -77,9 +57,29 @@ float TrackBlock::GetMaxSquareSize()
 	pengine::BEAM box;
 	model->CreateCollisionBox(box);
 	float max = box.width;
-	if (max < box.height)
+	if (max < box.depth)
 	{
-		max = box.height;
+		max = box.depth;
 	}
 	return max;
+}
+
+float TrackBlock::GetModelMinZ()
+{
+	return model->GetMinZ();
+}
+
+float TrackBlock::GetModelMaxZ()
+{
+	return model->GetMaxZ();
+}
+
+float TrackBlock::GetModelMinX()
+{
+	return model->GetMinX();
+}
+
+float TrackBlock::GetModelMaxX()
+{
+	return model->GetMaxX();
 }
