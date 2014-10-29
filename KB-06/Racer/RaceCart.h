@@ -44,12 +44,18 @@ namespace racer
 		float GetRadius();
 		bool IsOnTrack();
 
+		// Should be set to the first block by default
+		void SetLastCheckPoint(TrackBlock* checkPoint);
+
 		void CacheToRenderer(pengine::Renderer* renderer);
 
 	private:
 		// Every tick, the racecart should on track. We use this boolean to keep track of this
 		bool isOnTrack;
 		float horsePower = 10;
+
+		float fallingTime;
+		TrackBlock* lastCheckPoint;
 
 		std::list<TrackBlock*> checkPoints;
 		pengine::Object3D* model;

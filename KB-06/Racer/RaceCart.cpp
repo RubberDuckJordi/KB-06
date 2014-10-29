@@ -4,6 +4,7 @@ racer::RaceCart::RaceCart()
 {
 	collides = false;
 	isOnTrack = false;
+	fallingTime = 0.0f;
 }
 
 racer::RaceCart::~RaceCart()
@@ -18,6 +19,24 @@ void racer::RaceCart::UpdateLogic(float deltaTime, std::map<pengine::Input, long
 	if (!isOnTrack)
 	{
 		AddForce(new pengine::Vector3(0.0f, -50.0f * deltaTime * mass, 0.0f));
+		fallingTime += deltaTime;
+
+		if (fallingTime >= 3.0f)
+		{
+			if (lastCheckPoint == NULL)
+			{
+				logger->Log(pengine::Logger::ERR, "lastCheckPoint is NULL, please set a default lastCheckPoint for every cart");
+			}
+			movementVector.x = 0.0f;
+			movementVector.y = 0.0f;
+			movementVector.z = 0.0f;
+
+			position = *lastCheckPoint->GetPosition();
+			position.y += 122.047325f; // 122 must be replaced by track height
+			rotation = *lastCheckPoint->GetRotation();
+
+			fallingTime = 0.0f;
+		}
 	}
 	else
 	{
@@ -182,6 +201,7 @@ void racer::RaceCart::OnCollide(pengine::COLLISIONEFFECT* effect)
 				if (effect->collidable1 == checkPoints.front())
 				{
 					logger->Log(pengine::Logger::INFO, "Checkpoint reached");
+					lastCheckPoint = checkPoints.front();
 					checkPoints.pop_front();
 					if (checkPoints.size() == 0)
 					{
@@ -306,4 +326,9 @@ std::list<racer::TrackBlock*>* racer::RaceCart::GetCheckPoints()
 bool racer::RaceCart::IsOnTrack()
 {
 	return isOnTrack;
+}
+
+void racer::RaceCart::SetLastCheckPoint(TrackBlock* checkPoint)
+{
+	lastCheckPoint = checkPoint;
 }
