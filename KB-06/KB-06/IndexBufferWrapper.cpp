@@ -10,7 +10,6 @@ namespace pengine
 	IndexBufferWrapper::~IndexBufferWrapper()
 	{
 		indexBuffer->Release();
-		delete indexBuffer;
 		indexBuffer = NULL;
 	}
 

@@ -10,7 +10,6 @@ namespace pengine
 	VertexBufferWrapper::~VertexBufferWrapper()
 	{
 		vertexBuffer->Release();
-		delete vertexBuffer;
 		vertexBuffer = NULL;
 	}
 
