@@ -158,7 +158,8 @@ namespace pengine
 	{
 		// Ground friction
 		ApplyFriction(friction);
-		ApplyFriction(friction * 0.05f * movementVector.GetMagnitude());
+		// Air friction
+		ApplyFriction(friction * 0.05f * movementVector.GetMagnitude()); 
 
 		float xDelta = (deltaTime * movementVector.x);
 		float zDelta = (deltaTime * movementVector.z);

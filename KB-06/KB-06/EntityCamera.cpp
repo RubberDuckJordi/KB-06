@@ -180,7 +180,7 @@ namespace pengine
 			if ((frustrumPlane[i].a * position->x +
 				frustrumPlane[i].b * position->y +
 				frustrumPlane[i].c * position->z +
-				frustrumPlane[i].d * 1
+				frustrumPlane[i].d
 				) + radius < 0)
 			{
 				return FALSE;
