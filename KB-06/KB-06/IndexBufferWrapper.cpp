@@ -10,6 +10,8 @@ namespace pengine
 	IndexBufferWrapper::~IndexBufferWrapper()
 	{
 		indexBuffer->Release();
+		delete indexBuffer;
+		indexBuffer = NULL;
 	}
 
 	void IndexBufferWrapper::SetIndexBuffer(IDirect3DIndexBuffer9* _IndexBuffer, unsigned int _numIndices)

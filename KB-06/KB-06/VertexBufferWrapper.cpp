@@ -10,6 +10,8 @@ namespace pengine
 	VertexBufferWrapper::~VertexBufferWrapper()
 	{
 		vertexBuffer->Release();
+		delete vertexBuffer;
+		vertexBuffer = NULL;
 	}
 
 	void VertexBufferWrapper::SetVertexBuffer(IDirect3DVertexBuffer9* _VertexBuffer, unsigned int _numVertices)

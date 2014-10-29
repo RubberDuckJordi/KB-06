@@ -21,11 +21,15 @@ namespace pengine
 		if (g_pd3dDevice != NULL)
 		{
 			g_pd3dDevice->Release();
+			delete g_pd3dDevice;
+			g_pd3dDevice = NULL;
 		}
 
 		if (g_pD3D != NULL)
 		{
 			g_pD3D->Release();
+			delete g_pD3D;
+			g_pD3D = NULL;
 		}
 		logger->Log(Logger::INFO, "DirectXRenderer destructed");
 	}

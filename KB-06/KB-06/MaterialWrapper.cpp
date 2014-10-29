@@ -9,7 +9,7 @@ namespace pengine
 
 	MaterialWrapper::~MaterialWrapper()
 	{
-
+		delete material;
 	}
 
 	void MaterialWrapper::SetMaterial(D3DMATERIAL9* _material)
