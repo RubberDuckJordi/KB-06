@@ -35,6 +35,8 @@ void racer::RaceCart::UpdateLogic(float deltaTime, std::map<pengine::Input, long
 			position.y += 122.047325f; // 122 must be replaced by track height
 			rotation = *lastCheckPoint->GetRotation();
 
+			rotation.x += 180;
+
 			fallingTime = 0.0f;
 		}
 	}
@@ -201,7 +203,12 @@ void racer::RaceCart::OnCollide(pengine::COLLISIONEFFECT* effect)
 				if (effect->collidable1 == checkPoints.front())
 				{
 					logger->Log(pengine::Logger::INFO, "Checkpoint reached");
-					lastCheckPoint = checkPoints.front();
+					// only allow respawning on straight blocks
+					if (checkPoints.front()->GetBlockType() == TrackBlock::TYPE::STRAIGHT)
+					{
+						lastCheckPoint = checkPoints.front();
+					}
+					
 					checkPoints.pop_front();
 					if (checkPoints.size() == 0)
 					{
