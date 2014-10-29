@@ -27,7 +27,6 @@ namespace pengine
 		delete resourceManager;
 
 		logger->Log(Logger::INFO, "Destructed PEngine");
-		LoggerPool::GetInstance().~LoggerPool();
 	}
 
 	void PEngine::Init()

@@ -9,7 +9,6 @@ namespace pengine
 
 	SceneFactory::~SceneFactory()
 	{
-		delete resourceManager;
 	}
 
 	void SceneFactory::SetGroundResource(std::string p_groundResource)
