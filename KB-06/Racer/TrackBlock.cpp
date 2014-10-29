@@ -132,13 +132,22 @@ namespace racer
 
 		// Add transformation
 		rect->x += position.x;
-		rect->y += position.y - rect->height;
+		rect->y += position.y;
 		rect->z += position.z;
 
-		// Add rotation
-		rect->yaw = rotation.x;
-		rect->pitch = rotation.y;
-		rect->roll = rotation.z;
+		if (type == TrackBlock::TYPE::STRAIGHT)
+		{
+			rect->yaw = rotation.x;
+			rect->roll = rotation.y;
+			rect->pitch = rotation.z;
+		}
+		else
+		{
+			rect->yaw = rotation.x + 180;
+			rect->roll = rotation.y;
+			rect->pitch = rotation.z;
+		}
+
 
 		float radius = sqrt(pow(rect->frontBottomLeft.x, 2) + pow(rect->frontBottomLeft.z, 2));//abc
 		float angle = 0;
