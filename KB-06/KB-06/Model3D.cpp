@@ -188,6 +188,6 @@ namespace pengine
 				return (*i)->IsName(pText);
 			}
 		}
-		return 0;
+		return NULL;
 	}
 }

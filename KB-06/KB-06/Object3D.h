@@ -47,7 +47,7 @@ namespace pengine
 		//and bounding sphere (_Center & _Radius)
 		Vertex _Low, _High, _Center;
 		/*!
-		The radius in object space, including any animations
+		The radius in object space, including any animations... not implemented
 		*/
 		float _RadiusHorizontal, _RadiusVertical;
 		bool showWarning;

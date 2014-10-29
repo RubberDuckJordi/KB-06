@@ -133,6 +133,18 @@
     <ClCompile Include="QuadNode.cpp">
       <Filter>Source\Scene\Ground</Filter>
     </ClCompile>
+    <ClCompile Include="Material.cpp">
+      <Filter>Source\Resource\RobertX</Filter>
+    </ClCompile>
+    <ClCompile Include="Matrix.cpp">
+      <Filter>Source\Resource\RobertX</Filter>
+    </ClCompile>
+    <ClCompile Include="Quaternion.cpp">
+      <Filter>Source\Resource\RobertX</Filter>
+    </ClCompile>
+    <ClCompile Include="Vector.cpp">
+      <Filter>Source\Resource\RobertX</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DefaultEntity.h">
@@ -265,9 +277,6 @@
       <Filter>Header\Resource\RobertX</Filter>
     </ClInclude>
     <ClInclude Include="Quaternion.h">
-      <Filter>Header\Resource\RobertX</Filter>
-    </ClInclude>
-    <ClInclude Include="TRect.h">
       <Filter>Header\Resource\RobertX</Filter>
     </ClInclude>
     <ClInclude Include="Types.h">

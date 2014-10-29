@@ -8,20 +8,25 @@
 
 namespace racer
 {
-	enum Direction {
+	enum Direction 
+	{
 		NORTH = 0,
 		EAST = 1,
 		SOUTH = 2,
 		WEST = 3
 	};
+
 	class TrackBlock : public pengine::Entity, public pengine::Collidable
 	{
 	public:
-		static enum TYPE {
+
+		enum TYPE 
+		{
 			STRAIGHT,
 			LEFT,
 			RIGHT
 		};
+
 		TrackBlock();
 		~TrackBlock();
 		void Render(pengine::Renderer* renderer);

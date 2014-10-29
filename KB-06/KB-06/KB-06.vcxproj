@@ -142,7 +142,6 @@
     <ClInclude Include="targetver.h" />
     <ClInclude Include="BinaryData.h" />
     <ClInclude Include="TextureWrapper.h" />
-    <ClInclude Include="TRect.h" />
     <ClInclude Include="Types.h" />
     <ClInclude Include="Vector.h" />
     <ClInclude Include="Vector3.h" />
@@ -174,15 +173,19 @@
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="DefaultEntity.cpp" />
     <ClCompile Include="DirectKeyboard.cpp" />
+    <ClCompile Include="Material.cpp" />
     <ClCompile Include="MaterialWrapper.cpp" />
+    <ClCompile Include="Matrix.cpp" />
     <ClCompile Include="Model3D.cpp" />
     <ClCompile Include="Object3D.cpp" />
     <ClCompile Include="ObjectBone.cpp" />
     <ClCompile Include="PEngine.cpp" />
     <ClCompile Include="QuadNode.cpp" />
+    <ClCompile Include="Quaternion.cpp" />
     <ClCompile Include="SceneLoader.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="Skybox.cpp" />
+    <ClCompile Include="Vector.cpp" />
     <ClCompile Include="Vector3.cpp" />
     <ClCompile Include="Logger.cpp" />
     <ClCompile Include="LoggerPool.cpp" />

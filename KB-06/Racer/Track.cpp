@@ -13,7 +13,7 @@ namespace racer
 	{
 		Direction direction = Direction::NORTH;
 		float x = 0;
-		float y = -model->GetMaxY();
+		float y = 0;
 		float z = 0;
 		float yaw = 180; // 180 degrees to make first block face north :)
 

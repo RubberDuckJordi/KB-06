@@ -131,9 +131,9 @@ namespace racer
 		model->CreateCollisionBox(*rect);
 
 		// Add transformation
-		rect->x += position.x;// -rect->width / 8;
+		rect->x += position.x;
 		rect->y += position.y - rect->height;
-		rect->z += position.z;// +rect->depth / 4;
+		rect->z += position.z;
 
 		// Add rotation
 		rect->yaw = rotation.x;
@@ -165,22 +165,22 @@ namespace racer
 
 		angle = atan2f(rect->frontTopLeft.z, rect->frontTopLeft.x);
 		rect->rotFrontTopLeft.x = cos(angle - RADIANS(rect->yaw)) * radius;
-		rect->rotFrontTopLeft.y = rect->frontTopLeft.y - rect->height + 1.0f;//we aren't doing pitch rotation (yet...)
+		rect->rotFrontTopLeft.y = rect->frontTopLeft.y + 1.0f;//we aren't doing pitch rotation (yet...)
 		rect->rotFrontTopLeft.z = sin(angle - RADIANS(rect->yaw)) * radius;
 
 		angle = atan2f(rect->frontTopRight.z, rect->frontTopRight.x);
 		rect->rotFrontTopRight.x = cos(angle - RADIANS(rect->yaw)) * radius;
-		rect->rotFrontTopRight.y = rect->frontTopRight.y - rect->height + 1.0f;//we aren't doing pitch rotation (yet...)
+		rect->rotFrontTopRight.y = rect->frontTopRight.y + 1.0f;//we aren't doing pitch rotation (yet...)
 		rect->rotFrontTopRight.z = sin(angle - RADIANS(rect->yaw)) * radius;
 
 		angle = atan2f(rect->backTopLeft.z, rect->backTopLeft.x);
 		rect->rotBackTopLeft.x = cos(angle - RADIANS(rect->yaw)) * radius;
-		rect->rotBackTopLeft.y = rect->backTopLeft.y - rect->height + 1.0f;//we aren't doing pitch rotation (yet...)
+		rect->rotBackTopLeft.y = rect->backTopLeft.y + 1.0f;//we aren't doing pitch rotation (yet...)
 		rect->rotBackTopLeft.z = sin(angle - RADIANS(rect->yaw)) * radius;
 
 		angle = atan2f(rect->backTopRight.z, rect->backTopRight.x);
 		rect->rotBackTopRight.x = cos(angle - RADIANS(rect->yaw)) * radius;
-		rect->rotBackTopRight.y = rect->backTopRight.y - rect->height + 1.0f;//we aren't doing pitch rotation (yet...)
+		rect->rotBackTopRight.y = rect->backTopRight.y + 1.0f;//we aren't doing pitch rotation (yet...)
 		rect->rotBackTopRight.z = sin(angle - RADIANS(rect->yaw)) * radius;
 
 		collisionBox = *rect;

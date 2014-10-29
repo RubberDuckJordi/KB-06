@@ -275,6 +275,10 @@ pengine::Scene* racer::RaceSceneFactory::CreateScene()
 
 	racecart->SetLastCheckPoint(block00);
 	racecart1->SetLastCheckPoint(block00);
+	racecart->SetTrackHeight(trackStraight->GetMaxY());
+	racecart1->SetTrackHeight(trackStraight->GetMaxY());
+	racecart->AddPosition(0.0f, trackStraight->GetMaxY(), 0.0f);
+	racecart1->AddPosition(0.0f, trackStraight->GetMaxY(), 0.0f);
 
 	raceScene->AddStaticCollidable(block00);
 	raceScene->AddStaticCollidable(block01);
