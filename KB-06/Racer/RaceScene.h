@@ -18,6 +18,7 @@ namespace racer
 		void Render(pengine::Renderer* renderer);
 
 	private:
+		bool loss;
 		bool win;
 		RaceCart* raceCart;
 		float elapsedTime;

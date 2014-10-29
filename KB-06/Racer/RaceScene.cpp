@@ -5,6 +5,7 @@ racer::RaceScene::RaceScene()
 {
 	elapsedTime = 0.0f;
 	win = false;
+	loss = false;
 }
 
 racer::RaceScene::~RaceScene()

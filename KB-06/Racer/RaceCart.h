@@ -42,9 +42,13 @@ namespace racer
 
 		pengine::Matrix* GetRenderMatrix();
 		float GetRadius();
+		bool IsOnTrack();
 
 		void CacheToRenderer(pengine::Renderer* renderer);
+
 	private:
+		// Every tick, the racecart should on track. We use this boolean to keep track of this
+		bool isOnTrack;
 		float horsePower = 10;
 
 		std::list<TrackBlock*> checkPoints;

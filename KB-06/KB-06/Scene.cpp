@@ -40,6 +40,14 @@ namespace pengine
 			(*i)->UpdateLogic(deltaTime, actions);
 		}
 
+		currentCamera->UpdateLogic(deltaTime, actions);
+
+		// Update ground level of detail
+		UpdateLevelOfDetail();
+	}
+
+	void Scene::ProcessCollision()
+	{
 		//The following code is highly inefficient ;)
 
 		// Init the collision boxes
@@ -52,14 +60,6 @@ namespace pengine
 			(*i)->InitCollisionBox();
 		}
 
-		currentCamera->UpdateLogic(deltaTime, actions);
-
-		// Update ground level of detail
-		UpdateLevelOfDetail();
-	}
-
-	void Scene::ProcessCollision()
-	{
 		// Keep track of effects, will be executed after this loop
 		std::list<COLLISIONEFFECT*> collisionEffects;
 
