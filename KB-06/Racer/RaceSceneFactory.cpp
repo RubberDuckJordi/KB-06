@@ -252,17 +252,33 @@ pengine::Scene* racer::RaceSceneFactory::CreateScene()
 	racecart->AddCheckPoint(block00);
 	racecart->AddCheckPoint(block01);
 	racecart->AddCheckPoint(block02);
+	racecart->AddCheckPoint(block03);
+	racecart->AddCheckPoint(block04);
+	racecart->AddCheckPoint(block05);
 	racecart->AddCheckPoint(block06);
 	racecart->AddCheckPoint(block07);
+	racecart->AddCheckPoint(block08);
+	racecart->AddCheckPoint(block09);
+	racecart->AddCheckPoint(block10);
 	racecart->AddCheckPoint(block11);
 	racecart->AddCheckPoint(block12);
 	racecart->AddCheckPoint(block13);
+	racecart->AddCheckPoint(block14);
+	racecart->AddCheckPoint(block15);
+	racecart->AddCheckPoint(block16);
 	racecart->AddCheckPoint(block17);
 	racecart->AddCheckPoint(block18);
+	racecart->AddCheckPoint(block19);
+	racecart->AddCheckPoint(block20);
+	racecart->AddCheckPoint(block21);
 	racecart->AddCheckPoint(block00); // Finish block
 
 	racecart->SetLastCheckPoint(block00);
 	racecart1->SetLastCheckPoint(block00);
+	racecart->SetTrackHeight(trackStraight->GetMaxY());
+	racecart1->SetTrackHeight(trackStraight->GetMaxY());
+	racecart->AddPosition(0.0f, trackStraight->GetMaxY(), 0.0f);
+	racecart1->AddPosition(0.0f, trackStraight->GetMaxY(), 0.0f);
 
 	raceScene->AddStaticCollidable(block00);
 	raceScene->AddStaticCollidable(block01);

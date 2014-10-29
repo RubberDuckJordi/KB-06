@@ -48,11 +48,13 @@ namespace racer
 		void SetLastCheckPoint(TrackBlock* checkPoint);
 
 		void CacheToRenderer(pengine::Renderer* renderer);
+		void SetTrackHeight(float height);
 
 	private:
 		// Every tick, the racecart should on track. We use this boolean to keep track of this
 		bool isOnTrack;
 		float horsePower = 10;
+		float trackHeight;
 
 		float fallingTime;
 		TrackBlock* lastCheckPoint;

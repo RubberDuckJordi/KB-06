@@ -13,9 +13,9 @@ namespace racer
 	{
 		Direction direction = Direction::NORTH;
 		float x = 0;
-		float y = -model->GetMaxY();
+		float y = 0;
 		float z = 0;
-		float yaw = 0;
+		float yaw = 180; // 180 degrees to make first block face north :)
 
 		TrackBlock* newBlock = new TrackBlock();
 		newBlock->SetModel(model);
@@ -33,6 +33,7 @@ namespace racer
 				{
 				case NORTH:
 					direction = WEST;
+					yaw = 0;
 					if (previousBlock->GetBlockType() == TrackBlock::TYPE::STRAIGHT)
 					{
 						z = previousBlock->GetPosition()->z - (previousBlock->GetMaxSquareSize() / 2) - maxZ;
@@ -97,6 +98,7 @@ namespace racer
 					break;
 				case EAST:
 					direction = SOUTH;
+					yaw = 0;
 					if (previousBlock->GetBlockType() == TrackBlock::TYPE::STRAIGHT)
 					{
 						x = previousBlock->GetPosition()->x - (previousBlock->GetMaxSquareSize() / 2) - maxZ;
@@ -119,7 +121,7 @@ namespace racer
 					}
 					break;
 				case WEST:
-					yaw = -180;
+					yaw = 180;
 					direction = NORTH;
 					if (previousBlock->GetBlockType() == TrackBlock::TYPE::STRAIGHT)
 					{
@@ -137,6 +139,7 @@ namespace racer
 				{
 				case NORTH:
 					direction = NORTH;
+					yaw = 180;
 					if (previousBlock->GetBlockType() == TrackBlock::TYPE::STRAIGHT)
 					{
 						z = previousBlock->GetPosition()->z - (previousBlock->GetMaxSquareSize() / 2) - (newBlock->GetMaxSquareSize() / 2);
@@ -147,7 +150,7 @@ namespace racer
 					}
 					break;
 				case EAST:
-					yaw = -270;
+					yaw = -90;
 					direction = EAST;
 					if (previousBlock->GetBlockType() == TrackBlock::TYPE::STRAIGHT)
 					{
@@ -160,6 +163,7 @@ namespace racer
 					break;
 				case SOUTH:
 					direction = SOUTH;
+					yaw = 0;
 					if (previousBlock->GetBlockType() == TrackBlock::TYPE::STRAIGHT)
 					{
 						z = previousBlock->GetPosition()->z + (previousBlock->GetMaxSquareSize() / 2) + (newBlock->GetMaxSquareSize() / 2);
@@ -170,7 +174,7 @@ namespace racer
 					}
 					break;
 				case WEST:
-					yaw = -90;
+					yaw = -270;
 					direction = WEST;
 					if (previousBlock->GetBlockType() == TrackBlock::TYPE::STRAIGHT)
 					{
