@@ -58,7 +58,9 @@ namespace pengine
 
 	Skybox::~Skybox()
 	{
-		//d3dMesh->Release();
+		delete material;
+		delete v_buffer;
+		delete i_buffer;
 
 		delete[] aSkyboxVertices;
 		delete[] aSkyboxIndices;

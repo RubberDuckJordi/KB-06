@@ -225,9 +225,6 @@
     <ClInclude Include="EntityCamera.h">
       <Filter>Header\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="Sound.h">
-      <Filter>Header\Resource\Sound</Filter>
-    </ClInclude>
     <ClInclude Include="IndexBufferWrapper.h">
       <Filter>Header\Renderer\Wrap Containers</Filter>
     </ClInclude>
@@ -406,9 +403,6 @@
     </Filter>
     <Filter Include="Source\Renderer\Wrap Containers">
       <UniqueIdentifier>{a8a4c3de-c6dc-4555-a187-5c944c40dacb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header\Resource\Sound">
-      <UniqueIdentifier>{96c78ed4-cdc5-4f8f-87c7-648f3f6e5d85}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header\Resource\RobertX">
       <UniqueIdentifier>{96244d68-507c-4d05-9a8b-f997ad19f385}</UniqueIdentifier>

@@ -16,19 +16,14 @@ namespace pengine
 
 	PEngine::~PEngine()
 	{
-		inputManager->~InputManager();
 		delete inputManager;
 
-		windowManager->~WindowManager();
 		delete windowManager;
 
-		sceneManager->~SceneManager();
 		delete sceneManager;
 
-		renderer->~Renderer();
 		delete renderer;
 
-		resourceManager->~ResourceManager();
 		delete resourceManager;
 
 		logger->Log(Logger::INFO, "Destructed PEngine");

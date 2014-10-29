@@ -31,6 +31,27 @@ namespace pengine
 			delete g_pD3D;
 			g_pD3D = NULL;
 		}
+
+		if (d3dSurface != NULL)
+		{
+			d3dSurface->Release();
+			delete d3dSurface;
+			d3dSurface = NULL;
+		}
+
+		if (surfaceLevel != NULL)
+		{
+			surfaceLevel->Release();
+			delete surfaceLevel;
+			surfaceLevel = NULL;
+		}
+
+		if (backbuffer != NULL)
+		{
+			backbuffer->Release();
+			delete backbuffer;
+			backbuffer = NULL;
+		}
 		logger->Log(Logger::INFO, "DirectXRenderer destructed");
 	}
 

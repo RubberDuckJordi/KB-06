@@ -4,7 +4,6 @@
 
 #include "LoggerPool.h"
 #include "BinaryData.h"
-#include "Sound.h"
 #include "Material.h"
 #include "Ground.h"
 #include "HeightmapLoader.h"
@@ -49,7 +48,6 @@ namespace pengine
 		//std::map<std::string, Mesh> meshes;
 		std::map<std::string, Material> materials;
 		std::map<std::string, BinaryData*> textures;
-		std::map<std::string, Sound> sounds;
 		std::map<std::string, Ground> grounds;
 		std::map<std::string, Shader> shaders;
 		std::map<std::string, Model3D*> models;

@@ -11,6 +11,16 @@ namespace pengine
 
 	ResourceManager::~ResourceManager()
 	{
+		if (sceneLoader != NULL)
+		{
+			delete sceneLoader;
+			sceneLoader = NULL;
+		}
+		if (superXLoader != NULL)
+		{
+			delete superXLoader;
+			superXLoader = NULL;
+		}
 		logger->Log(Logger::INFO, "ResourceManager destructed");
 	}
 
@@ -42,7 +52,7 @@ namespace pengine
 	{
 		Ground* ground = NULL;
 
-		for (std::map<std::string, Ground>::iterator i = grounds.begin(); i != grounds.end(); ++i) 
+		for (std::map<std::string, Ground>::iterator i = grounds.begin(); i != grounds.end(); ++i)
 		{
 			if (i->first == filename)
 			{
@@ -59,7 +69,7 @@ namespace pengine
 
 			grounds[filename] = *ground;
 		}
-		
+
 
 		return ground;
 	}
@@ -181,7 +191,7 @@ namespace pengine
 		{
 			model = models.at(*filePath);
 		}
-		else 
+		else
 		{
 			if (superXLoader == NULL)
 			{

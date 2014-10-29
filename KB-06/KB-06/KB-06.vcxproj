@@ -120,7 +120,6 @@
     <ClInclude Include="SceneLoader.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="Skybox.h" />
-    <ClInclude Include="Sound.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="DefaultScene.h" />
     <ClInclude Include="DefaultSceneFactory.h" />
