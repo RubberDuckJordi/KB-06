@@ -167,8 +167,9 @@ namespace pengine
 		// quadtree's depth can be set by the user when creating the scene
 		int levelOfDetailDepth = ground->GetQuadTreeDepth();
 
-		int widthChunk = (ground->GetWidth() - 1) / (levelOfDetailDepth + 1) * ground->GetCellSize();
-		int depthChunk = (ground->GetHeight() - 1) / (levelOfDetailDepth + 1) * ground->GetCellSize();
+		// Use int() to get rid of the warning - we don't need double percision here.
+		int widthChunk = int((ground->GetWidth() - 1) / (levelOfDetailDepth + 1) * ground->GetCellSize());
+		int depthChunk = int((ground->GetHeight() - 1) / (levelOfDetailDepth + 1) * ground->GetCellSize());
 
 		QuadNode* rootNode = ground->GetQuadTree();
 
@@ -181,12 +182,12 @@ namespace pengine
 				int chunkEndX = widthChunk + i * widthChunk;
 				int chunkEndZ = depthChunk + j * depthChunk;
 
-				GoDeeper(rootNode, chunkStartX, chunkStartZ, chunkEndX, chunkEndZ, levelOfDetailDepth);
+				UpdateLevelOfDetailForArea(rootNode, chunkStartX, chunkStartZ, chunkEndX, chunkEndZ, levelOfDetailDepth);
 			}
 		}
 	}
 
-	void Scene::GoDeeper(QuadNode* node, int chunkStartX, int chunkStartZ, int chunkEndX, int chunkEndZ, int depth)
+	void Scene::UpdateLevelOfDetailForArea(QuadNode* node, int chunkStartX, int chunkStartZ, int chunkEndX, int chunkEndZ, int depth)
 	{
 		// There is no need to go deeper or set the level of distance if the chunk is not within the node's boundaries
 		if ((node->GetMinX() >= chunkEndX || node->GetMaxX() <= chunkStartX) ||
@@ -201,10 +202,10 @@ namespace pengine
 			int chunkPointX = chunkStartX + ((chunkEndX - chunkStartX) / 2);
 			int chunkPointZ = chunkStartZ + ((chunkEndZ - chunkStartZ) / 2);
 
-			int nodePointX = node->GetMinX() + ((node->GetMaxX() - node->GetMinX()) / 2);
-			int nodePointZ = node->GetMinZ() + ((node->GetMaxZ() - node->GetMinZ()) / 2);
+			int nodePointX = int(node->GetMinX() + ((node->GetMaxX() - node->GetMinX()) / 2));
+			int nodePointZ = int(node->GetMinZ() + ((node->GetMaxZ() - node->GetMinZ()) / 2));
 
-			int distance = sqrt(pow(currentCamera->GetPosition()->z - nodePointX, 2) + pow(currentCamera->GetPosition()->x - nodePointZ, 2));
+			int distance = int(sqrt(pow(currentCamera->GetPosition()->z - nodePointX, 2) + pow(currentCamera->GetPosition()->x - nodePointZ, 2)));
 
 			int nodesDistance = distance / (min(chunkEndX - chunkStartX, chunkEndZ - chunkStartZ));
 			node->SetLevelOfDetail(1 << (nodesDistance + 1));
@@ -212,7 +213,7 @@ namespace pengine
 		}
 
 		for (std::map<char, QuadNode*> ::iterator i = node->GetChildren()->begin(); i != node->GetChildren()->end(); ++i) {
-			GoDeeper(i->second, chunkStartX, chunkStartZ, chunkEndX, chunkEndZ, depth - 1);
+			UpdateLevelOfDetailForArea(i->second, chunkStartX, chunkStartZ, chunkEndX, chunkEndZ, depth - 1);
 		}
 	}
 
@@ -281,6 +282,22 @@ namespace pengine
 			ground->Render(renderer);
 		}
 
+		// RenderCollidables(renderer);
+
+		//restore wireframe status
+		if (wireFrameActivated)
+		{
+			renderer->SetFillMode(PENGINE_FILL_WIREFRAME);
+		}
+		else
+		{
+			renderer->SetFillMode(PENGINE_FILL_SOLID);
+		}
+
+	}
+
+	void Scene::RenderCollidables(Renderer* renderer)
+	{
 		renderer->SetFillMode(PENGINE_FILL_WIREFRAME);
 		Material mat;
 		mat.ambient = { 1.0f, 0.0f, 0.0f };
@@ -298,17 +315,6 @@ namespace pengine
 			(*i)->DrawCollidable(renderer);
 		}
 		renderer->SetFillMode(PENGINE_FILL_SOLID);
-
-		//restore wireframe status
-		if (wireFrameActivated)
-		{
-			renderer->SetFillMode(PENGINE_FILL_WIREFRAME);
-		}
-		else
-		{
-			renderer->SetFillMode(PENGINE_FILL_SOLID);
-		}
-
 	}
 
 	EntityCamera* Scene::GetCurrentCamera()

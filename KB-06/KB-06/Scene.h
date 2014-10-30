@@ -50,9 +50,23 @@ namespace pengine
 		int GetAmountOfRenderTextures();
 
 	protected:
-		void GoDeeper(QuadNode* node, int chunkStartX, int chunkStartZ, int chunkEndX, int chunkEndZ, int depth);
-		void ProcessCollision();
+		/*
+		Updates the levelOfDetail attribute for the quadtree.
+		*/
 		void UpdateLevelOfDetail();
+		/*
+		Updates the level of detail for a specific area in the field, defined by chunkStart coordinates.
+		This method is called from Scene::UpdateLevelOfDetail(), and is recursive until it reaches the leafs.
+		*/
+		void UpdateLevelOfDetailForArea(QuadNode* node, int chunkStartX, int chunkStartZ, int chunkEndX, int chunkEndZ, int depth);
+		
+		/*
+		Processes all collision events in the tick. OnCollide() on all colliding objects is called.
+		*/
+		void ProcessCollision();
+
+		// Renders the collisionbox of all collidables in the scene. Used for debugging.
+		void RenderCollidables(Renderer* renderer);
 
 		bool wireFrameActivated;
 		std::list<Entity*> entities;
