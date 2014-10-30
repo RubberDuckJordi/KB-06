@@ -144,6 +144,7 @@ namespace pengine
 		{
 			switch (pText[i])
 			{
+				//All the cases below are OR-like, if ANY of those cases is hit, it'll do sign=true
 			case '0':
 			case '1':
 			case '2':
