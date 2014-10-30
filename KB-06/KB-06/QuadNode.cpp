@@ -38,11 +38,18 @@ namespace pengine
 				for (int i = 0; i < amountOfVertices; ++i)
 				{
 					vertices[i] = &this->vertices[i];
-				}				
+				}
 			}
 			else
 			{
 				int nodeAmountOfVertices = this->amountOfVertices / (levelOfDetail * levelOfDetail);
+				while (nodeAmountOfVertices < 6)
+				{
+					levelOfDetail--;
+					nodeAmountOfVertices = this->amountOfVertices / (levelOfDetail * levelOfDetail);
+					newWidth = width / levelOfDetail;
+					newDepth = depth / levelOfDetail;
+				}
 				Vertex** nodeVertices = new Vertex*[nodeAmountOfVertices]();
 
 				int northRestitchingAmountOfVertices = 0;
@@ -53,9 +60,9 @@ namespace pengine
 				Vertex** southRestitchingVertices = NULL;
 				int westRestitchingAmountOfVertices = 0;
 				Vertex** westRestitchingVertices = NULL;
-				
+
 				int skippedTiles = levelOfDetail - 1;
-				// Divide the vertices by level of detail
+
 				for (int x = 0; x < newWidth; ++x)
 				{
 					int offset = x * newWidth * 6;
@@ -209,7 +216,7 @@ namespace pengine
 		else
 		{
 			int node0AmountOfVertices;
-			Vertex** node0Vertices =children[0]->GetAllChildrenVertices(node0AmountOfVertices);
+			Vertex** node0Vertices = children[0]->GetAllChildrenVertices(node0AmountOfVertices);
 			int node1AmountOfVertices;
 			Vertex** node1Vertices = children[1]->GetAllChildrenVertices(node1AmountOfVertices);
 			int node2AmountOfVertices;
