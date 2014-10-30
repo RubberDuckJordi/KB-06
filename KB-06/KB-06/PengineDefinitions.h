@@ -5,6 +5,7 @@ namespace pengine
 {
 	typedef unsigned char		BYTE;
 	typedef unsigned long       DWORD;
+	typedef const void			*PENGINEVOID;
 
 	// color definitions
 	//typedef BYTE PENGINECOLOR;

@@ -310,5 +310,7 @@ pengine::Scene* racer::RaceSceneFactory::CreateScene()
 
 	raceScene->SetAmountOfRenderTextures(1);
 
+	std::string* shaderp = resourceManager->LoadShaderFile("resources/shaders/shaderp.fx");
+	raceScene->shaderp = shaderp;
 	return raceScene;
 }
