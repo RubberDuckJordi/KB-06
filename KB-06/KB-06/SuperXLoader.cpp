@@ -93,7 +93,7 @@ namespace pengine
 			case X_EBRACE:
 				break; //end of a block ?!
 			case X_FRAME:
-				ProcessBone((Bone*)0);
+				ProcessBone(NULL);
 				break;
 			case X_MESH:
 				ProcessMesh();

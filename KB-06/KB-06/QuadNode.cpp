@@ -242,6 +242,8 @@ namespace pengine
 			{
 				vertices[offset + i] = node3Vertices[i];
 			}
+
+			delete[] node0Vertices;
 		}
 	}
 
