@@ -21,8 +21,10 @@ namespace pengine
 		}
 	}
 
-	void QuadNode::GetAllChildrenVertices(Vertex*& vertices, int& amountOfVertices)
+	Vertex** QuadNode::GetAllChildrenVertices(int& amountOfVertices)
 	{
+		Vertex** vertices;
+
 		if (isLeaf)
 		{
 			int newWidth = width / levelOfDetail;
@@ -31,22 +33,26 @@ namespace pengine
 			if (levelOfDetail == 1)
 			{
 				// No changes
-				vertices = this->vertices;
 				amountOfVertices = this->amountOfVertices;
+				vertices = new Vertex*[amountOfVertices];
+				for (int i = 0; i < amountOfVertices; ++i)
+				{
+					vertices[i] = &this->vertices[i];
+				}				
 			}
 			else
 			{
 				int nodeAmountOfVertices = this->amountOfVertices / (levelOfDetail * levelOfDetail);
-				Vertex* nodeVertices = new Vertex[nodeAmountOfVertices]();
+				Vertex** nodeVertices = new Vertex*[nodeAmountOfVertices]();
 
 				int northRestitchingAmountOfVertices = 0;
-				Vertex* northRestitchingVertices = NULL;
+				Vertex** northRestitchingVertices = NULL;
 				int eastRestitchingAmountOfVertices = 0;
-				Vertex* eastRestitchingVertices = NULL;
+				Vertex** eastRestitchingVertices = NULL;
 				int southRestitchingAmountOfVertices = 0;
-				Vertex* southRestitchingVertices = NULL;
+				Vertex** southRestitchingVertices = NULL;
 				int westRestitchingAmountOfVertices = 0;
-				Vertex* westRestitchingVertices = NULL;
+				Vertex** westRestitchingVertices = NULL;
 				
 				int skippedTiles = levelOfDetail - 1;
 				// Divide the vertices by level of detail
@@ -56,12 +62,12 @@ namespace pengine
 
 					for (int z = 0; z < newDepth; ++z)
 					{
-						nodeVertices[offset + z * 6] = this->vertices[(x * levelOfDetail + skippedTiles) * width * 6 + (z + z * skippedTiles) * 6];
-						nodeVertices[offset + z * 6 + 1] = this->vertices[(x + x * skippedTiles) * width * 6 + (z * levelOfDetail + skippedTiles) * 6 + 1];
-						nodeVertices[offset + z * 6 + 2] = this->vertices[(x + x * skippedTiles) * width * 6 + (z + z * skippedTiles) * 6 + 2];
-						nodeVertices[offset + z * 6 + 3] = this->vertices[(x * levelOfDetail + skippedTiles) * width * 6 + (z * levelOfDetail + skippedTiles) * 6 + 3];
-						nodeVertices[offset + z * 6 + 4] = this->vertices[(x + x * skippedTiles) * width * 6 + (z * levelOfDetail + skippedTiles) * 6 + 4];
-						nodeVertices[offset + z * 6 + 5] = this->vertices[(x * levelOfDetail + skippedTiles) * width * 6 + (z + z * skippedTiles) * 6 + 5];
+						nodeVertices[offset + z * 6] = &this->vertices[(x * levelOfDetail + skippedTiles) * width * 6 + (z + z * skippedTiles) * 6];
+						nodeVertices[offset + z * 6 + 1] = &this->vertices[(x + x * skippedTiles) * width * 6 + (z * levelOfDetail + skippedTiles) * 6 + 1];
+						nodeVertices[offset + z * 6 + 2] = &this->vertices[(x + x * skippedTiles) * width * 6 + (z + z * skippedTiles) * 6 + 2];
+						nodeVertices[offset + z * 6 + 3] = &this->vertices[(x * levelOfDetail + skippedTiles) * width * 6 + (z * levelOfDetail + skippedTiles) * 6 + 3];
+						nodeVertices[offset + z * 6 + 4] = &this->vertices[(x + x * skippedTiles) * width * 6 + (z * levelOfDetail + skippedTiles) * 6 + 4];
+						nodeVertices[offset + z * 6 + 5] = &this->vertices[(x * levelOfDetail + skippedTiles) * width * 6 + (z + z * skippedTiles) * 6 + 5];
 					}
 				}
 
@@ -74,7 +80,7 @@ namespace pengine
 					if (neighborLevelOfDetail < levelOfDetail)
 					{
 						northRestitchingAmountOfVertices = 3 * newDepth;
-						northRestitchingVertices = new Vertex[northRestitchingAmountOfVertices];
+						northRestitchingVertices = new Vertex*[northRestitchingAmountOfVertices];
 
 						int neighborSkippedTiles = neighborLevelOfDetail - 1;
 						int x = newWidth - 1; // only process north border
@@ -82,9 +88,9 @@ namespace pengine
 						for (int z = 0; z < newDepth; ++z)
 						{
 							int offset = z * 3;
-							northRestitchingVertices[offset] = this->vertices[(x * levelOfDetail + skippedTiles) * width * 6 + (z * levelOfDetail + skippedTiles) * 6 + 3];
-							northRestitchingVertices[offset + 1] = this->vertices[(x * levelOfDetail + skippedTiles) * width * 6 + (z * levelOfDetail - neighborSkippedTiles) * 6];
-							northRestitchingVertices[offset + 2] = this->vertices[(x * levelOfDetail + skippedTiles) * width * 6 + (z * levelOfDetail + skippedTiles - neighborSkippedTiles) * 6]; // relative to the first vertex
+							northRestitchingVertices[offset] = &this->vertices[(x * levelOfDetail + skippedTiles) * width * 6 + (z * levelOfDetail + skippedTiles) * 6 + 3];
+							northRestitchingVertices[offset + 1] = &this->vertices[(x * levelOfDetail + skippedTiles) * width * 6 + (z * levelOfDetail - neighborSkippedTiles) * 6];
+							northRestitchingVertices[offset + 2] = &this->vertices[(x * levelOfDetail + skippedTiles) * width * 6 + (z * levelOfDetail + skippedTiles - neighborSkippedTiles) * 6]; // relative to the first vertex
 						}
 					}
 				}
@@ -97,7 +103,7 @@ namespace pengine
 					if (neighborLevelOfDetail < levelOfDetail)
 					{
 						eastRestitchingAmountOfVertices = 3 * newWidth;
-						eastRestitchingVertices = new Vertex[eastRestitchingAmountOfVertices];
+						eastRestitchingVertices = new Vertex*[eastRestitchingAmountOfVertices];
 
 						int neighborSkippedTiles = neighborLevelOfDetail - 1;
 						int z = newDepth - 1; // only process east border
@@ -105,9 +111,9 @@ namespace pengine
 						for (int x = 0; x < newWidth; ++x)
 						{
 							int offset = x * 3;
-							eastRestitchingVertices[offset] = this->vertices[(x * levelOfDetail + skippedTiles) * width * 6 + (z * levelOfDetail + skippedTiles) * 6 + 3];
-							eastRestitchingVertices[offset + 1] = this->vertices[(x + x * skippedTiles + neighborLevelOfDetail) * width * 6 + (z * levelOfDetail + skippedTiles) * 6 + 4];
-							eastRestitchingVertices[offset + 2] = this->vertices[(x + x * skippedTiles) * width * 6 + (z * levelOfDetail + skippedTiles) * 6 + 4];
+							eastRestitchingVertices[offset] = &this->vertices[(x * levelOfDetail + skippedTiles) * width * 6 + (z * levelOfDetail + skippedTiles) * 6 + 3];
+							eastRestitchingVertices[offset + 1] = &this->vertices[(x + x * skippedTiles + neighborLevelOfDetail) * width * 6 + (z * levelOfDetail + skippedTiles) * 6 + 4];
+							eastRestitchingVertices[offset + 2] = &this->vertices[(x + x * skippedTiles) * width * 6 + (z * levelOfDetail + skippedTiles) * 6 + 4];
 						}
 					}
 				}
@@ -120,7 +126,7 @@ namespace pengine
 					if (neighborLevelOfDetail < levelOfDetail)
 					{
 						southRestitchingAmountOfVertices = 3 * newDepth;
-						southRestitchingVertices = new Vertex[southRestitchingAmountOfVertices];
+						southRestitchingVertices = new Vertex*[southRestitchingAmountOfVertices];
 
 						int neighborSkippedTiles = neighborLevelOfDetail - 1;
 						int x = 0; // only process south border
@@ -129,9 +135,9 @@ namespace pengine
 						{
 							int offset = z * 3;
 
-							southRestitchingVertices[offset] = this->vertices[(x + x * skippedTiles) * width * 6 + (z + z * skippedTiles + neighborLevelOfDetail) * 6 + 2];
-							southRestitchingVertices[offset + 1] = this->vertices[(x + x * skippedTiles) * width * 6 + (z * levelOfDetail + skippedTiles) * 6 + 1];
-							southRestitchingVertices[offset + 2] = this->vertices[(x + x * skippedTiles) * width * 6 + (z + z * skippedTiles) * 6 + 2];
+							southRestitchingVertices[offset] = &this->vertices[(x + x * skippedTiles) * width * 6 + (z + z * skippedTiles + neighborLevelOfDetail) * 6 + 2];
+							southRestitchingVertices[offset + 1] = &this->vertices[(x + x * skippedTiles) * width * 6 + (z * levelOfDetail + skippedTiles) * 6 + 1];
+							southRestitchingVertices[offset + 2] = &this->vertices[(x + x * skippedTiles) * width * 6 + (z + z * skippedTiles) * 6 + 2];
 						}
 					}
 				}
@@ -144,7 +150,7 @@ namespace pengine
 					if (neighborLevelOfDetail < levelOfDetail)
 					{
 						westRestitchingAmountOfVertices = 3 * newWidth;
-						westRestitchingVertices = new Vertex[westRestitchingAmountOfVertices];
+						westRestitchingVertices = new Vertex*[westRestitchingAmountOfVertices];
 
 						int neighborSkippedTiles = neighborLevelOfDetail - 1;
 						int z = 0; // only process west border
@@ -152,16 +158,16 @@ namespace pengine
 						for (int x = 0; x < newWidth; ++x)
 						{
 							int offset = x * 3;
-							westRestitchingVertices[offset] = this->vertices[(x * levelOfDetail + skippedTiles) * width * 6 + (z + z * skippedTiles) * 6];
-							westRestitchingVertices[offset + 1] = this->vertices[(x + x * skippedTiles + neighborLevelOfDetail) * width * 6 + (z + z * skippedTiles) * 6 + 2];
-							westRestitchingVertices[offset + 2] = this->vertices[(x + x * skippedTiles) * width * 6 + (z + z * skippedTiles) * 6 + 2];
+							westRestitchingVertices[offset] = &this->vertices[(x * levelOfDetail + skippedTiles) * width * 6 + (z + z * skippedTiles) * 6];
+							westRestitchingVertices[offset + 1] = &this->vertices[(x + x * skippedTiles + neighborLevelOfDetail) * width * 6 + (z + z * skippedTiles) * 6 + 2];
+							westRestitchingVertices[offset + 2] = &this->vertices[(x + x * skippedTiles) * width * 6 + (z + z * skippedTiles) * 6 + 2];
 						}
 					}
 				}
 
 				// Add vertices together in one array -- probably requires refactoring with memcpy :)
 				amountOfVertices = nodeAmountOfVertices + northRestitchingAmountOfVertices + eastRestitchingAmountOfVertices + southRestitchingAmountOfVertices + westRestitchingAmountOfVertices;
-				vertices = new Vertex[amountOfVertices];
+				vertices = new Vertex*[amountOfVertices];
 				int offset = 0;
 
 				for (int i = 0; i < nodeAmountOfVertices; ++i)
@@ -202,22 +208,18 @@ namespace pengine
 		}
 		else
 		{
-			Vertex* node0Vertices;
 			int node0AmountOfVertices;
-			children[0]->GetAllChildrenVertices(node0Vertices, node0AmountOfVertices);
-			Vertex* node1Vertices;
+			Vertex** node0Vertices =children[0]->GetAllChildrenVertices(node0AmountOfVertices);
 			int node1AmountOfVertices;
-			children[1]->GetAllChildrenVertices(node1Vertices, node1AmountOfVertices);
-			Vertex* node2Vertices;
+			Vertex** node1Vertices = children[1]->GetAllChildrenVertices(node1AmountOfVertices);
 			int node2AmountOfVertices;
-			children[2]->GetAllChildrenVertices(node2Vertices, node2AmountOfVertices);
-			Vertex* node3Vertices;
+			Vertex** node2Vertices = children[2]->GetAllChildrenVertices(node2AmountOfVertices);
 			int node3AmountOfVertices;
-			children[3]->GetAllChildrenVertices(node3Vertices, node3AmountOfVertices);
+			Vertex** node3Vertices = children[3]->GetAllChildrenVertices(node3AmountOfVertices);
 
 			// Add arrays together
 			amountOfVertices = node0AmountOfVertices + node1AmountOfVertices + node2AmountOfVertices + node3AmountOfVertices;
-			vertices = new Vertex[amountOfVertices];
+			vertices = new Vertex*[amountOfVertices];
 
 			int offset = 0;
 			for (int i = 0; i < node0AmountOfVertices; ++i)
@@ -242,7 +244,14 @@ namespace pengine
 			{
 				vertices[offset + i] = node3Vertices[i];
 			}
+
+			delete[] node0Vertices;
+			delete[] node1Vertices;
+			delete[] node2Vertices;
+			delete[] node3Vertices;
 		}
+
+		return vertices;
 	}
 
 	QuadNode* QuadNode::GetParent()

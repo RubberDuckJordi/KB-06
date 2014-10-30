@@ -117,9 +117,8 @@ namespace pengine
 
 	void Ground::Render(Renderer* renderer)
 	{
-		Vertex* vertices;
 		int amountOfVertices;
-		quadTreeRootNode->GetAllChildrenVertices(vertices, amountOfVertices);
+		Vertex** vertices = quadTreeRootNode->GetAllChildrenVertices(amountOfVertices);
 
 		// If the camera is too far away, the vertices array will be empty
 		if (amountOfVertices != 0)
@@ -129,11 +128,19 @@ namespace pengine
 				delete vertexBuffer;
 			}
 
-			vertexBuffer = renderer->CreateVertexBuffer(vertices, amountOfVertices);
+			// dereference all pointers :'(
+			Vertex* verticesArray = new Vertex[amountOfVertices];
+			for (int i = 0; i < amountOfVertices; ++i)
+			{
+				verticesArray[i] = *vertices[i];
+			}
+
+			vertexBuffer = renderer->CreateVertexBuffer(verticesArray, amountOfVertices);
 			renderer->SetActiveMatrix(location);
 			renderer->SetMaterial(material);
-
 			renderer->DrawVertexBuffer(vertexBuffer);
+
+			delete[] verticesArray;
 		}
 
 		delete[] vertices;
@@ -174,9 +181,6 @@ namespace pengine
 
 		rootNode->name = "root";
 		CreateQuadTreeChildren(rootNode, depth);
-
-		rootNode->SetLevelOfDetail(1);
-		(*rootNode->GetChildren())[3]->SetLevelOfDetail(2);
 
 		// Calculate neighbors
 		if (!rootNode->IsLeaf())
