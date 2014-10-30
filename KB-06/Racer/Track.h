@@ -19,7 +19,7 @@ namespace racer
 		void CacheToRenderer(pengine::Renderer* renderer);
 	private:
 		std::list<TrackBlock*> trackBlocks;
-		float offsetX = 0.0f;
+		float offsetX = -100.0f;
 		float offsetY = 0.0f;
 		float offsetZ = 0.0f;
 	};

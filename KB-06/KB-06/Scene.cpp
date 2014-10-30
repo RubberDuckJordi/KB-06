@@ -167,8 +167,8 @@ namespace pengine
 		// quadtree's depth can be set by the user when creating the scene
 		int levelOfDetailDepth = ground->GetQuadTreeDepth();
 
-		int widthChunk = (ground->GetWidth() - 1) / (levelOfDetailDepth + 1);
-		int depthChunk = (ground->GetHeight() - 1) / (levelOfDetailDepth + 1);
+		int widthChunk = (ground->GetWidth() - 1) / (levelOfDetailDepth + 1) * ground->GetCellSize();
+		int depthChunk = (ground->GetHeight() - 1) / (levelOfDetailDepth + 1) * ground->GetCellSize();
 
 		QuadNode* rootNode = ground->GetQuadTree();
 
