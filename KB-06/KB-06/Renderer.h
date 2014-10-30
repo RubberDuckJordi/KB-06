@@ -15,6 +15,7 @@
 
 namespace pengine
 {
+	typedef unsigned int __w64	PENGINEHANDLE;
 	class Renderer
 	{
 	public:
@@ -82,11 +83,80 @@ namespace pengine
 
 		/*!
 		Allows you to put a texture in the renderer's cache, failing to do
-		this for a texture will result in a crash!
+		this for a texture will result in undefined behaviour!
 		Fortunately, the PEngine will do this for every texture loaded
 		by the resource manager.
 		*/
 		virtual void CacheTexture(BinaryData* textureInRam) = 0;
+
+		/*!
+		Caches the given shaderp in text to the renderer.
+		This will (depending on the renderer) compile the shaderp for the specific
+		graphics card.
+		*/
+		virtual void CacheShaderp(std::string* shaderpInTextInRam) = 0;
+
+		/*!
+		Sets the current shader to the given shader.
+		Note that you still have to call 'BeginRenderingWithShaderp'.
+		*/
+		virtual void SetShaderp(std::string* shaderp) = 0;
+
+		/*!
+		Getting a parameter handle once speeds things up when you need to set
+		the value for the parameter.
+		*/
+		virtual PENGINEHANDLE GetShaderpParameterHandle(char* parameterName) = 0;
+
+		/*!
+		Getting a technique handle once speeds things up when you need to set
+		the techique.
+		*/
+		virtual PENGINEHANDLE GetShaderpTechniqueHandle(char* techniqueName) = 0;
+
+		/*!
+		Sets the active technique to the given technique
+		*/
+		virtual void SetShaderpTechnique(PENGINEHANDLE technique) = 0;
+
+		/*!
+		The 'passes' parameter will be filled with the amount of passes in the
+		currently active technique. It's up to you if you want to render with
+		all the passes.
+		*/
+		virtual void BeginRenderingWithShaderp(unsigned int* passes) = 0;
+
+		/*!
+		Begins rendering with the specified pass.
+		*/
+		virtual void BeginRenderingWithPass(unsigned int pass) = 0;
+
+		/*!
+		Throws the given data in the parameter of the given shader.
+		*/
+		virtual void SetShaderpValue(PENGINEHANDLE handleToParameter, PENGINEVOID data, unsigned int sizeInBytes) = 0;
+
+		/*!
+		Throws the given matrix in the parameter of the given shader, you can get
+		the parameter handle to the desired matrix with GetShaderpParameterHandle.
+		*/
+		virtual void SetShaderpMatrix(PENGINEHANDLE handleToParameter, Matrix* data) = 0;
+
+		/*!
+		Updates changes to any 'set' calls in the pass. This should be called before
+		any drawing call and after you have set all changes for the current pass.
+		Basically, you do not need to call CommitChanges if you are not setting any parameters
+		between the BeginRenderingWithPass and EndRenderingPass.
+		*/
+		virtual void CommitChanges() = 0;
+
+		/*!
+		Ends rendering with the specified pass, should be called before beginning
+		with a new pass.
+		*/
+		virtual void EndRenderingPass() = 0;
+
+		virtual void EndRenderingWithShaderp() = 0;
 
 	protected:
 		Logger* logger;

@@ -1,5 +1,4 @@
 #include "RaceScene.h"
-#include <DirectXRenderer.h>
 
 racer::RaceScene::RaceScene()
 {
@@ -138,8 +137,40 @@ void racer::RaceScene::Render(pengine::Renderer* renderer)
 	{
 		renderer->DrawString("Victory!\n" +std::to_string(elapsedTime), D3DCOLOR_ARGB(0, 100, 255, 100));
 	}
-	
 
+	renderer->SetShaderp(shaderp);
+	pengine::Matrix mWorld;
+	pengine::Matrix::CreateMatrix(-100, 140, 0, -90, 0, 0, 10, 10, 10, &mWorld);
+	pengine::Matrix mProj = *GetCurrentCamera()->GetProjectionMatrix();
+	pengine::Matrix mView = *GetCurrentCamera()->GetViewMatrix();
+	pengine::Matrix mWorldViewProjection = mWorld * mView * mProj;
+	
+	renderer->SetShaderpMatrix(renderer->GetShaderpParameterHandle("g_mWorldViewProjection"), &mWorldViewProjection);
+	renderer->SetShaderpMatrix(renderer->GetShaderpParameterHandle("g_mWorld"), &mWorld);
+
+	D3DXCOLOR lowGrey = D3DXCOLOR(0.1f, 1.0f, 0.1f, 1.0f);
+	renderer->SetShaderpValue(renderer->GetShaderpParameterHandle("g_MaterialAmbientColor"), &lowGrey, sizeof(D3DXCOLOR));
+
+	D3DXCOLOR white = D3DXCOLOR(0.1f, 0.1f, 0.1f, 1.0f);
+	renderer->SetShaderpValue(renderer->GetShaderpParameterHandle("g_LightDiffuse"), &white, sizeof(D3DXCOLOR));
+	renderer->SetShaderpValue(renderer->GetShaderpParameterHandle("g_MaterialDiffuseColor"), &white, sizeof(D3DXCOLOR));
+
+	D3DXVECTOR3 lightDir = D3DXVECTOR3(sinf(D3DX_PI * 2 * 1 / 1 - D3DX_PI / 6), 0, -cosf(D3DX_PI * 2 * 1 / 1 - D3DX_PI / 6));
+	renderer->SetShaderpValue(renderer->GetShaderpParameterHandle("g_LightDir"), &lightDir, sizeof(D3DXVECTOR3));
+
+	renderer->SetShaderpTechnique(renderer->GetShaderpTechniqueHandle("RenderScene"));
+
+	UINT cPasses, iPass;
+	renderer->BeginRenderingWithShaderp(&cPasses);
+
+	for (iPass = 0; iPass < cPasses; iPass++)
+	{
+		renderer->BeginRenderingWithPass(iPass);
+		//do all them renderings... tricky
+		renderer->DrawString("Hello shaderps!", D3DCOLOR_ARGB(0, 255, 0, 0));
+		renderer->EndRenderingPass();
+	}
+	renderer->EndRenderingWithShaderp();
 	//pengine::Material mat;
 	//mat.texture = NULL;
 	//mat.ambient = { 0.0f, 0.0f, 0.0f };

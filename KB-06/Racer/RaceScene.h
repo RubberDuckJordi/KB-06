@@ -17,6 +17,7 @@ namespace racer
 		void RenderToTexture(int texture, pengine::Renderer* renderer);
 		void Render(pengine::Renderer* renderer);
 
+		std::string* shaderp;
 	private:
 		bool loss;
 		bool win;

@@ -82,10 +82,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="BasePowerup.cpp" />
-    <ClCompile Include="Event.cpp" />
-    <ClCompile Include="EventListener.h" />
-    <ClCompile Include="EventManager.cpp" />
     <ClCompile Include="RaceCart.cpp" />
     <ClCompile Include="Racer.cpp" />
     <ClCompile Include="RaceScene.cpp" />
@@ -94,9 +90,6 @@
     <ClCompile Include="TrackBlock.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="BasePowerup.h" />
-    <ClInclude Include="Event.h" />
-    <ClInclude Include="EventManager.h" />
     <ClInclude Include="RaceCart.h" />
     <ClInclude Include="RaceScene.h" />
     <ClInclude Include="RaceSceneFactory.h" />

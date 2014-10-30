@@ -58,7 +58,7 @@ namespace pengine
 		void SetLocation(char location);
 
 		// Returns terrain vertices of all children
-		void GetAllChildrenVertices(Vertex*& vertices, int& amountOfVertices);
+		Vertex** GetAllChildrenVertices(int& amountOfVertices);
 		void CalculateNeighbors(unsigned short recursionLevel);
 
 	private:

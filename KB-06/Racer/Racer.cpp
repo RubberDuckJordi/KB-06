@@ -10,7 +10,6 @@
 
 #include "Object3D.h"
 #include "SuperXLoader.h"
-#include "EventManager.h"
 
 int main(int argc, const char* argv[])
 {
@@ -36,20 +35,6 @@ int main(int argc, const char* argv[])
 	scene->CacheToRenderer(pEngine.GetRenderer());
 	pEngine.GetResourceManager()->CacheToRenderer(pEngine.GetRenderer());
 	//!!!WE ARE MANAGING A SCENE OUTSIDE THE SCENE MANAGER!!!
-
-
-	// <EventManager voorbeeld>
-	EventManager* eventManager = new EventManager();
-	eventManager->CreateNewEvent("event");
-	class Iets : public EventListener {
-		void ProcEvent(std::string name){
-			std::cout << "Event prov example" << std::endl;
-		}
-	};
-	Iets* iets = new Iets();
-	eventManager->Subscribe("event", iets);
-	eventManager->Proc("event");
-	// </EventManager voorbeeld>
 
 
 	pEngine.SetCurrentScene(scene);

@@ -232,8 +232,8 @@ pengine::Scene* racer::RaceSceneFactory::CreateScene()
 	TrackBlock* block20 = track->AddTrackBlock(TrackBlock::TYPE::RIGHT, trackCurved);
 	TrackBlock* block21 = track->AddTrackBlock(TrackBlock::TYPE::RIGHT, trackCurved);
 
-	pengine::Ground* ground = resourceManager->LoadGround(groundResource, groundTexture);
-	ground->InitQuadTree(1);
+	pengine::Ground* ground = resourceManager->LoadGround(groundResource, groundTexture, 3);
+	ground->InitQuadTree(2);
 	pengine::Skybox* skybox = new pengine::Skybox();
 	pengine::Material* material = new pengine::Material();
 	material->texture = resourceManager->LoadBinaryFile(skyboxTexture);
@@ -310,5 +310,7 @@ pengine::Scene* racer::RaceSceneFactory::CreateScene()
 
 	raceScene->SetAmountOfRenderTextures(1);
 
+	std::string* shaderp = resourceManager->LoadShaderFile("resources/shaders/shaderp.fx");
+	raceScene->shaderp = shaderp;
 	return raceScene;
 }

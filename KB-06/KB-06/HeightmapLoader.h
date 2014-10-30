@@ -13,7 +13,7 @@ namespace pengine
 	public:
 		HeightmapLoader();
 		~HeightmapLoader();
-		Ground* LoadHeightmap(std::string filename);
+		Ground* LoadHeightmap(std::string filename, float cellSize);
 
 	private:
 		char* m_bitmapData;

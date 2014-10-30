@@ -14,6 +14,7 @@ namespace pengine
 		g_pd3dDevice = NULL;
 		matrixCache = new D3DXMATRIX();
 		//d2dBmp = NULL;
+		currentlyActiveShaderp = NULL;
 	}
 
 	DirectXRenderer::~DirectXRenderer()
@@ -762,12 +763,12 @@ namespace pengine
 				vertices[(i - iOffset) * 4 + 2] = ColoredVertex(minWidth + (currentX * 1.1f), maxHeight - (currentY * 1.1f) + 1.0f, 0.0f, 0.0f, 0.0f, 1.0f, color, textureWidthPerCharacter, 0.0f);//TL
 				vertices[(i - iOffset) * 4 + 3] = ColoredVertex(minWidth + (currentX * 1.1f) + 1, maxHeight - (currentY * 1.1f) + 1.0f, 0.0f, 0.0f, 0.0f, 1.0f, color, textureWidthPerCharacter, 0.0f);//TR
 
-				indices[(i - iOffset) * 6 + 0] = (i - iOffset) * 4 + 0;
-				indices[(i - iOffset) * 6 + 1] = (i - iOffset) * 4 + 1;
-				indices[(i - iOffset) * 6 + 2] = (i - iOffset) * 4 + 2;//BL->BR->TL
-				indices[(i - iOffset) * 6 + 3] = (i - iOffset) * 4 + 2;
-				indices[(i - iOffset) * 6 + 4] = (i - iOffset) * 4 + 1;
-				indices[(i - iOffset) * 6 + 5] = (i - iOffset) * 4 + 3;//TL->BR->TR
+				indices[(i - iOffset) * 6 + 1] = (i - iOffset) * 4 + 0;
+				indices[(i - iOffset) * 6 + 0] = (i - iOffset) * 4 + 1;
+				indices[(i - iOffset) * 6 + 3] = (i - iOffset) * 4 + 2;//BL->BR->TL
+				indices[(i - iOffset) * 6 + 2] = (i - iOffset) * 4 + 2;
+				indices[(i - iOffset) * 6 + 5] = (i - iOffset) * 4 + 1;
+				indices[(i - iOffset) * 6 + 4] = (i - iOffset) * 4 + 3;//TL->BR->TR
 
 				vertices[(i - iOffset) * 4 + 0].tu *= charIndex;
 				vertices[(i - iOffset) * 4 + 1].tu *= charIndex;
@@ -810,5 +811,69 @@ namespace pengine
 			textureCache[textureInRam] = d3DTexture;
 			//logger->LogAll(Logger::DEBUG, "Texture \"", material->texturePath, "\" converted to LPDIRECT3DTEXTURE9.");
 		}
+	}
+
+	void DirectXRenderer::CacheShaderp(std::string* shaderpInText)
+	{
+		ID3DXEffect* shaderpToAdd = NULL;
+		DWORD Flags = D3DXFX_NOT_CLONEABLE;
+		D3DXCreateEffect(g_pd3dDevice, shaderpInText->c_str(), shaderpInText->size(), NULL, NULL, Flags, NULL, &shaderpToAdd, NULL);
+		shaderpCache[shaderpInText] = shaderpToAdd;
+	}
+
+	void DirectXRenderer::SetShaderp(std::string* shaderp)
+	{
+		currentlyActiveShaderp = shaderpCache[shaderp];
+	}
+
+	PENGINEHANDLE DirectXRenderer::GetShaderpParameterHandle(char* parameterName)
+	{
+		return (PENGINEHANDLE)currentlyActiveShaderp->GetParameterByName(NULL, parameterName);
+	}
+
+	PENGINEHANDLE DirectXRenderer::GetShaderpTechniqueHandle(char* techniqueName)
+	{
+		return (PENGINEHANDLE)currentlyActiveShaderp->GetTechniqueByName(techniqueName);
+	}
+
+	void DirectXRenderer::SetShaderpTechnique(PENGINEHANDLE technique)
+	{
+		currentlyActiveShaderp->SetTechnique((D3DXHANDLE)technique);
+	}
+
+	void DirectXRenderer::BeginRenderingWithShaderp(unsigned int* passes)
+	{
+		currentlyActiveShaderp->Begin(passes, 0);
+	}
+
+	void DirectXRenderer::BeginRenderingWithPass( unsigned int pass)
+	{
+		currentlyActiveShaderp->BeginPass(pass);
+	}
+
+	void DirectXRenderer::SetShaderpValue(PENGINEHANDLE handleToParameter, PENGINEVOID data, unsigned int sizeInBytes)
+	{
+		currentlyActiveShaderp->SetValue((D3DXHANDLE)handleToParameter, data, sizeInBytes);
+	}
+
+	void DirectXRenderer::SetShaderpMatrix(PENGINEHANDLE handleToMatrix, Matrix* matrix)
+	{
+		SetMatrixCache(matrix);
+		currentlyActiveShaderp->SetMatrix((D3DXHANDLE)handleToMatrix, matrixCache);
+	}
+
+	void DirectXRenderer::CommitChanges()
+	{
+		currentlyActiveShaderp->CommitChanges();
+	}
+
+	void DirectXRenderer::EndRenderingPass()
+	{
+		currentlyActiveShaderp->EndPass();
+	}
+
+	void DirectXRenderer::EndRenderingWithShaderp()
+	{
+		currentlyActiveShaderp->End();
 	}
 }

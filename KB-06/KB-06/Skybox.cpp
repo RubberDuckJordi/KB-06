@@ -15,30 +15,30 @@ namespace pengine
 		aSkyboxVertices = new Vertex[amountOfVertices]();
 		//!!!VERTEX NORMALS ARE NOT RIGHT YET!!!
 		//(could also set a different shaderp for the skybox, I guess)
-		aSkyboxVertices[0] = Vertex(-50.0f, -50.0f, 50.0f, 0.0f, 0.0f, 0.0f, 0.25f, 0.6666f);//front
-		aSkyboxVertices[1] = Vertex(50.0f, -50.0f, 50.0f, 0.0f, 0.0f, 0.0f, 0.50f, 0.6666f);
-		aSkyboxVertices[2] = Vertex(50.0f, 50.0f, 50.0f, 0.0f, 0.0f, 0.0f, 0.50f, 0.3333f);
-		aSkyboxVertices[3] = Vertex(-50.0f, 50.0f, 50.0f, 0.0f, 0.0f, 0.0f, 0.25f, 0.3333f);
-		aSkyboxVertices[4] = Vertex(50.0f, -50.0f, 50.0f, 0.0f, 0.0f, 0.0f, 0.50f, 0.6666f);//right
-		aSkyboxVertices[5] = Vertex(50.0f, -50.0f, -50.0f, 0.0f, 0.0f, 0.0f, 0.75f, 0.6666f);
-		aSkyboxVertices[6] = Vertex(50.0f, 50.0f, -50.0f, 0.0f, 0.0f, 0.0f, 0.75f, 0.3333f);
-		aSkyboxVertices[7] = Vertex(50.0f, 50.0f, 50.0f, 0.0f, 0.0f, 0.0f, 0.50f, 0.3333f);
-		aSkyboxVertices[8] = Vertex(50.0f, -50.0f, -50.0f, 0.0f, 0.0f, 0.0f, 0.75f, 0.6666f);//back
-		aSkyboxVertices[9] = Vertex(-50.0f, -50.0f, -50.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.6666f);
-		aSkyboxVertices[10] = Vertex(-50.0f, 50.0f, -50.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.3333f);
-		aSkyboxVertices[11] = Vertex(50.0f, 50.0f, -50.0f, 0.0f, 0.0f, 0.0f, 0.75f, 0.3333f);
-		aSkyboxVertices[12] = Vertex(-50.0f, -50.0f, -50.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.6666f);//left
-		aSkyboxVertices[13] = Vertex(-50.0f, -50.0f, 50.0f, 0.0f, 0.0f, 0.0f, 0.25f, 0.6666f);
-		aSkyboxVertices[14] = Vertex(-50.0f, 50.0f, 50.0f, 0.0f, 0.0f, 0.0f, 0.25f, 0.3333f);
-		aSkyboxVertices[15] = Vertex(-50.0f, 50.0f, -50.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.3333f);
-		aSkyboxVertices[16] = Vertex(-50.0f, 50.0f, 50.0f, 0.0f, 0.0f, 0.0f, 0.25f, 0.3333f);//top
-		aSkyboxVertices[17] = Vertex(50.0f, 50.0f, 50.0f, 0.0f, 0.0f, 0.0f, 0.50f, 0.3333f);
-		aSkyboxVertices[18] = Vertex(50.0f, 50.0f, -50.0f, 0.0f, 0.0f, 0.0f, 0.50f, 0.0f);
-		aSkyboxVertices[19] = Vertex(-50.0f, 50.0f, -50.0f, 0.0f, 0.0f, 0.0f, 0.25f, 0.0f);
-		aSkyboxVertices[20] = Vertex(-50.0f, -50.0f, 50.0f, 0.0f, 0.0f, 0.0f, 0.25f, 0.6666f);//bottom
-		aSkyboxVertices[21] = Vertex(50.0f, -50.0f, 50.0f, 0.0f, 0.0f, 0.0f, 0.50f, 0.6666f);
-		aSkyboxVertices[22] = Vertex(50.0f, -50.0f, -50.0f, 0.0f, 0.0f, 0.0f, 0.50f, 1.0f);
-		aSkyboxVertices[23] = Vertex(-50.0f, -50.0f, -50.0f, 0.0f, 0.0f, 0.0f, 0.25f, 1.0f);
+		aSkyboxVertices[0] = Vertex(-2.0f, -2.0f, 2.0f, 0.0f, 0.0f, 0.0f, 0.25f, 0.6666f);//front
+		aSkyboxVertices[1] = Vertex(2.0f, -2.0f, 2.0f, 0.0f, 0.0f, 0.0f, 0.50f, 0.6666f);
+		aSkyboxVertices[2] = Vertex(2.0f, 2.0f, 2.0f, 0.0f, 0.0f, 0.0f, 0.50f, 0.3333f);
+		aSkyboxVertices[3] = Vertex(-2.0f, 2.0f, 2.0f, 0.0f, 0.0f, 0.0f, 0.25f, 0.3333f);
+		aSkyboxVertices[4] = Vertex(2.0f, -2.0f, 2.0f, 0.0f, 0.0f, 0.0f, 0.50f, 0.6666f);//right
+		aSkyboxVertices[5] = Vertex(2.0f, -2.0f, -2.0f, 0.0f, 0.0f, 0.0f, 0.75f, 0.6666f);
+		aSkyboxVertices[6] = Vertex(2.0f, 2.0f, -2.0f, 0.0f, 0.0f, 0.0f, 0.75f, 0.3333f);
+		aSkyboxVertices[7] = Vertex(2.0f, 2.0f, 2.0f, 0.0f, 0.0f, 0.0f, 0.50f, 0.3333f);
+		aSkyboxVertices[8] = Vertex(2.0f, -2.0f, -2.0f, 0.0f, 0.0f, 0.0f, 0.75f, 0.6666f);//back
+		aSkyboxVertices[9] = Vertex(-2.0f, -2.0f, -2.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.6666f);
+		aSkyboxVertices[10] = Vertex(-2.0f, 2.0f, -2.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.3333f);
+		aSkyboxVertices[11] = Vertex(2.0f, 2.0f, -2.0f, 0.0f, 0.0f, 0.0f, 0.75f, 0.3333f);
+		aSkyboxVertices[12] = Vertex(-2.0f, -2.0f, -2.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.6666f);//left
+		aSkyboxVertices[13] = Vertex(-2.0f, -2.0f, 2.0f, 0.0f, 0.0f, 0.0f, 0.25f, 0.6666f);
+		aSkyboxVertices[14] = Vertex(-2.0f, 2.0f, 2.0f, 0.0f, 0.0f, 0.0f, 0.25f, 0.3333f);
+		aSkyboxVertices[15] = Vertex(-2.0f, 2.0f, -2.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.3333f);
+		aSkyboxVertices[16] = Vertex(-2.0f, 2.0f, 2.0f, 0.0f, 0.0f, 0.0f, 0.25f, 0.3333f);//top
+		aSkyboxVertices[17] = Vertex(2.0f, 2.0f, 2.0f, 0.0f, 0.0f, 0.0f, 0.50f, 0.3333f);
+		aSkyboxVertices[18] = Vertex(2.0f, 2.0f, -2.0f, 0.0f, 0.0f, 0.0f, 0.50f, 0.0f);
+		aSkyboxVertices[19] = Vertex(-2.0f, 2.0f, -2.0f, 0.0f, 0.0f, 0.0f, 0.25f, 0.0f);
+		aSkyboxVertices[20] = Vertex(-2.0f, -2.0f, 2.0f, 0.0f, 0.0f, 0.0f, 0.25f, 0.6666f);//bottom
+		aSkyboxVertices[21] = Vertex(2.0f, -2.0f, 2.0f, 0.0f, 0.0f, 0.0f, 0.50f, 0.6666f);
+		aSkyboxVertices[22] = Vertex(2.0f, -2.0f, -2.0f, 0.0f, 0.0f, 0.0f, 0.50f, 1.0f);
+		aSkyboxVertices[23] = Vertex(-2.0f, -2.0f, -2.0f, 0.0f, 0.0f, 0.0f, 0.25f, 1.0f);
 
 		aSkyboxIndices = new unsigned int[amountOfIndices];
 

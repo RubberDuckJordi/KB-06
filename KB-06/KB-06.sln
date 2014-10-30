@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.21005.1
+VisualStudioVersion = 12.0.30501.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PEngine", "KB-06\KB-06.vcxproj", "{92DAF88F-03E3-49FB-8CD4-CC217C022CFC}"
 EndProject
@@ -11,7 +11,9 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CubeGame", "CubeGame\CubeGa
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Racer", "Racer\Racer.vcxproj", "{3B3232B5-EFB9-445F-BB1B-23B05B6F9E7B}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "NiggahRacer", "NiggahRacer\NiggahRacer.vcxproj", "{6E6F9812-1543-46AD-B292-DD56F22E4530}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RacerDeTweede", "NiggahRacer\NiggahRacer.vcxproj", "{6E6F9812-1543-46AD-B292-DD56F22E4530}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "OfficialIceRacer", "OfficialIceRacer\OfficialIceRacer.vcxproj", "{BE4C1614-FA95-451B-AB18-837088EC5305}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -73,6 +75,16 @@ Global
 		{6E6F9812-1543-46AD-B292-DD56F22E4530}.Release|Mixed Platforms.Build.0 = Release|Win32
 		{6E6F9812-1543-46AD-B292-DD56F22E4530}.Release|Win32.ActiveCfg = Release|Win32
 		{6E6F9812-1543-46AD-B292-DD56F22E4530}.Release|Win32.Build.0 = Release|Win32
+		{BE4C1614-FA95-451B-AB18-837088EC5305}.Debug|Any CPU.ActiveCfg = Debug|Win32
+		{BE4C1614-FA95-451B-AB18-837088EC5305}.Debug|Mixed Platforms.ActiveCfg = Debug|Win32
+		{BE4C1614-FA95-451B-AB18-837088EC5305}.Debug|Mixed Platforms.Build.0 = Debug|Win32
+		{BE4C1614-FA95-451B-AB18-837088EC5305}.Debug|Win32.ActiveCfg = Debug|Win32
+		{BE4C1614-FA95-451B-AB18-837088EC5305}.Debug|Win32.Build.0 = Debug|Win32
+		{BE4C1614-FA95-451B-AB18-837088EC5305}.Release|Any CPU.ActiveCfg = Release|Win32
+		{BE4C1614-FA95-451B-AB18-837088EC5305}.Release|Mixed Platforms.ActiveCfg = Release|Win32
+		{BE4C1614-FA95-451B-AB18-837088EC5305}.Release|Mixed Platforms.Build.0 = Release|Win32
+		{BE4C1614-FA95-451B-AB18-837088EC5305}.Release|Win32.ActiveCfg = Release|Win32
+		{BE4C1614-FA95-451B-AB18-837088EC5305}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

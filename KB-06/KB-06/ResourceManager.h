@@ -23,22 +23,13 @@ namespace pengine
 		ResourceManager();
 		~ResourceManager();
 
-		//Mesh* LoadMesh(const std::string& fileName, const std::string& extension);
-		Material* LoadMaterial(const std::string& fileName, const std::string& extension);
 		BinaryData* LoadBinaryFile(const std::string& fileName);
-		Ground* LoadGround(std::string filename, std::string textureFilename);
-		Shader* LoadShader(std::string VertexShaderFilename, std::string PixelShaderFilename, std::string filename, Renderer* renderer);
+		std::string* LoadShaderFile(const std::string& fileName);
+		Ground* LoadGround(std::string filename, std::string textureFilename, float cellSize);
 		std::vector<std::string>* LoadSceneFile(std::string* path);
 		Object3D* LoadXFile(std::string* fileName);
 		void CacheToRenderer(Renderer* renderer);
 
-		//Mesh* LoadSound(const std::string& fileName, const std::string& extension);
-
-		//void AddMeshLoader(BaseMeshLoader*);
-		//void AddMaterialLoader(BaseMaterialLoader*);
-		//void AddSoundLoader(BaseMeshLoader*);
-
-		//std::map<std::string, Material>* LoadMaterials(std::string file);
 	private:
 		Logger* logger;
 
@@ -49,7 +40,7 @@ namespace pengine
 		std::map<std::string, Material> materials;
 		std::map<std::string, BinaryData*> textures;
 		std::map<std::string, Ground> grounds;
-		std::map<std::string, Shader> shaders;
+		std::map<std::string, std::string*> shaderps;
 		std::map<std::string, Model3D*> models;
 
 		//std::map<std::string, BaseMeshLoader*> meshLoaders;

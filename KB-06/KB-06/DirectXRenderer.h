@@ -87,6 +87,75 @@ namespace pengine
 		*/
 		void CacheTexture(BinaryData* textureInRam);
 
+		/*!
+		Caches the given shaderp in text to the renderer.
+		This will (depending on the renderer) compile the shaderp for the specific
+		graphics card.
+		*/
+		void CacheShaderp(std::string* shaderpInText);
+
+		/*!
+		Sets the current shader to the given shader.
+		Note that you still have to call 'BeginRenderingWithShaderp'.
+		*/
+		void SetShaderp(std::string* shaderp);
+
+		/*!
+		Getting a parameter handle once speeds things up when you need to set
+		the value for the parameter.
+		*/
+		PENGINEHANDLE GetShaderpParameterHandle(char* parameterName);
+
+		/*!
+		Getting a technique handle once speeds things up when you need to set
+		the techique.
+		*/
+		PENGINEHANDLE GetShaderpTechniqueHandle(char* techniqueName);
+
+		/*!
+		Sets the active technique to the given technique
+		*/
+		void SetShaderpTechnique(PENGINEHANDLE technique);
+
+		/*!
+		The 'passes' parameter will be filled with the amount of passes in the
+		currently active technique. It's up to you if you want to render with
+		all the passes.
+		*/
+		void BeginRenderingWithShaderp(unsigned int* passes);
+
+		/*!
+		Begins rendering with the specified pass.
+		*/
+		void BeginRenderingWithPass(unsigned int pass);
+
+		/*!
+		Throws the given data in the parameter of the given shader.
+		*/
+		void SetShaderpValue(PENGINEHANDLE handleToParameter, PENGINEVOID data, unsigned int sizeInBytes);
+
+		/*!
+		Throws the given matrix in the parameter of the given shader, you can get
+		the parameter handle to the desired matrix with GetShaderpParameterHandle.
+		*/
+		void SetShaderpMatrix(PENGINEHANDLE handleToParameter, Matrix* data);
+
+		/*!
+		Updates changes to any 'set' calls in the pass. This should be called before
+		any drawing call and after you have set all changes for the current pass.
+		Basically, you do not need to call CommitChanges if you are not setting any parameters
+		between the BeginRenderingWithPass and EndRenderingPass.
+		*/
+		void CommitChanges();
+
+		/*!
+		Ends rendering with the specified pass, should be called before beginning
+		with a new pass.
+		*/
+		void EndRenderingPass();
+
+		void EndRenderingWithShaderp();
+
 	private:
 		void SetMatrixCache(Matrix* matrix);
 
@@ -118,6 +187,8 @@ namespace pengine
 		LPDIRECT3DDEVICE9 g_pd3dDevice;
 
 		std::map<BinaryData*, LPDIRECT3DTEXTURE9> textureCache;
+		ID3DXEffect* currentlyActiveShaderp;
+		std::map<std::string*, ID3DXEffect*> shaderpCache;
 
 		D3DXMATRIX* matrixCache;
 		D3DXMATRIXA16 projectionMatix;

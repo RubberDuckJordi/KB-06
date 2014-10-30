@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Header Files\Scene">
+      <UniqueIdentifier>{e1986f61-6550-4432-80d3-a0f2bb318302}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Scene\Track">
+      <UniqueIdentifier>{d65d5557-cc0a-49a3-af72-9f83fb3038dc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Scene\Kart">
+      <UniqueIdentifier>{f134ce2d-309e-4e62-bc63-d1f4ff989353}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Scene">
+      <UniqueIdentifier>{1729544a-246d-4a2f-93b1-e5b87f874601}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Scene\Kart">
+      <UniqueIdentifier>{f4a44681-4105-4bba-a32e-10d95c90dd17}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Scene\Track">
+      <UniqueIdentifier>{91552784-a15f-4163-b089-6fc29d99bb72}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="OfficialIceRacer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="RaceKart.cpp">
+      <Filter>Source Files\Scene\Kart</Filter>
+    </ClCompile>
+    <ClCompile Include="Track.cpp">
+      <Filter>Source Files\Scene\Track</Filter>
+    </ClCompile>
+    <ClCompile Include="TrackBlock.cpp">
+      <Filter>Source Files\Scene\Track</Filter>
+    </ClCompile>
+    <ClCompile Include="RaceScene.cpp">
+      <Filter>Source Files\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="RaceSceneFactory.cpp">
+      <Filter>Source Files\Scene</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="RaceKart.h">
+      <Filter>Header Files\Scene\Kart</Filter>
+    </ClInclude>
+    <ClInclude Include="Track.h">
+      <Filter>Header Files\Scene\Track</Filter>
+    </ClInclude>
+    <ClInclude Include="TrackBlock.h">
+      <Filter>Header Files\Scene\Track</Filter>
+    </ClInclude>
+    <ClInclude Include="RaceScene.h">
+      <Filter>Header Files\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="RaceSceneFactory.h">
+      <Filter>Header Files\Scene</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

@@ -89,6 +89,40 @@ template DeclData {
  array DWORD data[nDWords];
 }
 
+template AnimTicksPerSecond {
+ <9e415a43-7ba6-4a73-8743-b73d47e88476>
+ DWORD AnimTicksPerSecond;
+}
+
+template Animation {
+ <3d82ab4f-62da-11cf-ab39-0020af71e433>
+ [...]
+}
+
+template AnimationSet {
+ <3d82ab50-62da-11cf-ab39-0020af71e433>
+ [Animation <3d82ab4f-62da-11cf-ab39-0020af71e433>]
+}
+
+template FloatKeys {
+ <10dd46a9-775b-11cf-8f52-0040333594a3>
+ DWORD nValues;
+ array FLOAT values[nValues];
+}
+
+template TimedFloatKeys {
+ <f406b180-7b3b-11cf-8f52-0040333594a3>
+ DWORD time;
+ FloatKeys tfkeys;
+}
+
+template AnimationKey {
+ <10dd46a8-775b-11cf-8f52-0040333594a3>
+ DWORD keyType;
+ DWORD nKeys;
+ array TimedFloatKeys keys[nKeys];
+}
+
 
 Material Material__36 {
  1.000000;1.000000;1.000000;1.000000;;
@@ -123,7 +157,7 @@ Material Material__38 {
  }
 }
 
-Frame SceneRoot {
+Frame DaRoot {
  
 
  FrameTransformMatrix {
@@ -134,7 +168,7 @@ Frame SceneRoot {
   
 
   FrameTransformMatrix {
-   1.000000,0.000000,0.000000,0.000000,0.000000,1.000000,0.000000,0.000000,0.000000,0.000000,1.000000,0.000000,0.000000,0.000000,0.000000,1.000000;;
+   0.100000,0.000000,0.000000,0.000000,0.000000,0.100000,0.000000,0.000000,0.000000,0.000000,0.100000,0.000000,0.000000,0.000000,0.000000,1.000000;;
   }
 
   Mesh Box001 {
@@ -4139,6 +4173,40 @@ Frame SceneRoot {
     1065681629,
     1043644160;
    }
+  }
+ }
+}
+
+AnimTicksPerSecond  {
+ 4800;
+}
+
+AnimationSet Anims_1 {
+ 
+
+ Animation {
+  
+  { Box001 }
+
+  AnimationKey R {
+   0;
+   2;
+   0;4;1.000000,0.000000,0.000000,0.000000;;,
+   160;4;1.000000,0.000000,0.000000,0.000000;;;
+  }
+
+  AnimationKey S {
+   1;
+   2;
+   0;3;0.100000,0.100000,0.100000;;,
+   160;3;0.100000,0.100000,0.100000;;;
+  }
+
+  AnimationKey T {
+   2;
+   2;
+   0;3;0.000000,0.000000,0.000000;;,
+   160;3;0.000000,0.000000,0.000000;;;
   }
  }
 }
