@@ -18,19 +18,19 @@ void racer::RaceScene::Update(float deltaTime, std::map<pengine::Input, long>* a
 	{
 		elapsedTime += deltaTime;
 	}
-	
-	Scene::Update(deltaTime, actions);
-	GetCurrentCamera()->SetThirdPersonEntity(raceCart, 75.0f, 30.0f);
 
-	if (raceCart->GetCheckPoints()->size() == 0)
+	Scene::Update(deltaTime, actions);
+	GetCurrentCamera()->SetThirdPersonEntity(raceKart, 75.0f, 30.0f);
+
+	if (raceKart->GetCheckPoints()->size() == 0)
 	{
 		win = true;
 	}
 }
 
-void racer::RaceScene::SetRaceCart(RaceCart* entity)
+void racer::RaceScene::SetRaceKart(RaceKart* entity)
 {
-	raceCart = entity;
+	raceKart = entity;
 }
 
 void racer::RaceScene::RenderToTexture(int texture, pengine::Renderer* renderer)
@@ -115,7 +115,7 @@ void racer::RaceScene::Render(pengine::Renderer* renderer)
 
 	pengine::Matrix::CreateMatrix(0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 3.0f, 3.0f, 1.0f, &aMatrix);
 	renderer->SetActiveMatrix(&aMatrix);
-	
+
 	pengine::Matrix aMatrix2;
 	pengine::Matrix aMatrix3;
 	pengine::Matrix::CreateMatrix(0.0f, 15.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, &aMatrix2);
@@ -135,9 +135,9 @@ void racer::RaceScene::Render(pengine::Renderer* renderer)
 	}
 	else
 	{
-		renderer->DrawString("Victory!\n" +std::to_string(elapsedTime), D3DCOLOR_ARGB(0, 100, 255, 100));
+		renderer->DrawString("Victory!\n" + std::to_string(elapsedTime), D3DCOLOR_ARGB(0, 100, 255, 100));
 	}
-	
+
 
 	//pengine::Material mat;
 	//mat.texture = NULL;

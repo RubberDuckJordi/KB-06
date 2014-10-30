@@ -13,34 +13,34 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Source Files\Scene">
-      <UniqueIdentifier>{df6c3bfa-6f7d-4a7b-974b-1f17fa7549c9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Scene\Track">
-      <UniqueIdentifier>{b8f67ba6-6d10-4c67-a625-0a6fdf306a28}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Scene">
-      <UniqueIdentifier>{63dce1fb-1f3f-4490-909f-13a81ab50c79}</UniqueIdentifier>
+      <UniqueIdentifier>{e1986f61-6550-4432-80d3-a0f2bb318302}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\Scene\Track">
-      <UniqueIdentifier>{82a84d21-33fd-44df-8f5b-40ad5bfc9d3d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Scene\Kart">
-      <UniqueIdentifier>{c81afb6c-f5d3-4676-9c3a-3beba88a42e7}</UniqueIdentifier>
+      <UniqueIdentifier>{d65d5557-cc0a-49a3-af72-9f83fb3038dc}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\Scene\Kart">
-      <UniqueIdentifier>{9f93b4a9-3b3b-4d97-b671-4456713b13fd}</UniqueIdentifier>
+      <UniqueIdentifier>{f134ce2d-309e-4e62-bc63-d1f4ff989353}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Scene">
+      <UniqueIdentifier>{1729544a-246d-4a2f-93b1-e5b87f874601}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Scene\Kart">
+      <UniqueIdentifier>{f4a44681-4105-4bba-a32e-10d95c90dd17}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Scene\Track">
+      <UniqueIdentifier>{91552784-a15f-4163-b089-6fc29d99bb72}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Racer.cpp">
+    <Text Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="OfficialIceRacer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="RaceSceneFactory.cpp">
-      <Filter>Source Files\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="RaceScene.cpp">
-      <Filter>Source Files\Scene</Filter>
+    <ClCompile Include="RaceKart.cpp">
+      <Filter>Source Files\Scene\Kart</Filter>
     </ClCompile>
     <ClCompile Include="Track.cpp">
       <Filter>Source Files\Scene\Track</Filter>
@@ -48,19 +48,22 @@
     <ClCompile Include="TrackBlock.cpp">
       <Filter>Source Files\Scene\Track</Filter>
     </ClCompile>
-    <ClCompile Include="RaceCart.cpp">
-      <Filter>Source Files\Scene\Kart</Filter>
+    <ClCompile Include="RaceScene.cpp">
+      <Filter>Source Files\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="RaceSceneFactory.cpp">
+      <Filter>Source Files\Scene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="RaceKart.h">
+      <Filter>Header Files\Scene\Kart</Filter>
+    </ClInclude>
     <ClInclude Include="Track.h">
       <Filter>Header Files\Scene\Track</Filter>
     </ClInclude>
     <ClInclude Include="TrackBlock.h">
       <Filter>Header Files\Scene\Track</Filter>
-    </ClInclude>
-    <ClInclude Include="RaceCart.h">
-      <Filter>Header Files\Scene\Kart</Filter>
     </ClInclude>
     <ClInclude Include="RaceScene.h">
       <Filter>Header Files\Scene</Filter>
