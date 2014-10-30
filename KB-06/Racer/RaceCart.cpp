@@ -16,8 +16,6 @@ void racer::RaceCart::UpdateLogic(float deltaTime, std::map<pengine::Input, long
 {
 	pengine::Entity::UpdateLogic(deltaTime, actions);
 
-	isOnTrack = true;
-
 	if (!isOnTrack)
 	{
 		// To prevent glitching by flying from one trackblock to the next
