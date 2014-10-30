@@ -100,24 +100,5 @@ namespace pengine
 		return logEntry.str();
 	}
 
-	void Logger::LogMemoryDump(int logType, void* const p_address, const int p_size, char* const p_name)
-	{
-		std::stringstream sstr;
-		const char* c = reinterpret_cast<const char*>(p_address);
-
-		sstr <<
-			"MEMDUMP\t | " <<
-			"N:[" << p_name << "]\t | " <<
-			"A:[0x" << p_address << "]\t | " <<
-			"S:" << p_size << " | " <<
-			"D:[ ";
-
-		for (int i = 0; i < p_size; ++i)
-		{
-			sstr << "0x" << std::hex << int(c[i]) << " ";
-		}
-
-		sstr << "]";
-		Log(logType, sstr.str());
-	}
+	
 }

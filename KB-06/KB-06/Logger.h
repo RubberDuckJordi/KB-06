@@ -25,7 +25,6 @@ namespace pengine {
 		~Logger();
 
 		void Log(int logType, std::string text);
-		void LogMemoryDump(int logType, void* const p_address, const int p_size, char* const p_name);
 		void SetLogLevel(int logLevel);
 		void RemoveLogs();
 
