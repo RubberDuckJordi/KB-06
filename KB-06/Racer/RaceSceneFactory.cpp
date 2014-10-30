@@ -232,7 +232,7 @@ pengine::Scene* racer::RaceSceneFactory::CreateScene()
 	TrackBlock* block20 = track->AddTrackBlock(TrackBlock::TYPE::RIGHT, trackCurved);
 	TrackBlock* block21 = track->AddTrackBlock(TrackBlock::TYPE::RIGHT, trackCurved);
 
-	pengine::Ground* ground = resourceManager->LoadGround(groundResource, groundTexture);
+	pengine::Ground* ground = resourceManager->LoadGround(groundResource, groundTexture, 3);
 	ground->InitQuadTree(1);
 	pengine::Skybox* skybox = new pengine::Skybox();
 	pengine::Material* material = new pengine::Material();

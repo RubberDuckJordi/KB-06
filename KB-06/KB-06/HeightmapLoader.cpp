@@ -13,7 +13,7 @@ namespace pengine
 		delete[] m_bitmapData;
 	}
 
-	Ground* HeightmapLoader::LoadHeightmap(std::string filename)
+	Ground* HeightmapLoader::LoadHeightmap(std::string filename, float cellSize)
 	{
 		Ground* ground = new Ground();
 		bool result = true;
@@ -30,7 +30,7 @@ namespace pengine
 
 			ground->SetWidth(width);
 			ground->SetHeight(height);
-			ground->SetCellSize(1); // default value
+			ground->SetCellSize(cellSize);
 
 			BuildGround(heightMapValues, *ground);
 

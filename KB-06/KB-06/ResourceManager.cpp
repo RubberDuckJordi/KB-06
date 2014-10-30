@@ -48,7 +48,7 @@ namespace pengine
 		return textures[fileName];
 	}
 
-	Ground* ResourceManager::LoadGround(std::string filename, std::string textureFilename)
+	Ground* ResourceManager::LoadGround(std::string filename, std::string textureFilename, float cellSize)
 	{
 		Ground* ground = NULL;
 
@@ -62,7 +62,7 @@ namespace pengine
 
 		if (ground == NULL)
 		{
-			ground = heightmapLoader.LoadHeightmap(filename);
+			ground = heightmapLoader.LoadHeightmap(filename, cellSize);
 			Material* material = new Material();
 			material->texture = LoadBinaryFile(textureFilename);
 			ground->SetMaterial(material);

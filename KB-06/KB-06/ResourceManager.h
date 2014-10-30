@@ -26,7 +26,7 @@ namespace pengine
 		//Mesh* LoadMesh(const std::string& fileName, const std::string& extension);
 		Material* LoadMaterial(const std::string& fileName, const std::string& extension);
 		BinaryData* LoadBinaryFile(const std::string& fileName);
-		Ground* LoadGround(std::string filename, std::string textureFilename);
+		Ground* LoadGround(std::string filename, std::string textureFilename, float cellSize);
 		Shader* LoadShader(std::string VertexShaderFilename, std::string PixelShaderFilename, std::string filename, Renderer* renderer);
 		std::vector<std::string>* LoadSceneFile(std::string* path);
 		Object3D* LoadXFile(std::string* fileName);
