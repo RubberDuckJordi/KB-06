@@ -3,7 +3,8 @@
 
 namespace pengine
 {
-	struct Plane{
+	struct Plane
+	{
 		float a, b, c, d;
 	};
 }

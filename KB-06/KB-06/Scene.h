@@ -13,6 +13,10 @@
 #include <functional>
 #include <vector>
 
+/*
+Scene base class, must be overridden to implement custom scene logic
+*/
+
 namespace pengine
 {
 	class Scene
@@ -22,6 +26,7 @@ namespace pengine
 		~Scene();
 		virtual void Update(float deltaTime, std::map<Input, long>* actions);
 		void AddEntity(Entity* entity);
+		// Collidable lists are separated for performance, static collidables don't need to be checked agaist eachother.
 		void AddCollidable(Collidable* collidable);
 		void AddStaticCollidable(Collidable* collidable);
 		/*!

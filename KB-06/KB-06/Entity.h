@@ -26,11 +26,14 @@ namespace pengine
 		void SetMovementVector(Vector3* vector);
 		void SetFriction(float friction);
 		void AddFriction(float friction);
+		// Adds a force to the current movement force vector
 		void AddForce(Vector3* vector);
 		// Used for collisions, vector is multiplied by mass
 		void AddForce(Vector3* vector, float mass);
 		void SetMass(float mass);
 
+		// Adds a force relative to the entity's rotation
+		// for example: 0.0f, 0.0f, 1.0f is forward.
 		void AddRelativeForce(Vector3*);
 		Vector3* GetRelativeForce();
 
