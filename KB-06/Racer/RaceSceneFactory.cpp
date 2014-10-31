@@ -19,17 +19,26 @@ racer::RaceSceneFactory::~RaceSceneFactory()
 
 pengine::Scene* racer::RaceSceneFactory::CreateScene(std::vector<std::string>* sceneFile, pengine::ResourceManager* resourceManager)
 {
-	pengine::Scene* scene = new pengine::Scene();
+	RaceScene* scene = new RaceScene();
+	std::vector<RaceCart*> raceCarts;
+	std::vector<TrackBlock*> trackBlocks;
+	float height = NULL;
+
+	Track* track = NULL;
+
 	std::string beginLine;
 
-	for (unsigned int i = 0; i < sceneFile->size(); ++i)
+	int i;
+	int j;
+	int k;
+
+	for (i = 0; i < sceneFile->size(); ++i)
 	{
 		beginLine = sceneFile->at(i);
 
 		if (!beginLine.compare("<Entity>"))
 		{
 			std::string endLine;
-			unsigned int j;
 			for (j = i; j < sceneFile->size(); ++j)
 			{
 				endLine = sceneFile->at(j);
@@ -41,25 +50,43 @@ pengine::Scene* racer::RaceSceneFactory::CreateScene(std::vector<std::string>* s
 
 					std::string type;
 					std::string objectPath;
-					std::string texturePath;
-					int translationX;
-					int translationY;
-					int translationZ;
-					int positionX;
-					int positionY;
-					int positionZ;
-					int scalingX;
-					int scalingY;
-					int scalingZ;
+					bool controllable;
+					float horsePower;
+					float mass;
+					float translationX;
+					float translationY;
+					float translationZ;
+					float positionX;
+					float positionY;
+					float positionZ;
+					float scalingX;
+					float scalingY;
+					float scalingZ;
 
-					for (unsigned int k = i + 1; k < j - 1; ++k)
+					for (k = i + 1; k < j; ++k)
 					{
+
+
 						startPosition = sceneFile->at(k).find("<Type>");
 						endPosition = sceneFile->at(k).find("</Type>");
 						if (startPosition != std::string::npos || endPosition != std::string::npos)
 						{
 							startPosition = startPosition + 6;
 							type = sceneFile->at(k).substr(startPosition, endPosition - startPosition);
+						}
+						startPosition = sceneFile->at(k).find("<Controllable>");
+						endPosition = sceneFile->at(k).find("</Controllable>");
+						if (startPosition != std::string::npos || endPosition != std::string::npos)
+						{
+							startPosition = startPosition + 14;
+							if (sceneFile->at(k).substr(startPosition, endPosition - startPosition).compare("TRUE") == 0)
+							{
+								controllable = true;
+							}
+							else
+							{
+								controllable = false;
+							}
 						}
 						startPosition = sceneFile->at(k).find("<ObjectPath>");
 						endPosition = sceneFile->at(k).find("</ObjectPath>");
@@ -68,89 +95,111 @@ pengine::Scene* racer::RaceSceneFactory::CreateScene(std::vector<std::string>* s
 							startPosition = startPosition + 12;
 							objectPath = sceneFile->at(k).substr(startPosition, endPosition - startPosition);
 						}
-						startPosition = sceneFile->at(k).find("<TexturePath>");
-						endPosition = sceneFile->at(k).find("</TexturePath>");
+						startPosition = sceneFile->at(k).find("<Mass>");
+						endPosition = sceneFile->at(k).find("</Mass>");
 						if (startPosition != std::string::npos || endPosition != std::string::npos)
 						{
-							startPosition = startPosition + 13;
-							texturePath = sceneFile->at(k).substr(startPosition, endPosition - startPosition);
+							startPosition = startPosition + 6;
+							mass = (float)atof(sceneFile->at(k).substr(startPosition, endPosition - startPosition).c_str());
+						}
+						startPosition = sceneFile->at(k).find("<HorsePower>");
+						endPosition = sceneFile->at(k).find("</HorsePower>");
+						if (startPosition != std::string::npos || endPosition != std::string::npos)
+						{
+							startPosition = startPosition + 12;
+							horsePower = (float)atof(sceneFile->at(k).substr(startPosition, endPosition - startPosition).c_str());
 						}
 						startPosition = sceneFile->at(k).find("<TranslationX>");
 						endPosition = sceneFile->at(k).find("</TranslationX>");
 						if (startPosition != std::string::npos || endPosition != std::string::npos)
 						{
 							startPosition = startPosition + 14;
-							translationX = (int)atof(sceneFile->at(k).substr(startPosition, endPosition - startPosition).c_str());
+							translationX = (float)atof(sceneFile->at(k).substr(startPosition, endPosition - startPosition).c_str());
 						}
 						startPosition = sceneFile->at(k).find("<TranslationY>");
 						endPosition = sceneFile->at(k).find("</TranslationY>");
 						if (startPosition != std::string::npos || endPosition != std::string::npos)
 						{
 							startPosition = startPosition + 14;
-							translationY = (int)atof(sceneFile->at(k).substr(startPosition, endPosition - startPosition).c_str());
+							translationY = (float)atof(sceneFile->at(k).substr(startPosition, endPosition - startPosition).c_str());
 						}
 						startPosition = sceneFile->at(k).find("<TranslationZ>");
 						endPosition = sceneFile->at(k).find("</TranslationZ>");
 						if (startPosition != std::string::npos || endPosition != std::string::npos)
 						{
 							startPosition = startPosition + 14;
-							translationZ = (int)atof(sceneFile->at(k).substr(startPosition, endPosition - startPosition).c_str());
+							translationZ = (float)atof(sceneFile->at(k).substr(startPosition, endPosition - startPosition).c_str());
 						}
 						startPosition = sceneFile->at(k).find("<PositionX>");
 						endPosition = sceneFile->at(k).find("</PositionX>");
 						if (startPosition != std::string::npos || endPosition != std::string::npos)
 						{
 							startPosition = startPosition + 11;
-							positionX = (int)atof(sceneFile->at(k).substr(startPosition, endPosition - startPosition).c_str());
+							positionX = (float)atof(sceneFile->at(k).substr(startPosition, endPosition - startPosition).c_str());
 						}
 						startPosition = sceneFile->at(k).find("<PositionY>");
 						endPosition = sceneFile->at(k).find("</PositionY>");
 						if (startPosition != std::string::npos || endPosition != std::string::npos)
 						{
 							startPosition = startPosition + 11;
-							positionY = (int)atof(sceneFile->at(k).substr(startPosition, endPosition - startPosition).c_str());
+							positionY = (float)atof(sceneFile->at(k).substr(startPosition, endPosition - startPosition).c_str());
 						}
 						startPosition = sceneFile->at(k).find("<PositionZ>");
 						endPosition = sceneFile->at(k).find("</PositionZ>");
 						if (startPosition != std::string::npos || endPosition != std::string::npos)
 						{
 							startPosition = startPosition + 11;
-							positionZ = (int)atof(sceneFile->at(k).substr(startPosition, endPosition - startPosition).c_str());
+							positionZ = (float)atof(sceneFile->at(k).substr(startPosition, endPosition - startPosition).c_str());
 						}
 						startPosition = sceneFile->at(k).find("<ScalingX>");
 						endPosition = sceneFile->at(k).find("</ScalingX>");
 						if (startPosition != std::string::npos || endPosition != std::string::npos)
 						{
 							startPosition = startPosition + 10;
-							scalingX = (int)atof(sceneFile->at(k).substr(startPosition, endPosition - startPosition).c_str());
+							scalingX = (float)atof(sceneFile->at(k).substr(startPosition, endPosition - startPosition).c_str());
 						}
 						startPosition = sceneFile->at(k).find("<ScalingY>");
 						endPosition = sceneFile->at(k).find("</ScalingY>");
 						if (startPosition != std::string::npos || endPosition != std::string::npos)
 						{
 							startPosition = startPosition + 10;
-							scalingY = (int)atof(sceneFile->at(k).substr(startPosition, endPosition - startPosition).c_str());
+							scalingY = (float)atof(sceneFile->at(k).substr(startPosition, endPosition - startPosition).c_str());
 						}
 						startPosition = sceneFile->at(k).find("<ScalingZ>");
 						endPosition = sceneFile->at(k).find("</ScalingZ>");
 						if (startPosition != std::string::npos || endPosition != std::string::npos)
 						{
 							startPosition = startPosition + 10;
-							scalingZ = (int)atof(sceneFile->at(k).substr(startPosition, endPosition - startPosition).c_str());
+							scalingZ = (float)atof(sceneFile->at(k).substr(startPosition, endPosition - startPosition).c_str());
 						}
 
 					}
-					if (!type.empty())
+
+					if (type.compare("RaceKart") == 0)
 					{
+						RaceCart* raceCart = new RaceCart();
+						raceCart->SetControllable(controllable);
+						raceCart->SetMass(mass);
+						raceCart->SetHorsePower(horsePower);
+						raceCart->AddAll(positionX, positionY, positionZ, translationX, translationY, translationZ, scalingX, scalingY, scalingZ);
+						raceCart->SetObject3D(resourceManager->LoadXFile(&objectPath));
+
+						scene->AddEntity(raceCart);
+						scene->AddCollidable(raceCart);
+						if (controllable == true)
+						{
+							scene->SetRaceCart(raceCart);
+						}
+						raceCarts.push_back(raceCart);
 					}
 				}
 			}
-			i = j;
+			i = k;
 		}
 		else if (!beginLine.compare("<Skybox>"))
 		{
 			std::string endLine;
-			unsigned int j;
+
 			for (j = i; j < sceneFile->size(); ++j)
 			{
 				endLine = sceneFile->at(j);
@@ -159,31 +208,177 @@ pengine::Scene* racer::RaceSceneFactory::CreateScene(std::vector<std::string>* s
 				{
 					std::string skyboxPath;
 
-					for (unsigned int k = i + 1; k < j - 1; ++k)
+					for (k = i; k < j; ++k)
 					{
 						std::size_t startPosition;
 						std::size_t endPosition;
 
-						startPosition = sceneFile->at(k).find("<Texture>");
-						endPosition = sceneFile->at(k).find("</Texture>");
+						startPosition = sceneFile->at(k).find("<Material>");
+						endPosition = sceneFile->at(k).find("</Material>");
+
+						std::size_t npos = std::string::npos;
+
 						if (startPosition != std::string::npos || endPosition != std::string::npos)
 						{
-							startPosition = startPosition + 9;
+							startPosition = startPosition + 10;
 							skyboxPath = sceneFile->at(k).substr(startPosition, endPosition - startPosition);
 						}
+
+					}
+
+					if (skyboxPath.compare(""))
+					{
+						pengine::Skybox* skybox = new pengine::Skybox();
+						pengine::Material* material = new pengine::Material();
+						material->texture = resourceManager->LoadBinaryFile(skyboxPath);
+
+						skybox->SetMaterial(material);
+						scene->SetSkybox(skybox);
+					}
+				}
+
+
+			}
+			i = k;
+		}
+		else if (!beginLine.compare("<Ground>"))
+		{
+			std::string endLine;
+
+			for (j = i; j < sceneFile->size(); ++j)
+			{
+				endLine = sceneFile->at(j);
+
+				if (!endLine.compare("</Ground>"))
+				{
+					std::string groundHeightmapPath;
+					std::string groundMaterialPath;
+
+					for (k = i + 1; k < j; ++k)
+					{
+						std::size_t startPosition;
+						std::size_t endPosition;
+
+						startPosition = sceneFile->at(k).find("<Heightmap>");
+						endPosition = sceneFile->at(k).find("</Heightmap>");
+
+						if (startPosition != std::string::npos || endPosition != std::string::npos)
+						{
+							startPosition = startPosition + 11;
+							groundHeightmapPath = sceneFile->at(k).substr(startPosition, endPosition - startPosition);
+						}
+
+						startPosition = sceneFile->at(k).find("<Material>");
+						endPosition = sceneFile->at(k).find("</Material>");
+						if (startPosition != std::string::npos || endPosition != std::string::npos)
+						{
+							startPosition = startPosition + 10;
+							groundMaterialPath = sceneFile->at(k).substr(startPosition, endPosition - startPosition);
+						}
+					}
+
+					if (groundHeightmapPath.compare("") && groundMaterialPath.compare(""))
+					{
+						pengine::Ground* ground = resourceManager->LoadGround(groundHeightmapPath, groundMaterialPath, 3);
+						ground->InitQuadTree(2);
+						scene->SetGround(ground);
+					}
+				}
+
+
+			}
+			i = k;
+		}
+		else if (!beginLine.compare("<TrackBlock>"))
+		{
+			std::string endLine;
+			for (j = i; j < sceneFile->size(); ++j)
+			{
+				endLine = sceneFile->at(j);
+				if (!endLine.compare("</TrackBlock>"))
+				{
+					std::string trackBlockType;
+					std::string trackBlockModel;
+					for (k = i + 1; k < j; ++k)
+					{
+						std::size_t startPosition;
+						std::size_t endPosition;
+						startPosition = sceneFile->at(k).find("<Type>");
+						endPosition = sceneFile->at(k).find("</Type>");
+						if (startPosition != std::string::npos || endPosition != std::string::npos)
+						{
+							startPosition = startPosition + 6;
+							trackBlockType = sceneFile->at(k).substr(startPosition, endPosition - startPosition);
+						}
+						startPosition = sceneFile->at(k).find("<Model>");
+						endPosition = sceneFile->at(k).find("</Model>");
+						if (startPosition != std::string::npos || endPosition != std::string::npos)
+						{
+							startPosition = startPosition + 7;
+							trackBlockModel = sceneFile->at(k).substr(startPosition, endPosition - startPosition);
+						}
+					}
+					if (trackBlockType.compare("") && trackBlockModel.compare(""))
+					{
+						if (track == NULL)
+						{
+							track = new Track();
+						}
+						
+
+						if (!trackBlockType.compare("STRAIGHT"))
+						{
+							trackBlocks.push_back(track->AddTrackBlock(TrackBlock::TYPE::STRAIGHT, resourceManager->LoadXFile(&trackBlockModel)));
+						}
+						else if (!trackBlockType.compare("LEFT"))
+						{
+							trackBlocks.push_back(track->AddTrackBlock(TrackBlock::TYPE::LEFT, resourceManager->LoadXFile(&trackBlockModel)));
+						}
+						else if (!trackBlockType.compare("RIGHT"))
+						{
+							trackBlocks.push_back(track->AddTrackBlock(TrackBlock::TYPE::RIGHT, resourceManager->LoadXFile(&trackBlockModel)));
+						}
+
+						if (height == NULL)
+						{
+							height = resourceManager->LoadXFile(&trackBlockModel)->GetMaxY();
+						}
+
 					}
 				}
 			}
-			i = j;
+			i = k;
 		}
-		else if (!beginLine.compare("<Terrain>"))
+		if (!track == NULL)
 		{
+			scene->AddEntity(track);
 		}
-		else if (!beginLine.compare("<Track>"))
-		{
-		}
+
 	}
-	return NULL;
+
+	for (int i = 0; i < trackBlocks.size(); ++i)
+	{
+		for (int j = 0; j < raceCarts.size(); ++j)
+		{
+			raceCarts[j]->AddCheckPoint(trackBlocks[i]);
+		}
+		scene->AddStaticCollidable(trackBlocks[i]);
+	}
+
+	for (int i = 0; i < raceCarts.size(); ++i)
+	{
+		raceCarts[i]->SetLastCheckPoint(trackBlocks[0]);
+		raceCarts[i]->SetTrackHeight(height);
+		raceCarts[i]->AddPosition(raceCarts[i]->GetPosition()->x, height, raceCarts[i]->GetPosition()->z);
+	}
+
+	
+
+	pengine::EntityCamera* camera = new pengine::EntityCamera();
+	camera->useInput = false;
+	scene->SetCurrentCamera(camera);
+	scene->SetAmountOfRenderTextures(1);
+	return scene;
 }
 
 pengine::Scene* racer::RaceSceneFactory::CreateScene()

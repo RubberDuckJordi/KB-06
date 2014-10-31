@@ -22,12 +22,15 @@ int main(int argc, const char* argv[])
 
 	//!!!WE ARE MANAGING A SCENE OUTSIDE THE SCENE MANAGER!!!
 	racer::RaceSceneFactory* sceneFactory = new racer::RaceSceneFactory(pEngine.GetResourceManager());
-	sceneFactory->SetGroundResource("resources/heightmap.bmp");
-	sceneFactory->SetGroundTexture("resources/heightmaptexture.bmp");
-	sceneFactory->SetSkyboxTexture("resources/dome2.jpg");
-
+	//sceneFactory->SetGroundResource("resources/heightmap.bmp");
+	//sceneFactory->SetGroundTexture("resources/heightmaptexture.bmp");
+	//sceneFactory->SetSkyboxTexture("resources/dome2.jpg");
+	
 	pEngine.AddSceneFactory("raceScene", sceneFactory);
-	pengine::Scene* scene = pEngine.AddScene("raceScene");
+	//pengine::Scene* scene = pEngine.AddScene("raceScene");
+
+	std::string filePath = "resources/LevelOne.txt";
+	pengine::Scene* scene = pEngine.CreateScene("raceScene", &filePath);
 
 	pengine::BinaryData* font = pEngine.GetResourceManager()->LoadBinaryFile("resources/font.png");//we should probably do this in the scene
 	pEngine.GetRenderer()->SetFontTexture(font);

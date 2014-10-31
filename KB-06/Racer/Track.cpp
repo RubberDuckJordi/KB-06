@@ -57,7 +57,7 @@ namespace racer
 					break;
 				case SOUTH:
 					direction = EAST;
-					yaw = -180;
+					yaw = 180;
 					if (previousBlock->GetBlockType() == TrackBlock::TYPE::STRAIGHT)
 					{
 						z = previousBlock->GetPosition()->z + (previousBlock->GetMaxSquareSize() / 2) + maxZ;
@@ -150,7 +150,7 @@ namespace racer
 					}
 					break;
 				case EAST:
-					yaw = -90;
+					yaw = 270;
 					direction = EAST;
 					if (previousBlock->GetBlockType() == TrackBlock::TYPE::STRAIGHT)
 					{
@@ -174,7 +174,7 @@ namespace racer
 					}
 					break;
 				case WEST:
-					yaw = -270;
+					yaw = 90;
 					direction = WEST;
 					if (previousBlock->GetBlockType() == TrackBlock::TYPE::STRAIGHT)
 					{
