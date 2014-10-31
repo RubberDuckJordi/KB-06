@@ -34,7 +34,7 @@ namespace pengine
 
 		// Adds a force relative to the entity's rotation
 		// for example: 0.0f, 0.0f, 1.0f is forward.
-		void AddRelativeForce(Vector3*);
+		void AddRelativeForce(Vector3* vector);
 		Vector3* GetRelativeForce();
 
 		float GetFriction();

@@ -23,8 +23,8 @@ namespace pengine
 		Sets the position to look at with the camera
 		*/
 		void SetLookAtPosition(float x, float y, float z, float rollDegrees);
-		void SetLookAtEntity(Entity*);
-		void SetThirdPersonEntity(Entity*, float distance, float height);
+		void SetLookAtEntity(Entity* entity);
+		void SetThirdPersonEntity(Entity* entity, float distance, float height);
 		void SetRotation(float yawDegrees, float pitchDegrees, float rollDegrees);
 
 		bool useInput = false;
