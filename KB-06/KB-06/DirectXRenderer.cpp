@@ -162,7 +162,7 @@ namespace pengine
 
 	void DirectXRenderer::SetDefaultRenderStates()
 	{
-		this->g_pd3dDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);	//Counter Clockwise Cullmode
+		this->g_pd3dDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);	//Counter Clockwise Cullmode
 		this->g_pd3dDevice->SetRenderState(D3DRS_ZENABLE, true); //Z buffer on
 		this->g_pd3dDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, true); //Turn Alphablending on
 		this->g_pd3dDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA); //Type alphablending

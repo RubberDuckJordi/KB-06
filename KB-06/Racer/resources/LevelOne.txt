@@ -22,9 +22,9 @@
 <Ground>
 <Heightmap>resources/heightmap.bmp</Heightmap>
 <Material>resources/heightmaptexture.bmp</Material>
-<PositionX>0.0f</PositionX>
-<PositionY>10.0f</PositionY>
-<PositionZ>0.0f</PositionZ>
+<PositionX>-250.0f</PositionX>
+<PositionY>-50.0f</PositionY>
+<PositionZ>-250.0f</PositionZ>
 <TranslationX>0.0f</TranslationX>
 <TranslationY>0.0f</TranslationY>
 <TranslationZ>0.0f</TranslationZ>

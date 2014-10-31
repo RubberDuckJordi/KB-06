@@ -352,7 +352,7 @@ pengine::Scene* racer::RaceSceneFactory::CreateScene(std::vector<std::string>* s
 
 					if (groundHeightmapPath.compare("") && groundMaterialPath.compare(""))
 					{
-						pengine::Ground* ground = resourceManager->LoadGround(groundHeightmapPath, groundMaterialPath, 3);
+						pengine::Ground* ground = resourceManager->LoadGround(groundHeightmapPath, groundMaterialPath, 10);
 						ground->SetAll(positionX, positionY, positionZ, translationX, translationY, translationZ, scalingX, scalingY, scalingZ);
 						ground->InitQuadTree(2);
 						scene->SetGround(ground);
