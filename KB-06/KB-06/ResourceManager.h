@@ -1,4 +1,3 @@
-
 #ifndef _PENGINE_RESOURCEMANAGER_H_
 #define _PENGINE_RESOURCEMANAGER_H_
 
@@ -13,6 +12,11 @@
 
 #include <vector>
 #include <string>
+
+/*
+Responsible for loading and managing all resources that have to be loaded from hard drive.
+Makes sure that no resources is loaded twice.
+*/
 
 namespace pengine
 {
@@ -35,15 +39,12 @@ namespace pengine
 		HeightmapLoader heightmapLoader;
 		SceneLoader* sceneLoader;
 		SuperXLoader* superXLoader;
-		//std::map<std::string, Mesh> meshes;
 		std::map<std::string, Material> materials;
 		std::map<std::string, BinaryData*> textures;
 		std::map<std::string, Ground> grounds;
 		std::map<std::string, std::string*> shaders;
 		std::map<std::string, Model3D*> models;
 
-		//std::map<std::string, BaseMeshLoader*> meshLoaders;
-		//std::map<std::string, BaseMaterialLoader*> materialLoaders;
 	};
 }
 #endif

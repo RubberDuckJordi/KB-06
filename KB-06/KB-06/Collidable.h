@@ -6,6 +6,10 @@
 #include "CollisionEffect.h"
 #include "Renderer.h"
 
+/*
+Any object in the Scene that is able to collide must implement Collidable.
+*/
+
 namespace pengine
 {
 	struct COLLISIONEFFECT;
@@ -29,10 +33,6 @@ namespace pengine
 		virtual void DrawCollidable(Renderer*);
 		// Type to know what kind of object has collided
 		virtual std::string GetType() = 0;
-
-		//BEAM collisionBox;//unsafe, but for testing purposes...
-
-		//BEAM collisionBox2;//unsafe, but for testing purposes...
 	protected:
 		BEAM collisionBox;
 

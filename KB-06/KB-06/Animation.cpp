@@ -25,11 +25,6 @@ namespace pengine
 		}
 	}
 
-	Animation* Animation::Get()
-	{
-		return this;
-	}
-
 	Animation* Animation::IsName(std::string &pText)
 	{
 		if (strcmp(boneName.c_str(), pText.c_str()) == 0)

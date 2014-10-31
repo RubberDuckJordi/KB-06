@@ -40,7 +40,7 @@ namespace pengine
 	{
 	public:
 		~Animation();
-		Animation* Get();
+		// Returns this pointer when the bone name equals to the pText parameter
 		Animation* IsName(std::string &pText);
 
 		std::string boneName;
