@@ -29,7 +29,7 @@
 <TranslationY>0.0f</TranslationY>
 <TranslationZ>0.0f</TranslationZ>
 <ScalingX>1.0f</ScalingX>
-<ScalingY>1.0f</ScalingY>
+<ScalingY>1.5f</ScalingY>
 <ScalingZ>1.0f</ScalingZ>
 </Ground>
 
