@@ -1,5 +1,5 @@
-#ifndef _PENGINE_BONE_H_
-#define _PENGINE_BONE_H_
+#ifndef _PENGINEbone_H_
+#define _PENGINEbone_H_
 
 #include "Matrix.h"
 #include "Types.h"
@@ -17,13 +17,13 @@ namespace pengine
 		Bone* IsName(std::string &BoneName);
 		void UpdateIndices(uint16 pIndex);
 
-		Matrix _MatrixPos, _SkinOffset;
-		uint32 _nVertices;
-		uint16* _Vertices;
-		float* _Weights;
-		std::string _MeshName;
-		std::string _Name;
-		std::list<Bone*> _Bones;
+		Matrix matrixPos, _SkinOffset;
+		uint32 nVertices;
+		uint16* vertices;
+		float* weights;
+		std::string meshName;
+		std::string name;
+		std::list<Bone*> bones;
 	};
 }
 #endif

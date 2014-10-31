@@ -33,7 +33,7 @@ namespace pengine
 		// Adds a position to the vertices array
 		void AddPosition(int p_vertexIndex, int p_pointIndex, float p_y, Ground& ground);
 		// Builds ground based on a byte array of heightmap points
-		void BuildGround(byte* p_vertices, Ground& ground);
+		void BuildGround(byte* pvertices, Ground& ground);
 		/*
 		Loads and reads the HeightMap file 
 		Results are loaded into the private fields of this class.

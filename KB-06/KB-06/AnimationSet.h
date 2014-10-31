@@ -1,5 +1,5 @@
-#ifndef _PENGINE_ANIMATIONSET_H_
-#define _PENGINE_ANIMATIONSET_H_
+#ifndef _PENGINEanimationsET_H_
+#define _PENGINEanimationsET_H_
 
 #include "Animation.h"
 
@@ -13,9 +13,9 @@ namespace pengine
 		~AnimationSet();
 		AnimationSet* IsName(std::string &pText);
 		Animation* FindAnimation(std::string &pText);
-		std::string _Name;
-		std::list<Animation*> _Animations;
-		uint32 _MaxKey; //Maximum time key for the full animation set
+		std::string name;
+		std::list<Animation*> animations;
+		uint32 maxKey; //Maximum time key for the full animation set
 	};
 }
 #endif

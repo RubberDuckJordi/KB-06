@@ -1,5 +1,5 @@
-#ifndef _PENGINE_ANIMATION_H_
-#define _PENGINE_ANIMATION_H_
+#ifndef _PENGINEanimation_H_
+#define _PENGINEanimation_H_
 
 #include "Types.h"
 #include "Vector.h"
@@ -43,11 +43,11 @@ namespace pengine
 		Animation* Get();
 		Animation* IsName(std::string &pText);
 
-		std::string _BoneName;
-		std::vector<ScaleKey*> _Scalings;
-		std::vector<RotateKey*> _Rotations;
-		std::vector<PositionKey*> _Translations;
-		std::vector<MatrixKey*> _Matrices;
+		std::string boneName;
+		std::vector<ScaleKey*> scalings;
+		std::vector<RotateKey*> rotations;
+		std::vector<PositionKey*> translations;
+		std::vector<MatrixKey*> matrices;
 	};
 }
 #endif

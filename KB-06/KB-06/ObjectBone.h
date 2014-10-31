@@ -20,12 +20,12 @@ namespace pengine
 		//Sets up the original Matrix position as transformation matrix
 		void CalcBindSpace();
 
-		Bone* _Bone;
-		Animation* _Animation;
-		uint16 _AnimationIndexMat, _AnimationIndexS, _AnimationIndexR, _AnimationIndexT;
-		Matrix _TransformMatrix, _CombinedMatrix, _FinalMatrix;
-		std::string _BoneName;
-		std::list<ObjectBone*> _Bones;
+		Bone* bone;
+		Animation* animation;
+		uint16 animationIndexMat, animationIndexS, animationIndexR, animationIndexT;
+		Matrix transformMatrix, combinedMatrix, finalMatrix;
+		std::string boneName;
+		std::list<ObjectBone*> bones;
 	};
 }
 #endif

@@ -3,18 +3,18 @@
 
 namespace pengine
 {
-	ObjectBone::ObjectBone() : _Bone(0), _Animation(0)
+	ObjectBone::ObjectBone() : bone(0), animation(0)
 	{
-		_TransformMatrix.Identity();
-		_CombinedMatrix.Identity();
-		_FinalMatrix.Identity();
+		transformMatrix.Identity();
+		combinedMatrix.Identity();
+		finalMatrix.Identity();
 	}
 
 	ObjectBone::~ObjectBone()
 	{
-		while (!_Bones.empty())
+		while (!bones.empty())
 		{
-			delete _Bones.back(); _Bones.pop_back();
+			delete bones.back(); bones.pop_back();
 		}
 	}
 
@@ -22,19 +22,19 @@ namespace pengine
 	{
 		if (pParentBone == 0)
 		{
-			_CombinedMatrix = _TransformMatrix;
+			combinedMatrix = transformMatrix;
 		}
 		else
 		{
-			_CombinedMatrix = _TransformMatrix * pParentBone->_CombinedMatrix;
+			combinedMatrix = transformMatrix * pParentBone->combinedMatrix;
 		}
 
-		_FinalMatrix = _Bone->_SkinOffset * _CombinedMatrix;
+		finalMatrix = bone->_SkinOffset * combinedMatrix;
 	}
 
 	void ObjectBone::CalcAnimation(uint16 &pKey)
 	{
-		if (_Animation == 0)
+		if (animation == 0)
 		{
 			return;
 		}
@@ -44,38 +44,38 @@ namespace pengine
 		float cTime; //pKey minus current key time: cTime / DeltaKey gives the interpolation factor
 
 		//If the transformations are expressed as matrices
-		if (!_Animation->_Matrices.empty())
+		if (!animation->matrices.empty())
 		{
 			if (pKey == 0)
 			{
-				_AnimationIndexMat = 0;
+				animationIndexMat = 0;
 			}
 
-			if (_AnimationIndexMat == _Animation->_Matrices.size() - 1)
+			if (animationIndexMat == animation->matrices.size() - 1)
 			{
 				//If we are at the last matrix index use the last matrix as a transform matrix
-				Mat = (_Animation->_Matrices[_AnimationIndexMat])->Matrix;
+				Mat = (animation->matrices[animationIndexMat])->Matrix;
 			}
 			else
 			{
 				//Advance the internal matrix animation index according to the main Time count
-				while (pKey > (_Animation->_Matrices[_AnimationIndexMat + 1])->Time)
+				while (pKey > (animation->matrices[animationIndexMat + 1])->Time)
 				{
-					_AnimationIndexMat++;
-					if (_AnimationIndexMat >= _Animation->_Matrices.size())
+					animationIndexMat++;
+					if (animationIndexMat >= animation->matrices.size())
 					{
-						_AnimationIndexMat = _Animation->_Matrices.size() - 1;
+						animationIndexMat = animation->matrices.size() - 1;
 						break;
 					}
 				}
 
 				//interpolate the transform matrix between this matrix index and
 				//the next using the Time count parameter
-				DeltaKey = (float)((_Animation->_Matrices[_AnimationIndexMat + 1])->Time - (_Animation->_Matrices[_AnimationIndexMat])->Time);
-				cTime = (float)(pKey - (_Animation->_Matrices[_AnimationIndexMat])->Time);
-				Mat = (_Animation->_Matrices[_AnimationIndexMat])->Matrix + (((_Animation->_Matrices[_AnimationIndexMat + 1])->Matrix - (_Animation->_Matrices[_AnimationIndexMat])->Matrix) * (cTime / DeltaKey));
+				DeltaKey = (float)((animation->matrices[animationIndexMat + 1])->Time - (animation->matrices[animationIndexMat])->Time);
+				cTime = (float)(pKey - (animation->matrices[animationIndexMat])->Time);
+				Mat = (animation->matrices[animationIndexMat])->Matrix + (((animation->matrices[animationIndexMat + 1])->Matrix - (animation->matrices[animationIndexMat])->Matrix) * (cTime / DeltaKey));
 			}
-			_TransformMatrix = Mat;
+			transformMatrix = Mat;
 		}
 		else
 		{
@@ -83,109 +83,109 @@ namespace pengine
 			Vector Scale;
 			Vertex Translate;
 
-			_TransformMatrix.Identity();
+			transformMatrix.Identity();
 			if (pKey == 0)
 			{
-				_AnimationIndexR = 0;
-				_AnimationIndexS = 0;
-				_AnimationIndexT = 0;
+				animationIndexR = 0;
+				animationIndexS = 0;
+				animationIndexT = 0;
 			}
 
 			//If there are rotations
-			if (!_Animation->_Rotations.empty())
+			if (!animation->rotations.empty())
 			{
-				if (_AnimationIndexR == _Animation->_Rotations.size() - 1)
+				if (animationIndexR == animation->rotations.size() - 1)
 				{
 					//If we are at the last rotation index use the last rotation
-					Quat = (_Animation->_Rotations[_AnimationIndexR])->Rotation;
+					Quat = (animation->rotations[animationIndexR])->Rotation;
 				}
 				else
 				{
 					//Advance the internal rotation animation index according to the main Time count
-					while (pKey > (_Animation->_Rotations[_AnimationIndexR + 1])->Time)
+					while (pKey > (animation->rotations[animationIndexR + 1])->Time)
 					{
-						_AnimationIndexR++;
-						if (_AnimationIndexR >= _Animation->_Rotations.size())
+						animationIndexR++;
+						if (animationIndexR >= animation->rotations.size())
 						{
-							_AnimationIndexR = _Animation->_Rotations.size() - 1;
+							animationIndexR = animation->rotations.size() - 1;
 							break;
 						}
 					}
 					//Interpolate the quaternion
-					DeltaKey = (float)((_Animation->_Rotations[_AnimationIndexR + 1])->Time - (_Animation->_Rotations[_AnimationIndexR])->Time);
-					cTime = (float)(pKey - (_Animation->_Rotations[_AnimationIndexR])->Time);
-					Quat = (_Animation->_Rotations[_AnimationIndexR])->Rotation.Slerp(cTime / DeltaKey, (_Animation->_Rotations[_AnimationIndexR + 1])->Rotation);
+					DeltaKey = (float)((animation->rotations[animationIndexR + 1])->Time - (animation->rotations[animationIndexR])->Time);
+					cTime = (float)(pKey - (animation->rotations[animationIndexR])->Time);
+					Quat = (animation->rotations[animationIndexR])->Rotation.Slerp(cTime / DeltaKey, (animation->rotations[animationIndexR + 1])->Rotation);
 				}
 				Mat.Identity();
 				Mat.QuaternionMatrix(Quat[1], Quat[2], Quat[3], Quat[0]);
-				_TransformMatrix *= Mat;
+				transformMatrix *= Mat;
 			}
 
 			//if there are scalings
-			if (!_Animation->_Scalings.empty())
+			if (!animation->scalings.empty())
 			{
-				if (_AnimationIndexS == _Animation->_Scalings.size() - 1)
+				if (animationIndexS == animation->scalings.size() - 1)
 				{
 					//If we are at the last scaling index use the last scaling
-					Scale = (_Animation->_Scalings[_AnimationIndexS])->Scale;
+					Scale = (animation->scalings[animationIndexS])->Scale;
 				}
 				else
 				{
 					//Advance the internal scaling animation index according to the main Time count
-					while (pKey > (_Animation->_Scalings[_AnimationIndexS + 1])->Time)
+					while (pKey > (animation->scalings[animationIndexS + 1])->Time)
 					{
-						_AnimationIndexS++;
-						if (_AnimationIndexS >= _Animation->_Scalings.size())
+						animationIndexS++;
+						if (animationIndexS >= animation->scalings.size())
 						{
-							_AnimationIndexS = _Animation->_Scalings.size() - 1;
+							animationIndexS = animation->scalings.size() - 1;
 							break;
 						}
 					}
 					//Interpolate the vector
-					DeltaKey = (float)((_Animation->_Scalings[_AnimationIndexS + 1])->Time - (_Animation->_Scalings[_AnimationIndexS])->Time);
-					cTime = (float)(pKey - (_Animation->_Scalings[_AnimationIndexS])->Time);
-					Scale = (_Animation->_Scalings[_AnimationIndexS])->Scale + (((_Animation->_Scalings[_AnimationIndexS + 1])->Scale - (_Animation->_Scalings[_AnimationIndexS])->Scale) * (cTime / DeltaKey));
+					DeltaKey = (float)((animation->scalings[animationIndexS + 1])->Time - (animation->scalings[animationIndexS])->Time);
+					cTime = (float)(pKey - (animation->scalings[animationIndexS])->Time);
+					Scale = (animation->scalings[animationIndexS])->Scale + (((animation->scalings[animationIndexS + 1])->Scale - (animation->scalings[animationIndexS])->Scale) * (cTime / DeltaKey));
 				}
 
 				Mat.Identity();
 				Mat.ScalingMatrix(Scale);
-				_TransformMatrix *= Mat;
+				transformMatrix *= Mat;
 			}
 
 			//if there are translations
-			if (!_Animation->_Translations.empty())
+			if (!animation->translations.empty())
 			{
-				if (_AnimationIndexT == _Animation->_Translations.size() - 1)
+				if (animationIndexT == animation->translations.size() - 1)
 				{
 					//If we are at the last translation index use the last translation
-					Translate = (_Animation->_Translations[_AnimationIndexT])->Translation;
+					Translate = (animation->translations[animationIndexT])->Translation;
 				}
 				else
 				{
 					//Advance the internal translation animation index according to the main Time count
-					while (pKey > (_Animation->_Translations[_AnimationIndexT + 1])->Time)
+					while (pKey > (animation->translations[animationIndexT + 1])->Time)
 					{
-						_AnimationIndexT++;
-						if (_AnimationIndexT >= _Animation->_Translations.size())
+						animationIndexT++;
+						if (animationIndexT >= animation->translations.size())
 						{
-							_AnimationIndexT = _Animation->_Translations.size() - 1;
+							animationIndexT = animation->translations.size() - 1;
 							break;
 						}
 					}
 					//interpolate the vector
-					DeltaKey = (float)((_Animation->_Translations[_AnimationIndexT + 1])->Time - (_Animation->_Translations[_AnimationIndexT])->Time);
-					cTime = (float)(pKey - (_Animation->_Translations[_AnimationIndexT])->Time);
-					Translate = (_Animation->_Translations[_AnimationIndexT])->Translation + (((_Animation->_Translations[_AnimationIndexT + 1])->Translation - (_Animation->_Translations[_AnimationIndexT])->Translation) * (cTime / DeltaKey));
+					DeltaKey = (float)((animation->translations[animationIndexT + 1])->Time - (animation->translations[animationIndexT])->Time);
+					cTime = (float)(pKey - (animation->translations[animationIndexT])->Time);
+					Translate = (animation->translations[animationIndexT])->Translation + (((animation->translations[animationIndexT + 1])->Translation - (animation->translations[animationIndexT])->Translation) * (cTime / DeltaKey));
 				}
 				Mat.Identity();
 				Mat.TranslationMatrix(Translate);
-				_TransformMatrix *= Mat;
+				transformMatrix *= Mat;
 			}
 		}
 	}
 
 	void ObjectBone::CalcBindSpace()
 	{
-		_TransformMatrix = _Bone->_MatrixPos;
+		transformMatrix = bone->matrixPos;
 	}
 }

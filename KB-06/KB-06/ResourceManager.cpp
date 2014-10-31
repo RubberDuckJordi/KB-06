@@ -134,9 +134,9 @@ namespace pengine
 			superXLoader->Load(*filePath, model);
 
 			size_t found = filePath->find_last_of("/");
-			for (auto i = model->_Meshes.begin(); i != model->_Meshes.end(); ++i)
+			for (auto i = model->meshes.begin(); i != model->meshes.end(); ++i)
 			{
-				for (auto j = (*i)->_Materials.begin(); j != (*i)->_Materials.end(); ++j)
+				for (auto j = (*i)->materials.begin(); j != (*i)->materials.end(); ++j)
 				{
 					if ((*j)->texturePath != "")
 					{

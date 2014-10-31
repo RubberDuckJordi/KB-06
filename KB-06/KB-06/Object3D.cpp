@@ -5,7 +5,7 @@
 namespace pengine
 {
 
-	Object3D::Object3D() :_Skeleton(NULL), _SkinnedVertices(NULL), _Model(NULL), _AnimationStep(1)
+	Object3D::Object3D() :skeleton(NULL), _SkinnedVertices(NULL), _Model(NULL), animationstep(1)
 	{
 		Logger* logger = LoggerPool::GetInstance().GetLogger("SuperXLoader");
 		logger->SetLogLevel(Logger::DEBUG);
@@ -27,12 +27,12 @@ namespace pengine
 
 	void Object3D::ClearSkinnedVertices(void)
 	{
-		memset(_SkinnedVertices, 0, _Mesh->_nVertices * sizeof(Vertex));
+		memset(_SkinnedVertices, 0, _Mesh->nVertices * sizeof(Vertex));
 	}
 
 	void Object3D::SetAnimationStep(uint16 pStep)
 	{
-		_AnimationStep = pStep;
+		animationstep = pStep;
 	}
 
 	void Object3D::UpdateAnimation()
@@ -45,53 +45,53 @@ namespace pengine
 		else if (_cAnimationSet != NULL)
 		{
 			ClearSkinnedVertices();
-			_cKey += _AnimationStep;
-			if (_cKey > _cAnimationSet->_MaxKey)
+			_cKey += animationstep;
+			if (_cKey > _cAnimationSet->maxKey)
 			{
 				_cKey = 0;
 			}
-			CalcAnimation(_Skeleton);
+			CalcAnimation(skeleton);
 			ComputeBoundingBoxSphere();
-			CalcAttitude(_Skeleton, 0);
-			SkinMesh(_Skeleton);
+			CalcAttitude(skeleton, 0);
+			SkinMesh(skeleton);
 		}
 	}
 
 	void Object3D::UpdateBindSpace(void)
 	{
-		CalcBindSpace(_Skeleton);
-		CalcAttitude(_Skeleton, 0);
-		SkinMesh(_Skeleton);
+		CalcBindSpace(skeleton);
+		CalcAttitude(skeleton, 0);
+		SkinMesh(skeleton);
 	}
 
 	void Object3D::CalcAnimation(void)
 	{
-		_cKey += _AnimationStep;
-		if (_cKey > _cAnimationSet->_MaxKey)
+		_cKey += animationstep;
+		if (_cKey > _cAnimationSet->maxKey)
 		{
 			_cKey = 0;
 		}
-		CalcAnimation(_Skeleton);
+		CalcAnimation(skeleton);
 		ComputeBoundingBoxSphere();
 	}
 
 	void Object3D::CalcBindSpace(void)
 	{
-		CalcBindSpace(_Skeleton);
+		CalcBindSpace(skeleton);
 	}
 
 	void Object3D::Update(void)
 	{
-		CalcAttitude(_Skeleton, 0);
-		SkinMesh(_Skeleton);
+		CalcAttitude(skeleton, 0);
+		SkinMesh(skeleton);
 	}
 
 	void Object3D::SetupModel(Model3D* &pModel)
 	{
 		_Model = pModel;
-		_Mesh = _Model->_Meshes.back();
-		_SkinnedVertices = new Vertex[_Mesh->_nVertices]();
-		_Skeleton = ReplicateSkeleton(_Model->_Skeleton);
+		_Mesh = _Model->meshes.back();
+		_SkinnedVertices = new Vertex[_Mesh->nVertices]();
+		skeleton = ReplicateSkeleton(_Model->skeleton);
 	}
 
 	void Object3D::MapAnimationSet(std::string pText)
@@ -100,23 +100,23 @@ namespace pengine
 		_cKey = 0;
 		if (_cAnimationSet != 0)
 		{
-			GetBoneAnimation(_Skeleton);
+			GetBoneAnimation(skeleton);
 		}
 	}
 
 	void Object3D::MapAnimationSet(uint16 &index)
 	{
-		if (_Model->_AnimationSets.size() == 0)
+		if (_Model->animationsets.size() == 0)
 		{
 			return;
 		}
-		if (index >= _Model->_AnimationSets.size())
+		if (index >= _Model->animationsets.size())
 		{
 			index = 0;
 		}
-		//logger->LogAll(Logger::INFO, "Object3D: ", _Model->_AnimationSets.size(), " Animation Sets. Playing: ", index);
+		//logger->LogAll(Logger::INFO, "Object3D: ", _Model->animationsets.size(), " Animation Sets. Playing: ", index);
 
-		std::list<AnimationSet*>::iterator i = _Model->_AnimationSets.begin();
+		std::list<AnimationSet*>::iterator i = _Model->animationsets.begin();
 		if (index != 0)
 		{
 			int16 test = index;
@@ -127,7 +127,7 @@ namespace pengine
 		}
 		_cAnimationSet = (*i);
 
-		GetBoneAnimation(_Skeleton);
+		GetBoneAnimation(skeleton);
 		_cKey = 0;
 	}
 
@@ -135,18 +135,18 @@ namespace pengine
 	{
 		if (indexBuffers.size() == 0)
 		{
-			if (_Mesh->_Subsets.size() == 0)
+			if (_Mesh->subsets.size() == 0)
 			{
 				unsigned int counter = 0;
-				for (auto i = _Mesh->_Materials.begin(); i != _Mesh->_Materials.end(); ++i)
+				for (auto i = _Mesh->materials.begin(); i != _Mesh->materials.end(); ++i)
 				{
 					std::list<Face> facesToDraw;
-					for (unsigned int j = 0; j < _Mesh->_nFaces; ++j)
+					for (unsigned int j = 0; j < _Mesh->nFaces; ++j)
 					{
-						int ffs = _Mesh->_FaceMaterials[j];
-						if (_Mesh->_FaceMaterials[j] == counter)
+						int ffs = _Mesh->faceMaterials[j];
+						if (_Mesh->faceMaterials[j] == counter)
 						{
-							facesToDraw.push_back(_Mesh->_Faces[j]);
+							facesToDraw.push_back(_Mesh->faces[j]);
 						}
 					}
 					unsigned int* indices = new unsigned int[facesToDraw.size() * 3];
@@ -170,10 +170,10 @@ namespace pengine
 			{
 				Subset* tempSubset;
 				Face tempFace;
-				auto i = _Mesh->_Subsets.begin();
-				auto j = _Mesh->_Materials.begin();
+				auto i = _Mesh->subsets.begin();
+				auto j = _Mesh->materials.begin();
 
-				while (j != _Mesh->_Materials.end())
+				while (j != _Mesh->materials.end())
 				{
 					tempSubset = *i;
 					unsigned int indicesForSubset = tempSubset->Size * 3;//amount of faces * 3
@@ -202,7 +202,7 @@ namespace pengine
 
 	void Object3D::Render(Renderer* renderer)
 	{
-		int	amountOfVertices = _Mesh->_nVertices;
+		int	amountOfVertices = _Mesh->nVertices;
 
 		Vertex* d3dVertices = new Vertex[amountOfVertices];
 
@@ -211,11 +211,11 @@ namespace pengine
 			for (int i = 0; i < amountOfVertices; ++i)//first do all the vertices, then set the indices to the right vertices
 			{
 				Vertex newVertex;
-				newVertex.x = _Mesh->_Vertices[i].x;
-				newVertex.y = _Mesh->_Vertices[i].y;
-				newVertex.z = _Mesh->_Vertices[i].z;
-				newVertex.tu = _Mesh->_Vertices[i].tu;
-				newVertex.tv = _Mesh->_Vertices[i].tv;
+				newVertex.x = _Mesh->vertices[i].x;
+				newVertex.y = _Mesh->vertices[i].y;
+				newVertex.z = _Mesh->vertices[i].z;
+				newVertex.tu = _Mesh->vertices[i].tu;
+				newVertex.tv = _Mesh->vertices[i].tv;
 				d3dVertices[i] = newVertex;
 			}
 		}
@@ -238,7 +238,7 @@ namespace pengine
 		unsigned int counter = 0;
 		for (auto it = indexBuffers.begin(); it != indexBuffers.end(); ++it)
 		{
-			renderer->SetMaterial(_Mesh->_Materials[counter]);
+			renderer->SetMaterial(_Mesh->materials[counter]);
 			counter++;
 			renderer->DrawIndexedVertexBuffer(vbWrapper, (*it));
 		}
@@ -253,15 +253,15 @@ namespace pengine
 		{
 			ObjectBone* NBone = new ObjectBone;
 
-			NBone->_BoneName = pBone->_Name;
-			NBone->_Bone = pBone;
-			NBone->_TransformMatrix = pBone->_MatrixPos;
+			NBone->boneName = pBone->name;
+			NBone->bone = pBone;
+			NBone->transformMatrix = pBone->matrixPos;
 
-			if (!pBone->_Bones.empty())
+			if (!pBone->bones.empty())
 			{
-				for (std::list<Bone*>::iterator i = pBone->_Bones.begin(); i != pBone->_Bones.end(); i++)
+				for (std::list<Bone*>::iterator i = pBone->bones.begin(); i != pBone->bones.end(); i++)
 				{
-					NBone->_Bones.push_back(ReplicateSkeleton(*i));
+					NBone->bones.push_back(ReplicateSkeleton(*i));
 				}
 			}
 			return NBone;
@@ -274,18 +274,18 @@ namespace pengine
 
 	void Object3D::GetBoneAnimation(ObjectBone* &pBone)
 	{
-		pBone->_Animation = _cAnimationSet->FindAnimation(pBone->_BoneName);
-		if (pBone->_Animation == 0)
+		pBone->animation = _cAnimationSet->FindAnimation(pBone->boneName);
+		if (pBone->animation == 0)
 		{
-			//logger->LogAll(Logger::INFO, "Object3D: ", pBone->_BoneName, " is not linked to an animation.");
+			//logger->LogAll(Logger::INFO, "Object3D: ", pBone->boneName, " is not linked to an animation.");
 		}
-		pBone->_AnimationIndexMat = 0;
-		pBone->_AnimationIndexR = 0;
-		pBone->_AnimationIndexS = 0;
-		pBone->_AnimationIndexT = 0;
-		if (!pBone->_Bones.empty())
+		pBone->animationIndexMat = 0;
+		pBone->animationIndexR = 0;
+		pBone->animationIndexS = 0;
+		pBone->animationIndexT = 0;
+		if (!pBone->bones.empty())
 		{
-			for (std::list<ObjectBone*>::iterator i = pBone->_Bones.begin(); i != pBone->_Bones.end(); i++)
+			for (std::list<ObjectBone*>::iterator i = pBone->bones.begin(); i != pBone->bones.end(); i++)
 			{
 				GetBoneAnimation(*i);
 			}
@@ -295,9 +295,9 @@ namespace pengine
 	void Object3D::CalcAttitude(ObjectBone* pBone, ObjectBone* pParentBone)
 	{
 		pBone->CalcAttitude(pParentBone);
-		if (!pBone->_Bones.empty())
+		if (!pBone->bones.empty())
 		{
-			for (std::list<ObjectBone*>::iterator i = pBone->_Bones.begin(); i != pBone->_Bones.end(); i++)
+			for (std::list<ObjectBone*>::iterator i = pBone->bones.begin(); i != pBone->bones.end(); i++)
 			{
 				CalcAttitude(*i, pBone);
 			}
@@ -307,9 +307,9 @@ namespace pengine
 	void Object3D::CalcAnimation(ObjectBone* &pBone)
 	{
 		pBone->CalcAnimation(_cKey);
-		if (!pBone->_Bones.empty())
+		if (!pBone->bones.empty())
 		{
-			for (std::list<ObjectBone*>::iterator i = pBone->_Bones.begin(); i != pBone->_Bones.end(); i++)
+			for (std::list<ObjectBone*>::iterator i = pBone->bones.begin(); i != pBone->bones.end(); i++)
 			{
 				CalcAnimation(*i);
 			}
@@ -319,9 +319,9 @@ namespace pengine
 	void Object3D::CalcBindSpace(ObjectBone* &pBone)
 	{
 		pBone->CalcBindSpace();
-		if (!pBone->_Bones.empty())
+		if (!pBone->bones.empty())
 		{
-			for (std::list<ObjectBone*>::iterator i = pBone->_Bones.begin(); i != pBone->_Bones.end(); i++)
+			for (std::list<ObjectBone*>::iterator i = pBone->bones.begin(); i != pBone->bones.end(); i++)
 			{
 				CalcBindSpace(*i);
 			}
@@ -330,23 +330,23 @@ namespace pengine
 
 	void Object3D::SkinMesh(ObjectBone* pBone)
 	{
-		if (!pBone->_Bones.empty())
+		if (!pBone->bones.empty())
 		{
 			//logger->LogAll(Logger::DEBUG, "Object3D: Bones is not empty");
-			for (std::list<ObjectBone*>::iterator i = pBone->_Bones.begin(); i != pBone->_Bones.end(); i++)
+			for (std::list<ObjectBone*>::iterator i = pBone->bones.begin(); i != pBone->bones.end(); i++)
 			{
 				SkinMesh(*i);
 			}
 		}
 
-		Vertex* MeshVertices = _Mesh->_Vertices;
-		uint32 nIndices = pBone->_Bone->_nVertices;
-		uint16* VertexIndices = pBone->_Bone->_Vertices;
-		float* Weights = pBone->_Bone->_Weights;
+		Vertex* MeshVertices = _Mesh->vertices;
+		uint32 nIndices = pBone->bone->nVertices;
+		uint16* VertexIndices = pBone->bone->vertices;
+		float* Weights = pBone->bone->weights;
 
 		for (unsigned int i = 0; i < nIndices; i++)
 		{
-			_SkinnedVertices[VertexIndices[i]] = _SkinnedVertices[VertexIndices[i]] + (pBone->_FinalMatrix * MeshVertices[VertexIndices[i]]) * Weights[i];
+			_SkinnedVertices[VertexIndices[i]] = _SkinnedVertices[VertexIndices[i]] + (pBone->finalMatrix * MeshVertices[VertexIndices[i]]) * Weights[i];
 		}
 
 	}
@@ -357,48 +357,48 @@ namespace pengine
 		float maxx, maxy, maxz;
 
 		//Initialise at first values
-		minx = this->_Mesh->_Vertices[0].x;
-		maxx = this->_Mesh->_Vertices[0].x;
-		miny = this->_Mesh->_Vertices[0].y;
-		maxy = this->_Mesh->_Vertices[0].y;
-		minz = this->_Mesh->_Vertices[0].z;
-		maxz = this->_Mesh->_Vertices[0].z;
+		minx = this->_Mesh->vertices[0].x;
+		maxx = this->_Mesh->vertices[0].x;
+		miny = this->_Mesh->vertices[0].y;
+		maxy = this->_Mesh->vertices[0].y;
+		minz = this->_Mesh->vertices[0].z;
+		maxz = this->_Mesh->vertices[0].z;
 
-		for (int i = 0; i < this->_Mesh->_nVertices; ++i)
+		for (int i = 0; i < this->_Mesh->nVertices; ++i)
 		{
 			// Check min values 
-			if (this->_Mesh->_Vertices[i].x < minx)
+			if (this->_Mesh->vertices[i].x < minx)
 			{
-				minx = this->_Mesh->_Vertices[i].x;
+				minx = this->_Mesh->vertices[i].x;
 			}
-			if (this->_Mesh->_Vertices[i].y < miny)
+			if (this->_Mesh->vertices[i].y < miny)
 			{
-				miny = this->_Mesh->_Vertices[i].y;
+				miny = this->_Mesh->vertices[i].y;
 			}
-			if (this->_Mesh->_Vertices[i].z < minz)
+			if (this->_Mesh->vertices[i].z < minz)
 			{
-				minz = this->_Mesh->_Vertices[i].z;
+				minz = this->_Mesh->vertices[i].z;
 			}
 
 			// Check max values
-			if (this->_Mesh->_Vertices[i].x > maxx)
+			if (this->_Mesh->vertices[i].x > maxx)
 			{
-				maxx = this->_Mesh->_Vertices[i].x;
+				maxx = this->_Mesh->vertices[i].x;
 			}
-			if (this->_Mesh->_Vertices[i].y > maxy)
+			if (this->_Mesh->vertices[i].y > maxy)
 			{
-				maxy = this->_Mesh->_Vertices[i].y;
+				maxy = this->_Mesh->vertices[i].y;
 			}
-			if (this->_Mesh->_Vertices[i].z > maxz)
+			if (this->_Mesh->vertices[i].z > maxz)
 			{
-				maxz = this->_Mesh->_Vertices[i].z;
+				maxz = this->_Mesh->vertices[i].z;
 			}
 		}
 
 		// Calculate the rectangle 
-		rect.x = _Skeleton->_Bone->_MatrixPos[12];
-		rect.y = _Skeleton->_Bone->_MatrixPos[13];
-		rect.z = _Skeleton->_Bone->_MatrixPos[14];
+		rect.x = skeleton->bone->matrixPos[12];
+		rect.y = skeleton->bone->matrixPos[13];
+		rect.z = skeleton->bone->matrixPos[14];
 
 		rect.width = maxx - minx;
 		rect.height = maxy - miny;
@@ -418,12 +418,12 @@ namespace pengine
 	float Object3D::GetMinZ()
 	{
 		float  minz;
-		minz = this->_Mesh->_Vertices[0].z;
-		for (int i = 0; i < this->_Mesh->_nVertices; ++i)
+		minz = this->_Mesh->vertices[0].z;
+		for (int i = 0; i < this->_Mesh->nVertices; ++i)
 		{
-			if (this->_Mesh->_Vertices[i].z < minz)
+			if (this->_Mesh->vertices[i].z < minz)
 			{
-				minz = this->_Mesh->_Vertices[i].z;
+				minz = this->_Mesh->vertices[i].z;
 			}
 		}
 		return minz;
@@ -432,12 +432,12 @@ namespace pengine
 	float Object3D::GetMaxZ()
 	{
 		float  maxz;
-		maxz = this->_Mesh->_Vertices[0].z;
-		for (int i = 0; i < this->_Mesh->_nVertices; ++i)
+		maxz = this->_Mesh->vertices[0].z;
+		for (int i = 0; i < this->_Mesh->nVertices; ++i)
 		{
-			if (this->_Mesh->_Vertices[i].z > maxz)
+			if (this->_Mesh->vertices[i].z > maxz)
 			{
-				maxz = this->_Mesh->_Vertices[i].z;
+				maxz = this->_Mesh->vertices[i].z;
 			}
 		}
 		return maxz ;
@@ -446,12 +446,12 @@ namespace pengine
 	float Object3D::GetMinX()
 	{
 		float  minx;
-		minx = this->_Mesh->_Vertices[0].x;
-		for (int i = 0; i < this->_Mesh->_nVertices; ++i)
+		minx = this->_Mesh->vertices[0].x;
+		for (int i = 0; i < this->_Mesh->nVertices; ++i)
 		{
-			if (this->_Mesh->_Vertices[i].x < minx)
+			if (this->_Mesh->vertices[i].x < minx)
 			{
-				minx = this->_Mesh->_Vertices[i].x;
+				minx = this->_Mesh->vertices[i].x;
 			}
 		}
 		return minx;
@@ -460,12 +460,12 @@ namespace pengine
 	float Object3D::GetMaxX()
 	{
 		float  maxx;
-		maxx = this->_Mesh->_Vertices[0].x;
-		for (int i = 0; i < this->_Mesh->_nVertices; ++i)
+		maxx = this->_Mesh->vertices[0].x;
+		for (int i = 0; i < this->_Mesh->nVertices; ++i)
 		{
-			if (this->_Mesh->_Vertices[i].x > maxx)
+			if (this->_Mesh->vertices[i].x > maxx)
 			{
-				maxx = this->_Mesh->_Vertices[i].x;
+				maxx = this->_Mesh->vertices[i].x;
 			}
 		}
 		return maxx;
@@ -474,12 +474,12 @@ namespace pengine
 	float Object3D::GetMinY()
 	{
 		float  miny;
-		miny = this->_Mesh->_Vertices[0].y;
-		for (int i = 0; i < this->_Mesh->_nVertices; ++i)
+		miny = this->_Mesh->vertices[0].y;
+		for (int i = 0; i < this->_Mesh->nVertices; ++i)
 		{
-			if (this->_Mesh->_Vertices[i].y < miny)
+			if (this->_Mesh->vertices[i].y < miny)
 			{
-				miny = this->_Mesh->_Vertices[i].y;
+				miny = this->_Mesh->vertices[i].y;
 			}
 		}
 		return miny;
@@ -488,12 +488,12 @@ namespace pengine
 	float Object3D::GetMaxY()
 	{
 		float  maxy;
-		maxy = this->_Mesh->_Vertices[0].y;
-		for (int i = 0; i < this->_Mesh->_nVertices; ++i)
+		maxy = this->_Mesh->vertices[0].y;
+		for (int i = 0; i < this->_Mesh->nVertices; ++i)
 		{
-			if (this->_Mesh->_Vertices[i].y > maxy)
+			if (this->_Mesh->vertices[i].y > maxy)
 			{
-				maxy = this->_Mesh->_Vertices[i].y;
+				maxy = this->_Mesh->vertices[i].y;
 			}
 		}
 		return maxy;
@@ -501,46 +501,46 @@ namespace pengine
 
 	void Object3D::ComputeBoundingBoxSphere()
 	{
-		_Low = _SkinnedVertices[0];
-		_High = _Low;
-		_Center = _Low;
-		_RadiusHorizontal = 0.0f;
-		_RadiusVertical = 0.0f;
-		for (int i = 0; i < _Mesh->_nVertices; i++)
+		low = _SkinnedVertices[0];
+		high = low;
+		center = low;
+		radiusHorizontal = 0.0f;
+		radiusVertical = 0.0f;
+		for (int i = 0; i < _Mesh->nVertices; i++)
 		{
-			if (_Low.x> _SkinnedVertices[i].x)
+			if (low.x> _SkinnedVertices[i].x)
 			{
-				_Low.x = _SkinnedVertices[i].x;
+				low.x = _SkinnedVertices[i].x;
 			}
-			if (_Low.y > _SkinnedVertices[i].y)
+			if (low.y > _SkinnedVertices[i].y)
 			{
-				_Low.y = _SkinnedVertices[i].y;
+				low.y = _SkinnedVertices[i].y;
 			}
-			if (_Low.z > _SkinnedVertices[i].z)
+			if (low.z > _SkinnedVertices[i].z)
 			{
-				_Low.z = _SkinnedVertices[i].z;
+				low.z = _SkinnedVertices[i].z;
 			}
-			if (_High.x < _SkinnedVertices[i].x)
+			if (high.x < _SkinnedVertices[i].x)
 			{
-				_High.x = _SkinnedVertices[i].x;
+				high.x = _SkinnedVertices[i].x;
 			}
-			if (_High.y < _SkinnedVertices[i].y)
+			if (high.y < _SkinnedVertices[i].y)
 			{
-				_High.y = _SkinnedVertices[i].y;
+				high.y = _SkinnedVertices[i].y;
 			}
-			if (_High.z < _SkinnedVertices[i].z)
+			if (high.z < _SkinnedVertices[i].z)
 			{
-				_High.z = _SkinnedVertices[i].z;
+				high.z = _SkinnedVertices[i].z;
 			}
 		}
-		_Center.x = _Low.x + (_High.x - _Low.x) * 0.5f;
-		_Center.y = _Low.y + (_High.y - _Low.y) * 0.5f;
-		_Center.z = _Low.z + (_High.z - _Low.z) * 0.5f;
+		center.x = low.x + (high.x - low.x) * 0.5f;
+		center.y = low.y + (high.y - low.y) * 0.5f;
+		center.z = low.z + (high.z - low.z) * 0.5f;
 
 
 		
-		/*logger->LogAll(Logger::DEBUG, "Object3D: ", "AABB Low: ", _Low[0], "x", _Low[1], "x", _Low[2]);
-		logger->LogAll(Logger::DEBUG, "Object3D: ", "AABB High: ", _High[0], "x", _High[1], "x", _High[2]);
-		logger->LogAll(Logger::DEBUG, "Object3D: ", "AABB Center: ", _Center[0], "x", _Center[1], "x", _Center[2]);*/
+		/*logger->LogAll(Logger::DEBUG, "Object3D: ", "AABB Low: ", low[0], "x", low[1], "x", low[2]);
+		logger->LogAll(Logger::DEBUG, "Object3D: ", "AABB High: ", high[0], "x", high[1], "x", high[2]);
+		logger->LogAll(Logger::DEBUG, "Object3D: ", "AABB Center: ", center[0], "x", center[1], "x", center[2]);*/
 	}
 }

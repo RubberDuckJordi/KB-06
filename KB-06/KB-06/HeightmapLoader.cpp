@@ -57,7 +57,7 @@ namespace pengine
 		return ground;
 	}
 
-	void HeightmapLoader::BuildGround(byte* p_vertices, Ground& ground)
+	void HeightmapLoader::BuildGround(byte* pvertices, Ground& ground)
 	{
 		ground.SetAmountOfVertices(((ground.GetWidth() - 1) * (ground.GetHeight() - 1) * 6));
 		Vertex* vertex = new Vertex[ground.GetAmountOfVertices()]();
@@ -76,14 +76,14 @@ namespace pengine
 				int point4Index = ((x)+((z))*ground.GetWidth());
 
 				//First triangle for the square
-				AddPosition(vertexIndex + 0, point3Index, p_vertices[point3Index], ground);
-				AddPosition(vertexIndex + 1, point2Index, p_vertices[point2Index], ground);
-				AddPosition(vertexIndex + 2, point1Index, p_vertices[point1Index], ground);
+				AddPosition(vertexIndex + 0, point3Index, pvertices[point3Index], ground);
+				AddPosition(vertexIndex + 1, point2Index, pvertices[point2Index], ground);
+				AddPosition(vertexIndex + 2, point1Index, pvertices[point1Index], ground);
 
 				//Second triangle for the square
-				AddPosition(vertexIndex + 5, point3Index, p_vertices[point3Index], ground);
-				AddPosition(vertexIndex + 4, point2Index, p_vertices[point2Index], ground);
-				AddPosition(vertexIndex + 3, point4Index, p_vertices[point4Index], ground);
+				AddPosition(vertexIndex + 5, point3Index, pvertices[point3Index], ground);
+				AddPosition(vertexIndex + 4, point2Index, pvertices[point2Index], ground);
+				AddPosition(vertexIndex + 3, point4Index, pvertices[point4Index], ground);
 
 				vertexIndex += 6;
 			}

@@ -28,26 +28,26 @@ namespace pengine
 		void UpdateIndices();
 		void CreateSubsets();
 		//Vertices
-		uint16 _nVertices, _FirstVertex;
-		Vertex* _Vertices;
+		uint16 nVertices, _FirstVertex;
+		Vertex* vertices;
 		//Texture Coords for each vertex
-		uint16 _nTextureCoords, _FirstTextureCoord;
-		TCoord* _TextureCoords;
+		uint16 nTextureCoords, firstTextureCoord;
+		TCoord* textureCoords;
 		//Faces
-		uint32 _nFaces, _FirstFace;
-		Face* _Faces;
+		uint32 nFaces, firstFace;
+		Face* faces;
 		//Subset of a mesh: there is one subset for each material used
-		std::list<Subset*> _Subsets;
+		std::list<Subset*> subsets;
 		//Normals
-		uint16 _nNormals, _FirstNormal;
-		Vector* _Normals;
-		Face* _FaceNormals;
+		uint16 nNormals, firstNormal;
+		Vector* normals;
+		Face* faceNormals;
 		//Material index for each face
-		uint16 _nMaterials, _FirstMaterial;
-		uint16* _FaceMaterials;
+		uint16 nMaterials, firstMaterial;
+		uint16* faceMaterials;
 		//list of Materials for that Mesh
-		std::vector<Material*> _Materials;
-		std::string _Name;
+		std::vector<Material*> materials;
+		std::string name;
 	};
 }
 #endif

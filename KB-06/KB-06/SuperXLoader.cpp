@@ -23,9 +23,9 @@ namespace pengine
 			{ "Material", X_MATERIAL },
 			{ "SkinWeights", X_SKINWEIGHTS },
 			{ "TextureFilename", X_TEXTUREFILENAME },
-			{ "AnimationSet", X_ANIMATIONSET },
-			{ "AnimationKey", X_ANIMATIONKEY },
-			{ "Animation", X_ANIMATION },
+			{ "AnimationSet", XanimationsET },
+			{ "AnimationKey", XanimationKEY },
+			{ "Animation", Xanimation },
 			{ "Header", X_HEADER },
 			{ "DeclData", X_DECLDATA }
 	};
@@ -98,7 +98,7 @@ namespace pengine
 			case X_MESH:
 				ProcessMesh();
 				break;
-			case X_ANIMATIONSET:
+			case XanimationsET:
 				ProcessAnimationSets();
 				break;
 			case X_MATERIAL:
@@ -120,8 +120,8 @@ namespace pengine
 		else
 		{
 			//seems to be tiger only...
-			_Object->_Skeleton = new Bone();
-			_Object->_Skeleton->_MatrixPos.Identity();
+			_Object->skeleton = new Bone();
+			_Object->skeleton->matrixPos.Identity();
 			//logger->Log(Logger::DEBUG, "There's no rootbone!");
 		}
 
@@ -358,10 +358,10 @@ namespace pengine
 		for (int i = 0; i < 15; ++i)
 		{
 			fin.getline(text, TEXT_BUFFER, ',');
-			pB->_MatrixPos[i] = TextToNum(text);
+			pB->matrixPos[i] = TextToNum(text);
 		}
 		fin.getline(text, TEXT_BUFFER, ';');
-		pB->_MatrixPos[15] = TextToNum(text);
+		pB->matrixPos[15] = TextToNum(text);
 		Find('}');
 	}
 
@@ -376,29 +376,29 @@ namespace pengine
 		token = fin.peek();
 		if (token != '{')
 		{
-			fin >> cBone->_Name;
+			fin >> cBone->name;
 		}
 		else
 		{
-			cBone->_Name = SetUID('B');
+			cBone->name = SetUID('B');
 		}
 
-		if (unlinkedSkinnedBones[cBone->_Name] != NULL)
+		if (unlinkedSkinnedBones[cBone->name] != NULL)
 		{
-			//logger->Log(Logger::DEBUG, "We found a bone that we already have some skinweights for! The bone is: " + cBone->_Name);
-			cBone = unlinkedSkinnedBones[cBone->_Name];
+			//logger->Log(Logger::DEBUG, "We found a bone that we already have some skinweights for! The bone is: " + cBone->name);
+			cBone = unlinkedSkinnedBones[cBone->name];
 		}
 
 		if (pBone == 0)
 		{
-			//logger->Log(Logger::DEBUG, "SuperXLoader: Skeleton 1st bone: " + cBone->_Name);
+			//logger->Log(Logger::DEBUG, "SuperXLoader: Skeleton 1st bone: " + cBone->name);
 			_LoadSkeleton = cBone;
-			_Object->_Skeleton = _LoadSkeleton;
+			_Object->skeleton = _LoadSkeleton;
 		}
 		else
 		{
-			//logger->Log(Logger::DEBUG, "SuperXLoader: " + pBone->_Name + "->" + cBone->_Name);
-			pBone->_Bones.push_back(cBone);
+			//logger->Log(Logger::DEBUG, "SuperXLoader: " + pBone->name + "->" + cBone->name);
+			pBone->bones.push_back(cBone);
 		}
 		Find('{');
 		token = X_OBRACE;
@@ -414,7 +414,7 @@ namespace pengine
 				break;
 			case X_OBRACE:
 				fin.getline(data, TEXT_BUFFER, '}');
-				cBone->_MeshName = data;
+				cBone->meshName = data;
 				break;
 			case X_FRAME:
 				ProcessBone(cBone);
@@ -424,7 +424,7 @@ namespace pengine
 				break;
 			case X_MESH:
 				ProcessMesh();
-				cBone->_MeshName = _LoadMesh->_Name;
+				cBone->meshName = _LoadMesh->name;
 				break;
 			default:
 				AvoidTemplate();
@@ -441,74 +441,74 @@ namespace pengine
 		int16 token;
 		char data[TEXT_BUFFER];
 
-		if (!_Object->_Meshes.empty())
+		if (!_Object->meshes.empty())
 		{
-			Mesh* LastMesh = _Object->_Meshes.back();
-			_LoadMesh->_FirstVertex = LastMesh->_FirstVertex + LastMesh->_nVertices;
-			_LoadMesh->_FirstFace = LastMesh->_FirstFace + LastMesh->_nFaces;
-			_LoadMesh->_FirstTextureCoord = LastMesh->_FirstTextureCoord + LastMesh->_nTextureCoords;
-			_LoadMesh->_FirstMaterial = LastMesh->_FirstMaterial + LastMesh->_nMaterials;
-			if (_LoadMesh->_FirstTextureCoord < _LoadMesh->_FirstVertex)
+			Mesh* LastMesh = _Object->meshes.back();
+			_LoadMesh->_FirstVertex = LastMesh->_FirstVertex + LastMesh->nVertices;
+			_LoadMesh->firstFace = LastMesh->firstFace + LastMesh->nFaces;
+			_LoadMesh->firstTextureCoord = LastMesh->firstTextureCoord + LastMesh->nTextureCoords;
+			_LoadMesh->firstMaterial = LastMesh->firstMaterial + LastMesh->nMaterials;
+			if (_LoadMesh->firstTextureCoord < _LoadMesh->_FirstVertex)
 			{
-				_LoadMesh->_FirstTextureCoord = _LoadMesh->_FirstVertex;
+				_LoadMesh->firstTextureCoord = _LoadMesh->_FirstVertex;
 			}
-			_LoadMesh->_FirstNormal = LastMesh->_FirstNormal + LastMesh->_nNormals;
-			if (_LoadMesh->_FirstNormal < _LoadMesh->_FirstVertex)
+			_LoadMesh->firstNormal = LastMesh->firstNormal + LastMesh->nNormals;
+			if (_LoadMesh->firstNormal < _LoadMesh->_FirstVertex)
 			{
-				_LoadMesh->_FirstNormal = _LoadMesh->_FirstVertex;
+				_LoadMesh->firstNormal = _LoadMesh->_FirstVertex;
 			}
 
 			//logger->Log(Logger::DEBUG, "SuperXLoader: Starting Vertex index: " + std::to_string(_LoadMesh->_FirstVertex));
-			//logger->Log(Logger::DEBUG, "SuperXLoader: Starting Face index: " + std::to_string(_LoadMesh->_FirstFace));
-			//logger->Log(Logger::DEBUG, "SuperXLoader: Starting TextureCoord index: " + std::to_string(_LoadMesh->_FirstTextureCoord));
-			//logger->Log(Logger::DEBUG, "SuperXLoader: Starting Normal index: " + std::to_string(_LoadMesh->_FirstNormal));
-			//logger->Log(Logger::DEBUG, "SuperXLoader: Starting Material index: " + std::to_string(_LoadMesh->_FirstMaterial));
+			//logger->Log(Logger::DEBUG, "SuperXLoader: Starting Face index: " + std::to_string(_LoadMesh->firstFace));
+			//logger->Log(Logger::DEBUG, "SuperXLoader: Starting TextureCoord index: " + std::to_string(_LoadMesh->firstTextureCoord));
+			//logger->Log(Logger::DEBUG, "SuperXLoader: Starting Normal index: " + std::to_string(_LoadMesh->firstNormal));
+			//logger->Log(Logger::DEBUG, "SuperXLoader: Starting Material index: " + std::to_string(_LoadMesh->firstMaterial));
 		}
 
 		token = fin.peek();
 		if (token != '{')
 		{
-			fin >> _LoadMesh->_Name;
+			fin >> _LoadMesh->name;
 		}
 		else
 		{
-			_LoadMesh->_Name = SetUID('M');
+			_LoadMesh->name = SetUID('M');
 		}
 
 		Find('{');
-		//logger->Log(Logger::DEBUG, "SuperXLoader: Mesh: " + _LoadMesh->_Name);
+		//logger->Log(Logger::DEBUG, "SuperXLoader: Mesh: " + _LoadMesh->name);
 
 		fin.getline(data, TEXT_BUFFER, ';');
-		_LoadMesh->_nVertices = (uint16)TextToNum(data);
-		//logger->Log(Logger::DEBUG, "SuperXLoader: Number of vertices: " + std::to_string(_LoadMesh->_nVertices));
-		_LoadMesh->_Vertices = new Vertex[_LoadMesh->_nVertices]();
-		//   _LoadMesh->_SkinnedVertices = new Frm::Vertex[_LoadMesh->_nVertices];
-		for (int i = 0; i < _LoadMesh->_nVertices; ++i)
+		_LoadMesh->nVertices = (uint16)TextToNum(data);
+		//logger->Log(Logger::DEBUG, "SuperXLoader: Number of vertices: " + std::to_string(_LoadMesh->nVertices));
+		_LoadMesh->vertices = new Vertex[_LoadMesh->nVertices]();
+		//   _LoadMesh->_SkinnedVertices = new Frm::Vertex[_LoadMesh->nVertices];
+		for (int i = 0; i < _LoadMesh->nVertices; ++i)
 		{
 			fin.getline(data, TEXT_BUFFER, ';');
-			_LoadMesh->_Vertices[i].x = TextToNum(data);
+			_LoadMesh->vertices[i].x = TextToNum(data);
 			fin.getline(data, TEXT_BUFFER, ';');
-			_LoadMesh->_Vertices[i].y = TextToNum(data);
+			_LoadMesh->vertices[i].y = TextToNum(data);
 			fin.getline(data, TEXT_BUFFER, ';');
-			_LoadMesh->_Vertices[i].z = TextToNum(data);
+			_LoadMesh->vertices[i].z = TextToNum(data);
 			fin.get();//eats either the comma or the semicolon at the end of each vertex description
 		}
 
 		fin.getline(data, TEXT_BUFFER, ';');
-		_LoadMesh->_nFaces = (uint16)TextToNum(data);
-		//logger->Log(Logger::DEBUG, "SuperXLoader: Number of Faces: " + std::to_string(_LoadMesh->_nFaces));
-		_LoadMesh->_Faces = new Face[_LoadMesh->_nFaces]();
-		for (uint32 i = 0; i < _LoadMesh->_nFaces; ++i)
+		_LoadMesh->nFaces = (uint16)TextToNum(data);
+		//logger->Log(Logger::DEBUG, "SuperXLoader: Number of Faces: " + std::to_string(_LoadMesh->nFaces));
+		_LoadMesh->faces = new Face[_LoadMesh->nFaces]();
+		for (uint32 i = 0; i < _LoadMesh->nFaces; ++i)
 		{
 			Find(';');
 			fin.getline(data, TEXT_BUFFER, ',');
-			_LoadMesh->_Faces[i][0] = (uint16)TextToNum(data);
+			_LoadMesh->faces[i][0] = (uint16)TextToNum(data);
 			fin.getline(data, TEXT_BUFFER, ',');
-			_LoadMesh->_Faces[i][1] = (uint16)TextToNum(data);
+			_LoadMesh->faces[i][1] = (uint16)TextToNum(data);
 			fin.getline(data, TEXT_BUFFER, ';');
-			_LoadMesh->_Faces[i][2] = (uint16)TextToNum(data);
+			_LoadMesh->faces[i][2] = (uint16)TextToNum(data);
 			fin.get(); //eats either the comma or the semicolon at the end of each face description
-			//logger->LogAll(Logger::DEBUG, "SuperXLoader: Face ", std::to_string(i), ": ", std::to_string(_LoadMesh->_Faces[i].data[0]), " ", std::to_string(_LoadMesh->_Faces[i].data[1]), " ", std::to_string(_LoadMesh->_Faces[i].data[2]));
+			//logger->LogAll(Logger::DEBUG, "SuperXLoader: Face ", std::to_string(i), ": ", std::to_string(_LoadMesh->faces[i].data[0]), " ", std::to_string(_LoadMesh->faces[i].data[1]), " ", std::to_string(_LoadMesh->faces[i].data[2]));
 		}
 
 		token = X_COMMENT;
@@ -520,7 +520,7 @@ namespace pengine
 			case X_COMMENT:
 				break; //used for spaces and other kind of comments
 			case X_EBRACE:
-				_Object->_Meshes.push_back(_LoadMesh);
+				_Object->meshes.push_back(_LoadMesh);
 				return; //this is the end, my only friend ...
 				break;
 			case X_MESHNORMALS:
@@ -546,7 +546,7 @@ namespace pengine
 				break;
 			}
 		}
-		_Object->_Meshes.push_back(_LoadMesh);
+		_Object->meshes.push_back(_LoadMesh);
 	}
 
 	void SuperXLoader::ProcessMeshTextureCoords(void)
@@ -556,17 +556,17 @@ namespace pengine
 		Find('{');
 
 		fin.getline(data, TEXT_BUFFER, ';');
-		_LoadMesh->_nTextureCoords = (uint16)TextToNum(data);
-		//logger->Log(Logger::DEBUG, "SuperXLoader: Number of Texture Coords: " + _LoadMesh->_nTextureCoords);
-		_LoadMesh->_TextureCoords = new TCoord[_LoadMesh->_nTextureCoords];
-		for (int i = 0; i < _LoadMesh->_nTextureCoords; ++i)
+		_LoadMesh->nTextureCoords = (uint16)TextToNum(data);
+		//logger->Log(Logger::DEBUG, "SuperXLoader: Number of Texture Coords: " + _LoadMesh->nTextureCoords);
+		_LoadMesh->textureCoords = new TCoord[_LoadMesh->nTextureCoords];
+		for (int i = 0; i < _LoadMesh->nTextureCoords; ++i)
 		{
 			fin.getline(data, TEXT_BUFFER, ';');
-			//_LoadMesh->_TextureCoords[i].data[0] = TextToNum(data);
-			_LoadMesh->_Vertices[i].tu = TextToNum(data);
+			//_LoadMesh->textureCoords[i].data[0] = TextToNum(data);
+			_LoadMesh->vertices[i].tu = TextToNum(data);
 			fin.getline(data, TEXT_BUFFER, ';');
-			//_LoadMesh->_TextureCoords[i].data[1] = TextToNum(data);
-			_LoadMesh->_Vertices[i].tv = TextToNum(data);
+			//_LoadMesh->textureCoords[i].data[1] = TextToNum(data);
+			_LoadMesh->vertices[i].tv = TextToNum(data);
 			fin.get();//eats the comma or the semicolon at the end
 		}
 		Find('}');
@@ -578,32 +578,32 @@ namespace pengine
 
 		Find('{');
 		fin.getline(data, TEXT_BUFFER, ';');
-		_LoadMesh->_nNormals = (uint16)TextToNum(data);
-		//logger->Log(Logger::DEBUG, "SuperXLoader: Number of normals: " + std::to_string(_LoadMesh->_nNormals));
-		_LoadMesh->_Normals = new Vector[_LoadMesh->_nNormals];
-		for (int i = 0; i < _LoadMesh->_nNormals; ++i)
+		_LoadMesh->nNormals = (uint16)TextToNum(data);
+		//logger->Log(Logger::DEBUG, "SuperXLoader: Number of normals: " + std::to_string(_LoadMesh->nNormals));
+		_LoadMesh->normals = new Vector[_LoadMesh->nNormals];
+		for (int i = 0; i < _LoadMesh->nNormals; ++i)
 		{
 			fin.getline(data, TEXT_BUFFER, ';');
-			_LoadMesh->_Normals[i].x = TextToNum(data);
+			_LoadMesh->normals[i].x = TextToNum(data);
 			fin.getline(data, TEXT_BUFFER, ';');
-			_LoadMesh->_Normals[i].y = TextToNum(data);
+			_LoadMesh->normals[i].y = TextToNum(data);
 			fin.getline(data, TEXT_BUFFER, ';');
-			_LoadMesh->_Normals[i].z = TextToNum(data);
+			_LoadMesh->normals[i].z = TextToNum(data);
 			fin.get();//eats the comma or the semicolon at the end
 		}
 
-		_LoadMesh->_FaceNormals = new Face[_LoadMesh->_nFaces];
-		for (uint32 i = 0; i < _LoadMesh->_nFaces; ++i)
+		_LoadMesh->faceNormals = new Face[_LoadMesh->nFaces];
+		for (uint32 i = 0; i < _LoadMesh->nFaces; ++i)
 		{
 			Find(';');
 			fin.getline(data, TEXT_BUFFER, ',');
-			_LoadMesh->_FaceNormals[i][0] = (uint16)TextToNum(data);
+			_LoadMesh->faceNormals[i][0] = (uint16)TextToNum(data);
 			fin.getline(data, TEXT_BUFFER, ',');
-			_LoadMesh->_FaceNormals[i][1] = (uint16)TextToNum(data);
+			_LoadMesh->faceNormals[i][1] = (uint16)TextToNum(data);
 			fin.getline(data, TEXT_BUFFER, ';');
-			_LoadMesh->_FaceNormals[i][2] = (uint16)TextToNum(data);
+			_LoadMesh->faceNormals[i][2] = (uint16)TextToNum(data);
 			fin.get(); //eats either the comma or the semicolon at the end of each face description
-			//logger->LogAll(Logger::DEBUG, "SuperXLoader: Face Normal index ", std::to_string(i) + ": ", std::to_string(_LoadMesh->_FaceNormals[i].data[0]), " ", std::to_string(_LoadMesh->_FaceNormals[i].data[1]), " ", std::to_string(_LoadMesh->_FaceNormals[i].data[2]));
+			//logger->LogAll(Logger::DEBUG, "SuperXLoader: Face Normal index ", std::to_string(i) + ": ", std::to_string(_LoadMesh->faceNormals[i].data[0]), " ", std::to_string(_LoadMesh->faceNormals[i].data[1]), " ", std::to_string(_LoadMesh->faceNormals[i].data[2]));
 		}
 
 		Find('}');
@@ -617,19 +617,19 @@ namespace pengine
 		Find('{');
 
 		fin.getline(data, TEXT_BUFFER, ';');
-		_LoadMesh->_nMaterials = (uint16)TextToNum(data);
-		//logger->Log(Logger::DEBUG, "SuperXLoader: Number of Materials: " + std::to_string(_LoadMesh->_nMaterials));
+		_LoadMesh->nMaterials = (uint16)TextToNum(data);
+		//logger->Log(Logger::DEBUG, "SuperXLoader: Number of Materials: " + std::to_string(_LoadMesh->nMaterials));
 
 		fin.getline(data, TEXT_BUFFER, ';');
 		uint16 nFaces = (uint16)TextToNum(data);
-		_LoadMesh->_FaceMaterials = new uint16[nFaces];
+		_LoadMesh->faceMaterials = new uint16[nFaces];
 		for (uint16 i = 0; i < nFaces - 1; i++)
 		{
 			fin.getline(data, TEXT_BUFFER, ',');
-			_LoadMesh->_FaceMaterials[i] = (uint16)TextToNum(data);
+			_LoadMesh->faceMaterials[i] = (uint16)TextToNum(data);
 		}
 		fin.getline(data, TEXT_BUFFER, ';');
-		_LoadMesh->_FaceMaterials[nFaces - 1] = (uint16)TextToNum(data);
+		_LoadMesh->faceMaterials[nFaces - 1] = (uint16)TextToNum(data);
 		if (fin.peek() == ';')
 		{
 			fin.get(); //eats the last semicolon if it's there
@@ -652,7 +652,7 @@ namespace pengine
 				if (globalMaterials[std::string(data)] != NULL)
 				{
 					//logger->Log(Logger::DEBUG, "SuperXLoader: We found a material that is globally known!");
-					_LoadMesh->_Materials.push_back(globalMaterials[std::string(data)]);//we don't have to do anything with special numbers to indicate which face uses which material, as it's always in order.
+					_LoadMesh->materials.push_back(globalMaterials[std::string(data)]);//we don't have to do anything with special numbers to indicate which face uses which material, as it's always in order.
 				}
 				Find('}');
 				break;
@@ -736,7 +736,7 @@ namespace pengine
 				}
 				else
 				{
-					_LoadMesh->_Materials.push_back(NewMaterial);
+					_LoadMesh->materials.push_back(NewMaterial);
 				}
 				return; //this is the end
 				break;
@@ -759,7 +759,7 @@ namespace pengine
 		}
 		else
 		{
-			_LoadMesh->_Materials.push_back(NewMaterial);
+			_LoadMesh->materials.push_back(NewMaterial);
 		}
 	}
 
@@ -779,34 +779,34 @@ namespace pengine
 			//logger->Log(Logger::DEBUG, "We found skinweights for bone " + temp + " but we don't have that bone yet!");
 			unlinkedSkinnedBones[temp] = new Bone();
 			cBone = unlinkedSkinnedBones[temp];
-			cBone->_Name = temp;
-			cBone->_MeshName = _LoadMesh->_Name;
+			cBone->name = temp;
+			cBone->meshName = _LoadMesh->name;
 		}
-		//logger->Log(Logger::DEBUG, "SuperXLoader: Skinning bone: " + cBone->_Name);
+		//logger->Log(Logger::DEBUG, "SuperXLoader: Skinning bone: " + cBone->name);
 		Find(';');
 
 		fin.getline(data, TEXT_BUFFER, ';');
-		cBone->_nVertices = (uint16)TextToNum(data);
-		cBone->_Vertices = new uint16[cBone->_nVertices];
-		for (uint32 i = 0; i < cBone->_nVertices - 1; ++i)
+		cBone->nVertices = (uint16)TextToNum(data);
+		cBone->vertices = new uint16[cBone->nVertices];
+		for (uint32 i = 0; i < cBone->nVertices - 1; ++i)
 		{
 			fin.getline(data, TEXT_BUFFER, ',');
-			cBone->_Vertices[i] = (uint16)TextToNum(data);
+			cBone->vertices[i] = (uint16)TextToNum(data);
 			//logger->LogAll(Logger::DEBUG, "SuperXLoader: Vertex: ", atoi(Data));
 		}
 		fin.getline(data, TEXT_BUFFER, ';');
-		cBone->_Vertices[cBone->_nVertices - 1] = (uint16)TextToNum(data);
+		cBone->vertices[cBone->nVertices - 1] = (uint16)TextToNum(data);
 		//logger->LogAll(Logger::DEBUG, "SuperXLoader: Vertex: ", atoi(Data));
 
-		cBone->_Weights = new float[cBone->_nVertices];
-		for (uint32 i = 0; i < cBone->_nVertices - 1; ++i)
+		cBone->weights = new float[cBone->nVertices];
+		for (uint32 i = 0; i < cBone->nVertices - 1; ++i)
 		{
 			fin.getline(data, TEXT_BUFFER, ',');
-			cBone->_Weights[i] = TextToNum(data);
+			cBone->weights[i] = TextToNum(data);
 			//logger->LogAll(Logger::DEBUG, "SuperXLoader: Weight: ", atof(Data));
 		}
 		fin.getline(data, TEXT_BUFFER, ';');
-		cBone->_Weights[cBone->_nVertices - 1] = TextToNum(data);
+		cBone->weights[cBone->nVertices - 1] = TextToNum(data);
 		//logger->Log(Logger::DEBUG, "SuperXLoader: Weight: " + std::to_string(atof(data)));
 
 		for (int i = 0; i < 15; ++i)
@@ -823,21 +823,21 @@ namespace pengine
 	{
 		int16 token;
 
-		_MaxKey = 0;
+		maxKey = 0;
 		_LoadAnimationSet = new AnimationSet;
 
 		token = fin.peek();
 		if (token != '{')
 		{
-			fin >> _LoadAnimationSet->_Name;
+			fin >> _LoadAnimationSet->name;
 		}
 		else
 		{
-			_LoadAnimationSet->_Name = SetUID('A');
+			_LoadAnimationSet->name = SetUID('A');
 		}
 
 		Find('{');
-		//logger->Log(Logger::DEBUG, "SuperXLoader: Animation Set: " + _LoadAnimationSet->_Name);
+		//logger->Log(Logger::DEBUG, "SuperXLoader: Animation Set: " + _LoadAnimationSet->name);
 
 		token = X_COMMENT;
 		while (token != X_EBRACE)
@@ -848,11 +848,11 @@ namespace pengine
 			case X_COMMENT:
 				break; //used for spaces and other kind of comments
 			case X_EBRACE:
-				_LoadAnimationSet->_MaxKey = _MaxKey;
-				//logger->Log(Logger::DEBUG, "SuperXLoader: MaxKey: " + std::to_string(_MaxKey));
-				_Object->_AnimationSets.push_back(_LoadAnimationSet);
+				_LoadAnimationSet->maxKey = maxKey;
+				//logger->Log(Logger::DEBUG, "SuperXLoader: MaxKey: " + std::to_string(maxKey));
+				_Object->animationsets.push_back(_LoadAnimationSet);
 				return; //this is the end
-			case X_ANIMATION:
+			case Xanimation:
 				ProcessAnimations(_LoadAnimationSet);
 				break;
 			default:
@@ -860,9 +860,9 @@ namespace pengine
 				break;
 			}
 		}
-		_LoadAnimationSet->_MaxKey = _MaxKey;
-		//logger->Log(Logger::DEBUG, "SuperXLoader: MaxKey: " + std::to_string(_MaxKey));
-		_Object->_AnimationSets.push_back(_LoadAnimationSet);
+		_LoadAnimationSet->maxKey = maxKey;
+		//logger->Log(Logger::DEBUG, "SuperXLoader: MaxKey: " + std::to_string(maxKey));
+		_Object->animationsets.push_back(_LoadAnimationSet);
 	}
 
 	void SuperXLoader::ProcessAnimations(AnimationSet* &pAS)
@@ -882,24 +882,24 @@ namespace pengine
 			case X_COMMENT:
 				break; //used for spaces and other kind of comments
 			case X_EBRACE:
-				pAS->_Animations.push_back(tempAnimation);
+				pAS->animations.push_back(tempAnimation);
 				return; //this is the end
 				break;
 			case X_OBRACE:
 				Find('{');
 				fin.getline(data, TEXT_BUFFER, '}');
 				Remove(' ', data);
-				tempAnimation->_BoneName = data;
-				//logger->Log(Logger::DEBUG, "SuperXLoader: Animated Bone: " + tempAnimation->_BoneName);
+				tempAnimation->boneName = data;
+				//logger->Log(Logger::DEBUG, "SuperXLoader: Animated Bone: " + tempAnimation->boneName);
 				break;
-			case X_ANIMATIONKEY:
+			case XanimationKEY:
 				ProcessAnimationKeys(tempAnimation);
 				break;
 			default:
 				AvoidTemplate(); break;
 			}
 		}
-		pAS->_Animations.push_back(tempAnimation);
+		pAS->animations.push_back(tempAnimation);
 	}
 
 	void SuperXLoader::ProcessAnimationKeys(Animation* &pA)
@@ -921,15 +921,15 @@ namespace pengine
 		{
 		case 0:
 			//logger->Log(Logger::DEBUG, "SuperXLoader: " + std::to_string(size) + " Rotation Keys");
-			pA->_Rotations.reserve(size);
+			pA->rotations.reserve(size);
 			while (size--)
 			{
 				tempRot = new RotateKey;
 				fin.getline(data, TEXT_BUFFER, ';');
 				tempRot->Time = (uint16)TextToNum(data);
-				if (tempRot->Time > _MaxKey)
+				if (tempRot->Time > maxKey)
 				{
-					_MaxKey = tempRot->Time;
+					maxKey = tempRot->Time;
 				}
 				Find(';');
 				fin.getline(data, TEXT_BUFFER, ',');
@@ -942,20 +942,20 @@ namespace pengine
 				tempRot->Rotation[3] = TextToNum(data);
 				Find(';');
 				fin.get();
-				pA->_Rotations.push_back(tempRot);
+				pA->rotations.push_back(tempRot);
 			}
 			break;
 		case 1:
 			//logger->Log(Logger::DEBUG, "SuperXLoader: " + std::to_string(size) + " Scaling Keys");
-			pA->_Scalings.reserve(size);
+			pA->scalings.reserve(size);
 			while (size--)
 			{
 				tempScale = new ScaleKey;
 				fin.getline(data, TEXT_BUFFER, ';');
 				tempScale->Time = (uint16)TextToNum(data);
-				if (tempScale->Time > _MaxKey)
+				if (tempScale->Time > maxKey)
 				{
-					_MaxKey = tempScale->Time;
+					maxKey = tempScale->Time;
 				}
 				Find(';');
 				fin.getline(data, TEXT_BUFFER, ',');
@@ -966,20 +966,20 @@ namespace pengine
 				tempScale->Scale.z = TextToNum(data);
 				Find(';');
 				fin.get();
-				pA->_Scalings.push_back(tempScale);
+				pA->scalings.push_back(tempScale);
 			}
 			break;
 		case 2:
 			//logger->Log(Logger::DEBUG, "SuperXLoader: " + std::to_string(size) + " Position Keys");
-			pA->_Translations.reserve(size);
+			pA->translations.reserve(size);
 			while (size--)
 			{
 				tempPos = new PositionKey;
 				fin.getline(data, TEXT_BUFFER, ';');
 				tempPos->Time = (uint16)TextToNum(data);
-				if (tempPos->Time > _MaxKey)
+				if (tempPos->Time > maxKey)
 				{
-					_MaxKey = tempPos->Time;
+					maxKey = tempPos->Time;
 				}
 				Find(';');
 				fin.getline(data, TEXT_BUFFER, ',');
@@ -990,20 +990,20 @@ namespace pengine
 				tempPos->Translation.z = TextToNum(data);
 				Find(';');
 				fin.get();
-				pA->_Translations.push_back(tempPos);
+				pA->translations.push_back(tempPos);
 			}
 			break;
 		case 4:
 			//logger->Log(Logger::DEBUG, "SuperXLoader: " + std::to_string(size) + " Matrix Keys");
-			pA->_Matrices.reserve(size);
+			pA->matrices.reserve(size);
 			while (size--)
 			{
 				tempMatrix = new MatrixKey;
 				fin.getline(data, TEXT_BUFFER, ';');
 				tempMatrix->Time = (uint16)TextToNum(data);
-				if (tempMatrix->Time > _MaxKey)
+				if (tempMatrix->Time > maxKey)
 				{
-					_MaxKey = tempMatrix->Time;
+					maxKey = tempMatrix->Time;
 				}
 				Find(';');
 				for (int i = 0; i < 15; ++i)
@@ -1015,7 +1015,7 @@ namespace pengine
 				tempMatrix->Matrix[15] = TextToNum(data);
 				Find(';');
 				fin.get();
-				pA->_Matrices.push_back(tempMatrix);
+				pA->matrices.push_back(tempMatrix);
 			}
 			break;
 		default:
@@ -1027,18 +1027,18 @@ namespace pengine
 
 	void SuperXLoader::MapMeshToBones(Bone* &pBone)
 	{
-		if (pBone->_MeshName.empty())
+		if (pBone->meshName.empty())
 		{
-			pBone->_MeshName = _LoadMesh->_Name;
+			pBone->meshName = _LoadMesh->name;
 		}
-		//logger->Log(Logger::DEBUG, "SuperXLoader: Bone " + pBone->_Name + " is linked to mesh " + pBone->_MeshName);
-		if (!pBone->_Bones.empty())
+		//logger->Log(Logger::DEBUG, "SuperXLoader: Bone " + pBone->name + " is linked to mesh " + pBone->meshName);
+		if (!pBone->bones.empty())
 		{
-			for (std::list<Bone*>::iterator i = pBone->_Bones.begin(); i != pBone->_Bones.end(); ++i)
+			for (std::list<Bone*>::iterator i = pBone->bones.begin(); i != pBone->bones.end(); ++i)
 			{
-				if ((*i)->_MeshName.empty())
+				if ((*i)->meshName.empty())
 				{
-					(*i)->_MeshName = pBone->_MeshName;
+					(*i)->meshName = pBone->meshName;
 				}
 				MapMeshToBones(*i);
 			}
@@ -1165,14 +1165,14 @@ namespace pengine
 				switch (declUsages[j])
 				{
 				case DECLUSAGE_TEXCOORD:
-					/*if (_LoadMesh->_TextureCoords == NULL)
+					/*if (_LoadMesh->textureCoords == NULL)
 					{
-						_LoadMesh->_nTextureCoords = _LoadMesh->_nVertices;//technically not every vertex needs to have a texture coordinate...
-						//logger->Log(Logger::DEBUG, "SuperXLoader: Number of Texture Coords: " + std::to_string(_LoadMesh->_nTextureCoords));
-						_LoadMesh->_TextureCoords = new TCoord[_LoadMesh->_nTextureCoords];
+						_LoadMesh->nTextureCoords = _LoadMesh->nVertices;//technically not every vertex needs to have a texture coordinate...
+						//logger->Log(Logger::DEBUG, "SuperXLoader: Number of Texture Coords: " + std::to_string(_LoadMesh->nTextureCoords));
+						_LoadMesh->textureCoords = new TCoord[_LoadMesh->nTextureCoords];
 					}*/
-					_LoadMesh->_Vertices[currentTextureCoordinateSet].tu = *(float*)&component[0];//convert DWORD to float
-					_LoadMesh->_Vertices[currentTextureCoordinateSet].tv = *(float*)&component[1];
+					_LoadMesh->vertices[currentTextureCoordinateSet].tu = *(float*)&component[0];//convert DWORD to float
+					_LoadMesh->vertices[currentTextureCoordinateSet].tv = *(float*)&component[1];
 					//logger->Log(Logger::DEBUG, "SuperXLoader: DeclData texture coordinates " + std::to_string(currentTextureCoordinateSet) + ": u: " + std::to_string(*(float*)&component[0]) + "; v: " + std::to_string(*(float*)&component[1]));
 					++currentTextureCoordinateSet;
 					break;
@@ -1195,9 +1195,9 @@ namespace pengine
 					logger->Log(Logger::WARNING, "SuperXLoader: DeclData found unsupported DECLUSAGE: DECLUSAGE_FOG!");
 					break;
 				case DECLUSAGE_NORMAL:
-					_LoadMesh->_Vertices[currentNormalSet].nX = *(float*)&component[0];//convert DWORD to float
-					_LoadMesh->_Vertices[currentNormalSet].nY = *(float*)&component[1];//convert DWORD to float
-					_LoadMesh->_Vertices[currentNormalSet].nZ = *(float*)&component[2];//convert DWORD to float
+					_LoadMesh->vertices[currentNormalSet].nX = *(float*)&component[0];//convert DWORD to float
+					_LoadMesh->vertices[currentNormalSet].nY = *(float*)&component[1];//convert DWORD to float
+					_LoadMesh->vertices[currentNormalSet].nZ = *(float*)&component[2];//convert DWORD to float
 					++currentNormalSet;
 					break;
 				case DECLUSAGE_POSITION:

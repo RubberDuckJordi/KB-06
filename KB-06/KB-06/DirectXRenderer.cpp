@@ -351,7 +351,7 @@ namespace pengine
 		matrixCache->_44 = (*matrix)[15];
 	}
 
-	VertexBufferWrapper* DirectXRenderer::CreateVertexBuffer(Vertex* p_vertices, unsigned int amountOfVertices)
+	VertexBufferWrapper* DirectXRenderer::CreateVertexBuffer(Vertex* pvertices, unsigned int amountOfVertices)
 	{
 		IDirect3DVertexBuffer9* buffer = LPDIRECT3DVERTEXBUFFER9();
 
@@ -366,7 +366,7 @@ namespace pengine
 		{
 			logger->Log(Logger::ERR, "DirectXRenderer::CreateVertexBuffer() vertexbuffer lock failed");
 		}
-		memcpy(verticesBuffer, p_vertices, size);
+		memcpy(verticesBuffer, pvertices, size);
 		buffer->Unlock();
 
 		VertexBufferWrapper* vertexBufferWrapper = new VertexBufferWrapper();
@@ -375,7 +375,7 @@ namespace pengine
 		return vertexBufferWrapper;
 	}
 
-	VertexBufferWrapper* DirectXRenderer::CreateColoredVertexBuffer(ColoredVertex* p_vertices, unsigned int amountOfVertices)
+	VertexBufferWrapper* DirectXRenderer::CreateColoredVertexBuffer(ColoredVertex* pvertices, unsigned int amountOfVertices)
 	{
 		IDirect3DVertexBuffer9* buffer = LPDIRECT3DVERTEXBUFFER9();
 
@@ -392,7 +392,7 @@ namespace pengine
 		{
 			logger->Log(Logger::ERR, "DirectXRenderer::CreateVertexBuffer() vertexbuffer lock failed");
 		}
-		memcpy(verticesBuffer, p_vertices, size);
+		memcpy(verticesBuffer, pvertices, size);
 		buffer->Unlock();
 
 		VertexBufferWrapper* vertexBufferWrapper = new VertexBufferWrapper();

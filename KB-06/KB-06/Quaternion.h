@@ -18,7 +18,6 @@ namespace pengine
 		float& operator[](int index);
 		Quaternion& operator=(const Quaternion &pq);
 		Quaternion operator+(Quaternion pq);
-		Quaternion operator*(Quaternion pq);//wasn't implemented, unused?
 		Quaternion operator*(float pT);
 		float Dot(Quaternion &pq);
 		Quaternion Slerp(float pT, Quaternion &pq);

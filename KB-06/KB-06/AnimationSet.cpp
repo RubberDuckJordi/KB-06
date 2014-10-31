@@ -4,15 +4,15 @@ namespace pengine
 {
 	AnimationSet::~AnimationSet()
 	{
-		while (!_Animations.empty())
+		while (!animations.empty())
 		{
-			delete _Animations.back(); _Animations.pop_back();
+			delete animations.back(); animations.pop_back();
 		}
 	}
 
 	AnimationSet* AnimationSet::IsName(std::string &pText)
 	{
-		if (strcmp(_Name.c_str(), pText.c_str()) == 0)
+		if (strcmp(name.c_str(), pText.c_str()) == 0)
 		{
 			return this;
 		}
@@ -21,7 +21,7 @@ namespace pengine
 
 	Animation* AnimationSet::FindAnimation(std::string &pText)
 	{
-		for (std::list<Animation*>::iterator i = _Animations.begin(); i != _Animations.end(); i++)
+		for (std::list<Animation*>::iterator i = animations.begin(); i != animations.end(); i++)
 		{
 			if ((*i)->IsName(pText) != 0)
 			{

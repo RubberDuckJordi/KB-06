@@ -16,9 +16,9 @@ namespace pengine
 		Mesh* IsMeshName(std::string &pText);
 		void ConcatenateMeshes(void);
 		AnimationSet* FindAnimationSet(std::string &pText);
-		Bone* _Skeleton;
-		std::list<Mesh*> _Meshes;
-		std::list<AnimationSet*> _AnimationSets;
+		Bone* skeleton;
+		std::list<Mesh*> meshes;
+		std::list<AnimationSet*> animationsets;
 	private:
 		Logger* logger;
 		void UpdateBoneIndices(Bone* &pBone);

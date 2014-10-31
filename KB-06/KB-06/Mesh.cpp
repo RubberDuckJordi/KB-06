@@ -5,69 +5,69 @@ namespace pengine
 	Mesh::Mesh()
 	{
 		//Vertices
-		_nVertices = 0;
+		nVertices = 0;
 		_FirstVertex = 0;
-		_Vertices = NULL;
+		vertices = NULL;
 		//Texture Coords for each vertex
-		_nTextureCoords = 0;
-		_FirstTextureCoord = 0;
-		_TextureCoords = NULL;
+		nTextureCoords = 0;
+		firstTextureCoord = 0;
+		textureCoords = NULL;
 		//Faces
-		_nFaces = 0;
-		_FirstFace = 0;
-		_Faces = NULL;
+		nFaces = 0;
+		firstFace = 0;
+		faces = NULL;
 		//Subset of a mesh: there is one subset for each material used
-		//_Subsets = 0;
+		//subsets = 0;
 		//Normals
-		_nNormals = 0;
-		_FirstNormal = 0;
-		_Normals = NULL;
-		_FaceNormals = NULL;
+		nNormals = 0;
+		firstNormal = 0;
+		normals = NULL;
+		faceNormals = NULL;
 		//Material index for each face
-		_nMaterials = 0;
-		_FirstMaterial = 0;
-		_FaceMaterials = NULL;
-		_Name = "Undefined";
+		nMaterials = 0;
+		firstMaterial = 0;
+		faceMaterials = NULL;
+		name = "Undefined";
 	}
 
 	Mesh::~Mesh()
 	{
-		if (_Vertices != NULL)
+		if (vertices != NULL)
 		{
-			delete[] _Vertices;
+			delete[] vertices;
 		}
-		if (_Faces != NULL)
+		if (faces != NULL)
 		{
-			delete[] _Faces;
+			delete[] faces;
 		}
-		if (_Normals != NULL)
+		if (normals != NULL)
 		{
-			delete[] _Normals;
+			delete[] normals;
 		}
-		if (_TextureCoords != NULL)
+		if (textureCoords != NULL)
 		{
-			delete[] _TextureCoords;
+			delete[] textureCoords;
 		}
-		while (!_Materials.empty())
+		while (!materials.empty())
 		{
-			delete _Materials.back();
-			_Materials.pop_back();
+			delete materials.back();
+			materials.pop_back();
 		}
-		if (_FaceMaterials != NULL)
+		if (faceMaterials != NULL)
 		{
-			delete[] _FaceMaterials;
+			delete[] faceMaterials;
 		}
-		while (!_Subsets.empty())
+		while (!subsets.empty())
 		{
-			delete[] _Subsets.back()->Faces;
-			delete _Subsets.back();
-			_Subsets.pop_back();
+			delete[] subsets.back()->Faces;
+			delete subsets.back();
+			subsets.pop_back();
 		}
 	}
 
 	Mesh* Mesh::IsName(std::string &MeshName)
 	{
-		if (strcmp(_Name.c_str(), MeshName.c_str()) == 0)
+		if (strcmp(name.c_str(), MeshName.c_str()) == 0)
 		{
 			return this;
 		}
@@ -76,22 +76,22 @@ namespace pengine
 
 	void Mesh::UpdateIndices()
 	{
-		for (uint32 i = 0; i < _nFaces; i++)
+		for (uint32 i = 0; i < nFaces; i++)
 		{
-			_Faces[i][0] += _FirstVertex;
-			_Faces[i][1] += _FirstVertex;
-			_Faces[i][2] += _FirstVertex;
+			faces[i][0] += _FirstVertex;
+			faces[i][1] += _FirstVertex;
+			faces[i][2] += _FirstVertex;
 
-			_FaceMaterials[i] += _FirstMaterial;
+			faceMaterials[i] += firstMaterial;
 		}
 
-		if (_nNormals != 0)
+		if (nNormals != 0)
 		{
-			for (uint32 i = 0; i < _nFaces; i++)
+			for (uint32 i = 0; i < nFaces; i++)
 			{
-				_FaceNormals[i][0] += _FirstNormal;
-				_FaceNormals[i][1] += _FirstNormal;
-				_FaceNormals[i][2] += _FirstNormal;
+				faceNormals[i][0] += firstNormal;
+				faceNormals[i][1] += firstNormal;
+				faceNormals[i][2] += firstNormal;
 			}
 		}
 	}
@@ -102,13 +102,13 @@ namespace pengine
 		Subset* MeshSubset;
 
 		//For each material
-		for (unsigned int i = 0; i < _Materials.size(); i++)
+		for (unsigned int i = 0; i < materials.size(); i++)
 		{
 			//We count the number of faces using this material
 			FaceCount = 0;
-			for (unsigned int j = 0; j < _nFaces; ++j)
+			for (unsigned int j = 0; j < nFaces; ++j)
 			{
-				if (_FaceMaterials[j] == i)
+				if (faceMaterials[j] == i)
 				{
 					++FaceCount;
 				}
@@ -119,15 +119,15 @@ namespace pengine
 			MeshSubset->Faces = new Face[FaceCount];
 			int k = 0;
 			//We fill in the Mesh subset
-			for (unsigned int j = 0; j < _nFaces; ++j)
+			for (unsigned int j = 0; j < nFaces; ++j)
 			{
-				if (_FaceMaterials[j] == i)
+				if (faceMaterials[j] == i)
 				{
-					MeshSubset->Faces[k++] = _Faces[j];
+					MeshSubset->Faces[k++] = faces[j];
 				}
 			}
 			//And we add that subset to the list
-			_Subsets.push_back(MeshSubset);
+			subsets.push_back(MeshSubset);
 		}
 	}
 }

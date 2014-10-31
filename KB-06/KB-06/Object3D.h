@@ -43,25 +43,25 @@ namespace pengine
 		float GetMaxY();
 		void ComputeBoundingBoxSphere();
 
-		//Elements for the AABB (_Low & _High)
-		//and bounding sphere (_Center & _Radius)
-		Vertex _Low, _High, _Center;
+		//Elements for the AABB (low & high)
+		//and bounding sphere (center & _Radius)
+		Vertex low, high, center;
 		/*!
 		The radius in object space, including any animations... not implemented
 		*/
-		float _RadiusHorizontal, _RadiusVertical;
+		float radiusHorizontal, radiusVertical;
 		bool showWarning;
 	private:
 		Logger* logger;
 		std::list<IndexBufferWrapper*> indexBuffers;
-		ObjectBone* _Skeleton;//also known as rootbone
+		ObjectBone* skeleton;//also known as rootbone
 		Mesh* _Mesh; //pointer to Model Mesh
 		Vertex* _SkinnedVertices;
 		Model3D* _Model;
 		AnimationSet* _cAnimationSet;
 
 		uint16 _cKey; //current animation Key
-		uint16 _AnimationStep; //Animation Increment
+		uint16 animationstep; //Animation Increment
 
 		ObjectBone* ReplicateSkeleton(Bone* &pBone);
 		void GetBoneAnimation(ObjectBone* &pBone);

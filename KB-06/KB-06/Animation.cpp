@@ -3,25 +3,25 @@ namespace pengine
 {
 	Animation::~Animation()
 	{
-		while (!_Scalings.empty())
+		while (!scalings.empty())
 		{
-			delete _Scalings.back();
-			_Scalings.pop_back();
+			delete scalings.back();
+			scalings.pop_back();
 		}
-		while (!_Rotations.empty())
+		while (!rotations.empty())
 		{
-			delete _Rotations.back();
-			_Rotations.pop_back();
+			delete rotations.back();
+			rotations.pop_back();
 		}
-		while (!_Translations.empty())
+		while (!translations.empty())
 		{
-			delete _Translations.back();
-			_Translations.pop_back();
+			delete translations.back();
+			translations.pop_back();
 		}
-		while (!_Matrices.empty())
+		while (!matrices.empty())
 		{
-			delete _Matrices.back();
-			_Matrices.pop_back();
+			delete matrices.back();
+			matrices.pop_back();
 		}
 	}
 
@@ -32,7 +32,7 @@ namespace pengine
 
 	Animation* Animation::IsName(std::string &pText)
 	{
-		if (strcmp(_BoneName.c_str(), pText.c_str()) == 0)
+		if (strcmp(boneName.c_str(), pText.c_str()) == 0)
 		{
 			return this;
 		}

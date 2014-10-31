@@ -76,7 +76,7 @@ namespace pengine
 		}_X_UID;
 
 		//X File struct processing
-		uint32 _MaxKey; //Max animation key for a loaded animation set
+		uint32 maxKey; //Max animation key for a loaded animation set
 		void ProcessFrameTransformMatrix(Bone* &pB);
 		void ProcessBone(Bone* pBone);
 		void ProcessMesh();
