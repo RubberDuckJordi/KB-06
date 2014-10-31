@@ -266,9 +266,7 @@ namespace pengine
 	int16 SuperXLoader::BlockID(std::string &pText)
 	{
 		long pos;
-
 		//logger->Log(Logger::DEBUG, "SuperXLoader: BlockID: " + pText);
-
 		if (fin.eof())
 		{
 			//logger->Log(Logger::DEBUG, "SuperXLoader: BlockID() has eof");
@@ -443,7 +441,6 @@ namespace pengine
 		int16 token;
 		char data[TEXT_BUFFER];
 
-
 		if (!_Object->_Meshes.empty())
 		{
 			Mesh* LastMesh = _Object->_Meshes.back();
@@ -511,8 +508,7 @@ namespace pengine
 			fin.getline(data, TEXT_BUFFER, ';');
 			_LoadMesh->_Faces[i][2] = (uint16)TextToNum(data);
 			fin.get(); //eats either the comma or the semicolon at the end of each face description
-
-			////logger->LogAll(Logger::DEBUG, "SuperXLoader: Face ", std::to_string(i), ": ", std::to_string(_LoadMesh->_Faces[i].data[0]), " ", std::to_string(_LoadMesh->_Faces[i].data[1]), " ", std::to_string(_LoadMesh->_Faces[i].data[2]));
+			//logger->LogAll(Logger::DEBUG, "SuperXLoader: Face ", std::to_string(i), ": ", std::to_string(_LoadMesh->_Faces[i].data[0]), " ", std::to_string(_LoadMesh->_Faces[i].data[1]), " ", std::to_string(_LoadMesh->_Faces[i].data[2]));
 		}
 
 		token = X_COMMENT;
@@ -561,7 +557,7 @@ namespace pengine
 
 		fin.getline(data, TEXT_BUFFER, ';');
 		_LoadMesh->_nTextureCoords = (uint16)TextToNum(data);
-		////logger->Log(Logger::DEBUG, "SuperXLoader: Number of Texture Coords: " + _LoadMesh->_nTextureCoords);
+		//logger->Log(Logger::DEBUG, "SuperXLoader: Number of Texture Coords: " + _LoadMesh->_nTextureCoords);
 		_LoadMesh->_TextureCoords = new TCoord[_LoadMesh->_nTextureCoords];
 		for (int i = 0; i < _LoadMesh->_nTextureCoords; ++i)
 		{
@@ -607,7 +603,7 @@ namespace pengine
 			fin.getline(data, TEXT_BUFFER, ';');
 			_LoadMesh->_FaceNormals[i][2] = (uint16)TextToNum(data);
 			fin.get(); //eats either the comma or the semicolon at the end of each face description
-			////logger->LogAll(Logger::DEBUG, "SuperXLoader: Face Normal index ", std::to_string(i) + ": ", std::to_string(_LoadMesh->_FaceNormals[i].data[0]), " ", std::to_string(_LoadMesh->_FaceNormals[i].data[1]), " ", std::to_string(_LoadMesh->_FaceNormals[i].data[2]));
+			//logger->LogAll(Logger::DEBUG, "SuperXLoader: Face Normal index ", std::to_string(i) + ": ", std::to_string(_LoadMesh->_FaceNormals[i].data[0]), " ", std::to_string(_LoadMesh->_FaceNormals[i].data[1]), " ", std::to_string(_LoadMesh->_FaceNormals[i].data[2]));
 		}
 
 		Find('}');
@@ -796,22 +792,22 @@ namespace pengine
 		{
 			fin.getline(data, TEXT_BUFFER, ',');
 			cBone->_Vertices[i] = (uint16)TextToNum(data);
-			////logger->LogAll(Logger::DEBUG, "SuperXLoader: Vertex: ", atoi(Data));
+			//logger->LogAll(Logger::DEBUG, "SuperXLoader: Vertex: ", atoi(Data));
 		}
 		fin.getline(data, TEXT_BUFFER, ';');
 		cBone->_Vertices[cBone->_nVertices - 1] = (uint16)TextToNum(data);
-		////logger->LogAll(Logger::DEBUG, "SuperXLoader: Vertex: ", atoi(Data));
+		//logger->LogAll(Logger::DEBUG, "SuperXLoader: Vertex: ", atoi(Data));
 
 		cBone->_Weights = new float[cBone->_nVertices];
 		for (uint32 i = 0; i < cBone->_nVertices - 1; ++i)
 		{
 			fin.getline(data, TEXT_BUFFER, ',');
 			cBone->_Weights[i] = TextToNum(data);
-			////logger->LogAll(Logger::DEBUG, "SuperXLoader: Weight: ", atof(Data));
+			//logger->LogAll(Logger::DEBUG, "SuperXLoader: Weight: ", atof(Data));
 		}
 		fin.getline(data, TEXT_BUFFER, ';');
 		cBone->_Weights[cBone->_nVertices - 1] = TextToNum(data);
-		////logger->Log(Logger::DEBUG, "SuperXLoader: Weight: " + std::to_string(atof(data)));
+		//logger->Log(Logger::DEBUG, "SuperXLoader: Weight: " + std::to_string(atof(data)));
 
 		for (int i = 0; i < 15; ++i)
 		{
@@ -1035,9 +1031,7 @@ namespace pengine
 		{
 			pBone->_MeshName = _LoadMesh->_Name;
 		}
-
 		//logger->Log(Logger::DEBUG, "SuperXLoader: Bone " + pBone->_Name + " is linked to mesh " + pBone->_MeshName);
-
 		if (!pBone->_Bones.empty())
 		{
 			for (std::list<Bone*>::iterator i = pBone->_Bones.begin(); i != pBone->_Bones.end(); ++i)
@@ -1165,7 +1159,7 @@ namespace pengine
 					i += 4;
 					break;
 				default:
-					//logger->Log(Logger::WARNING, "SuperXLoader: DeclData(): unknown DECLTYPE, things might be incorrect or crash!");
+					logger->Log(Logger::WARNING, "SuperXLoader: DeclData(): unknown DECLTYPE, things might be incorrect or crash!");
 					break;
 				}
 				switch (declUsages[j])
@@ -1179,54 +1173,53 @@ namespace pengine
 					}*/
 					_LoadMesh->_Vertices[currentTextureCoordinateSet].tu = *(float*)&component[0];//convert DWORD to float
 					_LoadMesh->_Vertices[currentTextureCoordinateSet].tv = *(float*)&component[1];
-					////logger->Log(Logger::DEBUG, "SuperXLoader: DeclData texture coordinates " + std::to_string(currentTextureCoordinateSet) + ": u: " + std::to_string(*(float*)&component[0]) + "; v: " + std::to_string(*(float*)&component[1]));
+					//logger->Log(Logger::DEBUG, "SuperXLoader: DeclData texture coordinates " + std::to_string(currentTextureCoordinateSet) + ": u: " + std::to_string(*(float*)&component[0]) + "; v: " + std::to_string(*(float*)&component[1]));
 					++currentTextureCoordinateSet;
 					break;
 				case DECLUSAGE_BINORMAL:
-					//logger->Log(Logger::WARNING, "SuperXLoader: DeclData found unsupported DECLUSAGE: DECLUSAGE_BINORMAL!");
+					logger->Log(Logger::WARNING, "SuperXLoader: DeclData found unsupported DECLUSAGE: DECLUSAGE_BINORMAL!");
 					break;
 				case DECLUSAGE_BLENDINDICES:
-					//logger->Log(Logger::WARNING, "SuperXLoader: DeclData found unsupported DECLUSAGE: DECLUSAGE_BLENDINDICES!");
+					logger->Log(Logger::WARNING, "SuperXLoader: DeclData found unsupported DECLUSAGE: DECLUSAGE_BLENDINDICES!");
 					break;
 				case DECLUSAGE_BLENDWEIGHT:
-					//logger->Log(Logger::WARNING, "SuperXLoader: DeclData found unsupported DECLUSAGE: DECLUSAGE_BLENDWEIGHT!");
+					logger->Log(Logger::WARNING, "SuperXLoader: DeclData found unsupported DECLUSAGE: DECLUSAGE_BLENDWEIGHT!");
 					break;
 				case DECLUSAGE_COLOR:
-					//logger->Log(Logger::WARNING, "SuperXLoader: DeclData found unsupported DECLUSAGE: DECLUSAGE_COLOR!");
+					logger->Log(Logger::WARNING, "SuperXLoader: DeclData found unsupported DECLUSAGE: DECLUSAGE_COLOR!");
 					break;
 				case DECLUSAGE_DEPTH:
-					//logger->Log(Logger::WARNING, "SuperXLoader: DeclData found unsupported DECLUSAGE: DECLUSAGE_DEPTH!");
+					logger->Log(Logger::WARNING, "SuperXLoader: DeclData found unsupported DECLUSAGE: DECLUSAGE_DEPTH!");
 					break;
 				case DECLUSAGE_FOG:
-					//logger->Log(Logger::WARNING, "SuperXLoader: DeclData found unsupported DECLUSAGE: DECLUSAGE_FOG!");
+					logger->Log(Logger::WARNING, "SuperXLoader: DeclData found unsupported DECLUSAGE: DECLUSAGE_FOG!");
 					break;
 				case DECLUSAGE_NORMAL:
-					////logger->Log(Logger::WARNING, "SuperXLoader: DeclData found unsupported DECLUSAGE: DECLUSAGE_NORMAL!");
 					_LoadMesh->_Vertices[currentNormalSet].nX = *(float*)&component[0];//convert DWORD to float
 					_LoadMesh->_Vertices[currentNormalSet].nY = *(float*)&component[1];//convert DWORD to float
 					_LoadMesh->_Vertices[currentNormalSet].nZ = *(float*)&component[2];//convert DWORD to float
 					++currentNormalSet;
 					break;
 				case DECLUSAGE_POSITION:
-					//logger->Log(Logger::WARNING, "SuperXLoader: DeclData found unsupported DECLUSAGE: DECLUSAGE_POSITION!");
+					logger->Log(Logger::WARNING, "SuperXLoader: DeclData found unsupported DECLUSAGE: DECLUSAGE_POSITION!");
 					break;
 				case DECLUSAGE_POSITIONT:
-					//logger->Log(Logger::WARNING, "SuperXLoader: DeclData found unsupported DECLUSAGE: DECLUSAGE_POSITIONT!");
+					logger->Log(Logger::WARNING, "SuperXLoader: DeclData found unsupported DECLUSAGE: DECLUSAGE_POSITIONT!");
 					break;
 				case DECLUSAGE_PSIZE:
-					//logger->Log(Logger::WARNING, "SuperXLoader: DeclData found unsupported DECLUSAGE: DECLUSAGE_PSIZE!");
+					logger->Log(Logger::WARNING, "SuperXLoader: DeclData found unsupported DECLUSAGE: DECLUSAGE_PSIZE!");
 					break;
 				case DECLUSAGE_SAMPLE:
-					//logger->Log(Logger::WARNING, "SuperXLoader: DeclData found unsupported DECLUSAGE: DECLUSAGE_SAMPLE!");
+					logger->Log(Logger::WARNING, "SuperXLoader: DeclData found unsupported DECLUSAGE: DECLUSAGE_SAMPLE!");
 					break;
 				case DECLUSAGE_TANGENT:
-					//logger->Log(Logger::WARNING, "SuperXLoader: DeclData found unsupported DECLUSAGE: DECLUSAGE_TANGENT!");
+					logger->Log(Logger::WARNING, "SuperXLoader: DeclData found unsupported DECLUSAGE: DECLUSAGE_TANGENT!");
 					break;
 				case DECLUSAGE_TESSFACTOR:
-					//logger->Log(Logger::WARNING, "SuperXLoader: DeclData found unsupported DECLUSAGE: DECLUSAGE_TESSFACTOR!");
+					logger->Log(Logger::WARNING, "SuperXLoader: DeclData found unsupported DECLUSAGE: DECLUSAGE_TESSFACTOR!");
 					break;
 				default:
-					//logger->Log(Logger::WARNING, "SuperXLoader: DeclData found unsupported DECLUSAGE: " + std::to_string(declUsages[j]) + " (unknown value)");
+					logger->Log(Logger::WARNING, "SuperXLoader: DeclData found unsupported DECLUSAGE: " + std::to_string(declUsages[j]) + " (unknown value)");
 					break;
 				}
 			}
