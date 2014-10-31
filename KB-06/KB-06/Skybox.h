@@ -16,7 +16,9 @@ namespace pengine
 	public:
 		Skybox();
 		~Skybox();
+		// Returns a vertex array of all skybox vertices
 		Vertex* GetSkyboxVertices();
+		// Returns an array of all skybox indices
 		unsigned int* GetSkyboxIndices();
 		Material* GetMaterial();
 		void SetMaterial(Material*);

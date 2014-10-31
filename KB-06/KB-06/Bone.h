@@ -14,6 +14,7 @@ namespace pengine
 	public:
 		Bone();
 		~Bone();
+		// Returns this pointer if bone name is equal to the BoneName parameter
 		Bone* IsName(std::string &BoneName);
 		void UpdateIndices(uint16 pIndex);
 

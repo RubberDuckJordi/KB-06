@@ -3,6 +3,10 @@
 
 #include "SceneFactory.h"
 
+/*
+Default scene factory for creating scenes without specific implementation
+*/
+
 namespace pengine
 {
 	class DefaultSceneFactory : public SceneFactory

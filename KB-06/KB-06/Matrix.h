@@ -20,7 +20,16 @@ namespace pengine
 		Matrix(const Matrix &pm);
 		Matrix(const float* pT);
 		void Zero();
+		// Creates an empty Matrix
+		/*
+		1 0 0 0
+		0 1 0 0 
+		0 0 1 0
+		0 0 0 1
+		*/
 		void Identity();
+
+		// operator overloading
 		Matrix& operator=(const Matrix &pm);
 		Matrix operator+(Matrix pm);
 		Matrix operator-(Matrix pm);

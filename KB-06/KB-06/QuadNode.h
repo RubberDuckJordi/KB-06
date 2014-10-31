@@ -42,6 +42,8 @@ namespace pengine
 		// 0: north, 1: east, 2: south, 3: west
 		std::map<char, QuadNode*>* GetNeighbors();
 
+		// returns all vertices associated to this quadnode, not optimized
+		// only works for leafs
 		Vertex* GetVertices();
 		void SetVertices(Vertex* vertices);
 
@@ -59,6 +61,7 @@ namespace pengine
 
 		// Returns terrain vertices of all children
 		Vertex** GetAllChildrenVertices(int& amountOfVertices);
+		// calculates the neighbors after quadnode creation
 		void CalculateNeighbors(unsigned short recursionLevel);
 
 	private:

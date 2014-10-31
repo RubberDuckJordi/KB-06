@@ -7,11 +7,14 @@
 
 namespace pengine
 {
+	// forward declaration, the struct depends on collidable and collidable depends on the struct
 	class Collidable;
 	// Struct to keep track of changes in force that must be done after collision detection has been executed
 	struct COLLISIONEFFECT
 	{
+		// The object that the current object has crashed against
 		Collidable* collidable1;
+		// The current object
 		Collidable* collidable2;
 
 		// Properties of collidable1

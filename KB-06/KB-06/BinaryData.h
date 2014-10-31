@@ -3,9 +3,15 @@
 
 #include <string>
 
+/*
+Struct to hold binary data that has been loaded from a file
+Is used for textures
+*/
+
 namespace pengine
 {
-	struct BinaryData{
+	struct BinaryData
+	{
 		std::string fileName;
 		char* rawData;
 		unsigned int size;

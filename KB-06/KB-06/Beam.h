@@ -1,6 +1,10 @@
 #ifndef _RECTANGLE_H_
 #define _RECTANGLE_H_
 
+/*
+Beam used to determine collision
+*/
+
 namespace pengine
 {
 	struct BEAM

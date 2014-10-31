@@ -5,6 +5,10 @@
 #include "Logger.h"
 #include "Renderer.h"
 
+/*
+	Default entity for creating entities without specific implementation
+*/
+
 namespace pengine
 {
 	class DefaultEntity : public Entity {
