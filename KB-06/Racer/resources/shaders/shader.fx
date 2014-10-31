@@ -23,9 +23,11 @@ sampler MeshTextureSampler =
 sampler_state
 {
 	Texture = < g_MeshTexture > ;
-	MipFilter = LINEAR;
-	MinFilter = LINEAR;
-	MagFilter = LINEAR;
+	MipFilter = NONE;
+	MinFilter = NONE;
+	MagFilter = NONE;
+	AddressU = CLAMP;
+	AddressV = CLAMP;
 };
 
 
