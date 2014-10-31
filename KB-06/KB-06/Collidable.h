@@ -18,7 +18,7 @@ namespace pengine
 	{
 	public:
 		// Function called when the object collides with another collidable, must be implemented
-		virtual void OnCollide(COLLISIONEFFECT*) = 0;
+		virtual void OnCollide(COLLISIONEFFECT* effect) = 0;
 		// Function that initializes the collisionBox, must be implemented
 		virtual void InitCollisionBox() = 0;
 		// Function returns vector with current force. This can be used for a physical reaction to the impact.
@@ -28,9 +28,9 @@ namespace pengine
 		// Must return a collision box relative to the world matrix
 		BEAM* GetCollisionBox();
 		// Checks collision with another collidable, can be overridden to provide an own implementation
-		virtual bool CheckCollision(Collidable*);
+		virtual bool CheckCollision(Collidable* collidable);
 		// Draws the collision box for debugging
-		virtual void DrawCollidable(Renderer*);
+		virtual void DrawCollidable(Renderer* renderer);
 		// Type to know what kind of object has collided
 		virtual std::string GetType() = 0;
 	protected:

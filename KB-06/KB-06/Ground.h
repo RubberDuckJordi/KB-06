@@ -29,10 +29,10 @@ namespace pengine
 		long GetWidth();
 
 		// the 5 functions below are invoked from the heightmaploader, they should not be invoked later.
-		void SetHeight(long);
-		void SetCellSize(float);
-		void SetWidth(long);
-		void SetAmountOfVertices(int);
+		void SetHeight(long height);
+		void SetCellSize(float cellSize);
+		void SetWidth(long width);
+		void SetAmountOfVertices(int amount);
 		void SetVertices(Vertex* vertex);
 
 		// scaling
