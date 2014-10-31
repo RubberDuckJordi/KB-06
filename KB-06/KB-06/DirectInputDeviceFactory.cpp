@@ -62,7 +62,7 @@ namespace pengine
 				return NULL;
 			}
 
-			if (newDevice->Initialize(dInput, hwnd))
+			if (newDevice->Initialise(dInput, hwnd))
 			{
 				newDevice->SetActionMapping(actionMapping);
 				return newDevice;

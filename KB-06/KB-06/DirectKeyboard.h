@@ -16,7 +16,7 @@ namespace pengine
 		DirectKeyboard();
 		~DirectKeyboard();
 		// Initialises the input device, returns false in case of failure
-		bool Initialize(LPDIRECTINPUT8, HWND hwnd);
+		bool Initialise(LPDIRECTINPUT8 directInput, HWND hwnd);
 		// Updates the current input actions, returns false in case of failure
 		bool Update();
 		std::map<Input, long>* GetInputValues();
@@ -25,7 +25,7 @@ namespace pengine
 
 	private:
 		long GetStateOf(int p_key);
-		char m_KeyBuffer[256];
+		char keyBuffer[256];
 	};
 }
 #endif

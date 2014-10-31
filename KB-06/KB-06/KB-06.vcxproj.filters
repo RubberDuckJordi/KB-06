@@ -402,9 +402,4 @@
       <UniqueIdentifier>{8c887dbf-7097-4141-bf07-a9b4aa9d9052}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
-  <ItemGroup>
-    <None Include="ClassDiagram.cd" />
-    <None Include="ClassDiagram1.cd" />
-    <None Include="ClassDiagram2.cd" />
-  </ItemGroup>
 </Project>

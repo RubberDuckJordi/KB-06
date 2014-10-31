@@ -14,7 +14,7 @@ namespace pengine
 
 	//Create the new DirectInputDevice, add a handler to its window and
 	//set the required settings to be able to poll it.
-	bool DirectKeyboard::Initialize(LPDIRECTINPUT8 m_dInput, HWND hwnd)
+	bool DirectKeyboard::Initialise(LPDIRECTINPUT8 m_dInput, HWND hwnd)
 	{
 		HRESULT hr = m_dInput->CreateDevice(GUID_SysKeyboard, &dInputDevice, NULL);
 		if FAILED(hr)
@@ -60,7 +60,7 @@ namespace pengine
 			return false;
 		}
 
-		if (FAILED(dInputDevice->GetDeviceState(sizeof(m_KeyBuffer), (LPVOID)&m_KeyBuffer)))
+		if (FAILED(dInputDevice->GetDeviceState(sizeof(keyBuffer), (LPVOID)&keyBuffer)))
 		{
 			return false;
 		}
@@ -74,7 +74,7 @@ namespace pengine
 		{
 			return 0;
 		}
-		else if (m_KeyBuffer[p_key] & 0x80)
+		else if (keyBuffer[p_key] & 0x80)
 		{
 			return 100;
 		}

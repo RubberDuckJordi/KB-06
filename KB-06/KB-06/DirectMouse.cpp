@@ -15,7 +15,7 @@ namespace pengine
 
 	//Create the new DirectInputDevice, add a handler to its window and
 	//set the required settings to be able to poll it.
-	bool DirectMouse::Initialize(LPDIRECTINPUT8 p_dInput, HWND hwnd)
+	bool DirectMouse::Initialise(LPDIRECTINPUT8 p_dInput, HWND hwnd)
 	{
 		HRESULT hr = p_dInput->CreateDevice(GUID_SysMouse, &dInputDevice, NULL);
 		if (FAILED(hr))

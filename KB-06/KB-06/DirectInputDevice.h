@@ -24,7 +24,7 @@ namespace pengine
 	public:
 		DirectInputDevice();
 		~DirectInputDevice();
-		virtual bool Initialize(LPDIRECTINPUT8, HWND) = 0;
+		virtual bool Initialise(LPDIRECTINPUT8 directInput, HWND) = 0;
 		bool AcquireDevice();
 		void ReleaseDevice();
 		virtual bool Update() = 0;
