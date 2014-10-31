@@ -92,37 +92,37 @@ namespace pengine
 		This will (depending on the renderer) compile the shader for the specific
 		graphics card.
 		*/
-		void Cacheshader(std::string* shaderInText);
+		void CacheShader(std::string* shaderInText);
 
 		/*!
 		Sets the current shader to the given shader.
 		Note that you still have to call 'BeginRenderingWithshader'.
 		*/
-		void Setshader(std::string* shader);
+		void SetShader(std::string* shader);
 
 		/*!
 		Getting a parameter handle once speeds things up when you need to set
 		the value for the parameter.
 		*/
-		PENGINEHANDLE GetshaderParameterHandle(char* parameterName);
+		PENGINEHANDLE GetShaderParameterHandle(char* parameterName);
 
 		/*!
 		Getting a technique handle once speeds things up when you need to set
 		the techique.
 		*/
-		PENGINEHANDLE GetshaderTechniqueHandle(char* techniqueName);
+		PENGINEHANDLE GetShaderTechniqueHandle(char* techniqueName);
 
 		/*!
 		Sets the active technique to the given technique
 		*/
-		void SetshaderTechnique(PENGINEHANDLE technique);
+		void SetShaderTechnique(PENGINEHANDLE technique);
 
 		/*!
 		The 'passes' parameter will be filled with the amount of passes in the
 		currently active technique. It's up to you if you want to render with
 		all the passes.
 		*/
-		void BeginRenderingWithshader(unsigned int* passes);
+		void BeginRenderingWithShader(unsigned int* passes);
 
 		/*!
 		Begins rendering with the specified pass.
@@ -132,13 +132,13 @@ namespace pengine
 		/*!
 		Throws the given data in the parameter of the given shader.
 		*/
-		void SetshaderValue(PENGINEHANDLE handleToParameter, PENGINEVOID data, unsigned int sizeInBytes);
+		void SetShaderValue(PENGINEHANDLE handleToParameter, PENGINEVOID data, unsigned int sizeInBytes);
 
 		/*!
 		Throws the given matrix in the parameter of the given shader, you can get
 		the parameter handle to the desired matrix with GetshaderParameterHandle.
 		*/
-		void SetshaderMatrix(PENGINEHANDLE handleToParameter, Matrix* data);
+		void SetShaderMatrix(PENGINEHANDLE handleToParameter, Matrix* data);
 
 		/*!
 		Updates changes to any 'set' calls in the pass. This should be called before
@@ -154,7 +154,7 @@ namespace pengine
 		*/
 		void EndRenderingPass();
 
-		void EndRenderingWithshader();
+		void EndRenderingWithShader();
 
 	private:
 		void SetMatrixCache(Matrix* matrix);
@@ -187,7 +187,7 @@ namespace pengine
 		LPDIRECT3DDEVICE9 g_pd3dDevice;
 
 		std::map<BinaryData*, LPDIRECT3DTEXTURE9> textureCache;
-		ID3DXEffect* currentlyActiveshader;
+		ID3DXEffect* currentlyActiveShader;
 		std::map<std::string*, ID3DXEffect*> shaderCache;
 
 		D3DXMATRIX* matrixCache;

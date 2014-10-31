@@ -14,7 +14,7 @@ namespace pengine
 		g_pd3dDevice = NULL;
 		matrixCache = new D3DXMATRIX();
 		//d2dBmp = NULL;
-		currentlyActiveshader = NULL;
+		currentlyActiveShader = NULL;
 	}
 
 	DirectXRenderer::~DirectXRenderer()
@@ -813,7 +813,7 @@ namespace pengine
 		}
 	}
 
-	void DirectXRenderer::Cacheshader(std::string* shaderInText)
+	void DirectXRenderer::CacheShader(std::string* shaderInText)
 	{
 		ID3DXEffect* shaderToAdd = NULL;
 		DWORD Flags = D3DXFX_NOT_CLONEABLE;
@@ -821,59 +821,59 @@ namespace pengine
 		shaderCache[shaderInText] = shaderToAdd;
 	}
 
-	void DirectXRenderer::Setshader(std::string* shader)
+	void DirectXRenderer::SetShader(std::string* shader)
 	{
-		currentlyActiveshader = shaderCache[shader];
+		currentlyActiveShader = shaderCache[shader];
 	}
 
-	PENGINEHANDLE DirectXRenderer::GetshaderParameterHandle(char* parameterName)
+	PENGINEHANDLE DirectXRenderer::GetShaderParameterHandle(char* parameterName)
 	{
-		return (PENGINEHANDLE)currentlyActiveshader->GetParameterByName(NULL, parameterName);
+		return (PENGINEHANDLE)currentlyActiveShader->GetParameterByName(NULL, parameterName);
 	}
 
-	PENGINEHANDLE DirectXRenderer::GetshaderTechniqueHandle(char* techniqueName)
+	PENGINEHANDLE DirectXRenderer::GetShaderTechniqueHandle(char* techniqueName)
 	{
-		return (PENGINEHANDLE)currentlyActiveshader->GetTechniqueByName(techniqueName);
+		return (PENGINEHANDLE)currentlyActiveShader->GetTechniqueByName(techniqueName);
 	}
 
-	void DirectXRenderer::SetshaderTechnique(PENGINEHANDLE technique)
+	void DirectXRenderer::SetShaderTechnique(PENGINEHANDLE technique)
 	{
-		currentlyActiveshader->SetTechnique((D3DXHANDLE)technique);
+		currentlyActiveShader->SetTechnique((D3DXHANDLE)technique);
 	}
 
-	void DirectXRenderer::BeginRenderingWithshader(unsigned int* passes)
+	void DirectXRenderer::BeginRenderingWithShader(unsigned int* passes)
 	{
-		currentlyActiveshader->Begin(passes, 0);
+		currentlyActiveShader->Begin(passes, 0);
 	}
 
 	void DirectXRenderer::BeginRenderingWithPass( unsigned int pass)
 	{
-		currentlyActiveshader->BeginPass(pass);
+		currentlyActiveShader->BeginPass(pass);
 	}
 
-	void DirectXRenderer::SetshaderValue(PENGINEHANDLE handleToParameter, PENGINEVOID data, unsigned int sizeInBytes)
+	void DirectXRenderer::SetShaderValue(PENGINEHANDLE handleToParameter, PENGINEVOID data, unsigned int sizeInBytes)
 	{
-		currentlyActiveshader->SetValue((D3DXHANDLE)handleToParameter, data, sizeInBytes);
+		currentlyActiveShader->SetValue((D3DXHANDLE)handleToParameter, data, sizeInBytes);
 	}
 
-	void DirectXRenderer::SetshaderMatrix(PENGINEHANDLE handleToMatrix, Matrix* matrix)
+	void DirectXRenderer::SetShaderMatrix(PENGINEHANDLE handleToMatrix, Matrix* matrix)
 	{
 		SetMatrixCache(matrix);
-		currentlyActiveshader->SetMatrix((D3DXHANDLE)handleToMatrix, matrixCache);
+		currentlyActiveShader->SetMatrix((D3DXHANDLE)handleToMatrix, matrixCache);
 	}
 
 	void DirectXRenderer::CommitChanges()
 	{
-		currentlyActiveshader->CommitChanges();
+		currentlyActiveShader->CommitChanges();
 	}
 
 	void DirectXRenderer::EndRenderingPass()
 	{
-		currentlyActiveshader->EndPass();
+		currentlyActiveShader->EndPass();
 	}
 
-	void DirectXRenderer::EndRenderingWithshader()
+	void DirectXRenderer::EndRenderingWithShader()
 	{
-		currentlyActiveshader->End();
+		currentlyActiveShader->End();
 	}
 }

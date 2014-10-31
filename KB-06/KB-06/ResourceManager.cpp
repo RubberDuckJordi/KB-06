@@ -168,7 +168,7 @@ namespace pengine
 		for (auto it = shaders.begin(); it != shaders.end(); ++it)
 		{
 			//compile shader on renderer
-			renderer->Cacheshader((*it).second);
+			renderer->CacheShader((*it).second);
 		}
 	}
 }

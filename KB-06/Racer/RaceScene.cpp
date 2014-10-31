@@ -138,30 +138,30 @@ void racer::RaceScene::Render(pengine::Renderer* renderer)
 		renderer->DrawString("Victory!\n" +std::to_string(elapsedTime), D3DCOLOR_ARGB(0, 100, 255, 100));
 	}
 
-	renderer->Setshader(shader);
+	renderer->SetShader(shader);
 	pengine::Matrix mWorld;
 	pengine::Matrix::CreateMatrix(-100, 140, 0, -90, 0, 0, 10, 10, 10, &mWorld);
 	pengine::Matrix mProj = *GetCurrentCamera()->GetProjectionMatrix();
 	pengine::Matrix mView = *GetCurrentCamera()->GetViewMatrix();
 	pengine::Matrix mWorldViewProjection = mWorld * mView * mProj;
 	
-	renderer->SetshaderMatrix(renderer->GetshaderParameterHandle("g_mWorldViewProjection"), &mWorldViewProjection);
-	renderer->SetshaderMatrix(renderer->GetshaderParameterHandle("g_mWorld"), &mWorld);
+	renderer->SetShaderMatrix(renderer->GetShaderParameterHandle("g_mWorldViewProjection"), &mWorldViewProjection);
+	renderer->SetShaderMatrix(renderer->GetShaderParameterHandle("g_mWorld"), &mWorld);
 
 	pengine::RGBAColor lowGrey = pengine::RGBAColor(0.1f, 1.0f, 0.1f, 1.0f);
-	renderer->SetShaderpValue(renderer->GetShaderpParameterHandle("g_MaterialAmbientColor"), &lowGrey, sizeof(pengine::RGBAColor));
+	renderer->SetShaderValue(renderer->GetShaderParameterHandle("g_MaterialAmbientColor"), &lowGrey, sizeof(pengine::RGBAColor));
 
 	pengine::RGBAColor white = pengine::RGBAColor(0.1f, 0.1f, 0.1f, 1.0f);
-	renderer->SetShaderpValue(renderer->GetShaderpParameterHandle("g_LightDiffuse"), &white, sizeof(pengine::RGBAColor));
-	renderer->SetShaderpValue(renderer->GetShaderpParameterHandle("g_MaterialDiffuseColor"), &white, sizeof(pengine::RGBAColor));
+	renderer->SetShaderValue(renderer->GetShaderParameterHandle("g_LightDiffuse"), &white, sizeof(pengine::RGBAColor));
+	renderer->SetShaderValue(renderer->GetShaderParameterHandle("g_MaterialDiffuseColor"), &white, sizeof(pengine::RGBAColor));
 
 	pengine::Vector3 lightDir = pengine::Vector3(sinf(D3DX_PI * 2 * 1 / 1 - D3DX_PI / 6), 0, -cosf(D3DX_PI * 2 * 1 / 1 - D3DX_PI / 6));
-	renderer->SetShaderpValue(renderer->GetShaderpParameterHandle("g_LightDir"), &lightDir, sizeof(pengine::Vector3));
+	renderer->SetShaderValue(renderer->GetShaderParameterHandle("g_LightDir"), &lightDir, sizeof(pengine::Vector3));
 
-	renderer->SetshaderTechnique(renderer->GetshaderTechniqueHandle("RenderScene"));
+	renderer->SetShaderTechnique(renderer->GetShaderTechniqueHandle("RenderScene"));
 
 	UINT cPasses, iPass;
-	renderer->BeginRenderingWithshader(&cPasses);
+	renderer->BeginRenderingWithShader(&cPasses);
 
 	for (iPass = 0; iPass < cPasses; iPass++)
 	{
@@ -170,7 +170,7 @@ void racer::RaceScene::Render(pengine::Renderer* renderer)
 		renderer->DrawString("Hello shaders!", D3DCOLOR_ARGB(0, 255, 0, 0));
 		renderer->EndRenderingPass();
 	}
-	renderer->EndRenderingWithshader();
+	renderer->EndRenderingWithShader();
 	//pengine::Material mat;
 	//mat.texture = NULL;
 	//mat.ambient = { 0.0f, 0.0f, 0.0f };

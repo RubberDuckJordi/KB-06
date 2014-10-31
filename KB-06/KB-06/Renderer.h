@@ -94,37 +94,37 @@ namespace pengine
 		This will (depending on the renderer) compile the shader for the specific
 		graphics card.
 		*/
-		virtual void Cacheshader(std::string* shaderInTextInRam) = 0;
+		virtual void CacheShader(std::string* shaderInTextInRam) = 0;
 
 		/*!
 		Sets the current shader to the given shader.
 		Note that you still have to call 'BeginRenderingWithshader'.
 		*/
-		virtual void Setshader(std::string* shader) = 0;
+		virtual void SetShader(std::string* shader) = 0;
 
 		/*!
 		Getting a parameter handle once speeds things up when you need to set
 		the value for the parameter.
 		*/
-		virtual PENGINEHANDLE GetshaderParameterHandle(char* parameterName) = 0;
+		virtual PENGINEHANDLE GetShaderParameterHandle(char* parameterName) = 0;
 
 		/*!
 		Getting a technique handle once speeds things up when you need to set
 		the techique.
 		*/
-		virtual PENGINEHANDLE GetshaderTechniqueHandle(char* techniqueName) = 0;
+		virtual PENGINEHANDLE GetShaderTechniqueHandle(char* techniqueName) = 0;
 
 		/*!
 		Sets the active technique to the given technique
 		*/
-		virtual void SetshaderTechnique(PENGINEHANDLE technique) = 0;
+		virtual void SetShaderTechnique(PENGINEHANDLE technique) = 0;
 
 		/*!
 		The 'passes' parameter will be filled with the amount of passes in the
 		currently active technique. It's up to you if you want to render with
 		all the passes.
 		*/
-		virtual void BeginRenderingWithshader(unsigned int* passes) = 0;
+		virtual void BeginRenderingWithShader(unsigned int* passes) = 0;
 
 		/*!
 		Begins rendering with the specified pass.
@@ -134,13 +134,13 @@ namespace pengine
 		/*!
 		Throws the given data in the parameter of the given shader.
 		*/
-		virtual void SetshaderValue(PENGINEHANDLE handleToParameter, PENGINEVOID data, unsigned int sizeInBytes) = 0;
+		virtual void SetShaderValue(PENGINEHANDLE handleToParameter, PENGINEVOID data, unsigned int sizeInBytes) = 0;
 
 		/*!
 		Throws the given matrix in the parameter of the given shader, you can get
-		the parameter handle to the desired matrix with GetshaderParameterHandle.
+		the parameter handle to the desired matrix with GetShaderParameterHandle.
 		*/
-		virtual void SetshaderMatrix(PENGINEHANDLE handleToParameter, Matrix* data) = 0;
+		virtual void SetShaderMatrix(PENGINEHANDLE handleToParameter, Matrix* data) = 0;
 
 		/*!
 		Updates changes to any 'set' calls in the pass. This should be called before
@@ -156,7 +156,7 @@ namespace pengine
 		*/
 		virtual void EndRenderingPass() = 0;
 
-		virtual void EndRenderingWithshader() = 0;
+		virtual void EndRenderingWithShader() = 0;
 
 	protected:
 		Logger* logger;
