@@ -7,6 +7,8 @@
 #include "Ground.h"
 #include "Material.h"
 
+#include "TinyEntity.h"
+
 racer::RaceSceneFactory::RaceSceneFactory(pengine::ResourceManager* resourceManager) : SceneFactory(resourceManager)
 {
 
@@ -384,6 +386,11 @@ pengine::Scene* racer::RaceSceneFactory::CreateScene(std::vector<std::string>* s
 pengine::Scene* racer::RaceSceneFactory::CreateScene()
 {
 	pengine::Logger* logger = pengine::LoggerPool::GetInstance().GetLogger();
+
+	TinyEntity* tiny = new TinyEntity();
+	tiny->SetObject3D(resourceManager->LoadXFile(&std::string("resources/tiny/tiny.x")));
+	tiny->SetAll(0, 122, 0, 0, 270, 0, 0.05f, 0.05f, 0.05f);
+
 	RaceCart* racecart = new RaceCart();
 	racecart->SetControllable(true);
 	racecart->SetMass(100.0f);
@@ -436,6 +443,7 @@ pengine::Scene* racer::RaceSceneFactory::CreateScene()
 	skybox->SetMaterial(material);
 
 	RaceScene* raceScene = new RaceScene();
+	raceScene->AddEntity(tiny);
 	raceScene->AddEntity(racecart);
 	raceScene->AddEntity(racecart1);
 	raceScene->AddCollidable(racecart);

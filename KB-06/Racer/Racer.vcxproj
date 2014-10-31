@@ -86,10 +86,12 @@
     <ClCompile Include="Racer.cpp" />
     <ClCompile Include="RaceScene.cpp" />
     <ClCompile Include="RaceSceneFactory.cpp" />
+    <ClCompile Include="TinyEntity.cpp" />
     <ClCompile Include="Track.cpp" />
     <ClCompile Include="TrackBlock.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="TinyEntity.h" />
     <ClInclude Include="RaceCart.h" />
     <ClInclude Include="RaceScene.h" />
     <ClInclude Include="RaceSceneFactory.h" />
