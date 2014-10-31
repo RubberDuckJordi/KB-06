@@ -5,7 +5,6 @@
 #include "SceneFactory.h"
 #include "Input.h"
 #include "Renderer.h"
-#include "SceneCallback.h"
 #include "ResourceManager.h"
 
 #include <list>
@@ -14,7 +13,7 @@
 
 namespace pengine
 {
-	class SceneManager : public SceneCallback
+	class SceneManager
 	{
 	public:
 		SceneManager();
@@ -22,14 +21,10 @@ namespace pengine
 		std::vector<std::string>* ReadScene(std::string* path, ResourceManager* resourceManager);
 		Scene* CreateScene(std::vector<std::string>* sceneFile, char* factoryKey, ResourceManager* resourceManager);
 		void AddSceneFactory(char* key, SceneFactory* sceneFactory);
-		Scene* SetScene(char* sceneFactory);
-		void RemoveScene(Scene* scene);
-		void UpdateScene(Scene* scene);
 		void UpdateActiveScene(float deltaTime, std::map<Input, long>* actions);
 		void RenderActiveScene(Renderer* renderer);
 		void SetCurrentScene(Scene* scene);
 		Scene* GetCurrentScene();
-		void ChangeScene(char* identifier);
 	private:
 		Scene* currentScene;
 		std::list<Scene*> scenes;

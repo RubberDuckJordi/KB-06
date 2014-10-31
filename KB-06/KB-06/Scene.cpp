@@ -24,7 +24,6 @@ namespace pengine
 		{
 			delete staticCollidables.front(), staticCollidables.pop_front();
 		}
-		delete callback;
 		delete currentCamera;
 		delete skybox;
 		delete ground;
@@ -325,11 +324,6 @@ namespace pengine
 	void Scene::SetCurrentCamera(EntityCamera* camera)
 	{
 		currentCamera = camera;
-	}
-
-	void Scene::SetSceneCallback(SceneCallback* callback)
-	{
-		this->callback = callback;
 	}
 
 	void Scene::SetSkybox(Skybox* p_skybox)

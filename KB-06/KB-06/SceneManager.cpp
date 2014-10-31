@@ -1,5 +1,4 @@
 #include "SceneManager.h"
-#include "SceneCallback.h"
 
 namespace pengine
 {
@@ -34,38 +33,12 @@ namespace pengine
 		SceneFactory* factory = sceneFactories.at(factoryKey);
 		Scene* scene = factory->CreateScene(sceneFile, resourceManager);
 		SetCurrentScene(scene);
-		currentScene->SetSceneCallback(this);
 		return scene;
 	}
 
 	void SceneManager::AddSceneFactory(char* key, SceneFactory* sceneFactory)
 	{
 		sceneFactories[key] = sceneFactory;
-	}
-
-	Scene* SceneManager::SetScene(char* sceneFactory)
-	{
-		if (sceneFactories.find(sceneFactory) != sceneFactories.end())
-		{
-			Scene* currentScene = sceneFactories.at(sceneFactory)->CreateScene();
-			currentScene->SetSceneCallback(this);
-			return currentScene;
-		}
-		else
-		{
-			logger->Log(Logger::ERR, "SceneFactory \"" + std::string(sceneFactory) + "\" not found");
-			return NULL;
-		}
-	}
-
-	void SceneManager::RemoveScene(Scene* scene)
-	{
-
-	}
-
-	void SceneManager::UpdateScene(Scene* scene)
-	{
-
 	}
 
 	void SceneManager::UpdateActiveScene(float deltaTime, std::map<Input, long>* actions)
@@ -117,9 +90,5 @@ namespace pengine
 	Scene* SceneManager::GetCurrentScene()
 	{
 		return currentScene;
-	}
-
-	void SceneManager::ChangeScene(char* identifier){
-		SetScene(identifier);
 	}
 }

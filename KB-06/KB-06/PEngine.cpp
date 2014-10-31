@@ -80,10 +80,6 @@ namespace pengine
 		GetSceneManager()->AddSceneFactory("raceScene", sceneFactory);
 	}
 
-	Scene* PEngine::AddScene(char* sceneFactory){
-		return sceneManager->SetScene(sceneFactory);
-	}
-
 	void PEngine::SetCurrentScene(Scene* scene){
 		sceneManager->SetCurrentScene(scene);
 	}

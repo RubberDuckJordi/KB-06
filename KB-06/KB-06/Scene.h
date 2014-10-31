@@ -9,7 +9,6 @@
 #include "Input.h"
 #include "Skybox.h"
 #include "Ground.h"
-#include "SceneCallback.h"
 #include "Collidable.h"
 #include <functional>
 #include <vector>
@@ -43,7 +42,6 @@ namespace pengine
 
 		EntityCamera* GetCurrentCamera();
 		void SetCurrentCamera(EntityCamera* camera);
-		void SetSceneCallback(SceneCallback* callback);
 		void SetSkybox(Skybox* skybox);
 		void SetGround(Ground* ground);
 		void SetAmountOfRenderTextures(int amount);
@@ -77,7 +75,6 @@ namespace pengine
 
 		EntityCamera* currentCamera;
 		Logger* logger;
-		SceneCallback* callback;
 		Skybox* skybox;
 		Ground* ground;
 		int amountOfRenderTextures;

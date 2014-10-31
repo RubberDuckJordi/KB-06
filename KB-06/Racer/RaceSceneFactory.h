@@ -10,12 +10,9 @@ namespace racer
 	class RaceSceneFactory : public pengine::SceneFactory
 	{
 	public:
-		RaceSceneFactory(pengine::ResourceManager* resourceManager);
+		RaceSceneFactory();
 		~RaceSceneFactory();
-
-		pengine::Scene* CreateScene();
 		pengine::Scene* CreateScene(std::vector<std::string>* sceneFile, pengine::ResourceManager* resourceManager);
-	private:
 	};
 }
 #endif

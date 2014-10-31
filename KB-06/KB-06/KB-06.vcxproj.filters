@@ -1,15 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="DefaultEntity.cpp">
-      <Filter>Source\Scene\Default</Filter>
-    </ClCompile>
-    <ClCompile Include="DefaultScene.cpp">
-      <Filter>Source\Scene\Default</Filter>
-    </ClCompile>
-    <ClCompile Include="DefaultSceneFactory.cpp">
-      <Filter>Source\Scene\Default</Filter>
-    </ClCompile>
     <ClCompile Include="DirectInputDevice.cpp">
       <Filter>Source\Input\Direct</Filter>
     </ClCompile>
@@ -144,15 +135,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="DefaultEntity.h">
-      <Filter>Header\Scene\Default</Filter>
-    </ClInclude>
-    <ClInclude Include="DefaultScene.h">
-      <Filter>Header\Scene\Default</Filter>
-    </ClInclude>
-    <ClInclude Include="DefaultSceneFactory.h">
-      <Filter>Header\Scene\Default</Filter>
-    </ClInclude>
     <ClInclude Include="DirectInputDevice.h">
       <Filter>Header\Input\Direct</Filter>
     </ClInclude>
@@ -294,9 +276,6 @@
     <ClInclude Include="Skybox.h">
       <Filter>Header\Resource\SkyBox</Filter>
     </ClInclude>
-    <ClInclude Include="SceneCallback.h">
-      <Filter>Header\Scene</Filter>
-    </ClInclude>
     <ClInclude Include="Material.h">
       <Filter>Header\Resource\RobertX</Filter>
     </ClInclude>
@@ -350,9 +329,6 @@
     <Filter Include="Header\Window">
       <UniqueIdentifier>{5727ef4d-677c-4d5d-9751-6d790726ead0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header\Scene\Default">
-      <UniqueIdentifier>{7a920306-9829-4958-8b40-8250c9fdc650}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header\Input\Direct">
       <UniqueIdentifier>{6cc027ff-f9d4-44a3-a451-e2d0b5641208}</UniqueIdentifier>
     </Filter>
@@ -367,9 +343,6 @@
     </Filter>
     <Filter Include="Source\Input\Direct">
       <UniqueIdentifier>{e2e560c4-d5b7-4b72-b285-8549bd47db80}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source\Scene\Default">
-      <UniqueIdentifier>{a0b6dd3a-b07d-46ed-bd94-ef5085d3c579}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source\Resource">
       <UniqueIdentifier>{33e97ab4-b8a0-4075-b927-2b12fc56c201}</UniqueIdentifier>
