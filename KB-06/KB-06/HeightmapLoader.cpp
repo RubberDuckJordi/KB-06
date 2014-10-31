@@ -111,15 +111,6 @@ namespace pengine
 		vertex[p_vertexIndex].tv = tv;
 	}
 
-	/*
-	Loads and reads the HeightMap file
-	If the file does not start with 0x424D
-	Or if the BMP is not:
-	- 24bpp
-	- uncompressed
-	Then the file is not in the correct format and false will be returned.
-	Else true will be returned.
-	*/
 	bool HeightmapLoader::ReadHeightMapFile(const std::string& p_filename)
 	{
 		std::string message;
@@ -162,11 +153,6 @@ namespace pengine
 		}
 	}
 
-	/*
-	Loads the entire file content into m_bitmapData
-	return = true	If Bitmap content is loaded
-	return = false	If Bitmap content is not loaded because the file could not be opened
-	*/
 	bool HeightmapLoader::ReadFileContent(const std::string& p_filename)
 	{
 		//ios::ate sets the reading pointer at the end of the file
@@ -193,14 +179,6 @@ namespace pengine
 		}
 	}
 
-	/*
-	Reads the Bitmap Header
-
-	Byte 6-9 are skipped because they are reserved
-	and the valuesdepend on the application that created the image
-	return = true	If Bitmap is loaded
-	return = false	If Bitmap is not loaded
-	*/
 	bool HeightmapLoader::ReadFileHeader()
 	{
 		if (m_bitmapData != NULL)
@@ -225,11 +203,6 @@ namespace pengine
 		}
 	}
 
-	/*
-	Reads the entire Bitmap Information Header
-	return = true	If Bitmap is loaded
-	return = false	If Bitmap is not loaded
-	*/
 	bool HeightmapLoader::ReadInformationHeader()
 	{
 		if (m_bitmapData != NULL)

@@ -72,7 +72,10 @@ namespace pengine
 		return renderer;
 	}
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/master
 
 	void PEngine::NewWindow(int x, int y, int width, int height){
 		GetWindowManager()->NewWindow(x, y, width, height);

@@ -2,6 +2,12 @@
 #define _PENGINE_CUSTOMD3DVERTEX_H_
 
 #include <d3dx9.h>
+
+/*
+Vertex implementation
+Contains position (xyz), normals (nX, nY, nZ) and texture coordinates (tu,tv)
+*/
+
 struct Vertex
 {
 	Vertex()
@@ -82,6 +88,11 @@ struct Vertex
 	float nX, nY, nZ;	//Vertex normal
 	float tu, tv;		//Texture coordinate
 };
+
+/*
+Colored Vertex implementation
+Contains position (xyz), normals (nX, nY, nZ) and texture coordinates (tu,tv) and color.
+*/
 
 struct ColoredVertex
 {
