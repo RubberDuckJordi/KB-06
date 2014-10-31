@@ -9,7 +9,6 @@
 #include "HeightmapLoader.h"
 #include "SceneLoader.h"
 #include "SuperXLoader.h"
-#include "Shader.h"
 #include "Object3D.h"
 
 #include <vector>

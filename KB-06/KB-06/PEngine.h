@@ -6,9 +6,6 @@
 #include "ResourceManager.h"
 #include "WindowManager.h"
 
-// ugly testing
-#include "Shader.h"
-
 namespace pengine
 {
 	class PEngine
@@ -35,10 +32,6 @@ namespace pengine
 		void SetCurrentScene(Scene* scene);
 		void GameLoop();
 
-		// ugly testing
-		Shader* GetShader();
-		void SetShader(Shader* shader);
-
 	private:
 
 		SceneManager* sceneManager;
@@ -47,9 +40,6 @@ namespace pengine
 		InputManager* inputManager;
 		Renderer* renderer;
 		Logger* logger;
-
-		// ugly testing
-		Shader* TestShader;
 	};
 }
 
