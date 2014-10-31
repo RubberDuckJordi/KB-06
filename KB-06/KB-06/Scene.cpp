@@ -269,11 +269,11 @@ namespace pengine
 		//int entitiesLoaded = 0;
 		for each(Entity* entity in entities)
 		{
-			/*if (currentCamera->SphereInFrustum(entity->GetPosition(), entity->GetRadius()))
-			{*/
+			if (currentCamera->SphereInFrustum(entity->GetPosition(), entity->GetRadius()))
+			{
 			entity->Render(renderer);
 			//++entitiesLoaded;
-			//}
+			}
 		}
 		//logger->Log(Logger::DEBUG, "Rendered " + std::to_string(entitiesLoaded) + " of " + std::to_string(entities.size()) + " entities");
 

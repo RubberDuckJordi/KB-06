@@ -23,9 +23,9 @@ namespace pengine
 			{ "Material", X_MATERIAL },
 			{ "SkinWeights", X_SKINWEIGHTS },
 			{ "TextureFilename", X_TEXTUREFILENAME },
-			{ "AnimationSet", XanimationsET },
-			{ "AnimationKey", XanimationKEY },
-			{ "Animation", Xanimation },
+			{ "AnimationSet", X_ANIMATIONSET },
+			{ "AnimationKey", X_ANIMATIONKEY },
+			{ "Animation", X_ANIMATION },
 			{ "Header", X_HEADER },
 			{ "DeclData", X_DECLDATA }
 	};
@@ -98,7 +98,7 @@ namespace pengine
 			case X_MESH:
 				ProcessMesh();
 				break;
-			case XanimationsET:
+			case X_ANIMATIONSET:
 				ProcessAnimationSets();
 				break;
 			case X_MATERIAL:
@@ -852,7 +852,7 @@ namespace pengine
 				//logger->Log(Logger::DEBUG, "SuperXLoader: MaxKey: " + std::to_string(maxKey));
 				_Object->animationsets.push_back(_LoadAnimationSet);
 				return; //this is the end
-			case Xanimation:
+			case X_ANIMATION:
 				ProcessAnimations(_LoadAnimationSet);
 				break;
 			default:
@@ -892,7 +892,7 @@ namespace pengine
 				tempAnimation->boneName = data;
 				//logger->Log(Logger::DEBUG, "SuperXLoader: Animated Bone: " + tempAnimation->boneName);
 				break;
-			case XanimationKEY:
+			case X_ANIMATIONKEY:
 				ProcessAnimationKeys(tempAnimation);
 				break;
 			default:

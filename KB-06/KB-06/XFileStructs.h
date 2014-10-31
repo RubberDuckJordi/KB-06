@@ -83,9 +83,9 @@ namespace pengine
 #define X_SKINWEIGHTS 			 69
 #define X_TEXTUREFILENAME		 70
 #define X_MESHNORMALS			 71
-#define XanimationsET			 72
-#define Xanimation			 	 73
-#define XanimationKEY		 	 74
+#define X_ANIMATIONSET			 72
+#define X_ANIMATION			 	 73
+#define X_ANIMATIONKEY		 	 74
 #define X_DECLDATA			 	 75
 
 #define X_COMMENT				 254

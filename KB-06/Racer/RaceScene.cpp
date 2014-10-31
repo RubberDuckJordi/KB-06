@@ -167,7 +167,7 @@ void racer::RaceScene::Render(pengine::Renderer* renderer)
 	{
 		renderer->BeginRenderingWithPass(iPass);
 		//do all them renderings... tricky
-		renderer->DrawString("Hello shaders!", D3DCOLOR_ARGB(0, 255, 0, 0));
+		renderer->DrawString("Hello shaderps!", D3DCOLOR_ARGB(0, 255, 0, 0));
 		renderer->EndRenderingPass();
 	}
 	renderer->EndRenderingWithShader();
