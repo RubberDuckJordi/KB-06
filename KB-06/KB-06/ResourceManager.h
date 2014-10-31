@@ -40,7 +40,7 @@ namespace pengine
 		std::map<std::string, Material> materials;
 		std::map<std::string, BinaryData*> textures;
 		std::map<std::string, Ground> grounds;
-		std::map<std::string, std::string*> shaderps;
+		std::map<std::string, std::string*> shaders;
 		std::map<std::string, Model3D*> models;
 
 		//std::map<std::string, BaseMeshLoader*> meshLoaders;

@@ -58,7 +58,7 @@ namespace pengine
 
 	std::string* ResourceManager::LoadShaderFile(const std::string& fileName)
 	{
-		if (shaderps[fileName] == NULL)
+		if (shaders[fileName] == NULL)
 		{
 			std::ifstream in(fileName, std::ios::in | std::ios::binary);
 			if (in)
@@ -73,12 +73,12 @@ namespace pengine
 				in.close();
 
 				*stored = contents;
-				shaderps[fileName] = stored;
+				shaders[fileName] = stored;
 			}
 		}
 
-		logger->Log(Logger::DEBUG, "Shader string: " + *shaderps[fileName]);
-		return shaderps[fileName];
+		logger->Log(Logger::DEBUG, "Shader string: " + *shaders[fileName]);
+		return shaders[fileName];
 	}
 
 	Ground* ResourceManager::LoadGround(std::string filename, std::string textureFilename, float cellSize)
@@ -165,10 +165,10 @@ namespace pengine
 			renderer->CacheTexture((*it).second);
 		}
 
-		for (auto it = shaderps.begin(); it != shaderps.end(); ++it)
+		for (auto it = shaders.begin(); it != shaders.end(); ++it)
 		{
-			//compile shaderp on renderer
-			renderer->CacheShaderp((*it).second);
+			//compile shader on renderer
+			renderer->Cacheshader((*it).second);
 		}
 	}
 }

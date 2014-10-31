@@ -90,41 +90,41 @@ namespace pengine
 		virtual void CacheTexture(BinaryData* textureInRam) = 0;
 
 		/*!
-		Caches the given shaderp in text to the renderer.
-		This will (depending on the renderer) compile the shaderp for the specific
+		Caches the given shader in text to the renderer.
+		This will (depending on the renderer) compile the shader for the specific
 		graphics card.
 		*/
-		virtual void CacheShaderp(std::string* shaderpInTextInRam) = 0;
+		virtual void Cacheshader(std::string* shaderInTextInRam) = 0;
 
 		/*!
 		Sets the current shader to the given shader.
-		Note that you still have to call 'BeginRenderingWithShaderp'.
+		Note that you still have to call 'BeginRenderingWithshader'.
 		*/
-		virtual void SetShaderp(std::string* shaderp) = 0;
+		virtual void Setshader(std::string* shader) = 0;
 
 		/*!
 		Getting a parameter handle once speeds things up when you need to set
 		the value for the parameter.
 		*/
-		virtual PENGINEHANDLE GetShaderpParameterHandle(char* parameterName) = 0;
+		virtual PENGINEHANDLE GetshaderParameterHandle(char* parameterName) = 0;
 
 		/*!
 		Getting a technique handle once speeds things up when you need to set
 		the techique.
 		*/
-		virtual PENGINEHANDLE GetShaderpTechniqueHandle(char* techniqueName) = 0;
+		virtual PENGINEHANDLE GetshaderTechniqueHandle(char* techniqueName) = 0;
 
 		/*!
 		Sets the active technique to the given technique
 		*/
-		virtual void SetShaderpTechnique(PENGINEHANDLE technique) = 0;
+		virtual void SetshaderTechnique(PENGINEHANDLE technique) = 0;
 
 		/*!
 		The 'passes' parameter will be filled with the amount of passes in the
 		currently active technique. It's up to you if you want to render with
 		all the passes.
 		*/
-		virtual void BeginRenderingWithShaderp(unsigned int* passes) = 0;
+		virtual void BeginRenderingWithshader(unsigned int* passes) = 0;
 
 		/*!
 		Begins rendering with the specified pass.
@@ -134,13 +134,13 @@ namespace pengine
 		/*!
 		Throws the given data in the parameter of the given shader.
 		*/
-		virtual void SetShaderpValue(PENGINEHANDLE handleToParameter, PENGINEVOID data, unsigned int sizeInBytes) = 0;
+		virtual void SetshaderValue(PENGINEHANDLE handleToParameter, PENGINEVOID data, unsigned int sizeInBytes) = 0;
 
 		/*!
 		Throws the given matrix in the parameter of the given shader, you can get
-		the parameter handle to the desired matrix with GetShaderpParameterHandle.
+		the parameter handle to the desired matrix with GetshaderParameterHandle.
 		*/
-		virtual void SetShaderpMatrix(PENGINEHANDLE handleToParameter, Matrix* data) = 0;
+		virtual void SetshaderMatrix(PENGINEHANDLE handleToParameter, Matrix* data) = 0;
 
 		/*!
 		Updates changes to any 'set' calls in the pass. This should be called before
@@ -156,7 +156,7 @@ namespace pengine
 		*/
 		virtual void EndRenderingPass() = 0;
 
-		virtual void EndRenderingWithShaderp() = 0;
+		virtual void EndRenderingWithshader() = 0;
 
 	protected:
 		Logger* logger;

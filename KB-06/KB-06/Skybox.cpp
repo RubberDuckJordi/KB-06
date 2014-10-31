@@ -14,7 +14,7 @@ namespace pengine
 
 		aSkyboxVertices = new Vertex[amountOfVertices]();
 		//!!!VERTEX NORMALS ARE NOT RIGHT YET!!!
-		//(could also set a different shaderp for the skybox, I guess)
+		//(could also set a different shader for the skybox, I guess)
 		aSkyboxVertices[0] = Vertex(-2.0f, -2.0f, 2.0f, 0.0f, 0.0f, 0.0f, 0.25f, 0.6666f);//front
 		aSkyboxVertices[1] = Vertex(2.0f, -2.0f, 2.0f, 0.0f, 0.0f, 0.0f, 0.50f, 0.6666f);
 		aSkyboxVertices[2] = Vertex(2.0f, 2.0f, 2.0f, 0.0f, 0.0f, 0.0f, 0.50f, 0.3333f);
