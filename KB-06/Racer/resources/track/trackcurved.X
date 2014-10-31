@@ -131,7 +131,7 @@ Material Material__36 {
  0.000000;0.000000;0.000000;;
 
  TextureFilename {
-  "trackstraight.png";
+  "trackcurved.png";
  }
 }
 
