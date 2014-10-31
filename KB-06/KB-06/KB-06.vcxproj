@@ -113,7 +113,7 @@
     <ClInclude Include="PEngine.h" />
     <ClInclude Include="PengineDefinitions.h" />
     <ClInclude Include="RGBAColor.h" />
-    <ClInclude Include="SceneDefinition.h" />
+    <ClInclude Include="SceneCallback.h" />
     <ClInclude Include="SceneLoader.h" />
     <ClInclude Include="Skybox.h" />
     <ClInclude Include="Input.h" />
@@ -193,6 +193,11 @@
     <ClCompile Include="Window.cpp" />
     <ClCompile Include="WindowManager.cpp" />
     <ClCompile Include="Mesh.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
+    <None Include="ClassDiagram1.cd" />
+    <None Include="ClassDiagram2.cd" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,0 +1,624 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="NameAndType">
+  <Class Name="pengine::PEngine" Collapsed="true">
+    <Position X="12.25" Y="10.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEAEAAAIAgAgACAQBAAAAAABAQACggAAADBBAAiAA=</HashCode>
+      <FileName>pengine.h</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="logger" />
+      <Field Name="inputManager" />
+      <Field Name="sceneManager" />
+      <Field Name="windowManager" />
+      <Field Name="resourceManager" />
+      <Field Name="renderer" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="pengine::Vector3" Collapsed="true">
+    <Position X="4.75" Y="11.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAAAAIAUAAUACAAIAAAAAgAAAIAAAABgAQAAAAA=</HashCode>
+      <FileName>vector3.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="pengine::InputDevice" Collapsed="true">
+    <Position X="8.25" Y="12.5" Width="1.5" />
+    <NestedTypes>
+      <Enum Name="pengine::InputDevice::Type" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>InputDevice.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAwIAACAAAABAAECAAAIACAAAAAAAAAAAAAABAAAAIA=</HashCode>
+      <FileName>InputDevice.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="pengine::InputDeviceFactory" Collapsed="true">
+    <Position X="12" Y="15.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAASAAAAAAQACBAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>InputDeviceFactory.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="pengine::InputManager" Collapsed="true">
+    <Position X="10" Y="10.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAgAAAAAABAAAQECIBAAAAQAAAAAAAEAAAAAIAAAAAA=</HashCode>
+      <FileName>InputManager.h</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="inputDeviceFactory" />
+      <Field Name="logger" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="pengine::DirectInputDevice" Collapsed="true">
+    <Position X="8.25" Y="13.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAUAAACAAAABAQAAEAAAAAAEAAAAAgAAAAAAAAAAABA=</HashCode>
+      <FileName>DirectInputDevice.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="pengine::DirectInputDeviceFactory" Collapsed="true">
+    <Position X="12" Y="16.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAACACAAAAAAQAAAEAAAAAAAAAAAAAACAAAAAgAABE=</HashCode>
+      <FileName>DirectInputDeviceFactory.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="pengine::DirectKeyboard" Collapsed="true">
+    <Position X="7" Y="15.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAwIAAAAAAAAAQEAAAABAAAAABAAAAAAAQAAAQAAAAA=</HashCode>
+      <FileName>DirectKeyboard.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="pengine::DirectMouse" Collapsed="true">
+    <Position X="9.25" Y="15.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAwIAAAEAAAAIQEAAAAAAAEAAAIAAAEAAAAAAAAAAAA=</HashCode>
+      <FileName>DirectMouse.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="pengine::EntityCamera" Collapsed="true">
+    <Position X="7" Y="10.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAGgAgAAACgAAAgECAAAAgAGACAAgAiAAFCCkCAAIAA=</HashCode>
+      <FileName>EntityCamera.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="pengine::Entity" Collapsed="true">
+    <Position X="7" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EIQOEAAgCKSCCAgCGACAIAACgSAEAggAIBCBCggA4BE=</HashCode>
+      <FileName>Entity.h</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="logger" />
+      <Field Name="movementVector" />
+      <Field Name="myCachedMatrix" />
+      <Field Name="position" />
+      <Field Name="previousPosition" />
+      <Field Name="previousRotation" />
+      <Field Name="rotation" />
+      <Field Name="scale" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="pengine::Scene" Collapsed="true">
+    <Position X="5.75" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ASwxAIAgAACAAQAKgAEAAABAwAMAEQAAAJCAAIAAACE=</HashCode>
+      <FileName>scene.h</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="currentCamera" />
+      <Field Name="ground" />
+      <Field Name="logger" />
+      <Field Name="skybox" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="pengine::SceneFactory" Collapsed="true">
+    <Position X="22" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAgAAAAAAAAAAAAAAgAAAAAAAAAAQA=</HashCode>
+      <FileName>scenefactory.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="pengine::SceneManager" Collapsed="true">
+    <Position X="14.25" Y="12.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAgE0giAAAAAIAAAAIAAAgAAAAAQAAAAAQ=</HashCode>
+      <FileName>SceneManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="pengine::Collidable" Collapsed="true">
+    <Position X="22" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAAAAAAAAgAAEAAAAAAAAAAAAAAAGABAAAAAQAABA=</HashCode>
+      <FileName>Collidable.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="pengine::Ground" Collapsed="true">
+    <Position X="6" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AERQAEEgAIAAAAQCQASAYABCECQQAggEQBSAAkBAGGQ=</HashCode>
+      <FileName>Ground.h</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="location" />
+      <Field Name="material" />
+      <Field Name="quadTreeRootNode" />
+      <Field Name="position" />
+      <Field Name="logger" />
+      <Field Name="scale" />
+      <Field Name="rotation" />
+      <Field Name="vertexBuffer" />
+      <Field Name="vertices" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="pengine::QuadNode" Collapsed="true">
+    <Position X="6" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gFRIBAMCAHAgEAVCUAAAlQCCMBA0QAAiAEQCIFQAAAQ=</HashCode>
+      <FileName>quadnode.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="pengine::Window" Collapsed="true">
+    <Position X="8.5" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAhAGAAgBAIACEAAgAEICAQAEAEAEAAAACAMAIAA=</HashCode>
+      <FileName>Window.h</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="logger" />
+      <Field Name="logger" />
+      <Field Name="state" />
+      <Field Name="state" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="pengine::WindowManager" Collapsed="true">
+    <Position X="14.25" Y="8.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAhEQAAgIAACCEABAAAAIAAAAgIAAgAAABAAQAAA=</HashCode>
+      <FileName>WindowManager.h</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="logger" />
+      <Field Name="sceneManager" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="pengine::SceneLoader" Collapsed="true">
+    <Position X="4.5" Y="14.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAQAAAABAAAAAAAAABAA=</HashCode>
+      <FileName>SceneLoader.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="pengine::ResourceManager" Collapsed="true">
+    <Position X="5.5" Y="12.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAgAAAAEAAAAADBAAAEAAAgEQAAABAAgCAAABIACA=</HashCode>
+      <FileName>ResourceManager.h</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="heightmapLoader" />
+      <Field Name="logger" />
+      <Field Name="sceneLoader" />
+      <Field Name="superXLoader" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="pengine::Animation" Collapsed="true">
+    <Position X="1.75" Y="11.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAAAAAAAIAAAAAAAiAAAAAAAAAAAAAAAAAAAAQAAE=</HashCode>
+      <FileName>Animation.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="pengine::AnimationSet" Collapsed="true">
+    <Position X="12.75" Y="9.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAQAAAAAGEAAAIAAAAAAQAAA=</HashCode>
+      <FileName>AnimationSet.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="pengine::Bone" Collapsed="true">
+    <Position X="11.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAABAEABAAABAAAAIAAAAUQAAAEgAAAAAQAEA=</HashCode>
+      <FileName>Bone.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="pengine::Matrix" Collapsed="true">
+    <Position X="2.5" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAQCAAAAAAAAAIMiAAASACAQEgAAAAhEEwAAAAAgA=</HashCode>
+      <FileName>matrix.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="pengine::Model3D" Collapsed="true">
+    <Position X="11" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAAAEAAEAAAAACAAAAAIAAEACAAAACAAAAAABAAAE=</HashCode>
+      <FileName>Model3D.h</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="logger" />
+      <Field Name="skeleton" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="pengine::Object3D" Collapsed="true">
+    <Position X="11.5" Y="8.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABwcGAAAiHAUAAAKcAAICAoAABIAAAAQABCAAQDBIIQ=</HashCode>
+      <FileName>object3d.h</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_cAnimationSet" />
+      <Field Name="_Model" />
+      <Field Name="_SkinnedVertices" />
+      <Field Name="center" />
+      <Field Name="high" />
+      <Field Name="logger" />
+      <Field Name="low" />
+      <Field Name="skeleton" />
+      <Field Name="_Mesh" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="pengine::ObjectBone" Collapsed="true">
+    <Position X="1.75" Y="9.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QBgACAEgCAAAAAAAAAAQAIIAAAgCAAAAAAABAAAAAAA=</HashCode>
+      <FileName>ObjectBone.h</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="animation" />
+      <Field Name="bone" />
+      <Field Name="combinedMatrix" />
+      <Field Name="finalMatrix" />
+      <Field Name="transformMatrix" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="pengine::Quaternion" Collapsed="true">
+    <Position X="8" Y="18.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAIAAAAAQAAAAAAAAAAACQEAAAAAAAAwAAAQAAA=</HashCode>
+      <FileName>Quaternion.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="pengine::SuperXLoader" Collapsed="true">
+    <Position X="12.75" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QBAJiAACAIiApUCiABCABQAAgQBIAAAKAAAAAAAIARA=</HashCode>
+      <FileName>superxloader.h</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_LoadAnimationSet" />
+      <Field Name="_LoadMesh" />
+      <Field Name="_LoadSkeleton" />
+      <Field Name="_Object" />
+      <Field Name="logger" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="pengine::Vector" Collapsed="true">
+    <Position X="17.5" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAABAAAEAAAAAAACAEAAAAAAEDgAQBAAAA=</HashCode>
+      <FileName>vector.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="pengine::Material" Collapsed="true">
+    <Position X="3" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QEAgCAAAAAAEAAAAAAAAAAIAAAEEAgAAAAAAAABQAAA=</HashCode>
+      <FileName>material.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="pengine::Mesh" Collapsed="true">
+    <Position X="15.5" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gCAAAAQAAREEABAAAACAAEAAAIAWAEAEAUAAAABRAAE=</HashCode>
+      <FileName>Mesh.h</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="faceNormals" />
+      <Field Name="faces" />
+      <Field Name="normals" />
+      <Field Name="vertices" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="pengine::Skybox" Collapsed="true">
+    <Position X="6.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAQEAAAAAAAQAIhAAAAgAgAAAAAAAEABSAAABAgAA=</HashCode>
+      <FileName>Skybox.h</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="material" />
+      <Field Name="v_buffer" />
+      <Field Name="i_buffer" />
+      <Field Name="aSkyboxVertices" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="pengine::HeightmapLoader" Collapsed="true">
+    <Position X="4.5" Y="9.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AGAAECAAAAAAAAMCAAAABKQAAAEAIAAAAIAEAAAKQAA=</HashCode>
+      <FileName>HeightmapLoader.h</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="logger" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="pengine::Logger" Collapsed="true">
+    <Position X="8.5" Y="8.25" Width="1.5" />
+    <NestedTypes>
+      <Enum Name="pengine::Logger::LogLevel" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Logger.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+      <Enum Name="pengine::Logger::Consolecolor" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Logger.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AIASAAAAQAIAAQAAAAAAAEAAAAgAAAAAAQAAAAAAAAA=</HashCode>
+      <FileName>Logger.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="pengine::LoggerPool" Collapsed="true">
+    <Position X="23.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAAAAAAIAAAAAAAABAgAAAAAAAgAAAAABIA=</HashCode>
+      <FileName>LoggerPool.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="pengine::DirectXRenderer" Collapsed="true">
+    <Position X="12" Y="13.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EACgooIAIBgOMNBEJASgISSKBSEBgpiUBQBeJAAUJEg=</HashCode>
+      <FileName>directxrenderer.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="pengine::Renderer" Collapsed="true">
+    <Position X="12" Y="12.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAGgoIIAIBgOAMAGBASgAQAKBSABgpiEBQDGJAAUJEA=</HashCode>
+      <FileName>renderer.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="pengine::IndexBufferWrapper" Collapsed="true">
+    <Position X="6.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAgAAAAgAAAAgABABAAAAAAABAAAEAAAAAAAAAAAAA=</HashCode>
+      <FileName>IndexBufferWrapper.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="pengine::MaterialWrapper" Collapsed="true">
+    <Position X="25.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAAABAAAAAAAAAAAAAAAAAAAAAEAAAAAgBAAAA=</HashCode>
+      <FileName>MaterialWrapper.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="pengine::MeshWrapper" Collapsed="true">
+    <Position X="27.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAgAAABEAAAAAAAQAAAAAABAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>MeshWrapper.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="pengine::TextureWrapper" Collapsed="true">
+    <Position X="23.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAACAAAQAAAAAAAAAAAAACIAAgAAAAAAAAAAAAA=</HashCode>
+      <FileName>TextureWrapper.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="pengine::VertexBufferWrapper" Collapsed="true">
+    <Position X="3" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAQAAAAkAABAAAAAEIAAAAAAAAAAAAAAAACAAwAAEA=</HashCode>
+      <FileName>VertexBufferWrapper.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="pengine::WindowListener" Collapsed="true">
+    <Position X="10" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAgAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>WindowListener.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Struct Name="pengine::CameraData" Collapsed="true">
+    <Position X="25.5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACABgAAAAAACAAAAAAAAAAAAAAAAABgAQAAAAA=</HashCode>
+      <FileName>penginedefinitions.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="pengine::Plane" Collapsed="true">
+    <Position X="23.75" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAACkAQAAAAAAAAA=</HashCode>
+      <FileName>plane.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="pengine::COLLISIONEFFECT" Collapsed="true">
+    <Position X="27.25" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAAAAAAAAAAAgAAAAAAAQAAAABCAAAAQAAAAAAAAA=</HashCode>
+      <FileName>CollisionEffect.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="pengine::BEAM" Collapsed="true">
+    <Position X="22" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAAAgQgASBQAASAQBAACEAggAAAAFEAAABgIQAAIAA=</HashCode>
+      <FileName>Beam.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="pengine::BinaryData" Collapsed="true">
+    <Position X="23.75" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAEgAAAAAAAA=</HashCode>
+      <FileName>BinaryData.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="pengine::RGBColor" Collapsed="true">
+    <Position X="23.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAQABAAAAAAA=</HashCode>
+      <FileName>rgbcolor.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="pengine::RGBAColor" Collapsed="true">
+    <Position X="22" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAoAQABAAAAAAA=</HashCode>
+      <FileName>rgbacolor.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="pengine::RotateKey" Collapsed="true">
+    <Position X="8" Y="20.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAQA=</HashCode>
+      <FileName>Animation.h</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="Rotation" />
+    </ShowAsAssociation>
+  </Struct>
+  <Struct Name="pengine::PositionKey" Collapsed="true">
+    <Position X="27.25" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAQA=</HashCode>
+      <FileName>Animation.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="pengine::ScaleKey" Collapsed="true">
+    <Position X="17.5" Y="10.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAQA=</HashCode>
+      <FileName>Animation.h</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="Scale" />
+    </ShowAsAssociation>
+  </Struct>
+  <Struct Name="pengine::MatrixKey">
+    <Position X="0.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAQA=</HashCode>
+      <FileName>Animation.h</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="Matrix" />
+    </ShowAsAssociation>
+  </Struct>
+  <Struct Name="pengine::XFileHeader" Collapsed="true">
+    <Position X="25.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAEAAABAAAAAAAAAAAAAAAAAhAAQAAAAAAAAAAAAA=</HashCode>
+      <FileName>XFileStructs.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="pengine::Subset">
+    <Position X="19.5" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Mesh.h</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="Faces" />
+    </ShowAsAssociation>
+  </Struct>
+  <Struct Name="pengine::Point" Collapsed="true">
+    <Position X="25.5" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAQAAAAA=</HashCode>
+      <FileName>Collidable.cpp</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="pengine::XOF_TEMPLATEID" Collapsed="true">
+    <Position X="27.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAEA=</HashCode>
+      <FileName>SuperXLoader.cpp</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="Vertex" Collapsed="true">
+    <Position X="13.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAABAAAAEAAAAAAAAAQAAAAAAAJgAQAAAQA=</HashCode>
+      <FileName>vertex.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="ColoredVertex" Collapsed="true">
+    <Position X="22" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAAAAAAAEAAAAAAAAAQAAACAAAJgAQAAgQA=</HashCode>
+      <FileName>vertex.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Typedef Name="pengine::Face" Collapsed="true">
+    <Position X="18.5" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>types.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Enum Name="pengine::PENGINEFORMAT" Collapsed="true">
+    <Position X="27.25" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CDAgqFgkgQoAEELhhBRIBAkMAEksUSAImaAAAIAIEiA=</HashCode>
+      <FileName>penginedefinitions.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="pengine::PENGINEPOOL" Collapsed="true">
+    <Position X="22" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAAAIAAAAAAAAAAAQAAAAAAAAAgAAAAAQAAAAAA=</HashCode>
+      <FileName>penginedefinitions.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="pengine::PENGINERENDERSTATETYPE" Collapsed="true">
+    <Position X="23.75" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>DwAyoaogRQAhigGgHVRQI2odKIESYON/FMCKgQCrAPU=</HashCode>
+      <FileName>penginedefinitions.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="pengine::CULLINGTYPE" Collapsed="true">
+    <Position X="22" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAAAAAAAQACAAAAAAAAAAAAABAAAAAAAAAAAAA=</HashCode>
+      <FileName>penginedefinitions.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="pengine::FILLMODE" Collapsed="true">
+    <Position X="23.75" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAgQAAAAAACAAAAAAAAAAAABAAAAAAA=</HashCode>
+      <FileName>penginedefinitions.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="pengine::Input" Collapsed="true">
+    <Position X="25.5" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>FiDSQnkPERjOAKgSCYrFQJEBDcV/gEP/53j4XCFBfXQ=</HashCode>
+      <FileName>Input.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="pengine::WindowState" Collapsed="true">
+    <Position X="8.5" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAAAAAACAAAAAAAAAAAAAAAAAAAgIAAAACAAAAAAA=</HashCode>
+      <FileName>Window.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
