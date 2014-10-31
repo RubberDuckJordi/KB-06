@@ -5,6 +5,10 @@
 #include "Scene.h"
 #include <map>
 
+/*
+Interface for SceneFactories. One must be implemented for every Scene implementation
+*/
+
 namespace pengine
 {
 	class SceneFactory 

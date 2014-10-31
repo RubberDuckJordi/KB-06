@@ -11,6 +11,15 @@
 #include <map>
 #include <functional>
 
+/*
+SceneManager is responsible for creating and managing all scenes.
+SceneManager expects factories (added by calling AddSceneFactory) before it is
+able to create a scene. After creating, SetCurrentScene can be called.
+
+UpdateActiveScene must be called every tick. SceneManager then passes the tick
+on to the Scene.
+*/
+
 namespace pengine
 {
 	class SceneManager

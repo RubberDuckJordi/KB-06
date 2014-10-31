@@ -3,6 +3,13 @@
 
 #include "Window.h"
 
+/*
+Listener interface can be implemented and added to the window manager to receive events whenever a window is created, focus is gained or lost.
+
+OnWindowFocusGained event is called from the Window
+OnWindowCreated event is called from the WindowManager
+*/
+
 namespace pengine
 {
 	class Window;

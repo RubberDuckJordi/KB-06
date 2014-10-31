@@ -6,6 +6,10 @@
 #include "ResourceManager.h"
 #include "WindowManager.h"
 
+/*
+Kernel
+*/
+
 namespace pengine
 {
 	class PEngine
@@ -25,7 +29,6 @@ namespace pengine
 		void NewWindow(int x, int y, int width, int height);
 		void AddSceneFactory(char* key, SceneFactory* sceneFactory);
 
-		void AddScene();
 		void InitRenderer();
 		Scene* CreateScene(char* sceneFactory, std::string* filePath);
 		Scene* AddScene(char* sceneFactory);
