@@ -79,6 +79,7 @@ namespace pengine
 		std::list<Collidable*> staticCollidables;
 
 		EntityCamera* currentCamera;
+
 		Logger* logger;
 		Skybox* skybox;
 		Ground* ground;

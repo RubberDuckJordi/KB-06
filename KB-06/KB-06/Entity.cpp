@@ -229,7 +229,13 @@ namespace pengine
 		AddForce(&inverted);
 	}
 
-	float Entity::GetRadius(){
+	void Entity::SetRadius(float radius)
+	{
+		this->defaultRadius = radius;
+	}
+
+	float Entity::GetRadius()
+	{
 		return defaultRadius;
 	}
 }

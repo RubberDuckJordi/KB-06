@@ -268,7 +268,8 @@ namespace pengine
 		//int entitiesLoaded = 0;
 		for each(Entity* entity in entities)
 		{
-			if (currentCamera->SphereInFrustum(entity->GetPosition(), entity->GetRadius()))
+			//if (currentCamera->SphereInFrustum(entity->GetPosition(), entity->GetRadius()))
+			if (true)
 			{
 			entity->Render(renderer);
 			//++entitiesLoaded;

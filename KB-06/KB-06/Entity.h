@@ -50,6 +50,8 @@ namespace pengine
 		virtual void Render(Renderer* renderer) = 0;
 		virtual void UpdateLogic(float deltaTime, std::map<Input, long>* actions);
 		
+
+		virtual void SetRadius(float radius);
 		virtual float GetRadius();
 
 		// Used for reverting movement when two collision boxes hit eachother. They will get stuck otherwise.
@@ -73,7 +75,6 @@ namespace pengine
 		float mass;
 		float friction;
 		Vector3 movementVector;
-		float radius;
 		Logger* logger;
 		float defaultRadius;
 	};

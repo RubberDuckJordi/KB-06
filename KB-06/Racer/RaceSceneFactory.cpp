@@ -425,6 +425,7 @@ pengine::Scene* racer::RaceSceneFactory::CreateScene(std::vector<std::string>* s
 		}
 		if (!track == NULL)
 		{
+			track->SetRadius(10000.0f);
 			scene->AddEntity(track);
 		}
 

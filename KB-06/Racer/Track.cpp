@@ -4,6 +4,9 @@ namespace racer
 {
 	Track::Track()
 	{
+		offsetX = -100.0f;
+		offsetY = 0.0f;
+		offsetZ = 0.0f;
 	}
 	Track::~Track()
 	{
@@ -218,8 +221,9 @@ namespace racer
 		if (scale.x > highestScale) highestScale = scale.x;
 		if (scale.y > highestScale) highestScale = scale.y;
 		if (scale.z > highestScale) highestScale = scale.z;
-		return radius*highestScale;
+		return defaultRadius*highestScale;
 	}
+
 	void Track::CacheToRenderer(pengine::Renderer* renderer)
 	{
 		for (auto it = trackBlocks.begin(); it != trackBlocks.end(); ++it)
