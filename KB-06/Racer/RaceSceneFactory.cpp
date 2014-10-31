@@ -428,6 +428,8 @@ pengine::Scene* racer::RaceSceneFactory::CreateScene(std::vector<std::string>* s
 			scene->AddEntity(track);
 		}
 
+		
+
 	}
 
 	for (int i = 0; i < trackBlocks.size(); ++i)
@@ -448,6 +450,10 @@ pengine::Scene* racer::RaceSceneFactory::CreateScene(std::vector<std::string>* s
 	std::string* shader = resourceManager->LoadShaderFile("resources/shaders/shader.fx");
 	scene->shader = shader;
 	
+	TinyEntity* tiny = new TinyEntity();
+	tiny->SetObject3D(resourceManager->LoadXFile(&std::string("resources/tiny/tiny.x")));
+	tiny->SetAll(-100, 75, -150, 0, 270, 0, 0.2f, 0.2f, 0.2f);
+	scene->AddEntity(tiny);
 
 	pengine::EntityCamera* camera = new pengine::EntityCamera();
 	camera->useInput = false;
