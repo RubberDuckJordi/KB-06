@@ -53,11 +53,20 @@ namespace pengine
 		void CacheToRenderer(Renderer* renderer);
 		void Render(Renderer* renderer);
 
+		void SetPosition(float x, float y, float z);
+		void SetRotation(float yaw, float pitch, float roll);
+		void SetScale(float scaleX, float scaleY, float scaleZ);
+		void SetAll(float x, float y, float z, float yaw, float pitch, float roll, float scaleX, float scaleY, float scaleZ);
+
 	private:
 		void CreateQuadTreeChildren(QuadNode* parent, unsigned short remainingDepth);
 		
 		QuadNode* quadTreeRootNode;
 		unsigned short quadTreeDepth;
+
+		Vector3 position;
+		Vector3 rotation;
+		Vector3 scale;
 
 		Logger* logger;
 		int amountOfVertices;

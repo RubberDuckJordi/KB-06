@@ -22,12 +22,8 @@ int main(int argc, const char* argv[])
 
 	//!!!WE ARE MANAGING A SCENE OUTSIDE THE SCENE MANAGER!!!
 	racer::RaceSceneFactory* sceneFactory = new racer::RaceSceneFactory();
-	//sceneFactory->SetGroundResource("resources/heightmap.bmp");
-	//sceneFactory->SetGroundTexture("resources/heightmaptexture.bmp");
-	//sceneFactory->SetSkyboxTexture("resources/dome2.jpg");
-	
+
 	pEngine.AddSceneFactory("raceScene", sceneFactory);
-	//pengine::Scene* scene = pEngine.AddScene("raceScene");
 
 	std::string filePath = "resources/LevelOne.txt";
 	pengine::Scene* scene = pEngine.CreateScene("raceScene", &filePath);

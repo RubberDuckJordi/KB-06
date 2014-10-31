@@ -12,7 +12,6 @@ namespace pengine
 		logger = LoggerPool::GetInstance().GetLogger();
 
 		location = new Matrix();
-		location->Identity();
 	}
 
 	Ground::~Ground()
@@ -41,6 +40,37 @@ namespace pengine
 		{
 			delete location;
 		}
+	}
+
+	void Ground::SetPosition(float x, float y, float z)
+	{
+		position.x = x;
+		position.y = y;
+		position.z = z;
+		location->CreateMatrix(position.x, position.y, position.z, rotation.x, rotation.y, rotation.z, scale.x, scale.y, scale.z, location);
+	}
+
+	void Ground::SetRotation(float yaw, float pitch, float roll)
+	{
+		rotation.x = yaw;
+		rotation.y = pitch;
+		rotation.z = roll;
+		location->CreateMatrix(position.x, position.y, position.z, rotation.x, rotation.y, rotation.z, scale.x, scale.y, scale.z, location);
+	}
+
+	void Ground::SetScale(float scaleX, float scaleY, float scaleZ)
+	{
+		scale.x = scaleX;
+		scale.y = scaleY;
+		scale.z = scaleZ;
+		location->CreateMatrix(position.x, position.y, position.z, rotation.x, rotation.y, rotation.z, scale.x, scale.y, scale.z, location);
+	}
+	
+	void Ground::SetAll(float x, float y, float z, float yaw, float pitch, float roll, float scaleX, float scaleY, float scaleZ)
+	{
+		SetScale(scaleX, scaleY, scaleZ);
+		SetPosition(x, y, z);
+		SetRotation(yaw, pitch, roll);
 	}
 
 	void Ground::InitQuadTree(unsigned short depth)

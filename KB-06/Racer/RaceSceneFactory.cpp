@@ -254,6 +254,15 @@ pengine::Scene* racer::RaceSceneFactory::CreateScene(std::vector<std::string>* s
 				{
 					std::string groundHeightmapPath;
 					std::string groundMaterialPath;
+					float translationX;
+					float translationY;
+					float translationZ;
+					float positionX;
+					float positionY;
+					float positionZ;
+					float scalingX;
+					float scalingY;
+					float scalingZ;
 
 					for (k = i + 1; k < j; ++k)
 					{
@@ -276,11 +285,75 @@ pengine::Scene* racer::RaceSceneFactory::CreateScene(std::vector<std::string>* s
 							startPosition = startPosition + 10;
 							groundMaterialPath = sceneFile->at(k).substr(startPosition, endPosition - startPosition);
 						}
+						startPosition = sceneFile->at(k).find("<TranslationX>");
+						endPosition = sceneFile->at(k).find("</TranslationX>");
+						if (startPosition != std::string::npos || endPosition != std::string::npos)
+						{
+							startPosition = startPosition + 14;
+							translationX = (float)atof(sceneFile->at(k).substr(startPosition, endPosition - startPosition).c_str());
+						}
+						startPosition = sceneFile->at(k).find("<TranslationY>");
+						endPosition = sceneFile->at(k).find("</TranslationY>");
+						if (startPosition != std::string::npos || endPosition != std::string::npos)
+						{
+							startPosition = startPosition + 14;
+							translationY = (float)atof(sceneFile->at(k).substr(startPosition, endPosition - startPosition).c_str());
+						}
+						startPosition = sceneFile->at(k).find("<TranslationZ>");
+						endPosition = sceneFile->at(k).find("</TranslationZ>");
+						if (startPosition != std::string::npos || endPosition != std::string::npos)
+						{
+							startPosition = startPosition + 14;
+							translationZ = (float)atof(sceneFile->at(k).substr(startPosition, endPosition - startPosition).c_str());
+						}
+						startPosition = sceneFile->at(k).find("<PositionX>");
+						endPosition = sceneFile->at(k).find("</PositionX>");
+						if (startPosition != std::string::npos || endPosition != std::string::npos)
+						{
+							startPosition = startPosition + 11;
+							positionX = (float)atof(sceneFile->at(k).substr(startPosition, endPosition - startPosition).c_str());
+						}
+						startPosition = sceneFile->at(k).find("<PositionY>");
+						endPosition = sceneFile->at(k).find("</PositionY>");
+						if (startPosition != std::string::npos || endPosition != std::string::npos)
+						{
+							startPosition = startPosition + 11;
+							positionY = (float)atof(sceneFile->at(k).substr(startPosition, endPosition - startPosition).c_str());
+						}
+						startPosition = sceneFile->at(k).find("<PositionZ>");
+						endPosition = sceneFile->at(k).find("</PositionZ>");
+						if (startPosition != std::string::npos || endPosition != std::string::npos)
+						{
+							startPosition = startPosition + 11;
+							positionZ = (float)atof(sceneFile->at(k).substr(startPosition, endPosition - startPosition).c_str());
+						}
+						startPosition = sceneFile->at(k).find("<ScalingX>");
+						endPosition = sceneFile->at(k).find("</ScalingX>");
+						if (startPosition != std::string::npos || endPosition != std::string::npos)
+						{
+							startPosition = startPosition + 10;
+							scalingX = (float)atof(sceneFile->at(k).substr(startPosition, endPosition - startPosition).c_str());
+						}
+						startPosition = sceneFile->at(k).find("<ScalingY>");
+						endPosition = sceneFile->at(k).find("</ScalingY>");
+						if (startPosition != std::string::npos || endPosition != std::string::npos)
+						{
+							startPosition = startPosition + 10;
+							scalingY = (float)atof(sceneFile->at(k).substr(startPosition, endPosition - startPosition).c_str());
+						}
+						startPosition = sceneFile->at(k).find("<ScalingZ>");
+						endPosition = sceneFile->at(k).find("</ScalingZ>");
+						if (startPosition != std::string::npos || endPosition != std::string::npos)
+						{
+							startPosition = startPosition + 10;
+							scalingZ = (float)atof(sceneFile->at(k).substr(startPosition, endPosition - startPosition).c_str());
+						}
 					}
 
 					if (groundHeightmapPath.compare("") && groundMaterialPath.compare(""))
 					{
 						pengine::Ground* ground = resourceManager->LoadGround(groundHeightmapPath, groundMaterialPath, 3);
+						ground->SetAll(positionX, positionY, positionZ, translationX, translationY, translationZ, scalingX, scalingY, scalingZ);
 						ground->InitQuadTree(2);
 						scene->SetGround(ground);
 					}
