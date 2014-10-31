@@ -32,10 +32,6 @@ namespace pengine
 		void SetCurrentScene(Scene* scene);
 		void GameLoop();
 
-<<<<<<< HEAD
-
-=======
->>>>>>> origin/master
 	private:
 
 		SceneManager* sceneManager;
@@ -44,10 +40,6 @@ namespace pengine
 		InputManager* inputManager;
 		Renderer* renderer;
 		Logger* logger;
-<<<<<<< HEAD
-
-=======
->>>>>>> origin/master
 	};
 }
 
