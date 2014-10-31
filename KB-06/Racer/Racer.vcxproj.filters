@@ -31,6 +31,12 @@
     <Filter Include="Header Files\Scene\Kart">
       <UniqueIdentifier>{9f93b4a9-3b3b-4d97-b671-4456713b13fd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Scene\Tiny">
+      <UniqueIdentifier>{f2b2a3c9-42f1-4b56-8d00-38827bb07304}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Scene\Tiny">
+      <UniqueIdentifier>{ce325739-c277-4de3-aa52-6adf9080ee00}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Racer.cpp">
@@ -51,6 +57,9 @@
     <ClCompile Include="RaceCart.cpp">
       <Filter>Source Files\Scene\Kart</Filter>
     </ClCompile>
+    <ClCompile Include="TinyEntity.cpp">
+      <Filter>Source Files\Scene\Tiny</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Track.h">
@@ -67,6 +76,9 @@
     </ClInclude>
     <ClInclude Include="RaceSceneFactory.h">
       <Filter>Header Files\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="TinyEntity.h">
+      <Filter>Header Files\Scene\Tiny</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

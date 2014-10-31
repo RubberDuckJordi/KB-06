@@ -314,7 +314,8 @@ float racer::RaceCart::GetCollisionMass()
 	return mass;
 }
 
-float racer::RaceCart::GetRadius(){
+float racer::RaceCart::GetRadius()
+{
 	float radius = collisionBox.depth * scale.z;
 	return radius;
 }

@@ -148,15 +148,15 @@ void racer::RaceScene::Render(pengine::Renderer* renderer)
 	renderer->SetShaderpMatrix(renderer->GetShaderpParameterHandle("g_mWorldViewProjection"), &mWorldViewProjection);
 	renderer->SetShaderpMatrix(renderer->GetShaderpParameterHandle("g_mWorld"), &mWorld);
 
-	D3DXCOLOR lowGrey = D3DXCOLOR(0.1f, 1.0f, 0.1f, 1.0f);
-	renderer->SetShaderpValue(renderer->GetShaderpParameterHandle("g_MaterialAmbientColor"), &lowGrey, sizeof(D3DXCOLOR));
+	pengine::RGBAColor lowGrey = pengine::RGBAColor(0.1f, 1.0f, 0.1f, 1.0f);
+	renderer->SetShaderpValue(renderer->GetShaderpParameterHandle("g_MaterialAmbientColor"), &lowGrey, sizeof(pengine::RGBAColor));
 
-	D3DXCOLOR white = D3DXCOLOR(0.1f, 0.1f, 0.1f, 1.0f);
-	renderer->SetShaderpValue(renderer->GetShaderpParameterHandle("g_LightDiffuse"), &white, sizeof(D3DXCOLOR));
-	renderer->SetShaderpValue(renderer->GetShaderpParameterHandle("g_MaterialDiffuseColor"), &white, sizeof(D3DXCOLOR));
+	pengine::RGBAColor white = pengine::RGBAColor(0.1f, 0.1f, 0.1f, 1.0f);
+	renderer->SetShaderpValue(renderer->GetShaderpParameterHandle("g_LightDiffuse"), &white, sizeof(pengine::RGBAColor));
+	renderer->SetShaderpValue(renderer->GetShaderpParameterHandle("g_MaterialDiffuseColor"), &white, sizeof(pengine::RGBAColor));
 
-	D3DXVECTOR3 lightDir = D3DXVECTOR3(sinf(D3DX_PI * 2 * 1 / 1 - D3DX_PI / 6), 0, -cosf(D3DX_PI * 2 * 1 / 1 - D3DX_PI / 6));
-	renderer->SetShaderpValue(renderer->GetShaderpParameterHandle("g_LightDir"), &lightDir, sizeof(D3DXVECTOR3));
+	pengine::Vector3 lightDir = pengine::Vector3(sinf(D3DX_PI * 2 * 1 / 1 - D3DX_PI / 6), 0, -cosf(D3DX_PI * 2 * 1 / 1 - D3DX_PI / 6));
+	renderer->SetShaderpValue(renderer->GetShaderpParameterHandle("g_LightDir"), &lightDir, sizeof(pengine::Vector3));
 
 	renderer->SetShaderpTechnique(renderer->GetShaderpTechniqueHandle("RenderScene"));
 
