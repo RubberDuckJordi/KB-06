@@ -208,7 +208,7 @@ namespace pengine
 			int distance = int(sqrt(pow(currentCamera->GetPosition()->z - nodePointX, 2) + pow(currentCamera->GetPosition()->x - nodePointZ, 2)));
 
 			int nodesDistance = distance / (min(chunkEndX - chunkStartX, chunkEndZ - chunkStartZ));
-			node->SetLevelOfDetail(1 << (nodesDistance + 1));
+			node->SetLevelOfDetail(1 << nodesDistance);
 			return;
 		}
 
