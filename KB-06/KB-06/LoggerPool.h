@@ -4,6 +4,13 @@
 #include "logger.h"
 #include <list>
 
+/*
+Pool pattern
+
+Is responsible for managing all loggers.
+This pool is a singleton to make sure that it can be called from anywhere in the engine.
+*/
+
 namespace pengine
 {
 	class LoggerPool
@@ -16,7 +23,6 @@ namespace pengine
 		Logger* GetLogger(std::string fileName);
 	private:
 		LoggerPool();
-		void LoggerPool::RemoveLogs();
 
 		std::map<std::string, Logger*> pool;
 		std::string defaultLogFile;

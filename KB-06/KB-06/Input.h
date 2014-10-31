@@ -1,6 +1,11 @@
 #ifndef _PENGINE_KEY_H_
 #define _PENGINE_KEY_H_
 
+/*
+This enum is a list of all keys that can be used in the engine.
+The enum is used in the input module to identify which key has been pressed.
+*/
+
 namespace pengine
 {
 	enum Input

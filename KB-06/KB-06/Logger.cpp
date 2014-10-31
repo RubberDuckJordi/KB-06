@@ -6,11 +6,6 @@
 #include <ctime>
 #include <iomanip>
 
-/*
-Do NOT directly instaniate this class, use the loggerpool instead!
-The logger defaults to the highest loglevel
-*/
-
 namespace pengine
 {
 	Logger::Logger(std::string fileName)

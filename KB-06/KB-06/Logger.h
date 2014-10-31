@@ -9,11 +9,22 @@
 #include <string>
 #include <sstream>
 
-namespace pengine {
+/*
+System logger, can be used for debugging purposes
+Logger can be retrieved from the LoggerPool.
+
+Do NOT directly instaniate this class, use the loggerpool instead!
+The logger defaults to the highest loglevel
+
+*/
+
+namespace pengine 
+{
 	class Logger
 	{
 	public:
-		static enum LogLevel{
+		static enum LogLevel
+		{
 			NONE = 0,
 			ERR = 1,
 			WARNING = 2,
@@ -21,15 +32,17 @@ namespace pengine {
 			INFO = 4
 		};
 
+		// Initialises the logger with a file to write to
+		// fileName must be given without the extension.
 		Logger(std::string fileName);
 		~Logger();
 
 		void Log(int logType, std::string text);
 		void SetLogLevel(int logLevel);
-		void RemoveLogs();
 
 	private:
 		void PrintConsole(int logType, std::string entry);
+		// Transforms the message to a log entry, adds metadata such as logtype and timestamp.
 		std::string BuildLogEntry(int logType, std::string messasge);
 
 		std::ofstream outfile;

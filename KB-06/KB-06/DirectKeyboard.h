@@ -15,7 +15,9 @@ namespace pengine
 	public:
 		DirectKeyboard();
 		~DirectKeyboard();
+		// Initialises the input device, returns false in case of failure
 		bool Initialize(LPDIRECTINPUT8, HWND hwnd);
+		// Updates the current input actions, returns false in case of failure
 		bool Update();
 		std::map<Input, long>* GetInputValues();
 		void OnWindowFocusLost(Window* window);

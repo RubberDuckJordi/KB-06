@@ -10,6 +10,13 @@
 #include <d3dx9.h>
 #include <dinput.h>
 
+/*
+Abstract DirectInputDevice implementation
+
+Contains all generic DirectInput implementation for DirectInput
+Should be implemented by types such as Mouse, Keyboard and Joystick.
+*/
+
 namespace pengine
 {
 	class DirectInputDevice : public InputDevice
@@ -21,6 +28,7 @@ namespace pengine
 		bool AcquireDevice();
 		void ReleaseDevice();
 		virtual bool Update() = 0;
+		// Creates a mapping from DirectInput to our Input enum
 		void SetActionMapping(std::map<Input, int>* actionMapping);
 
 	protected:

@@ -11,7 +11,9 @@ namespace pengine
 	public:
 		DirectMouse();
 		~DirectMouse();
+		// Initialises the input device, returns false in case of failure
 		bool Initialize(LPDIRECTINPUT8, HWND);
+		// Updates the current input actions, returns false in case of failure
 		bool Update();
 		std::map<Input, long>* GetInputValues();
 
