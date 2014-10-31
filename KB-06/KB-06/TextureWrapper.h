@@ -3,6 +3,10 @@
 
 #include <d3dx9.h>
 
+/*
+Wrapper to wrap directX specific implementation
+*/
+
 namespace pengine
 {
 	class TextureWrapper

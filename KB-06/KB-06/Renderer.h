@@ -13,6 +13,11 @@
 #include "Vertex.h"
 #include "Matrix.h"
 
+/*
+This interface contains all rendering functions
+Must be implemented by a renderer implementation
+*/
+
 namespace pengine
 {
 	typedef unsigned int __w64	PENGINEHANDLE;

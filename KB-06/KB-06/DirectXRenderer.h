@@ -1,11 +1,9 @@
 #ifndef _PENGINE_DIRECTXRENDERER_H_
 #define _PENGINE_DIRECTXRENDERER_H_
 
-//#include <d2d1.h>
 #include <d3dx9.h>
 #include <vector>
 #include "Renderer.h"
-//#include <wincodec.h>
 
 namespace pengine
 {
