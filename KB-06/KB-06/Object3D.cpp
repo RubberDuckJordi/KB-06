@@ -37,12 +37,7 @@ namespace pengine
 
 	void Object3D::UpdateAnimation()
 	{
-		if (showWarning && _cAnimationSet == NULL)
-		{
-			//this warning should be in the future PEngine manual instead, with just a crash...
-			logger->Log(Logger::WARNING, "There are no animations, don't call UpdateAnimation!");
-		}
-		else if (_cAnimationSet != NULL)
+		if (_cAnimationSet != NULL)
 		{
 			ClearSkinnedVertices();
 			_cKey += animationstep;
@@ -440,7 +435,7 @@ namespace pengine
 				maxz = this->_Mesh->vertices[i].z;
 			}
 		}
-		return maxz ;
+		return maxz;
 	}
 
 	float Object3D::GetMinX()
@@ -501,11 +496,9 @@ namespace pengine
 
 	void Object3D::ComputeBoundingBoxSphere()
 	{
-		low = _SkinnedVertices[0];
+		low = Vector3();
 		high = low;
 		center = low;
-		radiusHorizontal = 0.0f;
-		radiusVertical = 0.0f;
 		for (int i = 0; i < _Mesh->nVertices; i++)
 		{
 			if (low.x> _SkinnedVertices[i].x)
@@ -536,11 +529,33 @@ namespace pengine
 		center.x = low.x + (high.x - low.x) * 0.5f;
 		center.y = low.y + (high.y - low.y) * 0.5f;
 		center.z = low.z + (high.z - low.z) * 0.5f;
+	}
 
+	float Object3D::GetMaxRadius()
+	{
+		float result = 0.0f;
 
-		
-		/*logger->LogAll(Logger::DEBUG, "Object3D: ", "AABB Low: ", low[0], "x", low[1], "x", low[2]);
-		logger->LogAll(Logger::DEBUG, "Object3D: ", "AABB High: ", high[0], "x", high[1], "x", high[2]);
-		logger->LogAll(Logger::DEBUG, "Object3D: ", "AABB Center: ", center[0], "x", center[1], "x", center[2]);*/
+		if (_Model->animationsets.size() > 1)
+		{
+			for (int i = 0; i < this->_Mesh->nVertices; ++i)
+			{
+				float working = sqrt(pow(_SkinnedVertices[i].x, 2) + pow(_SkinnedVertices[i].y, 2) + pow(_SkinnedVertices[i].z, 2));
+				if (working > result)
+				{
+					result = working;
+				}
+			}
+		}
+		else
+		{
+			for (int i = 0; i < this->_Mesh->nVertices; ++i)
+			{
+				float working = sqrt(pow(_Mesh->vertices[i].x, 2) + pow(_Mesh->vertices[i].y, 2) + pow(_Mesh->vertices[i].z, 2)); if (working > result)
+				{
+					result = working;
+				}
+			}
+		}
+		return result;
 	}
 }

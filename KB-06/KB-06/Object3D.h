@@ -19,7 +19,6 @@ namespace pengine
 		~Object3D();
 		void SetupModel(Model3D* &pModel);
 
-		//Vertices to render
 		void ClearSkinnedVertices();
 
 		//Animation Based
@@ -31,6 +30,7 @@ namespace pengine
 		void CalcAnimation();
 		void CalcBindSpace();
 		void Update();
+
 		void CacheToRenderer(Renderer* renderer);
 		void Render(Renderer* renderer);
 
@@ -43,13 +43,18 @@ namespace pengine
 		float GetMaxY();
 		void ComputeBoundingBoxSphere();
 
+		/*!
+		Gets the maximum radius you can possibly get with a default scaling of 1.
+		This means that any rotated state of this object falls within the radius.
+		If you change scaling, you'll need to multiply this result with the 
+		highest scaled axis;
+		*/
+		float GetMaxRadius();
+
 		//Elements for the AABB (low & high)
 		//and bounding sphere (center & _Radius)
-		Vertex low, high, center;
-		/*!
-		The radius in object space, including any animations... not implemented
-		*/
-		float radiusHorizontal, radiusVertical;
+		Vector3 low, high, center;
+
 		bool showWarning;
 	private:
 		Logger* logger;
