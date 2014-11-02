@@ -6,6 +6,7 @@ namespace racer
 	{
 		direction = NORTH;
 		type = TYPE::STRAIGHT;
+		defaultRadius = 10;
 	}
 
 	TrackBlock::~TrackBlock()
@@ -28,9 +29,27 @@ namespace racer
 		direction = d;
 	}
 
+	void TrackBlock::SetAll(float x, float y, float z, float yaw, float pitch, float roll, float scaleX, float scaleY, float scaleZ)
+	{
+		Entity::SetAll(x, y, z, yaw, pitch, roll, scaleX, scaleY, scaleZ);
+
+		//kind of unneeded because the scale is always 1, but you never know :)
+		float maxScale = abs(myCachedMatrix->data[0]);
+		if (abs(myCachedMatrix->data[5]) > maxScale)
+		{
+			maxScale = abs(myCachedMatrix->data[5]);
+		}
+		if (abs(myCachedMatrix->data[10]) > maxScale)
+		{
+			maxScale = abs(myCachedMatrix->data[10]);
+		}
+		defaultRadius *= maxScale;
+	}
+
 	void TrackBlock::SetModel(pengine::Object3D* p_xModel)
 	{
 		model = p_xModel;
+		defaultRadius = model->GetMaxRadius();
 	}
 
 	void TrackBlock::SetBlockType(TrackBlock::TYPE _type)
@@ -46,40 +65,6 @@ namespace racer
 	TrackBlock::TYPE TrackBlock::GetBlockType()
 	{
 		return type;
-	}
-
-	void TrackBlock::SetPosition(float x, float y, float z)
-	{
-		Entity::SetPosition(x + positionOffset.x * scale.x, y + positionOffset.y * scale.y, z + positionOffset.z * scale.z);
-	}
-
-	void TrackBlock::SetPositionOffset(float x, float y, float z)
-	{
-		positionOffset.x = x;
-		positionOffset.y = y;
-		positionOffset.z = z;
-	}
-
-	pengine::Vector3* TrackBlock::GetPositionOffset()
-	{
-		return &positionOffset;
-	}
-
-	void TrackBlock::SetRotation(float yaw, float pitch, float roll)
-	{
-		Entity::SetRotation(yaw + rotationOffset.x, pitch + rotationOffset.y, roll + rotationOffset.z);
-	}
-
-	void TrackBlock::SetRotationOffset(float yaw, float pitch, float roll)
-	{
-		rotationOffset.x = yaw;
-		rotationOffset.y = pitch;
-		rotationOffset.z = roll;
-	}
-
-	pengine::Vector3* TrackBlock::GetRotationOffset()
-	{
-		return &rotationOffset;
 	}
 
 	float TrackBlock::GetMaxSquareSize()

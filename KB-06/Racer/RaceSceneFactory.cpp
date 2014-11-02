@@ -22,7 +22,6 @@ pengine::Scene* racer::RaceSceneFactory::CreateScene(std::vector<std::string>* s
 {
 	RaceScene* scene = new RaceScene();
 	std::vector<RaceCart*> raceCarts;
-	std::vector<TrackBlock*> trackBlocks;
 	float height = NULL;
 
 	Track* track = NULL;
@@ -36,14 +35,12 @@ pengine::Scene* racer::RaceSceneFactory::CreateScene(std::vector<std::string>* s
 	for (i = 0; i < sceneFile->size(); ++i)
 	{
 		beginLine = sceneFile->at(i);
-
 		if (!beginLine.compare("<Entity>"))
 		{
 			std::string endLine;
 			for (j = i; j < sceneFile->size(); ++j)
 			{
 				endLine = sceneFile->at(j);
-
 				if (!endLine.compare("</Entity>"))
 				{
 					std::size_t startPosition;
@@ -66,8 +63,6 @@ pengine::Scene* racer::RaceSceneFactory::CreateScene(std::vector<std::string>* s
 
 					for (k = i + 1; k < j; ++k)
 					{
-
-
 						startPosition = sceneFile->at(k).find("<Type>");
 						endPosition = sceneFile->at(k).find("</Type>");
 						if (startPosition != std::string::npos || endPosition != std::string::npos)
@@ -200,15 +195,12 @@ pengine::Scene* racer::RaceSceneFactory::CreateScene(std::vector<std::string>* s
 		else if (!beginLine.compare("<Skybox>"))
 		{
 			std::string endLine;
-
 			for (j = i; j < sceneFile->size(); ++j)
 			{
 				endLine = sceneFile->at(j);
-
 				if (!endLine.compare("</Skybox>"))
 				{
 					std::string skyboxPath;
-
 					for (k = i; k < j; ++k)
 					{
 						std::size_t startPosition;
@@ -224,7 +216,6 @@ pengine::Scene* racer::RaceSceneFactory::CreateScene(std::vector<std::string>* s
 							startPosition = startPosition + 10;
 							skyboxPath = sceneFile->at(k).substr(startPosition, endPosition - startPosition);
 						}
-
 					}
 
 					if (skyboxPath.compare(""))
@@ -237,8 +228,6 @@ pengine::Scene* racer::RaceSceneFactory::CreateScene(std::vector<std::string>* s
 						scene->SetSkybox(skybox);
 					}
 				}
-
-
 			}
 			i = k;
 		}
@@ -358,8 +347,6 @@ pengine::Scene* racer::RaceSceneFactory::CreateScene(std::vector<std::string>* s
 						scene->SetGround(ground);
 					}
 				}
-
-
 			}
 			i = k;
 		}
@@ -398,19 +385,18 @@ pengine::Scene* racer::RaceSceneFactory::CreateScene(std::vector<std::string>* s
 						{
 							track = new Track();
 						}
-						
 
 						if (!trackBlockType.compare("STRAIGHT"))
 						{
-							trackBlocks.push_back(track->AddTrackBlock(TrackBlock::TYPE::STRAIGHT, resourceManager->LoadXFile(&trackBlockModel)));
+							track->AddTrackBlock(TrackBlock::TYPE::STRAIGHT, resourceManager->LoadXFile(&trackBlockModel));
 						}
 						else if (!trackBlockType.compare("LEFT"))
 						{
-							trackBlocks.push_back(track->AddTrackBlock(TrackBlock::TYPE::LEFT, resourceManager->LoadXFile(&trackBlockModel)));
+							track->AddTrackBlock(TrackBlock::TYPE::LEFT, resourceManager->LoadXFile(&trackBlockModel));
 						}
 						else if (!trackBlockType.compare("RIGHT"))
 						{
-							trackBlocks.push_back(track->AddTrackBlock(TrackBlock::TYPE::RIGHT, resourceManager->LoadXFile(&trackBlockModel)));
+							track->AddTrackBlock(TrackBlock::TYPE::RIGHT, resourceManager->LoadXFile(&trackBlockModel));
 						}
 
 						if (height == NULL)
@@ -425,32 +411,28 @@ pengine::Scene* racer::RaceSceneFactory::CreateScene(std::vector<std::string>* s
 		}
 		if (!track == NULL)
 		{
-			track->SetRadius(10000.0f);
-			scene->AddEntity(track);
+			scene->SetTrack(track);
+			for each (TrackBlock* block in track->GetTrackBlocks())
+			{
+				for (int j = 0; j < raceCarts.size(); ++j)
+				{
+					raceCarts[j]->AddCheckPoint(block);
+				}
+				scene->AddStaticCollidable(block);
+			}
 		}
-
-		
-
-	}
-
-	for (int i = 0; i < trackBlocks.size(); ++i)
-	{
-		for (int j = 0; j < raceCarts.size(); ++j)
-		{
-			raceCarts[j]->AddCheckPoint(trackBlocks[i]);
-		}
-		scene->AddStaticCollidable(trackBlocks[i]);
 	}
 
 	for (int i = 0; i < raceCarts.size(); ++i)
 	{
-		raceCarts[i]->SetLastCheckPoint(trackBlocks[0]);
+		raceCarts[i]->SetLastCheckPoint(*track->GetTrackBlocks().begin());
 		raceCarts[i]->SetTrackHeight(height);
 		raceCarts[i]->AddPosition(raceCarts[i]->GetPosition()->x, height, raceCarts[i]->GetPosition()->z);
 	}
+
 	std::string* shader = resourceManager->LoadShaderFile("resources/shaders/shader.fx");
 	scene->shader = shader;
-	
+
 	TinyEntity* tiny = new TinyEntity();
 	tiny->SetObject3D(resourceManager->LoadXFile(&std::string("resources/tiny/tiny.x")));
 	tiny->SetAll(-100, 75, -150, 0, 270, 0, 0.2f, 0.2f, 0.2f);
@@ -459,6 +441,6 @@ pengine::Scene* racer::RaceSceneFactory::CreateScene(std::vector<std::string>* s
 	pengine::EntityCamera* camera = new pengine::EntityCamera();
 	camera->useInput = false;
 	scene->SetCurrentCamera(camera);
-	scene->SetAmountOfRenderTextures(1);
+	scene->SetAmountOfRenderTextures(0);
 	return scene;
 }

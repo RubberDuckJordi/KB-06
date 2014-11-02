@@ -183,10 +183,10 @@ namespace pengine
 				frustrumPlane[i].d
 				) + radius < 0)
 			{
-				return FALSE;
+				return false;
 			}
 		}
-		return TRUE;
+		return true;
 	}
 
 	void EntityCamera::SetProjectionMatrix(float fovY, float aspectRatio, float nearClippingPlane, float farClippingPlane)

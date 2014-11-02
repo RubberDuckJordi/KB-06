@@ -4,9 +4,6 @@ namespace racer
 {
 	Track::Track()
 	{
-		offsetX = -100.0f;
-		offsetY = 0.0f;
-		offsetZ = 0.0f;
 	}
 	Track::~Track()
 	{
@@ -198,37 +195,9 @@ namespace racer
 		trackBlocks.push_back(newBlock);
 		return newBlock;
 	}
-	void Track::SetAll(float x, float y, float z, float yaw, float pitch, float roll, float scaleX, float scaleY, float scaleZ)
-	{
-		Entity::SetAll(x, y, z, yaw, pitch, roll, scaleX, scaleY, scaleZ);
-		for (auto iterator = trackBlocks.begin(); iterator != trackBlocks.end(); ++iterator)
-		{
-			(*iterator)->SetAll(x, y, z, yaw, pitch, roll, scaleX, scaleY, scaleZ);
-		}
-	}
 
-	void Track::Render(pengine::Renderer* renderer)
+	std::list<TrackBlock*> Track::GetTrackBlocks()
 	{
-		for (auto iterator = trackBlocks.begin(); iterator != trackBlocks.end(); ++iterator)
-		{
-			(*iterator)->Render(renderer);
-		}
-	}
-
-	float Track::GetRadius()
-	{
-		float highestScale = 0;
-		if (scale.x > highestScale) highestScale = scale.x;
-		if (scale.y > highestScale) highestScale = scale.y;
-		if (scale.z > highestScale) highestScale = scale.z;
-		return defaultRadius*highestScale;
-	}
-
-	void Track::CacheToRenderer(pengine::Renderer* renderer)
-	{
-		for (auto it = trackBlocks.begin(); it != trackBlocks.end(); ++it)
-		{
-			(*it)->CacheToRenderer(renderer);
-		}
+		return trackBlocks;
 	}
 }

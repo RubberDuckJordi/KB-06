@@ -32,16 +32,11 @@ namespace racer
 		void Render(pengine::Renderer* renderer);
 		void SetModel(pengine::Object3D* model);
 		Direction GetDirection();
-		void SetPosition(float x, float y, float z);
-		void SetPositionOffset(float x, float y, float z);
-		pengine::Vector3* GetPositionOffset();
-		void SetRotation(float yaw, float pitch, float roll);
-		void SetRotationOffset(float yaw, float pitch, float roll);
-		pengine::Vector3* GetRotationOffset();
 		void CacheToRenderer(pengine::Renderer* renderer);
 		float GetMaxSquareSize();
 
 		void SetDirection(Direction direction);
+		void SetAll(float x, float y, float z, float yaw, float pitch, float roll, float scaleX, float scaleY, float scaleZ);
 		void SetBlockType(TYPE type);
 
 		TYPE GetBlockType();

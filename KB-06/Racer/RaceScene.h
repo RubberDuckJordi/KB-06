@@ -4,6 +4,7 @@
 #include "Scene.h"
 #include "Input.h"
 #include "RaceCart.h"
+#include "Track.h"
 
 namespace racer
 {
@@ -14,11 +15,15 @@ namespace racer
 		~RaceScene();
 		void Update(float deltaTime, std::map<pengine::Input, long>* actions);
 		void SetRaceCart(RaceCart*);
+		void CacheToRenderer(pengine::Renderer* renderer);
 		void RenderToTexture(int texture, pengine::Renderer* renderer);
 		void Render(pengine::Renderer* renderer);
 
+		void SetTrack(Track* track);
+
 		std::string* shader;
 	private:
+		Track* track;
 		bool loss;
 		bool win;
 		RaceCart* raceCart;

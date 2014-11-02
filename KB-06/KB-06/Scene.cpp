@@ -265,17 +265,20 @@ namespace pengine
 			skybox->Render(renderer, cameraPosition);
 		}
 
-		//int entitiesLoaded = 0;
 		for each(Entity* entity in entities)
 		{
-			//if (currentCamera->SphereInFrustum(entity->GetPosition(), entity->GetRadius()))
-			if (true)
+			if (entity->GetRadius())
 			{
-			entity->Render(renderer);
-			//++entitiesLoaded;
+				if (currentCamera->SphereInFrustum(entity->GetPosition(), entity->GetRadius()))
+				{
+					entity->Render(renderer);
+				}
+			} 
+			else
+			{
+				entity->Render(renderer);
 			}
 		}
-		//logger->Log(Logger::DEBUG, "Rendered " + std::to_string(entitiesLoaded) + " of " + std::to_string(entities.size()) + " entities");
 
 		if (ground != NULL)
 		{
