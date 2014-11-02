@@ -14,7 +14,7 @@ namespace pengine
 		Model3D(Bone* skeleton = 0);
 		~Model3D();
 		Mesh* IsMeshName(std::string &pText);
-		void ConcatenateMeshes(void);
+		void ConcatenateMeshes();
 		AnimationSet* FindAnimationSet(std::string &pText);
 		Bone* skeleton;
 		std::list<Mesh*> meshes;
