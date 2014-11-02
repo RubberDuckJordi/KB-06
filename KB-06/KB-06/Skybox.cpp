@@ -52,8 +52,8 @@ namespace pengine
 		aSkyboxIndices[21] = 12; aSkyboxIndices[23] = 14; aSkyboxIndices[22] = 15;
 		aSkyboxIndices[24] = 16; aSkyboxIndices[26] = 17; aSkyboxIndices[25] = 18;//top
 		aSkyboxIndices[27] = 16; aSkyboxIndices[29] = 18; aSkyboxIndices[28] = 19;
-		aSkyboxIndices[30] = 20; aSkyboxIndices[32] = 21; aSkyboxIndices[31] = 22;//bottom
-		aSkyboxIndices[33] = 20; aSkyboxIndices[35] = 22; aSkyboxIndices[34] = 23;
+		aSkyboxIndices[31] = 20; aSkyboxIndices[32] = 21; aSkyboxIndices[30] = 22;//bottom
+		aSkyboxIndices[34] = 20; aSkyboxIndices[35] = 22; aSkyboxIndices[33] = 23;
 	}
 
 	Skybox::~Skybox()
