@@ -7,6 +7,10 @@ namespace racer
 		tinyModel->ClearSkinnedVertices();
 		tinyModel->SetAnimationStep(2000 * deltaTime);
 		tinyModel->UpdateAnimation();
+
+		//this is probably inefficient and painful math...
+		maxRadius = tinyModel->GetMaxRadius();
+		defaultRadius = maxScale * maxRadius;
 		pengine::Entity::UpdateLogic(deltaTime, actions);
 	}
 
@@ -32,8 +36,25 @@ namespace racer
 		if (tinyModel != NULL)
 		{
 			renderer->SetActiveMatrix(myCachedMatrix); //should be called every frame
-
 			tinyModel->Render(renderer);
 		}
+	}
+
+	void TinyEntity::SetAll(float x, float y, float z, float yaw, float pitch, float roll, float scaleX, float scaleY, float scaleZ)
+	{
+		Entity::SetAll(x, y, z, yaw, pitch, roll, scaleX, scaleY, scaleZ);
+
+		//kind of unneeded because the scale is always 1, but you never know :)
+		float maxScales = abs(myCachedMatrix->data[0]);
+		if (abs(myCachedMatrix->data[5]) > maxScales)
+		{
+			maxScales = abs(myCachedMatrix->data[5]);
+		}
+		if (abs(myCachedMatrix->data[10]) > maxScales)
+		{
+			maxScales = abs(myCachedMatrix->data[10]);
+		}
+		maxScale = maxScales;
+		defaultRadius = maxScale * maxRadius;
 	}
 }

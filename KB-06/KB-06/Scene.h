@@ -14,7 +14,7 @@
 #include <vector>
 
 /*
-Scene base class, must be overridden to implement custom scene logic
+Scene base class, can be overridden to implement custom scene logic
 */
 
 namespace pengine

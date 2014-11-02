@@ -133,7 +133,6 @@ namespace racer
 			rect->pitch = rotation.z;
 		}
 
-
 		float radius = sqrt(pow(rect->frontBottomLeft.x, 2) + pow(rect->frontBottomLeft.z, 2));//abc
 		float angle = 0;
 

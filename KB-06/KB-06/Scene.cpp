@@ -251,13 +251,8 @@ namespace pengine
 
 	void Scene::Render(Renderer* renderer)
 	{
-		/*Resource::Vertex* cameraPosition = currentCamera->GetPosition();
-		Resource::Vertex* cameraRotation = currentCamera->GetRotation();*/
-
-		//renderer->SetViewMatrix(0, 0, -0.5f, 0, 0, 0.5f);
 		renderer->SetViewMatrix(currentCamera->GetViewMatrix());
 		renderer->SetProjectionMatrix(currentCamera->GetProjectionMatrix());
-
 
 		Vector3* cameraPosition = currentCamera->GetPosition();
 		if (skybox != NULL)
@@ -284,7 +279,6 @@ namespace pengine
 		{
 			ground->Render(renderer);
 		}
-
 		// RenderCollidables(renderer);
 
 		//restore wireframe status
@@ -296,7 +290,6 @@ namespace pengine
 		{
 			renderer->SetFillMode(PENGINE_FILL_SOLID);
 		}
-
 	}
 
 	void Scene::RenderCollidables(Renderer* renderer)

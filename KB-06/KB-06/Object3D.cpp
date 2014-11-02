@@ -198,7 +198,6 @@ namespace pengine
 	void Object3D::Render(Renderer* renderer)
 	{
 		int	amountOfVertices = _Mesh->nVertices;
-
 		Vertex* d3dVertices = new Vertex[amountOfVertices];
 
 		if (_cAnimationSet == NULL)
@@ -343,7 +342,6 @@ namespace pengine
 		{
 			_SkinnedVertices[VertexIndices[i]] = _SkinnedVertices[VertexIndices[i]] + (pBone->finalMatrix * MeshVertices[VertexIndices[i]]) * Weights[i];
 		}
-
 	}
 
 	void Object3D::CreateCollisionBox(BEAM& rect)

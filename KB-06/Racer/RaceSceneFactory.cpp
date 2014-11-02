@@ -266,7 +266,6 @@ pengine::Scene* racer::RaceSceneFactory::CreateScene(std::vector<std::string>* s
 							startPosition = startPosition + 11;
 							groundHeightmapPath = sceneFile->at(k).substr(startPosition, endPosition - startPosition);
 						}
-
 						startPosition = sceneFile->at(k).find("<Material>");
 						endPosition = sceneFile->at(k).find("</Material>");
 						if (startPosition != std::string::npos || endPosition != std::string::npos)
