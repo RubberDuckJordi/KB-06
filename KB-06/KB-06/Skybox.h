@@ -21,7 +21,7 @@ namespace pengine
 		// Returns an array of all skybox indices
 		unsigned int* GetSkyboxIndices();
 		Material* GetMaterial();
-		void SetMaterial(Material*);
+		void SetMaterial(Material* material);
 		void CacheToRenderer(Renderer* renderer);
 		void Render(Renderer* renderer, Vector3* position);
 	private:

@@ -5,6 +5,9 @@
 
 /*
 Wrapper to wrap directX specific implementation
+
+CLASS IS DEPRECATED BY Resource/RobertX/Mesh
+
 */
 
 namespace pengine

@@ -5,6 +5,8 @@
 
 /*
 Wrapper to wrap directX specific implementation
+
+CLASS IS DEPRECATED BY Resource/BinaryData
 */
 
 namespace pengine

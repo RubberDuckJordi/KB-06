@@ -40,13 +40,13 @@ namespace pengine
 		virtual void CreateBitmapFromWIC() = 0;
 		virtual void D2DDraw() = 0;
 
-		virtual void SetCulling(CULLINGTYPE) = 0;
-		virtual void SetZBuffer(bool) = 0;
-		virtual void SetFillMode(FILLMODE) = 0;
+		virtual void SetCulling(CULLINGTYPE type) = 0;
+		virtual void SetZBuffer(bool enabled) = 0;
+		virtual void SetFillMode(FILLMODE fillmode) = 0;
 
 		virtual void SetActiveCamera(CameraData camera, bool orthographic) = 0;
 		virtual void SetProjectionMatrix(Matrix* ProjectionMatrix) = 0;
-		virtual void SetViewMatrix(Matrix*) = 0;
+		virtual void SetViewMatrix(Matrix* viewMatrix) = 0;
 		virtual void SetProjectionMatrix(float FOV, float farClippingPlane) = 0;
 
 		virtual void BeginScene() = 0;
@@ -66,8 +66,8 @@ namespace pengine
 
 		virtual void SetLights() = 0;
 
-		virtual VertexBufferWrapper* CreateVertexBuffer(Vertex*, unsigned int amountOfVertices) = 0;
-		virtual VertexBufferWrapper* CreateColoredVertexBuffer(ColoredVertex*, unsigned int amountOfVertices) = 0;
+		virtual VertexBufferWrapper* CreateVertexBuffer(Vertex* vertices, unsigned int amountOfVertices) = 0;
+		virtual VertexBufferWrapper* CreateColoredVertexBuffer(ColoredVertex* vertices, unsigned int amountOfVertices) = 0;
 		virtual IndexBufferWrapper* CreateIndexBuffer(unsigned int* indices, unsigned int amountOfIndices) = 0;
 		virtual void DrawVertexBuffer(VertexBufferWrapper* vertexBuffer) = 0;
 		virtual void DrawIndexedVertexBuffer(VertexBufferWrapper* vertexBuffer, IndexBufferWrapper* indexBuffer) = 0;
