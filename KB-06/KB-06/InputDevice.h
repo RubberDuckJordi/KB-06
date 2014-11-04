@@ -37,7 +37,7 @@ namespace pengine
 		virtual std::map<Input, long>* GetInputValues() = 0;
 		// This method will be called from InputManager when a window lost focus
 		virtual void OnWindowFocusLost(Window* window) = 0;
-		// This method will be called from InputManager when a gains focus
+		// This method will be called from InputManager when a window gains focus
 		virtual void OnWindowFocusGained(Window* window) = 0;
 
 	protected:

@@ -22,7 +22,7 @@ namespace pengine
 	public:
 		DirectInputDeviceFactory();
 		~DirectInputDeviceFactory();
-		void Initialise(HWND);
+		void Initialise(HWND hWnd);
 		InputDevice* CreateInputDevice(InputDevice::Type type);
 	private:
 		void CreateActionMapping();

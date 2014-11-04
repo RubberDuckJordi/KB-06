@@ -43,9 +43,6 @@
     <ClCompile Include="VertexBufferWrapper.cpp">
       <Filter>Source\Renderer\Wrap Containers</Filter>
     </ClCompile>
-    <ClCompile Include="WindowManager.cpp">
-      <Filter>Source\Window</Filter>
-    </ClCompile>
     <ClCompile Include="Window.cpp">
       <Filter>Source\Window</Filter>
     </ClCompile>
@@ -132,6 +129,9 @@
     </ClCompile>
     <ClCompile Include="Vector.cpp">
       <Filter>Source\Resource\RobertX</Filter>
+    </ClCompile>
+    <ClCompile Include="WindowManager.cpp">
+      <Filter>Source\Window</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

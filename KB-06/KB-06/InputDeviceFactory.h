@@ -23,7 +23,7 @@ namespace pengine
 		InputDeviceFactory();
 		~InputDeviceFactory();
 		// Initialise will be called after InputManager is initialised. Some frameworks require a HWND for input devices to be created.
-		virtual void Initialise(HWND) = 0;
+		virtual void Initialise(HWND hWnd) = 0;
 		// Must create an inputDevice implementation
 		virtual InputDevice* CreateInputDevice(InputDevice::Type type) = 0;
 	protected:
