@@ -210,6 +210,9 @@ namespace pengine
 				newVertex.z = _Mesh->vertices[i].z;
 				newVertex.tu = _Mesh->vertices[i].tu;
 				newVertex.tv = _Mesh->vertices[i].tv;
+				newVertex.nX = _Mesh->vertices[i].nX;
+				newVertex.nY = _Mesh->vertices[i].nY;
+				newVertex.nZ = _Mesh->vertices[i].nZ;
 				d3dVertices[i] = newVertex;
 			}
 		}
@@ -223,6 +226,9 @@ namespace pengine
 				newVertex.z = _SkinnedVertices[i].z;
 				newVertex.tu = _SkinnedVertices[i].tu;
 				newVertex.tv = _SkinnedVertices[i].tv;
+				newVertex.nX = _Mesh->vertices[i].nX;
+				newVertex.nY = _Mesh->vertices[i].nY;
+				newVertex.nZ = _Mesh->vertices[i].nZ;
 				d3dVertices[i] = newVertex;
 			}
 		}

@@ -180,14 +180,14 @@ namespace racer
 		renderer->SetShaderMatrix(renderer->GetShaderParameterHandle("g_mWorldViewProjection"), &mWorldViewProjection);
 		renderer->SetShaderMatrix(renderer->GetShaderParameterHandle("g_mWorld"), &mWorld);
 
-		pengine::RGBAColor lowGrey = pengine::RGBAColor(0.1f, 1.0f, 0.1f, 1.0f);
+		pengine::RGBAColor lowGrey = pengine::RGBAColor(0.1f, 0.1f, 0.1f, 1.0f);
 		renderer->SetShaderValue(renderer->GetShaderParameterHandle("g_MaterialAmbientColor"), &lowGrey, sizeof(pengine::RGBAColor));
 
-		pengine::RGBAColor white = pengine::RGBAColor(0.1f, 0.1f, 0.1f, 1.0f);
+		pengine::RGBAColor white = pengine::RGBAColor(1.0f, 1.0f, 1.0f, 1.0f);
 		renderer->SetShaderValue(renderer->GetShaderParameterHandle("g_LightDiffuse"), &white, sizeof(pengine::RGBAColor));
 		renderer->SetShaderValue(renderer->GetShaderParameterHandle("g_MaterialDiffuseColor"), &white, sizeof(pengine::RGBAColor));
 
-		pengine::Vector3 lightDir = pengine::Vector3(sinf(D3DX_PI * 2 * 1 / 1 - D3DX_PI / 6), 0, -cosf(D3DX_PI * 2 * 1 / 1 - D3DX_PI / 6));
+		pengine::Vector3 lightDir = pengine::Vector3(0, 100, 100);
 		renderer->SetShaderValue(renderer->GetShaderParameterHandle("g_LightDir"), &lightDir, sizeof(pengine::Vector3));
 
 		renderer->SetShaderTechnique(renderer->GetShaderTechniqueHandle("RenderScene"));
@@ -200,6 +200,18 @@ namespace racer
 			renderer->BeginRenderingWithPass(iPass);
 			//do all them renderings... tricky
 			renderer->DrawString("Hello shaders!", D3DCOLOR_ARGB(0, 255, 0, 0));
+			pengine::Matrix::CreateMatrix(100, 75, -150, 0, 270, 0, 0.2f, 0.2f, 0.2f, &mWorld);
+			mWorldViewProjection = mWorld * mView * mProj;
+			renderer->SetShaderMatrix(renderer->GetShaderParameterHandle("g_mWorldViewProjection"), &mWorldViewProjection);
+			renderer->SetShaderMatrix(renderer->GetShaderParameterHandle("g_mWorld"), &mWorld);
+
+			renderer->CommitChanges();
+
+			for each(pengine::Entity* entity in entities)
+			{
+				entity->Render(renderer);
+			}
+
 			renderer->EndRenderingPass();
 		}
 		renderer->EndRenderingWithShader();

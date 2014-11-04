@@ -585,10 +585,13 @@ namespace pengine
 		{
 			fin.getline(data, TEXT_BUFFER, ';');
 			_LoadMesh->normals[i].x = TextToNum(data);
+			_LoadMesh->vertices[i].nX = TextToNum(data);
 			fin.getline(data, TEXT_BUFFER, ';');
 			_LoadMesh->normals[i].y = TextToNum(data);
+			_LoadMesh->vertices[i].nY = TextToNum(data);
 			fin.getline(data, TEXT_BUFFER, ';');
 			_LoadMesh->normals[i].z = TextToNum(data);
+			_LoadMesh->vertices[i].nZ = TextToNum(data);
 			fin.get();//eats the comma or the semicolon at the end
 		}
 

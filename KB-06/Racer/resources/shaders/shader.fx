@@ -52,7 +52,7 @@ VS_OUTPUT OutlineVertexShader(float4 vPos : POSITION,
 	Output.Position = mul(vPos, g_mWorldViewProjection);
 	float4 normal = mul(vNormal, g_mWorldViewProjection);
 
-	Output.Position = Output.Position + (mul(1.5f, normal));
+	Output.Position = Output.Position + (mul(0.5f, normal));
 
 	// Black is fine in this case, 
 	Output.Diffuse.rgb = float4(0, 0, 0, 1);
