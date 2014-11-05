@@ -1,6 +1,7 @@
 #include "RaceSceneFactory.h"
 #include "RaceScene.h"
 #include "RaceCart.h"
+#include "Obstacle.h"
 #include "track.h"
 #include "trackblock.h"
 #include "Ground.h"
@@ -187,6 +188,16 @@ pengine::Scene* racer::RaceSceneFactory::CreateScene(std::vector<std::string>* s
 							scene->SetRaceCart(raceCart);
 						}
 						raceCarts.push_back(raceCart);
+					}
+					else if (type.compare("Obstacle") == 0)
+					{
+						Obstacle* obstacle = new Obstacle();
+						obstacle->SetMass(mass);
+						obstacle->AddAll(positionX, positionY, positionZ, translationX, translationY, translationZ, scalingX, scalingY, scalingZ);
+						obstacle->SetObject3D(resourceManager->LoadXFile(&objectPath));
+						obstacle->SetTrackHeight(122);
+						scene->AddEntity(obstacle);
+						scene->AddCollidable(obstacle);
 					}
 				}
 			}
@@ -428,7 +439,6 @@ pengine::Scene* racer::RaceSceneFactory::CreateScene(std::vector<std::string>* s
 		raceCarts[i]->SetTrackHeight(height);
 		raceCarts[i]->AddPosition(raceCarts[i]->GetPosition()->x, height, raceCarts[i]->GetPosition()->z);
 	}
-
 	std::string* shader = resourceManager->LoadShaderFile("resources/shaders/shader.fx");
 	scene->shader = shader;
 

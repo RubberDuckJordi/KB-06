@@ -37,6 +37,12 @@
     <Filter Include="Source Files\Scene\Tiny">
       <UniqueIdentifier>{ce325739-c277-4de3-aa52-6adf9080ee00}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Scene\Obstacle">
+      <UniqueIdentifier>{44299088-bb39-4e2c-b513-cbc92fca74cb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Scene\Obstacle">
+      <UniqueIdentifier>{17cf19c1-ab7e-47e2-b92f-101f56257821}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Racer.cpp">
@@ -60,6 +66,9 @@
     <ClCompile Include="TinyEntity.cpp">
       <Filter>Source Files\Scene\Tiny</Filter>
     </ClCompile>
+    <ClCompile Include="Obstacle.cpp">
+      <Filter>Source Files\Scene\Obstacle</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Track.h">
@@ -79,6 +88,9 @@
     </ClInclude>
     <ClInclude Include="TinyEntity.h">
       <Filter>Header Files\Scene\Tiny</Filter>
+    </ClInclude>
+    <ClInclude Include="Obstacle.h">
+      <Filter>Header Files\Scene\Obstacle</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

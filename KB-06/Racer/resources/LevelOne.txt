@@ -15,6 +15,21 @@
 <ScalingZ>1.0f</ScalingZ>
 </Entity>
 
+<Entity>
+<Type>Obstacle</Type>
+<ObjectPath>resources/snowball/snowball.x</ObjectPath>
+<Mass>100.0f</Mass>
+<PositionX>0.0f</PositionX>
+<PositionY>130.0f</PositionY>
+<PositionZ>-30.0f</PositionZ>
+<TranslationX>0.0f</TranslationX>
+<TranslationY>0.0f</TranslationY>
+<TranslationZ>0.0f</TranslationZ>
+<ScalingX>1.0f</ScalingX>
+<ScalingY>1.0f</ScalingY>
+<ScalingZ>1.0f</ScalingZ>
+</Entity>
+
 <Skybox>
 <Material>resources/dome2.jpg</Material>
 </Skybox>
