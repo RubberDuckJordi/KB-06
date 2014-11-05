@@ -348,4 +348,15 @@ namespace pengine
 	{
 		return quadTreeDepth;
 	}
+
+	Vector3& Ground::GetScale()
+	{
+		return scale;
+	}
+
+	Vector3& Ground::GetPosition()
+	{
+		return position;
+	}
+
 }

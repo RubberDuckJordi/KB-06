@@ -57,7 +57,8 @@ namespace pengine
 		void SetRotation(float yaw, float pitch, float roll);
 		void SetScale(float scaleX, float scaleY, float scaleZ);
 		void SetAll(float x, float y, float z, float yaw, float pitch, float roll, float scaleX, float scaleY, float scaleZ);
-
+		Vector3& GetScale();
+		Vector3& GetPosition();
 	private:
 		void CreateQuadTreeChildren(QuadNode* parent, unsigned short remainingDepth);
 		

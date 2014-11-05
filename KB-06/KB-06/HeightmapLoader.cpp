@@ -105,7 +105,7 @@ namespace pengine
 		Vertex* vertex = ground.GetVertices();
 
 		vertex[p_vertexIndex].x = x * ground.GetCellSize();
-		vertex[p_vertexIndex].y = p_y;
+		vertex[p_vertexIndex].y = p_y - 127.0f;
 		vertex[p_vertexIndex].z = z * ground.GetCellSize();
 		vertex[p_vertexIndex].tu = tu;
 		vertex[p_vertexIndex].tv = tv;

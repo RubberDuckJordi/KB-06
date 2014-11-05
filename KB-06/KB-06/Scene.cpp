@@ -198,13 +198,11 @@ namespace pengine
 		if (depth == 0 || node->IsLeaf())
 		{
 			// Calculate the middle point of the chunk and the node to be able to calculate the distance
-			int chunkPointX = chunkStartX + ((chunkEndX - chunkStartX) / 2);
-			int chunkPointZ = chunkStartZ + ((chunkEndZ - chunkStartZ) / 2);
 
 			int nodePointX = int(node->GetMinX() + ((node->GetMaxX() - node->GetMinX()) / 2));
 			int nodePointZ = int(node->GetMinZ() + ((node->GetMaxZ() - node->GetMinZ()) / 2));
 
-			int distance = int(sqrt(pow(currentCamera->GetPosition()->z - nodePointX, 2) + pow(currentCamera->GetPosition()->x - nodePointZ, 2)));
+			int distance = int(sqrt(pow(currentCamera->GetPosition()->z - ground->GetPosition().z - nodePointX, 2) + pow(currentCamera->GetPosition()->x - ground->GetPosition().x - nodePointZ, 2)));
 
 			int nodesDistance = distance / (min(chunkEndX - chunkStartX, chunkEndZ - chunkStartZ));
 			node->SetLevelOfDetail(1 << nodesDistance);
