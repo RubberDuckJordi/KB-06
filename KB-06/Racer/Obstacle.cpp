@@ -21,6 +21,8 @@ namespace racer
 		defaultRadius = maxScale * maxRadius;
 		if (!isOnTrack)
 		{
+			AddForce(new pengine::Vector3(0.0f, -100.0f * deltaTime * mass, 0.0f));
+			fallingTime += deltaTime;
 			if (!fallingTime >= 3.0f)
 			{
 				// To prevent glitching by flying from one trackblock to the next
