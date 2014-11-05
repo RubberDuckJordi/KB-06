@@ -65,7 +65,7 @@ namespace pengine
 		scale.z = scaleZ;
 		location->CreateMatrix(position.x, position.y, position.z, rotation.x, rotation.y, rotation.z, scale.x, scale.y, scale.z, location);
 	}
-	
+
 	void Ground::SetAll(float x, float y, float z, float yaw, float pitch, float roll, float scaleX, float scaleY, float scaleZ)
 	{
 		SetScale(scaleX, scaleY, scaleZ);
@@ -150,28 +150,24 @@ namespace pengine
 		int amountOfVertices;
 		Vertex** vertices = quadTreeRootNode->GetAllChildrenVertices(amountOfVertices);
 
-		// If the camera is too far away, the vertices array will be empty
-		if (amountOfVertices != 0)
+		if (vertexBuffer != NULL)
 		{
-			if (vertexBuffer != NULL)
-			{
-				delete vertexBuffer;
-			}
-
-			// dereference all pointers :'(
-			Vertex* verticesArray = new Vertex[amountOfVertices];
-			for (int i = 0; i < amountOfVertices; ++i)
-			{
-				verticesArray[i] = *vertices[i];
-			}
-
-			vertexBuffer = renderer->CreateVertexBuffer(verticesArray, amountOfVertices);
-			renderer->SetActiveMatrix(location);
-			renderer->SetMaterial(material);
-			renderer->DrawVertexBuffer(vertexBuffer);
-
-			delete[] verticesArray;
+			delete vertexBuffer;
 		}
+
+		// dereference all pointers :'(
+		Vertex* verticesArray = new Vertex[amountOfVertices];
+		for (int i = 0; i < amountOfVertices; ++i)
+		{
+			verticesArray[i] = *vertices[i];
+		}
+
+		vertexBuffer = renderer->CreateVertexBuffer(verticesArray, amountOfVertices);
+		renderer->SetActiveMatrix(location);
+		renderer->SetMaterial(material);
+		renderer->DrawVertexBuffer(vertexBuffer);
+
+		delete[] verticesArray;
 
 		delete[] vertices;
 	}

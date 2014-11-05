@@ -275,7 +275,9 @@ namespace pengine
 
 		if (ground != NULL)
 		{
+			renderer->SetCulling(PENGINE_CULL_NONE);
 			ground->Render(renderer);
+			renderer->SetCulling(PENGINE_CULL_CCW);
 		}
 		// RenderCollidables(renderer);
 
