@@ -125,7 +125,7 @@ namespace racer
 	void RaceCart::Brake(float percentage)
 	{
 		// 5.0f could be replaced by braking power
-		ApplyFriction(5.0f * percentage);
+		ApplyFriction(0.1f * percentage);
 	}
 
 	void RaceCart::Throttle(float percentage)

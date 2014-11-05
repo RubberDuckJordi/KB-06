@@ -12,7 +12,7 @@ namespace pengine
 		movementVector.y = 0;
 		movementVector.z = 0;
 		mass = 1.0f;
-		friction = 0.5f;
+		friction = 0.1f;
 		defaultRadius = 0.0f;
 	}
 
