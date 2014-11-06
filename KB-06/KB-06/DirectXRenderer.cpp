@@ -817,7 +817,7 @@ namespace pengine
 	{
 		ID3DXEffect* shaderToAdd = NULL;
 		DWORD Flags = D3DXFX_NOT_CLONEABLE;
-		D3DXCreateEffect(g_pd3dDevice, shaderInText->c_str(), shaderInText->size(), NULL, NULL, Flags, NULL, &shaderToAdd, NULL);
+		HRESULT hr = D3DXCreateEffect(g_pd3dDevice, shaderInText->c_str(), shaderInText->size(), NULL, NULL, Flags, NULL, &shaderToAdd, NULL);
 		shaderCache[shaderInText] = shaderToAdd;
 	}
 

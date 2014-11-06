@@ -441,7 +441,7 @@ pengine::Scene* racer::RaceSceneFactory::CreateScene(std::vector<std::string>* s
 		raceCarts[i]->SetTrackHeight(height);
 		raceCarts[i]->AddPosition(raceCarts[i]->GetPosition()->x, height, raceCarts[i]->GetPosition()->z);
 	}
-	std::string* shader = resourceManager->LoadShaderFile("resources/shaders/HLSLwithoutEffects.fx");
+	std::string* shader = resourceManager->LoadShaderFile("resources/shaders/shader.fx");
 	scene->shader = shader;
 
 	TinyEntity* tiny = new TinyEntity();
