@@ -12,16 +12,16 @@ float4x4 g_mWorld;                  // World matrix for object
 //--------------------------------------------------------------------------------------
 // Texture samplers
 //--------------------------------------------------------------------------------------
-sampler MeshTextureSampler =
-sampler_state
-{
-	Texture = < g_MeshTexture > ;
-	MipFilter = NONE;
-	MinFilter = NONE;
-	MagFilter = NONE;
-	AddressU = CLAMP;
-	AddressV = CLAMP;
-};
+//sampler MeshTextureSampler =
+//sampler_state
+//{
+//	Texture = < g_MeshTexture > ;
+//	MipFilter = NONE;
+//	MinFilter = NONE;
+//	MagFilter = NONE;
+//	AddressU = CLAMP;
+//	AddressV = CLAMP;
+//};
 
 
 //-----------------------------------------------------------------------------
@@ -31,7 +31,7 @@ struct VS_OUTPUT
 {
     float4 Position   : POSITION;   // vertex position 
     float4 Diffuse    : COLOR0;     // vertex diffuse color
-    float2 TextureUV  : TEXCOORD1;  // vertex texture coords 
+    //float2 TextureUV  : TEXCOORD1;  // vertex texture coords 
 };
 
 
@@ -39,29 +39,23 @@ struct VS_OUTPUT
 VS_OUTPUT TextShader( in float3 vPosition : POSITION )
 {
 	VS_OUTPUT Output;
-	
-    float fSin, fCos;   
-    float x = length( vPosition ) * sin( .3 * g_fTime ) * 15.0f;
 
-    
-    // This HLSL intrinsic computes returns both the sine and cosine of x
-    //sincos( x, fSin, fCos );
+	float fSin, fCos;
+	float x = length( vPosition ) * sin( .3 * g_fTime ) * 15.0f;
 
-	// Change the y of the vertex position based on a function of time 
-	// and transform the vertex into projection space. 
+	// This HLSL intrinsic computes returns both the sine and cosine of x
+	sincos( x, fSin, fCos );
 
-    Output.Position = mul( float4( vPosition.x, fSin * 0.1f, vPosition.y, 1.0f ), g_mWorldViewProjection );
+	// Change the y of the vertex position based on a function of time
+	// and transform the vertex into projection space.
+	Output.Position = mul( float4( vPosition.x, fSin * 0.1f, vPosition.y, 1.0f ), g_mWorldViewProjection );
 
-    
-    // Output the diffuse color as function of time and 
-    // the vertex's object space position
-    Output.Diffuse = 1;//0.5f - 0.5f * fCos;
-    
-//    Output.TextureUV = vTexCoord0;
+	// Output the diffuse color as function of time and
+	// the vertex's object space position
+	Output.Diffuse = 0.5f - 0.5f * fCos;
 
-    
-    return Output;
-};
+	return Output;
+}
 
 //--------------------------------------------------------------------------------------
 // Pixel shader output structure
