@@ -200,7 +200,7 @@ namespace racer
 			renderer->BeginRenderingWithPass(iPass);
 			//do all them renderings... tricky
 			renderer->DrawString("Hello shaders!", D3DCOLOR_ARGB(0, 255, 0, 0));
-			pengine::Matrix::CreateMatrix(50, 150, -150, 0, 270, 0, 0.2f, 0.2f, 0.2f, &mWorld);
+			pengine::Matrix::CreateMatrix(100, 75, -150, 0, 270, 0, 0.2f, 0.2f, 0.2f, &mWorld);
 			mWorldViewProjection = mWorld * mView * mProj;
 			renderer->SetShaderMatrix(renderer->GetShaderParameterHandle("g_mWorldViewProjection"), &mWorldViewProjection);
 			renderer->SetShaderMatrix(renderer->GetShaderParameterHandle("g_mWorld"), &mWorld);
