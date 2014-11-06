@@ -74,9 +74,9 @@ struct PS_OUTPUT
 PS_OUTPUT ColorShader()
 {
 	PS_OUTPUT Output;
-	int red = int(sin(3 * g_fTime + 0) * 128 + 127);
-	int green = int(sin(3 * g_fTime + 2) * 128 + 127);
-	int blue = int(sin(3 * g_fTime + 4) * 128 + 127);
+	float red = (sin(g_fTime + 0) * (255/2) + (255/2)) / 255;
+	float green = (sin(g_fTime + 2) * (255/2) + (255/2)) / 255;
+	float blue = (sin(g_fTime + 4) * (255/2) + (255/2)) / 255;
 	Output.RGBColor = float4(red, green, blue, 1);
 	return Output;
 }
