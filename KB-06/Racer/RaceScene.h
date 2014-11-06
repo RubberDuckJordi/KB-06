@@ -22,6 +22,7 @@ namespace racer
 		void SetTrack(Track* track);
 
 		std::string* shader;
+		std::string* textShader;
 	private:
 		Track* track;
 		bool loss;

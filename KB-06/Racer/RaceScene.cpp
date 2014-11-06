@@ -199,7 +199,12 @@ namespace racer
 		{
 			renderer->BeginRenderingWithPass(iPass);
 			//do all them renderings... tricky
-			renderer->DrawString("Hello shaders!", D3DCOLOR_ARGB(0, 255, 0, 0));
+			/*pengine::Matrix::CreateMatrix(-100, 140, 0, -90, 0, 0, 10, 10, 10, &mWorld);
+			mWorldViewProjection = mWorld * mView * mProj;
+			renderer->SetShaderMatrix(renderer->GetShaderParameterHandle("g_mWorldViewProjection"), &mWorldViewProjection);
+			renderer->SetShaderMatrix(renderer->GetShaderParameterHandle("g_mWorld"), &mWorld);
+			renderer->CommitChanges();
+			renderer->DrawString("Hello shaders!", D3DCOLOR_ARGB(0, 255, 0, 0));*/
 			pengine::Matrix::CreateMatrix(50, 150, -150, 0, 270, 0, 0.2f, 0.2f, 0.2f, &mWorld);
 			mWorldViewProjection = mWorld * mView * mProj;
 			renderer->SetShaderMatrix(renderer->GetShaderParameterHandle("g_mWorldViewProjection"), &mWorldViewProjection);
@@ -215,6 +220,29 @@ namespace racer
 			renderer->EndRenderingPass();
 		}
 		renderer->EndRenderingWithShader();
+
+		renderer->SetShader(textShader);
+
+		pengine::Matrix::CreateMatrix(-100, 140, 0, -90, 0, 0, 10, 10, 10, &mWorld);
+		mWorldViewProjection = mWorld * mView * mProj;
+		renderer->SetShaderMatrix(renderer->GetShaderParameterHandle("g_mWorldViewProjection"), &mWorldViewProjection);
+		renderer->SetShaderMatrix(renderer->GetShaderParameterHandle("g_mWorld"), &mWorld);
+		renderer->SetShaderValue(renderer->GetShaderParameterHandle("g_fTime"), &elapsedTime, sizeof(float));
+		renderer->SetShaderTechnique(renderer->GetShaderTechniqueHandle("RenderScene"));
+
+		renderer->BeginRenderingWithShader(&cPasses);
+
+		for (iPass = 0; iPass < cPasses; iPass++)
+		{
+			renderer->BeginRenderingWithPass(iPass);
+			renderer->DrawString("Hello shaders!", D3DCOLOR_ARGB(0, 0, 0, 0));
+			renderer->EndRenderingPass();
+		}
+		renderer->EndRenderingWithShader();
+
+
+		
+
 		//pengine::Material mat;
 		//mat.texture = NULL;
 		//mat.ambient = { 0.0f, 0.0f, 0.0f };
