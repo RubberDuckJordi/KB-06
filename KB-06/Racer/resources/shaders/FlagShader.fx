@@ -6,15 +6,6 @@ float g_fTime;			  // Time parameter. This keeps increasing
 texture g_MeshTexture;            // Color texture for mesh
 
 
-//-----------------------------------------------------------------------------
-// Vertex shader output structure
-//-----------------------------------------------------------------------------
-struct VS_OUTPUT
-{
-	float4 Position   : POSITION;   // vertex position
-	float2 TextureUV  : TEXCOORD1;  // vertex texture coords 
-};
-
 sampler MeshTextureSampler =
 sampler_state
 {
@@ -25,6 +16,18 @@ sampler_state
 	AddressU = CLAMP;
 	AddressV = CLAMP;
 };
+
+
+// Vertex shader
+
+
+struct VS_OUTPUT
+{
+	float4 Position   : POSITION;   // vertex position
+	float2 TextureUV  : TEXCOORD1;  // vertex texture coords 
+};
+
+
 
 VS_OUTPUT TextWiggleShader(float4 vPosition : POSITION,
 	 float2 vTexCoord0 : TEXCOORD0)
@@ -40,14 +43,37 @@ VS_OUTPUT TextWiggleShader(float4 vPosition : POSITION,
 	return Output;
 }
 
+//Pixel Shader
 
-//--------------------------------------------------------------------------------------
-// Renders scene 
-//--------------------------------------------------------------------------------------
+struct PS_OUTPUT
+{
+	float4 RGBColor : COLOR0;  // Pixel color    
+};
+
+
+
+PS_OUTPUT RainbowColorShader(VS_OUTPUT In)
+{
+	PS_OUTPUT Output;
+
+	float red = 0;
+	float green = 255;
+	float blue = 0;
+
+	Output.RGBColor = tex2D(MeshTextureSampler, In.TextureUV) * float4(red, green, blue, 1);
+
+	return Output;
+}
+
+
+// Renders scene
+
+
 technique RenderScene
 {
 	pass P0
 	{
 		VertexShader = compile vs_2_0 TextWiggleShader();
+		PixelShader = compile ps_2_0 RainbowColorShader();
 	}
 }
