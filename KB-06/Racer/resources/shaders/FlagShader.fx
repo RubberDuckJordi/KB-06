@@ -3,6 +3,7 @@
 //-----------------------------------------------------------------------------
 float4x4 g_mWorldViewProjection;  // World * View * Projection transformation
 float g_fTime;			  // Time parameter. This keeps increasing
+texture g_MeshTexture;            // Color texture for mesh
 
 
 //-----------------------------------------------------------------------------
@@ -14,7 +15,16 @@ struct VS_OUTPUT
 	float2 TextureUV  : TEXCOORD1;  // vertex texture coords 
 };
 
-
+sampler MeshTextureSampler =
+sampler_state
+{
+	Texture = < g_MeshTexture > ;
+	MipFilter = NONE;
+	MinFilter = NONE;
+	MagFilter = NONE;
+	AddressU = CLAMP;
+	AddressV = CLAMP;
+};
 
 VS_OUTPUT TextWiggleShader(float4 vPosition : POSITION,
 	 float2 vTexCoord0 : TEXCOORD0)
