@@ -1,0 +1,12 @@
+XModel loader
+The model loader does not support matrix calculations (translation, rotation, scaling). The matrix is simply ignored. As a result, a model that has scaling in the X file is NOT scaled in the engine.
+
+LOD
+The Level Of Detail is supposed to make the terrain render a lot faster, but it could have been more efficient. Due to inefficiency issues, the optimization is not sufficient.
+Restitching between two levels of details does not work perfectly, the terrain has some holes.
+
+Collision
+In some cases, collision does not work properly, and the two objects get stuck together.
+
+Frustum Culling
+Frustum calculations for certain positions does not work. The culling is disabled in the current version. It will be enabled as soon as it is fixed.
