@@ -23,6 +23,7 @@ namespace racer
 
 		std::string* shader;
 		std::string* textShader;
+		std::string* flagShader;
 	private:
 		Track* track;
 		bool loss;

@@ -447,6 +447,9 @@ pengine::Scene* racer::RaceSceneFactory::CreateScene(std::vector<std::string>* s
 	shader = resourceManager->LoadShaderFile("resources/shaders/TextShader.fx");
 	scene->textShader = shader;
 
+	shader = resourceManager->LoadShaderFile("resources/shaders/FlagShader.fx");
+	scene->flagShader = shader;
+
 	TinyEntity* tiny = new TinyEntity();
 	tiny->SetObject3D(resourceManager->LoadXFile(&std::string("resources/tiny/tiny.x")));
 	tiny->SetAll(-100, 75, -150, 0, 270, 0, 0.2f, 0.2f, 0.2f);
