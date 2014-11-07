@@ -235,7 +235,7 @@ namespace racer
 		for (iPass = 0; iPass < cPasses; iPass++)
 		{
 			renderer->BeginRenderingWithPass(iPass);
-			renderer->DrawString("Hello shaders!", D3DCOLOR_ARGB(0, 0, 0, 0));
+			renderer->DrawString("Hello shaders!\nI am going to try breaking\nyou like a big jerk!\nDoesn't seem to be\nhappening though...", D3DCOLOR_ARGB(0, 0, 0, 0));
 			renderer->EndRenderingPass();
 		}
 		renderer->EndRenderingWithShader();
