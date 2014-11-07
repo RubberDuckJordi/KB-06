@@ -235,13 +235,29 @@ namespace racer
 		for (iPass = 0; iPass < cPasses; iPass++)
 		{
 			renderer->BeginRenderingWithPass(iPass);
-			renderer->DrawString("Hello shaders!", D3DCOLOR_ARGB(0, 0, 0, 0));
+			//renderer->DrawString("Hello shaders!", D3DCOLOR_ARGB(0, 0, 0, 0));
 			renderer->EndRenderingPass();
 		}
 		renderer->EndRenderingWithShader();
 
 
-		
+		renderer->SetShader(flagShader);
+
+		pengine::Matrix::CreateMatrix(-100, 140, 0, -90, 0, 0, 10, 10, 10, &mWorld);
+		mWorldViewProjection = mWorld * mView * mProj;
+		renderer->SetShaderMatrix(renderer->GetShaderParameterHandle("g_mWorldViewProjection"), &mWorldViewProjection);
+		renderer->SetShaderValue(renderer->GetShaderParameterHandle("g_fTime"), &elapsedTime, sizeof(float));
+		renderer->SetShaderTechnique(renderer->GetShaderTechniqueHandle("RenderScene"));
+
+		renderer->BeginRenderingWithShader(&cPasses);
+
+		for (iPass = 0; iPass < cPasses; iPass++)
+		{
+			renderer->BeginRenderingWithPass(iPass);
+			renderer->DrawString("Hello shaders!", D3DCOLOR_ARGB(1, 1, 0, 1));
+			renderer->EndRenderingPass();
+		}
+		renderer->EndRenderingWithShader();
 
 		//pengine::Material mat;
 		//mat.texture = NULL;
